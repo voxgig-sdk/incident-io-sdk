@@ -1,0 +1,18 @@
+# BasicStatusPagesCreateStatusPageIncidentUpdateResultV2Flow
+
+main: kit: flow: BasicStatusPagesCreateStatusPageIncidentUpdateResultV2Flow:
+{
+  entity: "status_pages_create_status_page_incident_update_result_v2",
+  kind: "basic",
+  name: "BasicStatusPagesCreateStatusPageIncidentUpdateResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "status_pages_create_status_page_incident_update_result_v2_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicStatusPagesCreateStatusPageIncidentUpdateResultV2Flow"
+}

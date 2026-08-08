@@ -1,0 +1,200 @@
+# Entity: alert_attribute
+
+main: kit: entity: alert_attribute: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "array"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "emoji"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "required"
+      op: {
+        create: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+        update: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+      }
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "type"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "alert_attribute"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/alert_attributes"
+          parts: [
+            "v2"
+            "alert_attributes"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_attribute`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/v2/alert_attributes"
+          parts: [
+            "v2"
+            "alert_attributes"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_attributes`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01GW2G3V0S59R238FAHPDS1R66"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/alert_attributes/{id}"
+          parts: [
+            "v2"
+            "alert_attributes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_attribute`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01GW2G3V0S59R238FAHPDS1R66"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/alert_attributes/{id}"
+          parts: [
+            "v2"
+            "alert_attributes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01GW2G3V0S59R238FAHPDS1R66"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/alert_attributes/{id}"
+          parts: [
+            "v2"
+            "alert_attributes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_attribute`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

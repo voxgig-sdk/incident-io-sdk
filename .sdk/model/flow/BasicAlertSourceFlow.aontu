@@ -1,0 +1,100 @@
+# BasicAlertSourceFlow
+
+main: kit: flow: BasicAlertSourceFlow:
+{
+  entity: "alert_source",
+  kind: "basic",
+  name: "BasicAlertSourceFlow",
+  step: [
+    {
+      input: {
+        ref: "alert_source_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "alert_source_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "alert_source_ref01",
+        srcdatavar: "alert_source_ref01_data",
+        suffix: "_up0",
+        textfield: "alert_events_url"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-alert_source_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "alert_source_ref01",
+        srcdatavar: "alert_source_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "alert_source01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-alert_source_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "alert_source_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "alert_source01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "alert_source_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAlertSourceFlow"
+}

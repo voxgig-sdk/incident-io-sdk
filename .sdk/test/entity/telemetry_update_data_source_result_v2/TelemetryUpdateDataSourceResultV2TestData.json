@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "telemetry_update_data_source_result_v2": {
+      "TELEMETRY_UPDATE_DATA_SOURCE_RESULT_V200": {
+        "created_at": "s64",
+        "datadog_config": {},
+        "enabled": true,
+        "grafana_config": {},
+        "id": "TELEMETRY_UPDATE_DATA_SOURCE_RESULT_V200",
+        "name": "s69",
+        "provider": "s6a",
+        "source_type": "s6b",
+        "updated_at": "s6c",
+        "version": "s6d"
+      },
+      "TELEMETRY_UPDATE_DATA_SOURCE_RESULT_V201": {
+        "created_at": "sc8",
+        "datadog_config": {},
+        "enabled": true,
+        "grafana_config": {},
+        "id": "TELEMETRY_UPDATE_DATA_SOURCE_RESULT_V201",
+        "name": "scd",
+        "provider": "sce",
+        "source_type": "scf",
+        "updated_at": "sd0",
+        "version": "sd1"
+      },
+      "TELEMETRY_UPDATE_DATA_SOURCE_RESULT_V202": {
+        "created_at": "s12c",
+        "datadog_config": {},
+        "enabled": true,
+        "grafana_config": {},
+        "id": "TELEMETRY_UPDATE_DATA_SOURCE_RESULT_V202",
+        "name": "s131",
+        "provider": "s132",
+        "source_type": "s133",
+        "updated_at": "s134",
+        "version": "s135"
+      }
+    }
+  },
+  "new": {
+    "telemetry_update_data_source_result_v2": {
+      "telemetry_update_data_source_result_v2_ref01": {
+        "created_at": "s190",
+        "datadog_config": {},
+        "enabled": true,
+        "grafana_config": {},
+        "name": "s195",
+        "provider": "s196",
+        "source_type": "s197",
+        "updated_at": "s198",
+        "version": "s199"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+# BasicIncidentsEditResultV2Flow
+
+main: kit: flow: BasicIncidentsEditResultV2Flow:
+{
+  entity: "incidents_edit_result_v2",
+  kind: "basic",
+  name: "BasicIncidentsEditResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "incidents_edit_result_v2_ref01"
+      }
+
+      match: {
+        incident_id: "incident01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicIncidentsEditResultV2Flow"
+}

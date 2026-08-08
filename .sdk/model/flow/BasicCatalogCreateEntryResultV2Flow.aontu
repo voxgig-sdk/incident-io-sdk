@@ -1,0 +1,18 @@
+# BasicCatalogCreateEntryResultV2Flow
+
+main: kit: flow: BasicCatalogCreateEntryResultV2Flow:
+{
+  entity: "catalog_create_entry_result_v2",
+  kind: "basic",
+  name: "BasicCatalogCreateEntryResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "catalog_create_entry_result_v2_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicCatalogCreateEntryResultV2Flow"
+}

@@ -1,0 +1,32 @@
+# BasicCatalogShowEntryResultV2Flow
+
+main: kit: flow: BasicCatalogShowEntryResultV2Flow:
+{
+  entity: "catalog_show_entry_result_v2",
+  kind: "basic",
+  name: "BasicCatalogShowEntryResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "catalog_show_entry_result_v2_ref01",
+        srcdatavar: "catalog_show_entry_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "catalog_show_entry_result_v201"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-catalog_show_entry_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCatalogShowEntryResultV2Flow"
+}

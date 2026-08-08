@@ -1,0 +1,100 @@
+# BasicCustomFieldOptionFlow
+
+main: kit: flow: BasicCustomFieldOptionFlow:
+{
+  entity: "custom_field_option",
+  kind: "basic",
+  name: "BasicCustomFieldOptionFlow",
+  step: [
+    {
+      input: {
+        ref: "custom_field_option_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "custom_field_option_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "custom_field_option_ref01",
+        srcdatavar: "custom_field_option_ref01_data",
+        suffix: "_up0",
+        textfield: "custom_field_id"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-custom_field_option_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "custom_field_option_ref01",
+        srcdatavar: "custom_field_option_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "custom_field_option01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-custom_field_option_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "custom_field_option_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "custom_field_option01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "custom_field_option_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCustomFieldOptionFlow"
+}

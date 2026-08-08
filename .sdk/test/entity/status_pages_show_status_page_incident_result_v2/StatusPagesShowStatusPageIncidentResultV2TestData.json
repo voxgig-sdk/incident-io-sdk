@@ -1,0 +1,48 @@
+{
+  "existing": {
+    "status_pages_show_status_page_incident_result_v2": {
+      "STATUS_PAGES_SHOW_STATUS_PAGE_INCIDENT_RESULT_V200": {
+        "component_impact": [],
+        "id": "STATUS_PAGES_SHOW_STATUS_PAGE_INCIDENT_RESULT_V200",
+        "incident_status": "s48",
+        "name": "s49",
+        "published_at": "s4a",
+        "status_page_id": "STATUS_PAGE01",
+        "update": [],
+        "status_page_incident_id": "STATUS_PAGE_INCIDENT01"
+      },
+      "STATUS_PAGES_SHOW_STATUS_PAGE_INCIDENT_RESULT_V201": {
+        "component_impact": [],
+        "id": "STATUS_PAGES_SHOW_STATUS_PAGE_INCIDENT_RESULT_V201",
+        "incident_status": "s8e",
+        "name": "s8f",
+        "published_at": "s90",
+        "status_page_id": "STATUS_PAGE01",
+        "update": [],
+        "status_page_incident_id": "STATUS_PAGE_INCIDENT01"
+      },
+      "STATUS_PAGES_SHOW_STATUS_PAGE_INCIDENT_RESULT_V202": {
+        "component_impact": [],
+        "id": "STATUS_PAGES_SHOW_STATUS_PAGE_INCIDENT_RESULT_V202",
+        "incident_status": "sd4",
+        "name": "sd5",
+        "published_at": "sd6",
+        "status_page_id": "STATUS_PAGE01",
+        "update": [],
+        "status_page_incident_id": "STATUS_PAGE_INCIDENT01"
+      }
+    }
+  },
+  "new": {
+    "status_pages_show_status_page_incident_result_v2": {
+      "status_pages_show_status_page_incident_result_v2_ref01": {
+        "component_impact": [],
+        "incident_status": "s11a",
+        "name": "s11b",
+        "published_at": "s11c",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      }
+    }
+  }
+}

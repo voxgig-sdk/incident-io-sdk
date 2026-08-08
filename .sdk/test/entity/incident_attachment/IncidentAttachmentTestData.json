@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "incident_attachment": {
+      "INCIDENT_ATTACHMENT00": {
+        "id": "INCIDENT_ATTACHMENT00",
+        "incident_id": "INCIDENT01",
+        "resource": {}
+      },
+      "INCIDENT_ATTACHMENT01": {
+        "id": "INCIDENT_ATTACHMENT01",
+        "incident_id": "INCIDENT01",
+        "resource": {}
+      },
+      "INCIDENT_ATTACHMENT02": {
+        "id": "INCIDENT_ATTACHMENT02",
+        "incident_id": "INCIDENT01",
+        "resource": {}
+      }
+    }
+  },
+  "new": {
+    "incident_attachment": {
+      "incident_attachment_ref01": {
+        "incident_id": "INCIDENT01",
+        "resource": {}
+      }
+    }
+  }
+}

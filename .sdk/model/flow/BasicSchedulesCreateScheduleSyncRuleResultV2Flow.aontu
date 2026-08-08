@@ -1,0 +1,22 @@
+# BasicSchedulesCreateScheduleSyncRuleResultV2Flow
+
+main: kit: flow: BasicSchedulesCreateScheduleSyncRuleResultV2Flow:
+{
+  entity: "schedules_create_schedule_sync_rule_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesCreateScheduleSyncRuleResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "schedules_create_schedule_sync_rule_result_v2_ref01"
+      }
+
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicSchedulesCreateScheduleSyncRuleResultV2Flow"
+}

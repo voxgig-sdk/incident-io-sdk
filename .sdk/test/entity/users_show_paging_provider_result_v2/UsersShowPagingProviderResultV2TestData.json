@@ -1,0 +1,28 @@
+{
+  "existing": {
+    "users_show_paging_provider_result_v2": {
+      "USERS_SHOW_PAGING_PROVIDER_RESULT_V200": {
+        "preferred_escalation_provider": "sa",
+        "user_id": "USER01",
+        "id": "USERS_SHOW_PAGING_PROVIDER_RESULT_V200"
+      },
+      "USERS_SHOW_PAGING_PROVIDER_RESULT_V201": {
+        "preferred_escalation_provider": "s14",
+        "user_id": "USER01",
+        "id": "USERS_SHOW_PAGING_PROVIDER_RESULT_V201"
+      },
+      "USERS_SHOW_PAGING_PROVIDER_RESULT_V202": {
+        "preferred_escalation_provider": "s1e",
+        "user_id": "USER01",
+        "id": "USERS_SHOW_PAGING_PROVIDER_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "users_show_paging_provider_result_v2": {
+      "users_show_paging_provider_result_v2_ref01": {
+        "preferred_escalation_provider": "s28"
+      }
+    }
+  }
+}

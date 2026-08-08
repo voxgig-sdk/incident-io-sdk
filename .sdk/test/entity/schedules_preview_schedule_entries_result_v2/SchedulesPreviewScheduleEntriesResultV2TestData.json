@@ -1,0 +1,48 @@
+{
+  "existing": {
+    "schedules_preview_schedule_entries_result_v2": {
+      "SCHEDULES_PREVIEW_SCHEDULE_ENTRIES_RESULT_V200": {
+        "entry_window_end": "s3c",
+        "entry_window_start": "s3d",
+        "final": [],
+        "override": [],
+        "schedule": {},
+        "scheduled": [],
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULES_PREVIEW_SCHEDULE_ENTRIES_RESULT_V200"
+      },
+      "SCHEDULES_PREVIEW_SCHEDULE_ENTRIES_RESULT_V201": {
+        "entry_window_end": "s78",
+        "entry_window_start": "s79",
+        "final": [],
+        "override": [],
+        "schedule": {},
+        "scheduled": [],
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULES_PREVIEW_SCHEDULE_ENTRIES_RESULT_V201"
+      },
+      "SCHEDULES_PREVIEW_SCHEDULE_ENTRIES_RESULT_V202": {
+        "entry_window_end": "sb4",
+        "entry_window_start": "sb5",
+        "final": [],
+        "override": [],
+        "schedule": {},
+        "scheduled": [],
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULES_PREVIEW_SCHEDULE_ENTRIES_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "schedules_preview_schedule_entries_result_v2": {
+      "schedules_preview_schedule_entries_result_v2_ref01": {
+        "entry_window_end": "sf0",
+        "entry_window_start": "sf1",
+        "final": [],
+        "override": [],
+        "schedule": {},
+        "scheduled": []
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+# BasicSchedulesUpdateScheduleSyncRuleResultV2Flow
+
+main: kit: flow: BasicSchedulesUpdateScheduleSyncRuleResultV2Flow:
+{
+  entity: "schedules_update_schedule_sync_rule_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesUpdateScheduleSyncRuleResultV2Flow",
+  step: [
+    {
+      data: {
+        schedule_id: "schedule01"
+      }
+
+      input: {
+        ref: "schedules_update_schedule_sync_rule_result_v2_ref01",
+        srcdatavar: "schedules_update_schedule_sync_rule_result_v2_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedules_update_schedule_sync_rule_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSchedulesUpdateScheduleSyncRuleResultV2Flow"
+}

@@ -1,0 +1,20 @@
+{
+  "existing": {
+    "catalog_v3": {
+      "CATALOG_V300": {
+        "id": "CATALOG_V300"
+      },
+      "CATALOG_V301": {
+        "id": "CATALOG_V301"
+      },
+      "CATALOG_V302": {
+        "id": "CATALOG_V302"
+      }
+    }
+  },
+  "new": {
+    "catalog_v3": {
+      "catalog_v3_ref01": {}
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "postmortem_document": {
+      "POSTMORTEM_DOCUMENT00": {
+        "created_at": "s64",
+        "document_url": "s65",
+        "editor": [],
+        "exported_url": [],
+        "id": "POSTMORTEM_DOCUMENT00",
+        "incident_id": "INCIDENT01",
+        "status": "s6a",
+        "title": "s6b",
+        "type": "s6c",
+        "updated_at": "s6d"
+      },
+      "POSTMORTEM_DOCUMENT01": {
+        "created_at": "sc8",
+        "document_url": "sc9",
+        "editor": [],
+        "exported_url": [],
+        "id": "POSTMORTEM_DOCUMENT01",
+        "incident_id": "INCIDENT01",
+        "status": "sce",
+        "title": "scf",
+        "type": "sd0",
+        "updated_at": "sd1"
+      },
+      "POSTMORTEM_DOCUMENT02": {
+        "created_at": "s12c",
+        "document_url": "s12d",
+        "editor": [],
+        "exported_url": [],
+        "id": "POSTMORTEM_DOCUMENT02",
+        "incident_id": "INCIDENT01",
+        "status": "s132",
+        "title": "s133",
+        "type": "s134",
+        "updated_at": "s135"
+      }
+    }
+  },
+  "new": {
+    "postmortem_document": {
+      "postmortem_document_ref01": {
+        "created_at": "s190",
+        "document_url": "s191",
+        "editor": [],
+        "exported_url": [],
+        "incident_id": "INCIDENT01",
+        "status": "s196",
+        "title": "s197",
+        "type": "s198",
+        "updated_at": "s199"
+      }
+    }
+  }
+}

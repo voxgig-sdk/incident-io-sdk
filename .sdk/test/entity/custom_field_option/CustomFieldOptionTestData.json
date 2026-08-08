@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "custom_field_option": {
+      "CUSTOM_FIELD_OPTION00": {
+        "custom_field_id": "CUSTOM_FIELD01",
+        "id": "CUSTOM_FIELD_OPTION00",
+        "sort_key": "s2a",
+        "value": "s2b"
+      },
+      "CUSTOM_FIELD_OPTION01": {
+        "custom_field_id": "CUSTOM_FIELD01",
+        "id": "CUSTOM_FIELD_OPTION01",
+        "sort_key": "s52",
+        "value": "s53"
+      },
+      "CUSTOM_FIELD_OPTION02": {
+        "custom_field_id": "CUSTOM_FIELD01",
+        "id": "CUSTOM_FIELD_OPTION02",
+        "sort_key": "s7a",
+        "value": "s7b"
+      }
+    }
+  },
+  "new": {
+    "custom_field_option": {
+      "custom_field_option_ref01": {
+        "custom_field_id": "CUSTOM_FIELD01",
+        "sort_key": "sa2",
+        "value": "sa3"
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+# BasicSeveritiesUpdateResultV1Flow
+
+main: kit: flow: BasicSeveritiesUpdateResultV1Flow:
+{
+  entity: "severities_update_result_v1",
+  kind: "basic",
+  name: "BasicSeveritiesUpdateResultV1Flow",
+  step: [
+    {
+      input: {
+        ref: "severities_update_result_v1_ref01",
+        srcdatavar: "severities_update_result_v1_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-severities_update_result_v1_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSeveritiesUpdateResultV1Flow"
+}

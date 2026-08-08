@@ -1,0 +1,22 @@
+# BasicIncidentRelationshipFlow
+
+main: kit: flow: BasicIncidentRelationshipFlow:
+{
+  entity: "incident_relationship",
+  kind: "basic",
+  name: "BasicIncidentRelationshipFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_relationship_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentRelationshipFlow"
+}

@@ -1,0 +1,26 @@
+# BasicUsersListNotificationRulesResultV2Flow
+
+main: kit: flow: BasicUsersListNotificationRulesResultV2Flow:
+{
+  entity: "users_list_notification_rules_result_v2",
+  kind: "basic",
+  name: "BasicUsersListNotificationRulesResultV2Flow",
+  step: [
+    {
+      match: {
+        user_id: "user01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "users_list_notification_rules_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicUsersListNotificationRulesResultV2Flow"
+}

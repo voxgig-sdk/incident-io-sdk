@@ -1,0 +1,28 @@
+# BasicUtilitiesIdentityResultV1Flow
+
+main: kit: flow: BasicUtilitiesIdentityResultV1Flow:
+{
+  entity: "utilities_identity_result_v1",
+  kind: "basic",
+  name: "BasicUtilitiesIdentityResultV1Flow",
+  step: [
+    {
+      input: {
+        ref: "utilities_identity_result_v1_ref01",
+        srcdatavar: "utilities_identity_result_v1_ref01_data",
+        suffix: "_dt0"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-utilities_identity_result_v1_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicUtilitiesIdentityResultV1Flow"
+}

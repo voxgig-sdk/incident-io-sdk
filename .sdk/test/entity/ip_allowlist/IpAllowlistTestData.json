@@ -1,0 +1,37 @@
+{
+  "existing": {
+    "ip_allowlist": {
+      "IP_ALLOWLIST00": {
+        "allowlist": [],
+        "enabled": false,
+        "updated_at": "s2a",
+        "version": "s2b",
+        "id": "IP_ALLOWLIST00"
+      },
+      "IP_ALLOWLIST01": {
+        "allowlist": [],
+        "enabled": false,
+        "updated_at": "s52",
+        "version": "s53",
+        "id": "IP_ALLOWLIST01"
+      },
+      "IP_ALLOWLIST02": {
+        "allowlist": [],
+        "enabled": false,
+        "updated_at": "s7a",
+        "version": "s7b",
+        "id": "IP_ALLOWLIST02"
+      }
+    }
+  },
+  "new": {
+    "ip_allowlist": {
+      "ip_allowlist_ref01": {
+        "allowlist": [],
+        "enabled": false,
+        "updated_at": "sa2",
+        "version": "sa3"
+      }
+    }
+  }
+}

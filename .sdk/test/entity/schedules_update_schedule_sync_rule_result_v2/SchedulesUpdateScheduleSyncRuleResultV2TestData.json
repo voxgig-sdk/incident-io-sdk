@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "schedules_update_schedule_sync_rule_result_v2": {
+      "SCHEDULES_UPDATE_SCHEDULE_SYNC_RULE_RESULT_V200": {
+        "annotation": {},
+        "created_at": "s65",
+        "id": "SCHEDULES_UPDATE_SCHEDULE_SYNC_RULE_RESULT_V200",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s6c",
+        "updated_at": "s6d"
+      },
+      "SCHEDULES_UPDATE_SCHEDULE_SYNC_RULE_RESULT_V201": {
+        "annotation": {},
+        "created_at": "sc9",
+        "id": "SCHEDULES_UPDATE_SCHEDULE_SYNC_RULE_RESULT_V201",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "sd0",
+        "updated_at": "sd1"
+      },
+      "SCHEDULES_UPDATE_SCHEDULE_SYNC_RULE_RESULT_V202": {
+        "annotation": {},
+        "created_at": "s12d",
+        "id": "SCHEDULES_UPDATE_SCHEDULE_SYNC_RULE_RESULT_V202",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s134",
+        "updated_at": "s135"
+      }
+    }
+  },
+  "new": {
+    "schedules_update_schedule_sync_rule_result_v2": {
+      "schedules_update_schedule_sync_rule_result_v2_ref01": {
+        "annotation": {},
+        "created_at": "s191",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s198",
+        "updated_at": "s199"
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+# BasicIncidentTimestampFlow
+
+main: kit: flow: BasicIncidentTimestampFlow:
+{
+  entity: "incident_timestamp",
+  kind: "basic",
+  name: "BasicIncidentTimestampFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_timestamp_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "incident_timestamp_ref01",
+        srcdatavar: "incident_timestamp_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "incident_timestamp01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-incident_timestamp_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentTimestampFlow"
+}

@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "alert_note": {
+      "ALERT_NOTE00": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_id": "ALERT01",
+        "content": "s5c",
+        "created_at": "s5d",
+        "creator": {},
+        "id": "ALERT_NOTE00",
+        "image": [],
+        "last_edited_at": "s61",
+        "updated_at": "s62"
+      },
+      "ALERT_NOTE01": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_id": "ALERT01",
+        "content": "sb6",
+        "created_at": "sb7",
+        "creator": {},
+        "id": "ALERT_NOTE01",
+        "image": [],
+        "last_edited_at": "sbb",
+        "updated_at": "sbc"
+      },
+      "ALERT_NOTE02": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_id": "ALERT01",
+        "content": "s110",
+        "created_at": "s111",
+        "creator": {},
+        "id": "ALERT_NOTE02",
+        "image": [],
+        "last_edited_at": "s115",
+        "updated_at": "s116"
+      }
+    }
+  },
+  "new": {
+    "alert_note": {
+      "alert_note_ref01": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_id": "ALERT01",
+        "content": "s16a",
+        "created_at": "s16b",
+        "creator": {},
+        "image": [],
+        "last_edited_at": "s16f",
+        "updated_at": "s170"
+      }
+    }
+  }
+}

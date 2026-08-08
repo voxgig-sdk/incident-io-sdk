@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "schedules_list_schedule_entries_result_v2": {
+      "SCHEDULES_LIST_SCHEDULE_ENTRIES_RESULT_V200": {
+        "pagination_meta": {},
+        "schedule_entry": {},
+        "id": "SCHEDULES_LIST_SCHEDULE_ENTRIES_RESULT_V200"
+      },
+      "SCHEDULES_LIST_SCHEDULE_ENTRIES_RESULT_V201": {
+        "pagination_meta": {},
+        "schedule_entry": {},
+        "id": "SCHEDULES_LIST_SCHEDULE_ENTRIES_RESULT_V201"
+      },
+      "SCHEDULES_LIST_SCHEDULE_ENTRIES_RESULT_V202": {
+        "pagination_meta": {},
+        "schedule_entry": {},
+        "id": "SCHEDULES_LIST_SCHEDULE_ENTRIES_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "schedules_list_schedule_entries_result_v2": {
+      "schedules_list_schedule_entries_result_v2_ref01": {
+        "pagination_meta": {},
+        "schedule_entry": {}
+      }
+    }
+  }
+}

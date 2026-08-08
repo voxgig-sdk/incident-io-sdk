@@ -1,0 +1,22 @@
+# BasicIncidentParticipantWorkloadFlow
+
+main: kit: flow: BasicIncidentParticipantWorkloadFlow:
+{
+  entity: "incident_participant_workload",
+  kind: "basic",
+  name: "BasicIncidentParticipantWorkloadFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_participant_workload_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentParticipantWorkloadFlow"
+}

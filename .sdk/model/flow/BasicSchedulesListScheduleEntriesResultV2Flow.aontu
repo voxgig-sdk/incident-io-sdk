@@ -1,0 +1,28 @@
+# BasicSchedulesListScheduleEntriesResultV2Flow
+
+main: kit: flow: BasicSchedulesListScheduleEntriesResultV2Flow:
+{
+  entity: "schedules_list_schedule_entries_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesListScheduleEntriesResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "schedules_list_schedule_entries_result_v2_ref01",
+        srcdatavar: "schedules_list_schedule_entries_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedules_list_schedule_entries_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSchedulesListScheduleEntriesResultV2Flow"
+}

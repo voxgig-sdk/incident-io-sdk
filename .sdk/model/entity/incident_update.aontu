@@ -1,0 +1,113 @@
+# Entity: incident_update
+
+main: kit: entity: incident_update: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "merged_into_incident_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "message"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "new_incident_status"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "new_severity"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "updater"
+      req: true
+      type: "`$OBJECT`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "incident_update"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                kind: "query"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/incident_updates"
+          parts: [
+            "v2"
+            "incident_updates"
+          ]
+          select: {
+            exist: [
+              "after"
+              "incident_id"
+              "page_size"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "incident_timestamp": {
+      "INCIDENT_TIMESTAMP00": {
+        "id": "INCIDENT_TIMESTAMP00",
+        "name": "s1f",
+        "rank": "s20"
+      },
+      "INCIDENT_TIMESTAMP01": {
+        "id": "INCIDENT_TIMESTAMP01",
+        "name": "s3d",
+        "rank": "s3e"
+      },
+      "INCIDENT_TIMESTAMP02": {
+        "id": "INCIDENT_TIMESTAMP02",
+        "name": "s5b",
+        "rank": "s5c"
+      }
+    }
+  },
+  "new": {
+    "incident_timestamp": {
+      "incident_timestamp_ref01": {
+        "name": "s79",
+        "rank": "s7a"
+      }
+    }
+  }
+}

@@ -1,0 +1,305 @@
+# Entity: maintenance_window
+
+main: kit: entity: maintenance_window: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "alert_condition_group"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "archived_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "end_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "escalation_target"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "lead"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "notification_message"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "notify_channel"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "notify_end_minutes_before"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "notify_start_minutes_before"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "reroute_on_end"
+      op: {
+        create: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+        update: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+      }
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "resolve_on_end"
+      op: {
+        create: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+        update: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+      }
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "show_in_sidebar"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "start_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "maintenance_window"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v1/maintenance_windows"
+          parts: [
+            "v1"
+            "maintenance_windows"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.maintenance_window`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: "active"
+                kind: "query"
+                name: "status"
+                orig: "status"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v1/maintenance_windows"
+          parts: [
+            "v1"
+            "maintenance_windows"
+          ]
+          select: {
+            exist: [
+              "after"
+              "page_size"
+              "status"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v1/maintenance_windows/{id}"
+          parts: [
+            "v1"
+            "maintenance_windows"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.maintenance_window`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v1/maintenance_windows/{id}"
+          parts: [
+            "v1"
+            "maintenance_windows"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v1/maintenance_windows/{id}"
+          parts: [
+            "v1"
+            "maintenance_windows"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.maintenance_window`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

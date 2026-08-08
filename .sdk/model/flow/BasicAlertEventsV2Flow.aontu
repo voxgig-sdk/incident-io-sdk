@@ -1,0 +1,22 @@
+# BasicAlertEventsV2Flow
+
+main: kit: flow: BasicAlertEventsV2Flow:
+{
+  entity: "alert_events_v2",
+  kind: "basic",
+  name: "BasicAlertEventsV2Flow",
+  step: [
+    {
+      input: {
+        ref: "alert_events_v2_ref01"
+      }
+
+      match: {
+        alert_source_config_id: "alert_source_config01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicAlertEventsV2Flow"
+}

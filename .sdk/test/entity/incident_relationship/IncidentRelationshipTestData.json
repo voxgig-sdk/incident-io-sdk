@@ -1,0 +1,25 @@
+{
+  "existing": {
+    "incident_relationship": {
+      "INCIDENT_RELATIONSHIP00": {
+        "id": "INCIDENT_RELATIONSHIP00",
+        "incident": {}
+      },
+      "INCIDENT_RELATIONSHIP01": {
+        "id": "INCIDENT_RELATIONSHIP01",
+        "incident": {}
+      },
+      "INCIDENT_RELATIONSHIP02": {
+        "id": "INCIDENT_RELATIONSHIP02",
+        "incident": {}
+      }
+    }
+  },
+  "new": {
+    "incident_relationship": {
+      "incident_relationship_ref01": {
+        "incident": {}
+      }
+    }
+  }
+}

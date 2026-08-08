@@ -1,0 +1,18 @@
+# BasicEscalationsCreatePathResultV2Flow
+
+main: kit: flow: BasicEscalationsCreatePathResultV2Flow:
+{
+  entity: "escalations_create_path_result_v2",
+  kind: "basic",
+  name: "BasicEscalationsCreatePathResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "escalations_create_path_result_v2_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicEscalationsCreatePathResultV2Flow"
+}

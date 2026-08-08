@@ -1,0 +1,23 @@
+{
+  "existing": {
+    "schedules_v2": {
+      "SCHEDULES_V200": {
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULES_V200"
+      },
+      "SCHEDULES_V201": {
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULES_V201"
+      },
+      "SCHEDULES_V202": {
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULES_V202"
+      }
+    }
+  },
+  "new": {
+    "schedules_v2": {
+      "schedules_v2_ref01": {}
+    }
+  }
+}

@@ -1,0 +1,100 @@
+# BasicIncidentStatusFlow
+
+main: kit: flow: BasicIncidentStatusFlow:
+{
+  entity: "incident_status",
+  kind: "basic",
+  name: "BasicIncidentStatusFlow",
+  step: [
+    {
+      input: {
+        ref: "incident_status_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_status_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "incident_status_ref01",
+        srcdatavar: "incident_status_ref01_data",
+        suffix: "_up0",
+        textfield: "category"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-incident_status_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "incident_status_ref01",
+        srcdatavar: "incident_status_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "incident_status01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-incident_status_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "incident_status_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "incident_status01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "incident_status_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentStatusFlow"
+}

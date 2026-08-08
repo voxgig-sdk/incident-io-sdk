@@ -1,0 +1,22 @@
+# BasicApiKeysRotateResultV1Flow
+
+main: kit: flow: BasicApiKeysRotateResultV1Flow:
+{
+  entity: "api_keys_rotate_result_v1",
+  kind: "basic",
+  name: "BasicApiKeysRotateResultV1Flow",
+  step: [
+    {
+      input: {
+        ref: "api_keys_rotate_result_v1_ref01"
+      }
+
+      match: {
+        api_key_id: "api_key01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicApiKeysRotateResultV1Flow"
+}

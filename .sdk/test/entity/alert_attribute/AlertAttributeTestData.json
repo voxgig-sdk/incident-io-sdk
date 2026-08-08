@@ -1,0 +1,41 @@
+{
+  "existing": {
+    "alert_attribute": {
+      "ALERT_ATTRIBUTE00": {
+        "array": true,
+        "emoji": "s3d",
+        "id": "ALERT_ATTRIBUTE00",
+        "name": "s3f",
+        "required": true,
+        "type": "s41"
+      },
+      "ALERT_ATTRIBUTE01": {
+        "array": true,
+        "emoji": "s79",
+        "id": "ALERT_ATTRIBUTE01",
+        "name": "s7b",
+        "required": true,
+        "type": "s7d"
+      },
+      "ALERT_ATTRIBUTE02": {
+        "array": true,
+        "emoji": "sb5",
+        "id": "ALERT_ATTRIBUTE02",
+        "name": "sb7",
+        "required": true,
+        "type": "sb9"
+      }
+    }
+  },
+  "new": {
+    "alert_attribute": {
+      "alert_attribute_ref01": {
+        "array": true,
+        "emoji": "sf1",
+        "name": "sf3",
+        "required": true,
+        "type": "sf5"
+      }
+    }
+  }
+}

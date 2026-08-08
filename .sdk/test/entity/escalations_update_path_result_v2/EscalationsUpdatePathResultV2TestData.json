@@ -1,0 +1,45 @@
+{
+  "existing": {
+    "escalations_update_path_result_v2": {
+      "ESCALATIONS_UPDATE_PATH_RESULT_V200": {
+        "current_responder": [],
+        "id": "ESCALATIONS_UPDATE_PATH_RESULT_V200",
+        "name": "s48",
+        "path": [],
+        "repeat_config": {},
+        "team_id": "TEAM01",
+        "working_hour": []
+      },
+      "ESCALATIONS_UPDATE_PATH_RESULT_V201": {
+        "current_responder": [],
+        "id": "ESCALATIONS_UPDATE_PATH_RESULT_V201",
+        "name": "s8e",
+        "path": [],
+        "repeat_config": {},
+        "team_id": "TEAM01",
+        "working_hour": []
+      },
+      "ESCALATIONS_UPDATE_PATH_RESULT_V202": {
+        "current_responder": [],
+        "id": "ESCALATIONS_UPDATE_PATH_RESULT_V202",
+        "name": "sd4",
+        "path": [],
+        "repeat_config": {},
+        "team_id": "TEAM01",
+        "working_hour": []
+      }
+    }
+  },
+  "new": {
+    "escalations_update_path_result_v2": {
+      "escalations_update_path_result_v2_ref01": {
+        "current_responder": [],
+        "name": "s11a",
+        "path": [],
+        "repeat_config": {},
+        "team_id": "TEAM01",
+        "working_hour": []
+      }
+    }
+  }
+}

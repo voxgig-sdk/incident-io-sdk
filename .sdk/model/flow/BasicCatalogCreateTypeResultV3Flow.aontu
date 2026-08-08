@@ -1,0 +1,18 @@
+# BasicCatalogCreateTypeResultV3Flow
+
+main: kit: flow: BasicCatalogCreateTypeResultV3Flow:
+{
+  entity: "catalog_create_type_result_v3",
+  kind: "basic",
+  name: "BasicCatalogCreateTypeResultV3Flow",
+  step: [
+    {
+      input: {
+        ref: "catalog_create_type_result_v3_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicCatalogCreateTypeResultV3Flow"
+}

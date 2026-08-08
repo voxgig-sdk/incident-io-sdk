@@ -1,0 +1,65 @@
+{
+  "existing": {
+    "api_key": {
+      "API_KEY00": {
+        "comment": "s78",
+        "created_at": "s79",
+        "creator": {},
+        "id": "API_KEY00",
+        "last_used_at": "s7c",
+        "name": "s7d",
+        "role": [],
+        "role_name": [],
+        "team_id": "TEAM01",
+        "team_role": [],
+        "team_role_name": [],
+        "token_last_issued_at": "s83"
+      },
+      "API_KEY01": {
+        "comment": "sf0",
+        "created_at": "sf1",
+        "creator": {},
+        "id": "API_KEY01",
+        "last_used_at": "sf4",
+        "name": "sf5",
+        "role": [],
+        "role_name": [],
+        "team_id": "TEAM01",
+        "team_role": [],
+        "team_role_name": [],
+        "token_last_issued_at": "sfb"
+      },
+      "API_KEY02": {
+        "comment": "s168",
+        "created_at": "s169",
+        "creator": {},
+        "id": "API_KEY02",
+        "last_used_at": "s16c",
+        "name": "s16d",
+        "role": [],
+        "role_name": [],
+        "team_id": "TEAM01",
+        "team_role": [],
+        "team_role_name": [],
+        "token_last_issued_at": "s173"
+      }
+    }
+  },
+  "new": {
+    "api_key": {
+      "api_key_ref01": {
+        "comment": "s1e0",
+        "created_at": "s1e1",
+        "creator": {},
+        "last_used_at": "s1e4",
+        "name": "s1e5",
+        "role": [],
+        "role_name": [],
+        "team_id": "TEAM01",
+        "team_role": [],
+        "team_role_name": [],
+        "token_last_issued_at": "s1eb"
+      }
+    }
+  }
+}

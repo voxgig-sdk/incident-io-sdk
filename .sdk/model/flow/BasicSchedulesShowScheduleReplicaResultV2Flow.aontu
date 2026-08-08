@@ -1,0 +1,33 @@
+# BasicSchedulesShowScheduleReplicaResultV2Flow
+
+main: kit: flow: BasicSchedulesShowScheduleReplicaResultV2Flow:
+{
+  entity: "schedules_show_schedule_replica_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesShowScheduleReplicaResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "schedules_show_schedule_replica_result_v2_ref01",
+        srcdatavar: "schedules_show_schedule_replica_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "schedules_show_schedule_replica_result_v201",
+        schedule_id: "schedule01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedules_show_schedule_replica_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSchedulesShowScheduleReplicaResultV2Flow"
+}

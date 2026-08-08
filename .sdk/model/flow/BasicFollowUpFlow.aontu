@@ -1,0 +1,100 @@
+# BasicFollowUpFlow
+
+main: kit: flow: BasicFollowUpFlow:
+{
+  entity: "follow_up",
+  kind: "basic",
+  name: "BasicFollowUpFlow",
+  step: [
+    {
+      input: {
+        ref: "follow_up_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "follow_up_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "follow_up_ref01",
+        srcdatavar: "follow_up_ref01_data",
+        suffix: "_up0",
+        textfield: "assignee_id"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-follow_up_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "follow_up_ref01",
+        srcdatavar: "follow_up_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "follow_up01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-follow_up_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "follow_up_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "follow_up01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "follow_up_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicFollowUpFlow"
+}

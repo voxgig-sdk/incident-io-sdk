@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "catalog_show_entry_result_v2": {
+      "CATALOG_SHOW_ENTRY_RESULT_V200": {
+        "catalog_entry": {},
+        "catalog_type": {},
+        "id": "CATALOG_SHOW_ENTRY_RESULT_V200"
+      },
+      "CATALOG_SHOW_ENTRY_RESULT_V201": {
+        "catalog_entry": {},
+        "catalog_type": {},
+        "id": "CATALOG_SHOW_ENTRY_RESULT_V201"
+      },
+      "CATALOG_SHOW_ENTRY_RESULT_V202": {
+        "catalog_entry": {},
+        "catalog_type": {},
+        "id": "CATALOG_SHOW_ENTRY_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "catalog_show_entry_result_v2": {
+      "catalog_show_entry_result_v2_ref01": {
+        "catalog_entry": {},
+        "catalog_type": {}
+      }
+    }
+  }
+}

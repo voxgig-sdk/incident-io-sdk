@@ -1,0 +1,18 @@
+# BasicPostmortemDocumentsAttachResultV1Flow
+
+main: kit: flow: BasicPostmortemDocumentsAttachResultV1Flow:
+{
+  entity: "postmortem_documents_attach_result_v1",
+  kind: "basic",
+  name: "BasicPostmortemDocumentsAttachResultV1Flow",
+  step: [
+    {
+      input: {
+        ref: "postmortem_documents_attach_result_v1_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicPostmortemDocumentsAttachResultV1Flow"
+}

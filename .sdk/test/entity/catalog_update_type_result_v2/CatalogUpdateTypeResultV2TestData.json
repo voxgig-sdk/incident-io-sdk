@@ -1,0 +1,97 @@
+{
+  "existing": {
+    "catalog_update_type_result_v2": {
+      "CATALOG_UPDATE_TYPE_RESULT_V200": {
+        "annotation": {},
+        "category": [],
+        "color": "sca",
+        "created_at": "scb",
+        "description": "scc",
+        "dynamic_resource_parameter": "scd",
+        "estimated_count": "sce",
+        "icon": "scf",
+        "id": "CATALOG_UPDATE_TYPE_RESULT_V200",
+        "is_editable": false,
+        "last_synced_at": "sd2",
+        "name": "sd3",
+        "ranked": true,
+        "registry_type": "sd5",
+        "required_integration": [],
+        "schema": {},
+        "semantic_type": "sd8",
+        "source_repo_url": "sd9",
+        "type_name": "sda",
+        "updated_at": "sdb"
+      },
+      "CATALOG_UPDATE_TYPE_RESULT_V201": {
+        "annotation": {},
+        "category": [],
+        "color": "s192",
+        "created_at": "s193",
+        "description": "s194",
+        "dynamic_resource_parameter": "s195",
+        "estimated_count": "s196",
+        "icon": "s197",
+        "id": "CATALOG_UPDATE_TYPE_RESULT_V201",
+        "is_editable": false,
+        "last_synced_at": "s19a",
+        "name": "s19b",
+        "ranked": true,
+        "registry_type": "s19d",
+        "required_integration": [],
+        "schema": {},
+        "semantic_type": "s1a0",
+        "source_repo_url": "s1a1",
+        "type_name": "s1a2",
+        "updated_at": "s1a3"
+      },
+      "CATALOG_UPDATE_TYPE_RESULT_V202": {
+        "annotation": {},
+        "category": [],
+        "color": "s25a",
+        "created_at": "s25b",
+        "description": "s25c",
+        "dynamic_resource_parameter": "s25d",
+        "estimated_count": "s25e",
+        "icon": "s25f",
+        "id": "CATALOG_UPDATE_TYPE_RESULT_V202",
+        "is_editable": false,
+        "last_synced_at": "s262",
+        "name": "s263",
+        "ranked": true,
+        "registry_type": "s265",
+        "required_integration": [],
+        "schema": {},
+        "semantic_type": "s268",
+        "source_repo_url": "s269",
+        "type_name": "s26a",
+        "updated_at": "s26b"
+      }
+    }
+  },
+  "new": {
+    "catalog_update_type_result_v2": {
+      "catalog_update_type_result_v2_ref01": {
+        "annotation": {},
+        "category": [],
+        "color": "s322",
+        "created_at": "s323",
+        "description": "s324",
+        "dynamic_resource_parameter": "s325",
+        "estimated_count": "s326",
+        "icon": "s327",
+        "is_editable": false,
+        "last_synced_at": "s32a",
+        "name": "s32b",
+        "ranked": true,
+        "registry_type": "s32d",
+        "required_integration": [],
+        "schema": {},
+        "semantic_type": "s330",
+        "source_repo_url": "s331",
+        "type_name": "s332",
+        "updated_at": "s333"
+      }
+    }
+  }
+}

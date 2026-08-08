@@ -1,0 +1,52 @@
+# BasicIncidentFlow
+
+main: kit: flow: BasicIncidentFlow:
+{
+  entity: "incident",
+  kind: "basic",
+  name: "BasicIncidentFlow",
+  step: [
+    {
+      input: {
+        ref: "incident_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "incident_ref01",
+        srcdatavar: "incident_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "incident01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-incident_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentFlow"
+}

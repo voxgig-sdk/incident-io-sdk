@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "user": {
+      "USER00": {
+        "base_role": {},
+        "custom_role": [],
+        "email": "s5c",
+        "id": "USER00",
+        "is_active": true,
+        "name": "s5f",
+        "role": "s60",
+        "seat": {},
+        "slack_user_id": "SLACK_USER01"
+      },
+      "USER01": {
+        "base_role": {},
+        "custom_role": [],
+        "email": "sb6",
+        "id": "USER01",
+        "is_active": true,
+        "name": "sb9",
+        "role": "sba",
+        "seat": {},
+        "slack_user_id": "SLACK_USER01"
+      },
+      "USER02": {
+        "base_role": {},
+        "custom_role": [],
+        "email": "s110",
+        "id": "USER02",
+        "is_active": true,
+        "name": "s113",
+        "role": "s114",
+        "seat": {},
+        "slack_user_id": "SLACK_USER01"
+      }
+    }
+  },
+  "new": {
+    "user": {
+      "user_ref01": {
+        "base_role": {},
+        "custom_role": [],
+        "email": "s16a",
+        "is_active": true,
+        "name": "s16d",
+        "role": "s16e",
+        "seat": {},
+        "slack_user_id": "SLACK_USER01"
+      }
+    }
+  }
+}

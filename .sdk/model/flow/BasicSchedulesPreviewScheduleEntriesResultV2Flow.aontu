@@ -1,0 +1,22 @@
+# BasicSchedulesPreviewScheduleEntriesResultV2Flow
+
+main: kit: flow: BasicSchedulesPreviewScheduleEntriesResultV2Flow:
+{
+  entity: "schedules_preview_schedule_entries_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesPreviewScheduleEntriesResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "schedules_preview_schedule_entries_result_v2_ref01"
+      }
+
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicSchedulesPreviewScheduleEntriesResultV2Flow"
+}

@@ -1,0 +1,22 @@
+# BasicIncidentsImportPostmortemDocumentResultV2Flow
+
+main: kit: flow: BasicIncidentsImportPostmortemDocumentResultV2Flow:
+{
+  entity: "incidents_import_postmortem_document_result_v2",
+  kind: "basic",
+  name: "BasicIncidentsImportPostmortemDocumentResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "incidents_import_postmortem_document_result_v2_ref01"
+      }
+
+      match: {
+        incident_id: "incident01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicIncidentsImportPostmortemDocumentResultV2Flow"
+}

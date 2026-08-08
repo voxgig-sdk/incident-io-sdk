@@ -1,0 +1,73 @@
+{
+  "existing": {
+    "alert_source": {
+      "ALERT_SOURCE00": {
+        "alert_events_url": "s8c",
+        "auto_resolve_incident_alert": false,
+        "auto_resolve_timeout_minute": "s8e",
+        "disabled": false,
+        "email_option": {},
+        "heartbeat_option": {},
+        "http_custom_option": {},
+        "id": "ALERT_SOURCE00",
+        "jira_option": {},
+        "name": "s95",
+        "owning_team_id": "OWNING_TEAM01",
+        "secret_token": "s97",
+        "source_type": "s98",
+        "template": {}
+      },
+      "ALERT_SOURCE01": {
+        "alert_events_url": "s118",
+        "auto_resolve_incident_alert": false,
+        "auto_resolve_timeout_minute": "s11a",
+        "disabled": false,
+        "email_option": {},
+        "heartbeat_option": {},
+        "http_custom_option": {},
+        "id": "ALERT_SOURCE01",
+        "jira_option": {},
+        "name": "s121",
+        "owning_team_id": "OWNING_TEAM01",
+        "secret_token": "s123",
+        "source_type": "s124",
+        "template": {}
+      },
+      "ALERT_SOURCE02": {
+        "alert_events_url": "s1a4",
+        "auto_resolve_incident_alert": false,
+        "auto_resolve_timeout_minute": "s1a6",
+        "disabled": false,
+        "email_option": {},
+        "heartbeat_option": {},
+        "http_custom_option": {},
+        "id": "ALERT_SOURCE02",
+        "jira_option": {},
+        "name": "s1ad",
+        "owning_team_id": "OWNING_TEAM01",
+        "secret_token": "s1af",
+        "source_type": "s1b0",
+        "template": {}
+      }
+    }
+  },
+  "new": {
+    "alert_source": {
+      "alert_source_ref01": {
+        "alert_events_url": "s230",
+        "auto_resolve_incident_alert": false,
+        "auto_resolve_timeout_minute": "s232",
+        "disabled": false,
+        "email_option": {},
+        "heartbeat_option": {},
+        "http_custom_option": {},
+        "jira_option": {},
+        "name": "s239",
+        "owning_team_id": "OWNING_TEAM01",
+        "secret_token": "s23b",
+        "source_type": "s23c",
+        "template": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+# BasicSeveritiesCreateResultV1Flow
+
+main: kit: flow: BasicSeveritiesCreateResultV1Flow:
+{
+  entity: "severities_create_result_v1",
+  kind: "basic",
+  name: "BasicSeveritiesCreateResultV1Flow",
+  step: [
+    {
+      input: {
+        ref: "severities_create_result_v1_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicSeveritiesCreateResultV1Flow"
+}

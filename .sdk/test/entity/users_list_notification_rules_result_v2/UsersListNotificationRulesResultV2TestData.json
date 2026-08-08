@@ -1,0 +1,48 @@
+{
+  "existing": {
+    "users_list_notification_rules_result_v2": {
+      "USERS_LIST_NOTIFICATION_RULES_RESULT_V200": {
+        "app": {},
+        "delay_second": "s47",
+        "id": "USERS_LIST_NOTIFICATION_RULES_RESULT_V200",
+        "method_target": {},
+        "method_type": "s4a",
+        "phone": {},
+        "rule_type": "s4c",
+        "user_id": "USER01"
+      },
+      "USERS_LIST_NOTIFICATION_RULES_RESULT_V201": {
+        "app": {},
+        "delay_second": "s8d",
+        "id": "USERS_LIST_NOTIFICATION_RULES_RESULT_V201",
+        "method_target": {},
+        "method_type": "s90",
+        "phone": {},
+        "rule_type": "s92",
+        "user_id": "USER01"
+      },
+      "USERS_LIST_NOTIFICATION_RULES_RESULT_V202": {
+        "app": {},
+        "delay_second": "sd3",
+        "id": "USERS_LIST_NOTIFICATION_RULES_RESULT_V202",
+        "method_target": {},
+        "method_type": "sd6",
+        "phone": {},
+        "rule_type": "sd8",
+        "user_id": "USER01"
+      }
+    }
+  },
+  "new": {
+    "users_list_notification_rules_result_v2": {
+      "users_list_notification_rules_result_v2_ref01": {
+        "app": {},
+        "delay_second": "s119",
+        "method_target": {},
+        "method_type": "s11c",
+        "phone": {},
+        "rule_type": "s11e"
+      }
+    }
+  }
+}

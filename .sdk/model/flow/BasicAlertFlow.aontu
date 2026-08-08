@@ -1,0 +1,44 @@
+# BasicAlertFlow
+
+main: kit: flow: BasicAlertFlow:
+{
+  entity: "alert",
+  kind: "basic",
+  name: "BasicAlertFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "alert_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "alert_ref01",
+        srcdatavar: "alert_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "alert01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-alert_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAlertFlow"
+}

@@ -1,0 +1,28 @@
+{
+  "existing": {
+    "users_v2": {
+      "USERS_V200": {
+        "preferred_escalation_provider": "sa",
+        "user_id": "USER01",
+        "id": "USERS_V200"
+      },
+      "USERS_V201": {
+        "preferred_escalation_provider": "s14",
+        "user_id": "USER01",
+        "id": "USERS_V201"
+      },
+      "USERS_V202": {
+        "preferred_escalation_provider": "s1e",
+        "user_id": "USER01",
+        "id": "USERS_V202"
+      }
+    }
+  },
+  "new": {
+    "users_v2": {
+      "users_v2_ref01": {
+        "preferred_escalation_provider": "s28"
+      }
+    }
+  }
+}

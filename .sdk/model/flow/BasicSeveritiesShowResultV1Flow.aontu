@@ -1,0 +1,32 @@
+# BasicSeveritiesShowResultV1Flow
+
+main: kit: flow: BasicSeveritiesShowResultV1Flow:
+{
+  entity: "severities_show_result_v1",
+  kind: "basic",
+  name: "BasicSeveritiesShowResultV1Flow",
+  step: [
+    {
+      input: {
+        ref: "severities_show_result_v1_ref01",
+        srcdatavar: "severities_show_result_v1_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "severities_show_result_v101"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-severities_show_result_v1_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSeveritiesShowResultV1Flow"
+}

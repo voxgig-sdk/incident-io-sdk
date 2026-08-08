@@ -1,0 +1,70 @@
+# Entity: ip_allowlist
+
+main: kit: entity: ip_allowlist: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "allowlist"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "enabled"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "updated_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "version"
+      req: true
+      type: "`$INTEGER`"
+    }
+  ]
+
+  name: "ip_allowlist"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          method: "GET"
+          orig: "/v1/ip_allowlists"
+          parts: [
+            "v1"
+            "ip_allowlists"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.ip_allowlist`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          method: "PUT"
+          orig: "/v1/ip_allowlists"
+          parts: [
+            "v1"
+            "ip_allowlists"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.ip_allowlist`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

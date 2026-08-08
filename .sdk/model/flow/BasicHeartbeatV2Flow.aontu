@@ -1,0 +1,44 @@
+# BasicHeartbeatV2Flow
+
+main: kit: flow: BasicHeartbeatV2Flow:
+{
+  entity: "heartbeat_v2",
+  kind: "basic",
+  name: "BasicHeartbeatV2Flow",
+  step: [
+    {
+      input: {
+        ref: "heartbeat_v2_ref01"
+      }
+
+      match: {
+        alert_source_config_id: "alert_source_config01"
+      }
+
+      op: "create"
+    }
+
+    {
+      input: {
+        ref: "heartbeat_v2_ref01",
+        srcdatavar: "heartbeat_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "heartbeat_v201"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-heartbeat_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicHeartbeatV2Flow"
+}

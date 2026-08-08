@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "schedule_sync_target": {
+      "SCHEDULE_SYNC_TARGET00": {
+        "add_bot_to_group": true,
+        "annotation": {},
+        "created_at": "s5c",
+        "id": "SCHEDULE_SYNC_TARGET00",
+        "linked_schedule": [],
+        "schedule_sync_target": {},
+        "slack_team_id": "SLACK_TEAM01",
+        "slack_user_group_id": "SLACK_USER_GROUP01",
+        "updated_at": "s62"
+      },
+      "SCHEDULE_SYNC_TARGET01": {
+        "add_bot_to_group": true,
+        "annotation": {},
+        "created_at": "sb6",
+        "id": "SCHEDULE_SYNC_TARGET01",
+        "linked_schedule": [],
+        "schedule_sync_target": {},
+        "slack_team_id": "SLACK_TEAM01",
+        "slack_user_group_id": "SLACK_USER_GROUP01",
+        "updated_at": "sbc"
+      },
+      "SCHEDULE_SYNC_TARGET02": {
+        "add_bot_to_group": true,
+        "annotation": {},
+        "created_at": "s110",
+        "id": "SCHEDULE_SYNC_TARGET02",
+        "linked_schedule": [],
+        "schedule_sync_target": {},
+        "slack_team_id": "SLACK_TEAM01",
+        "slack_user_group_id": "SLACK_USER_GROUP01",
+        "updated_at": "s116"
+      }
+    }
+  },
+  "new": {
+    "schedule_sync_target": {
+      "schedule_sync_target_ref01": {
+        "add_bot_to_group": true,
+        "annotation": {},
+        "created_at": "s16a",
+        "linked_schedule": [],
+        "schedule_sync_target": {},
+        "slack_team_id": "SLACK_TEAM01",
+        "slack_user_group_id": "SLACK_USER_GROUP01",
+        "updated_at": "s170"
+      }
+    }
+  }
+}

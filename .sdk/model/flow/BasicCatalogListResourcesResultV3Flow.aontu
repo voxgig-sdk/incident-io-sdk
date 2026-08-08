@@ -1,0 +1,22 @@
+# BasicCatalogListResourcesResultV3Flow
+
+main: kit: flow: BasicCatalogListResourcesResultV3Flow:
+{
+  entity: "catalog_list_resources_result_v3",
+  kind: "basic",
+  name: "BasicCatalogListResourcesResultV3Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "catalog_list_resources_result_v3_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCatalogListResourcesResultV3Flow"
+}

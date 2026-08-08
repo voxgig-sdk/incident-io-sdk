@@ -1,0 +1,63 @@
+# BasicPostmortemDocumentFlow
+
+main: kit: flow: BasicPostmortemDocumentFlow:
+{
+  entity: "postmortem_document",
+  kind: "basic",
+  name: "BasicPostmortemDocumentFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "postmortem_document_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "postmortem_document_ref01",
+        srcdatavar: "postmortem_document_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-postmortem_document_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "postmortem_document_ref01",
+        srcdatavar: "postmortem_document_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "postmortem_document01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-postmortem_document_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPostmortemDocumentFlow"
+}

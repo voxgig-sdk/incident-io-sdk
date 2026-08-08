@@ -1,0 +1,47 @@
+# BasicIpAllowlistFlow
+
+main: kit: flow: BasicIpAllowlistFlow:
+{
+  entity: "ip_allowlist",
+  kind: "basic",
+  name: "BasicIpAllowlistFlow",
+  step: [
+    {
+      input: {
+        ref: "ip_allowlist_ref01",
+        srcdatavar: "ip_allowlist_ref01_data",
+        suffix: "_up0",
+        textfield: "updated_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-ip_allowlist_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "ip_allowlist_ref01",
+        srcdatavar: "ip_allowlist_ref01_data",
+        suffix: "_dt0"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-ip_allowlist_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIpAllowlistFlow"
+}

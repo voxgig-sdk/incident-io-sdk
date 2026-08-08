@@ -1,0 +1,41 @@
+{
+  "existing": {
+    "severities_show_result_v1": {
+      "SEVERITIES_SHOW_RESULT_V100": {
+        "created_at": "s3c",
+        "description": "s3d",
+        "id": "SEVERITIES_SHOW_RESULT_V100",
+        "name": "s3f",
+        "rank": "s40",
+        "updated_at": "s41"
+      },
+      "SEVERITIES_SHOW_RESULT_V101": {
+        "created_at": "s78",
+        "description": "s79",
+        "id": "SEVERITIES_SHOW_RESULT_V101",
+        "name": "s7b",
+        "rank": "s7c",
+        "updated_at": "s7d"
+      },
+      "SEVERITIES_SHOW_RESULT_V102": {
+        "created_at": "sb4",
+        "description": "sb5",
+        "id": "SEVERITIES_SHOW_RESULT_V102",
+        "name": "sb7",
+        "rank": "sb8",
+        "updated_at": "sb9"
+      }
+    }
+  },
+  "new": {
+    "severities_show_result_v1": {
+      "severities_show_result_v1_ref01": {
+        "created_at": "sf0",
+        "description": "sf1",
+        "name": "sf3",
+        "rank": "sf4",
+        "updated_at": "sf5"
+      }
+    }
+  }
+}

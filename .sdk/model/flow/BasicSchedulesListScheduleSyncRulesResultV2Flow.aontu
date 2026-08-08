@@ -1,0 +1,26 @@
+# BasicSchedulesListScheduleSyncRulesResultV2Flow
+
+main: kit: flow: BasicSchedulesListScheduleSyncRulesResultV2Flow:
+{
+  entity: "schedules_list_schedule_sync_rules_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesListScheduleSyncRulesResultV2Flow",
+  step: [
+    {
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "schedules_list_schedule_sync_rules_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSchedulesListScheduleSyncRulesResultV2Flow"
+}

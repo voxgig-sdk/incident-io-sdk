@@ -1,0 +1,49 @@
+{
+  "existing": {
+    "status_pages_create_status_page_incident_result_v2": {
+      "STATUS_PAGES_CREATE_STATUS_PAGE_INCIDENT_RESULT_V200": {
+        "component_status": [],
+        "idempotency_key": "s47",
+        "incident_status": "s48",
+        "message": "s49",
+        "name": "s4a",
+        "notify_subscriber": false,
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGES_CREATE_STATUS_PAGE_INCIDENT_RESULT_V200"
+      },
+      "STATUS_PAGES_CREATE_STATUS_PAGE_INCIDENT_RESULT_V201": {
+        "component_status": [],
+        "idempotency_key": "s8d",
+        "incident_status": "s8e",
+        "message": "s8f",
+        "name": "s90",
+        "notify_subscriber": false,
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGES_CREATE_STATUS_PAGE_INCIDENT_RESULT_V201"
+      },
+      "STATUS_PAGES_CREATE_STATUS_PAGE_INCIDENT_RESULT_V202": {
+        "component_status": [],
+        "idempotency_key": "sd3",
+        "incident_status": "sd4",
+        "message": "sd5",
+        "name": "sd6",
+        "notify_subscriber": false,
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGES_CREATE_STATUS_PAGE_INCIDENT_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "status_pages_create_status_page_incident_result_v2": {
+      "status_pages_create_status_page_incident_result_v2_ref01": {
+        "component_status": [],
+        "idempotency_key": "s119",
+        "incident_status": "s11a",
+        "message": "s11b",
+        "name": "s11c",
+        "notify_subscriber": false,
+        "status_page_id": "STATUS_PAGE01"
+      }
+    }
+  }
+}

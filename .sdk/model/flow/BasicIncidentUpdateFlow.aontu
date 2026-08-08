@@ -1,0 +1,22 @@
+# BasicIncidentUpdateFlow
+
+main: kit: flow: BasicIncidentUpdateFlow:
+{
+  entity: "incident_update",
+  kind: "basic",
+  name: "BasicIncidentUpdateFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_update_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentUpdateFlow"
+}

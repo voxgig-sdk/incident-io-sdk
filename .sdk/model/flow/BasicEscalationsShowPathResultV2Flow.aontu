@@ -1,0 +1,32 @@
+# BasicEscalationsShowPathResultV2Flow
+
+main: kit: flow: BasicEscalationsShowPathResultV2Flow:
+{
+  entity: "escalations_show_path_result_v2",
+  kind: "basic",
+  name: "BasicEscalationsShowPathResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "escalations_show_path_result_v2_ref01",
+        srcdatavar: "escalations_show_path_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "escalations_show_path_result_v201"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-escalations_show_path_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicEscalationsShowPathResultV2Flow"
+}

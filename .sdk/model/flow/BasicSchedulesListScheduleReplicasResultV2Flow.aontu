@@ -1,0 +1,26 @@
+# BasicSchedulesListScheduleReplicasResultV2Flow
+
+main: kit: flow: BasicSchedulesListScheduleReplicasResultV2Flow:
+{
+  entity: "schedules_list_schedule_replicas_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesListScheduleReplicasResultV2Flow",
+  step: [
+    {
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "schedules_list_schedule_replicas_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSchedulesListScheduleReplicasResultV2Flow"
+}

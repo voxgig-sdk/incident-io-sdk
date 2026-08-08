@@ -1,0 +1,29 @@
+# BasicCatalogUpdateTypeResultV3Flow
+
+main: kit: flow: BasicCatalogUpdateTypeResultV3Flow:
+{
+  entity: "catalog_update_type_result_v3",
+  kind: "basic",
+  name: "BasicCatalogUpdateTypeResultV3Flow",
+  step: [
+    {
+      input: {
+        ref: "catalog_update_type_result_v3_ref01",
+        srcdatavar: "catalog_update_type_result_v3_ref01_data",
+        suffix: "_up0",
+        textfield: "color"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-catalog_update_type_result_v3_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCatalogUpdateTypeResultV3Flow"
+}

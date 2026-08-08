@@ -1,0 +1,69 @@
+{
+  "existing": {
+    "schedule": {
+      "SCHEDULE00": {
+        "annotation": {},
+        "config": {},
+        "created_at": "s84",
+        "current_shift": [],
+        "holidays_public_config": {},
+        "id": "SCHEDULE00",
+        "name": "s88",
+        "next_shift": [],
+        "permalink": "s8a",
+        "schedule": {},
+        "team_id": "TEAM01",
+        "timezone": "s8d",
+        "updated_at": "s8e"
+      },
+      "SCHEDULE01": {
+        "annotation": {},
+        "config": {},
+        "created_at": "s106",
+        "current_shift": [],
+        "holidays_public_config": {},
+        "id": "SCHEDULE01",
+        "name": "s10a",
+        "next_shift": [],
+        "permalink": "s10c",
+        "schedule": {},
+        "team_id": "TEAM01",
+        "timezone": "s10f",
+        "updated_at": "s110"
+      },
+      "SCHEDULE02": {
+        "annotation": {},
+        "config": {},
+        "created_at": "s188",
+        "current_shift": [],
+        "holidays_public_config": {},
+        "id": "SCHEDULE02",
+        "name": "s18c",
+        "next_shift": [],
+        "permalink": "s18e",
+        "schedule": {},
+        "team_id": "TEAM01",
+        "timezone": "s191",
+        "updated_at": "s192"
+      }
+    }
+  },
+  "new": {
+    "schedule": {
+      "schedule_ref01": {
+        "annotation": {},
+        "config": {},
+        "created_at": "s20a",
+        "current_shift": [],
+        "holidays_public_config": {},
+        "name": "s20e",
+        "next_shift": [],
+        "permalink": "s210",
+        "schedule": {},
+        "team_id": "TEAM01",
+        "timezone": "s213",
+        "updated_at": "s214"
+      }
+    }
+  }
+}

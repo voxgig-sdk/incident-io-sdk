@@ -1,0 +1,100 @@
+# BasicAlertNoteFlow
+
+main: kit: flow: BasicAlertNoteFlow:
+{
+  entity: "alert_note",
+  kind: "basic",
+  name: "BasicAlertNoteFlow",
+  step: [
+    {
+      input: {
+        ref: "alert_note_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "alert_note_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "alert_note_ref01",
+        srcdatavar: "alert_note_ref01_data",
+        suffix: "_up0",
+        textfield: "alert_group_id"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-alert_note_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "alert_note_ref01",
+        srcdatavar: "alert_note_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "alert_note01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-alert_note_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "alert_note_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "alert_note01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "alert_note_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAlertNoteFlow"
+}

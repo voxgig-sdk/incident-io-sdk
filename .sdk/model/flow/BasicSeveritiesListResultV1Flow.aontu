@@ -1,0 +1,22 @@
+# BasicSeveritiesListResultV1Flow
+
+main: kit: flow: BasicSeveritiesListResultV1Flow:
+{
+  entity: "severities_list_result_v1",
+  kind: "basic",
+  name: "BasicSeveritiesListResultV1Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "severities_list_result_v1_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSeveritiesListResultV1Flow"
+}

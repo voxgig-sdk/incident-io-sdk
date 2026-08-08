@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "alerts_list_incident_alerts_result_v2": {
+      "ALERTS_LIST_INCIDENT_ALERTS_RESULT_V200": {
+        "alert": {},
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "ALERTS_LIST_INCIDENT_ALERTS_RESULT_V200",
+        "incident": {}
+      },
+      "ALERTS_LIST_INCIDENT_ALERTS_RESULT_V201": {
+        "alert": {},
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "ALERTS_LIST_INCIDENT_ALERTS_RESULT_V201",
+        "incident": {}
+      },
+      "ALERTS_LIST_INCIDENT_ALERTS_RESULT_V202": {
+        "alert": {},
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "ALERTS_LIST_INCIDENT_ALERTS_RESULT_V202",
+        "incident": {}
+      }
+    }
+  },
+  "new": {
+    "alerts_list_incident_alerts_result_v2": {
+      "alerts_list_incident_alerts_result_v2_ref01": {
+        "alert": {},
+        "alert_route_id": "ALERT_ROUTE01",
+        "incident": {}
+      }
+    }
+  }
+}

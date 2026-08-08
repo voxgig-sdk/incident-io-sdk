@@ -1,0 +1,29 @@
+# BasicCatalogUpdateEntryResultV3Flow
+
+main: kit: flow: BasicCatalogUpdateEntryResultV3Flow:
+{
+  entity: "catalog_update_entry_result_v3",
+  kind: "basic",
+  name: "BasicCatalogUpdateEntryResultV3Flow",
+  step: [
+    {
+      input: {
+        ref: "catalog_update_entry_result_v3_ref01",
+        srcdatavar: "catalog_update_entry_result_v3_ref01_data",
+        suffix: "_up0",
+        textfield: "external_id"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-catalog_update_entry_result_v3_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCatalogUpdateEntryResultV3Flow"
+}

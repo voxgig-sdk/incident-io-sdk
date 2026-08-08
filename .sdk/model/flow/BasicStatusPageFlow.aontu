@@ -1,0 +1,22 @@
+# BasicStatusPageFlow
+
+main: kit: flow: BasicStatusPageFlow:
+{
+  entity: "status_page",
+  kind: "basic",
+  name: "BasicStatusPageFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "status_page_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPageFlow"
+}

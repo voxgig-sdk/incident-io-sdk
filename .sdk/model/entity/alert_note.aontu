@@ -1,0 +1,249 @@
+# Entity: alert_note
+
+main: kit: entity: alert_note: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "alert_group_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "alert_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "content"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "creator"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "image"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "last_edited_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "alert_note"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v1/alert_notes"
+          parts: [
+            "v1"
+            "alert_notes"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_note`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01HB9Z8WANK6P870EA6S7TK1DS"
+                kind: "query"
+                name: "alert_group_id"
+                orig: "alert_group_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "alert_id"
+                orig: "alert_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v1/alert_notes"
+          parts: [
+            "v1"
+            "alert_notes"
+          ]
+          select: {
+            exist: [
+              "after"
+              "alert_group_id"
+              "alert_id"
+              "page_size"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01J1X9J85C7Y12G8P8W8K55Q5Y"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v1/alert_notes/{id}"
+          parts: [
+            "v1"
+            "alert_notes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_note`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01J1X9J85C7Y12G8P8W8K55Q5Y"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v1/alert_notes/{id}"
+          parts: [
+            "v1"
+            "alert_notes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01J1X9J85C7Y12G8P8W8K55Q5Y"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v1/alert_notes/{id}"
+          parts: [
+            "v1"
+            "alert_notes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_note`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

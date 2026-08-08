@@ -1,0 +1,61 @@
+{
+  "existing": {
+    "custom_field": {
+      "CUSTOM_FIELD00": {
+        "catalog_type_id": "CATALOG_TYPE01",
+        "created_at": "s6f",
+        "description": "s70",
+        "field_type": "s71",
+        "filter_by": {},
+        "fixed_filter": {},
+        "group_by_catalog_attribute_id": "GROUP_BY_CATALOG_ATTRIBUTE01",
+        "helptext_catalog_attribute_id": "HELPTEXT_CATALOG_ATTRIBUTE01",
+        "id": "CUSTOM_FIELD00",
+        "name": "s77",
+        "updated_at": "s78"
+      },
+      "CUSTOM_FIELD01": {
+        "catalog_type_id": "CATALOG_TYPE01",
+        "created_at": "sdd",
+        "description": "sde",
+        "field_type": "sdf",
+        "filter_by": {},
+        "fixed_filter": {},
+        "group_by_catalog_attribute_id": "GROUP_BY_CATALOG_ATTRIBUTE01",
+        "helptext_catalog_attribute_id": "HELPTEXT_CATALOG_ATTRIBUTE01",
+        "id": "CUSTOM_FIELD01",
+        "name": "se5",
+        "updated_at": "se6"
+      },
+      "CUSTOM_FIELD02": {
+        "catalog_type_id": "CATALOG_TYPE01",
+        "created_at": "s14b",
+        "description": "s14c",
+        "field_type": "s14d",
+        "filter_by": {},
+        "fixed_filter": {},
+        "group_by_catalog_attribute_id": "GROUP_BY_CATALOG_ATTRIBUTE01",
+        "helptext_catalog_attribute_id": "HELPTEXT_CATALOG_ATTRIBUTE01",
+        "id": "CUSTOM_FIELD02",
+        "name": "s153",
+        "updated_at": "s154"
+      }
+    }
+  },
+  "new": {
+    "custom_field": {
+      "custom_field_ref01": {
+        "catalog_type_id": "CATALOG_TYPE01",
+        "created_at": "s1b9",
+        "description": "s1ba",
+        "field_type": "s1bb",
+        "filter_by": {},
+        "fixed_filter": {},
+        "group_by_catalog_attribute_id": "GROUP_BY_CATALOG_ATTRIBUTE01",
+        "helptext_catalog_attribute_id": "HELPTEXT_CATALOG_ATTRIBUTE01",
+        "name": "s1c1",
+        "updated_at": "s1c2"
+      }
+    }
+  }
+}

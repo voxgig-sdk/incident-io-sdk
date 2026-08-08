@@ -1,0 +1,20 @@
+{
+  "existing": {
+    "heartbeat_v2": {
+      "HEARTBEAT_V200": {
+        "id": "HEARTBEAT_V200"
+      },
+      "HEARTBEAT_V201": {
+        "id": "HEARTBEAT_V201"
+      },
+      "HEARTBEAT_V202": {
+        "id": "HEARTBEAT_V202"
+      }
+    }
+  },
+  "new": {
+    "heartbeat_v2": {
+      "heartbeat_v2_ref01": {}
+    }
+  }
+}

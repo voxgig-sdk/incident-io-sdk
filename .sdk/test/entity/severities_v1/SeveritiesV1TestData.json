@@ -1,0 +1,20 @@
+{
+  "existing": {
+    "severities_v1": {
+      "SEVERITIES_V100": {
+        "id": "SEVERITIES_V100"
+      },
+      "SEVERITIES_V101": {
+        "id": "SEVERITIES_V101"
+      },
+      "SEVERITIES_V102": {
+        "id": "SEVERITIES_V102"
+      }
+    }
+  },
+  "new": {
+    "severities_v1": {
+      "severities_v1_ref01": {}
+    }
+  }
+}

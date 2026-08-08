@@ -1,0 +1,200 @@
+# Entity: workflow_run
+
+main: kit: entity: workflow_run: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "cancelled_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "enqueued_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "error"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_reference"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "progress"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "scheduled_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "workflow_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "workflow_name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "workflow_version_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "workflow_version_number"
+      req: true
+      type: "`$INTEGER`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "workflow_run"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: {
+                  date_range: [
+                    "2026-07-01~2026-07-31"
+                  ]
+                }
+                kind: "query"
+                name: "created_at"
+                orig: "created_at"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "workflow_id"
+                orig: "workflow_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/workflow_runs"
+          parts: [
+            "v2"
+            "workflow_runs"
+          ]
+          select: {
+            exist: [
+              "after"
+              "created_at"
+              "incident_id"
+              "page_size"
+              "workflow_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/workflow_runs/{id}"
+          parts: [
+            "v2"
+            "workflow_runs"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.workflow_run`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

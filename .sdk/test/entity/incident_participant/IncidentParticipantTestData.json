@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "incident_participant": {
+      "INCIDENT_PARTICIPANT00": {
+        "active": [],
+        "passive": [],
+        "id": "INCIDENT_PARTICIPANT00"
+      },
+      "INCIDENT_PARTICIPANT01": {
+        "active": [],
+        "passive": [],
+        "id": "INCIDENT_PARTICIPANT01"
+      },
+      "INCIDENT_PARTICIPANT02": {
+        "active": [],
+        "passive": [],
+        "id": "INCIDENT_PARTICIPANT02"
+      }
+    }
+  },
+  "new": {
+    "incident_participant": {
+      "incident_participant_ref01": {
+        "active": [],
+        "passive": []
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "existing": {
+    "alert": {
+      "ALERT00": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_source_id": "ALERT_SOURCE01",
+        "attribute": [],
+        "created_at": "s7b",
+        "deduplication_key": "s7c",
+        "description": "s7d",
+        "id": "ALERT00",
+        "resolved_at": "s7f",
+        "source_url": "s80",
+        "status": "s81",
+        "title": "s82",
+        "updated_at": "s83"
+      },
+      "ALERT01": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_source_id": "ALERT_SOURCE01",
+        "attribute": [],
+        "created_at": "sf3",
+        "deduplication_key": "sf4",
+        "description": "sf5",
+        "id": "ALERT01",
+        "resolved_at": "sf7",
+        "source_url": "sf8",
+        "status": "sf9",
+        "title": "sfa",
+        "updated_at": "sfb"
+      },
+      "ALERT02": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_source_id": "ALERT_SOURCE01",
+        "attribute": [],
+        "created_at": "s16b",
+        "deduplication_key": "s16c",
+        "description": "s16d",
+        "id": "ALERT02",
+        "resolved_at": "s16f",
+        "source_url": "s170",
+        "status": "s171",
+        "title": "s172",
+        "updated_at": "s173"
+      }
+    }
+  },
+  "new": {
+    "alert": {
+      "alert_ref01": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_source_id": "ALERT_SOURCE01",
+        "attribute": [],
+        "created_at": "s1e3",
+        "deduplication_key": "s1e4",
+        "description": "s1e5",
+        "resolved_at": "s1e7",
+        "source_url": "s1e8",
+        "status": "s1e9",
+        "title": "s1ea",
+        "updated_at": "s1eb"
+      }
+    }
+  }
+}

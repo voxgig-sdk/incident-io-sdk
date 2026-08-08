@@ -1,0 +1,28 @@
+{
+  "existing": {
+    "status_pages_show_status_page_structure_result_v2": {
+      "STATUS_PAGES_SHOW_STATUS_PAGE_STRUCTURE_RESULT_V200": {
+        "item": [],
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGES_SHOW_STATUS_PAGE_STRUCTURE_RESULT_V200"
+      },
+      "STATUS_PAGES_SHOW_STATUS_PAGE_STRUCTURE_RESULT_V201": {
+        "item": [],
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGES_SHOW_STATUS_PAGE_STRUCTURE_RESULT_V201"
+      },
+      "STATUS_PAGES_SHOW_STATUS_PAGE_STRUCTURE_RESULT_V202": {
+        "item": [],
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGES_SHOW_STATUS_PAGE_STRUCTURE_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "status_pages_show_status_page_structure_result_v2": {
+      "status_pages_show_status_page_structure_result_v2_ref01": {
+        "item": []
+      }
+    }
+  }
+}

@@ -1,0 +1,236 @@
+# Entity: action
+
+main: kit: entity: action: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "assignee"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "assignee_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "completed_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "creator"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "description"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "status"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "action"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/actions"
+          parts: [
+            "v2"
+            "actions"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.action`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "standard"
+                kind: "query"
+                name: "incident_mode"
+                orig: "incident_mode"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/actions"
+          parts: [
+            "v2"
+            "actions"
+          ]
+          select: {
+            exist: [
+              "incident_id"
+              "incident_mode"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.actions`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/actions/{id}"
+          parts: [
+            "v2"
+            "actions"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.action`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/actions/{id}"
+          parts: [
+            "v2"
+            "actions"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/actions/{id}"
+          parts: [
+            "v2"
+            "actions"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.action`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

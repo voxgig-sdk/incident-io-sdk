@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "catalog_create_type_result_v2": {
+      "CATALOG_CREATE_TYPE_RESULT_V200": {
+        "annotation": {},
+        "category": [],
+        "color": "s5c",
+        "description": "s5d",
+        "icon": "s5e",
+        "name": "s5f",
+        "ranked": true,
+        "source_repo_url": "s61",
+        "type_name": "s62",
+        "id": "CATALOG_CREATE_TYPE_RESULT_V200"
+      },
+      "CATALOG_CREATE_TYPE_RESULT_V201": {
+        "annotation": {},
+        "category": [],
+        "color": "sb6",
+        "description": "sb7",
+        "icon": "sb8",
+        "name": "sb9",
+        "ranked": true,
+        "source_repo_url": "sbb",
+        "type_name": "sbc",
+        "id": "CATALOG_CREATE_TYPE_RESULT_V201"
+      },
+      "CATALOG_CREATE_TYPE_RESULT_V202": {
+        "annotation": {},
+        "category": [],
+        "color": "s110",
+        "description": "s111",
+        "icon": "s112",
+        "name": "s113",
+        "ranked": true,
+        "source_repo_url": "s115",
+        "type_name": "s116",
+        "id": "CATALOG_CREATE_TYPE_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "catalog_create_type_result_v2": {
+      "catalog_create_type_result_v2_ref01": {
+        "annotation": {},
+        "category": [],
+        "color": "s16a",
+        "description": "s16b",
+        "icon": "s16c",
+        "name": "s16d",
+        "ranked": true,
+        "source_repo_url": "s16f",
+        "type_name": "s170"
+      }
+    }
+  }
+}

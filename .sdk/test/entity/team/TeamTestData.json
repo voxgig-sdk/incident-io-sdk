@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "team": {
+      "TEAM00": {
+        "catalog_entry": {},
+        "id": "TEAM00",
+        "member": [],
+        "name": "s2b"
+      },
+      "TEAM01": {
+        "catalog_entry": {},
+        "id": "TEAM01",
+        "member": [],
+        "name": "s53"
+      },
+      "TEAM02": {
+        "catalog_entry": {},
+        "id": "TEAM02",
+        "member": [],
+        "name": "s7b"
+      }
+    }
+  },
+  "new": {
+    "team": {
+      "team_ref01": {
+        "catalog_entry": {},
+        "member": [],
+        "name": "sa3"
+      }
+    }
+  }
+}

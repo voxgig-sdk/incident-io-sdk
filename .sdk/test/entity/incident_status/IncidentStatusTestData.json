@@ -1,0 +1,45 @@
+{
+  "existing": {
+    "incident_status": {
+      "INCIDENT_STATUS00": {
+        "category": "s46",
+        "created_at": "s47",
+        "description": "s48",
+        "id": "INCIDENT_STATUS00",
+        "name": "s4a",
+        "rank": "s4b",
+        "updated_at": "s4c"
+      },
+      "INCIDENT_STATUS01": {
+        "category": "s8c",
+        "created_at": "s8d",
+        "description": "s8e",
+        "id": "INCIDENT_STATUS01",
+        "name": "s90",
+        "rank": "s91",
+        "updated_at": "s92"
+      },
+      "INCIDENT_STATUS02": {
+        "category": "sd2",
+        "created_at": "sd3",
+        "description": "sd4",
+        "id": "INCIDENT_STATUS02",
+        "name": "sd6",
+        "rank": "sd7",
+        "updated_at": "sd8"
+      }
+    }
+  },
+  "new": {
+    "incident_status": {
+      "incident_status_ref01": {
+        "category": "s118",
+        "created_at": "s119",
+        "description": "s11a",
+        "name": "s11c",
+        "rank": "s11d",
+        "updated_at": "s11e"
+      }
+    }
+  }
+}

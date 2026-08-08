@@ -1,0 +1,18 @@
+# BasicSchedulesCreateOverrideResultV2Flow
+
+main: kit: flow: BasicSchedulesCreateOverrideResultV2Flow:
+{
+  entity: "schedules_create_override_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesCreateOverrideResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "schedules_create_override_result_v2_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicSchedulesCreateOverrideResultV2Flow"
+}

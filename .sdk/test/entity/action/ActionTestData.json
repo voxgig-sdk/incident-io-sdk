@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "action": {
+      "ACTION00": {
+        "assignee": {},
+        "assignee_id": "ASSIGNEE01",
+        "completed_at": "s66",
+        "created_at": "s67",
+        "creator": {},
+        "description": "s69",
+        "id": "ACTION00",
+        "incident_id": "INCIDENT01",
+        "status": "s6c",
+        "updated_at": "s6d"
+      },
+      "ACTION01": {
+        "assignee": {},
+        "assignee_id": "ASSIGNEE01",
+        "completed_at": "sca",
+        "created_at": "scb",
+        "creator": {},
+        "description": "scd",
+        "id": "ACTION01",
+        "incident_id": "INCIDENT01",
+        "status": "sd0",
+        "updated_at": "sd1"
+      },
+      "ACTION02": {
+        "assignee": {},
+        "assignee_id": "ASSIGNEE01",
+        "completed_at": "s12e",
+        "created_at": "s12f",
+        "creator": {},
+        "description": "s131",
+        "id": "ACTION02",
+        "incident_id": "INCIDENT01",
+        "status": "s134",
+        "updated_at": "s135"
+      }
+    }
+  },
+  "new": {
+    "action": {
+      "action_ref01": {
+        "assignee": {},
+        "assignee_id": "ASSIGNEE01",
+        "completed_at": "s192",
+        "created_at": "s193",
+        "creator": {},
+        "description": "s195",
+        "incident_id": "INCIDENT01",
+        "status": "s198",
+        "updated_at": "s199"
+      }
+    }
+  }
+}

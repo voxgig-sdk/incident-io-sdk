@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "severities_create_result_v1": {
+      "SEVERITIES_CREATE_RESULT_V100": {
+        "description": "s1e",
+        "name": "s1f",
+        "rank": "s20",
+        "id": "SEVERITIES_CREATE_RESULT_V100"
+      },
+      "SEVERITIES_CREATE_RESULT_V101": {
+        "description": "s3c",
+        "name": "s3d",
+        "rank": "s3e",
+        "id": "SEVERITIES_CREATE_RESULT_V101"
+      },
+      "SEVERITIES_CREATE_RESULT_V102": {
+        "description": "s5a",
+        "name": "s5b",
+        "rank": "s5c",
+        "id": "SEVERITIES_CREATE_RESULT_V102"
+      }
+    }
+  },
+  "new": {
+    "severities_create_result_v1": {
+      "severities_create_result_v1_ref01": {
+        "description": "s78",
+        "name": "s79",
+        "rank": "s7a"
+      }
+    }
+  }
+}

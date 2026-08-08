@@ -1,0 +1,230 @@
+# Entity: alert_source
+
+main: kit: entity: alert_source: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "alert_events_url"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "auto_resolve_incident_alert"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "auto_resolve_timeout_minute"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "disabled"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "email_option"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "heartbeat_option"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "http_custom_option"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "jira_option"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "owning_team_id"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "secret_token"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "source_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "template"
+      req: true
+      type: "`$OBJECT`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "alert_source"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/alert_sources"
+          parts: [
+            "v2"
+            "alert_sources"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_source`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/v2/alert_sources"
+          parts: [
+            "v2"
+            "alert_sources"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_sources`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01GW2G3V0S59R238FAHPDS1R66"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/alert_sources/{id}"
+          parts: [
+            "v2"
+            "alert_sources"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_source`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01GW2G3V0S59R238FAHPDS1R66"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/alert_sources/{id}"
+          parts: [
+            "v2"
+            "alert_sources"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01GW2G3V0S59R238FAHPDS1R66"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/alert_sources/{id}"
+          parts: [
+            "v2"
+            "alert_sources"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_source`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

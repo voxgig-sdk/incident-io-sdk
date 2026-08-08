@@ -1,0 +1,65 @@
+{
+  "existing": {
+    "schedules_list_schedule_replicas_result_v2": {
+      "SCHEDULES_LIST_SCHEDULE_REPLICAS_RESULT_V200": {
+        "created_at": "s78",
+        "id": "SCHEDULES_LIST_SCHEDULE_REPLICAS_RESULT_V200",
+        "last_sync_error": "s7a",
+        "last_synced_at": "s7b",
+        "mirror_window_day": "s7c",
+        "replica_fallback_user_id": "REPLICA_FALLBACK_USER01",
+        "replica_provider": "s7e",
+        "replica_provider_id": "REPLICA_PROVIDER01",
+        "schedule_id": "SCHEDULE01",
+        "source": [],
+        "updated_at": "s82",
+        "user_status": []
+      },
+      "SCHEDULES_LIST_SCHEDULE_REPLICAS_RESULT_V201": {
+        "created_at": "sf0",
+        "id": "SCHEDULES_LIST_SCHEDULE_REPLICAS_RESULT_V201",
+        "last_sync_error": "sf2",
+        "last_synced_at": "sf3",
+        "mirror_window_day": "sf4",
+        "replica_fallback_user_id": "REPLICA_FALLBACK_USER01",
+        "replica_provider": "sf6",
+        "replica_provider_id": "REPLICA_PROVIDER01",
+        "schedule_id": "SCHEDULE01",
+        "source": [],
+        "updated_at": "sfa",
+        "user_status": []
+      },
+      "SCHEDULES_LIST_SCHEDULE_REPLICAS_RESULT_V202": {
+        "created_at": "s168",
+        "id": "SCHEDULES_LIST_SCHEDULE_REPLICAS_RESULT_V202",
+        "last_sync_error": "s16a",
+        "last_synced_at": "s16b",
+        "mirror_window_day": "s16c",
+        "replica_fallback_user_id": "REPLICA_FALLBACK_USER01",
+        "replica_provider": "s16e",
+        "replica_provider_id": "REPLICA_PROVIDER01",
+        "schedule_id": "SCHEDULE01",
+        "source": [],
+        "updated_at": "s172",
+        "user_status": []
+      }
+    }
+  },
+  "new": {
+    "schedules_list_schedule_replicas_result_v2": {
+      "schedules_list_schedule_replicas_result_v2_ref01": {
+        "created_at": "s1e0",
+        "last_sync_error": "s1e2",
+        "last_synced_at": "s1e3",
+        "mirror_window_day": "s1e4",
+        "replica_fallback_user_id": "REPLICA_FALLBACK_USER01",
+        "replica_provider": "s1e6",
+        "replica_provider_id": "REPLICA_PROVIDER01",
+        "schedule_id": "SCHEDULE01",
+        "source": [],
+        "updated_at": "s1ea",
+        "user_status": []
+      }
+    }
+  }
+}

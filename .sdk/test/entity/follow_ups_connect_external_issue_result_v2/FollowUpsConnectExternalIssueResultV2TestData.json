@@ -1,0 +1,84 @@
+{
+  "existing": {
+    "follow_ups_connect_external_issue_result_v2": {
+      "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V200": {
+        "assignee": {},
+        "assignee_team": {},
+        "completed_at": "sa2",
+        "created_at": "sa3",
+        "creator": {},
+        "description": "sa5",
+        "external_issue_reference": {},
+        "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V200",
+        "incident_id": "INCIDENT01",
+        "label": [],
+        "priority": {},
+        "provider": "sab",
+        "status": "sac",
+        "title": "sad",
+        "updated_at": "sae",
+        "url": "saf",
+        "follow_up_id": "FOLLOW_UP01"
+      },
+      "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V201": {
+        "assignee": {},
+        "assignee_team": {},
+        "completed_at": "s142",
+        "created_at": "s143",
+        "creator": {},
+        "description": "s145",
+        "external_issue_reference": {},
+        "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V201",
+        "incident_id": "INCIDENT01",
+        "label": [],
+        "priority": {},
+        "provider": "s14b",
+        "status": "s14c",
+        "title": "s14d",
+        "updated_at": "s14e",
+        "url": "s14f",
+        "follow_up_id": "FOLLOW_UP01"
+      },
+      "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V202": {
+        "assignee": {},
+        "assignee_team": {},
+        "completed_at": "s1e2",
+        "created_at": "s1e3",
+        "creator": {},
+        "description": "s1e5",
+        "external_issue_reference": {},
+        "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V202",
+        "incident_id": "INCIDENT01",
+        "label": [],
+        "priority": {},
+        "provider": "s1eb",
+        "status": "s1ec",
+        "title": "s1ed",
+        "updated_at": "s1ee",
+        "url": "s1ef",
+        "follow_up_id": "FOLLOW_UP01"
+      }
+    }
+  },
+  "new": {
+    "follow_ups_connect_external_issue_result_v2": {
+      "follow_ups_connect_external_issue_result_v2_ref01": {
+        "assignee": {},
+        "assignee_team": {},
+        "completed_at": "s282",
+        "created_at": "s283",
+        "creator": {},
+        "description": "s285",
+        "external_issue_reference": {},
+        "incident_id": "INCIDENT01",
+        "label": [],
+        "priority": {},
+        "provider": "s28b",
+        "status": "s28c",
+        "title": "s28d",
+        "updated_at": "s28e",
+        "url": "s28f"
+      }
+    }
+  }
+}

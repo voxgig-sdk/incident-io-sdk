@@ -1,0 +1,68 @@
+{
+  "existing": {
+    "alerts_resolve_result_v2": {
+      "ALERTS_RESOLVE_RESULT_V200": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_source_id": "ALERT_SOURCE01",
+        "attribute": [],
+        "created_at": "s7b",
+        "deduplication_key": "s7c",
+        "description": "s7d",
+        "id": "ALERTS_RESOLVE_RESULT_V200",
+        "resolved_at": "s7f",
+        "source_url": "s80",
+        "status": "s81",
+        "title": "s82",
+        "updated_at": "s83",
+        "alert_id": "ALERT01"
+      },
+      "ALERTS_RESOLVE_RESULT_V201": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_source_id": "ALERT_SOURCE01",
+        "attribute": [],
+        "created_at": "sf3",
+        "deduplication_key": "sf4",
+        "description": "sf5",
+        "id": "ALERTS_RESOLVE_RESULT_V201",
+        "resolved_at": "sf7",
+        "source_url": "sf8",
+        "status": "sf9",
+        "title": "sfa",
+        "updated_at": "sfb",
+        "alert_id": "ALERT01"
+      },
+      "ALERTS_RESOLVE_RESULT_V202": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_source_id": "ALERT_SOURCE01",
+        "attribute": [],
+        "created_at": "s16b",
+        "deduplication_key": "s16c",
+        "description": "s16d",
+        "id": "ALERTS_RESOLVE_RESULT_V202",
+        "resolved_at": "s16f",
+        "source_url": "s170",
+        "status": "s171",
+        "title": "s172",
+        "updated_at": "s173",
+        "alert_id": "ALERT01"
+      }
+    }
+  },
+  "new": {
+    "alerts_resolve_result_v2": {
+      "alerts_resolve_result_v2_ref01": {
+        "alert_group_id": "ALERT_GROUP01",
+        "alert_source_id": "ALERT_SOURCE01",
+        "attribute": [],
+        "created_at": "s1e3",
+        "deduplication_key": "s1e4",
+        "description": "s1e5",
+        "resolved_at": "s1e7",
+        "source_url": "s1e8",
+        "status": "s1e9",
+        "title": "s1ea",
+        "updated_at": "s1eb"
+      }
+    }
+  }
+}

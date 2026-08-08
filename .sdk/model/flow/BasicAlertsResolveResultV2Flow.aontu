@@ -1,0 +1,22 @@
+# BasicAlertsResolveResultV2Flow
+
+main: kit: flow: BasicAlertsResolveResultV2Flow:
+{
+  entity: "alerts_resolve_result_v2",
+  kind: "basic",
+  name: "BasicAlertsResolveResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "alerts_resolve_result_v2_ref01"
+      }
+
+      match: {
+        alert_id: "alert01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicAlertsResolveResultV2Flow"
+}

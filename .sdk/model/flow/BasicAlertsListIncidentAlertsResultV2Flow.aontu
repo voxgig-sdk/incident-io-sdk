@@ -1,0 +1,22 @@
+# BasicAlertsListIncidentAlertsResultV2Flow
+
+main: kit: flow: BasicAlertsListIncidentAlertsResultV2Flow:
+{
+  entity: "alerts_list_incident_alerts_result_v2",
+  kind: "basic",
+  name: "BasicAlertsListIncidentAlertsResultV2Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "alerts_list_incident_alerts_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAlertsListIncidentAlertsResultV2Flow"
+}

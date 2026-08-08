@@ -1,0 +1,320 @@
+# Entity: workflow
+
+main: kit: entity: workflow: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "annotation"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "condition_group"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "continue_on_step_error"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "delay"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "expression"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "folder"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "form_field"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "include_private_escalation"
+      op: {
+        list: {
+          req: true
+          type: "`$BOOLEAN`"
+        }
+      }
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "include_private_incident"
+      op: {
+        list: {
+          req: true
+          type: "`$BOOLEAN`"
+        }
+      }
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "management_meta"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "once_for"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "owning_team_id"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "private_incident_scope"
+      op: {
+        list: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "runs_from"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "runs_on_incident"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "runs_on_incident_mode"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "shortform"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "skip_step_upgrade"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "state"
+      op: {
+        list: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "step"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "trigger"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "version"
+      req: true
+      type: "`$INTEGER`"
+    }
+    {
+      name: "workflow"
+      req: true
+      type: "`$OBJECT`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "workflow"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/workflows"
+          parts: [
+            "v2"
+            "workflows"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.workflow`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/v2/workflows"
+          parts: [
+            "v2"
+            "workflows"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.workflows`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: false
+                kind: "query"
+                name: "skip_step_upgrade"
+                orig: "skip_step_upgrade"
+                reqd: false
+                type: "`$BOOLEAN`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/workflows/{id}"
+          parts: [
+            "v2"
+            "workflows"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+              "skip_step_upgrade"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.workflow`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/workflows/{id}"
+          parts: [
+            "v2"
+            "workflows"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/workflows/{id}"
+          parts: [
+            "v2"
+            "workflows"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.workflow`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

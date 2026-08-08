@@ -1,0 +1,83 @@
+# Entity: incident_relationship
+
+main: kit: entity: incident_relationship: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "incident"
+      req: true
+      type: "`$OBJECT`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "incident_relationship"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYD5H"
+                kind: "query"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v1/incident_relationships"
+          parts: [
+            "v1"
+            "incident_relationships"
+          ]
+          select: {
+            exist: [
+              "after"
+              "incident_id"
+              "page_size"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "incident_memberships_v1": {
+      "INCIDENT_MEMBERSHIPS_V100": {
+        "incident_id": "INCIDENT01",
+        "user_id": "USER01",
+        "id": "INCIDENT_MEMBERSHIPS_V100"
+      },
+      "INCIDENT_MEMBERSHIPS_V101": {
+        "incident_id": "INCIDENT01",
+        "user_id": "USER01",
+        "id": "INCIDENT_MEMBERSHIPS_V101"
+      },
+      "INCIDENT_MEMBERSHIPS_V102": {
+        "incident_id": "INCIDENT01",
+        "user_id": "USER01",
+        "id": "INCIDENT_MEMBERSHIPS_V102"
+      }
+    }
+  },
+  "new": {
+    "incident_memberships_v1": {
+      "incident_memberships_v1_ref01": {
+        "incident_id": "INCIDENT01",
+        "user_id": "USER01"
+      }
+    }
+  }
+}

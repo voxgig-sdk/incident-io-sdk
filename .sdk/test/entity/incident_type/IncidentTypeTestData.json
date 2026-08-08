@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "incident_type": {
+      "INCIDENT_TYPE00": {
+        "create_in_triage": "s5a",
+        "created_at": "s5b",
+        "description": "s5c",
+        "id": "INCIDENT_TYPE00",
+        "is_default": true,
+        "name": "s5f",
+        "owning_team_id": "OWNING_TEAM01",
+        "private_incidents_only": false,
+        "updated_at": "s62"
+      },
+      "INCIDENT_TYPE01": {
+        "create_in_triage": "sb4",
+        "created_at": "sb5",
+        "description": "sb6",
+        "id": "INCIDENT_TYPE01",
+        "is_default": true,
+        "name": "sb9",
+        "owning_team_id": "OWNING_TEAM01",
+        "private_incidents_only": false,
+        "updated_at": "sbc"
+      },
+      "INCIDENT_TYPE02": {
+        "create_in_triage": "s10e",
+        "created_at": "s10f",
+        "description": "s110",
+        "id": "INCIDENT_TYPE02",
+        "is_default": true,
+        "name": "s113",
+        "owning_team_id": "OWNING_TEAM01",
+        "private_incidents_only": false,
+        "updated_at": "s116"
+      }
+    }
+  },
+  "new": {
+    "incident_type": {
+      "incident_type_ref01": {
+        "create_in_triage": "s168",
+        "created_at": "s169",
+        "description": "s16a",
+        "is_default": true,
+        "name": "s16d",
+        "owning_team_id": "OWNING_TEAM01",
+        "private_incidents_only": false,
+        "updated_at": "s170"
+      }
+    }
+  }
+}

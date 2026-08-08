@@ -1,0 +1,29 @@
+# BasicStatusPagesUpdateStatusPageIncidentResultV2Flow
+
+main: kit: flow: BasicStatusPagesUpdateStatusPageIncidentResultV2Flow:
+{
+  entity: "status_pages_update_status_page_incident_result_v2",
+  kind: "basic",
+  name: "BasicStatusPagesUpdateStatusPageIncidentResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "status_pages_update_status_page_incident_result_v2_ref01",
+        srcdatavar: "status_pages_update_status_page_incident_result_v2_ref01_data",
+        suffix: "_up0",
+        textfield: "incident_status"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_pages_update_status_page_incident_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPagesUpdateStatusPageIncidentResultV2Flow"
+}

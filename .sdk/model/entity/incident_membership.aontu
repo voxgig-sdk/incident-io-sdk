@@ -1,0 +1,43 @@
+# Entity: incident_membership
+
+main: kit: entity: incident_membership: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "incident_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "user_id"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "incident_membership"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v1/incident_memberships"
+          parts: [
+            "v1"
+            "incident_memberships"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.incident_membership`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

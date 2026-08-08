@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "status_page": {
+      "STATUS_PAGE00": {
+        "description": "s28",
+        "id": "STATUS_PAGE00",
+        "name": "s2a",
+        "public_url": "s2b"
+      },
+      "STATUS_PAGE01": {
+        "description": "s50",
+        "id": "STATUS_PAGE01",
+        "name": "s52",
+        "public_url": "s53"
+      },
+      "STATUS_PAGE02": {
+        "description": "s78",
+        "id": "STATUS_PAGE02",
+        "name": "s7a",
+        "public_url": "s7b"
+      }
+    }
+  },
+  "new": {
+    "status_page": {
+      "status_page_ref01": {
+        "description": "sa0",
+        "name": "sa2",
+        "public_url": "sa3"
+      }
+    }
+  }
+}

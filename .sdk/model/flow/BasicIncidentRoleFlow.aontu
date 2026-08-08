@@ -1,0 +1,100 @@
+# BasicIncidentRoleFlow
+
+main: kit: flow: BasicIncidentRoleFlow:
+{
+  entity: "incident_role",
+  kind: "basic",
+  name: "BasicIncidentRoleFlow",
+  step: [
+    {
+      input: {
+        ref: "incident_role_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_role_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "incident_role_ref01",
+        srcdatavar: "incident_role_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-incident_role_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "incident_role_ref01",
+        srcdatavar: "incident_role_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "incident_role01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-incident_role_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "incident_role_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "incident_role01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "incident_role_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentRoleFlow"
+}

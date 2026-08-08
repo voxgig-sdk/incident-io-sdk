@@ -1,0 +1,22 @@
+# BasicSchedulesCreateScheduleReplicaResultV2Flow
+
+main: kit: flow: BasicSchedulesCreateScheduleReplicaResultV2Flow:
+{
+  entity: "schedules_create_schedule_replica_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesCreateScheduleReplicaResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "schedules_create_schedule_replica_result_v2_ref01"
+      }
+
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicSchedulesCreateScheduleReplicaResultV2Flow"
+}

@@ -1,0 +1,52 @@
+# BasicEscalationFlow
+
+main: kit: flow: BasicEscalationFlow:
+{
+  entity: "escalation",
+  kind: "basic",
+  name: "BasicEscalationFlow",
+  step: [
+    {
+      input: {
+        ref: "escalation_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "escalation_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "escalation_ref01",
+        srcdatavar: "escalation_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "escalation01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-escalation_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicEscalationFlow"
+}

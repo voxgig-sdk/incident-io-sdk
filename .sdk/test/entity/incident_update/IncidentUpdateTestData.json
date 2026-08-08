@@ -1,0 +1,49 @@
+{
+  "existing": {
+    "incident_update": {
+      "INCIDENT_UPDATE00": {
+        "created_at": "s50",
+        "id": "INCIDENT_UPDATE00",
+        "incident_id": "INCIDENT01",
+        "merged_into_incident_id": "MERGED_INTO_INCIDENT01",
+        "message": "s54",
+        "new_incident_status": {},
+        "new_severity": {},
+        "updater": {}
+      },
+      "INCIDENT_UPDATE01": {
+        "created_at": "sa0",
+        "id": "INCIDENT_UPDATE01",
+        "incident_id": "INCIDENT01",
+        "merged_into_incident_id": "MERGED_INTO_INCIDENT01",
+        "message": "sa4",
+        "new_incident_status": {},
+        "new_severity": {},
+        "updater": {}
+      },
+      "INCIDENT_UPDATE02": {
+        "created_at": "sf0",
+        "id": "INCIDENT_UPDATE02",
+        "incident_id": "INCIDENT01",
+        "merged_into_incident_id": "MERGED_INTO_INCIDENT01",
+        "message": "sf4",
+        "new_incident_status": {},
+        "new_severity": {},
+        "updater": {}
+      }
+    }
+  },
+  "new": {
+    "incident_update": {
+      "incident_update_ref01": {
+        "created_at": "s140",
+        "incident_id": "INCIDENT01",
+        "merged_into_incident_id": "MERGED_INTO_INCIDENT01",
+        "message": "s144",
+        "new_incident_status": {},
+        "new_severity": {},
+        "updater": {}
+      }
+    }
+  }
+}

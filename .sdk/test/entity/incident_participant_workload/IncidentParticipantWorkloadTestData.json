@@ -1,0 +1,34 @@
+{
+  "existing": {
+    "incident_participant_workload": {
+      "INCIDENT_PARTICIPANT_WORKLOAD00": {
+        "archived_at": "s28",
+        "participant_type": "s29",
+        "user": {},
+        "workload": {}
+      },
+      "INCIDENT_PARTICIPANT_WORKLOAD01": {
+        "archived_at": "s50",
+        "participant_type": "s51",
+        "user": {},
+        "workload": {}
+      },
+      "INCIDENT_PARTICIPANT_WORKLOAD02": {
+        "archived_at": "s78",
+        "participant_type": "s79",
+        "user": {},
+        "workload": {}
+      }
+    }
+  },
+  "new": {
+    "incident_participant_workload": {
+      "incident_participant_workload_ref01": {
+        "archived_at": "sa0",
+        "participant_type": "sa1",
+        "user": {},
+        "workload": {}
+      }
+    }
+  }
+}

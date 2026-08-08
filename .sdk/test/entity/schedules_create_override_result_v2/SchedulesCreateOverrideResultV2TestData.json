@@ -1,0 +1,45 @@
+{
+  "existing": {
+    "schedules_create_override_result_v2": {
+      "SCHEDULES_CREATE_OVERRIDE_RESULT_V200": {
+        "end_at": "s3c",
+        "layer_id": "LAYER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "start_at": "s40",
+        "user": {},
+        "id": "SCHEDULES_CREATE_OVERRIDE_RESULT_V200"
+      },
+      "SCHEDULES_CREATE_OVERRIDE_RESULT_V201": {
+        "end_at": "s78",
+        "layer_id": "LAYER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "start_at": "s7c",
+        "user": {},
+        "id": "SCHEDULES_CREATE_OVERRIDE_RESULT_V201"
+      },
+      "SCHEDULES_CREATE_OVERRIDE_RESULT_V202": {
+        "end_at": "sb4",
+        "layer_id": "LAYER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "start_at": "sb8",
+        "user": {},
+        "id": "SCHEDULES_CREATE_OVERRIDE_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "schedules_create_override_result_v2": {
+      "schedules_create_override_result_v2_ref01": {
+        "end_at": "sf0",
+        "layer_id": "LAYER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "start_at": "sf4",
+        "user": {}
+      }
+    }
+  }
+}

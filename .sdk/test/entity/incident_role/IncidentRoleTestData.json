@@ -1,0 +1,49 @@
+{
+  "existing": {
+    "incident_role": {
+      "INCIDENT_ROLE00": {
+        "created_at": "s50",
+        "description": "s51",
+        "id": "INCIDENT_ROLE00",
+        "instruction": "s53",
+        "name": "s54",
+        "role_type": "s55",
+        "shortform": "s56",
+        "updated_at": "s57"
+      },
+      "INCIDENT_ROLE01": {
+        "created_at": "sa0",
+        "description": "sa1",
+        "id": "INCIDENT_ROLE01",
+        "instruction": "sa3",
+        "name": "sa4",
+        "role_type": "sa5",
+        "shortform": "sa6",
+        "updated_at": "sa7"
+      },
+      "INCIDENT_ROLE02": {
+        "created_at": "sf0",
+        "description": "sf1",
+        "id": "INCIDENT_ROLE02",
+        "instruction": "sf3",
+        "name": "sf4",
+        "role_type": "sf5",
+        "shortform": "sf6",
+        "updated_at": "sf7"
+      }
+    }
+  },
+  "new": {
+    "incident_role": {
+      "incident_role_ref01": {
+        "created_at": "s140",
+        "description": "s141",
+        "instruction": "s143",
+        "name": "s144",
+        "role_type": "s145",
+        "shortform": "s146",
+        "updated_at": "s147"
+      }
+    }
+  }
+}

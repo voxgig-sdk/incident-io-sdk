@@ -1,0 +1,22 @@
+# BasicStatusPagesListStatusPageMaintenancesResultV2Flow
+
+main: kit: flow: BasicStatusPagesListStatusPageMaintenancesResultV2Flow:
+{
+  entity: "status_pages_list_status_page_maintenances_result_v2",
+  kind: "basic",
+  name: "BasicStatusPagesListStatusPageMaintenancesResultV2Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "status_pages_list_status_page_maintenances_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPagesListStatusPageMaintenancesResultV2Flow"
+}

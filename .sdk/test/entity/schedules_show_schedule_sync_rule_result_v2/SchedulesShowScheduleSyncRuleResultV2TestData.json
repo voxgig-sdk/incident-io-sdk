@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "schedules_show_schedule_sync_rule_result_v2": {
+      "SCHEDULES_SHOW_SCHEDULE_SYNC_RULE_RESULT_V200": {
+        "created_at": "s5a",
+        "id": "SCHEDULES_SHOW_SCHEDULE_SYNC_RULE_RESULT_V200",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s61",
+        "updated_at": "s62"
+      },
+      "SCHEDULES_SHOW_SCHEDULE_SYNC_RULE_RESULT_V201": {
+        "created_at": "sb4",
+        "id": "SCHEDULES_SHOW_SCHEDULE_SYNC_RULE_RESULT_V201",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "sbb",
+        "updated_at": "sbc"
+      },
+      "SCHEDULES_SHOW_SCHEDULE_SYNC_RULE_RESULT_V202": {
+        "created_at": "s10e",
+        "id": "SCHEDULES_SHOW_SCHEDULE_SYNC_RULE_RESULT_V202",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s115",
+        "updated_at": "s116"
+      }
+    }
+  },
+  "new": {
+    "schedules_show_schedule_sync_rule_result_v2": {
+      "schedules_show_schedule_sync_rule_result_v2_ref01": {
+        "created_at": "s168",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s16f",
+        "updated_at": "s170"
+      }
+    }
+  }
+}

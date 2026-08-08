@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "postmortem_documents_attach_result_v1": {
+      "POSTMORTEM_DOCUMENTS_ATTACH_RESULT_V100": {
+        "document_provider": "s1e",
+        "incident_id": "INCIDENT01",
+        "permalink": "s20",
+        "id": "POSTMORTEM_DOCUMENTS_ATTACH_RESULT_V100"
+      },
+      "POSTMORTEM_DOCUMENTS_ATTACH_RESULT_V101": {
+        "document_provider": "s3c",
+        "incident_id": "INCIDENT01",
+        "permalink": "s3e",
+        "id": "POSTMORTEM_DOCUMENTS_ATTACH_RESULT_V101"
+      },
+      "POSTMORTEM_DOCUMENTS_ATTACH_RESULT_V102": {
+        "document_provider": "s5a",
+        "incident_id": "INCIDENT01",
+        "permalink": "s5c",
+        "id": "POSTMORTEM_DOCUMENTS_ATTACH_RESULT_V102"
+      }
+    }
+  },
+  "new": {
+    "postmortem_documents_attach_result_v1": {
+      "postmortem_documents_attach_result_v1_ref01": {
+        "document_provider": "s78",
+        "incident_id": "INCIDENT01",
+        "permalink": "s7a"
+      }
+    }
+  }
+}

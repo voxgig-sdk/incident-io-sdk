@@ -1,0 +1,38 @@
+{
+  "existing": {
+    "catalog_list_resources_result_v2": {
+      "CATALOG_LIST_RESOURCES_RESULT_V200": {
+        "category": "s32",
+        "description": "s33",
+        "label": "s34",
+        "type": "s35",
+        "value_docstring": "s36"
+      },
+      "CATALOG_LIST_RESOURCES_RESULT_V201": {
+        "category": "s64",
+        "description": "s65",
+        "label": "s66",
+        "type": "s67",
+        "value_docstring": "s68"
+      },
+      "CATALOG_LIST_RESOURCES_RESULT_V202": {
+        "category": "s96",
+        "description": "s97",
+        "label": "s98",
+        "type": "s99",
+        "value_docstring": "s9a"
+      }
+    }
+  },
+  "new": {
+    "catalog_list_resources_result_v2": {
+      "catalog_list_resources_result_v2_ref01": {
+        "category": "sc8",
+        "description": "sc9",
+        "label": "sca",
+        "type": "scb",
+        "value_docstring": "scc"
+      }
+    }
+  }
+}

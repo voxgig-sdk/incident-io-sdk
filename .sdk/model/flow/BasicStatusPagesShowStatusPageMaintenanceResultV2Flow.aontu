@@ -1,0 +1,32 @@
+# BasicStatusPagesShowStatusPageMaintenanceResultV2Flow
+
+main: kit: flow: BasicStatusPagesShowStatusPageMaintenanceResultV2Flow:
+{
+  entity: "status_pages_show_status_page_maintenance_result_v2",
+  kind: "basic",
+  name: "BasicStatusPagesShowStatusPageMaintenanceResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "status_pages_show_status_page_maintenance_result_v2_ref01",
+        srcdatavar: "status_pages_show_status_page_maintenance_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "status_pages_show_status_page_maintenance_result_v201"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_pages_show_status_page_maintenance_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPagesShowStatusPageMaintenanceResultV2Flow"
+}

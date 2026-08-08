@@ -1,0 +1,22 @@
+# BasicSchedulesListOverridesResultV2Flow
+
+main: kit: flow: BasicSchedulesListOverridesResultV2Flow:
+{
+  entity: "schedules_list_overrides_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesListOverridesResultV2Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "schedules_list_overrides_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSchedulesListOverridesResultV2Flow"
+}

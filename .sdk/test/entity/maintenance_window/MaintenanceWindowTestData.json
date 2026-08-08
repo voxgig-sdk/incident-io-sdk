@@ -1,0 +1,89 @@
+{
+  "existing": {
+    "maintenance_window": {
+      "MAINTENANCE_WINDOW00": {
+        "alert_condition_group": [],
+        "archived_at": "sb5",
+        "created_at": "sb6",
+        "end_at": "sb7",
+        "escalation_target": [],
+        "id": "MAINTENANCE_WINDOW00",
+        "incident_id": "INCIDENT01",
+        "lead": {},
+        "name": "sbc",
+        "notification_message": "sbd",
+        "notify_channel": [],
+        "notify_end_minutes_before": "sbf",
+        "notify_start_minutes_before": "sc0",
+        "reroute_on_end": false,
+        "resolve_on_end": true,
+        "show_in_sidebar": false,
+        "start_at": "sc4",
+        "updated_at": "sc5"
+      },
+      "MAINTENANCE_WINDOW01": {
+        "alert_condition_group": [],
+        "archived_at": "s169",
+        "created_at": "s16a",
+        "end_at": "s16b",
+        "escalation_target": [],
+        "id": "MAINTENANCE_WINDOW01",
+        "incident_id": "INCIDENT01",
+        "lead": {},
+        "name": "s170",
+        "notification_message": "s171",
+        "notify_channel": [],
+        "notify_end_minutes_before": "s173",
+        "notify_start_minutes_before": "s174",
+        "reroute_on_end": false,
+        "resolve_on_end": true,
+        "show_in_sidebar": false,
+        "start_at": "s178",
+        "updated_at": "s179"
+      },
+      "MAINTENANCE_WINDOW02": {
+        "alert_condition_group": [],
+        "archived_at": "s21d",
+        "created_at": "s21e",
+        "end_at": "s21f",
+        "escalation_target": [],
+        "id": "MAINTENANCE_WINDOW02",
+        "incident_id": "INCIDENT01",
+        "lead": {},
+        "name": "s224",
+        "notification_message": "s225",
+        "notify_channel": [],
+        "notify_end_minutes_before": "s227",
+        "notify_start_minutes_before": "s228",
+        "reroute_on_end": false,
+        "resolve_on_end": true,
+        "show_in_sidebar": false,
+        "start_at": "s22c",
+        "updated_at": "s22d"
+      }
+    }
+  },
+  "new": {
+    "maintenance_window": {
+      "maintenance_window_ref01": {
+        "alert_condition_group": [],
+        "archived_at": "s2d1",
+        "created_at": "s2d2",
+        "end_at": "s2d3",
+        "escalation_target": [],
+        "incident_id": "INCIDENT01",
+        "lead": {},
+        "name": "s2d8",
+        "notification_message": "s2d9",
+        "notify_channel": [],
+        "notify_end_minutes_before": "s2db",
+        "notify_start_minutes_before": "s2dc",
+        "reroute_on_end": false,
+        "resolve_on_end": true,
+        "show_in_sidebar": false,
+        "start_at": "s2e0",
+        "updated_at": "s2e1"
+      }
+    }
+  }
+}

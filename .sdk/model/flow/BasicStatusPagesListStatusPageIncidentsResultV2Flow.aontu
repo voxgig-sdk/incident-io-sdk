@@ -1,0 +1,22 @@
+# BasicStatusPagesListStatusPageIncidentsResultV2Flow
+
+main: kit: flow: BasicStatusPagesListStatusPageIncidentsResultV2Flow:
+{
+  entity: "status_pages_list_status_page_incidents_result_v2",
+  kind: "basic",
+  name: "BasicStatusPagesListStatusPageIncidentsResultV2Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "status_pages_list_status_page_incidents_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPagesListStatusPageIncidentsResultV2Flow"
+}

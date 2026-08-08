@@ -1,0 +1,31 @@
+{
+  "existing": {
+    "status_pages_list_response_incidents_result_v1": {
+      "STATUS_PAGES_LIST_RESPONSE_INCIDENTS_RESULT_V100": {
+        "id": "STATUS_PAGES_LIST_RESPONSE_INCIDENTS_RESULT_V100",
+        "linked_at": "s15",
+        "incident_id": "INCIDENT01",
+        "status_page_id": "STATUS_PAGE01"
+      },
+      "STATUS_PAGES_LIST_RESPONSE_INCIDENTS_RESULT_V101": {
+        "id": "STATUS_PAGES_LIST_RESPONSE_INCIDENTS_RESULT_V101",
+        "linked_at": "s29",
+        "incident_id": "INCIDENT01",
+        "status_page_id": "STATUS_PAGE01"
+      },
+      "STATUS_PAGES_LIST_RESPONSE_INCIDENTS_RESULT_V102": {
+        "id": "STATUS_PAGES_LIST_RESPONSE_INCIDENTS_RESULT_V102",
+        "linked_at": "s3d",
+        "incident_id": "INCIDENT01",
+        "status_page_id": "STATUS_PAGE01"
+      }
+    }
+  },
+  "new": {
+    "status_pages_list_response_incidents_result_v1": {
+      "status_pages_list_response_incidents_result_v1_ref01": {
+        "linked_at": "s51"
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "existing": {
+    "catalog_create_type_result_v3": {
+      "CATALOG_CREATE_TYPE_RESULT_V300": {
+        "annotation": {},
+        "category": [],
+        "color": "s70",
+        "description": "s71",
+        "icon": "s72",
+        "name": "s73",
+        "owning_team_id": "OWNING_TEAM01",
+        "ranked": false,
+        "source_repo_url": "s76",
+        "type_name": "s77",
+        "use_name_as_identifier": true,
+        "id": "CATALOG_CREATE_TYPE_RESULT_V300"
+      },
+      "CATALOG_CREATE_TYPE_RESULT_V301": {
+        "annotation": {},
+        "category": [],
+        "color": "sde",
+        "description": "sdf",
+        "icon": "se0",
+        "name": "se1",
+        "owning_team_id": "OWNING_TEAM01",
+        "ranked": false,
+        "source_repo_url": "se4",
+        "type_name": "se5",
+        "use_name_as_identifier": true,
+        "id": "CATALOG_CREATE_TYPE_RESULT_V301"
+      },
+      "CATALOG_CREATE_TYPE_RESULT_V302": {
+        "annotation": {},
+        "category": [],
+        "color": "s14c",
+        "description": "s14d",
+        "icon": "s14e",
+        "name": "s14f",
+        "owning_team_id": "OWNING_TEAM01",
+        "ranked": false,
+        "source_repo_url": "s152",
+        "type_name": "s153",
+        "use_name_as_identifier": true,
+        "id": "CATALOG_CREATE_TYPE_RESULT_V302"
+      }
+    }
+  },
+  "new": {
+    "catalog_create_type_result_v3": {
+      "catalog_create_type_result_v3_ref01": {
+        "annotation": {},
+        "category": [],
+        "color": "s1ba",
+        "description": "s1bb",
+        "icon": "s1bc",
+        "name": "s1bd",
+        "owning_team_id": "OWNING_TEAM01",
+        "ranked": false,
+        "source_repo_url": "s1c0",
+        "type_name": "s1c1",
+        "use_name_as_identifier": true
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "existing": {
+    "api_keys_rotate_result_v1": {
+      "API_KEYS_ROTATE_RESULT_V100": {
+        "grace_period_minute": "sa",
+        "api_key_id": "API_KEY01",
+        "id": "API_KEYS_ROTATE_RESULT_V100"
+      },
+      "API_KEYS_ROTATE_RESULT_V101": {
+        "grace_period_minute": "s14",
+        "api_key_id": "API_KEY01",
+        "id": "API_KEYS_ROTATE_RESULT_V101"
+      },
+      "API_KEYS_ROTATE_RESULT_V102": {
+        "grace_period_minute": "s1e",
+        "api_key_id": "API_KEY01",
+        "id": "API_KEYS_ROTATE_RESULT_V102"
+      }
+    }
+  },
+  "new": {
+    "api_keys_rotate_result_v1": {
+      "api_keys_rotate_result_v1_ref01": {
+        "grace_period_minute": "s28"
+      }
+    }
+  }
+}

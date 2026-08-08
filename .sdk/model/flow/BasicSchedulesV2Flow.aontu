@@ -1,0 +1,9 @@
+# BasicSchedulesV2Flow
+
+main: kit: flow: BasicSchedulesV2Flow:
+{
+  entity: "schedules_v2",
+  kind: "basic",
+  name: "BasicSchedulesV2Flow",
+  "key$": "BasicSchedulesV2Flow"
+}

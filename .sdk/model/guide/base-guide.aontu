@@ -1,0 +1,365 @@
+# Guide
+
+guide: {
+  metrics: count: entity: 29
+  metrics: count: path: 52
+  metrics: count: method: 98
+
+  entity: action: {
+    path: "/v2/actions": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.action`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.actions`")|top
+    }
+    path: "/v2/actions/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.action`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.action`")|top
+    }
+  }
+
+  entity: alert: {
+    path: "/v2/alerts": {
+      op: list: method: *GET
+    }
+    path: "/v2/alerts/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.alert`")|top
+    }
+  }
+
+  entity: alert_attribute: {
+    path: "/v2/alert_attributes": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.alert_attribute`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.alert_attributes`")|top
+    }
+    path: "/v2/alert_attributes/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.alert_attribute`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.alert_attribute`")|top
+    }
+  }
+
+  entity: alert_note: {
+    path: "/v1/alert_notes": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.alert_note`")|top
+      op: list: method: *GET
+    }
+    path: "/v1/alert_notes/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.alert_note`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.alert_note`")|top
+    }
+  }
+
+  entity: alert_route: {
+    path: "/v3/alert_routes": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.alert_route`")|top
+      op: list: method: *GET
+    }
+    path: "/v3/alert_routes/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.alert_route`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.alert_route`")|top
+    }
+  }
+
+  entity: alert_source: {
+    path: "/v2/alert_sources": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.alert_source`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.alert_sources`")|top
+    }
+    path: "/v2/alert_sources/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.alert_source`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.alert_source`")|top
+    }
+  }
+
+  entity: api_key: {
+    path: "/v1/api_keys": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.api_key`")|top
+      op: list: method: *GET
+    }
+    path: "/v1/api_keys/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.api_key`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.api_key`")|top
+    }
+  }
+
+  entity: custom_field: {
+    path: "/v2/custom_fields": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.custom_field`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.custom_fields`")|top
+    }
+    path: "/v2/custom_fields/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.custom_field`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.custom_field`")|top
+    }
+  }
+
+  entity: custom_field_option: {
+    path: "/v1/custom_field_options": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.custom_field_option`")|top
+      op: list: method: *GET
+    }
+    path: "/v1/custom_field_options/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.custom_field_option`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.custom_field_option`")|top
+    }
+  }
+
+  entity: follow_up: {
+    path: "/v2/follow_ups": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.follow_up`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.follow_ups`")|top
+    }
+    path: "/v2/follow_ups/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.follow_up`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.follow_up`")|top
+    }
+  }
+
+  entity: incident: {
+    path: "/v2/incidents": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.incident`")|top
+      op: list: method: *GET
+    }
+    path: "/v2/incidents/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.incident`")|top
+    }
+  }
+
+  entity: incident_attachment: {
+    path: "/v1/incident_attachments": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.incident_attachment`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.incident_attachments`")|top
+    }
+    path: "/v1/incident_attachments/{id}": {
+      op: remove: method: *DELETE
+    }
+  }
+
+  entity: incident_membership: {
+    path: "/v1/incident_memberships": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.incident_membership`")|top
+    }
+  }
+
+  entity: incident_participant: {
+    path: "/v2/incident_participants": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.incident_participants`")|top
+    }
+  }
+
+  entity: incident_participant_workload: {
+    path: "/v2/incident_participant_workloads": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: incident_relationship: {
+    path: "/v1/incident_relationships": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: incident_role: {
+    path: "/v2/incident_roles": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.incident_role`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.incident_roles`")|top
+    }
+    path: "/v2/incident_roles/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.incident_role`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.incident_role`")|top
+    }
+  }
+
+  entity: incident_status: {
+    path: "/v1/incident_statuses": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.incident_status`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.incident_statuses`")|top
+    }
+    path: "/v1/incident_statuses/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.incident_status`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.incident_status`")|top
+    }
+  }
+
+  entity: incident_timestamp: {
+    path: "/v2/incident_timestamps": {
+      op: list: method: *GET
+      op: list: transform: res: *("`body.incident_timestamps`")|top
+    }
+    path: "/v2/incident_timestamps/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.incident_timestamp`")|top
+    }
+  }
+
+  entity: incident_type: {
+    path: "/v1/incident_types": {
+      op: list: method: *GET
+      op: list: transform: res: *("`body.incident_types`")|top
+    }
+    path: "/v1/incident_types/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.incident_type`")|top
+    }
+  }
+
+  entity: incident_update: {
+    path: "/v2/incident_updates": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: ip_allowlist: {
+    path: "/v1/ip_allowlists": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.ip_allowlist`")|top
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.ip_allowlist`")|top
+    }
+  }
+
+  entity: maintenance_window: {
+    path: "/v1/maintenance_windows": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.maintenance_window`")|top
+      op: list: method: *GET
+    }
+    path: "/v1/maintenance_windows/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.maintenance_window`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.maintenance_window`")|top
+    }
+  }
+
+  entity: postmortem_document: {
+    path: "/v1/postmortem_documents": {
+      op: list: method: *GET
+    }
+    path: "/v1/postmortem_documents/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.postmortem_document`")|top
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.postmortem_document`")|top
+    }
+  }
+
+  entity: secret: {
+    path: "/v2/secrets": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.secret`")|top
+      op: list: method: *GET
+    }
+    path: "/v2/secrets/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.secret`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.secret`")|top
+    }
+  }
+
+  entity: team: {
+    path: "/v3/teams": {
+      op: list: method: *GET
+    }
+    path: "/v3/teams/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.team`")|top
+    }
+  }
+
+  entity: user: {
+    path: "/v2/users": {
+      op: list: method: *GET
+    }
+    path: "/v2/users/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.user`")|top
+    }
+  }
+
+  entity: workflow: {
+    path: "/v2/workflows": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.workflow`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.workflows`")|top
+    }
+    path: "/v2/workflows/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.workflow`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.workflow`")|top
+    }
+  }
+
+  entity: workflow_run: {
+    path: "/v2/workflow_runs": {
+      op: list: method: *GET
+    }
+    path: "/v2/workflow_runs/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.workflow_run`")|top
+    }
+  }
+
+}

@@ -1,0 +1,29 @@
+# BasicEscalationsUpdatePathResultV2Flow
+
+main: kit: flow: BasicEscalationsUpdatePathResultV2Flow:
+{
+  entity: "escalations_update_path_result_v2",
+  kind: "basic",
+  name: "BasicEscalationsUpdatePathResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "escalations_update_path_result_v2_ref01",
+        srcdatavar: "escalations_update_path_result_v2_ref01_data",
+        suffix: "_up0",
+        textfield: "name"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-escalations_update_path_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicEscalationsUpdatePathResultV2Flow"
+}

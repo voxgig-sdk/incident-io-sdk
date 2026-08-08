@@ -1,0 +1,22 @@
+# BasicCatalogUpdateTypeSchemaResultV3Flow
+
+main: kit: flow: BasicCatalogUpdateTypeSchemaResultV3Flow:
+{
+  entity: "catalog_update_type_schema_result_v3",
+  kind: "basic",
+  name: "BasicCatalogUpdateTypeSchemaResultV3Flow",
+  step: [
+    {
+      input: {
+        ref: "catalog_update_type_schema_result_v3_ref01"
+      }
+
+      match: {
+        catalog_type_id: "catalog_type01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicCatalogUpdateTypeSchemaResultV3Flow"
+}

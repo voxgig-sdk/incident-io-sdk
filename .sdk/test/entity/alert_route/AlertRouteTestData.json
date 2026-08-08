@@ -1,0 +1,77 @@
+{
+  "existing": {
+    "alert_route": {
+      "ALERT_ROUTE00": {
+        "alert_source": [],
+        "condition_group": [],
+        "created_at": "s98",
+        "enabled": false,
+        "escalation_config": {},
+        "expression": [],
+        "grouping_config": {},
+        "id": "ALERT_ROUTE00",
+        "incident_config": {},
+        "is_private": false,
+        "message_config": {},
+        "name": "sa1",
+        "owning_team_id": "OWNING_TEAM01",
+        "updated_at": "sa3",
+        "version": "sa4"
+      },
+      "ALERT_ROUTE01": {
+        "alert_source": [],
+        "condition_group": [],
+        "created_at": "s12e",
+        "enabled": false,
+        "escalation_config": {},
+        "expression": [],
+        "grouping_config": {},
+        "id": "ALERT_ROUTE01",
+        "incident_config": {},
+        "is_private": false,
+        "message_config": {},
+        "name": "s137",
+        "owning_team_id": "OWNING_TEAM01",
+        "updated_at": "s139",
+        "version": "s13a"
+      },
+      "ALERT_ROUTE02": {
+        "alert_source": [],
+        "condition_group": [],
+        "created_at": "s1c4",
+        "enabled": false,
+        "escalation_config": {},
+        "expression": [],
+        "grouping_config": {},
+        "id": "ALERT_ROUTE02",
+        "incident_config": {},
+        "is_private": false,
+        "message_config": {},
+        "name": "s1cd",
+        "owning_team_id": "OWNING_TEAM01",
+        "updated_at": "s1cf",
+        "version": "s1d0"
+      }
+    }
+  },
+  "new": {
+    "alert_route": {
+      "alert_route_ref01": {
+        "alert_source": [],
+        "condition_group": [],
+        "created_at": "s25a",
+        "enabled": false,
+        "escalation_config": {},
+        "expression": [],
+        "grouping_config": {},
+        "incident_config": {},
+        "is_private": false,
+        "message_config": {},
+        "name": "s263",
+        "owning_team_id": "OWNING_TEAM01",
+        "updated_at": "s265",
+        "version": "s266"
+      }
+    }
+  }
+}

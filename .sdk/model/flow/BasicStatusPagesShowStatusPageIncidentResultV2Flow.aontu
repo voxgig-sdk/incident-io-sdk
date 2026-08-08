@@ -1,0 +1,32 @@
+# BasicStatusPagesShowStatusPageIncidentResultV2Flow
+
+main: kit: flow: BasicStatusPagesShowStatusPageIncidentResultV2Flow:
+{
+  entity: "status_pages_show_status_page_incident_result_v2",
+  kind: "basic",
+  name: "BasicStatusPagesShowStatusPageIncidentResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "status_pages_show_status_page_incident_result_v2_ref01",
+        srcdatavar: "status_pages_show_status_page_incident_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "status_pages_show_status_page_incident_result_v201"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_pages_show_status_page_incident_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPagesShowStatusPageIncidentResultV2Flow"
+}

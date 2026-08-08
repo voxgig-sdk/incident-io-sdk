@@ -1,0 +1,9 @@
+# BasicSeveritiesV1Flow
+
+main: kit: flow: BasicSeveritiesV1Flow:
+{
+  entity: "severities_v1",
+  kind: "basic",
+  name: "BasicSeveritiesV1Flow",
+  "key$": "BasicSeveritiesV1Flow"
+}

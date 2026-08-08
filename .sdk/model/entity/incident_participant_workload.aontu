@@ -1,0 +1,70 @@
+# Entity: incident_participant_workload
+
+main: kit: entity: incident_participant_workload: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "archived_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "participant_type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "user"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "workload"
+      req: true
+      type: "`$OBJECT`"
+    }
+  ]
+
+  name: "incident_participant_workload"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYD5H"
+                kind: "query"
+                name: "incident_id"
+                orig: "incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/incident_participant_workloads"
+          parts: [
+            "v2"
+            "incident_participant_workloads"
+          ]
+          select: {
+            exist: [
+              "incident_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

@@ -1,0 +1,100 @@
+# BasicWorkflowFlow
+
+main: kit: flow: BasicWorkflowFlow:
+{
+  entity: "workflow",
+  kind: "basic",
+  name: "BasicWorkflowFlow",
+  step: [
+    {
+      input: {
+        ref: "workflow_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "workflow_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "workflow_ref01",
+        srcdatavar: "workflow_ref01_data",
+        suffix: "_up0",
+        textfield: "folder"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-workflow_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "workflow_ref01",
+        srcdatavar: "workflow_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "workflow01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-workflow_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "workflow_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "workflow01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "workflow_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicWorkflowFlow"
+}

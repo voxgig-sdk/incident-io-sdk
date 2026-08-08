@@ -1,0 +1,41 @@
+{
+  "existing": {
+    "status_pages_create_status_page_maintenance_update_result_v2": {
+      "STATUS_PAGES_CREATE_STATUS_PAGE_MAINTENANCE_UPDATE_RESULT_V200": {
+        "component_status": [],
+        "maintenance_status": "s33",
+        "message": "s34",
+        "notify_subscriber": false,
+        "status_page_maintenance_id": "STATUS_PAGE_MAINTENANCE01",
+        "id": "STATUS_PAGES_CREATE_STATUS_PAGE_MAINTENANCE_UPDATE_RESULT_V200"
+      },
+      "STATUS_PAGES_CREATE_STATUS_PAGE_MAINTENANCE_UPDATE_RESULT_V201": {
+        "component_status": [],
+        "maintenance_status": "s65",
+        "message": "s66",
+        "notify_subscriber": false,
+        "status_page_maintenance_id": "STATUS_PAGE_MAINTENANCE01",
+        "id": "STATUS_PAGES_CREATE_STATUS_PAGE_MAINTENANCE_UPDATE_RESULT_V201"
+      },
+      "STATUS_PAGES_CREATE_STATUS_PAGE_MAINTENANCE_UPDATE_RESULT_V202": {
+        "component_status": [],
+        "maintenance_status": "s97",
+        "message": "s98",
+        "notify_subscriber": false,
+        "status_page_maintenance_id": "STATUS_PAGE_MAINTENANCE01",
+        "id": "STATUS_PAGES_CREATE_STATUS_PAGE_MAINTENANCE_UPDATE_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "status_pages_create_status_page_maintenance_update_result_v2": {
+      "status_pages_create_status_page_maintenance_update_result_v2_ref01": {
+        "component_status": [],
+        "maintenance_status": "sc9",
+        "message": "sca",
+        "notify_subscriber": false,
+        "status_page_maintenance_id": "STATUS_PAGE_MAINTENANCE01"
+      }
+    }
+  }
+}

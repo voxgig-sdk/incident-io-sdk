@@ -1,0 +1,22 @@
+# BasicCatalogListEntriesResultV2Flow
+
+main: kit: flow: BasicCatalogListEntriesResultV2Flow:
+{
+  entity: "catalog_list_entries_result_v2",
+  kind: "basic",
+  name: "BasicCatalogListEntriesResultV2Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "catalog_list_entries_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCatalogListEntriesResultV2Flow"
+}

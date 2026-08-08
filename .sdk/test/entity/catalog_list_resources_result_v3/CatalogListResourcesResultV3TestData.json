@@ -1,0 +1,42 @@
+{
+  "existing": {
+    "catalog_list_resources_result_v3": {
+      "CATALOG_LIST_RESOURCES_RESULT_V300": {
+        "category": "s3c",
+        "description": "s3d",
+        "engine_resource_type": "s3e",
+        "label": "s3f",
+        "type": "s40",
+        "value_docstring": "s41"
+      },
+      "CATALOG_LIST_RESOURCES_RESULT_V301": {
+        "category": "s78",
+        "description": "s79",
+        "engine_resource_type": "s7a",
+        "label": "s7b",
+        "type": "s7c",
+        "value_docstring": "s7d"
+      },
+      "CATALOG_LIST_RESOURCES_RESULT_V302": {
+        "category": "sb4",
+        "description": "sb5",
+        "engine_resource_type": "sb6",
+        "label": "sb7",
+        "type": "sb8",
+        "value_docstring": "sb9"
+      }
+    }
+  },
+  "new": {
+    "catalog_list_resources_result_v3": {
+      "catalog_list_resources_result_v3_ref01": {
+        "category": "sf0",
+        "description": "sf1",
+        "engine_resource_type": "sf2",
+        "label": "sf3",
+        "type": "sf4",
+        "value_docstring": "sf5"
+      }
+    }
+  }
+}

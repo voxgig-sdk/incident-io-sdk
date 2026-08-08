@@ -1,0 +1,32 @@
+# BasicUsersShowPagingProviderResultV2Flow
+
+main: kit: flow: BasicUsersShowPagingProviderResultV2Flow:
+{
+  entity: "users_show_paging_provider_result_v2",
+  kind: "basic",
+  name: "BasicUsersShowPagingProviderResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "users_show_paging_provider_result_v2_ref01",
+        srcdatavar: "users_show_paging_provider_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "users_show_paging_provider_result_v201"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-users_show_paging_provider_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicUsersShowPagingProviderResultV2Flow"
+}

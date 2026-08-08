@@ -1,0 +1,266 @@
+# Entity: alert
+
+main: kit: entity: alert: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "alert_group_id"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "alert_source_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "attribute"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "deduplication_key"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "description"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "resolved_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "source_url"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "status"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "title"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "alert"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: {
+                  one_of: [
+                    "01GBSQF3FHF7FWZQNWGHAVQ804"
+                  ]
+                }
+                kind: "query"
+                name: "alert_group_id"
+                orig: "alert_group_id"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  one_of: [
+                    "01GBSQF3FHF7FWZQNWGHAVQ804"
+                  ]
+                }
+                kind: "query"
+                name: "alert_source"
+                orig: "alert_source"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  "01GBSQF3FHF7FWZQNWGHAVQ804": {
+                    one_of: [
+                      "01GBSQF3FHF7FWZQNWGHAVQ804"
+                      "01ET65M7ZARSFZ6TFDFVQDN9AA"
+                    ]
+                  }
+                }
+                kind: "query"
+                name: "attribute"
+                orig: "attribute"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  gte: [
+                    "2025-01-01"
+                  ]
+                }
+                kind: "query"
+                name: "created_at"
+                orig: "created_at"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  is: [
+                    "01GBSQF3FHF7FWZQNWGHAVQ804"
+                  ]
+                }
+                kind: "query"
+                name: "deduplication_key"
+                orig: "deduplication_key"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  is: [
+                    "true"
+                  ]
+                }
+                kind: "query"
+                name: "has_note"
+                orig: "has_note"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  is: [
+                    "true"
+                  ]
+                }
+                kind: "query"
+                name: "include_maintenance_window"
+                orig: "include_maintenance_window"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: true
+                type: "`$INTEGER`"
+              }
+              {
+                example: {
+                  one_of: [
+                    "firing"
+                  ]
+                }
+                kind: "query"
+                name: "status"
+                orig: "status"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/alerts"
+          parts: [
+            "v2"
+            "alerts"
+          ]
+          select: {
+            exist: [
+              "after"
+              "alert_group_id"
+              "alert_source"
+              "attribute"
+              "created_at"
+              "deduplication_key"
+              "has_note"
+              "include_maintenance_window"
+              "page_size"
+              "status"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/alerts/{id}"
+          parts: [
+            "v2"
+            "alerts"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

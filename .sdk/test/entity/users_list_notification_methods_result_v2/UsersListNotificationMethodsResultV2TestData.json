@@ -1,0 +1,40 @@
+{
+  "existing": {
+    "users_list_notification_methods_result_v2": {
+      "USERS_LIST_NOTIFICATION_METHODS_RESULT_V200": {
+        "address": "s32",
+        "id": "USERS_LIST_NOTIFICATION_METHODS_RESULT_V200",
+        "is_usable": true,
+        "method_type": "s35",
+        "phone_detail": {},
+        "user_id": "USER01"
+      },
+      "USERS_LIST_NOTIFICATION_METHODS_RESULT_V201": {
+        "address": "s64",
+        "id": "USERS_LIST_NOTIFICATION_METHODS_RESULT_V201",
+        "is_usable": true,
+        "method_type": "s67",
+        "phone_detail": {},
+        "user_id": "USER01"
+      },
+      "USERS_LIST_NOTIFICATION_METHODS_RESULT_V202": {
+        "address": "s96",
+        "id": "USERS_LIST_NOTIFICATION_METHODS_RESULT_V202",
+        "is_usable": true,
+        "method_type": "s99",
+        "phone_detail": {},
+        "user_id": "USER01"
+      }
+    }
+  },
+  "new": {
+    "users_list_notification_methods_result_v2": {
+      "users_list_notification_methods_result_v2_ref01": {
+        "address": "sc8",
+        "is_usable": true,
+        "method_type": "scb",
+        "phone_detail": {}
+      }
+    }
+  }
+}

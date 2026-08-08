@@ -1,0 +1,22 @@
+# BasicUsersV2Flow
+
+main: kit: flow: BasicUsersV2Flow:
+{
+  entity: "users_v2",
+  kind: "basic",
+  name: "BasicUsersV2Flow",
+  step: [
+    {
+      input: {
+        ref: "users_v2_ref01"
+      }
+
+      match: {
+        user_id: "user01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicUsersV2Flow"
+}

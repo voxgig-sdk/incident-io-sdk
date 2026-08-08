@@ -1,0 +1,93 @@
+{
+  "existing": {
+    "follow_up": {
+      "FOLLOW_UP00": {
+        "assignee": {},
+        "assignee_id": "ASSIGNEE01",
+        "assignee_team": {},
+        "assignee_team_id": "ASSIGNEE_TEAM01",
+        "completed_at": "sc2",
+        "created_at": "sc3",
+        "creator": {},
+        "description": "sc5",
+        "external_issue_reference": {},
+        "external_issue_reference_id": "EXTERNAL_ISSUE_REFERENCE01",
+        "follow_up_category_id": "FOLLOW_UP_CATEGORY01",
+        "follow_up_priority_option_id": "FOLLOW_UP_PRIORITY_OPTION01",
+        "id": "FOLLOW_UP00",
+        "incident_id": "INCIDENT01",
+        "label": [],
+        "priority": {},
+        "status": "sce",
+        "title": "scf",
+        "updated_at": "sd0"
+      },
+      "FOLLOW_UP01": {
+        "assignee": {},
+        "assignee_id": "ASSIGNEE01",
+        "assignee_team": {},
+        "assignee_team_id": "ASSIGNEE_TEAM01",
+        "completed_at": "s180",
+        "created_at": "s181",
+        "creator": {},
+        "description": "s183",
+        "external_issue_reference": {},
+        "external_issue_reference_id": "EXTERNAL_ISSUE_REFERENCE01",
+        "follow_up_category_id": "FOLLOW_UP_CATEGORY01",
+        "follow_up_priority_option_id": "FOLLOW_UP_PRIORITY_OPTION01",
+        "id": "FOLLOW_UP01",
+        "incident_id": "INCIDENT01",
+        "label": [],
+        "priority": {},
+        "status": "s18c",
+        "title": "s18d",
+        "updated_at": "s18e"
+      },
+      "FOLLOW_UP02": {
+        "assignee": {},
+        "assignee_id": "ASSIGNEE01",
+        "assignee_team": {},
+        "assignee_team_id": "ASSIGNEE_TEAM01",
+        "completed_at": "s23e",
+        "created_at": "s23f",
+        "creator": {},
+        "description": "s241",
+        "external_issue_reference": {},
+        "external_issue_reference_id": "EXTERNAL_ISSUE_REFERENCE01",
+        "follow_up_category_id": "FOLLOW_UP_CATEGORY01",
+        "follow_up_priority_option_id": "FOLLOW_UP_PRIORITY_OPTION01",
+        "id": "FOLLOW_UP02",
+        "incident_id": "INCIDENT01",
+        "label": [],
+        "priority": {},
+        "status": "s24a",
+        "title": "s24b",
+        "updated_at": "s24c"
+      }
+    }
+  },
+  "new": {
+    "follow_up": {
+      "follow_up_ref01": {
+        "assignee": {},
+        "assignee_id": "ASSIGNEE01",
+        "assignee_team": {},
+        "assignee_team_id": "ASSIGNEE_TEAM01",
+        "completed_at": "s2fc",
+        "created_at": "s2fd",
+        "creator": {},
+        "description": "s2ff",
+        "external_issue_reference": {},
+        "external_issue_reference_id": "EXTERNAL_ISSUE_REFERENCE01",
+        "follow_up_category_id": "FOLLOW_UP_CATEGORY01",
+        "follow_up_priority_option_id": "FOLLOW_UP_PRIORITY_OPTION01",
+        "incident_id": "INCIDENT01",
+        "label": [],
+        "priority": {},
+        "status": "s308",
+        "title": "s309",
+        "updated_at": "s30a"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+# BasicEscalationsListPathsResultV2Flow
+
+main: kit: flow: BasicEscalationsListPathsResultV2Flow:
+{
+  entity: "escalations_list_paths_result_v2",
+  kind: "basic",
+  name: "BasicEscalationsListPathsResultV2Flow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "escalations_list_paths_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicEscalationsListPathsResultV2Flow"
+}

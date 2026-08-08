@@ -1,0 +1,17 @@
+# SDK Targets.
+#
+# The extended set (java, csharp, swift, zig) is deliberately NOT built for
+# this demo. incident.io's response envelopes fail the generated entity smoke
+# tests in every one of those targets — csharp 37/362, swift 11/239,
+# zig 35/134 — while the six below are clean. Shipping a demo whose tests do
+# not pass would undo the point of the demo. Recorded as a toolchain gap in
+# the prospect working file; revisit once it is fixed upstream.
+
+
+@"ts.aontu"
+@"js.aontu"
+@"py.aontu"
+@"php.aontu"
+@"lua.aontu"
+@"go-mcp.aontu"
+@"go.aontu"

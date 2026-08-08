@@ -1,0 +1,18 @@
+# BasicStatusPagesCreateStatusPageMaintenanceResultV2Flow
+
+main: kit: flow: BasicStatusPagesCreateStatusPageMaintenanceResultV2Flow:
+{
+  entity: "status_pages_create_status_page_maintenance_result_v2",
+  kind: "basic",
+  name: "BasicStatusPagesCreateStatusPageMaintenanceResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "status_pages_create_status_page_maintenance_result_v2_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicStatusPagesCreateStatusPageMaintenanceResultV2Flow"
+}

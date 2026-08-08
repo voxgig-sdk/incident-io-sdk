@@ -1,0 +1,32 @@
+# BasicPostmortemDocumentsShowContentResultV1Flow
+
+main: kit: flow: BasicPostmortemDocumentsShowContentResultV1Flow:
+{
+  entity: "postmortem_documents_show_content_result_v1",
+  kind: "basic",
+  name: "BasicPostmortemDocumentsShowContentResultV1Flow",
+  step: [
+    {
+      input: {
+        ref: "postmortem_documents_show_content_result_v1_ref01",
+        srcdatavar: "postmortem_documents_show_content_result_v1_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "postmortem_documents_show_content_result_v101"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-postmortem_documents_show_content_result_v1_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPostmortemDocumentsShowContentResultV1Flow"
+}

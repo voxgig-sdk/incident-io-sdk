@@ -1,0 +1,9 @@
+# BasicCatalogV2Flow
+
+main: kit: flow: BasicCatalogV2Flow:
+{
+  entity: "catalog_v2",
+  kind: "basic",
+  name: "BasicCatalogV2Flow",
+  "key$": "BasicCatalogV2Flow"
+}

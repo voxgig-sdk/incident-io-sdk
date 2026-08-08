@@ -1,0 +1,45 @@
+{
+  "existing": {
+    "catalog_create_entry_result_v3": {
+      "CATALOG_CREATE_ENTRY_RESULT_V300": {
+        "alias": [],
+        "attribute_value": {},
+        "catalog_type_id": "CATALOG_TYPE01",
+        "external_id": "EXTERNAL01",
+        "name": "s40",
+        "rank": "s41",
+        "id": "CATALOG_CREATE_ENTRY_RESULT_V300"
+      },
+      "CATALOG_CREATE_ENTRY_RESULT_V301": {
+        "alias": [],
+        "attribute_value": {},
+        "catalog_type_id": "CATALOG_TYPE01",
+        "external_id": "EXTERNAL01",
+        "name": "s7c",
+        "rank": "s7d",
+        "id": "CATALOG_CREATE_ENTRY_RESULT_V301"
+      },
+      "CATALOG_CREATE_ENTRY_RESULT_V302": {
+        "alias": [],
+        "attribute_value": {},
+        "catalog_type_id": "CATALOG_TYPE01",
+        "external_id": "EXTERNAL01",
+        "name": "sb8",
+        "rank": "sb9",
+        "id": "CATALOG_CREATE_ENTRY_RESULT_V302"
+      }
+    }
+  },
+  "new": {
+    "catalog_create_entry_result_v3": {
+      "catalog_create_entry_result_v3_ref01": {
+        "alias": [],
+        "attribute_value": {},
+        "catalog_type_id": "CATALOG_TYPE01",
+        "external_id": "EXTERNAL01",
+        "name": "sf4",
+        "rank": "sf5"
+      }
+    }
+  }
+}

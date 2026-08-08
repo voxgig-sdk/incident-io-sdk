@@ -1,0 +1,18 @@
+# BasicStatusPagesCreateStatusPageRetrospectiveIncidentResultV2Flow
+
+main: kit: flow: BasicStatusPagesCreateStatusPageRetrospectiveIncidentResultV2Flow:
+{
+  entity: "status_pages_create_status_page_retrospective_incident_result_v2",
+  kind: "basic",
+  name: "BasicStatusPagesCreateStatusPageRetrospectiveIncidentResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "status_pages_create_status_page_retrospective_incident_result_v2_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicStatusPagesCreateStatusPageRetrospectiveIncidentResultV2Flow"
+}

@@ -1,0 +1,18 @@
+# BasicIncidentMembershipFlow
+
+main: kit: flow: BasicIncidentMembershipFlow:
+{
+  entity: "incident_membership",
+  kind: "basic",
+  name: "BasicIncidentMembershipFlow",
+  step: [
+    {
+      input: {
+        ref: "incident_membership_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicIncidentMembershipFlow"
+}

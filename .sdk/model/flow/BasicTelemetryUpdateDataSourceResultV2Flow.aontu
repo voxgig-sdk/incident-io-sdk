@@ -1,0 +1,29 @@
+# BasicTelemetryUpdateDataSourceResultV2Flow
+
+main: kit: flow: BasicTelemetryUpdateDataSourceResultV2Flow:
+{
+  entity: "telemetry_update_data_source_result_v2",
+  kind: "basic",
+  name: "BasicTelemetryUpdateDataSourceResultV2Flow",
+  step: [
+    {
+      input: {
+        ref: "telemetry_update_data_source_result_v2_ref01",
+        srcdatavar: "telemetry_update_data_source_result_v2_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-telemetry_update_data_source_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicTelemetryUpdateDataSourceResultV2Flow"
+}

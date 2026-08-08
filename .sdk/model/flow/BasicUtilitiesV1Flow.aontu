@@ -1,0 +1,28 @@
+# BasicUtilitiesV1Flow
+
+main: kit: flow: BasicUtilitiesV1Flow:
+{
+  entity: "utilities_v1",
+  kind: "basic",
+  name: "BasicUtilitiesV1Flow",
+  step: [
+    {
+      input: {
+        ref: "utilities_v1_ref01",
+        srcdatavar: "utilities_v1_ref01_data",
+        suffix: "_dt0"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-utilities_v1_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicUtilitiesV1Flow"
+}
