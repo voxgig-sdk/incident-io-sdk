@@ -1,0 +1,255 @@
+# Entity: schedule
+
+main: kit: entity: schedule: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "annotation"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "config"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "current_shift"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "holidays_public_config"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "next_shift"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "permalink"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "schedule"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "team_id"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "timezone"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "schedule"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/schedules"
+          parts: [
+            "v2"
+            "schedules"
+          ]
+          transform: {
+            req: {
+              schedule: "`reqdata`"
+            }
+            res: "`body.schedule`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/schedules"
+          parts: [
+            "v2"
+            "schedules"
+          ]
+          select: {
+            exist: [
+              "after"
+              "page_size"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/schedules/{id}"
+          parts: [
+            "v2"
+            "schedules"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.schedule`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/schedules/{id}"
+          parts: [
+            "v2"
+            "schedules"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/schedules/{id}"
+          parts: [
+            "v2"
+            "schedules"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: {
+              schedule: "`reqdata`"
+            }
+            res: "`body.schedule`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

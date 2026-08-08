@@ -1,0 +1,61 @@
+{
+  "existing": {
+    "status_page_incident": {
+      "STATUS_PAGE_INCIDENT00": {
+        "component_impact": [],
+        "component_status": [],
+        "id": "STATUS_PAGE_INCIDENT00",
+        "idempotency_key": "s71",
+        "incident_status": "s72",
+        "message": "s73",
+        "name": "s74",
+        "notify_subscriber": false,
+        "published_at": "s76",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      },
+      "STATUS_PAGE_INCIDENT01": {
+        "component_impact": [],
+        "component_status": [],
+        "id": "STATUS_PAGE_INCIDENT01",
+        "idempotency_key": "sdf",
+        "incident_status": "se0",
+        "message": "se1",
+        "name": "se2",
+        "notify_subscriber": false,
+        "published_at": "se4",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      },
+      "STATUS_PAGE_INCIDENT02": {
+        "component_impact": [],
+        "component_status": [],
+        "id": "STATUS_PAGE_INCIDENT02",
+        "idempotency_key": "s14d",
+        "incident_status": "s14e",
+        "message": "s14f",
+        "name": "s150",
+        "notify_subscriber": false,
+        "published_at": "s152",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      }
+    }
+  },
+  "new": {
+    "status_page_incident": {
+      "status_page_incident_ref01": {
+        "component_impact": [],
+        "component_status": [],
+        "idempotency_key": "s1bb",
+        "incident_status": "s1bc",
+        "message": "s1bd",
+        "name": "s1be",
+        "notify_subscriber": false,
+        "published_at": "s1c0",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      }
+    }
+  }
+}

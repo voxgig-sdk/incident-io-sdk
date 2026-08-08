@@ -1,0 +1,61 @@
+{
+  "existing": {
+    "schedule_sync_rule": {
+      "SCHEDULE_SYNC_RULE00": {
+        "annotation": {},
+        "created_at": "s6f",
+        "id": "SCHEDULE_SYNC_RULE00",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_rule": {},
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s77",
+        "updated_at": "s78"
+      },
+      "SCHEDULE_SYNC_RULE01": {
+        "annotation": {},
+        "created_at": "sdd",
+        "id": "SCHEDULE_SYNC_RULE01",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_rule": {},
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "se5",
+        "updated_at": "se6"
+      },
+      "SCHEDULE_SYNC_RULE02": {
+        "annotation": {},
+        "created_at": "s14b",
+        "id": "SCHEDULE_SYNC_RULE02",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_rule": {},
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s153",
+        "updated_at": "s154"
+      }
+    }
+  },
+  "new": {
+    "schedule_sync_rule": {
+      "schedule_sync_rule_ref01": {
+        "annotation": {},
+        "created_at": "s1b9",
+        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_sync_rule": {},
+        "schedule_sync_target": {},
+        "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
+        "sync_type": "s1c1",
+        "updated_at": "s1c2"
+      }
+    }
+  }
+}

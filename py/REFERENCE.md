@@ -69,6 +69,22 @@ Create a new `AlertSourceEntity` instance. Pass `None` for no initial data.
 
 Create a new `ApiKeyEntity` instance. Pass `None` for no initial data.
 
+#### `CatalogEntry(data=None)`
+
+Create a new `CatalogEntryEntity` instance. Pass `None` for no initial data.
+
+#### `CatalogResource(data=None)`
+
+Create a new `CatalogResourceEntity` instance. Pass `None` for no initial data.
+
+#### `CatalogType(data=None)`
+
+Create a new `CatalogTypeEntity` instance. Pass `None` for no initial data.
+
+#### `CatalogTypeSchema(data=None)`
+
+Create a new `CatalogTypeSchemaEntity` instance. Pass `None` for no initial data.
+
 #### `CustomField(data=None)`
 
 Create a new `CustomFieldEntity` instance. Pass `None` for no initial data.
@@ -77,6 +93,10 @@ Create a new `CustomFieldEntity` instance. Pass `None` for no initial data.
 
 Create a new `CustomFieldOptionEntity` instance. Pass `None` for no initial data.
 
+#### `Escalation(data=None)`
+
+Create a new `EscalationEntity` instance. Pass `None` for no initial data.
+
 #### `FollowUp(data=None)`
 
 Create a new `FollowUpEntity` instance. Pass `None` for no initial data.
@@ -84,6 +104,10 @@ Create a new `FollowUpEntity` instance. Pass `None` for no initial data.
 #### `Incident(data=None)`
 
 Create a new `IncidentEntity` instance. Pass `None` for no initial data.
+
+#### `IncidentAlert(data=None)`
+
+Create a new `IncidentAlertEntity` instance. Pass `None` for no initial data.
 
 #### `IncidentAttachment(data=None)`
 
@@ -137,13 +161,65 @@ Create a new `MaintenanceWindowEntity` instance. Pass `None` for no initial data
 
 Create a new `PostmortemDocumentEntity` instance. Pass `None` for no initial data.
 
+#### `Schedule(data=None)`
+
+Create a new `ScheduleEntity` instance. Pass `None` for no initial data.
+
+#### `ScheduleEntry(data=None)`
+
+Create a new `ScheduleEntryEntity` instance. Pass `None` for no initial data.
+
+#### `ScheduleReplica(data=None)`
+
+Create a new `ScheduleReplicaEntity` instance. Pass `None` for no initial data.
+
+#### `ScheduleSyncRule(data=None)`
+
+Create a new `ScheduleSyncRuleEntity` instance. Pass `None` for no initial data.
+
+#### `ScheduleSyncTarget(data=None)`
+
+Create a new `ScheduleSyncTargetEntity` instance. Pass `None` for no initial data.
+
 #### `Secret(data=None)`
 
 Create a new `SecretEntity` instance. Pass `None` for no initial data.
 
+#### `Severity(data=None)`
+
+Create a new `SeverityEntity` instance. Pass `None` for no initial data.
+
+#### `StatusPage(data=None)`
+
+Create a new `StatusPageEntity` instance. Pass `None` for no initial data.
+
+#### `StatusPageIncident(data=None)`
+
+Create a new `StatusPageIncidentEntity` instance. Pass `None` for no initial data.
+
+#### `StatusPageIncidentUpdate(data=None)`
+
+Create a new `StatusPageIncidentUpdateEntity` instance. Pass `None` for no initial data.
+
+#### `StatusPageMaintenance(data=None)`
+
+Create a new `StatusPageMaintenanceEntity` instance. Pass `None` for no initial data.
+
+#### `StatusPageMaintenanceUpdate(data=None)`
+
+Create a new `StatusPageMaintenanceUpdateEntity` instance. Pass `None` for no initial data.
+
+#### `StatusPageStructure(data=None)`
+
+Create a new `StatusPageStructureEntity` instance. Pass `None` for no initial data.
+
 #### `Team(data=None)`
 
 Create a new `TeamEntity` instance. Pass `None` for no initial data.
+
+#### `TelemetryDataSource(data=None)`
+
+Create a new `TelemetryDataSourceEntity` instance. Pass `None` for no initial data.
 
 #### `User(data=None)`
 
@@ -204,11 +280,30 @@ action = client.Action()
 | `completed_at` | `str` | No |  |
 | `created_at` | `str` | Yes |  |
 | `creator` | `dict` | Yes |  |
-| `description` | `str` | Yes |  |
+| `description` | `str` | No |  |
+| `external_issue_reference` | `dict` | No |  |
+| `follow_up` | `bool` | Yes |  |
 | `id` | `str` | Yes |  |
 | `incident_id` | `str` | Yes |  |
 | `status` | `str` | Yes |  |
 | `updated_at` | `str` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignee` | - | - | - | - | - |
+| `assignee_id` | - | - | - | - | - |
+| `completed_at` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `creator` | - | - | - | - | - |
+| `description` | Yes | Yes | Yes | Yes | - |
+| `external_issue_reference` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `incident_id` | - | - | - | - | - |
+| `status` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -221,7 +316,7 @@ result = client.Action().create({
     "assignee": {},  # dict
     "created_at": "example_created_at",  # str
     "creator": {},  # dict
-    "description": "example_description",  # str
+    "follow_up": True,  # bool
     "id": "example_id",  # str
     "incident_id": "example_incident_id",  # str
     "status": "example_status",  # str
@@ -319,6 +414,23 @@ alert = client.Alert()
 | `updated_at` | `str` | Yes |  |
 
 ### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.Alert().create({
+    "id": "example_id",  # str
+    "alert_source_id": "example_alert_source_id",  # str
+    "attribute": [],  # list
+    "created_at": "example_created_at",  # str
+    "deduplication_key": "example_deduplication_key",  # str
+    "status": "example_status",  # str
+    "title": "example_title",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
 
 #### `list(reqmatch=None, ctrl=None) -> list`
 
@@ -591,6 +703,7 @@ alert_route = client.AlertRoute()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `alert_source` | `list` | Yes |  |
+| `channel_config` | `list` | Yes |  |
 | `condition_group` | `list` | Yes |  |
 | `created_at` | `str` | No |  |
 | `enabled` | `bool` | Yes |  |
@@ -599,8 +712,10 @@ alert_route = client.AlertRoute()
 | `grouping_config` | `dict` | Yes |  |
 | `id` | `str` | Yes |  |
 | `incident_config` | `dict` | Yes |  |
+| `incident_template` | `dict` | Yes |  |
 | `is_private` | `bool` | Yes |  |
 | `message_config` | `dict` | Yes |  |
+| `message_template` | `dict` | No |  |
 | `name` | `str` | Yes |  |
 | `owning_team_id` | `list` | No |  |
 | `updated_at` | `str` | No |  |
@@ -615,6 +730,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 ```python
 result = client.AlertRoute().create({
     "alert_source": [],  # list
+    "channel_config": [],  # list
     "condition_group": [],  # list
     "enabled": True,  # bool
     "escalation_config": {},  # dict
@@ -622,6 +738,7 @@ result = client.AlertRoute().create({
     "grouping_config": {},  # dict
     "id": "example_id",  # str
     "incident_config": {},  # dict
+    "incident_template": {},  # dict
     "is_private": True,  # bool
     "message_config": {},  # dict
     "name": "example_name",  # str
@@ -818,6 +935,7 @@ api_key = client.ApiKey()
 | `comment` | `str` | No |  |
 | `created_at` | `str` | Yes |  |
 | `creator` | `dict` | Yes |  |
+| `grace_period_minute` | `int` | Yes |  |
 | `id` | `str` | Yes |  |
 | `last_used_at` | `str` | No |  |
 | `name` | `str` | Yes |  |
@@ -838,6 +956,7 @@ Create a new entity with the given data. Returns the created entity data and rai
 result = client.ApiKey().create({
     "created_at": "example_created_at",  # str
     "creator": {},  # dict
+    "grace_period_minute": 1,  # int
     "id": "example_id",  # str
     "name": "example_name",  # str
     "role": [],  # list
@@ -915,6 +1034,428 @@ Return the entity name.
 
 ---
 
+## CatalogEntryEntity
+
+```python
+catalog_entry = client.CatalogEntry()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alias` | `list` | No |  |
+| `archived_at` | `str` | No |  |
+| `attribute_value` | `dict` | Yes |  |
+| `catalog_entry` | `dict` | Yes |  |
+| `catalog_type` | `dict` | Yes |  |
+| `catalog_type_id` | `str` | Yes |  |
+| `created_at` | `str` | Yes |  |
+| `external_id` | `str` | No |  |
+| `id` | `str` | Yes |  |
+| `name` | `str` | Yes |  |
+| `rank` | `int` | No |  |
+| `update_attribute` | `list` | No |  |
+| `updated_at` | `str` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `alias` | - | Yes | - | - |
+| `archived_at` | - | - | - | - |
+| `attribute_value` | - | - | - | - |
+| `catalog_entry` | - | - | - | - |
+| `catalog_type` | - | - | - | - |
+| `catalog_type_id` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `external_id` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | Yes | - | - |
+| `update_attribute` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.CatalogEntry().create({
+    "attribute_value": {},  # dict
+    "catalog_entry": {},  # dict
+    "catalog_type": {},  # dict
+    "catalog_type_id": "example_catalog_type_id",  # str
+    "created_at": "example_created_at",  # str
+    "id": "example_id",  # str
+    "name": "example_name",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.CatalogEntry().list()
+for catalog_entry in results:
+    print(catalog_entry)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.CatalogEntry().load({"id": "catalog_entry_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> dict`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
+
+```python
+result = client.CatalogEntry().update({
+    "id": "catalog_entry_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogEntryEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## CatalogResourceEntity
+
+```python
+catalog_resource = client.CatalogResource()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `category` | `str` | Yes |  |
+| `description` | `str` | Yes |  |
+| `engine_resource_type` | `str` | Yes |  |
+| `label` | `str` | Yes |  |
+| `type` | `str` | Yes |  |
+| `value_docstring` | `str` | Yes |  |
+
+### Operations
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.CatalogResource().list()
+for catalog_resource in results:
+    print(catalog_resource)
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogResourceEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## CatalogTypeEntity
+
+```python
+catalog_type = client.CatalogType()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `dict` | Yes |  |
+| `category` | `list` | Yes |  |
+| `color` | `str` | Yes |  |
+| `created_at` | `str` | Yes |  |
+| `description` | `str` | Yes |  |
+| `dynamic_resource_parameter` | `str` | No |  |
+| `engine_resource_type` | `str` | Yes |  |
+| `estimated_count` | `int` | No |  |
+| `icon` | `str` | Yes |  |
+| `id` | `str` | Yes |  |
+| `is_editable` | `bool` | Yes |  |
+| `is_team_type` | `bool` | No |  |
+| `last_synced_at` | `str` | No |  |
+| `name` | `str` | Yes |  |
+| `owning_team_id` | `list` | No |  |
+| `ranked` | `bool` | Yes |  |
+| `registry_type` | `str` | No |  |
+| `required_integration` | `list` | No |  |
+| `schema` | `dict` | Yes |  |
+| `semantic_type` | `str` | Yes |  |
+| `source_repo_url` | `str` | No |  |
+| `type_name` | `str` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+| `use_name_as_identifier` | `bool` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | Yes | Yes |
+| `category` | - | - | Yes | Yes |
+| `color` | - | - | Yes | Yes |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - |
+| `engine_resource_type` | - | - | - | - |
+| `estimated_count` | - | - | - | - |
+| `icon` | - | - | Yes | Yes |
+| `id` | - | - | - | - |
+| `is_editable` | - | - | - | - |
+| `is_team_type` | - | - | - | - |
+| `last_synced_at` | - | - | - | - |
+| `name` | - | - | - | - |
+| `owning_team_id` | - | - | - | - |
+| `ranked` | - | - | Yes | Yes |
+| `registry_type` | - | - | - | - |
+| `required_integration` | - | - | - | - |
+| `schema` | - | - | - | - |
+| `semantic_type` | - | - | - | - |
+| `source_repo_url` | - | - | - | - |
+| `type_name` | - | - | Yes | - |
+| `updated_at` | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.CatalogType().create({
+    "annotation": {},  # dict
+    "category": [],  # list
+    "color": "example_color",  # str
+    "created_at": "example_created_at",  # str
+    "description": "example_description",  # str
+    "engine_resource_type": "example_engine_resource_type",  # str
+    "icon": "example_icon",  # str
+    "id": "example_id",  # str
+    "is_editable": True,  # bool
+    "name": "example_name",  # str
+    "ranked": True,  # bool
+    "schema": {},  # dict
+    "semantic_type": "example_semantic_type",  # str
+    "type_name": "example_type_name",  # str
+    "updated_at": "example_updated_at",  # str
+    "use_name_as_identifier": True,  # bool
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.CatalogType().list()
+for catalog_type in results:
+    print(catalog_type)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.CatalogType().load({"id": "catalog_type_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> dict`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
+
+```python
+result = client.CatalogType().update({
+    "id": "catalog_type_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogTypeEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## CatalogTypeSchemaEntity
+
+```python
+catalog_type_schema = client.CatalogTypeSchema()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `dict` | Yes |  |
+| `attribute` | `list` | Yes |  |
+| `category` | `list` | Yes |  |
+| `color` | `str` | Yes |  |
+| `created_at` | `str` | Yes |  |
+| `description` | `str` | Yes |  |
+| `dynamic_resource_parameter` | `str` | No |  |
+| `engine_resource_type` | `str` | Yes |  |
+| `estimated_count` | `int` | No |  |
+| `icon` | `str` | Yes |  |
+| `id` | `str` | Yes |  |
+| `is_editable` | `bool` | Yes |  |
+| `is_team_type` | `bool` | No |  |
+| `last_synced_at` | `str` | No |  |
+| `name` | `str` | Yes |  |
+| `owning_team_id` | `list` | No |  |
+| `ranked` | `bool` | Yes |  |
+| `registry_type` | `str` | No |  |
+| `required_integration` | `list` | No |  |
+| `schema` | `dict` | Yes |  |
+| `semantic_type` | `str` | Yes |  |
+| `source_repo_url` | `str` | No |  |
+| `type_name` | `str` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+| `use_name_as_identifier` | `bool` | Yes |  |
+| `version` | `int` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.CatalogTypeSchema().create({
+    "catalog_type_id": "example_catalog_type_id",  # str
+    "annotation": {},  # dict
+    "attribute": [],  # list
+    "category": [],  # list
+    "color": "example_color",  # str
+    "created_at": "example_created_at",  # str
+    "description": "example_description",  # str
+    "engine_resource_type": "example_engine_resource_type",  # str
+    "icon": "example_icon",  # str
+    "id": "example_id",  # str
+    "is_editable": True,  # bool
+    "name": "example_name",  # str
+    "ranked": True,  # bool
+    "schema": {},  # dict
+    "semantic_type": "example_semantic_type",  # str
+    "type_name": "example_type_name",  # str
+    "updated_at": "example_updated_at",  # str
+    "use_name_as_identifier": True,  # bool
+    "version": 1,  # int
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogTypeSchemaEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```python
@@ -935,6 +1476,13 @@ custom_field = client.CustomField()
 | `helptext_catalog_attribute_id` | `str` | No |  |
 | `id` | `str` | Yes |  |
 | `name` | `str` | Yes |  |
+| `option` | `list` | Yes |  |
+| `required` | `str` | No |  |
+| `required_v2` | `str` | No |  |
+| `show_before_closure` | `bool` | Yes |  |
+| `show_before_creation` | `bool` | Yes |  |
+| `show_before_update` | `bool` | Yes |  |
+| `show_in_announcement_post` | `bool` | No |  |
 | `updated_at` | `str` | Yes |  |
 
 ### Operations
@@ -952,6 +1500,10 @@ result = client.CustomField().create({
     "fixed_filter": {},  # dict
     "id": "example_id",  # str
     "name": "example_name",  # str
+    "option": [],  # list
+    "show_before_closure": True,  # bool
+    "show_before_creation": True,  # bool
+    "show_before_update": True,  # bool
     "updated_at": "example_updated_at",  # str
 })
 ```
@@ -1127,6 +1679,101 @@ Return the entity name.
 
 ---
 
+## EscalationEntity
+
+```python
+escalation = client.Escalation()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `str` | Yes |  |
+| `creator` | `dict` | Yes |  |
+| `description` | `str` | No |  |
+| `escalation_path_id` | `str` | No |  |
+| `event` | `list` | Yes |  |
+| `id` | `str` | Yes |  |
+| `idempotency_key` | `str` | Yes |  |
+| `incident_id` | `str` | No |  |
+| `priority` | `dict` | Yes |  |
+| `related_alert` | `list` | Yes |  |
+| `related_incident` | `list` | Yes |  |
+| `status` | `str` | Yes |  |
+| `title` | `str` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+| `user_id` | `list` | No |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.Escalation().create({
+    "created_at": "example_created_at",  # str
+    "creator": {},  # dict
+    "event": [],  # list
+    "id": "example_id",  # str
+    "idempotency_key": "example_idempotency_key",  # str
+    "priority": {},  # dict
+    "related_alert": [],  # list
+    "related_incident": [],  # list
+    "status": "example_status",  # str
+    "title": "example_title",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.Escalation().list()
+for escalation in results:
+    print(escalation)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.Escalation().load({"id": "escalation_id"})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `EscalationEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpEntity
 
 ```python
@@ -1289,6 +1936,7 @@ incident = client.Incident()
 | `has_debrief` | `bool` | No |  |
 | `id` | `str` | Yes |  |
 | `idempotency_key` | `str` | Yes |  |
+| `incident` | `dict` | Yes |  |
 | `incident_role_assignment` | `list` | Yes |  |
 | `incident_status` | `dict` | Yes |  |
 | `incident_status_id` | `str` | No |  |
@@ -1297,6 +1945,7 @@ incident = client.Incident()
 | `incident_type_id` | `str` | No |  |
 | `mode` | `str` | Yes |  |
 | `name` | `str` | Yes |  |
+| `notify_incident_channel` | `bool` | Yes |  |
 | `permalink` | `str` | No |  |
 | `postmortem_document_id` | `list` | No |  |
 | `postmortem_document_url` | `str` | No |  |
@@ -1308,7 +1957,11 @@ incident = client.Incident()
 | `slack_channel_name` | `str` | No |  |
 | `slack_channel_name_override` | `str` | No |  |
 | `slack_team_id` | `str` | Yes |  |
+| `source_message_channel_id` | `str` | No |  |
+| `source_message_timestamp` | `str` | No |  |
+| `status` | `str` | Yes |  |
 | `summary` | `str` | No |  |
+| `timestamp` | `list` | No |  |
 | `updated_at` | `str` | Yes |  |
 | `visibility` | `str` | Yes |  |
 | `workload_minutes_late` | `float` | No |  |
@@ -1329,6 +1982,7 @@ incident = client.Incident()
 | `has_debrief` | - | - | - |
 | `id` | - | - | - |
 | `idempotency_key` | - | - | - |
+| `incident` | - | - | - |
 | `incident_role_assignment` | - | - | Yes |
 | `incident_status` | - | - | - |
 | `incident_status_id` | - | - | - |
@@ -1337,6 +1991,7 @@ incident = client.Incident()
 | `incident_type_id` | - | - | - |
 | `mode` | - | - | Yes |
 | `name` | - | - | Yes |
+| `notify_incident_channel` | - | - | - |
 | `permalink` | - | - | - |
 | `postmortem_document_id` | - | - | - |
 | `postmortem_document_url` | - | - | - |
@@ -1348,7 +2003,11 @@ incident = client.Incident()
 | `slack_channel_name` | - | - | - |
 | `slack_channel_name_override` | - | - | - |
 | `slack_team_id` | - | - | Yes |
+| `source_message_channel_id` | - | - | - |
+| `source_message_timestamp` | - | - | - |
+| `status` | - | - | Yes |
 | `summary` | - | - | - |
+| `timestamp` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -1370,15 +2029,18 @@ result = client.Incident().create({
     "external_issue_reference": {},  # dict
     "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
+    "incident": {},  # dict
     "incident_role_assignment": [],  # list
     "incident_status": {},  # dict
     "incident_type": {},  # dict
     "mode": "example_mode",  # str
     "name": "example_name",  # str
+    "notify_incident_channel": True,  # bool
     "reference": "example_reference",  # str
     "severity": {},  # dict
     "slack_channel_id": "example_slack_channel_id",  # str
     "slack_team_id": "example_slack_team_id",  # str
+    "status": "example_status",  # str
     "updated_at": "example_updated_at",  # str
     "visibility": "example_visibility",  # str
 })
@@ -1423,6 +2085,62 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `IncidentEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## IncidentAlertEntity
+
+```python
+incident_alert = client.IncidentAlert()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alert` | `dict` | Yes |  |
+| `alert_route_id` | `str` | No |  |
+| `id` | `str` | Yes |  |
+| `incident` | `dict` | Yes |  |
+
+### Operations
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.IncidentAlert().list()
+for incident_alert in results:
+    print(incident_alert)
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `IncidentAlertEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -1738,9 +2456,24 @@ incident_role = client.IncidentRole()
 | `id` | `str` | Yes |  |
 | `instruction` | `str` | Yes |  |
 | `name` | `str` | Yes |  |
+| `required` | `bool` | No |  |
 | `role_type` | `str` | Yes |  |
 | `shortform` | `str` | Yes |  |
 | `updated_at` | `str` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `instruction` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `required` | - | - | Yes | - | - |
+| `role_type` | - | - | - | - | - |
+| `shortform` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2406,6 +3139,484 @@ Return the entity name.
 
 ---
 
+## ScheduleEntity
+
+```python
+schedule = client.Schedule()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `dict` | Yes |  |
+| `config` | `dict` | Yes |  |
+| `created_at` | `str` | Yes |  |
+| `current_shift` | `list` | No |  |
+| `holidays_public_config` | `dict` | Yes |  |
+| `id` | `str` | Yes |  |
+| `name` | `str` | Yes |  |
+| `next_shift` | `list` | No |  |
+| `permalink` | `str` | Yes |  |
+| `schedule` | `dict` | Yes |  |
+| `team_id` | `list` | Yes |  |
+| `timezone` | `str` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.Schedule().create({
+    "annotation": {},  # dict
+    "config": {},  # dict
+    "created_at": "example_created_at",  # str
+    "holidays_public_config": {},  # dict
+    "id": "example_id",  # str
+    "name": "example_name",  # str
+    "permalink": "example_permalink",  # str
+    "schedule": {},  # dict
+    "team_id": [],  # list
+    "timezone": "example_timezone",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.Schedule().list()
+for schedule in results:
+    print(schedule)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.Schedule().load({"id": "schedule_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> dict`
+
+Remove the entity matching the given criteria. Raises on error.
+
+```python
+result = client.Schedule().remove({"id": "schedule_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> dict`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
+
+```python
+result = client.Schedule().update({
+    "id": "schedule_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## ScheduleEntryEntity
+
+```python
+schedule_entry = client.ScheduleEntry()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `pagination_meta` | `dict` | Yes |  |
+| `schedule_entry` | `dict` | Yes |  |
+
+### Operations
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.ScheduleEntry().load()
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleEntryEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## ScheduleReplicaEntity
+
+```python
+schedule_replica = client.ScheduleReplica()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `str` | Yes |  |
+| `id` | `str` | Yes |  |
+| `last_sync_error` | `str` | No |  |
+| `last_synced_at` | `str` | No |  |
+| `mirror_window_day` | `int` | No |  |
+| `replica_fallback_user_id` | `str` | Yes |  |
+| `replica_provider` | `str` | Yes |  |
+| `replica_provider_id` | `str` | Yes |  |
+| `schedule_id` | `str` | Yes |  |
+| `schedule_replica` | `dict` | Yes |  |
+| `source` | `list` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+| `user_status` | `list` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.ScheduleReplica().create({
+    "id": "example_id",  # str
+    "created_at": "example_created_at",  # str
+    "replica_fallback_user_id": "example_replica_fallback_user_id",  # str
+    "replica_provider": "example_replica_provider",  # str
+    "replica_provider_id": "example_replica_provider_id",  # str
+    "schedule_id": "example_schedule_id",  # str
+    "schedule_replica": {},  # dict
+    "source": [],  # list
+    "updated_at": "example_updated_at",  # str
+    "user_status": [],  # list
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.ScheduleReplica().list()
+for schedule_replica in results:
+    print(schedule_replica)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.ScheduleReplica().load({"id": "schedule_replica_id", "schedule_id": "schedule_id"})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleReplicaEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## ScheduleSyncRuleEntity
+
+```python
+schedule_sync_rule = client.ScheduleSyncRule()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `dict` | No |  |
+| `created_at` | `str` | Yes |  |
+| `id` | `str` | Yes |  |
+| `permanent_member_user_id` | `list` | Yes |  |
+| `rotation_id` | `str` | No |  |
+| `schedule_id` | `str` | Yes |  |
+| `schedule_sync_rule` | `dict` | Yes |  |
+| `schedule_sync_target` | `dict` | Yes |  |
+| `schedule_sync_target_id` | `str` | Yes |  |
+| `sync_type` | `str` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `id` | - | - | - | - |
+| `permanent_member_user_id` | - | - | - | Yes |
+| `rotation_id` | - | - | - | - |
+| `schedule_id` | - | - | - | - |
+| `schedule_sync_rule` | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - |
+| `sync_type` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.ScheduleSyncRule().create({
+    "id": "example_id",  # str
+    "created_at": "example_created_at",  # str
+    "permanent_member_user_id": [],  # list
+    "schedule_id": "example_schedule_id",  # str
+    "schedule_sync_rule": {},  # dict
+    "schedule_sync_target": {},  # dict
+    "schedule_sync_target_id": "example_schedule_sync_target_id",  # str
+    "sync_type": "example_sync_type",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.ScheduleSyncRule().list()
+for schedule_sync_rule in results:
+    print(schedule_sync_rule)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.ScheduleSyncRule().load({"id": "schedule_sync_rule_id", "schedule_id": "schedule_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> dict`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
+
+```python
+result = client.ScheduleSyncRule().update({
+    "id": "schedule_sync_rule_id",
+    "schedule_id": "schedule_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleSyncRuleEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## ScheduleSyncTargetEntity
+
+```python
+schedule_sync_target = client.ScheduleSyncTarget()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `add_bot_to_group` | `bool` | Yes |  |
+| `annotation` | `dict` | No |  |
+| `created_at` | `str` | Yes |  |
+| `id` | `str` | Yes |  |
+| `linked_schedule` | `list` | Yes |  |
+| `schedule_sync_target` | `dict` | Yes |  |
+| `slack_team_id` | `str` | Yes |  |
+| `slack_user_group_id` | `str` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.ScheduleSyncTarget().create({
+    "add_bot_to_group": True,  # bool
+    "created_at": "example_created_at",  # str
+    "id": "example_id",  # str
+    "linked_schedule": [],  # list
+    "schedule_sync_target": {},  # dict
+    "slack_team_id": "example_slack_team_id",  # str
+    "slack_user_group_id": "example_slack_user_group_id",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.ScheduleSyncTarget().list()
+for schedule_sync_target in results:
+    print(schedule_sync_target)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.ScheduleSyncTarget().load({"id": "schedule_sync_target_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> dict`
+
+Remove the entity matching the given criteria. Raises on error.
+
+```python
+result = client.ScheduleSyncTarget().remove({"id": "schedule_sync_target_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> dict`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
+
+```python
+result = client.ScheduleSyncTarget().update({
+    "id": "schedule_sync_target_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleSyncTargetEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## SecretEntity
 
 ```python
@@ -2421,7 +3632,7 @@ secret = client.Secret()
 | `id` | `str` | Yes |  |
 | `last_four_char` | `str` | No |  |
 | `name` | `str` | Yes |  |
-| `owning_team_id` | `list` | No |  |
+| `owning_team_id` | `list` | Yes |  |
 | `secret` | `dict` | Yes |  |
 | `updated_at` | `str` | Yes |  |
 | `value` | `str` | Yes |  |
@@ -2436,7 +3647,7 @@ secret = client.Secret()
 | `id` | - | - | - | - | - |
 | `last_four_char` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
-| `owning_team_id` | - | Yes | - | Yes | - |
+| `owning_team_id` | - | - | Yes | Yes | - |
 | `secret` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 | `value` | - | - | - | - | - |
@@ -2453,6 +3664,7 @@ result = client.Secret().create({
     "created_at": "example_created_at",  # str
     "id": "example_id",  # str
     "name": "example_name",  # str
+    "owning_team_id": [],  # list
     "secret": {},  # dict
     "updated_at": "example_updated_at",  # str
     "value": "example_value",  # str
@@ -2526,6 +3738,530 @@ Return the entity name.
 
 ---
 
+## SeverityEntity
+
+```python
+severity = client.Severity()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `str` | Yes |  |
+| `description` | `str` | Yes |  |
+| `id` | `str` | Yes |  |
+| `name` | `str` | Yes |  |
+| `rank` | `int` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | - | Yes | Yes |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.Severity().create({
+    "created_at": "example_created_at",  # str
+    "description": "example_description",  # str
+    "id": "example_id",  # str
+    "name": "example_name",  # str
+    "rank": 1,  # int
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.Severity().list()
+for severity in results:
+    print(severity)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.Severity().load({"id": "severity_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> dict`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
+
+```python
+result = client.Severity().update({
+    "id": "severity_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `SeverityEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## StatusPageEntity
+
+```python
+status_page = client.StatusPage()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `description` | `str` | No |  |
+| `id` | `str` | Yes |  |
+| `name` | `str` | Yes |  |
+| `public_url` | `str` | No |  |
+
+### Operations
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.StatusPage().list()
+for status_page in results:
+    print(status_page)
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## StatusPageIncidentEntity
+
+```python
+status_page_incident = client.StatusPageIncident()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_impact` | `list` | Yes |  |
+| `component_status` | `list` | No |  |
+| `id` | `str` | Yes |  |
+| `idempotency_key` | `str` | Yes |  |
+| `incident_status` | `str` | Yes |  |
+| `message` | `str` | Yes |  |
+| `name` | `str` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `published_at` | `str` | Yes |  |
+| `status_page_id` | `str` | Yes |  |
+| `update` | `list` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.StatusPageIncident().create({
+    "component_impact": [],  # list
+    "id": "example_id",  # str
+    "idempotency_key": "example_idempotency_key",  # str
+    "incident_status": "example_incident_status",  # str
+    "message": "example_message",  # str
+    "name": "example_name",  # str
+    "notify_subscriber": True,  # bool
+    "published_at": "example_published_at",  # str
+    "status_page_id": "example_status_page_id",  # str
+    "update": [],  # list
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.StatusPageIncident().list()
+for status_page_incident in results:
+    print(status_page_incident)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.StatusPageIncident().load({"id": "status_page_incident_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> dict`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
+
+```python
+result = client.StatusPageIncident().update({
+    "id": "status_page_incident_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageIncidentEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## StatusPageIncidentUpdateEntity
+
+```python
+status_page_incident_update = client.StatusPageIncidentUpdate()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `list` | No |  |
+| `incident_status` | `str` | No |  |
+| `message` | `str` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `status_page_incident_id` | `str` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.StatusPageIncidentUpdate().create({
+    "message": "example_message",  # str
+    "notify_subscriber": True,  # bool
+    "status_page_incident_id": "example_status_page_incident_id",  # str
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageIncidentUpdateEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## StatusPageMaintenanceEntity
+
+```python
+status_page_maintenance = client.StatusPageMaintenance()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `affected_component_id` | `list` | Yes |  |
+| `component_maintenance_period` | `list` | Yes |  |
+| `end_at` | `str` | Yes |  |
+| `id` | `str` | Yes |  |
+| `idempotency_key` | `str` | Yes |  |
+| `maintenance_status` | `str` | Yes |  |
+| `message` | `str` | Yes |  |
+| `name` | `str` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `published_at` | `str` | Yes |  |
+| `start_at` | `str` | Yes |  |
+| `status_page_id` | `str` | Yes |  |
+| `update` | `list` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.StatusPageMaintenance().create({
+    "affected_component_id": [],  # list
+    "component_maintenance_period": [],  # list
+    "end_at": "example_end_at",  # str
+    "id": "example_id",  # str
+    "idempotency_key": "example_idempotency_key",  # str
+    "maintenance_status": "example_maintenance_status",  # str
+    "message": "example_message",  # str
+    "name": "example_name",  # str
+    "notify_subscriber": True,  # bool
+    "published_at": "example_published_at",  # str
+    "start_at": "example_start_at",  # str
+    "status_page_id": "example_status_page_id",  # str
+    "update": [],  # list
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
+
+```python
+results = client.StatusPageMaintenance().list()
+for status_page_maintenance in results:
+    print(status_page_maintenance)
+```
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.StatusPageMaintenance().load({"id": "status_page_maintenance_id"})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageMaintenanceEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## StatusPageMaintenanceUpdateEntity
+
+```python
+status_page_maintenance_update = client.StatusPageMaintenanceUpdate()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `list` | No |  |
+| `maintenance_status` | `str` | No |  |
+| `message` | `str` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `status_page_maintenance_id` | `str` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> dict`
+
+Create a new entity with the given data. Returns the created entity data and raises on error.
+
+```python
+result = client.StatusPageMaintenanceUpdate().create({
+    "message": "example_message",  # str
+    "notify_subscriber": True,  # bool
+    "status_page_maintenance_id": "example_status_page_maintenance_id",  # str
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageMaintenanceUpdateEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## StatusPageStructureEntity
+
+```python
+status_page_structure = client.StatusPageStructure()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `item` | `list` | Yes |  |
+
+### Operations
+
+#### `load(reqmatch, ctrl=None) -> dict`
+
+Load a single entity matching the given criteria. Returns the entity data and raises on error.
+
+```python
+result = client.StatusPageStructure().load({"id": "status_page_structure_id"})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageStructureEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## TeamEntity
 
 ```python
@@ -2582,6 +4318,84 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `TeamEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## TelemetryDataSourceEntity
+
+```python
+telemetry_data_source = client.TelemetryDataSource()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `str` | Yes |  |
+| `datadog_config` | `dict` | No |  |
+| `enabled` | `bool` | Yes |  |
+| `grafana_config` | `dict` | No |  |
+| `id` | `str` | Yes |  |
+| `name` | `str` | Yes |  |
+| `provider` | `str` | Yes |  |
+| `source_type` | `str` | Yes |  |
+| `updated_at` | `str` | Yes |  |
+| `version` | `str` | No |  |
+
+### Field Usage by Operation
+
+| Field | update |
+| --- | --- |
+| `created_at` | - |
+| `datadog_config` | - |
+| `enabled` | - |
+| `grafana_config` | - |
+| `id` | - |
+| `name` | Yes |
+| `provider` | - |
+| `source_type` | - |
+| `updated_at` | - |
+| `version` | - |
+
+### Operations
+
+#### `update(reqdata, ctrl=None) -> dict`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.
+
+```python
+result = client.TelemetryDataSource().update({
+    "id": "id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `TelemetryDataSourceEntity` instance with the same options.
 
 #### `get_name() -> str`
 

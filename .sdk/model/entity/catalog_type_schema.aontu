@@ -1,0 +1,238 @@
+# Entity: catalog_type_schema
+
+main: kit: entity: catalog_type_schema: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "annotation"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "attribute"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "category"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "color"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "description"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "dynamic_resource_parameter"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "engine_resource_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "estimated_count"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "icon"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "is_editable"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_team_type"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "last_synced_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "owning_team_id"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "ranked"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "registry_type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "required_integration"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "schema"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "semantic_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "source_repo_url"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "type_name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "use_name_as_identifier"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "version"
+      req: true
+      type: "`$INTEGER`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "catalog_type_schema"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "catalog_type_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/catalog_types/{id}/actions/update_schema"
+          parts: [
+            "v2"
+            "catalog_types"
+            "{catalog_type_id}"
+            "actions"
+            "update_schema"
+          ]
+          rename: {
+            param: {
+              id: "catalog_type_id"
+            }
+          }
+          select: {
+            exist: [
+              "catalog_type_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_type`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "catalog_type_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v3/catalog_types/{id}/actions/update_schema"
+          parts: [
+            "v3"
+            "catalog_types"
+            "{catalog_type_id}"
+            "actions"
+            "update_schema"
+          ]
+          rename: {
+            param: {
+              id: "catalog_type_id"
+            }
+          }
+          select: {
+            exist: [
+              "catalog_type_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_type`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "catalog_type"
+      ]
+    ]
+  }
+
+
+
+}

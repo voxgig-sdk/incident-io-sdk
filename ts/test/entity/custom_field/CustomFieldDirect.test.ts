@@ -49,7 +49,7 @@ describe('CustomFieldDirect', async () => {
     }
 
     const result: any = await client.direct({
-      path: 'v2/custom_fields/{id}',
+      path: 'v1/custom_fields/{id}',
       method: 'GET',
       params,
       query,
@@ -82,7 +82,7 @@ describe('CustomFieldDirect', async () => {
     const query: any = {}
 
     const result: any = await client.direct({
-      path: 'v2/custom_fields',
+      path: 'v1/custom_fields',
       method: 'GET',
       params,
       query,

@@ -265,6 +265,30 @@ class IncidentIoSDK:
         return ApiKeyEntity(self, data)
 
 
+    def CatalogEntry(self, data=None) -> "CatalogEntryEntity":
+        """Entity factory: client.CatalogEntry().list() / client.CatalogEntry().load({"id": ...})."""
+        from entity.catalog_entry_entity import CatalogEntryEntity
+        return CatalogEntryEntity(self, data)
+
+
+    def CatalogResource(self, data=None) -> "CatalogResourceEntity":
+        """Entity factory: client.CatalogResource().list() / client.CatalogResource().load({"id": ...})."""
+        from entity.catalog_resource_entity import CatalogResourceEntity
+        return CatalogResourceEntity(self, data)
+
+
+    def CatalogType(self, data=None) -> "CatalogTypeEntity":
+        """Entity factory: client.CatalogType().list() / client.CatalogType().load({"id": ...})."""
+        from entity.catalog_type_entity import CatalogTypeEntity
+        return CatalogTypeEntity(self, data)
+
+
+    def CatalogTypeSchema(self, data=None) -> "CatalogTypeSchemaEntity":
+        """Entity factory: client.CatalogTypeSchema().list() / client.CatalogTypeSchema().load({"id": ...})."""
+        from entity.catalog_type_schema_entity import CatalogTypeSchemaEntity
+        return CatalogTypeSchemaEntity(self, data)
+
+
     def CustomField(self, data=None) -> "CustomFieldEntity":
         """Entity factory: client.CustomField().list() / client.CustomField().load({"id": ...})."""
         from entity.custom_field_entity import CustomFieldEntity
@@ -277,6 +301,12 @@ class IncidentIoSDK:
         return CustomFieldOptionEntity(self, data)
 
 
+    def Escalation(self, data=None) -> "EscalationEntity":
+        """Entity factory: client.Escalation().list() / client.Escalation().load({"id": ...})."""
+        from entity.escalation_entity import EscalationEntity
+        return EscalationEntity(self, data)
+
+
     def FollowUp(self, data=None) -> "FollowUpEntity":
         """Entity factory: client.FollowUp().list() / client.FollowUp().load({"id": ...})."""
         from entity.follow_up_entity import FollowUpEntity
@@ -287,6 +317,12 @@ class IncidentIoSDK:
         """Entity factory: client.Incident().list() / client.Incident().load({"id": ...})."""
         from entity.incident_entity import IncidentEntity
         return IncidentEntity(self, data)
+
+
+    def IncidentAlert(self, data=None) -> "IncidentAlertEntity":
+        """Entity factory: client.IncidentAlert().list() / client.IncidentAlert().load({"id": ...})."""
+        from entity.incident_alert_entity import IncidentAlertEntity
+        return IncidentAlertEntity(self, data)
 
 
     def IncidentAttachment(self, data=None) -> "IncidentAttachmentEntity":
@@ -367,16 +403,94 @@ class IncidentIoSDK:
         return PostmortemDocumentEntity(self, data)
 
 
+    def Schedule(self, data=None) -> "ScheduleEntity":
+        """Entity factory: client.Schedule().list() / client.Schedule().load({"id": ...})."""
+        from entity.schedule_entity import ScheduleEntity
+        return ScheduleEntity(self, data)
+
+
+    def ScheduleEntry(self, data=None) -> "ScheduleEntryEntity":
+        """Entity factory: client.ScheduleEntry().list() / client.ScheduleEntry().load({"id": ...})."""
+        from entity.schedule_entry_entity import ScheduleEntryEntity
+        return ScheduleEntryEntity(self, data)
+
+
+    def ScheduleReplica(self, data=None) -> "ScheduleReplicaEntity":
+        """Entity factory: client.ScheduleReplica().list() / client.ScheduleReplica().load({"id": ...})."""
+        from entity.schedule_replica_entity import ScheduleReplicaEntity
+        return ScheduleReplicaEntity(self, data)
+
+
+    def ScheduleSyncRule(self, data=None) -> "ScheduleSyncRuleEntity":
+        """Entity factory: client.ScheduleSyncRule().list() / client.ScheduleSyncRule().load({"id": ...})."""
+        from entity.schedule_sync_rule_entity import ScheduleSyncRuleEntity
+        return ScheduleSyncRuleEntity(self, data)
+
+
+    def ScheduleSyncTarget(self, data=None) -> "ScheduleSyncTargetEntity":
+        """Entity factory: client.ScheduleSyncTarget().list() / client.ScheduleSyncTarget().load({"id": ...})."""
+        from entity.schedule_sync_target_entity import ScheduleSyncTargetEntity
+        return ScheduleSyncTargetEntity(self, data)
+
+
     def Secret(self, data=None) -> "SecretEntity":
         """Entity factory: client.Secret().list() / client.Secret().load({"id": ...})."""
         from entity.secret_entity import SecretEntity
         return SecretEntity(self, data)
 
 
+    def Severity(self, data=None) -> "SeverityEntity":
+        """Entity factory: client.Severity().list() / client.Severity().load({"id": ...})."""
+        from entity.severity_entity import SeverityEntity
+        return SeverityEntity(self, data)
+
+
+    def StatusPage(self, data=None) -> "StatusPageEntity":
+        """Entity factory: client.StatusPage().list() / client.StatusPage().load({"id": ...})."""
+        from entity.status_page_entity import StatusPageEntity
+        return StatusPageEntity(self, data)
+
+
+    def StatusPageIncident(self, data=None) -> "StatusPageIncidentEntity":
+        """Entity factory: client.StatusPageIncident().list() / client.StatusPageIncident().load({"id": ...})."""
+        from entity.status_page_incident_entity import StatusPageIncidentEntity
+        return StatusPageIncidentEntity(self, data)
+
+
+    def StatusPageIncidentUpdate(self, data=None) -> "StatusPageIncidentUpdateEntity":
+        """Entity factory: client.StatusPageIncidentUpdate().list() / client.StatusPageIncidentUpdate().load({"id": ...})."""
+        from entity.status_page_incident_update_entity import StatusPageIncidentUpdateEntity
+        return StatusPageIncidentUpdateEntity(self, data)
+
+
+    def StatusPageMaintenance(self, data=None) -> "StatusPageMaintenanceEntity":
+        """Entity factory: client.StatusPageMaintenance().list() / client.StatusPageMaintenance().load({"id": ...})."""
+        from entity.status_page_maintenance_entity import StatusPageMaintenanceEntity
+        return StatusPageMaintenanceEntity(self, data)
+
+
+    def StatusPageMaintenanceUpdate(self, data=None) -> "StatusPageMaintenanceUpdateEntity":
+        """Entity factory: client.StatusPageMaintenanceUpdate().list() / client.StatusPageMaintenanceUpdate().load({"id": ...})."""
+        from entity.status_page_maintenance_update_entity import StatusPageMaintenanceUpdateEntity
+        return StatusPageMaintenanceUpdateEntity(self, data)
+
+
+    def StatusPageStructure(self, data=None) -> "StatusPageStructureEntity":
+        """Entity factory: client.StatusPageStructure().list() / client.StatusPageStructure().load({"id": ...})."""
+        from entity.status_page_structure_entity import StatusPageStructureEntity
+        return StatusPageStructureEntity(self, data)
+
+
     def Team(self, data=None) -> "TeamEntity":
         """Entity factory: client.Team().list() / client.Team().load({"id": ...})."""
         from entity.team_entity import TeamEntity
         return TeamEntity(self, data)
+
+
+    def TelemetryDataSource(self, data=None) -> "TelemetryDataSourceEntity":
+        """Entity factory: client.TelemetryDataSource().list() / client.TelemetryDataSource().load({"id": ...})."""
+        from entity.telemetry_data_source_entity import TelemetryDataSourceEntity
+        return TelemetryDataSourceEntity(self, data)
 
 
     def User(self, data=None) -> "UserEntity":
@@ -431,10 +545,16 @@ if TYPE_CHECKING:
     from entity.alert_route_entity import AlertRouteEntity
     from entity.alert_source_entity import AlertSourceEntity
     from entity.api_key_entity import ApiKeyEntity
+    from entity.catalog_entry_entity import CatalogEntryEntity
+    from entity.catalog_resource_entity import CatalogResourceEntity
+    from entity.catalog_type_entity import CatalogTypeEntity
+    from entity.catalog_type_schema_entity import CatalogTypeSchemaEntity
     from entity.custom_field_entity import CustomFieldEntity
     from entity.custom_field_option_entity import CustomFieldOptionEntity
+    from entity.escalation_entity import EscalationEntity
     from entity.follow_up_entity import FollowUpEntity
     from entity.incident_entity import IncidentEntity
+    from entity.incident_alert_entity import IncidentAlertEntity
     from entity.incident_attachment_entity import IncidentAttachmentEntity
     from entity.incident_membership_entity import IncidentMembershipEntity
     from entity.incident_participant_entity import IncidentParticipantEntity
@@ -448,8 +568,21 @@ if TYPE_CHECKING:
     from entity.ip_allowlist_entity import IpAllowlistEntity
     from entity.maintenance_window_entity import MaintenanceWindowEntity
     from entity.postmortem_document_entity import PostmortemDocumentEntity
+    from entity.schedule_entity import ScheduleEntity
+    from entity.schedule_entry_entity import ScheduleEntryEntity
+    from entity.schedule_replica_entity import ScheduleReplicaEntity
+    from entity.schedule_sync_rule_entity import ScheduleSyncRuleEntity
+    from entity.schedule_sync_target_entity import ScheduleSyncTargetEntity
     from entity.secret_entity import SecretEntity
+    from entity.severity_entity import SeverityEntity
+    from entity.status_page_entity import StatusPageEntity
+    from entity.status_page_incident_entity import StatusPageIncidentEntity
+    from entity.status_page_incident_update_entity import StatusPageIncidentUpdateEntity
+    from entity.status_page_maintenance_entity import StatusPageMaintenanceEntity
+    from entity.status_page_maintenance_update_entity import StatusPageMaintenanceUpdateEntity
+    from entity.status_page_structure_entity import StatusPageStructureEntity
     from entity.team_entity import TeamEntity
+    from entity.telemetry_data_source_entity import TelemetryDataSourceEntity
     from entity.user_entity import UserEntity
     from entity.workflow_entity import WorkflowEntity
     from entity.workflow_run_entity import WorkflowRunEntity

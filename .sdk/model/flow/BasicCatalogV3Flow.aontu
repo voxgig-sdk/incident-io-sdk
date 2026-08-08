@@ -5,5 +5,27 @@ main: kit: flow: BasicCatalogV3Flow:
   entity: "catalog_v3",
   kind: "basic",
   name: "BasicCatalogV3Flow",
+  step: [
+    {
+      input: {
+        ref: "catalog_v3_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      input: {
+        ref: "catalog_v3_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "catalog_v301"
+      }
+
+      op: "remove"
+    }
+  ],
   "key$": "BasicCatalogV3Flow"
 }

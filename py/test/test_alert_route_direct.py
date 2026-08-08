@@ -25,7 +25,7 @@ class TestAlertRouteDirect:
 
 
         result = client.direct({
-            "path": "v3/alert_routes",
+            "path": "v2/alert_routes",
             "method": "GET",
             "params": {},
         })
@@ -67,7 +67,7 @@ class TestAlertRouteDirect:
             params["id"] = "direct01"
 
         result = client.direct({
-            "path": "v3/alert_routes/{id}",
+            "path": "v2/alert_routes/{id}",
             "method": "GET",
             "params": params,
             "query": query,

@@ -45,13 +45,15 @@ try {
 }
 ```
 
-### 3. Load an action
+### 3. Load a schedulereplica
+
+ScheduleReplica is nested under schedule, so provide the `schedule_id`.
 
 ```php
 try {
-    // load() returns the bare Action record (throws on error).
-    $action = $client->Action()->load(["id" => "example_id"]);
-    print_r($action);
+    // load() returns the bare ScheduleReplica record (throws on error).
+    $schedulereplica = $client->ScheduleReplica()->load(["schedule_id" => "example_schedule_id", "id" => "example_id"]);
+    print_r($schedulereplica);
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -61,7 +63,7 @@ try {
 
 ```php
 // create() returns the bare created Action record.
-$created = $client->Action()->create(["assignee" => [], "created_at" => "example_created_at", "creator" => [], "description" => "example_description", "id" => "example_id", "incident_id" => "example_incident_id", "status" => "example_status", "updated_at" => "example_updated_at"]);
+$created = $client->Action()->create(["assignee" => [], "created_at" => "example_created_at", "creator" => [], "follow_up" => true, "id" => "example_id", "incident_id" => "example_incident_id", "status" => "example_status", "updated_at" => "example_updated_at"]);
 
 // Update — index the bare record directly ($created["id"]).
 $client->Action()->update(["id" => $created["id"], "assignee" => [], "assignee_id" => "example_assignee_id"]);
@@ -78,7 +80,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $incidenttypes = $client->IncidentType()->list();
+    $incidentroles = $client->IncidentRole()->list();
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -150,12 +152,12 @@ data via the `entity` option so offline calls resolve without a live server:
 
 ```php
 $client = IncidentIoSDK::test([
-    "entity" => ["incidenttype" => ["test01" => ["id" => "test01"]]],
+    "entity" => ["incidentrole" => ["test01" => ["id" => "test01"]]],
 ]);
 
 // Entity ops return the bare mock record (throws on error).
-$incidenttype = $client->IncidentType()->list();
-print_r($incidenttype);
+$incidentrole = $client->IncidentRole()->list();
+print_r($incidentrole);
 ```
 
 ### Use a custom fetch function
@@ -241,10 +243,16 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `AlertRoute` | `($data): AlertRouteEntity` | Create an AlertRoute entity instance. |
 | `AlertSource` | `($data): AlertSourceEntity` | Create an AlertSource entity instance. |
 | `ApiKey` | `($data): ApiKeyEntity` | Create an ApiKey entity instance. |
+| `CatalogEntry` | `($data): CatalogEntryEntity` | Create a CatalogEntry entity instance. |
+| `CatalogResource` | `($data): CatalogResourceEntity` | Create a CatalogResource entity instance. |
+| `CatalogType` | `($data): CatalogTypeEntity` | Create a CatalogType entity instance. |
+| `CatalogTypeSchema` | `($data): CatalogTypeSchemaEntity` | Create a CatalogTypeSchema entity instance. |
 | `CustomField` | `($data): CustomFieldEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `($data): CustomFieldOptionEntity` | Create a CustomFieldOption entity instance. |
+| `Escalation` | `($data): EscalationEntity` | Create an Escalation entity instance. |
 | `FollowUp` | `($data): FollowUpEntity` | Create a FollowUp entity instance. |
 | `Incident` | `($data): IncidentEntity` | Create an Incident entity instance. |
+| `IncidentAlert` | `($data): IncidentAlertEntity` | Create an IncidentAlert entity instance. |
 | `IncidentAttachment` | `($data): IncidentAttachmentEntity` | Create an IncidentAttachment entity instance. |
 | `IncidentMembership` | `($data): IncidentMembershipEntity` | Create an IncidentMembership entity instance. |
 | `IncidentParticipant` | `($data): IncidentParticipantEntity` | Create an IncidentParticipant entity instance. |
@@ -258,8 +266,21 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `IpAllowlist` | `($data): IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `MaintenanceWindow` | `($data): MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
 | `PostmortemDocument` | `($data): PostmortemDocumentEntity` | Create a PostmortemDocument entity instance. |
+| `Schedule` | `($data): ScheduleEntity` | Create a Schedule entity instance. |
+| `ScheduleEntry` | `($data): ScheduleEntryEntity` | Create a ScheduleEntry entity instance. |
+| `ScheduleReplica` | `($data): ScheduleReplicaEntity` | Create a ScheduleReplica entity instance. |
+| `ScheduleSyncRule` | `($data): ScheduleSyncRuleEntity` | Create a ScheduleSyncRule entity instance. |
+| `ScheduleSyncTarget` | `($data): ScheduleSyncTargetEntity` | Create a ScheduleSyncTarget entity instance. |
 | `Secret` | `($data): SecretEntity` | Create a Secret entity instance. |
+| `Severity` | `($data): SeverityEntity` | Create a Severity entity instance. |
+| `StatusPage` | `($data): StatusPageEntity` | Create a StatusPage entity instance. |
+| `StatusPageIncident` | `($data): StatusPageIncidentEntity` | Create a StatusPageIncident entity instance. |
+| `StatusPageIncidentUpdate` | `($data): StatusPageIncidentUpdateEntity` | Create a StatusPageIncidentUpdate entity instance. |
+| `StatusPageMaintenance` | `($data): StatusPageMaintenanceEntity` | Create a StatusPageMaintenance entity instance. |
+| `StatusPageMaintenanceUpdate` | `($data): StatusPageMaintenanceUpdateEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
+| `StatusPageStructure` | `($data): StatusPageStructureEntity` | Create a StatusPageStructure entity instance. |
 | `Team` | `($data): TeamEntity` | Create a Team entity instance. |
+| `TelemetryDataSource` | `($data): TelemetryDataSourceEntity` | Create a TelemetryDataSource entity instance. |
 | `User` | `($data): UserEntity` | Create an User entity instance. |
 | `Workflow` | `($data): WorkflowEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `($data): WorkflowRunEntity` | Create a WorkflowRun entity instance. |
@@ -312,6 +333,8 @@ On error, `ok` is `false` and `$err` contains the error value.
 | `created_at` |  |
 | `creator` |  |
 | `description` |  |
+| `external_issue_reference` |  |
+| `follow_up` |  |
 | `id` |  |
 | `incident_id` |  |
 | `status` |  |
@@ -338,9 +361,9 @@ API path: `/v2/actions`
 | `title` |  |
 | `updated_at` |  |
 
-Operations: List, Load.
+Operations: Create, List, Load.
 
-API path: `/v2/alerts`
+API path: `/v2/alerts/{id}/actions/resolve`
 
 #### AlertAttribute
 
@@ -380,6 +403,7 @@ API path: `/v1/alert_notes`
 | Field | Description |
 | --- | --- |
 | `alert_source` |  |
+| `channel_config` |  |
 | `condition_group` |  |
 | `created_at` |  |
 | `enabled` |  |
@@ -388,8 +412,10 @@ API path: `/v1/alert_notes`
 | `grouping_config` |  |
 | `id` |  |
 | `incident_config` |  |
+| `incident_template` |  |
 | `is_private` |  |
 | `message_config` |  |
+| `message_template` |  |
 | `name` |  |
 | `owning_team_id` |  |
 | `updated_at` |  |
@@ -397,7 +423,7 @@ API path: `/v1/alert_notes`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v3/alert_routes`
+API path: `/v2/alert_routes`
 
 #### AlertSource
 
@@ -429,6 +455,7 @@ API path: `/v2/alert_sources`
 | `comment` |  |
 | `created_at` |  |
 | `creator` |  |
+| `grace_period_minute` |  |
 | `id` |  |
 | `last_used_at` |  |
 | `name` |  |
@@ -441,7 +468,112 @@ API path: `/v2/alert_sources`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v1/api_keys`
+API path: `/v1/api_keys/{id}/actions/rotate`
+
+#### CatalogEntry
+
+| Field | Description |
+| --- | --- |
+| `alias` |  |
+| `archived_at` |  |
+| `attribute_value` |  |
+| `catalog_entry` |  |
+| `catalog_type` |  |
+| `catalog_type_id` |  |
+| `created_at` |  |
+| `external_id` |  |
+| `id` |  |
+| `name` |  |
+| `rank` |  |
+| `update_attribute` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/catalog_entries`
+
+#### CatalogResource
+
+| Field | Description |
+| --- | --- |
+| `category` |  |
+| `description` |  |
+| `engine_resource_type` |  |
+| `label` |  |
+| `type` |  |
+| `value_docstring` |  |
+
+Operations: List.
+
+API path: `/v2/catalog_resources`
+
+#### CatalogType
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `category` |  |
+| `color` |  |
+| `created_at` |  |
+| `description` |  |
+| `dynamic_resource_parameter` |  |
+| `engine_resource_type` |  |
+| `estimated_count` |  |
+| `icon` |  |
+| `id` |  |
+| `is_editable` |  |
+| `is_team_type` |  |
+| `last_synced_at` |  |
+| `name` |  |
+| `owning_team_id` |  |
+| `ranked` |  |
+| `registry_type` |  |
+| `required_integration` |  |
+| `schema` |  |
+| `semantic_type` |  |
+| `source_repo_url` |  |
+| `type_name` |  |
+| `updated_at` |  |
+| `use_name_as_identifier` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/catalog_types`
+
+#### CatalogTypeSchema
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `attribute` |  |
+| `category` |  |
+| `color` |  |
+| `created_at` |  |
+| `description` |  |
+| `dynamic_resource_parameter` |  |
+| `engine_resource_type` |  |
+| `estimated_count` |  |
+| `icon` |  |
+| `id` |  |
+| `is_editable` |  |
+| `is_team_type` |  |
+| `last_synced_at` |  |
+| `name` |  |
+| `owning_team_id` |  |
+| `ranked` |  |
+| `registry_type` |  |
+| `required_integration` |  |
+| `schema` |  |
+| `semantic_type` |  |
+| `source_repo_url` |  |
+| `type_name` |  |
+| `updated_at` |  |
+| `use_name_as_identifier` |  |
+| `version` |  |
+
+Operations: Create.
+
+API path: `/v2/catalog_types/{id}/actions/update_schema`
 
 #### CustomField
 
@@ -457,11 +589,18 @@ API path: `/v1/api_keys`
 | `helptext_catalog_attribute_id` |  |
 | `id` |  |
 | `name` |  |
+| `option` |  |
+| `required` |  |
+| `required_v2` |  |
+| `show_before_closure` |  |
+| `show_before_creation` |  |
+| `show_before_update` |  |
+| `show_in_announcement_post` |  |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/custom_fields`
+API path: `/v1/custom_fields`
 
 #### CustomFieldOption
 
@@ -475,6 +614,30 @@ API path: `/v2/custom_fields`
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/custom_field_options`
+
+#### Escalation
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `creator` |  |
+| `description` |  |
+| `escalation_path_id` |  |
+| `event` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `incident_id` |  |
+| `priority` |  |
+| `related_alert` |  |
+| `related_incident` |  |
+| `status` |  |
+| `title` |  |
+| `updated_at` |  |
+| `user_id` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/escalations`
 
 #### FollowUp
 
@@ -517,6 +680,7 @@ API path: `/v2/follow_ups`
 | `has_debrief` |  |
 | `id` |  |
 | `idempotency_key` |  |
+| `incident` |  |
 | `incident_role_assignment` |  |
 | `incident_status` |  |
 | `incident_status_id` |  |
@@ -525,6 +689,7 @@ API path: `/v2/follow_ups`
 | `incident_type_id` |  |
 | `mode` |  |
 | `name` |  |
+| `notify_incident_channel` |  |
 | `permalink` |  |
 | `postmortem_document_id` |  |
 | `postmortem_document_url` |  |
@@ -536,7 +701,11 @@ API path: `/v2/follow_ups`
 | `slack_channel_name` |  |
 | `slack_channel_name_override` |  |
 | `slack_team_id` |  |
+| `source_message_channel_id` |  |
+| `source_message_timestamp` |  |
+| `status` |  |
 | `summary` |  |
+| `timestamp` |  |
 | `updated_at` |  |
 | `visibility` |  |
 | `workload_minutes_late` |  |
@@ -546,7 +715,20 @@ API path: `/v2/follow_ups`
 
 Operations: Create, List, Load.
 
-API path: `/v2/incidents`
+API path: `/v2/incidents/{id}/actions/edit`
+
+#### IncidentAlert
+
+| Field | Description |
+| --- | --- |
+| `alert` |  |
+| `alert_route_id` |  |
+| `id` |  |
+| `incident` |  |
+
+Operations: List.
+
+API path: `/v2/incident_alerts`
 
 #### IncidentAttachment
 
@@ -615,13 +797,14 @@ API path: `/v1/incident_relationships`
 | `id` |  |
 | `instruction` |  |
 | `name` |  |
+| `required` |  |
 | `role_type` |  |
 | `shortform` |  |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/incident_roles`
+API path: `/v1/incident_roles`
 
 #### IncidentStatus
 
@@ -745,6 +928,99 @@ Operations: List, Load, Update.
 
 API path: `/v1/postmortem_documents`
 
+#### Schedule
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `config` |  |
+| `created_at` |  |
+| `current_shift` |  |
+| `holidays_public_config` |  |
+| `id` |  |
+| `name` |  |
+| `next_shift` |  |
+| `permalink` |  |
+| `schedule` |  |
+| `team_id` |  |
+| `timezone` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedules`
+
+#### ScheduleEntry
+
+| Field | Description |
+| --- | --- |
+| `pagination_meta` |  |
+| `schedule_entry` |  |
+
+Operations: Load.
+
+API path: `/v2/schedule_entries`
+
+#### ScheduleReplica
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `id` |  |
+| `last_sync_error` |  |
+| `last_synced_at` |  |
+| `mirror_window_day` |  |
+| `replica_fallback_user_id` |  |
+| `replica_provider` |  |
+| `replica_provider_id` |  |
+| `schedule_id` |  |
+| `schedule_replica` |  |
+| `source` |  |
+| `updated_at` |  |
+| `user_status` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/schedules/{schedule_id}/replicas`
+
+#### ScheduleSyncRule
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `created_at` |  |
+| `id` |  |
+| `permanent_member_user_id` |  |
+| `rotation_id` |  |
+| `schedule_id` |  |
+| `schedule_sync_rule` |  |
+| `schedule_sync_target` |  |
+| `schedule_sync_target_id` |  |
+| `sync_type` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/schedules/{schedule_id}/sync_rules`
+
+#### ScheduleSyncTarget
+
+| Field | Description |
+| --- | --- |
+| `add_bot_to_group` |  |
+| `annotation` |  |
+| `created_at` |  |
+| `id` |  |
+| `linked_schedule` |  |
+| `schedule_sync_target` |  |
+| `slack_team_id` |  |
+| `slack_user_group_id` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedule_sync_targets`
+
 #### Secret
 
 | Field | Description |
@@ -762,7 +1038,115 @@ API path: `/v1/postmortem_documents`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/secrets`
+API path: `/v2/secrets/{id}/actions/rotate`
+
+#### Severity
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `description` |  |
+| `id` |  |
+| `name` |  |
+| `rank` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v1/severities`
+
+#### StatusPage
+
+| Field | Description |
+| --- | --- |
+| `description` |  |
+| `id` |  |
+| `name` |  |
+| `public_url` |  |
+
+Operations: List.
+
+API path: `/v2/status_pages`
+
+#### StatusPageIncident
+
+| Field | Description |
+| --- | --- |
+| `component_impact` |  |
+| `component_status` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `incident_status` |  |
+| `message` |  |
+| `name` |  |
+| `notify_subscriber` |  |
+| `published_at` |  |
+| `status_page_id` |  |
+| `update` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/status_page_incidents`
+
+#### StatusPageIncidentUpdate
+
+| Field | Description |
+| --- | --- |
+| `component_status` |  |
+| `incident_status` |  |
+| `message` |  |
+| `notify_subscriber` |  |
+| `status_page_incident_id` |  |
+
+Operations: Create.
+
+API path: `/v2/status_page_incident_updates`
+
+#### StatusPageMaintenance
+
+| Field | Description |
+| --- | --- |
+| `affected_component_id` |  |
+| `component_maintenance_period` |  |
+| `end_at` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `maintenance_status` |  |
+| `message` |  |
+| `name` |  |
+| `notify_subscriber` |  |
+| `published_at` |  |
+| `start_at` |  |
+| `status_page_id` |  |
+| `update` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/status_page_maintenances`
+
+#### StatusPageMaintenanceUpdate
+
+| Field | Description |
+| --- | --- |
+| `component_status` |  |
+| `maintenance_status` |  |
+| `message` |  |
+| `notify_subscriber` |  |
+| `status_page_maintenance_id` |  |
+
+Operations: Create.
+
+API path: `/v2/status_page_maintenance_updates`
+
+#### StatusPageStructure
+
+| Field | Description |
+| --- | --- |
+| `item` |  |
+
+Operations: Load.
+
+API path: `/v2/status_page_structures/{status_page_id}`
 
 #### Team
 
@@ -776,6 +1160,25 @@ API path: `/v2/secrets`
 Operations: List, Load.
 
 API path: `/v3/teams`
+
+#### TelemetryDataSource
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `datadog_config` |  |
+| `enabled` |  |
+| `grafana_config` |  |
+| `id` |  |
+| `name` |  |
+| `provider` |  |
+| `source_type` |  |
+| `updated_at` |  |
+| `version` |  |
+
+Operations: Update.
+
+API path: `/v2/telemetry/data_sources/{id}`
 
 #### User
 
@@ -881,6 +1284,8 @@ Create an instance: `$action = $client->Action();`
 | `created_at` | `string` |  |
 | `creator` | `array` |  |
 | `description` | `string` |  |
+| `external_issue_reference` | `array` |  |
+| `follow_up` | `bool` |  |
 | `id` | `string` |  |
 | `incident_id` | `string` |  |
 | `status` | `string` |  |
@@ -907,7 +1312,7 @@ $action = $client->Action()->create([
     "assignee" => null, // array
     "created_at" => null, // string
     "creator" => null, // array
-    "description" => null, // string
+    "follow_up" => null, // bool
     "id" => null, // string
     "incident_id" => null, // string
     "status" => null, // string
@@ -924,6 +1329,7 @@ Create an instance: `$alert = $client->Alert();`
 
 | Method | Description |
 | --- | --- |
+| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
@@ -956,6 +1362,21 @@ $alert = $client->Alert()->load(["id" => "alert_id"]);
 ```php
 // list() returns an array of Alert records (throws on error).
 $alerts = $client->Alert()->list();
+```
+
+#### Example: Create
+
+```php
+$alert = $client->Alert()->create([
+    "id" => null, // string
+    "alert_source_id" => null, // string
+    "attribute" => null, // array
+    "created_at" => null, // string
+    "deduplication_key" => null, // string
+    "status" => null, // string
+    "title" => null, // string
+    "updated_at" => null, // string
+]);
 ```
 
 
@@ -1086,6 +1507,7 @@ Create an instance: `$alert_route = $client->AlertRoute();`
 | Field | Type | Description |
 | --- | --- | --- |
 | `alert_source` | `array` |  |
+| `channel_config` | `array` |  |
 | `condition_group` | `array` |  |
 | `created_at` | `string` |  |
 | `enabled` | `bool` |  |
@@ -1094,8 +1516,10 @@ Create an instance: `$alert_route = $client->AlertRoute();`
 | `grouping_config` | `array` |  |
 | `id` | `string` |  |
 | `incident_config` | `array` |  |
+| `incident_template` | `array` |  |
 | `is_private` | `bool` |  |
 | `message_config` | `array` |  |
+| `message_template` | `array` |  |
 | `name` | `string` |  |
 | `owning_team_id` | `array` |  |
 | `updated_at` | `string` |  |
@@ -1120,6 +1544,7 @@ $alert_routes = $client->AlertRoute()->list();
 ```php
 $alert_route = $client->AlertRoute()->create([
     "alert_source" => null, // array
+    "channel_config" => null, // array
     "condition_group" => null, // array
     "enabled" => null, // bool
     "escalation_config" => null, // array
@@ -1127,6 +1552,7 @@ $alert_route = $client->AlertRoute()->create([
     "grouping_config" => null, // array
     "id" => null, // string
     "incident_config" => null, // array
+    "incident_template" => null, // array
     "is_private" => null, // bool
     "message_config" => null, // array
     "name" => null, // string
@@ -1219,6 +1645,7 @@ Create an instance: `$api_key = $client->ApiKey();`
 | `comment` | `string` |  |
 | `created_at` | `string` |  |
 | `creator` | `array` |  |
+| `grace_period_minute` | `int` |  |
 | `id` | `string` |  |
 | `last_used_at` | `string` |  |
 | `name` | `string` |  |
@@ -1249,6 +1676,7 @@ $api_keys = $client->ApiKey()->list();
 $api_key = $client->ApiKey()->create([
     "created_at" => null, // string
     "creator" => null, // array
+    "grace_period_minute" => null, // int
     "id" => null, // string
     "name" => null, // string
     "role" => null, // array
@@ -1257,6 +1685,244 @@ $api_key = $client->ApiKey()->create([
     "team_role" => null, // array
     "team_role_name" => null, // array
     "token_last_issued_at" => null, // string
+]);
+```
+
+
+### CatalogEntry
+
+Create an instance: `$catalog_entry = $client->CatalogEntry();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alias` | `array` |  |
+| `archived_at` | `string` |  |
+| `attribute_value` | `array` |  |
+| `catalog_entry` | `array` |  |
+| `catalog_type` | `array` |  |
+| `catalog_type_id` | `string` |  |
+| `created_at` | `string` |  |
+| `external_id` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `rank` | `int` |  |
+| `update_attribute` | `array` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare CatalogEntry record (throws on error).
+$catalog_entry = $client->CatalogEntry()->load(["id" => "catalog_entry_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of CatalogEntry records (throws on error).
+$catalog_entrys = $client->CatalogEntry()->list();
+```
+
+#### Example: Create
+
+```php
+$catalog_entry = $client->CatalogEntry()->create([
+    "attribute_value" => null, // array
+    "catalog_entry" => null, // array
+    "catalog_type" => null, // array
+    "catalog_type_id" => null, // string
+    "created_at" => null, // string
+    "id" => null, // string
+    "name" => null, // string
+    "updated_at" => null, // string
+]);
+```
+
+
+### CatalogResource
+
+Create an instance: `$catalog_resource = $client->CatalogResource();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `category` | `string` |  |
+| `description` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `label` | `string` |  |
+| `type` | `string` |  |
+| `value_docstring` | `string` |  |
+
+#### Example: List
+
+```php
+// list() returns an array of CatalogResource records (throws on error).
+$catalog_resources = $client->CatalogResource()->list();
+```
+
+
+### CatalogType
+
+Create an instance: `$catalog_type = $client->CatalogType();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `array` |  |
+| `category` | `array` |  |
+| `color` | `string` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `dynamic_resource_parameter` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `estimated_count` | `int` |  |
+| `icon` | `string` |  |
+| `id` | `string` |  |
+| `is_editable` | `bool` |  |
+| `is_team_type` | `bool` |  |
+| `last_synced_at` | `string` |  |
+| `name` | `string` |  |
+| `owning_team_id` | `array` |  |
+| `ranked` | `bool` |  |
+| `registry_type` | `string` |  |
+| `required_integration` | `array` |  |
+| `schema` | `array` |  |
+| `semantic_type` | `string` |  |
+| `source_repo_url` | `string` |  |
+| `type_name` | `string` |  |
+| `updated_at` | `string` |  |
+| `use_name_as_identifier` | `bool` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare CatalogType record (throws on error).
+$catalog_type = $client->CatalogType()->load(["id" => "catalog_type_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of CatalogType records (throws on error).
+$catalog_types = $client->CatalogType()->list();
+```
+
+#### Example: Create
+
+```php
+$catalog_type = $client->CatalogType()->create([
+    "annotation" => null, // array
+    "category" => null, // array
+    "color" => null, // string
+    "created_at" => null, // string
+    "description" => null, // string
+    "engine_resource_type" => null, // string
+    "icon" => null, // string
+    "id" => null, // string
+    "is_editable" => null, // bool
+    "name" => null, // string
+    "ranked" => null, // bool
+    "schema" => null, // array
+    "semantic_type" => null, // string
+    "type_name" => null, // string
+    "updated_at" => null, // string
+    "use_name_as_identifier" => null, // bool
+]);
+```
+
+
+### CatalogTypeSchema
+
+Create an instance: `$catalog_type_schema = $client->CatalogTypeSchema();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `array` |  |
+| `attribute` | `array` |  |
+| `category` | `array` |  |
+| `color` | `string` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `dynamic_resource_parameter` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `estimated_count` | `int` |  |
+| `icon` | `string` |  |
+| `id` | `string` |  |
+| `is_editable` | `bool` |  |
+| `is_team_type` | `bool` |  |
+| `last_synced_at` | `string` |  |
+| `name` | `string` |  |
+| `owning_team_id` | `array` |  |
+| `ranked` | `bool` |  |
+| `registry_type` | `string` |  |
+| `required_integration` | `array` |  |
+| `schema` | `array` |  |
+| `semantic_type` | `string` |  |
+| `source_repo_url` | `string` |  |
+| `type_name` | `string` |  |
+| `updated_at` | `string` |  |
+| `use_name_as_identifier` | `bool` |  |
+| `version` | `int` |  |
+
+#### Example: Create
+
+```php
+$catalog_type_schema = $client->CatalogTypeSchema()->create([
+    "catalog_type_id" => null, // string
+    "annotation" => null, // array
+    "attribute" => null, // array
+    "category" => null, // array
+    "color" => null, // string
+    "created_at" => null, // string
+    "description" => null, // string
+    "engine_resource_type" => null, // string
+    "icon" => null, // string
+    "id" => null, // string
+    "is_editable" => null, // bool
+    "name" => null, // string
+    "ranked" => null, // bool
+    "schema" => null, // array
+    "semantic_type" => null, // string
+    "type_name" => null, // string
+    "updated_at" => null, // string
+    "use_name_as_identifier" => null, // bool
+    "version" => null, // int
 ]);
 ```
 
@@ -1289,6 +1955,13 @@ Create an instance: `$custom_field = $client->CustomField();`
 | `helptext_catalog_attribute_id` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
+| `option` | `array` |  |
+| `required` | `string` |  |
+| `required_v2` | `string` |  |
+| `show_before_closure` | `bool` |  |
+| `show_before_creation` | `bool` |  |
+| `show_before_update` | `bool` |  |
+| `show_in_announcement_post` | `bool` |  |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -1316,6 +1989,10 @@ $custom_field = $client->CustomField()->create([
     "fixed_filter" => null, // array
     "id" => null, // string
     "name" => null, // string
+    "option" => null, // array
+    "show_before_closure" => null, // bool
+    "show_before_creation" => null, // bool
+    "show_before_update" => null, // bool
     "updated_at" => null, // string
 ]);
 ```
@@ -1366,6 +2043,71 @@ $custom_field_option = $client->CustomFieldOption()->create([
     "id" => null, // string
     "sort_key" => null, // int
     "value" => null, // string
+]);
+```
+
+
+### Escalation
+
+Create an instance: `$escalation = $client->Escalation();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `creator` | `array` |  |
+| `description` | `string` |  |
+| `escalation_path_id` | `string` |  |
+| `event` | `array` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `incident_id` | `string` |  |
+| `priority` | `array` |  |
+| `related_alert` | `array` |  |
+| `related_incident` | `array` |  |
+| `status` | `string` |  |
+| `title` | `string` |  |
+| `updated_at` | `string` |  |
+| `user_id` | `array` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare Escalation record (throws on error).
+$escalation = $client->Escalation()->load(["id" => "escalation_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of Escalation records (throws on error).
+$escalations = $client->Escalation()->list();
+```
+
+#### Example: Create
+
+```php
+$escalation = $client->Escalation()->create([
+    "created_at" => null, // string
+    "creator" => null, // array
+    "event" => null, // array
+    "id" => null, // string
+    "idempotency_key" => null, // string
+    "priority" => null, // array
+    "related_alert" => null, // array
+    "related_incident" => null, // array
+    "status" => null, // string
+    "title" => null, // string
+    "updated_at" => null, // string
 ]);
 ```
 
@@ -1467,6 +2209,7 @@ Create an instance: `$incident = $client->Incident();`
 | `has_debrief` | `bool` |  |
 | `id` | `string` |  |
 | `idempotency_key` | `string` |  |
+| `incident` | `array` |  |
 | `incident_role_assignment` | `array` |  |
 | `incident_status` | `array` |  |
 | `incident_status_id` | `string` |  |
@@ -1475,6 +2218,7 @@ Create an instance: `$incident = $client->Incident();`
 | `incident_type_id` | `string` |  |
 | `mode` | `string` |  |
 | `name` | `string` |  |
+| `notify_incident_channel` | `bool` |  |
 | `permalink` | `string` |  |
 | `postmortem_document_id` | `array` |  |
 | `postmortem_document_url` | `string` |  |
@@ -1486,7 +2230,11 @@ Create an instance: `$incident = $client->Incident();`
 | `slack_channel_name` | `string` |  |
 | `slack_channel_name_override` | `string` |  |
 | `slack_team_id` | `string` |  |
+| `source_message_channel_id` | `string` |  |
+| `source_message_timestamp` | `string` |  |
+| `status` | `string` |  |
 | `summary` | `string` |  |
+| `timestamp` | `array` |  |
 | `updated_at` | `string` |  |
 | `visibility` | `string` |  |
 | `workload_minutes_late` | `float` |  |
@@ -1518,18 +2266,48 @@ $incident = $client->Incident()->create([
     "external_issue_reference" => null, // array
     "id" => null, // string
     "idempotency_key" => null, // string
+    "incident" => null, // array
     "incident_role_assignment" => null, // array
     "incident_status" => null, // array
     "incident_type" => null, // array
     "mode" => null, // string
     "name" => null, // string
+    "notify_incident_channel" => null, // bool
     "reference" => null, // string
     "severity" => null, // array
     "slack_channel_id" => null, // string
     "slack_team_id" => null, // string
+    "status" => null, // string
     "updated_at" => null, // string
     "visibility" => null, // string
 ]);
+```
+
+
+### IncidentAlert
+
+Create an instance: `$incident_alert = $client->IncidentAlert();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert` | `array` |  |
+| `alert_route_id` | `string` |  |
+| `id` | `string` |  |
+| `incident` | `array` |  |
+
+#### Example: List
+
+```php
+// list() returns an array of IncidentAlert records (throws on error).
+$incident_alerts = $client->IncidentAlert()->list();
 ```
 
 
@@ -1698,6 +2476,7 @@ Create an instance: `$incident_role = $client->IncidentRole();`
 | `id` | `string` |  |
 | `instruction` | `string` |  |
 | `name` | `string` |  |
+| `required` | `bool` |  |
 | `role_type` | `string` |  |
 | `shortform` | `string` |  |
 | `updated_at` | `string` |  |
@@ -2032,6 +2811,276 @@ $postmortem_documents = $client->PostmortemDocument()->list();
 ```
 
 
+### Schedule
+
+Create an instance: `$schedule = $client->Schedule();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `array` |  |
+| `config` | `array` |  |
+| `created_at` | `string` |  |
+| `current_shift` | `array` |  |
+| `holidays_public_config` | `array` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `next_shift` | `array` |  |
+| `permalink` | `string` |  |
+| `schedule` | `array` |  |
+| `team_id` | `array` |  |
+| `timezone` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare Schedule record (throws on error).
+$schedule = $client->Schedule()->load(["id" => "schedule_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of Schedule records (throws on error).
+$schedules = $client->Schedule()->list();
+```
+
+#### Example: Create
+
+```php
+$schedule = $client->Schedule()->create([
+    "annotation" => null, // array
+    "config" => null, // array
+    "created_at" => null, // string
+    "holidays_public_config" => null, // array
+    "id" => null, // string
+    "name" => null, // string
+    "permalink" => null, // string
+    "schedule" => null, // array
+    "team_id" => null, // array
+    "timezone" => null, // string
+    "updated_at" => null, // string
+]);
+```
+
+
+### ScheduleEntry
+
+Create an instance: `$schedule_entry = $client->ScheduleEntry();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `pagination_meta` | `array` |  |
+| `schedule_entry` | `array` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare ScheduleEntry record (throws on error).
+$schedule_entry = $client->ScheduleEntry()->load();
+```
+
+
+### ScheduleReplica
+
+Create an instance: `$schedule_replica = $client->ScheduleReplica();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `last_sync_error` | `string` |  |
+| `last_synced_at` | `string` |  |
+| `mirror_window_day` | `int` |  |
+| `replica_fallback_user_id` | `string` |  |
+| `replica_provider` | `string` |  |
+| `replica_provider_id` | `string` |  |
+| `schedule_id` | `string` |  |
+| `schedule_replica` | `array` |  |
+| `source` | `array` |  |
+| `updated_at` | `string` |  |
+| `user_status` | `array` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare ScheduleReplica record (throws on error).
+$schedule_replica = $client->ScheduleReplica()->load(["id" => "schedule_replica_id", "schedule_id" => "schedule_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of ScheduleReplica records (throws on error).
+$schedule_replicas = $client->ScheduleReplica()->list();
+```
+
+#### Example: Create
+
+```php
+$schedule_replica = $client->ScheduleReplica()->create([
+    "id" => null, // string
+    "created_at" => null, // string
+    "replica_fallback_user_id" => null, // string
+    "replica_provider" => null, // string
+    "replica_provider_id" => null, // string
+    "schedule_id" => null, // string
+    "schedule_replica" => null, // array
+    "source" => null, // array
+    "updated_at" => null, // string
+    "user_status" => null, // array
+]);
+```
+
+
+### ScheduleSyncRule
+
+Create an instance: `$schedule_sync_rule = $client->ScheduleSyncRule();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `array` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `permanent_member_user_id` | `array` |  |
+| `rotation_id` | `string` |  |
+| `schedule_id` | `string` |  |
+| `schedule_sync_rule` | `array` |  |
+| `schedule_sync_target` | `array` |  |
+| `schedule_sync_target_id` | `string` |  |
+| `sync_type` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare ScheduleSyncRule record (throws on error).
+$schedule_sync_rule = $client->ScheduleSyncRule()->load(["id" => "schedule_sync_rule_id", "schedule_id" => "schedule_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of ScheduleSyncRule records (throws on error).
+$schedule_sync_rules = $client->ScheduleSyncRule()->list();
+```
+
+#### Example: Create
+
+```php
+$schedule_sync_rule = $client->ScheduleSyncRule()->create([
+    "id" => null, // string
+    "created_at" => null, // string
+    "permanent_member_user_id" => null, // array
+    "schedule_id" => null, // string
+    "schedule_sync_rule" => null, // array
+    "schedule_sync_target" => null, // array
+    "schedule_sync_target_id" => null, // string
+    "sync_type" => null, // string
+    "updated_at" => null, // string
+]);
+```
+
+
+### ScheduleSyncTarget
+
+Create an instance: `$schedule_sync_target = $client->ScheduleSyncTarget();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `add_bot_to_group` | `bool` |  |
+| `annotation` | `array` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `linked_schedule` | `array` |  |
+| `schedule_sync_target` | `array` |  |
+| `slack_team_id` | `string` |  |
+| `slack_user_group_id` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare ScheduleSyncTarget record (throws on error).
+$schedule_sync_target = $client->ScheduleSyncTarget()->load(["id" => "schedule_sync_target_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of ScheduleSyncTarget records (throws on error).
+$schedule_sync_targets = $client->ScheduleSyncTarget()->list();
+```
+
+#### Example: Create
+
+```php
+$schedule_sync_target = $client->ScheduleSyncTarget()->create([
+    "add_bot_to_group" => null, // bool
+    "created_at" => null, // string
+    "id" => null, // string
+    "linked_schedule" => null, // array
+    "schedule_sync_target" => null, // array
+    "slack_team_id" => null, // string
+    "slack_user_group_id" => null, // string
+    "updated_at" => null, // string
+]);
+```
+
+
 ### Secret
 
 Create an instance: `$secret = $client->Secret();`
@@ -2082,11 +3131,303 @@ $secret = $client->Secret()->create([
     "created_at" => null, // string
     "id" => null, // string
     "name" => null, // string
+    "owning_team_id" => null, // array
     "secret" => null, // array
     "updated_at" => null, // string
     "value" => null, // string
     "version" => null, // array
 ]);
+```
+
+
+### Severity
+
+Create an instance: `$severity = $client->Severity();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `rank` | `int` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare Severity record (throws on error).
+$severity = $client->Severity()->load(["id" => "severity_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of Severity records (throws on error).
+$severitys = $client->Severity()->list();
+```
+
+#### Example: Create
+
+```php
+$severity = $client->Severity()->create([
+    "created_at" => null, // string
+    "description" => null, // string
+    "id" => null, // string
+    "name" => null, // string
+    "rank" => null, // int
+    "updated_at" => null, // string
+]);
+```
+
+
+### StatusPage
+
+Create an instance: `$status_page = $client->StatusPage();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `public_url` | `string` |  |
+
+#### Example: List
+
+```php
+// list() returns an array of StatusPage records (throws on error).
+$status_pages = $client->StatusPage()->list();
+```
+
+
+### StatusPageIncident
+
+Create an instance: `$status_page_incident = $client->StatusPageIncident();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_impact` | `array` |  |
+| `component_status` | `array` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `incident_status` | `string` |  |
+| `message` | `string` |  |
+| `name` | `string` |  |
+| `notify_subscriber` | `bool` |  |
+| `published_at` | `string` |  |
+| `status_page_id` | `string` |  |
+| `update` | `array` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare StatusPageIncident record (throws on error).
+$status_page_incident = $client->StatusPageIncident()->load(["id" => "status_page_incident_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of StatusPageIncident records (throws on error).
+$status_page_incidents = $client->StatusPageIncident()->list();
+```
+
+#### Example: Create
+
+```php
+$status_page_incident = $client->StatusPageIncident()->create([
+    "component_impact" => null, // array
+    "id" => null, // string
+    "idempotency_key" => null, // string
+    "incident_status" => null, // string
+    "message" => null, // string
+    "name" => null, // string
+    "notify_subscriber" => null, // bool
+    "published_at" => null, // string
+    "status_page_id" => null, // string
+    "update" => null, // array
+]);
+```
+
+
+### StatusPageIncidentUpdate
+
+Create an instance: `$status_page_incident_update = $client->StatusPageIncidentUpdate();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `array` |  |
+| `incident_status` | `string` |  |
+| `message` | `string` |  |
+| `notify_subscriber` | `bool` |  |
+| `status_page_incident_id` | `string` |  |
+
+#### Example: Create
+
+```php
+$status_page_incident_update = $client->StatusPageIncidentUpdate()->create([
+    "message" => null, // string
+    "notify_subscriber" => null, // bool
+    "status_page_incident_id" => null, // string
+]);
+```
+
+
+### StatusPageMaintenance
+
+Create an instance: `$status_page_maintenance = $client->StatusPageMaintenance();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `affected_component_id` | `array` |  |
+| `component_maintenance_period` | `array` |  |
+| `end_at` | `string` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `maintenance_status` | `string` |  |
+| `message` | `string` |  |
+| `name` | `string` |  |
+| `notify_subscriber` | `bool` |  |
+| `published_at` | `string` |  |
+| `start_at` | `string` |  |
+| `status_page_id` | `string` |  |
+| `update` | `array` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare StatusPageMaintenance record (throws on error).
+$status_page_maintenance = $client->StatusPageMaintenance()->load(["id" => "status_page_maintenance_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of StatusPageMaintenance records (throws on error).
+$status_page_maintenances = $client->StatusPageMaintenance()->list();
+```
+
+#### Example: Create
+
+```php
+$status_page_maintenance = $client->StatusPageMaintenance()->create([
+    "affected_component_id" => null, // array
+    "component_maintenance_period" => null, // array
+    "end_at" => null, // string
+    "id" => null, // string
+    "idempotency_key" => null, // string
+    "maintenance_status" => null, // string
+    "message" => null, // string
+    "name" => null, // string
+    "notify_subscriber" => null, // bool
+    "published_at" => null, // string
+    "start_at" => null, // string
+    "status_page_id" => null, // string
+    "update" => null, // array
+]);
+```
+
+
+### StatusPageMaintenanceUpdate
+
+Create an instance: `$status_page_maintenance_update = $client->StatusPageMaintenanceUpdate();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `array` |  |
+| `maintenance_status` | `string` |  |
+| `message` | `string` |  |
+| `notify_subscriber` | `bool` |  |
+| `status_page_maintenance_id` | `string` |  |
+
+#### Example: Create
+
+```php
+$status_page_maintenance_update = $client->StatusPageMaintenanceUpdate()->create([
+    "message" => null, // string
+    "notify_subscriber" => null, // bool
+    "status_page_maintenance_id" => null, // string
+]);
+```
+
+
+### StatusPageStructure
+
+Create an instance: `$status_page_structure = $client->StatusPageStructure();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `item` | `array` |  |
+
+#### Example: Load
+
+```php
+// load() returns the bare StatusPageStructure record (throws on error).
+$status_page_structure = $client->StatusPageStructure()->load(["id" => "status_page_structure_id"]);
 ```
 
 
@@ -2123,6 +3464,32 @@ $team = $client->Team()->load(["id" => "team_id"]);
 // list() returns an array of Team records (throws on error).
 $teams = $client->Team()->list();
 ```
+
+
+### TelemetryDataSource
+
+Create an instance: `$telemetry_data_source = $client->TelemetryDataSource();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `datadog_config` | `array` |  |
+| `enabled` | `bool` |  |
+| `grafana_config` | `array` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `provider` | `string` |  |
+| `source_type` | `string` |  |
+| `updated_at` | `string` |  |
+| `version` | `string` |  |
 
 
 ### User
@@ -2366,11 +3733,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$incidenttype = $client->IncidentType();
-$incidenttype->list();
+$incidentrole = $client->IncidentRole();
+$incidentrole->list();
 
-// $incidenttype->data_get() now returns the incidenttype data from the last list
-// $incidenttype->match_get() returns the last match criteria
+// $incidentrole->data_get() now returns the incidentrole data from the last list
+// $incidentrole->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

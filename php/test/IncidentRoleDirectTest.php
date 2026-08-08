@@ -25,7 +25,7 @@ class IncidentRoleDirectTest extends TestCase
 
 
         $result = $client->direct([
-            "path" => "v2/incident_roles",
+            "path" => "v1/incident_roles",
             "method" => "GET",
             "params" => [],
         ]);
@@ -75,7 +75,7 @@ class IncidentRoleDirectTest extends TestCase
         }
 
         $result = $client->direct([
-            "path" => "v2/incident_roles/{id}",
+            "path" => "v1/incident_roles/{id}",
             "method" => "GET",
             "params" => $params,
             "query" => $query,

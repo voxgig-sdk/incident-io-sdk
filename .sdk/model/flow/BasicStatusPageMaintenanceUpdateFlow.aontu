@@ -1,0 +1,18 @@
+# BasicStatusPageMaintenanceUpdateFlow
+
+main: kit: flow: BasicStatusPageMaintenanceUpdateFlow:
+{
+  entity: "status_page_maintenance_update",
+  kind: "basic",
+  name: "BasicStatusPageMaintenanceUpdateFlow",
+  step: [
+    {
+      input: {
+        ref: "status_page_maintenance_update_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicStatusPageMaintenanceUpdateFlow"
+}

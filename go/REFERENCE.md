@@ -75,6 +75,22 @@ Create a new `AlertSource` entity instance. Pass `nil` for no initial data.
 
 Create a new `ApiKey` entity instance. Pass `nil` for no initial data.
 
+#### `CatalogEntry(data map[string]any) IncidentIoEntity`
+
+Create a new `CatalogEntry` entity instance. Pass `nil` for no initial data.
+
+#### `CatalogResource(data map[string]any) IncidentIoEntity`
+
+Create a new `CatalogResource` entity instance. Pass `nil` for no initial data.
+
+#### `CatalogType(data map[string]any) IncidentIoEntity`
+
+Create a new `CatalogType` entity instance. Pass `nil` for no initial data.
+
+#### `CatalogTypeSchema(data map[string]any) IncidentIoEntity`
+
+Create a new `CatalogTypeSchema` entity instance. Pass `nil` for no initial data.
+
 #### `CustomField(data map[string]any) IncidentIoEntity`
 
 Create a new `CustomField` entity instance. Pass `nil` for no initial data.
@@ -83,6 +99,10 @@ Create a new `CustomField` entity instance. Pass `nil` for no initial data.
 
 Create a new `CustomFieldOption` entity instance. Pass `nil` for no initial data.
 
+#### `Escalation(data map[string]any) IncidentIoEntity`
+
+Create a new `Escalation` entity instance. Pass `nil` for no initial data.
+
 #### `FollowUp(data map[string]any) IncidentIoEntity`
 
 Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
@@ -90,6 +110,10 @@ Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
 #### `Incident(data map[string]any) IncidentIoEntity`
 
 Create a new `Incident` entity instance. Pass `nil` for no initial data.
+
+#### `IncidentAlert(data map[string]any) IncidentIoEntity`
+
+Create a new `IncidentAlert` entity instance. Pass `nil` for no initial data.
 
 #### `IncidentAttachment(data map[string]any) IncidentIoEntity`
 
@@ -143,13 +167,65 @@ Create a new `MaintenanceWindow` entity instance. Pass `nil` for no initial data
 
 Create a new `PostmortemDocument` entity instance. Pass `nil` for no initial data.
 
+#### `Schedule(data map[string]any) IncidentIoEntity`
+
+Create a new `Schedule` entity instance. Pass `nil` for no initial data.
+
+#### `ScheduleEntry(data map[string]any) IncidentIoEntity`
+
+Create a new `ScheduleEntry` entity instance. Pass `nil` for no initial data.
+
+#### `ScheduleReplica(data map[string]any) IncidentIoEntity`
+
+Create a new `ScheduleReplica` entity instance. Pass `nil` for no initial data.
+
+#### `ScheduleSyncRule(data map[string]any) IncidentIoEntity`
+
+Create a new `ScheduleSyncRule` entity instance. Pass `nil` for no initial data.
+
+#### `ScheduleSyncTarget(data map[string]any) IncidentIoEntity`
+
+Create a new `ScheduleSyncTarget` entity instance. Pass `nil` for no initial data.
+
 #### `Secret(data map[string]any) IncidentIoEntity`
 
 Create a new `Secret` entity instance. Pass `nil` for no initial data.
 
+#### `Severity(data map[string]any) IncidentIoEntity`
+
+Create a new `Severity` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPage(data map[string]any) IncidentIoEntity`
+
+Create a new `StatusPage` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageIncident(data map[string]any) IncidentIoEntity`
+
+Create a new `StatusPageIncident` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageIncidentUpdate(data map[string]any) IncidentIoEntity`
+
+Create a new `StatusPageIncidentUpdate` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageMaintenance(data map[string]any) IncidentIoEntity`
+
+Create a new `StatusPageMaintenance` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageMaintenanceUpdate(data map[string]any) IncidentIoEntity`
+
+Create a new `StatusPageMaintenanceUpdate` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageStructure(data map[string]any) IncidentIoEntity`
+
+Create a new `StatusPageStructure` entity instance. Pass `nil` for no initial data.
+
 #### `Team(data map[string]any) IncidentIoEntity`
 
 Create a new `Team` entity instance. Pass `nil` for no initial data.
+
+#### `TelemetryDataSource(data map[string]any) IncidentIoEntity`
+
+Create a new `TelemetryDataSource` entity instance. Pass `nil` for no initial data.
 
 #### `User(data map[string]any) IncidentIoEntity`
 
@@ -215,11 +291,30 @@ fmt.Println(action.GetName()) // "action"
 | `completed_at` | `string` | No |  |
 | `created_at` | `string` | Yes |  |
 | `creator` | `map[string]any` | Yes |  |
-| `description` | `string` | Yes |  |
+| `description` | `string` | No |  |
+| `external_issue_reference` | `map[string]any` | No |  |
+| `follow_up` | `bool` | Yes |  |
 | `id` | `string` | Yes |  |
 | `incident_id` | `string` | Yes |  |
 | `status` | `string` | Yes |  |
 | `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignee` | - | - | - | - | - |
+| `assignee_id` | - | - | - | - | - |
+| `completed_at` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `creator` | - | - | - | - | - |
+| `description` | Yes | Yes | Yes | Yes | - |
+| `external_issue_reference` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `incident_id` | - | - | - | - | - |
+| `status` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -256,7 +351,7 @@ result, err := client.Action(nil).Create(map[string]any{
     "assignee": map[string]any{},
     "created_at": "example_created_at",
     "creator": map[string]any{},
-    "description": "example_description",
+    "follow_up": true,
     "id": "example_id",
     "incident_id": "example_incident_id",
     "status": "example_status",
@@ -363,6 +458,27 @@ Load a single entity matching the given criteria.
 
 ```go
 result, err := client.Alert(nil).Load(map[string]any{"id": "alert_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Alert(nil).Create(map[string]any{
+    "id": "example_id",
+    "alert_source_id": "example_alert_source_id",
+    "attribute": []any{},
+    "created_at": "example_created_at",
+    "deduplication_key": "example_deduplication_key",
+    "status": "example_status",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
+}, nil)
 if err != nil {
     panic(err)
 }
@@ -646,6 +762,7 @@ fmt.Println(alertRoute.GetName()) // "alert_route"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `alert_source` | `[]any` | Yes |  |
+| `channel_config` | `[]any` | Yes |  |
 | `condition_group` | `[]any` | Yes |  |
 | `created_at` | `string` | No |  |
 | `enabled` | `bool` | Yes |  |
@@ -654,8 +771,10 @@ fmt.Println(alertRoute.GetName()) // "alert_route"
 | `grouping_config` | `map[string]any` | Yes |  |
 | `id` | `string` | Yes |  |
 | `incident_config` | `map[string]any` | Yes |  |
+| `incident_template` | `map[string]any` | Yes |  |
 | `is_private` | `bool` | Yes |  |
 | `message_config` | `map[string]any` | Yes |  |
+| `message_template` | `map[string]any` | No |  |
 | `name` | `string` | Yes |  |
 | `owning_team_id` | `[]any` | No |  |
 | `updated_at` | `string` | No |  |
@@ -694,6 +813,7 @@ Create a new entity with the given data.
 ```go
 result, err := client.AlertRoute(nil).Create(map[string]any{
     "alert_source": []any{},
+    "channel_config": []any{},
     "condition_group": []any{},
     "enabled": true,
     "escalation_config": map[string]any{},
@@ -701,6 +821,7 @@ result, err := client.AlertRoute(nil).Create(map[string]any{
     "grouping_config": map[string]any{},
     "id": "example_id",
     "incident_config": map[string]any{},
+    "incident_template": map[string]any{},
     "is_private": true,
     "message_config": map[string]any{},
     "name": "example_name",
@@ -901,6 +1022,7 @@ fmt.Println(apiKey.GetName()) // "api_key"
 | `comment` | `string` | No |  |
 | `created_at` | `string` | Yes |  |
 | `creator` | `map[string]any` | Yes |  |
+| `grace_period_minute` | `int` | Yes |  |
 | `id` | `string` | Yes |  |
 | `last_used_at` | `string` | No |  |
 | `name` | `string` | Yes |  |
@@ -945,6 +1067,7 @@ Create a new entity with the given data.
 result, err := client.ApiKey(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "creator": map[string]any{},
+    "grace_period_minute": 1,
     "id": "example_id",
     "name": "example_name",
     "role": []any{},
@@ -1011,6 +1134,446 @@ Return the entity name.
 
 ---
 
+## CatalogEntryEntity
+
+```go
+catalogEntry := client.CatalogEntry(nil)
+fmt.Println(catalogEntry.GetName()) // "catalog_entry"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alias` | `[]any` | No |  |
+| `archived_at` | `string` | No |  |
+| `attribute_value` | `map[string]any` | Yes |  |
+| `catalog_entry` | `map[string]any` | Yes |  |
+| `catalog_type` | `map[string]any` | Yes |  |
+| `catalog_type_id` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `external_id` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `rank` | `int` | No |  |
+| `update_attribute` | `[]any` | No |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `alias` | - | Yes | - | - |
+| `archived_at` | - | - | - | - |
+| `attribute_value` | - | - | - | - |
+| `catalog_entry` | - | - | - | - |
+| `catalog_type` | - | - | - | - |
+| `catalog_type_id` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `external_id` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | Yes | - | - |
+| `update_attribute` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.CatalogEntry(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.CatalogEntry(nil).Load(map[string]any{"id": "catalog_entry_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.CatalogEntry(nil).Create(map[string]any{
+    "attribute_value": map[string]any{},
+    "catalog_entry": map[string]any{},
+    "catalog_type": map[string]any{},
+    "catalog_type_id": "example_catalog_type_id",
+    "created_at": "example_created_at",
+    "id": "example_id",
+    "name": "example_name",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```go
+result, err := client.CatalogEntry(nil).Update(map[string]any{
+    "id": "catalog_entry_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `CatalogEntryEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## CatalogResourceEntity
+
+```go
+catalogResource := client.CatalogResource(nil)
+fmt.Println(catalogResource.GetName()) // "catalog_resource"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `category` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `label` | `string` | Yes |  |
+| `type` | `string` | Yes |  |
+| `value_docstring` | `string` | Yes |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.CatalogResource(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `CatalogResourceEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## CatalogTypeEntity
+
+```go
+catalogType := client.CatalogType(nil)
+fmt.Println(catalogType.GetName()) // "catalog_type"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `map[string]any` | Yes |  |
+| `category` | `[]any` | Yes |  |
+| `color` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `dynamic_resource_parameter` | `string` | No |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `estimated_count` | `int` | No |  |
+| `icon` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `is_editable` | `bool` | Yes |  |
+| `is_team_type` | `bool` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `owning_team_id` | `[]any` | No |  |
+| `ranked` | `bool` | Yes |  |
+| `registry_type` | `string` | No |  |
+| `required_integration` | `[]any` | No |  |
+| `schema` | `map[string]any` | Yes |  |
+| `semantic_type` | `string` | Yes |  |
+| `source_repo_url` | `string` | No |  |
+| `type_name` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `use_name_as_identifier` | `bool` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | Yes | Yes |
+| `category` | - | - | Yes | Yes |
+| `color` | - | - | Yes | Yes |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - |
+| `engine_resource_type` | - | - | - | - |
+| `estimated_count` | - | - | - | - |
+| `icon` | - | - | Yes | Yes |
+| `id` | - | - | - | - |
+| `is_editable` | - | - | - | - |
+| `is_team_type` | - | - | - | - |
+| `last_synced_at` | - | - | - | - |
+| `name` | - | - | - | - |
+| `owning_team_id` | - | - | - | - |
+| `ranked` | - | - | Yes | Yes |
+| `registry_type` | - | - | - | - |
+| `required_integration` | - | - | - | - |
+| `schema` | - | - | - | - |
+| `semantic_type` | - | - | - | - |
+| `source_repo_url` | - | - | - | - |
+| `type_name` | - | - | Yes | - |
+| `updated_at` | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.CatalogType(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.CatalogType(nil).Load(map[string]any{"id": "catalog_type_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.CatalogType(nil).Create(map[string]any{
+    "annotation": map[string]any{},
+    "category": []any{},
+    "color": "example_color",
+    "created_at": "example_created_at",
+    "description": "example_description",
+    "engine_resource_type": "example_engine_resource_type",
+    "icon": "example_icon",
+    "id": "example_id",
+    "is_editable": true,
+    "name": "example_name",
+    "ranked": true,
+    "schema": map[string]any{},
+    "semantic_type": "example_semantic_type",
+    "type_name": "example_type_name",
+    "updated_at": "example_updated_at",
+    "use_name_as_identifier": true,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```go
+result, err := client.CatalogType(nil).Update(map[string]any{
+    "id": "catalog_type_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `CatalogTypeEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## CatalogTypeSchemaEntity
+
+```go
+catalogTypeSchema := client.CatalogTypeSchema(nil)
+fmt.Println(catalogTypeSchema.GetName()) // "catalog_type_schema"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `map[string]any` | Yes |  |
+| `attribute` | `[]any` | Yes |  |
+| `category` | `[]any` | Yes |  |
+| `color` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `dynamic_resource_parameter` | `string` | No |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `estimated_count` | `int` | No |  |
+| `icon` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `is_editable` | `bool` | Yes |  |
+| `is_team_type` | `bool` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `owning_team_id` | `[]any` | No |  |
+| `ranked` | `bool` | Yes |  |
+| `registry_type` | `string` | No |  |
+| `required_integration` | `[]any` | No |  |
+| `schema` | `map[string]any` | Yes |  |
+| `semantic_type` | `string` | Yes |  |
+| `source_repo_url` | `string` | No |  |
+| `type_name` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `use_name_as_identifier` | `bool` | Yes |  |
+| `version` | `int` | Yes |  |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.CatalogTypeSchema(nil).Create(map[string]any{
+    "catalog_type_id": "example_catalog_type_id",
+    "annotation": map[string]any{},
+    "attribute": []any{},
+    "category": []any{},
+    "color": "example_color",
+    "created_at": "example_created_at",
+    "description": "example_description",
+    "engine_resource_type": "example_engine_resource_type",
+    "icon": "example_icon",
+    "id": "example_id",
+    "is_editable": true,
+    "name": "example_name",
+    "ranked": true,
+    "schema": map[string]any{},
+    "semantic_type": "example_semantic_type",
+    "type_name": "example_type_name",
+    "updated_at": "example_updated_at",
+    "use_name_as_identifier": true,
+    "version": 1,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `CatalogTypeSchemaEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```go
@@ -1032,6 +1595,13 @@ fmt.Println(customField.GetName()) // "custom_field"
 | `helptext_catalog_attribute_id` | `string` | No |  |
 | `id` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `option` | `[]any` | Yes |  |
+| `required` | `string` | No |  |
+| `required_v2` | `string` | No |  |
+| `show_before_closure` | `bool` | Yes |  |
+| `show_before_creation` | `bool` | Yes |  |
+| `show_before_update` | `bool` | Yes |  |
+| `show_in_announcement_post` | `bool` | No |  |
 | `updated_at` | `string` | Yes |  |
 
 ### Operations
@@ -1073,6 +1643,10 @@ result, err := client.CustomField(nil).Create(map[string]any{
     "fixed_filter": map[string]any{},
     "id": "example_id",
     "name": "example_name",
+    "option": []any{},
+    "show_before_closure": true,
+    "show_before_creation": true,
+    "show_before_update": true,
     "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
@@ -1242,6 +1816,107 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `CustomFieldOptionEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## EscalationEntity
+
+```go
+escalation := client.Escalation(nil)
+fmt.Println(escalation.GetName()) // "escalation"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `creator` | `map[string]any` | Yes |  |
+| `description` | `string` | No |  |
+| `escalation_path_id` | `string` | No |  |
+| `event` | `[]any` | Yes |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `incident_id` | `string` | No |  |
+| `priority` | `map[string]any` | Yes |  |
+| `related_alert` | `[]any` | Yes |  |
+| `related_incident` | `[]any` | Yes |  |
+| `status` | `string` | Yes |  |
+| `title` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `user_id` | `[]any` | No |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.Escalation(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.Escalation(nil).Load(map[string]any{"id": "escalation_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Escalation(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "creator": map[string]any{},
+    "event": []any{},
+    "id": "example_id",
+    "idempotency_key": "example_idempotency_key",
+    "priority": map[string]any{},
+    "related_alert": []any{},
+    "related_incident": []any{},
+    "status": "example_status",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `EscalationEntity` instance with the same client and
 options.
 
 #### `GetName() string`
@@ -1428,6 +2103,7 @@ fmt.Println(incident.GetName()) // "incident"
 | `has_debrief` | `bool` | No |  |
 | `id` | `string` | Yes |  |
 | `idempotency_key` | `string` | Yes |  |
+| `incident` | `map[string]any` | Yes |  |
 | `incident_role_assignment` | `[]any` | Yes |  |
 | `incident_status` | `map[string]any` | Yes |  |
 | `incident_status_id` | `string` | No |  |
@@ -1436,6 +2112,7 @@ fmt.Println(incident.GetName()) // "incident"
 | `incident_type_id` | `string` | No |  |
 | `mode` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `notify_incident_channel` | `bool` | Yes |  |
 | `permalink` | `string` | No |  |
 | `postmortem_document_id` | `[]any` | No |  |
 | `postmortem_document_url` | `string` | No |  |
@@ -1447,7 +2124,11 @@ fmt.Println(incident.GetName()) // "incident"
 | `slack_channel_name` | `string` | No |  |
 | `slack_channel_name_override` | `string` | No |  |
 | `slack_team_id` | `string` | Yes |  |
+| `source_message_channel_id` | `string` | No |  |
+| `source_message_timestamp` | `string` | No |  |
+| `status` | `string` | Yes |  |
 | `summary` | `string` | No |  |
+| `timestamp` | `[]any` | No |  |
 | `updated_at` | `string` | Yes |  |
 | `visibility` | `string` | Yes |  |
 | `workload_minutes_late` | `float64` | No |  |
@@ -1468,6 +2149,7 @@ fmt.Println(incident.GetName()) // "incident"
 | `has_debrief` | - | - | - |
 | `id` | - | - | - |
 | `idempotency_key` | - | - | - |
+| `incident` | - | - | - |
 | `incident_role_assignment` | - | - | Yes |
 | `incident_status` | - | - | - |
 | `incident_status_id` | - | - | - |
@@ -1476,6 +2158,7 @@ fmt.Println(incident.GetName()) // "incident"
 | `incident_type_id` | - | - | - |
 | `mode` | - | - | Yes |
 | `name` | - | - | Yes |
+| `notify_incident_channel` | - | - | - |
 | `permalink` | - | - | - |
 | `postmortem_document_id` | - | - | - |
 | `postmortem_document_url` | - | - | - |
@@ -1487,7 +2170,11 @@ fmt.Println(incident.GetName()) // "incident"
 | `slack_channel_name` | - | - | - |
 | `slack_channel_name_override` | - | - | - |
 | `slack_team_id` | - | - | Yes |
+| `source_message_channel_id` | - | - | - |
+| `source_message_timestamp` | - | - | - |
+| `status` | - | - | Yes |
 | `summary` | - | - | - |
+| `timestamp` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -1533,15 +2220,18 @@ result, err := client.Incident(nil).Create(map[string]any{
     "external_issue_reference": map[string]any{},
     "id": "example_id",
     "idempotency_key": "example_idempotency_key",
+    "incident": map[string]any{},
     "incident_role_assignment": []any{},
     "incident_status": map[string]any{},
     "incident_type": map[string]any{},
     "mode": "example_mode",
     "name": "example_name",
+    "notify_incident_channel": true,
     "reference": "example_reference",
     "severity": map[string]any{},
     "slack_channel_id": "example_slack_channel_id",
     "slack_team_id": "example_slack_team_id",
+    "status": "example_status",
     "updated_at": "example_updated_at",
     "visibility": "example_visibility",
 }, nil)
@@ -1566,6 +2256,60 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `IncidentEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## IncidentAlertEntity
+
+```go
+incidentAlert := client.IncidentAlert(nil)
+fmt.Println(incidentAlert.GetName()) // "incident_alert"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alert` | `map[string]any` | Yes |  |
+| `alert_route_id` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `incident` | `map[string]any` | Yes |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.IncidentAlert(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `IncidentAlertEntity` instance with the same client and
 options.
 
 #### `GetName() string`
@@ -1885,9 +2629,24 @@ fmt.Println(incidentRole.GetName()) // "incident_role"
 | `id` | `string` | Yes |  |
 | `instruction` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `required` | `bool` | No |  |
 | `role_type` | `string` | Yes |  |
 | `shortform` | `string` | Yes |  |
 | `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `instruction` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `required` | - | - | Yes | - | - |
+| `role_type` | - | - | - | - | - |
+| `shortform` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2606,6 +3365,528 @@ Return the entity name.
 
 ---
 
+## ScheduleEntity
+
+```go
+schedule := client.Schedule(nil)
+fmt.Println(schedule.GetName()) // "schedule"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `map[string]any` | Yes |  |
+| `config` | `map[string]any` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `current_shift` | `[]any` | No |  |
+| `holidays_public_config` | `map[string]any` | Yes |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `next_shift` | `[]any` | No |  |
+| `permalink` | `string` | Yes |  |
+| `schedule` | `map[string]any` | Yes |  |
+| `team_id` | `[]any` | Yes |  |
+| `timezone` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.Schedule(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.Schedule(nil).Load(map[string]any{"id": "schedule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Schedule(nil).Create(map[string]any{
+    "annotation": map[string]any{},
+    "config": map[string]any{},
+    "created_at": "example_created_at",
+    "holidays_public_config": map[string]any{},
+    "id": "example_id",
+    "name": "example_name",
+    "permalink": "example_permalink",
+    "schedule": map[string]any{},
+    "team_id": []any{},
+    "timezone": "example_timezone",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```go
+result, err := client.Schedule(nil).Update(map[string]any{
+    "id": "schedule_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.Schedule(nil).Remove(map[string]any{"id": "schedule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `ScheduleEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleEntryEntity
+
+```go
+scheduleEntry := client.ScheduleEntry(nil)
+fmt.Println(scheduleEntry.GetName()) // "schedule_entry"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `pagination_meta` | `map[string]any` | Yes |  |
+| `schedule_entry` | `map[string]any` | Yes |  |
+
+### Operations
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.ScheduleEntry(nil).Load(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `ScheduleEntryEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleReplicaEntity
+
+```go
+scheduleReplica := client.ScheduleReplica(nil)
+fmt.Println(scheduleReplica.GetName()) // "schedule_replica"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `last_sync_error` | `string` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `mirror_window_day` | `int` | No |  |
+| `replica_fallback_user_id` | `string` | Yes |  |
+| `replica_provider` | `string` | Yes |  |
+| `replica_provider_id` | `string` | Yes |  |
+| `schedule_id` | `string` | Yes |  |
+| `schedule_replica` | `map[string]any` | Yes |  |
+| `source` | `[]any` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `user_status` | `[]any` | Yes |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.ScheduleReplica(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.ScheduleReplica(nil).Load(map[string]any{"id": "schedule_replica_id", "schedule_id": "schedule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.ScheduleReplica(nil).Create(map[string]any{
+    "id": "example_id",
+    "created_at": "example_created_at",
+    "replica_fallback_user_id": "example_replica_fallback_user_id",
+    "replica_provider": "example_replica_provider",
+    "replica_provider_id": "example_replica_provider_id",
+    "schedule_id": "example_schedule_id",
+    "schedule_replica": map[string]any{},
+    "source": []any{},
+    "updated_at": "example_updated_at",
+    "user_status": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `ScheduleReplicaEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleSyncRuleEntity
+
+```go
+scheduleSyncRule := client.ScheduleSyncRule(nil)
+fmt.Println(scheduleSyncRule.GetName()) // "schedule_sync_rule"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `map[string]any` | No |  |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `permanent_member_user_id` | `[]any` | Yes |  |
+| `rotation_id` | `string` | No |  |
+| `schedule_id` | `string` | Yes |  |
+| `schedule_sync_rule` | `map[string]any` | Yes |  |
+| `schedule_sync_target` | `map[string]any` | Yes |  |
+| `schedule_sync_target_id` | `string` | Yes |  |
+| `sync_type` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `id` | - | - | - | - |
+| `permanent_member_user_id` | - | - | - | Yes |
+| `rotation_id` | - | - | - | - |
+| `schedule_id` | - | - | - | - |
+| `schedule_sync_rule` | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - |
+| `sync_type` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.ScheduleSyncRule(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.ScheduleSyncRule(nil).Load(map[string]any{"id": "schedule_sync_rule_id", "schedule_id": "schedule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.ScheduleSyncRule(nil).Create(map[string]any{
+    "id": "example_id",
+    "created_at": "example_created_at",
+    "permanent_member_user_id": []any{},
+    "schedule_id": "example_schedule_id",
+    "schedule_sync_rule": map[string]any{},
+    "schedule_sync_target": map[string]any{},
+    "schedule_sync_target_id": "example_schedule_sync_target_id",
+    "sync_type": "example_sync_type",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```go
+result, err := client.ScheduleSyncRule(nil).Update(map[string]any{
+    "id": "schedule_sync_rule_id",
+    "schedule_id": "schedule_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `ScheduleSyncRuleEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleSyncTargetEntity
+
+```go
+scheduleSyncTarget := client.ScheduleSyncTarget(nil)
+fmt.Println(scheduleSyncTarget.GetName()) // "schedule_sync_target"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `add_bot_to_group` | `bool` | Yes |  |
+| `annotation` | `map[string]any` | No |  |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `linked_schedule` | `[]any` | Yes |  |
+| `schedule_sync_target` | `map[string]any` | Yes |  |
+| `slack_team_id` | `string` | Yes |  |
+| `slack_user_group_id` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.ScheduleSyncTarget(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.ScheduleSyncTarget(nil).Load(map[string]any{"id": "schedule_sync_target_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.ScheduleSyncTarget(nil).Create(map[string]any{
+    "add_bot_to_group": true,
+    "created_at": "example_created_at",
+    "id": "example_id",
+    "linked_schedule": []any{},
+    "schedule_sync_target": map[string]any{},
+    "slack_team_id": "example_slack_team_id",
+    "slack_user_group_id": "example_slack_user_group_id",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```go
+result, err := client.ScheduleSyncTarget(nil).Update(map[string]any{
+    "id": "schedule_sync_target_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria.
+
+```go
+result, err := client.ScheduleSyncTarget(nil).Remove(map[string]any{"id": "schedule_sync_target_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `ScheduleSyncTargetEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
 ## SecretEntity
 
 ```go
@@ -2622,7 +3903,7 @@ fmt.Println(secret.GetName()) // "secret"
 | `id` | `string` | Yes |  |
 | `last_four_char` | `string` | No |  |
 | `name` | `string` | Yes |  |
-| `owning_team_id` | `[]any` | No |  |
+| `owning_team_id` | `[]any` | Yes |  |
 | `secret` | `map[string]any` | Yes |  |
 | `updated_at` | `string` | Yes |  |
 | `value` | `string` | Yes |  |
@@ -2637,7 +3918,7 @@ fmt.Println(secret.GetName()) // "secret"
 | `id` | - | - | - | - | - |
 | `last_four_char` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
-| `owning_team_id` | - | Yes | - | Yes | - |
+| `owning_team_id` | - | - | Yes | Yes | - |
 | `secret` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 | `value` | - | - | - | - | - |
@@ -2678,6 +3959,7 @@ result, err := client.Secret(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "id": "example_id",
     "name": "example_name",
+    "owning_team_id": []any{},
     "secret": map[string]any{},
     "updated_at": "example_updated_at",
     "value": "example_value",
@@ -2731,6 +4013,554 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `SecretEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## SeverityEntity
+
+```go
+severity := client.Severity(nil)
+fmt.Println(severity.GetName()) // "severity"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `rank` | `int` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | - | Yes | Yes |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.Severity(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.Severity(nil).Load(map[string]any{"id": "severity_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.Severity(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "description": "example_description",
+    "id": "example_id",
+    "name": "example_name",
+    "rank": 1,
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```go
+result, err := client.Severity(nil).Update(map[string]any{
+    "id": "severity_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `SeverityEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageEntity
+
+```go
+statusPage := client.StatusPage(nil)
+fmt.Println(statusPage.GetName()) // "status_page"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `description` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `public_url` | `string` | No |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.StatusPage(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `StatusPageEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageIncidentEntity
+
+```go
+statusPageIncident := client.StatusPageIncident(nil)
+fmt.Println(statusPageIncident.GetName()) // "status_page_incident"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_impact` | `[]any` | Yes |  |
+| `component_status` | `[]any` | No |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `incident_status` | `string` | Yes |  |
+| `message` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `published_at` | `string` | Yes |  |
+| `status_page_id` | `string` | Yes |  |
+| `update` | `[]any` | Yes |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.StatusPageIncident(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.StatusPageIncident(nil).Load(map[string]any{"id": "status_page_incident_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.StatusPageIncident(nil).Create(map[string]any{
+    "component_impact": []any{},
+    "id": "example_id",
+    "idempotency_key": "example_idempotency_key",
+    "incident_status": "example_incident_status",
+    "message": "example_message",
+    "name": "example_name",
+    "notify_subscriber": true,
+    "published_at": "example_published_at",
+    "status_page_id": "example_status_page_id",
+    "update": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```go
+result, err := client.StatusPageIncident(nil).Update(map[string]any{
+    "id": "status_page_incident_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `StatusPageIncidentEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageIncidentUpdateEntity
+
+```go
+statusPageIncidentUpdate := client.StatusPageIncidentUpdate(nil)
+fmt.Println(statusPageIncidentUpdate.GetName()) // "status_page_incident_update"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `[]any` | No |  |
+| `incident_status` | `string` | No |  |
+| `message` | `string` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `status_page_incident_id` | `string` | Yes |  |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.StatusPageIncidentUpdate(nil).Create(map[string]any{
+    "message": "example_message",
+    "notify_subscriber": true,
+    "status_page_incident_id": "example_status_page_incident_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `StatusPageIncidentUpdateEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageMaintenanceEntity
+
+```go
+statusPageMaintenance := client.StatusPageMaintenance(nil)
+fmt.Println(statusPageMaintenance.GetName()) // "status_page_maintenance"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `affected_component_id` | `[]any` | Yes |  |
+| `component_maintenance_period` | `[]any` | Yes |  |
+| `end_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `maintenance_status` | `string` | Yes |  |
+| `message` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `published_at` | `string` | Yes |  |
+| `start_at` | `string` | Yes |  |
+| `status_page_id` | `string` | Yes |  |
+| `update` | `[]any` | Yes |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns an array.
+
+```go
+results, err := client.StatusPageMaintenance(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(results)
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.StatusPageMaintenance(nil).Load(map[string]any{"id": "status_page_maintenance_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.StatusPageMaintenance(nil).Create(map[string]any{
+    "affected_component_id": []any{},
+    "component_maintenance_period": []any{},
+    "end_at": "example_end_at",
+    "id": "example_id",
+    "idempotency_key": "example_idempotency_key",
+    "maintenance_status": "example_maintenance_status",
+    "message": "example_message",
+    "name": "example_name",
+    "notify_subscriber": true,
+    "published_at": "example_published_at",
+    "start_at": "example_start_at",
+    "status_page_id": "example_status_page_id",
+    "update": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `StatusPageMaintenanceEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageMaintenanceUpdateEntity
+
+```go
+statusPageMaintenanceUpdate := client.StatusPageMaintenanceUpdate(nil)
+fmt.Println(statusPageMaintenanceUpdate.GetName()) // "status_page_maintenance_update"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `[]any` | No |  |
+| `maintenance_status` | `string` | No |  |
+| `message` | `string` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `status_page_maintenance_id` | `string` | Yes |  |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data.
+
+```go
+result, err := client.StatusPageMaintenanceUpdate(nil).Create(map[string]any{
+    "message": "example_message",
+    "notify_subscriber": true,
+    "status_page_maintenance_id": "example_status_page_maintenance_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `StatusPageMaintenanceUpdateEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageStructureEntity
+
+```go
+statusPageStructure := client.StatusPageStructure(nil)
+fmt.Println(statusPageStructure.GetName()) // "status_page_structure"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `item` | `[]any` | Yes |  |
+
+### Operations
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.StatusPageStructure(nil).Load(map[string]any{"id": "status_page_structure_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `StatusPageStructureEntity` instance with the same client and
 options.
 
 #### `GetName() string`
@@ -2797,6 +4627,84 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `TeamEntity` instance with the same client and
+options.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## TelemetryDataSourceEntity
+
+```go
+telemetryDataSource := client.TelemetryDataSource(nil)
+fmt.Println(telemetryDataSource.GetName()) // "telemetry_data_source"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `datadog_config` | `map[string]any` | No |  |
+| `enabled` | `bool` | Yes |  |
+| `grafana_config` | `map[string]any` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `provider` | `string` | Yes |  |
+| `source_type` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `version` | `string` | No |  |
+
+### Field Usage by Operation
+
+| Field | update |
+| --- | --- |
+| `created_at` | - |
+| `datadog_config` | - |
+| `enabled` | - |
+| `grafana_config` | - |
+| `id` | - |
+| `name` | Yes |
+| `provider` | - |
+| `source_type` | - |
+| `updated_at` | - |
+| `version` | - |
+
+### Operations
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```go
+result, err := client.TelemetryDataSource(nil).Update(map[string]any{
+    "id": "id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `GetName() string`

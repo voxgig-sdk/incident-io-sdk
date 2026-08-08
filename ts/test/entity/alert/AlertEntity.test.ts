@@ -39,7 +39,7 @@ describe('AlertEntity', async () => {
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE
-    for (const op of ['list', 'load']) {
+    for (const op of ['create', 'list', 'load']) {
       if (maybeSkipControl(t, 'entityOp', 'alert.' + op, live)) return
     }
 
@@ -57,13 +57,21 @@ describe('AlertEntity', async () => {
     const isempty = struct.isempty
     const select = struct.select
 
-    let alert_ref01_data = Object.values(setup.data.existing.alert)[0] as any
+
+    // CREATE
+    const alert_ref01_ent = client.Alert()
+    let alert_ref01_data = setup.data.new.alert['alert_ref01']
+
+    alert_ref01_data = await alert_ref01_ent.create(alert_ref01_data)
+    assert(null != alert_ref01_data.id)
+
 
     // LIST
-    const alert_ref01_ent = client.Alert()
     const alert_ref01_match: any = {}
 
     const alert_ref01_list = await alert_ref01_ent.list(alert_ref01_match)
+
+    assert(!isempty(select(alert_ref01_list, { id: alert_ref01_data.id })))
 
 
     // LOAD

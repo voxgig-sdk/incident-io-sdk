@@ -1,0 +1,22 @@
+# BasicCatalogResourceFlow
+
+main: kit: flow: BasicCatalogResourceFlow:
+{
+  entity: "catalog_resource",
+  kind: "basic",
+  name: "BasicCatalogResourceFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "catalog_resource_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCatalogResourceFlow"
+}

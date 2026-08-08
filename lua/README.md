@@ -47,19 +47,21 @@ for _, item in ipairs(actions) do
 end
 ```
 
-### 3. Load an action
+### 3. Load a schedulereplica
+
+ScheduleReplica is nested under schedule, so provide the `schedule_id`.
 
 ```lua
-local action, err = client:Action():load({ id = "example_id" })
+local schedulereplica, err = client:ScheduleReplica():load({ schedule_id = "example_schedule_id", id = "example_id" })
 if err then error(err) end
-print(action)
+print(schedulereplica)
 ```
 
 ### 4. Create, update, and remove
 
 ```lua
 -- Create
-local created, err = client:Action():create({ assignee = {}, created_at = "example_created_at", creator = {}, description = "example_description", id = "example_id", incident_id = "example_incident_id", status = "example_status", updated_at = "example_updated_at" })
+local created, err = client:Action():create({ assignee = {}, created_at = "example_created_at", creator = {}, follow_up = true, id = "example_id", incident_id = "example_incident_id", status = "example_status", updated_at = "example_updated_at" })
 if err then error(err) end
 
 -- Update
@@ -76,7 +78,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local incidenttypes, err = client:IncidentType():list()
+local incidentroles, err = client:IncidentRole():list()
 if err then error(err) end
 ```
 
@@ -134,7 +136,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:IncidentType():list()
+local result, err = client:IncidentRole():list()
 -- result is the returned data; err is set on failure
 ```
 
@@ -220,10 +222,16 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `AlertRoute` | `(data) -> AlertRouteEntity` | Create an AlertRoute entity instance. |
 | `AlertSource` | `(data) -> AlertSourceEntity` | Create an AlertSource entity instance. |
 | `ApiKey` | `(data) -> ApiKeyEntity` | Create an ApiKey entity instance. |
+| `CatalogEntry` | `(data) -> CatalogEntryEntity` | Create a CatalogEntry entity instance. |
+| `CatalogResource` | `(data) -> CatalogResourceEntity` | Create a CatalogResource entity instance. |
+| `CatalogType` | `(data) -> CatalogTypeEntity` | Create a CatalogType entity instance. |
+| `CatalogTypeSchema` | `(data) -> CatalogTypeSchemaEntity` | Create a CatalogTypeSchema entity instance. |
 | `CustomField` | `(data) -> CustomFieldEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `(data) -> CustomFieldOptionEntity` | Create a CustomFieldOption entity instance. |
+| `Escalation` | `(data) -> EscalationEntity` | Create an Escalation entity instance. |
 | `FollowUp` | `(data) -> FollowUpEntity` | Create a FollowUp entity instance. |
 | `Incident` | `(data) -> IncidentEntity` | Create an Incident entity instance. |
+| `IncidentAlert` | `(data) -> IncidentAlertEntity` | Create an IncidentAlert entity instance. |
 | `IncidentAttachment` | `(data) -> IncidentAttachmentEntity` | Create an IncidentAttachment entity instance. |
 | `IncidentMembership` | `(data) -> IncidentMembershipEntity` | Create an IncidentMembership entity instance. |
 | `IncidentParticipant` | `(data) -> IncidentParticipantEntity` | Create an IncidentParticipant entity instance. |
@@ -237,8 +245,21 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `IpAllowlist` | `(data) -> IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `MaintenanceWindow` | `(data) -> MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
 | `PostmortemDocument` | `(data) -> PostmortemDocumentEntity` | Create a PostmortemDocument entity instance. |
+| `Schedule` | `(data) -> ScheduleEntity` | Create a Schedule entity instance. |
+| `ScheduleEntry` | `(data) -> ScheduleEntryEntity` | Create a ScheduleEntry entity instance. |
+| `ScheduleReplica` | `(data) -> ScheduleReplicaEntity` | Create a ScheduleReplica entity instance. |
+| `ScheduleSyncRule` | `(data) -> ScheduleSyncRuleEntity` | Create a ScheduleSyncRule entity instance. |
+| `ScheduleSyncTarget` | `(data) -> ScheduleSyncTargetEntity` | Create a ScheduleSyncTarget entity instance. |
 | `Secret` | `(data) -> SecretEntity` | Create a Secret entity instance. |
+| `Severity` | `(data) -> SeverityEntity` | Create a Severity entity instance. |
+| `StatusPage` | `(data) -> StatusPageEntity` | Create a StatusPage entity instance. |
+| `StatusPageIncident` | `(data) -> StatusPageIncidentEntity` | Create a StatusPageIncident entity instance. |
+| `StatusPageIncidentUpdate` | `(data) -> StatusPageIncidentUpdateEntity` | Create a StatusPageIncidentUpdate entity instance. |
+| `StatusPageMaintenance` | `(data) -> StatusPageMaintenanceEntity` | Create a StatusPageMaintenance entity instance. |
+| `StatusPageMaintenanceUpdate` | `(data) -> StatusPageMaintenanceUpdateEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
+| `StatusPageStructure` | `(data) -> StatusPageStructureEntity` | Create a StatusPageStructure entity instance. |
 | `Team` | `(data) -> TeamEntity` | Create a Team entity instance. |
+| `TelemetryDataSource` | `(data) -> TelemetryDataSourceEntity` | Create a TelemetryDataSource entity instance. |
 | `User` | `(data) -> UserEntity` | Create an User entity instance. |
 | `Workflow` | `(data) -> WorkflowEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `(data) -> WorkflowRunEntity` | Create a WorkflowRun entity instance. |
@@ -292,6 +313,8 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | `created_at` |  |
 | `creator` |  |
 | `description` |  |
+| `external_issue_reference` |  |
+| `follow_up` |  |
 | `id` |  |
 | `incident_id` |  |
 | `status` |  |
@@ -318,9 +341,9 @@ API path: `/v2/actions`
 | `title` |  |
 | `updated_at` |  |
 
-Operations: List, Load.
+Operations: Create, List, Load.
 
-API path: `/v2/alerts`
+API path: `/v2/alerts/{id}/actions/resolve`
 
 #### AlertAttribute
 
@@ -360,6 +383,7 @@ API path: `/v1/alert_notes`
 | Field | Description |
 | --- | --- |
 | `alert_source` |  |
+| `channel_config` |  |
 | `condition_group` |  |
 | `created_at` |  |
 | `enabled` |  |
@@ -368,8 +392,10 @@ API path: `/v1/alert_notes`
 | `grouping_config` |  |
 | `id` |  |
 | `incident_config` |  |
+| `incident_template` |  |
 | `is_private` |  |
 | `message_config` |  |
+| `message_template` |  |
 | `name` |  |
 | `owning_team_id` |  |
 | `updated_at` |  |
@@ -377,7 +403,7 @@ API path: `/v1/alert_notes`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v3/alert_routes`
+API path: `/v2/alert_routes`
 
 #### AlertSource
 
@@ -409,6 +435,7 @@ API path: `/v2/alert_sources`
 | `comment` |  |
 | `created_at` |  |
 | `creator` |  |
+| `grace_period_minute` |  |
 | `id` |  |
 | `last_used_at` |  |
 | `name` |  |
@@ -421,7 +448,112 @@ API path: `/v2/alert_sources`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v1/api_keys`
+API path: `/v1/api_keys/{id}/actions/rotate`
+
+#### CatalogEntry
+
+| Field | Description |
+| --- | --- |
+| `alias` |  |
+| `archived_at` |  |
+| `attribute_value` |  |
+| `catalog_entry` |  |
+| `catalog_type` |  |
+| `catalog_type_id` |  |
+| `created_at` |  |
+| `external_id` |  |
+| `id` |  |
+| `name` |  |
+| `rank` |  |
+| `update_attribute` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/catalog_entries`
+
+#### CatalogResource
+
+| Field | Description |
+| --- | --- |
+| `category` |  |
+| `description` |  |
+| `engine_resource_type` |  |
+| `label` |  |
+| `type` |  |
+| `value_docstring` |  |
+
+Operations: List.
+
+API path: `/v2/catalog_resources`
+
+#### CatalogType
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `category` |  |
+| `color` |  |
+| `created_at` |  |
+| `description` |  |
+| `dynamic_resource_parameter` |  |
+| `engine_resource_type` |  |
+| `estimated_count` |  |
+| `icon` |  |
+| `id` |  |
+| `is_editable` |  |
+| `is_team_type` |  |
+| `last_synced_at` |  |
+| `name` |  |
+| `owning_team_id` |  |
+| `ranked` |  |
+| `registry_type` |  |
+| `required_integration` |  |
+| `schema` |  |
+| `semantic_type` |  |
+| `source_repo_url` |  |
+| `type_name` |  |
+| `updated_at` |  |
+| `use_name_as_identifier` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/catalog_types`
+
+#### CatalogTypeSchema
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `attribute` |  |
+| `category` |  |
+| `color` |  |
+| `created_at` |  |
+| `description` |  |
+| `dynamic_resource_parameter` |  |
+| `engine_resource_type` |  |
+| `estimated_count` |  |
+| `icon` |  |
+| `id` |  |
+| `is_editable` |  |
+| `is_team_type` |  |
+| `last_synced_at` |  |
+| `name` |  |
+| `owning_team_id` |  |
+| `ranked` |  |
+| `registry_type` |  |
+| `required_integration` |  |
+| `schema` |  |
+| `semantic_type` |  |
+| `source_repo_url` |  |
+| `type_name` |  |
+| `updated_at` |  |
+| `use_name_as_identifier` |  |
+| `version` |  |
+
+Operations: Create.
+
+API path: `/v2/catalog_types/{id}/actions/update_schema`
 
 #### CustomField
 
@@ -437,11 +569,18 @@ API path: `/v1/api_keys`
 | `helptext_catalog_attribute_id` |  |
 | `id` |  |
 | `name` |  |
+| `option` |  |
+| `required` |  |
+| `required_v2` |  |
+| `show_before_closure` |  |
+| `show_before_creation` |  |
+| `show_before_update` |  |
+| `show_in_announcement_post` |  |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/custom_fields`
+API path: `/v1/custom_fields`
 
 #### CustomFieldOption
 
@@ -455,6 +594,30 @@ API path: `/v2/custom_fields`
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/custom_field_options`
+
+#### Escalation
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `creator` |  |
+| `description` |  |
+| `escalation_path_id` |  |
+| `event` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `incident_id` |  |
+| `priority` |  |
+| `related_alert` |  |
+| `related_incident` |  |
+| `status` |  |
+| `title` |  |
+| `updated_at` |  |
+| `user_id` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/escalations`
 
 #### FollowUp
 
@@ -497,6 +660,7 @@ API path: `/v2/follow_ups`
 | `has_debrief` |  |
 | `id` |  |
 | `idempotency_key` |  |
+| `incident` |  |
 | `incident_role_assignment` |  |
 | `incident_status` |  |
 | `incident_status_id` |  |
@@ -505,6 +669,7 @@ API path: `/v2/follow_ups`
 | `incident_type_id` |  |
 | `mode` |  |
 | `name` |  |
+| `notify_incident_channel` |  |
 | `permalink` |  |
 | `postmortem_document_id` |  |
 | `postmortem_document_url` |  |
@@ -516,7 +681,11 @@ API path: `/v2/follow_ups`
 | `slack_channel_name` |  |
 | `slack_channel_name_override` |  |
 | `slack_team_id` |  |
+| `source_message_channel_id` |  |
+| `source_message_timestamp` |  |
+| `status` |  |
 | `summary` |  |
+| `timestamp` |  |
 | `updated_at` |  |
 | `visibility` |  |
 | `workload_minutes_late` |  |
@@ -526,7 +695,20 @@ API path: `/v2/follow_ups`
 
 Operations: Create, List, Load.
 
-API path: `/v2/incidents`
+API path: `/v2/incidents/{id}/actions/edit`
+
+#### IncidentAlert
+
+| Field | Description |
+| --- | --- |
+| `alert` |  |
+| `alert_route_id` |  |
+| `id` |  |
+| `incident` |  |
+
+Operations: List.
+
+API path: `/v2/incident_alerts`
 
 #### IncidentAttachment
 
@@ -595,13 +777,14 @@ API path: `/v1/incident_relationships`
 | `id` |  |
 | `instruction` |  |
 | `name` |  |
+| `required` |  |
 | `role_type` |  |
 | `shortform` |  |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/incident_roles`
+API path: `/v1/incident_roles`
 
 #### IncidentStatus
 
@@ -725,6 +908,99 @@ Operations: List, Load, Update.
 
 API path: `/v1/postmortem_documents`
 
+#### Schedule
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `config` |  |
+| `created_at` |  |
+| `current_shift` |  |
+| `holidays_public_config` |  |
+| `id` |  |
+| `name` |  |
+| `next_shift` |  |
+| `permalink` |  |
+| `schedule` |  |
+| `team_id` |  |
+| `timezone` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedules`
+
+#### ScheduleEntry
+
+| Field | Description |
+| --- | --- |
+| `pagination_meta` |  |
+| `schedule_entry` |  |
+
+Operations: Load.
+
+API path: `/v2/schedule_entries`
+
+#### ScheduleReplica
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `id` |  |
+| `last_sync_error` |  |
+| `last_synced_at` |  |
+| `mirror_window_day` |  |
+| `replica_fallback_user_id` |  |
+| `replica_provider` |  |
+| `replica_provider_id` |  |
+| `schedule_id` |  |
+| `schedule_replica` |  |
+| `source` |  |
+| `updated_at` |  |
+| `user_status` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/schedules/{schedule_id}/replicas`
+
+#### ScheduleSyncRule
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `created_at` |  |
+| `id` |  |
+| `permanent_member_user_id` |  |
+| `rotation_id` |  |
+| `schedule_id` |  |
+| `schedule_sync_rule` |  |
+| `schedule_sync_target` |  |
+| `schedule_sync_target_id` |  |
+| `sync_type` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/schedules/{schedule_id}/sync_rules`
+
+#### ScheduleSyncTarget
+
+| Field | Description |
+| --- | --- |
+| `add_bot_to_group` |  |
+| `annotation` |  |
+| `created_at` |  |
+| `id` |  |
+| `linked_schedule` |  |
+| `schedule_sync_target` |  |
+| `slack_team_id` |  |
+| `slack_user_group_id` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedule_sync_targets`
+
 #### Secret
 
 | Field | Description |
@@ -742,7 +1018,115 @@ API path: `/v1/postmortem_documents`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/secrets`
+API path: `/v2/secrets/{id}/actions/rotate`
+
+#### Severity
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `description` |  |
+| `id` |  |
+| `name` |  |
+| `rank` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v1/severities`
+
+#### StatusPage
+
+| Field | Description |
+| --- | --- |
+| `description` |  |
+| `id` |  |
+| `name` |  |
+| `public_url` |  |
+
+Operations: List.
+
+API path: `/v2/status_pages`
+
+#### StatusPageIncident
+
+| Field | Description |
+| --- | --- |
+| `component_impact` |  |
+| `component_status` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `incident_status` |  |
+| `message` |  |
+| `name` |  |
+| `notify_subscriber` |  |
+| `published_at` |  |
+| `status_page_id` |  |
+| `update` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/status_page_incidents`
+
+#### StatusPageIncidentUpdate
+
+| Field | Description |
+| --- | --- |
+| `component_status` |  |
+| `incident_status` |  |
+| `message` |  |
+| `notify_subscriber` |  |
+| `status_page_incident_id` |  |
+
+Operations: Create.
+
+API path: `/v2/status_page_incident_updates`
+
+#### StatusPageMaintenance
+
+| Field | Description |
+| --- | --- |
+| `affected_component_id` |  |
+| `component_maintenance_period` |  |
+| `end_at` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `maintenance_status` |  |
+| `message` |  |
+| `name` |  |
+| `notify_subscriber` |  |
+| `published_at` |  |
+| `start_at` |  |
+| `status_page_id` |  |
+| `update` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/status_page_maintenances`
+
+#### StatusPageMaintenanceUpdate
+
+| Field | Description |
+| --- | --- |
+| `component_status` |  |
+| `maintenance_status` |  |
+| `message` |  |
+| `notify_subscriber` |  |
+| `status_page_maintenance_id` |  |
+
+Operations: Create.
+
+API path: `/v2/status_page_maintenance_updates`
+
+#### StatusPageStructure
+
+| Field | Description |
+| --- | --- |
+| `item` |  |
+
+Operations: Load.
+
+API path: `/v2/status_page_structures/{status_page_id}`
 
 #### Team
 
@@ -756,6 +1140,25 @@ API path: `/v2/secrets`
 Operations: List, Load.
 
 API path: `/v3/teams`
+
+#### TelemetryDataSource
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `datadog_config` |  |
+| `enabled` |  |
+| `grafana_config` |  |
+| `id` |  |
+| `name` |  |
+| `provider` |  |
+| `source_type` |  |
+| `updated_at` |  |
+| `version` |  |
+
+Operations: Update.
+
+API path: `/v2/telemetry/data_sources/{id}`
 
 #### User
 
@@ -861,6 +1264,8 @@ Create an instance: `local action = client:Action(nil)`
 | `created_at` | `string` |  |
 | `creator` | `table` |  |
 | `description` | `string` |  |
+| `external_issue_reference` | `table` |  |
+| `follow_up` | `boolean` |  |
 | `id` | `string` |  |
 | `incident_id` | `string` |  |
 | `status` | `string` |  |
@@ -885,7 +1290,7 @@ local action, err = client:Action():create({
   assignee = {}, -- table
   created_at = "example_created_at", -- string
   creator = {}, -- table
-  description = "example_description", -- string
+  follow_up = true, -- boolean
   id = "example_id", -- string
   incident_id = "example_incident_id", -- string
   status = "example_status", -- string
@@ -902,6 +1307,7 @@ Create an instance: `local alert = client:Alert(nil)`
 
 | Method | Description |
 | --- | --- |
+| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
@@ -932,6 +1338,21 @@ local alert, err = client:Alert():load({ id = "alert_id" })
 
 ```lua
 local alerts, err = client:Alert():list()
+```
+
+#### Example: Create
+
+```lua
+local alert, err = client:Alert():create({
+  id = "example_id", -- string
+  alert_source_id = "example_alert_source_id", -- string
+  attribute = {}, -- table
+  created_at = "example_created_at", -- string
+  deduplication_key = "example_deduplication_key", -- string
+  status = "example_status", -- string
+  title = "example_title", -- string
+  updated_at = "example_updated_at", -- string
+})
 ```
 
 
@@ -1058,6 +1479,7 @@ Create an instance: `local alert_route = client:AlertRoute(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `alert_source` | `table` |  |
+| `channel_config` | `table` |  |
 | `condition_group` | `table` |  |
 | `created_at` | `string` |  |
 | `enabled` | `boolean` |  |
@@ -1066,8 +1488,10 @@ Create an instance: `local alert_route = client:AlertRoute(nil)`
 | `grouping_config` | `table` |  |
 | `id` | `string` |  |
 | `incident_config` | `table` |  |
+| `incident_template` | `table` |  |
 | `is_private` | `boolean` |  |
 | `message_config` | `table` |  |
+| `message_template` | `table` |  |
 | `name` | `string` |  |
 | `owning_team_id` | `table` |  |
 | `updated_at` | `string` |  |
@@ -1090,6 +1514,7 @@ local alert_routes, err = client:AlertRoute():list()
 ```lua
 local alert_route, err = client:AlertRoute():create({
   alert_source = {}, -- table
+  channel_config = {}, -- table
   condition_group = {}, -- table
   enabled = true, -- boolean
   escalation_config = {}, -- table
@@ -1097,6 +1522,7 @@ local alert_route, err = client:AlertRoute():create({
   grouping_config = {}, -- table
   id = "example_id", -- string
   incident_config = {}, -- table
+  incident_template = {}, -- table
   is_private = true, -- boolean
   message_config = {}, -- table
   name = "example_name", -- string
@@ -1187,6 +1613,7 @@ Create an instance: `local api_key = client:ApiKey(nil)`
 | `comment` | `string` |  |
 | `created_at` | `string` |  |
 | `creator` | `table` |  |
+| `grace_period_minute` | `number` |  |
 | `id` | `string` |  |
 | `last_used_at` | `string` |  |
 | `name` | `string` |  |
@@ -1215,6 +1642,7 @@ local api_keys, err = client:ApiKey():list()
 local api_key, err = client:ApiKey():create({
   created_at = "example_created_at", -- string
   creator = {}, -- table
+  grace_period_minute = 1, -- number
   id = "example_id", -- string
   name = "example_name", -- string
   role = {}, -- table
@@ -1223,6 +1651,239 @@ local api_key, err = client:ApiKey():create({
   team_role = {}, -- table
   team_role_name = {}, -- table
   token_last_issued_at = "example_token_last_issued_at", -- string
+})
+```
+
+
+### CatalogEntry
+
+Create an instance: `local catalog_entry = client:CatalogEntry(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alias` | `table` |  |
+| `archived_at` | `string` |  |
+| `attribute_value` | `table` |  |
+| `catalog_entry` | `table` |  |
+| `catalog_type` | `table` |  |
+| `catalog_type_id` | `string` |  |
+| `created_at` | `string` |  |
+| `external_id` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `rank` | `number` |  |
+| `update_attribute` | `table` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```lua
+local catalog_entry, err = client:CatalogEntry():load({ id = "catalog_entry_id" })
+```
+
+#### Example: List
+
+```lua
+local catalog_entrys, err = client:CatalogEntry():list()
+```
+
+#### Example: Create
+
+```lua
+local catalog_entry, err = client:CatalogEntry():create({
+  attribute_value = {}, -- table
+  catalog_entry = {}, -- table
+  catalog_type = {}, -- table
+  catalog_type_id = "example_catalog_type_id", -- string
+  created_at = "example_created_at", -- string
+  id = "example_id", -- string
+  name = "example_name", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### CatalogResource
+
+Create an instance: `local catalog_resource = client:CatalogResource(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `category` | `string` |  |
+| `description` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `label` | `string` |  |
+| `type` | `string` |  |
+| `value_docstring` | `string` |  |
+
+#### Example: List
+
+```lua
+local catalog_resources, err = client:CatalogResource():list()
+```
+
+
+### CatalogType
+
+Create an instance: `local catalog_type = client:CatalogType(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `table` |  |
+| `category` | `table` |  |
+| `color` | `string` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `dynamic_resource_parameter` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `estimated_count` | `number` |  |
+| `icon` | `string` |  |
+| `id` | `string` |  |
+| `is_editable` | `boolean` |  |
+| `is_team_type` | `boolean` |  |
+| `last_synced_at` | `string` |  |
+| `name` | `string` |  |
+| `owning_team_id` | `table` |  |
+| `ranked` | `boolean` |  |
+| `registry_type` | `string` |  |
+| `required_integration` | `table` |  |
+| `schema` | `table` |  |
+| `semantic_type` | `string` |  |
+| `source_repo_url` | `string` |  |
+| `type_name` | `string` |  |
+| `updated_at` | `string` |  |
+| `use_name_as_identifier` | `boolean` |  |
+
+#### Example: Load
+
+```lua
+local catalog_type, err = client:CatalogType():load({ id = "catalog_type_id" })
+```
+
+#### Example: List
+
+```lua
+local catalog_types, err = client:CatalogType():list()
+```
+
+#### Example: Create
+
+```lua
+local catalog_type, err = client:CatalogType():create({
+  annotation = {}, -- table
+  category = {}, -- table
+  color = "example_color", -- string
+  created_at = "example_created_at", -- string
+  description = "example_description", -- string
+  engine_resource_type = "example_engine_resource_type", -- string
+  icon = "example_icon", -- string
+  id = "example_id", -- string
+  is_editable = true, -- boolean
+  name = "example_name", -- string
+  ranked = true, -- boolean
+  schema = {}, -- table
+  semantic_type = "example_semantic_type", -- string
+  type_name = "example_type_name", -- string
+  updated_at = "example_updated_at", -- string
+  use_name_as_identifier = true, -- boolean
+})
+```
+
+
+### CatalogTypeSchema
+
+Create an instance: `local catalog_type_schema = client:CatalogTypeSchema(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `table` |  |
+| `attribute` | `table` |  |
+| `category` | `table` |  |
+| `color` | `string` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `dynamic_resource_parameter` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `estimated_count` | `number` |  |
+| `icon` | `string` |  |
+| `id` | `string` |  |
+| `is_editable` | `boolean` |  |
+| `is_team_type` | `boolean` |  |
+| `last_synced_at` | `string` |  |
+| `name` | `string` |  |
+| `owning_team_id` | `table` |  |
+| `ranked` | `boolean` |  |
+| `registry_type` | `string` |  |
+| `required_integration` | `table` |  |
+| `schema` | `table` |  |
+| `semantic_type` | `string` |  |
+| `source_repo_url` | `string` |  |
+| `type_name` | `string` |  |
+| `updated_at` | `string` |  |
+| `use_name_as_identifier` | `boolean` |  |
+| `version` | `number` |  |
+
+#### Example: Create
+
+```lua
+local catalog_type_schema, err = client:CatalogTypeSchema():create({
+  catalog_type_id = "example_catalog_type_id", -- string
+  annotation = {}, -- table
+  attribute = {}, -- table
+  category = {}, -- table
+  color = "example_color", -- string
+  created_at = "example_created_at", -- string
+  description = "example_description", -- string
+  engine_resource_type = "example_engine_resource_type", -- string
+  icon = "example_icon", -- string
+  id = "example_id", -- string
+  is_editable = true, -- boolean
+  name = "example_name", -- string
+  ranked = true, -- boolean
+  schema = {}, -- table
+  semantic_type = "example_semantic_type", -- string
+  type_name = "example_type_name", -- string
+  updated_at = "example_updated_at", -- string
+  use_name_as_identifier = true, -- boolean
+  version = 1, -- number
 })
 ```
 
@@ -1255,6 +1916,13 @@ Create an instance: `local custom_field = client:CustomField(nil)`
 | `helptext_catalog_attribute_id` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
+| `option` | `table` |  |
+| `required` | `string` |  |
+| `required_v2` | `string` |  |
+| `show_before_closure` | `boolean` |  |
+| `show_before_creation` | `boolean` |  |
+| `show_before_update` | `boolean` |  |
+| `show_in_announcement_post` | `boolean` |  |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -1280,6 +1948,10 @@ local custom_field, err = client:CustomField():create({
   fixed_filter = {}, -- table
   id = "example_id", -- string
   name = "example_name", -- string
+  option = {}, -- table
+  show_before_closure = true, -- boolean
+  show_before_creation = true, -- boolean
+  show_before_update = true, -- boolean
   updated_at = "example_updated_at", -- string
 })
 ```
@@ -1328,6 +2000,69 @@ local custom_field_option, err = client:CustomFieldOption():create({
   id = "example_id", -- string
   sort_key = 1, -- number
   value = "example_value", -- string
+})
+```
+
+
+### Escalation
+
+Create an instance: `local escalation = client:Escalation(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `creator` | `table` |  |
+| `description` | `string` |  |
+| `escalation_path_id` | `string` |  |
+| `event` | `table` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `incident_id` | `string` |  |
+| `priority` | `table` |  |
+| `related_alert` | `table` |  |
+| `related_incident` | `table` |  |
+| `status` | `string` |  |
+| `title` | `string` |  |
+| `updated_at` | `string` |  |
+| `user_id` | `table` |  |
+
+#### Example: Load
+
+```lua
+local escalation, err = client:Escalation():load({ id = "escalation_id" })
+```
+
+#### Example: List
+
+```lua
+local escalations, err = client:Escalation():list()
+```
+
+#### Example: Create
+
+```lua
+local escalation, err = client:Escalation():create({
+  created_at = "example_created_at", -- string
+  creator = {}, -- table
+  event = {}, -- table
+  id = "example_id", -- string
+  idempotency_key = "example_idempotency_key", -- string
+  priority = {}, -- table
+  related_alert = {}, -- table
+  related_incident = {}, -- table
+  status = "example_status", -- string
+  title = "example_title", -- string
+  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -1427,6 +2162,7 @@ Create an instance: `local incident = client:Incident(nil)`
 | `has_debrief` | `boolean` |  |
 | `id` | `string` |  |
 | `idempotency_key` | `string` |  |
+| `incident` | `table` |  |
 | `incident_role_assignment` | `table` |  |
 | `incident_status` | `table` |  |
 | `incident_status_id` | `string` |  |
@@ -1435,6 +2171,7 @@ Create an instance: `local incident = client:Incident(nil)`
 | `incident_type_id` | `string` |  |
 | `mode` | `string` |  |
 | `name` | `string` |  |
+| `notify_incident_channel` | `boolean` |  |
 | `permalink` | `string` |  |
 | `postmortem_document_id` | `table` |  |
 | `postmortem_document_url` | `string` |  |
@@ -1446,7 +2183,11 @@ Create an instance: `local incident = client:Incident(nil)`
 | `slack_channel_name` | `string` |  |
 | `slack_channel_name_override` | `string` |  |
 | `slack_team_id` | `string` |  |
+| `source_message_channel_id` | `string` |  |
+| `source_message_timestamp` | `string` |  |
+| `status` | `string` |  |
 | `summary` | `string` |  |
+| `timestamp` | `table` |  |
 | `updated_at` | `string` |  |
 | `visibility` | `string` |  |
 | `workload_minutes_late` | `number` |  |
@@ -1476,18 +2217,47 @@ local incident, err = client:Incident():create({
   external_issue_reference = {}, -- table
   id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
+  incident = {}, -- table
   incident_role_assignment = {}, -- table
   incident_status = {}, -- table
   incident_type = {}, -- table
   mode = "example_mode", -- string
   name = "example_name", -- string
+  notify_incident_channel = true, -- boolean
   reference = "example_reference", -- string
   severity = {}, -- table
   slack_channel_id = "example_slack_channel_id", -- string
   slack_team_id = "example_slack_team_id", -- string
+  status = "example_status", -- string
   updated_at = "example_updated_at", -- string
   visibility = "example_visibility", -- string
 })
+```
+
+
+### IncidentAlert
+
+Create an instance: `local incident_alert = client:IncidentAlert(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert` | `table` |  |
+| `alert_route_id` | `string` |  |
+| `id` | `string` |  |
+| `incident` | `table` |  |
+
+#### Example: List
+
+```lua
+local incident_alerts, err = client:IncidentAlert():list()
 ```
 
 
@@ -1652,6 +2422,7 @@ Create an instance: `local incident_role = client:IncidentRole(nil)`
 | `id` | `string` |  |
 | `instruction` | `string` |  |
 | `name` | `string` |  |
+| `required` | `boolean` |  |
 | `role_type` | `string` |  |
 | `shortform` | `string` |  |
 | `updated_at` | `string` |  |
@@ -1972,6 +2743,267 @@ local postmortem_documents, err = client:PostmortemDocument():list()
 ```
 
 
+### Schedule
+
+Create an instance: `local schedule = client:Schedule(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `table` |  |
+| `config` | `table` |  |
+| `created_at` | `string` |  |
+| `current_shift` | `table` |  |
+| `holidays_public_config` | `table` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `next_shift` | `table` |  |
+| `permalink` | `string` |  |
+| `schedule` | `table` |  |
+| `team_id` | `table` |  |
+| `timezone` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```lua
+local schedule, err = client:Schedule():load({ id = "schedule_id" })
+```
+
+#### Example: List
+
+```lua
+local schedules, err = client:Schedule():list()
+```
+
+#### Example: Create
+
+```lua
+local schedule, err = client:Schedule():create({
+  annotation = {}, -- table
+  config = {}, -- table
+  created_at = "example_created_at", -- string
+  holidays_public_config = {}, -- table
+  id = "example_id", -- string
+  name = "example_name", -- string
+  permalink = "example_permalink", -- string
+  schedule = {}, -- table
+  team_id = {}, -- table
+  timezone = "example_timezone", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### ScheduleEntry
+
+Create an instance: `local schedule_entry = client:ScheduleEntry(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `pagination_meta` | `table` |  |
+| `schedule_entry` | `table` |  |
+
+#### Example: Load
+
+```lua
+local schedule_entry, err = client:ScheduleEntry():load()
+```
+
+
+### ScheduleReplica
+
+Create an instance: `local schedule_replica = client:ScheduleReplica(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `last_sync_error` | `string` |  |
+| `last_synced_at` | `string` |  |
+| `mirror_window_day` | `number` |  |
+| `replica_fallback_user_id` | `string` |  |
+| `replica_provider` | `string` |  |
+| `replica_provider_id` | `string` |  |
+| `schedule_id` | `string` |  |
+| `schedule_replica` | `table` |  |
+| `source` | `table` |  |
+| `updated_at` | `string` |  |
+| `user_status` | `table` |  |
+
+#### Example: Load
+
+```lua
+local schedule_replica, err = client:ScheduleReplica():load({ id = "schedule_replica_id", schedule_id = "schedule_id" })
+```
+
+#### Example: List
+
+```lua
+local schedule_replicas, err = client:ScheduleReplica():list()
+```
+
+#### Example: Create
+
+```lua
+local schedule_replica, err = client:ScheduleReplica():create({
+  id = "example_id", -- string
+  created_at = "example_created_at", -- string
+  replica_fallback_user_id = "example_replica_fallback_user_id", -- string
+  replica_provider = "example_replica_provider", -- string
+  replica_provider_id = "example_replica_provider_id", -- string
+  schedule_id = "example_schedule_id", -- string
+  schedule_replica = {}, -- table
+  source = {}, -- table
+  updated_at = "example_updated_at", -- string
+  user_status = {}, -- table
+})
+```
+
+
+### ScheduleSyncRule
+
+Create an instance: `local schedule_sync_rule = client:ScheduleSyncRule(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `table` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `permanent_member_user_id` | `table` |  |
+| `rotation_id` | `string` |  |
+| `schedule_id` | `string` |  |
+| `schedule_sync_rule` | `table` |  |
+| `schedule_sync_target` | `table` |  |
+| `schedule_sync_target_id` | `string` |  |
+| `sync_type` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```lua
+local schedule_sync_rule, err = client:ScheduleSyncRule():load({ id = "schedule_sync_rule_id", schedule_id = "schedule_id" })
+```
+
+#### Example: List
+
+```lua
+local schedule_sync_rules, err = client:ScheduleSyncRule():list()
+```
+
+#### Example: Create
+
+```lua
+local schedule_sync_rule, err = client:ScheduleSyncRule():create({
+  id = "example_id", -- string
+  created_at = "example_created_at", -- string
+  permanent_member_user_id = {}, -- table
+  schedule_id = "example_schedule_id", -- string
+  schedule_sync_rule = {}, -- table
+  schedule_sync_target = {}, -- table
+  schedule_sync_target_id = "example_schedule_sync_target_id", -- string
+  sync_type = "example_sync_type", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### ScheduleSyncTarget
+
+Create an instance: `local schedule_sync_target = client:ScheduleSyncTarget(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `add_bot_to_group` | `boolean` |  |
+| `annotation` | `table` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `linked_schedule` | `table` |  |
+| `schedule_sync_target` | `table` |  |
+| `slack_team_id` | `string` |  |
+| `slack_user_group_id` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```lua
+local schedule_sync_target, err = client:ScheduleSyncTarget():load({ id = "schedule_sync_target_id" })
+```
+
+#### Example: List
+
+```lua
+local schedule_sync_targets, err = client:ScheduleSyncTarget():list()
+```
+
+#### Example: Create
+
+```lua
+local schedule_sync_target, err = client:ScheduleSyncTarget():create({
+  add_bot_to_group = true, -- boolean
+  created_at = "example_created_at", -- string
+  id = "example_id", -- string
+  linked_schedule = {}, -- table
+  schedule_sync_target = {}, -- table
+  slack_team_id = "example_slack_team_id", -- string
+  slack_user_group_id = "example_slack_user_group_id", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
 ### Secret
 
 Create an instance: `local secret = client:Secret(nil)`
@@ -2020,11 +3052,295 @@ local secret, err = client:Secret():create({
   created_at = "example_created_at", -- string
   id = "example_id", -- string
   name = "example_name", -- string
+  owning_team_id = {}, -- table
   secret = {}, -- table
   updated_at = "example_updated_at", -- string
   value = "example_value", -- string
   version = {}, -- table
 })
+```
+
+
+### Severity
+
+Create an instance: `local severity = client:Severity(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `rank` | `number` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```lua
+local severity, err = client:Severity():load({ id = "severity_id" })
+```
+
+#### Example: List
+
+```lua
+local severitys, err = client:Severity():list()
+```
+
+#### Example: Create
+
+```lua
+local severity, err = client:Severity():create({
+  created_at = "example_created_at", -- string
+  description = "example_description", -- string
+  id = "example_id", -- string
+  name = "example_name", -- string
+  rank = 1, -- number
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### StatusPage
+
+Create an instance: `local status_page = client:StatusPage(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `public_url` | `string` |  |
+
+#### Example: List
+
+```lua
+local status_pages, err = client:StatusPage():list()
+```
+
+
+### StatusPageIncident
+
+Create an instance: `local status_page_incident = client:StatusPageIncident(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_impact` | `table` |  |
+| `component_status` | `table` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `incident_status` | `string` |  |
+| `message` | `string` |  |
+| `name` | `string` |  |
+| `notify_subscriber` | `boolean` |  |
+| `published_at` | `string` |  |
+| `status_page_id` | `string` |  |
+| `update` | `table` |  |
+
+#### Example: Load
+
+```lua
+local status_page_incident, err = client:StatusPageIncident():load({ id = "status_page_incident_id" })
+```
+
+#### Example: List
+
+```lua
+local status_page_incidents, err = client:StatusPageIncident():list()
+```
+
+#### Example: Create
+
+```lua
+local status_page_incident, err = client:StatusPageIncident():create({
+  component_impact = {}, -- table
+  id = "example_id", -- string
+  idempotency_key = "example_idempotency_key", -- string
+  incident_status = "example_incident_status", -- string
+  message = "example_message", -- string
+  name = "example_name", -- string
+  notify_subscriber = true, -- boolean
+  published_at = "example_published_at", -- string
+  status_page_id = "example_status_page_id", -- string
+  update = {}, -- table
+})
+```
+
+
+### StatusPageIncidentUpdate
+
+Create an instance: `local status_page_incident_update = client:StatusPageIncidentUpdate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `table` |  |
+| `incident_status` | `string` |  |
+| `message` | `string` |  |
+| `notify_subscriber` | `boolean` |  |
+| `status_page_incident_id` | `string` |  |
+
+#### Example: Create
+
+```lua
+local status_page_incident_update, err = client:StatusPageIncidentUpdate():create({
+  message = "example_message", -- string
+  notify_subscriber = true, -- boolean
+  status_page_incident_id = "example_status_page_incident_id", -- string
+})
+```
+
+
+### StatusPageMaintenance
+
+Create an instance: `local status_page_maintenance = client:StatusPageMaintenance(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `affected_component_id` | `table` |  |
+| `component_maintenance_period` | `table` |  |
+| `end_at` | `string` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `maintenance_status` | `string` |  |
+| `message` | `string` |  |
+| `name` | `string` |  |
+| `notify_subscriber` | `boolean` |  |
+| `published_at` | `string` |  |
+| `start_at` | `string` |  |
+| `status_page_id` | `string` |  |
+| `update` | `table` |  |
+
+#### Example: Load
+
+```lua
+local status_page_maintenance, err = client:StatusPageMaintenance():load({ id = "status_page_maintenance_id" })
+```
+
+#### Example: List
+
+```lua
+local status_page_maintenances, err = client:StatusPageMaintenance():list()
+```
+
+#### Example: Create
+
+```lua
+local status_page_maintenance, err = client:StatusPageMaintenance():create({
+  affected_component_id = {}, -- table
+  component_maintenance_period = {}, -- table
+  end_at = "example_end_at", -- string
+  id = "example_id", -- string
+  idempotency_key = "example_idempotency_key", -- string
+  maintenance_status = "example_maintenance_status", -- string
+  message = "example_message", -- string
+  name = "example_name", -- string
+  notify_subscriber = true, -- boolean
+  published_at = "example_published_at", -- string
+  start_at = "example_start_at", -- string
+  status_page_id = "example_status_page_id", -- string
+  update = {}, -- table
+})
+```
+
+
+### StatusPageMaintenanceUpdate
+
+Create an instance: `local status_page_maintenance_update = client:StatusPageMaintenanceUpdate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `table` |  |
+| `maintenance_status` | `string` |  |
+| `message` | `string` |  |
+| `notify_subscriber` | `boolean` |  |
+| `status_page_maintenance_id` | `string` |  |
+
+#### Example: Create
+
+```lua
+local status_page_maintenance_update, err = client:StatusPageMaintenanceUpdate():create({
+  message = "example_message", -- string
+  notify_subscriber = true, -- boolean
+  status_page_maintenance_id = "example_status_page_maintenance_id", -- string
+})
+```
+
+
+### StatusPageStructure
+
+Create an instance: `local status_page_structure = client:StatusPageStructure(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `item` | `table` |  |
+
+#### Example: Load
+
+```lua
+local status_page_structure, err = client:StatusPageStructure():load({ id = "status_page_structure_id" })
 ```
 
 
@@ -2059,6 +3375,32 @@ local team, err = client:Team():load({ id = "team_id" })
 ```lua
 local teams, err = client:Team():list()
 ```
+
+
+### TelemetryDataSource
+
+Create an instance: `local telemetry_data_source = client:TelemetryDataSource(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `datadog_config` | `table` |  |
+| `enabled` | `boolean` |  |
+| `grafana_config` | `table` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `provider` | `string` |  |
+| `source_type` | `string` |  |
+| `updated_at` | `string` |  |
+| `version` | `string` |  |
 
 
 ### User
@@ -2296,11 +3638,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local incidenttype = client:IncidentType()
-incidenttype:list()
+local incidentrole = client:IncidentRole()
+incidentrole:list()
 
--- incidenttype:data_get() now returns the incidenttype data from the last list
--- incidenttype:match_get() returns the last match criteria
+-- incidentrole:data_get() now returns the incidentrole data from the last list
+-- incidentrole:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

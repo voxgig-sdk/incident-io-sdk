@@ -1,0 +1,71 @@
+# BasicCatalogEntryFlow
+
+main: kit: flow: BasicCatalogEntryFlow:
+{
+  entity: "catalog_entry",
+  kind: "basic",
+  name: "BasicCatalogEntryFlow",
+  step: [
+    {
+      input: {
+        ref: "catalog_entry_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "catalog_entry_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "catalog_entry_ref01",
+        srcdatavar: "catalog_entry_ref01_data",
+        suffix: "_up0",
+        textfield: "archived_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-catalog_entry_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "catalog_entry_ref01",
+        srcdatavar: "catalog_entry_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "catalog_entry01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-catalog_entry_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCatalogEntryFlow"
+}

@@ -39,13 +39,21 @@ describe('AlertEntity', async () => {
     const isempty = struct.isempty
     const select = struct.select
 
-    let alert_ref01_data = Object.values(setup.data.existing.alert)[0]
+
+    // CREATE
+    const alert_ref01_ent = client.Alert()
+    let alert_ref01_data = setup.data.new.alert['alert_ref01']
+
+    alert_ref01_data = await alert_ref01_ent.create(alert_ref01_data)
+    assert(null != alert_ref01_data.id)
+
 
     // LIST
-    const alert_ref01_ent = client.Alert()
     const alert_ref01_match = {}
 
     const alert_ref01_list = await alert_ref01_ent.list(alert_ref01_match)
+
+    assert(!isempty(select(alert_ref01_list, { id: alert_ref01_data.id })))
 
 
     // LOAD

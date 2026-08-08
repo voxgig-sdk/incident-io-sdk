@@ -11,7 +11,9 @@ export interface Action {
   completed_at?: string
   created_at: string
   creator: Record<string, any>
-  description: string
+  description?: string
+  external_issue_reference?: Record<string, any>
+  follow_up: boolean
   id: string
   incident_id: string
   status: string
@@ -29,6 +31,8 @@ export interface ActionListMatch {
   created_at?: string
   creator?: Record<string, any>
   description?: string
+  external_issue_reference?: Record<string, any>
+  follow_up?: boolean
   id?: string
   incident_id?: string
   status?: string
@@ -41,7 +45,9 @@ export interface ActionCreateData {
   completed_at?: string
   created_at: string
   creator: Record<string, any>
-  description: string
+  description?: string
+  external_issue_reference?: Record<string, any>
+  follow_up: boolean
   id: string
   incident_id: string
   status: string
@@ -56,6 +62,8 @@ export interface ActionUpdateData {
   created_at?: string
   creator?: Record<string, any>
   description?: string
+  external_issue_reference?: Record<string, any>
+  follow_up?: boolean
   incident_id?: string
   status?: string
   updated_at?: string
@@ -97,6 +105,21 @@ export interface AlertListMatch {
   status?: string
   title?: string
   updated_at?: string
+}
+
+export interface AlertCreateData {
+  id: string
+  alert_group_id?: any[]
+  alert_source_id: string
+  attribute: any[]
+  created_at: string
+  deduplication_key: string
+  description?: string
+  resolved_at?: string
+  source_url?: string
+  status: string
+  title: string
+  updated_at: string
 }
 
 export interface AlertAttribute {
@@ -201,6 +224,7 @@ export interface AlertNoteRemoveMatch {
 
 export interface AlertRoute {
   alert_source: any[]
+  channel_config: any[]
   condition_group: any[]
   created_at?: string
   enabled: boolean
@@ -209,8 +233,10 @@ export interface AlertRoute {
   grouping_config: Record<string, any>
   id: string
   incident_config: Record<string, any>
+  incident_template: Record<string, any>
   is_private: boolean
   message_config: Record<string, any>
+  message_template?: Record<string, any>
   name: string
   owning_team_id?: any[]
   updated_at?: string
@@ -223,6 +249,7 @@ export interface AlertRouteLoadMatch {
 
 export interface AlertRouteListMatch {
   alert_source?: any[]
+  channel_config?: any[]
   condition_group?: any[]
   created_at?: string
   enabled?: boolean
@@ -231,8 +258,10 @@ export interface AlertRouteListMatch {
   grouping_config?: Record<string, any>
   id?: string
   incident_config?: Record<string, any>
+  incident_template?: Record<string, any>
   is_private?: boolean
   message_config?: Record<string, any>
+  message_template?: Record<string, any>
   name?: string
   owning_team_id?: any[]
   updated_at?: string
@@ -241,6 +270,7 @@ export interface AlertRouteListMatch {
 
 export interface AlertRouteCreateData {
   alert_source: any[]
+  channel_config: any[]
   condition_group: any[]
   created_at?: string
   enabled: boolean
@@ -249,8 +279,10 @@ export interface AlertRouteCreateData {
   grouping_config: Record<string, any>
   id: string
   incident_config: Record<string, any>
+  incident_template: Record<string, any>
   is_private: boolean
   message_config: Record<string, any>
+  message_template?: Record<string, any>
   name: string
   owning_team_id?: any[]
   updated_at?: string
@@ -260,6 +292,7 @@ export interface AlertRouteCreateData {
 export interface AlertRouteUpdateData {
   id: string
   alert_source?: any[]
+  channel_config?: any[]
   condition_group?: any[]
   created_at?: string
   enabled?: boolean
@@ -267,8 +300,10 @@ export interface AlertRouteUpdateData {
   expression?: any[]
   grouping_config?: Record<string, any>
   incident_config?: Record<string, any>
+  incident_template?: Record<string, any>
   is_private?: boolean
   message_config?: Record<string, any>
+  message_template?: Record<string, any>
   name?: string
   owning_team_id?: any[]
   updated_at?: string
@@ -359,6 +394,7 @@ export interface ApiKey {
   comment?: string
   created_at: string
   creator: Record<string, any>
+  grace_period_minute: number
   id: string
   last_used_at?: string
   name: string
@@ -378,6 +414,7 @@ export interface ApiKeyListMatch {
   comment?: string
   created_at?: string
   creator?: Record<string, any>
+  grace_period_minute?: number
   id?: string
   last_used_at?: string
   name?: string
@@ -393,6 +430,7 @@ export interface ApiKeyCreateData {
   comment?: string
   created_at: string
   creator: Record<string, any>
+  grace_period_minute: number
   id: string
   last_used_at?: string
   name: string
@@ -409,6 +447,7 @@ export interface ApiKeyUpdateData {
   comment?: string
   created_at?: string
   creator?: Record<string, any>
+  grace_period_minute?: number
   last_used_at?: string
   name?: string
   role?: any[]
@@ -423,6 +462,263 @@ export interface ApiKeyRemoveMatch {
   id: string
 }
 
+export interface CatalogEntry {
+  alias?: any[]
+  archived_at?: string
+  attribute_value: Record<string, any>
+  catalog_entry: Record<string, any>
+  catalog_type: Record<string, any>
+  catalog_type_id: string
+  created_at: string
+  external_id?: string
+  id: string
+  name: string
+  rank?: number
+  update_attribute?: any[]
+  updated_at: string
+}
+
+export interface CatalogEntryLoadMatch {
+  id: string
+}
+
+export interface CatalogEntryListMatch {
+  alias?: any[]
+  archived_at?: string
+  attribute_value?: Record<string, any>
+  catalog_entry?: Record<string, any>
+  catalog_type?: Record<string, any>
+  catalog_type_id?: string
+  created_at?: string
+  external_id?: string
+  id?: string
+  name?: string
+  rank?: number
+  update_attribute?: any[]
+  updated_at?: string
+}
+
+export interface CatalogEntryCreateData {
+  alias?: any[]
+  archived_at?: string
+  attribute_value: Record<string, any>
+  catalog_entry: Record<string, any>
+  catalog_type: Record<string, any>
+  catalog_type_id: string
+  created_at: string
+  external_id?: string
+  id: string
+  name: string
+  rank?: number
+  update_attribute?: any[]
+  updated_at: string
+}
+
+export interface CatalogEntryUpdateData {
+  id: string
+  alias?: any[]
+  archived_at?: string
+  attribute_value?: Record<string, any>
+  catalog_entry?: Record<string, any>
+  catalog_type?: Record<string, any>
+  catalog_type_id?: string
+  created_at?: string
+  external_id?: string
+  name?: string
+  rank?: number
+  update_attribute?: any[]
+  updated_at?: string
+}
+
+export interface CatalogResource {
+  category: string
+  description: string
+  engine_resource_type: string
+  label: string
+  type: string
+  value_docstring: string
+}
+
+export interface CatalogResourceListMatch {
+  category?: string
+  description?: string
+  engine_resource_type?: string
+  label?: string
+  type?: string
+  value_docstring?: string
+}
+
+export interface CatalogType {
+  annotation: Record<string, any>
+  category: any[]
+  color: string
+  created_at: string
+  description: string
+  dynamic_resource_parameter?: string
+  engine_resource_type: string
+  estimated_count?: number
+  icon: string
+  id: string
+  is_editable: boolean
+  is_team_type?: boolean
+  last_synced_at?: string
+  name: string
+  owning_team_id?: any[]
+  ranked: boolean
+  registry_type?: string
+  required_integration?: any[]
+  schema: Record<string, any>
+  semantic_type: string
+  source_repo_url?: string
+  type_name: string
+  updated_at: string
+  use_name_as_identifier: boolean
+}
+
+export interface CatalogTypeLoadMatch {
+  id: string
+}
+
+export interface CatalogTypeListMatch {
+  annotation?: Record<string, any>
+  category?: any[]
+  color?: string
+  created_at?: string
+  description?: string
+  dynamic_resource_parameter?: string
+  engine_resource_type?: string
+  estimated_count?: number
+  icon?: string
+  id?: string
+  is_editable?: boolean
+  is_team_type?: boolean
+  last_synced_at?: string
+  name?: string
+  owning_team_id?: any[]
+  ranked?: boolean
+  registry_type?: string
+  required_integration?: any[]
+  schema?: Record<string, any>
+  semantic_type?: string
+  source_repo_url?: string
+  type_name?: string
+  updated_at?: string
+  use_name_as_identifier?: boolean
+}
+
+export interface CatalogTypeCreateData {
+  annotation: Record<string, any>
+  category: any[]
+  color: string
+  created_at: string
+  description: string
+  dynamic_resource_parameter?: string
+  engine_resource_type: string
+  estimated_count?: number
+  icon: string
+  id: string
+  is_editable: boolean
+  is_team_type?: boolean
+  last_synced_at?: string
+  name: string
+  owning_team_id?: any[]
+  ranked: boolean
+  registry_type?: string
+  required_integration?: any[]
+  schema: Record<string, any>
+  semantic_type: string
+  source_repo_url?: string
+  type_name: string
+  updated_at: string
+  use_name_as_identifier: boolean
+}
+
+export interface CatalogTypeUpdateData {
+  id: string
+  annotation?: Record<string, any>
+  category?: any[]
+  color?: string
+  created_at?: string
+  description?: string
+  dynamic_resource_parameter?: string
+  engine_resource_type?: string
+  estimated_count?: number
+  icon?: string
+  is_editable?: boolean
+  is_team_type?: boolean
+  last_synced_at?: string
+  name?: string
+  owning_team_id?: any[]
+  ranked?: boolean
+  registry_type?: string
+  required_integration?: any[]
+  schema?: Record<string, any>
+  semantic_type?: string
+  source_repo_url?: string
+  type_name?: string
+  updated_at?: string
+  use_name_as_identifier?: boolean
+}
+
+export interface CatalogTypeSchema {
+  annotation: Record<string, any>
+  attribute: any[]
+  category: any[]
+  color: string
+  created_at: string
+  description: string
+  dynamic_resource_parameter?: string
+  engine_resource_type: string
+  estimated_count?: number
+  icon: string
+  id: string
+  is_editable: boolean
+  is_team_type?: boolean
+  last_synced_at?: string
+  name: string
+  owning_team_id?: any[]
+  ranked: boolean
+  registry_type?: string
+  required_integration?: any[]
+  schema: Record<string, any>
+  semantic_type: string
+  source_repo_url?: string
+  type_name: string
+  updated_at: string
+  use_name_as_identifier: boolean
+  version: number
+}
+
+export interface CatalogTypeSchemaCreateData {
+  catalog_type_id: string
+  annotation: Record<string, any>
+  attribute: any[]
+  category: any[]
+  color: string
+  created_at: string
+  description: string
+  dynamic_resource_parameter?: string
+  engine_resource_type: string
+  estimated_count?: number
+  icon: string
+  id: string
+  is_editable: boolean
+  is_team_type?: boolean
+  last_synced_at?: string
+  name: string
+  owning_team_id?: any[]
+  ranked: boolean
+  registry_type?: string
+  required_integration?: any[]
+  schema: Record<string, any>
+  semantic_type: string
+  source_repo_url?: string
+  type_name: string
+  updated_at: string
+  use_name_as_identifier: boolean
+  version: number
+}
+
 export interface CustomField {
   catalog_type_id?: string
   created_at: string
@@ -434,6 +730,13 @@ export interface CustomField {
   helptext_catalog_attribute_id?: string
   id: string
   name: string
+  option: any[]
+  required?: string
+  required_v2?: string
+  show_before_closure: boolean
+  show_before_creation: boolean
+  show_before_update: boolean
+  show_in_announcement_post?: boolean
   updated_at: string
 }
 
@@ -452,6 +755,13 @@ export interface CustomFieldListMatch {
   helptext_catalog_attribute_id?: string
   id?: string
   name?: string
+  option?: any[]
+  required?: string
+  required_v2?: string
+  show_before_closure?: boolean
+  show_before_creation?: boolean
+  show_before_update?: boolean
+  show_in_announcement_post?: boolean
   updated_at?: string
 }
 
@@ -466,6 +776,13 @@ export interface CustomFieldCreateData {
   helptext_catalog_attribute_id?: string
   id: string
   name: string
+  option: any[]
+  required?: string
+  required_v2?: string
+  show_before_closure: boolean
+  show_before_creation: boolean
+  show_before_update: boolean
+  show_in_announcement_post?: boolean
   updated_at: string
 }
 
@@ -480,6 +797,13 @@ export interface CustomFieldUpdateData {
   group_by_catalog_attribute_id?: string
   helptext_catalog_attribute_id?: string
   name?: string
+  option?: any[]
+  required?: string
+  required_v2?: string
+  show_before_closure?: boolean
+  show_before_creation?: boolean
+  show_before_update?: boolean
+  show_in_announcement_post?: boolean
   updated_at?: string
 }
 
@@ -521,6 +845,64 @@ export interface CustomFieldOptionUpdateData {
 
 export interface CustomFieldOptionRemoveMatch {
   id: string
+}
+
+export interface Escalation {
+  created_at: string
+  creator: Record<string, any>
+  description?: string
+  escalation_path_id?: string
+  event: any[]
+  id: string
+  idempotency_key: string
+  incident_id?: string
+  priority: Record<string, any>
+  related_alert: any[]
+  related_incident: any[]
+  status: string
+  title: string
+  updated_at: string
+  user_id?: any[]
+}
+
+export interface EscalationLoadMatch {
+  id: string
+}
+
+export interface EscalationListMatch {
+  created_at?: string
+  creator?: Record<string, any>
+  description?: string
+  escalation_path_id?: string
+  event?: any[]
+  id?: string
+  idempotency_key?: string
+  incident_id?: string
+  priority?: Record<string, any>
+  related_alert?: any[]
+  related_incident?: any[]
+  status?: string
+  title?: string
+  updated_at?: string
+  user_id?: any[]
+}
+
+export interface EscalationCreateData {
+  created_at: string
+  creator: Record<string, any>
+  description?: string
+  escalation_path_id?: string
+  event: any[]
+  id: string
+  idempotency_key: string
+  incident_id?: string
+  priority: Record<string, any>
+  related_alert: any[]
+  related_incident: any[]
+  status: string
+  title: string
+  updated_at: string
+  user_id?: any[]
 }
 
 export interface FollowUp {
@@ -629,6 +1011,7 @@ export interface Incident {
   has_debrief?: boolean
   id: string
   idempotency_key: string
+  incident: Record<string, any>
   incident_role_assignment: any[]
   incident_status: Record<string, any>
   incident_status_id?: string
@@ -637,6 +1020,7 @@ export interface Incident {
   incident_type_id?: string
   mode: string
   name: string
+  notify_incident_channel: boolean
   permalink?: string
   postmortem_document_id?: any[]
   postmortem_document_url?: string
@@ -648,7 +1032,11 @@ export interface Incident {
   slack_channel_name?: string
   slack_channel_name_override?: string
   slack_team_id: string
+  source_message_channel_id?: string
+  source_message_timestamp?: string
+  status: string
   summary?: string
+  timestamp?: any[]
   updated_at: string
   visibility: string
   workload_minutes_late?: number
@@ -671,6 +1059,7 @@ export interface IncidentListMatch {
   has_debrief?: boolean
   id?: string
   idempotency_key?: string
+  incident?: Record<string, any>
   incident_role_assignment?: any[]
   incident_status?: Record<string, any>
   incident_status_id?: string
@@ -679,6 +1068,7 @@ export interface IncidentListMatch {
   incident_type_id?: string
   mode?: string
   name?: string
+  notify_incident_channel?: boolean
   permalink?: string
   postmortem_document_id?: any[]
   postmortem_document_url?: string
@@ -690,7 +1080,11 @@ export interface IncidentListMatch {
   slack_channel_name?: string
   slack_channel_name_override?: string
   slack_team_id?: string
+  source_message_channel_id?: string
+  source_message_timestamp?: string
+  status?: string
   summary?: string
+  timestamp?: any[]
   updated_at?: string
   visibility?: string
   workload_minutes_late?: number
@@ -709,6 +1103,7 @@ export interface IncidentCreateData {
   has_debrief?: boolean
   id: string
   idempotency_key: string
+  incident: Record<string, any>
   incident_role_assignment: any[]
   incident_status: Record<string, any>
   incident_status_id?: string
@@ -717,6 +1112,7 @@ export interface IncidentCreateData {
   incident_type_id?: string
   mode: string
   name: string
+  notify_incident_channel: boolean
   permalink?: string
   postmortem_document_id?: any[]
   postmortem_document_url?: string
@@ -728,13 +1124,31 @@ export interface IncidentCreateData {
   slack_channel_name?: string
   slack_channel_name_override?: string
   slack_team_id: string
+  source_message_channel_id?: string
+  source_message_timestamp?: string
+  status: string
   summary?: string
+  timestamp?: any[]
   updated_at: string
   visibility: string
   workload_minutes_late?: number
   workload_minutes_sleeping?: number
   workload_minutes_total?: number
   workload_minutes_working?: number
+}
+
+export interface IncidentAlert {
+  alert: Record<string, any>
+  alert_route_id?: string
+  id: string
+  incident: Record<string, any>
+}
+
+export interface IncidentAlertListMatch {
+  alert?: Record<string, any>
+  alert_route_id?: string
+  id?: string
+  incident?: Record<string, any>
 }
 
 export interface IncidentAttachment {
@@ -809,6 +1223,7 @@ export interface IncidentRole {
   id: string
   instruction: string
   name: string
+  required?: boolean
   role_type: string
   shortform: string
   updated_at: string
@@ -824,6 +1239,7 @@ export interface IncidentRoleListMatch {
   id?: string
   instruction?: string
   name?: string
+  required?: boolean
   role_type?: string
   shortform?: string
   updated_at?: string
@@ -835,6 +1251,7 @@ export interface IncidentRoleCreateData {
   id: string
   instruction: string
   name: string
+  required?: boolean
   role_type: string
   shortform: string
   updated_at: string
@@ -846,6 +1263,7 @@ export interface IncidentRoleUpdateData {
   description?: string
   instruction?: string
   name?: string
+  required?: boolean
   role_type?: string
   shortform?: string
   updated_at?: string
@@ -1125,13 +1543,243 @@ export interface PostmortemDocumentUpdateData {
   updated_at?: string
 }
 
+export interface Schedule {
+  annotation: Record<string, any>
+  config: Record<string, any>
+  created_at: string
+  current_shift?: any[]
+  holidays_public_config: Record<string, any>
+  id: string
+  name: string
+  next_shift?: any[]
+  permalink: string
+  schedule: Record<string, any>
+  team_id: any[]
+  timezone: string
+  updated_at: string
+}
+
+export interface ScheduleLoadMatch {
+  id: string
+}
+
+export interface ScheduleListMatch {
+  annotation?: Record<string, any>
+  config?: Record<string, any>
+  created_at?: string
+  current_shift?: any[]
+  holidays_public_config?: Record<string, any>
+  id?: string
+  name?: string
+  next_shift?: any[]
+  permalink?: string
+  schedule?: Record<string, any>
+  team_id?: any[]
+  timezone?: string
+  updated_at?: string
+}
+
+export interface ScheduleCreateData {
+  annotation: Record<string, any>
+  config: Record<string, any>
+  created_at: string
+  current_shift?: any[]
+  holidays_public_config: Record<string, any>
+  id: string
+  name: string
+  next_shift?: any[]
+  permalink: string
+  schedule: Record<string, any>
+  team_id: any[]
+  timezone: string
+  updated_at: string
+}
+
+export interface ScheduleUpdateData {
+  id: string
+  annotation?: Record<string, any>
+  config?: Record<string, any>
+  created_at?: string
+  current_shift?: any[]
+  holidays_public_config?: Record<string, any>
+  name?: string
+  next_shift?: any[]
+  permalink?: string
+  schedule?: Record<string, any>
+  team_id?: any[]
+  timezone?: string
+  updated_at?: string
+}
+
+export interface ScheduleRemoveMatch {
+  id: string
+}
+
+export interface ScheduleEntry {
+  pagination_meta: Record<string, any>
+  schedule_entry: Record<string, any>
+}
+
+export interface ScheduleEntryLoadMatch {
+  pagination_meta?: Record<string, any>
+  schedule_entry?: Record<string, any>
+}
+
+export interface ScheduleReplica {
+  created_at: string
+  id: string
+  last_sync_error?: string
+  last_synced_at?: string
+  mirror_window_day?: number
+  replica_fallback_user_id: string
+  replica_provider: string
+  replica_provider_id: string
+  schedule_id: string
+  schedule_replica: Record<string, any>
+  source: any[]
+  updated_at: string
+  user_status: any[]
+}
+
+export interface ScheduleReplicaLoadMatch {
+  id: string
+  schedule_id: string
+}
+
+export interface ScheduleReplicaListMatch {
+  id: string
+}
+
+export interface ScheduleReplicaCreateData {
+  id: string
+  created_at: string
+  last_sync_error?: string
+  last_synced_at?: string
+  mirror_window_day?: number
+  replica_fallback_user_id: string
+  replica_provider: string
+  replica_provider_id: string
+  schedule_id: string
+  schedule_replica: Record<string, any>
+  source: any[]
+  updated_at: string
+  user_status: any[]
+}
+
+export interface ScheduleSyncRule {
+  annotation?: Record<string, any>
+  created_at: string
+  id: string
+  permanent_member_user_id: any[]
+  rotation_id?: string
+  schedule_id: string
+  schedule_sync_rule: Record<string, any>
+  schedule_sync_target: Record<string, any>
+  schedule_sync_target_id: string
+  sync_type: string
+  updated_at: string
+}
+
+export interface ScheduleSyncRuleLoadMatch {
+  id: string
+  schedule_id: string
+}
+
+export interface ScheduleSyncRuleListMatch {
+  id: string
+}
+
+export interface ScheduleSyncRuleCreateData {
+  id: string
+  annotation?: Record<string, any>
+  created_at: string
+  permanent_member_user_id: any[]
+  rotation_id?: string
+  schedule_id: string
+  schedule_sync_rule: Record<string, any>
+  schedule_sync_target: Record<string, any>
+  schedule_sync_target_id: string
+  sync_type: string
+  updated_at: string
+}
+
+export interface ScheduleSyncRuleUpdateData {
+  id: string
+  schedule_id: string
+  annotation?: Record<string, any>
+  created_at?: string
+  permanent_member_user_id?: any[]
+  rotation_id?: string
+  schedule_sync_rule?: Record<string, any>
+  schedule_sync_target?: Record<string, any>
+  schedule_sync_target_id?: string
+  sync_type?: string
+  updated_at?: string
+}
+
+export interface ScheduleSyncTarget {
+  add_bot_to_group: boolean
+  annotation?: Record<string, any>
+  created_at: string
+  id: string
+  linked_schedule: any[]
+  schedule_sync_target: Record<string, any>
+  slack_team_id: string
+  slack_user_group_id: string
+  updated_at: string
+}
+
+export interface ScheduleSyncTargetLoadMatch {
+  id: string
+}
+
+export interface ScheduleSyncTargetListMatch {
+  add_bot_to_group?: boolean
+  annotation?: Record<string, any>
+  created_at?: string
+  id?: string
+  linked_schedule?: any[]
+  schedule_sync_target?: Record<string, any>
+  slack_team_id?: string
+  slack_user_group_id?: string
+  updated_at?: string
+}
+
+export interface ScheduleSyncTargetCreateData {
+  add_bot_to_group: boolean
+  annotation?: Record<string, any>
+  created_at: string
+  id: string
+  linked_schedule: any[]
+  schedule_sync_target: Record<string, any>
+  slack_team_id: string
+  slack_user_group_id: string
+  updated_at: string
+}
+
+export interface ScheduleSyncTargetUpdateData {
+  id: string
+  add_bot_to_group?: boolean
+  annotation?: Record<string, any>
+  created_at?: string
+  linked_schedule?: any[]
+  schedule_sync_target?: Record<string, any>
+  slack_team_id?: string
+  slack_user_group_id?: string
+  updated_at?: string
+}
+
+export interface ScheduleSyncTargetRemoveMatch {
+  id: string
+}
+
 export interface Secret {
   created_at: string
   description?: string
   id: string
   last_four_char?: string
   name: string
-  owning_team_id?: any[]
+  owning_team_id: any[]
   secret: Record<string, any>
   updated_at: string
   value: string
@@ -1161,7 +1809,7 @@ export interface SecretCreateData {
   id: string
   last_four_char?: string
   name: string
-  owning_team_id?: any[]
+  owning_team_id: any[]
   secret: Record<string, any>
   updated_at: string
   value: string
@@ -1185,6 +1833,212 @@ export interface SecretRemoveMatch {
   id: string
 }
 
+export interface Severity {
+  created_at: string
+  description: string
+  id: string
+  name: string
+  rank: number
+  updated_at: string
+}
+
+export interface SeverityLoadMatch {
+  id: string
+}
+
+export interface SeverityListMatch {
+  created_at?: string
+  description?: string
+  id?: string
+  name?: string
+  rank?: number
+  updated_at?: string
+}
+
+export interface SeverityCreateData {
+  created_at: string
+  description: string
+  id: string
+  name: string
+  rank: number
+  updated_at: string
+}
+
+export interface SeverityUpdateData {
+  id: string
+  created_at?: string
+  description?: string
+  name?: string
+  rank?: number
+  updated_at?: string
+}
+
+export interface StatusPage {
+  description?: string
+  id: string
+  name: string
+  public_url?: string
+}
+
+export interface StatusPageListMatch {
+  description?: string
+  id?: string
+  name?: string
+  public_url?: string
+}
+
+export interface StatusPageIncident {
+  component_impact: any[]
+  component_status?: any[]
+  id: string
+  idempotency_key: string
+  incident_status: string
+  message: string
+  name: string
+  notify_subscriber: boolean
+  published_at: string
+  status_page_id: string
+  update: any[]
+}
+
+export interface StatusPageIncidentLoadMatch {
+  id: string
+}
+
+export interface StatusPageIncidentListMatch {
+  component_impact?: any[]
+  component_status?: any[]
+  id?: string
+  idempotency_key?: string
+  incident_status?: string
+  message?: string
+  name?: string
+  notify_subscriber?: boolean
+  published_at?: string
+  status_page_id?: string
+  update?: any[]
+}
+
+export interface StatusPageIncidentCreateData {
+  component_impact: any[]
+  component_status?: any[]
+  id: string
+  idempotency_key: string
+  incident_status: string
+  message: string
+  name: string
+  notify_subscriber: boolean
+  published_at: string
+  status_page_id: string
+  update: any[]
+}
+
+export interface StatusPageIncidentUpdateData {
+  id: string
+  component_impact?: any[]
+  component_status?: any[]
+  idempotency_key?: string
+  incident_status?: string
+  message?: string
+  name?: string
+  notify_subscriber?: boolean
+  published_at?: string
+  status_page_id?: string
+  update?: any[]
+}
+
+export interface StatusPageIncidentUpdate {
+  component_status?: any[]
+  incident_status?: string
+  message: string
+  notify_subscriber: boolean
+  status_page_incident_id: string
+}
+
+export interface StatusPageIncidentUpdateCreateData {
+  component_status?: any[]
+  incident_status?: string
+  message: string
+  notify_subscriber: boolean
+  status_page_incident_id: string
+}
+
+export interface StatusPageMaintenance {
+  affected_component_id: any[]
+  component_maintenance_period: any[]
+  end_at: string
+  id: string
+  idempotency_key: string
+  maintenance_status: string
+  message: string
+  name: string
+  notify_subscriber: boolean
+  published_at: string
+  start_at: string
+  status_page_id: string
+  update: any[]
+}
+
+export interface StatusPageMaintenanceLoadMatch {
+  id: string
+}
+
+export interface StatusPageMaintenanceListMatch {
+  affected_component_id?: any[]
+  component_maintenance_period?: any[]
+  end_at?: string
+  id?: string
+  idempotency_key?: string
+  maintenance_status?: string
+  message?: string
+  name?: string
+  notify_subscriber?: boolean
+  published_at?: string
+  start_at?: string
+  status_page_id?: string
+  update?: any[]
+}
+
+export interface StatusPageMaintenanceCreateData {
+  affected_component_id: any[]
+  component_maintenance_period: any[]
+  end_at: string
+  id: string
+  idempotency_key: string
+  maintenance_status: string
+  message: string
+  name: string
+  notify_subscriber: boolean
+  published_at: string
+  start_at: string
+  status_page_id: string
+  update: any[]
+}
+
+export interface StatusPageMaintenanceUpdate {
+  component_status?: any[]
+  maintenance_status?: string
+  message: string
+  notify_subscriber: boolean
+  status_page_maintenance_id: string
+}
+
+export interface StatusPageMaintenanceUpdateCreateData {
+  component_status?: any[]
+  maintenance_status?: string
+  message: string
+  notify_subscriber: boolean
+  status_page_maintenance_id: string
+}
+
+export interface StatusPageStructure {
+  item: any[]
+}
+
+export interface StatusPageStructureLoadMatch {
+  id: string
+}
+
 export interface Team {
   catalog_entry: Record<string, any>
   id: string
@@ -1201,6 +2055,32 @@ export interface TeamListMatch {
   id?: string
   member?: any[]
   name?: string
+}
+
+export interface TelemetryDataSource {
+  created_at: string
+  datadog_config?: Record<string, any>
+  enabled: boolean
+  grafana_config?: Record<string, any>
+  id: string
+  name: string
+  provider: string
+  source_type: string
+  updated_at: string
+  version?: string
+}
+
+export interface TelemetryDataSourceUpdateData {
+  id: string
+  created_at?: string
+  datadog_config?: Record<string, any>
+  enabled?: boolean
+  grafana_config?: Record<string, any>
+  name?: string
+  provider?: string
+  source_type?: string
+  updated_at?: string
+  version?: string
 }
 
 export interface User {

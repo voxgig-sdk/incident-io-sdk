@@ -20,7 +20,7 @@ class ActionRequired(TypedDict):
     assignee: dict
     created_at: str
     creator: dict
-    description: str
+    follow_up: bool
     id: str
     incident_id: str
     status: str
@@ -30,6 +30,8 @@ class ActionRequired(TypedDict):
 class Action(ActionRequired, total=False):
     assignee_id: str
     completed_at: str
+    description: str
+    external_issue_reference: dict
 
 
 class ActionLoadMatch(TypedDict):
@@ -43,6 +45,8 @@ class ActionListMatch(TypedDict, total=False):
     created_at: str
     creator: dict
     description: str
+    external_issue_reference: dict
+    follow_up: bool
     id: str
     incident_id: str
     status: str
@@ -53,7 +57,7 @@ class ActionCreateDataRequired(TypedDict):
     assignee: dict
     created_at: str
     creator: dict
-    description: str
+    follow_up: bool
     id: str
     incident_id: str
     status: str
@@ -63,6 +67,8 @@ class ActionCreateDataRequired(TypedDict):
 class ActionCreateData(ActionCreateDataRequired, total=False):
     assignee_id: str
     completed_at: str
+    description: str
+    external_issue_reference: dict
 
 
 class ActionUpdateDataRequired(TypedDict):
@@ -76,6 +82,8 @@ class ActionUpdateData(ActionUpdateDataRequired, total=False):
     created_at: str
     creator: dict
     description: str
+    external_issue_reference: dict
+    follow_up: bool
     incident_id: str
     status: str
     updated_at: str
@@ -120,6 +128,24 @@ class AlertListMatch(TypedDict, total=False):
     status: str
     title: str
     updated_at: str
+
+
+class AlertCreateDataRequired(TypedDict):
+    id: str
+    alert_source_id: str
+    attribute: list
+    created_at: str
+    deduplication_key: str
+    status: str
+    title: str
+    updated_at: str
+
+
+class AlertCreateData(AlertCreateDataRequired, total=False):
+    alert_group_id: list
+    description: str
+    resolved_at: str
+    source_url: str
 
 
 class AlertAttributeRequired(TypedDict):
@@ -242,6 +268,7 @@ class AlertNoteRemoveMatch(TypedDict):
 
 class AlertRouteRequired(TypedDict):
     alert_source: list
+    channel_config: list
     condition_group: list
     enabled: bool
     escalation_config: dict
@@ -249,6 +276,7 @@ class AlertRouteRequired(TypedDict):
     grouping_config: dict
     id: str
     incident_config: dict
+    incident_template: dict
     is_private: bool
     message_config: dict
     name: str
@@ -257,6 +285,7 @@ class AlertRouteRequired(TypedDict):
 
 class AlertRoute(AlertRouteRequired, total=False):
     created_at: str
+    message_template: dict
     owning_team_id: list
     updated_at: str
 
@@ -267,6 +296,7 @@ class AlertRouteLoadMatch(TypedDict):
 
 class AlertRouteListMatch(TypedDict, total=False):
     alert_source: list
+    channel_config: list
     condition_group: list
     created_at: str
     enabled: bool
@@ -275,8 +305,10 @@ class AlertRouteListMatch(TypedDict, total=False):
     grouping_config: dict
     id: str
     incident_config: dict
+    incident_template: dict
     is_private: bool
     message_config: dict
+    message_template: dict
     name: str
     owning_team_id: list
     updated_at: str
@@ -285,6 +317,7 @@ class AlertRouteListMatch(TypedDict, total=False):
 
 class AlertRouteCreateDataRequired(TypedDict):
     alert_source: list
+    channel_config: list
     condition_group: list
     enabled: bool
     escalation_config: dict
@@ -292,6 +325,7 @@ class AlertRouteCreateDataRequired(TypedDict):
     grouping_config: dict
     id: str
     incident_config: dict
+    incident_template: dict
     is_private: bool
     message_config: dict
     name: str
@@ -300,6 +334,7 @@ class AlertRouteCreateDataRequired(TypedDict):
 
 class AlertRouteCreateData(AlertRouteCreateDataRequired, total=False):
     created_at: str
+    message_template: dict
     owning_team_id: list
     updated_at: str
 
@@ -310,6 +345,7 @@ class AlertRouteUpdateDataRequired(TypedDict):
 
 class AlertRouteUpdateData(AlertRouteUpdateDataRequired, total=False):
     alert_source: list
+    channel_config: list
     condition_group: list
     created_at: str
     enabled: bool
@@ -317,8 +353,10 @@ class AlertRouteUpdateData(AlertRouteUpdateDataRequired, total=False):
     expression: list
     grouping_config: dict
     incident_config: dict
+    incident_template: dict
     is_private: bool
     message_config: dict
+    message_template: dict
     name: str
     owning_team_id: list
     updated_at: str
@@ -417,6 +455,7 @@ class AlertSourceRemoveMatch(TypedDict):
 class ApiKeyRequired(TypedDict):
     created_at: str
     creator: dict
+    grace_period_minute: int
     id: str
     name: str
     role: list
@@ -440,6 +479,7 @@ class ApiKeyListMatch(TypedDict, total=False):
     comment: str
     created_at: str
     creator: dict
+    grace_period_minute: int
     id: str
     last_used_at: str
     name: str
@@ -454,6 +494,7 @@ class ApiKeyListMatch(TypedDict, total=False):
 class ApiKeyCreateDataRequired(TypedDict):
     created_at: str
     creator: dict
+    grace_period_minute: int
     id: str
     name: str
     role: list
@@ -477,6 +518,7 @@ class ApiKeyUpdateData(ApiKeyUpdateDataRequired, total=False):
     comment: str
     created_at: str
     creator: dict
+    grace_period_minute: int
     last_used_at: str
     name: str
     role: list
@@ -491,6 +533,287 @@ class ApiKeyRemoveMatch(TypedDict):
     id: str
 
 
+class CatalogEntryRequired(TypedDict):
+    attribute_value: dict
+    catalog_entry: dict
+    catalog_type: dict
+    catalog_type_id: str
+    created_at: str
+    id: str
+    name: str
+    updated_at: str
+
+
+class CatalogEntry(CatalogEntryRequired, total=False):
+    alias: list
+    archived_at: str
+    external_id: str
+    rank: int
+    update_attribute: list
+
+
+class CatalogEntryLoadMatch(TypedDict):
+    id: str
+
+
+class CatalogEntryListMatch(TypedDict, total=False):
+    alias: list
+    archived_at: str
+    attribute_value: dict
+    catalog_entry: dict
+    catalog_type: dict
+    catalog_type_id: str
+    created_at: str
+    external_id: str
+    id: str
+    name: str
+    rank: int
+    update_attribute: list
+    updated_at: str
+
+
+class CatalogEntryCreateDataRequired(TypedDict):
+    attribute_value: dict
+    catalog_entry: dict
+    catalog_type: dict
+    catalog_type_id: str
+    created_at: str
+    id: str
+    name: str
+    updated_at: str
+
+
+class CatalogEntryCreateData(CatalogEntryCreateDataRequired, total=False):
+    alias: list
+    archived_at: str
+    external_id: str
+    rank: int
+    update_attribute: list
+
+
+class CatalogEntryUpdateDataRequired(TypedDict):
+    id: str
+
+
+class CatalogEntryUpdateData(CatalogEntryUpdateDataRequired, total=False):
+    alias: list
+    archived_at: str
+    attribute_value: dict
+    catalog_entry: dict
+    catalog_type: dict
+    catalog_type_id: str
+    created_at: str
+    external_id: str
+    name: str
+    rank: int
+    update_attribute: list
+    updated_at: str
+
+
+class CatalogResource(TypedDict):
+    category: str
+    description: str
+    engine_resource_type: str
+    label: str
+    type: str
+    value_docstring: str
+
+
+class CatalogResourceListMatch(TypedDict, total=False):
+    category: str
+    description: str
+    engine_resource_type: str
+    label: str
+    type: str
+    value_docstring: str
+
+
+class CatalogTypeRequired(TypedDict):
+    annotation: dict
+    category: list
+    color: str
+    created_at: str
+    description: str
+    engine_resource_type: str
+    icon: str
+    id: str
+    is_editable: bool
+    name: str
+    ranked: bool
+    schema: dict
+    semantic_type: str
+    type_name: str
+    updated_at: str
+    use_name_as_identifier: bool
+
+
+class CatalogType(CatalogTypeRequired, total=False):
+    dynamic_resource_parameter: str
+    estimated_count: int
+    is_team_type: bool
+    last_synced_at: str
+    owning_team_id: list
+    registry_type: str
+    required_integration: list
+    source_repo_url: str
+
+
+class CatalogTypeLoadMatch(TypedDict):
+    id: str
+
+
+class CatalogTypeListMatch(TypedDict, total=False):
+    annotation: dict
+    category: list
+    color: str
+    created_at: str
+    description: str
+    dynamic_resource_parameter: str
+    engine_resource_type: str
+    estimated_count: int
+    icon: str
+    id: str
+    is_editable: bool
+    is_team_type: bool
+    last_synced_at: str
+    name: str
+    owning_team_id: list
+    ranked: bool
+    registry_type: str
+    required_integration: list
+    schema: dict
+    semantic_type: str
+    source_repo_url: str
+    type_name: str
+    updated_at: str
+    use_name_as_identifier: bool
+
+
+class CatalogTypeCreateDataRequired(TypedDict):
+    annotation: dict
+    category: list
+    color: str
+    created_at: str
+    description: str
+    engine_resource_type: str
+    icon: str
+    id: str
+    is_editable: bool
+    name: str
+    ranked: bool
+    schema: dict
+    semantic_type: str
+    type_name: str
+    updated_at: str
+    use_name_as_identifier: bool
+
+
+class CatalogTypeCreateData(CatalogTypeCreateDataRequired, total=False):
+    dynamic_resource_parameter: str
+    estimated_count: int
+    is_team_type: bool
+    last_synced_at: str
+    owning_team_id: list
+    registry_type: str
+    required_integration: list
+    source_repo_url: str
+
+
+class CatalogTypeUpdateDataRequired(TypedDict):
+    id: str
+
+
+class CatalogTypeUpdateData(CatalogTypeUpdateDataRequired, total=False):
+    annotation: dict
+    category: list
+    color: str
+    created_at: str
+    description: str
+    dynamic_resource_parameter: str
+    engine_resource_type: str
+    estimated_count: int
+    icon: str
+    is_editable: bool
+    is_team_type: bool
+    last_synced_at: str
+    name: str
+    owning_team_id: list
+    ranked: bool
+    registry_type: str
+    required_integration: list
+    schema: dict
+    semantic_type: str
+    source_repo_url: str
+    type_name: str
+    updated_at: str
+    use_name_as_identifier: bool
+
+
+class CatalogTypeSchemaRequired(TypedDict):
+    annotation: dict
+    attribute: list
+    category: list
+    color: str
+    created_at: str
+    description: str
+    engine_resource_type: str
+    icon: str
+    id: str
+    is_editable: bool
+    name: str
+    ranked: bool
+    schema: dict
+    semantic_type: str
+    type_name: str
+    updated_at: str
+    use_name_as_identifier: bool
+    version: int
+
+
+class CatalogTypeSchema(CatalogTypeSchemaRequired, total=False):
+    dynamic_resource_parameter: str
+    estimated_count: int
+    is_team_type: bool
+    last_synced_at: str
+    owning_team_id: list
+    registry_type: str
+    required_integration: list
+    source_repo_url: str
+
+
+class CatalogTypeSchemaCreateDataRequired(TypedDict):
+    catalog_type_id: str
+    annotation: dict
+    attribute: list
+    category: list
+    color: str
+    created_at: str
+    description: str
+    engine_resource_type: str
+    icon: str
+    id: str
+    is_editable: bool
+    name: str
+    ranked: bool
+    schema: dict
+    semantic_type: str
+    type_name: str
+    updated_at: str
+    use_name_as_identifier: bool
+    version: int
+
+
+class CatalogTypeSchemaCreateData(CatalogTypeSchemaCreateDataRequired, total=False):
+    dynamic_resource_parameter: str
+    estimated_count: int
+    is_team_type: bool
+    last_synced_at: str
+    owning_team_id: list
+    registry_type: str
+    required_integration: list
+    source_repo_url: str
+
+
 class CustomFieldRequired(TypedDict):
     created_at: str
     description: str
@@ -499,6 +822,10 @@ class CustomFieldRequired(TypedDict):
     fixed_filter: dict
     id: str
     name: str
+    option: list
+    show_before_closure: bool
+    show_before_creation: bool
+    show_before_update: bool
     updated_at: str
 
 
@@ -506,6 +833,9 @@ class CustomField(CustomFieldRequired, total=False):
     catalog_type_id: str
     group_by_catalog_attribute_id: str
     helptext_catalog_attribute_id: str
+    required: str
+    required_v2: str
+    show_in_announcement_post: bool
 
 
 class CustomFieldLoadMatch(TypedDict):
@@ -523,6 +853,13 @@ class CustomFieldListMatch(TypedDict, total=False):
     helptext_catalog_attribute_id: str
     id: str
     name: str
+    option: list
+    required: str
+    required_v2: str
+    show_before_closure: bool
+    show_before_creation: bool
+    show_before_update: bool
+    show_in_announcement_post: bool
     updated_at: str
 
 
@@ -534,6 +871,10 @@ class CustomFieldCreateDataRequired(TypedDict):
     fixed_filter: dict
     id: str
     name: str
+    option: list
+    show_before_closure: bool
+    show_before_creation: bool
+    show_before_update: bool
     updated_at: str
 
 
@@ -541,6 +882,9 @@ class CustomFieldCreateData(CustomFieldCreateDataRequired, total=False):
     catalog_type_id: str
     group_by_catalog_attribute_id: str
     helptext_catalog_attribute_id: str
+    required: str
+    required_v2: str
+    show_in_announcement_post: bool
 
 
 class CustomFieldUpdateDataRequired(TypedDict):
@@ -557,6 +901,13 @@ class CustomFieldUpdateData(CustomFieldUpdateDataRequired, total=False):
     group_by_catalog_attribute_id: str
     helptext_catalog_attribute_id: str
     name: str
+    option: list
+    required: str
+    required_v2: str
+    show_before_closure: bool
+    show_before_creation: bool
+    show_before_update: bool
+    show_in_announcement_post: bool
     updated_at: str
 
 
@@ -601,6 +952,70 @@ class CustomFieldOptionUpdateData(CustomFieldOptionUpdateDataRequired, total=Fal
 
 class CustomFieldOptionRemoveMatch(TypedDict):
     id: str
+
+
+class EscalationRequired(TypedDict):
+    created_at: str
+    creator: dict
+    event: list
+    id: str
+    idempotency_key: str
+    priority: dict
+    related_alert: list
+    related_incident: list
+    status: str
+    title: str
+    updated_at: str
+
+
+class Escalation(EscalationRequired, total=False):
+    description: str
+    escalation_path_id: str
+    incident_id: str
+    user_id: list
+
+
+class EscalationLoadMatch(TypedDict):
+    id: str
+
+
+class EscalationListMatch(TypedDict, total=False):
+    created_at: str
+    creator: dict
+    description: str
+    escalation_path_id: str
+    event: list
+    id: str
+    idempotency_key: str
+    incident_id: str
+    priority: dict
+    related_alert: list
+    related_incident: list
+    status: str
+    title: str
+    updated_at: str
+    user_id: list
+
+
+class EscalationCreateDataRequired(TypedDict):
+    created_at: str
+    creator: dict
+    event: list
+    id: str
+    idempotency_key: str
+    priority: dict
+    related_alert: list
+    related_incident: list
+    status: str
+    title: str
+    updated_at: str
+
+
+class EscalationCreateData(EscalationCreateDataRequired, total=False):
+    description: str
+    escalation_path_id: str
+    incident_id: str
+    user_id: list
 
 
 class FollowUpRequired(TypedDict):
@@ -715,15 +1130,18 @@ class IncidentRequired(TypedDict):
     external_issue_reference: dict
     id: str
     idempotency_key: str
+    incident: dict
     incident_role_assignment: list
     incident_status: dict
     incident_type: dict
     mode: str
     name: str
+    notify_incident_channel: bool
     reference: str
     severity: dict
     slack_channel_id: str
     slack_team_id: str
+    status: str
     updated_at: str
     visibility: str
 
@@ -742,7 +1160,10 @@ class Incident(IncidentRequired, total=False):
     severity_id: str
     slack_channel_name: str
     slack_channel_name_override: str
+    source_message_channel_id: str
+    source_message_timestamp: str
     summary: str
+    timestamp: list
     workload_minutes_late: float
     workload_minutes_sleeping: float
     workload_minutes_total: float
@@ -763,6 +1184,7 @@ class IncidentListMatch(TypedDict, total=False):
     has_debrief: bool
     id: str
     idempotency_key: str
+    incident: dict
     incident_role_assignment: list
     incident_status: dict
     incident_status_id: str
@@ -771,6 +1193,7 @@ class IncidentListMatch(TypedDict, total=False):
     incident_type_id: str
     mode: str
     name: str
+    notify_incident_channel: bool
     permalink: str
     postmortem_document_id: list
     postmortem_document_url: str
@@ -782,7 +1205,11 @@ class IncidentListMatch(TypedDict, total=False):
     slack_channel_name: str
     slack_channel_name_override: str
     slack_team_id: str
+    source_message_channel_id: str
+    source_message_timestamp: str
+    status: str
     summary: str
+    timestamp: list
     updated_at: str
     visibility: str
     workload_minutes_late: float
@@ -798,15 +1225,18 @@ class IncidentCreateDataRequired(TypedDict):
     external_issue_reference: dict
     id: str
     idempotency_key: str
+    incident: dict
     incident_role_assignment: list
     incident_status: dict
     incident_type: dict
     mode: str
     name: str
+    notify_incident_channel: bool
     reference: str
     severity: dict
     slack_channel_id: str
     slack_team_id: str
+    status: str
     updated_at: str
     visibility: str
 
@@ -825,11 +1255,31 @@ class IncidentCreateData(IncidentCreateDataRequired, total=False):
     severity_id: str
     slack_channel_name: str
     slack_channel_name_override: str
+    source_message_channel_id: str
+    source_message_timestamp: str
     summary: str
+    timestamp: list
     workload_minutes_late: float
     workload_minutes_sleeping: float
     workload_minutes_total: float
     workload_minutes_working: float
+
+
+class IncidentAlertRequired(TypedDict):
+    alert: dict
+    id: str
+    incident: dict
+
+
+class IncidentAlert(IncidentAlertRequired, total=False):
+    alert_route_id: str
+
+
+class IncidentAlertListMatch(TypedDict, total=False):
+    alert: dict
+    alert_route_id: str
+    id: str
+    incident: dict
 
 
 class IncidentAttachment(TypedDict):
@@ -901,7 +1351,7 @@ class IncidentRelationshipListMatch(TypedDict, total=False):
     incident: dict
 
 
-class IncidentRole(TypedDict):
+class IncidentRoleRequired(TypedDict):
     created_at: str
     description: str
     id: str
@@ -910,6 +1360,10 @@ class IncidentRole(TypedDict):
     role_type: str
     shortform: str
     updated_at: str
+
+
+class IncidentRole(IncidentRoleRequired, total=False):
+    required: bool
 
 
 class IncidentRoleLoadMatch(TypedDict):
@@ -922,12 +1376,13 @@ class IncidentRoleListMatch(TypedDict, total=False):
     id: str
     instruction: str
     name: str
+    required: bool
     role_type: str
     shortform: str
     updated_at: str
 
 
-class IncidentRoleCreateData(TypedDict):
+class IncidentRoleCreateDataRequired(TypedDict):
     created_at: str
     description: str
     id: str
@@ -936,6 +1391,10 @@ class IncidentRoleCreateData(TypedDict):
     role_type: str
     shortform: str
     updated_at: str
+
+
+class IncidentRoleCreateData(IncidentRoleCreateDataRequired, total=False):
+    required: bool
 
 
 class IncidentRoleUpdateDataRequired(TypedDict):
@@ -947,6 +1406,7 @@ class IncidentRoleUpdateData(IncidentRoleUpdateDataRequired, total=False):
     description: str
     instruction: str
     name: str
+    required: bool
     role_type: str
     shortform: str
     updated_at: str
@@ -1250,10 +1710,274 @@ class PostmortemDocumentUpdateData(PostmortemDocumentUpdateDataRequired, total=F
     updated_at: str
 
 
+class ScheduleRequired(TypedDict):
+    annotation: dict
+    config: dict
+    created_at: str
+    holidays_public_config: dict
+    id: str
+    name: str
+    permalink: str
+    schedule: dict
+    team_id: list
+    timezone: str
+    updated_at: str
+
+
+class Schedule(ScheduleRequired, total=False):
+    current_shift: list
+    next_shift: list
+
+
+class ScheduleLoadMatch(TypedDict):
+    id: str
+
+
+class ScheduleListMatch(TypedDict, total=False):
+    annotation: dict
+    config: dict
+    created_at: str
+    current_shift: list
+    holidays_public_config: dict
+    id: str
+    name: str
+    next_shift: list
+    permalink: str
+    schedule: dict
+    team_id: list
+    timezone: str
+    updated_at: str
+
+
+class ScheduleCreateDataRequired(TypedDict):
+    annotation: dict
+    config: dict
+    created_at: str
+    holidays_public_config: dict
+    id: str
+    name: str
+    permalink: str
+    schedule: dict
+    team_id: list
+    timezone: str
+    updated_at: str
+
+
+class ScheduleCreateData(ScheduleCreateDataRequired, total=False):
+    current_shift: list
+    next_shift: list
+
+
+class ScheduleUpdateDataRequired(TypedDict):
+    id: str
+
+
+class ScheduleUpdateData(ScheduleUpdateDataRequired, total=False):
+    annotation: dict
+    config: dict
+    created_at: str
+    current_shift: list
+    holidays_public_config: dict
+    name: str
+    next_shift: list
+    permalink: str
+    schedule: dict
+    team_id: list
+    timezone: str
+    updated_at: str
+
+
+class ScheduleRemoveMatch(TypedDict):
+    id: str
+
+
+class ScheduleEntry(TypedDict):
+    pagination_meta: dict
+    schedule_entry: dict
+
+
+class ScheduleEntryLoadMatch(TypedDict, total=False):
+    pagination_meta: dict
+    schedule_entry: dict
+
+
+class ScheduleReplicaRequired(TypedDict):
+    created_at: str
+    id: str
+    replica_fallback_user_id: str
+    replica_provider: str
+    replica_provider_id: str
+    schedule_id: str
+    schedule_replica: dict
+    source: list
+    updated_at: str
+    user_status: list
+
+
+class ScheduleReplica(ScheduleReplicaRequired, total=False):
+    last_sync_error: str
+    last_synced_at: str
+    mirror_window_day: int
+
+
+class ScheduleReplicaLoadMatch(TypedDict):
+    id: str
+    schedule_id: str
+
+
+class ScheduleReplicaListMatch(TypedDict):
+    id: str
+
+
+class ScheduleReplicaCreateDataRequired(TypedDict):
+    id: str
+    created_at: str
+    replica_fallback_user_id: str
+    replica_provider: str
+    replica_provider_id: str
+    schedule_id: str
+    schedule_replica: dict
+    source: list
+    updated_at: str
+    user_status: list
+
+
+class ScheduleReplicaCreateData(ScheduleReplicaCreateDataRequired, total=False):
+    last_sync_error: str
+    last_synced_at: str
+    mirror_window_day: int
+
+
+class ScheduleSyncRuleRequired(TypedDict):
+    created_at: str
+    id: str
+    permanent_member_user_id: list
+    schedule_id: str
+    schedule_sync_rule: dict
+    schedule_sync_target: dict
+    schedule_sync_target_id: str
+    sync_type: str
+    updated_at: str
+
+
+class ScheduleSyncRule(ScheduleSyncRuleRequired, total=False):
+    annotation: dict
+    rotation_id: str
+
+
+class ScheduleSyncRuleLoadMatch(TypedDict):
+    id: str
+    schedule_id: str
+
+
+class ScheduleSyncRuleListMatch(TypedDict):
+    id: str
+
+
+class ScheduleSyncRuleCreateDataRequired(TypedDict):
+    id: str
+    created_at: str
+    permanent_member_user_id: list
+    schedule_id: str
+    schedule_sync_rule: dict
+    schedule_sync_target: dict
+    schedule_sync_target_id: str
+    sync_type: str
+    updated_at: str
+
+
+class ScheduleSyncRuleCreateData(ScheduleSyncRuleCreateDataRequired, total=False):
+    annotation: dict
+    rotation_id: str
+
+
+class ScheduleSyncRuleUpdateDataRequired(TypedDict):
+    id: str
+    schedule_id: str
+
+
+class ScheduleSyncRuleUpdateData(ScheduleSyncRuleUpdateDataRequired, total=False):
+    annotation: dict
+    created_at: str
+    permanent_member_user_id: list
+    rotation_id: str
+    schedule_sync_rule: dict
+    schedule_sync_target: dict
+    schedule_sync_target_id: str
+    sync_type: str
+    updated_at: str
+
+
+class ScheduleSyncTargetRequired(TypedDict):
+    add_bot_to_group: bool
+    created_at: str
+    id: str
+    linked_schedule: list
+    schedule_sync_target: dict
+    slack_team_id: str
+    slack_user_group_id: str
+    updated_at: str
+
+
+class ScheduleSyncTarget(ScheduleSyncTargetRequired, total=False):
+    annotation: dict
+
+
+class ScheduleSyncTargetLoadMatch(TypedDict):
+    id: str
+
+
+class ScheduleSyncTargetListMatch(TypedDict, total=False):
+    add_bot_to_group: bool
+    annotation: dict
+    created_at: str
+    id: str
+    linked_schedule: list
+    schedule_sync_target: dict
+    slack_team_id: str
+    slack_user_group_id: str
+    updated_at: str
+
+
+class ScheduleSyncTargetCreateDataRequired(TypedDict):
+    add_bot_to_group: bool
+    created_at: str
+    id: str
+    linked_schedule: list
+    schedule_sync_target: dict
+    slack_team_id: str
+    slack_user_group_id: str
+    updated_at: str
+
+
+class ScheduleSyncTargetCreateData(ScheduleSyncTargetCreateDataRequired, total=False):
+    annotation: dict
+
+
+class ScheduleSyncTargetUpdateDataRequired(TypedDict):
+    id: str
+
+
+class ScheduleSyncTargetUpdateData(ScheduleSyncTargetUpdateDataRequired, total=False):
+    add_bot_to_group: bool
+    annotation: dict
+    created_at: str
+    linked_schedule: list
+    schedule_sync_target: dict
+    slack_team_id: str
+    slack_user_group_id: str
+    updated_at: str
+
+
+class ScheduleSyncTargetRemoveMatch(TypedDict):
+    id: str
+
+
 class SecretRequired(TypedDict):
     created_at: str
     id: str
     name: str
+    owning_team_id: list
     secret: dict
     updated_at: str
     value: str
@@ -1263,7 +1987,6 @@ class SecretRequired(TypedDict):
 class Secret(SecretRequired, total=False):
     description: str
     last_four_char: str
-    owning_team_id: list
 
 
 class SecretLoadMatch(TypedDict):
@@ -1287,6 +2010,7 @@ class SecretCreateDataRequired(TypedDict):
     created_at: str
     id: str
     name: str
+    owning_team_id: list
     secret: dict
     updated_at: str
     value: str
@@ -1296,7 +2020,6 @@ class SecretCreateDataRequired(TypedDict):
 class SecretCreateData(SecretCreateDataRequired, total=False):
     description: str
     last_four_char: str
-    owning_team_id: list
 
 
 class SecretUpdateDataRequired(TypedDict):
@@ -1319,6 +2042,239 @@ class SecretRemoveMatch(TypedDict):
     id: str
 
 
+class Severity(TypedDict):
+    created_at: str
+    description: str
+    id: str
+    name: str
+    rank: int
+    updated_at: str
+
+
+class SeverityLoadMatch(TypedDict):
+    id: str
+
+
+class SeverityListMatch(TypedDict, total=False):
+    created_at: str
+    description: str
+    id: str
+    name: str
+    rank: int
+    updated_at: str
+
+
+class SeverityCreateData(TypedDict):
+    created_at: str
+    description: str
+    id: str
+    name: str
+    rank: int
+    updated_at: str
+
+
+class SeverityUpdateDataRequired(TypedDict):
+    id: str
+
+
+class SeverityUpdateData(SeverityUpdateDataRequired, total=False):
+    created_at: str
+    description: str
+    name: str
+    rank: int
+    updated_at: str
+
+
+class StatusPageRequired(TypedDict):
+    id: str
+    name: str
+
+
+class StatusPage(StatusPageRequired, total=False):
+    description: str
+    public_url: str
+
+
+class StatusPageListMatch(TypedDict, total=False):
+    description: str
+    id: str
+    name: str
+    public_url: str
+
+
+class StatusPageIncidentRequired(TypedDict):
+    component_impact: list
+    id: str
+    idempotency_key: str
+    incident_status: str
+    message: str
+    name: str
+    notify_subscriber: bool
+    published_at: str
+    status_page_id: str
+    update: list
+
+
+class StatusPageIncident(StatusPageIncidentRequired, total=False):
+    component_status: list
+
+
+class StatusPageIncidentLoadMatch(TypedDict):
+    id: str
+
+
+class StatusPageIncidentListMatch(TypedDict, total=False):
+    component_impact: list
+    component_status: list
+    id: str
+    idempotency_key: str
+    incident_status: str
+    message: str
+    name: str
+    notify_subscriber: bool
+    published_at: str
+    status_page_id: str
+    update: list
+
+
+class StatusPageIncidentCreateDataRequired(TypedDict):
+    component_impact: list
+    id: str
+    idempotency_key: str
+    incident_status: str
+    message: str
+    name: str
+    notify_subscriber: bool
+    published_at: str
+    status_page_id: str
+    update: list
+
+
+class StatusPageIncidentCreateData(StatusPageIncidentCreateDataRequired, total=False):
+    component_status: list
+
+
+class StatusPageIncidentUpdateDataRequired(TypedDict):
+    id: str
+
+
+class StatusPageIncidentUpdateData(StatusPageIncidentUpdateDataRequired, total=False):
+    component_impact: list
+    component_status: list
+    idempotency_key: str
+    incident_status: str
+    message: str
+    name: str
+    notify_subscriber: bool
+    published_at: str
+    status_page_id: str
+    update: list
+
+
+class StatusPageIncidentUpdateRequired(TypedDict):
+    message: str
+    notify_subscriber: bool
+    status_page_incident_id: str
+
+
+class StatusPageIncidentUpdate(StatusPageIncidentUpdateRequired, total=False):
+    component_status: list
+    incident_status: str
+
+
+class StatusPageIncidentUpdateCreateDataRequired(TypedDict):
+    message: str
+    notify_subscriber: bool
+    status_page_incident_id: str
+
+
+class StatusPageIncidentUpdateCreateData(StatusPageIncidentUpdateCreateDataRequired, total=False):
+    component_status: list
+    incident_status: str
+
+
+class StatusPageMaintenance(TypedDict):
+    affected_component_id: list
+    component_maintenance_period: list
+    end_at: str
+    id: str
+    idempotency_key: str
+    maintenance_status: str
+    message: str
+    name: str
+    notify_subscriber: bool
+    published_at: str
+    start_at: str
+    status_page_id: str
+    update: list
+
+
+class StatusPageMaintenanceLoadMatch(TypedDict):
+    id: str
+
+
+class StatusPageMaintenanceListMatch(TypedDict, total=False):
+    affected_component_id: list
+    component_maintenance_period: list
+    end_at: str
+    id: str
+    idempotency_key: str
+    maintenance_status: str
+    message: str
+    name: str
+    notify_subscriber: bool
+    published_at: str
+    start_at: str
+    status_page_id: str
+    update: list
+
+
+class StatusPageMaintenanceCreateData(TypedDict):
+    affected_component_id: list
+    component_maintenance_period: list
+    end_at: str
+    id: str
+    idempotency_key: str
+    maintenance_status: str
+    message: str
+    name: str
+    notify_subscriber: bool
+    published_at: str
+    start_at: str
+    status_page_id: str
+    update: list
+
+
+class StatusPageMaintenanceUpdateRequired(TypedDict):
+    message: str
+    notify_subscriber: bool
+    status_page_maintenance_id: str
+
+
+class StatusPageMaintenanceUpdate(StatusPageMaintenanceUpdateRequired, total=False):
+    component_status: list
+    maintenance_status: str
+
+
+class StatusPageMaintenanceUpdateCreateDataRequired(TypedDict):
+    message: str
+    notify_subscriber: bool
+    status_page_maintenance_id: str
+
+
+class StatusPageMaintenanceUpdateCreateData(StatusPageMaintenanceUpdateCreateDataRequired, total=False):
+    component_status: list
+    maintenance_status: str
+
+
+class StatusPageStructure(TypedDict):
+    item: list
+
+
+class StatusPageStructureLoadMatch(TypedDict):
+    id: str
+
+
 class Team(TypedDict):
     catalog_entry: dict
     id: str
@@ -1335,6 +2291,38 @@ class TeamListMatch(TypedDict, total=False):
     id: str
     member: list
     name: str
+
+
+class TelemetryDataSourceRequired(TypedDict):
+    created_at: str
+    enabled: bool
+    id: str
+    name: str
+    provider: str
+    source_type: str
+    updated_at: str
+
+
+class TelemetryDataSource(TelemetryDataSourceRequired, total=False):
+    datadog_config: dict
+    grafana_config: dict
+    version: str
+
+
+class TelemetryDataSourceUpdateDataRequired(TypedDict):
+    id: str
+
+
+class TelemetryDataSourceUpdateData(TelemetryDataSourceUpdateDataRequired, total=False):
+    created_at: str
+    datadog_config: dict
+    enabled: bool
+    grafana_config: dict
+    name: str
+    provider: str
+    source_type: str
+    updated_at: str
+    version: str
 
 
 class UserRequired(TypedDict):

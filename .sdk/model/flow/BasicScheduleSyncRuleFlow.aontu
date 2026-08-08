@@ -1,0 +1,84 @@
+# BasicScheduleSyncRuleFlow
+
+main: kit: flow: BasicScheduleSyncRuleFlow:
+{
+  entity: "schedule_sync_rule",
+  kind: "basic",
+  name: "BasicScheduleSyncRuleFlow",
+  step: [
+    {
+      input: {
+        ref: "schedule_sync_rule_ref01"
+      }
+
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "create"
+    }
+
+    {
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "schedule_sync_rule_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      data: {
+        schedule_id: "schedule01"
+      }
+
+      input: {
+        ref: "schedule_sync_rule_ref01",
+        srcdatavar: "schedule_sync_rule_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedule_sync_rule_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "schedule_sync_rule_ref01",
+        srcdatavar: "schedule_sync_rule_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "schedule_sync_rule01",
+        schedule_id: "schedule01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedule_sync_rule_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicScheduleSyncRuleFlow"
+}

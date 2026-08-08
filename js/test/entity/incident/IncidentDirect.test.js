@@ -53,7 +53,7 @@ describe('IncidentDirect', async () => {
     }
 
     const result = await client.direct({
-      path: 'v2/incidents/{id}',
+      path: 'v1/incidents/{id}',
       method: 'GET',
       params,
     })

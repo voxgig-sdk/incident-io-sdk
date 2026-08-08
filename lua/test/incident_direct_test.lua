@@ -70,7 +70,7 @@ describe("IncidentDirect", function()
     end
 
     local result, err = client:direct({
-      path = "v2/incidents/{id}",
+      path = "v1/incidents/{id}",
       method = "GET",
       params = params,
       query = query,

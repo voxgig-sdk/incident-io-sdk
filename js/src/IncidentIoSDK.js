@@ -7,10 +7,16 @@ const { AlertNoteEntity } = require('./entity/AlertNoteEntity')
 const { AlertRouteEntity } = require('./entity/AlertRouteEntity')
 const { AlertSourceEntity } = require('./entity/AlertSourceEntity')
 const { ApiKeyEntity } = require('./entity/ApiKeyEntity')
+const { CatalogEntryEntity } = require('./entity/CatalogEntryEntity')
+const { CatalogResourceEntity } = require('./entity/CatalogResourceEntity')
+const { CatalogTypeEntity } = require('./entity/CatalogTypeEntity')
+const { CatalogTypeSchemaEntity } = require('./entity/CatalogTypeSchemaEntity')
 const { CustomFieldEntity } = require('./entity/CustomFieldEntity')
 const { CustomFieldOptionEntity } = require('./entity/CustomFieldOptionEntity')
+const { EscalationEntity } = require('./entity/EscalationEntity')
 const { FollowUpEntity } = require('./entity/FollowUpEntity')
 const { IncidentEntity } = require('./entity/IncidentEntity')
+const { IncidentAlertEntity } = require('./entity/IncidentAlertEntity')
 const { IncidentAttachmentEntity } = require('./entity/IncidentAttachmentEntity')
 const { IncidentMembershipEntity } = require('./entity/IncidentMembershipEntity')
 const { IncidentParticipantEntity } = require('./entity/IncidentParticipantEntity')
@@ -24,8 +30,21 @@ const { IncidentUpdateEntity } = require('./entity/IncidentUpdateEntity')
 const { IpAllowlistEntity } = require('./entity/IpAllowlistEntity')
 const { MaintenanceWindowEntity } = require('./entity/MaintenanceWindowEntity')
 const { PostmortemDocumentEntity } = require('./entity/PostmortemDocumentEntity')
+const { ScheduleEntity } = require('./entity/ScheduleEntity')
+const { ScheduleEntryEntity } = require('./entity/ScheduleEntryEntity')
+const { ScheduleReplicaEntity } = require('./entity/ScheduleReplicaEntity')
+const { ScheduleSyncRuleEntity } = require('./entity/ScheduleSyncRuleEntity')
+const { ScheduleSyncTargetEntity } = require('./entity/ScheduleSyncTargetEntity')
 const { SecretEntity } = require('./entity/SecretEntity')
+const { SeverityEntity } = require('./entity/SeverityEntity')
+const { StatusPageEntity } = require('./entity/StatusPageEntity')
+const { StatusPageIncidentEntity } = require('./entity/StatusPageIncidentEntity')
+const { StatusPageIncidentUpdateEntity } = require('./entity/StatusPageIncidentUpdateEntity')
+const { StatusPageMaintenanceEntity } = require('./entity/StatusPageMaintenanceEntity')
+const { StatusPageMaintenanceUpdateEntity } = require('./entity/StatusPageMaintenanceUpdateEntity')
+const { StatusPageStructureEntity } = require('./entity/StatusPageStructureEntity')
 const { TeamEntity } = require('./entity/TeamEntity')
+const { TelemetryDataSourceEntity } = require('./entity/TelemetryDataSourceEntity')
 const { UserEntity } = require('./entity/UserEntity')
 const { WorkflowEntity } = require('./entity/WorkflowEntity')
 const { WorkflowRunEntity } = require('./entity/WorkflowRunEntity')
@@ -275,6 +294,42 @@ class IncidentIoSDK {
   }
 
 
+  // Entity access: `client.CatalogEntry().list()` / `client.CatalogEntry().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CatalogEntry(entopts) {
+    const self = this
+    return new CatalogEntryEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.CatalogResource().list()` / `client.CatalogResource().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CatalogResource(entopts) {
+    const self = this
+    return new CatalogResourceEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.CatalogType().list()` / `client.CatalogType().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CatalogType(entopts) {
+    const self = this
+    return new CatalogTypeEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.CatalogTypeSchema().list()` / `client.CatalogTypeSchema().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CatalogTypeSchema(entopts) {
+    const self = this
+    return new CatalogTypeSchemaEntity(self, entopts)
+  }
+
+
   // Entity access: `client.CustomField().list()` / `client.CustomField().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -293,6 +348,15 @@ class IncidentIoSDK {
   }
 
 
+  // Entity access: `client.Escalation().list()` / `client.Escalation().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Escalation(entopts) {
+    const self = this
+    return new EscalationEntity(self, entopts)
+  }
+
+
   // Entity access: `client.FollowUp().list()` / `client.FollowUp().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -308,6 +372,15 @@ class IncidentIoSDK {
   Incident(entopts) {
     const self = this
     return new IncidentEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.IncidentAlert().list()` / `client.IncidentAlert().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  IncidentAlert(entopts) {
+    const self = this
+    return new IncidentAlertEntity(self, entopts)
   }
 
 
@@ -428,6 +501,51 @@ class IncidentIoSDK {
   }
 
 
+  // Entity access: `client.Schedule().list()` / `client.Schedule().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Schedule(entopts) {
+    const self = this
+    return new ScheduleEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.ScheduleEntry().list()` / `client.ScheduleEntry().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  ScheduleEntry(entopts) {
+    const self = this
+    return new ScheduleEntryEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.ScheduleReplica().list()` / `client.ScheduleReplica().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  ScheduleReplica(entopts) {
+    const self = this
+    return new ScheduleReplicaEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.ScheduleSyncRule().list()` / `client.ScheduleSyncRule().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  ScheduleSyncRule(entopts) {
+    const self = this
+    return new ScheduleSyncRuleEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.ScheduleSyncTarget().list()` / `client.ScheduleSyncTarget().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  ScheduleSyncTarget(entopts) {
+    const self = this
+    return new ScheduleSyncTargetEntity(self, entopts)
+  }
+
+
   // Entity access: `client.Secret().list()` / `client.Secret().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -437,12 +555,84 @@ class IncidentIoSDK {
   }
 
 
+  // Entity access: `client.Severity().list()` / `client.Severity().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Severity(entopts) {
+    const self = this
+    return new SeverityEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.StatusPage().list()` / `client.StatusPage().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  StatusPage(entopts) {
+    const self = this
+    return new StatusPageEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.StatusPageIncident().list()` / `client.StatusPageIncident().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  StatusPageIncident(entopts) {
+    const self = this
+    return new StatusPageIncidentEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.StatusPageIncidentUpdate().list()` / `client.StatusPageIncidentUpdate().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  StatusPageIncidentUpdate(entopts) {
+    const self = this
+    return new StatusPageIncidentUpdateEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.StatusPageMaintenance().list()` / `client.StatusPageMaintenance().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  StatusPageMaintenance(entopts) {
+    const self = this
+    return new StatusPageMaintenanceEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.StatusPageMaintenanceUpdate().list()` / `client.StatusPageMaintenanceUpdate().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  StatusPageMaintenanceUpdate(entopts) {
+    const self = this
+    return new StatusPageMaintenanceUpdateEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.StatusPageStructure().list()` / `client.StatusPageStructure().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  StatusPageStructure(entopts) {
+    const self = this
+    return new StatusPageStructureEntity(self, entopts)
+  }
+
+
   // Entity access: `client.Team().list()` / `client.Team().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
   Team(entopts) {
     const self = this
     return new TeamEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.TelemetryDataSource().list()` / `client.TelemetryDataSource().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  TelemetryDataSource(entopts) {
+    const self = this
+    return new TelemetryDataSourceEntity(self, entopts)
   }
 
 

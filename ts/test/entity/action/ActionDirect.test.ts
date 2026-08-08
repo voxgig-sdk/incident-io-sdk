@@ -49,7 +49,7 @@ describe('ActionDirect', async () => {
     }
 
     const result: any = await client.direct({
-      path: 'v2/actions/{id}',
+      path: 'v1/actions/{id}',
       method: 'GET',
       params,
       query,
@@ -82,7 +82,7 @@ describe('ActionDirect', async () => {
     const query: any = {}
 
     const result: any = await client.direct({
-      path: 'v2/actions',
+      path: 'v1/actions',
       method: 'GET',
       params,
       query,

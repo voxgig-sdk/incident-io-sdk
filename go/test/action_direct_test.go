@@ -31,7 +31,7 @@ func TestActionDirect(t *testing.T) {
 
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v2/actions",
+			"path":   "v1/actions",
 			"method": "GET",
 			"params": map[string]any{},
 		})
@@ -100,7 +100,7 @@ func TestActionDirect(t *testing.T) {
 		}
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v2/actions/{id}",
+			"path":   "v1/actions/{id}",
 			"method": "GET",
 			"params": params,
 			"query":  query,

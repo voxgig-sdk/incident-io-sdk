@@ -349,6 +349,62 @@ function IncidentIoSDK:ApiKey(data)
 end
 
 
+-- Idiomatic facade: client:CatalogEntry():list() / client:CatalogEntry():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:CatalogEntry(data)
+  local EntityMod = require("entity.catalog_entry_entity")
+  if data == nil then
+    if self._catalog_entry == nil then
+      self._catalog_entry = EntityMod.new(self, nil)
+    end
+    return self._catalog_entry
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:CatalogResource():list() / client:CatalogResource():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:CatalogResource(data)
+  local EntityMod = require("entity.catalog_resource_entity")
+  if data == nil then
+    if self._catalog_resource == nil then
+      self._catalog_resource = EntityMod.new(self, nil)
+    end
+    return self._catalog_resource
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:CatalogType():list() / client:CatalogType():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:CatalogType(data)
+  local EntityMod = require("entity.catalog_type_entity")
+  if data == nil then
+    if self._catalog_type == nil then
+      self._catalog_type = EntityMod.new(self, nil)
+    end
+    return self._catalog_type
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:CatalogTypeSchema():list() / client:CatalogTypeSchema():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:CatalogTypeSchema(data)
+  local EntityMod = require("entity.catalog_type_schema_entity")
+  if data == nil then
+    if self._catalog_type_schema == nil then
+      self._catalog_type_schema = EntityMod.new(self, nil)
+    end
+    return self._catalog_type_schema
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:CustomField():list() / client:CustomField():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:CustomField(data)
@@ -377,6 +433,20 @@ function IncidentIoSDK:CustomFieldOption(data)
 end
 
 
+-- Idiomatic facade: client:Escalation():list() / client:Escalation():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:Escalation(data)
+  local EntityMod = require("entity.escalation_entity")
+  if data == nil then
+    if self._escalation == nil then
+      self._escalation = EntityMod.new(self, nil)
+    end
+    return self._escalation
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:FollowUp():list() / client:FollowUp():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:FollowUp(data)
@@ -400,6 +470,20 @@ function IncidentIoSDK:Incident(data)
       self._incident = EntityMod.new(self, nil)
     end
     return self._incident
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:IncidentAlert():list() / client:IncidentAlert():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:IncidentAlert(data)
+  local EntityMod = require("entity.incident_alert_entity")
+  if data == nil then
+    if self._incident_alert == nil then
+      self._incident_alert = EntityMod.new(self, nil)
+    end
+    return self._incident_alert
   end
   return EntityMod.new(self, data)
 end
@@ -587,6 +671,76 @@ function IncidentIoSDK:PostmortemDocument(data)
 end
 
 
+-- Idiomatic facade: client:Schedule():list() / client:Schedule():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:Schedule(data)
+  local EntityMod = require("entity.schedule_entity")
+  if data == nil then
+    if self._schedule == nil then
+      self._schedule = EntityMod.new(self, nil)
+    end
+    return self._schedule
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:ScheduleEntry():list() / client:ScheduleEntry():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:ScheduleEntry(data)
+  local EntityMod = require("entity.schedule_entry_entity")
+  if data == nil then
+    if self._schedule_entry == nil then
+      self._schedule_entry = EntityMod.new(self, nil)
+    end
+    return self._schedule_entry
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:ScheduleReplica():list() / client:ScheduleReplica():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:ScheduleReplica(data)
+  local EntityMod = require("entity.schedule_replica_entity")
+  if data == nil then
+    if self._schedule_replica == nil then
+      self._schedule_replica = EntityMod.new(self, nil)
+    end
+    return self._schedule_replica
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:ScheduleSyncRule():list() / client:ScheduleSyncRule():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:ScheduleSyncRule(data)
+  local EntityMod = require("entity.schedule_sync_rule_entity")
+  if data == nil then
+    if self._schedule_sync_rule == nil then
+      self._schedule_sync_rule = EntityMod.new(self, nil)
+    end
+    return self._schedule_sync_rule
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:ScheduleSyncTarget():list() / client:ScheduleSyncTarget():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:ScheduleSyncTarget(data)
+  local EntityMod = require("entity.schedule_sync_target_entity")
+  if data == nil then
+    if self._schedule_sync_target == nil then
+      self._schedule_sync_target = EntityMod.new(self, nil)
+    end
+    return self._schedule_sync_target
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:Secret():list() / client:Secret():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:Secret(data)
@@ -601,6 +755,104 @@ function IncidentIoSDK:Secret(data)
 end
 
 
+-- Idiomatic facade: client:Severity():list() / client:Severity():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:Severity(data)
+  local EntityMod = require("entity.severity_entity")
+  if data == nil then
+    if self._severity == nil then
+      self._severity = EntityMod.new(self, nil)
+    end
+    return self._severity
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:StatusPage():list() / client:StatusPage():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:StatusPage(data)
+  local EntityMod = require("entity.status_page_entity")
+  if data == nil then
+    if self._status_page == nil then
+      self._status_page = EntityMod.new(self, nil)
+    end
+    return self._status_page
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:StatusPageIncident():list() / client:StatusPageIncident():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:StatusPageIncident(data)
+  local EntityMod = require("entity.status_page_incident_entity")
+  if data == nil then
+    if self._status_page_incident == nil then
+      self._status_page_incident = EntityMod.new(self, nil)
+    end
+    return self._status_page_incident
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:StatusPageIncidentUpdate():list() / client:StatusPageIncidentUpdate():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:StatusPageIncidentUpdate(data)
+  local EntityMod = require("entity.status_page_incident_update_entity")
+  if data == nil then
+    if self._status_page_incident_update == nil then
+      self._status_page_incident_update = EntityMod.new(self, nil)
+    end
+    return self._status_page_incident_update
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:StatusPageMaintenance():list() / client:StatusPageMaintenance():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:StatusPageMaintenance(data)
+  local EntityMod = require("entity.status_page_maintenance_entity")
+  if data == nil then
+    if self._status_page_maintenance == nil then
+      self._status_page_maintenance = EntityMod.new(self, nil)
+    end
+    return self._status_page_maintenance
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:StatusPageMaintenanceUpdate():list() / client:StatusPageMaintenanceUpdate():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:StatusPageMaintenanceUpdate(data)
+  local EntityMod = require("entity.status_page_maintenance_update_entity")
+  if data == nil then
+    if self._status_page_maintenance_update == nil then
+      self._status_page_maintenance_update = EntityMod.new(self, nil)
+    end
+    return self._status_page_maintenance_update
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:StatusPageStructure():list() / client:StatusPageStructure():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:StatusPageStructure(data)
+  local EntityMod = require("entity.status_page_structure_entity")
+  if data == nil then
+    if self._status_page_structure == nil then
+      self._status_page_structure = EntityMod.new(self, nil)
+    end
+    return self._status_page_structure
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:Team():list() / client:Team():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:Team(data)
@@ -610,6 +862,20 @@ function IncidentIoSDK:Team(data)
       self._team = EntityMod.new(self, nil)
     end
     return self._team
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:TelemetryDataSource():list() / client:TelemetryDataSource():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:TelemetryDataSource(data)
+  local EntityMod = require("entity.telemetry_data_source_entity")
+  if data == nil then
+    if self._telemetry_data_source == nil then
+      self._telemetry_data_source = EntityMod.new(self, nil)
+    end
+    return self._telemetry_data_source
   end
   return EntityMod.new(self, data)
 end

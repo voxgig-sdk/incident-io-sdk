@@ -80,7 +80,7 @@ func TestAlertEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"list", "load"} {
+		for _, _op := range []string{"create", "list", "load"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "alert." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -97,27 +97,38 @@ func TestAlertEntity(t *testing.T) {
 		}
 		client := setup.client
 
-		// Bootstrap entity data from existing test data (no create step in flow).
-		alertRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath("existing.alert", setup.data)))
-		var alertRef01Data map[string]any
-		if len(alertRef01DataRaw) > 0 {
-			alertRef01Data = core.ToMapAny(alertRef01DataRaw[0][1])
+		// CREATE
+		alertRef01Ent := client.Alert(nil)
+		alertRef01Data := core.ToMapAny(vs.GetProp(
+			vs.GetPath([]any{"new", "alert"}, setup.data), "alert_ref01"))
+
+		alertRef01DataResult, err := alertRef01Ent.Create(alertRef01Data, nil)
+		if err != nil {
+			t.Fatalf("create failed: %v", err)
 		}
-		// Discard guards against Go's unused-var check when the flow's steps
-		// happen not to consume the bootstrap data (e.g. list-only flows).
-		_ = alertRef01Data
+		alertRef01Data = core.ToMapAny(alertRef01DataResult)
+		if alertRef01Data == nil {
+			t.Fatal("expected create result to be a map")
+		}
+		if alertRef01Data["id"] == nil {
+			t.Fatal("expected created entity to have an id")
+		}
 
 		// LIST
-		alertRef01Ent := client.Alert(nil)
 		alertRef01Match := map[string]any{}
 
 		alertRef01ListResult, err := alertRef01Ent.List(alertRef01Match, nil)
 		if err != nil {
 			t.Fatalf("list failed: %v", err)
 		}
-		_, alertRef01ListOk := alertRef01ListResult.([]any)
+		alertRef01List, alertRef01ListOk := alertRef01ListResult.([]any)
 		if !alertRef01ListOk {
 			t.Fatalf("expected list result to be an array, got %T", alertRef01ListResult)
+		}
+
+		foundItem := vs.Select(entityListToData(alertRef01List), map[string]any{"id": alertRef01Data["id"]})
+		if vs.IsEmpty(foundItem) {
+			t.Fatal("expected to find created entity in list")
 		}
 
 		// LOAD

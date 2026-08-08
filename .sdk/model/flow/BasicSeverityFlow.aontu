@@ -1,0 +1,71 @@
+# BasicSeverityFlow
+
+main: kit: flow: BasicSeverityFlow:
+{
+  entity: "severity",
+  kind: "basic",
+  name: "BasicSeverityFlow",
+  step: [
+    {
+      input: {
+        ref: "severity_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "severity_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "severity_ref01",
+        srcdatavar: "severity_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-severity_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "severity_ref01",
+        srcdatavar: "severity_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "severity01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-severity_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSeverityFlow"
+}

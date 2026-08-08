@@ -1,0 +1,69 @@
+{
+  "existing": {
+    "status_page_maintenance": {
+      "STATUS_PAGE_MAINTENANCE00": {
+        "affected_component_id": "AFFECTED_COMPONENT01",
+        "component_maintenance_period": [],
+        "end_at": "s84",
+        "id": "STATUS_PAGE_MAINTENANCE00",
+        "idempotency_key": "s86",
+        "maintenance_status": "s87",
+        "message": "s88",
+        "name": "s89",
+        "notify_subscriber": true,
+        "published_at": "s8b",
+        "start_at": "s8c",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      },
+      "STATUS_PAGE_MAINTENANCE01": {
+        "affected_component_id": "AFFECTED_COMPONENT01",
+        "component_maintenance_period": [],
+        "end_at": "s106",
+        "id": "STATUS_PAGE_MAINTENANCE01",
+        "idempotency_key": "s108",
+        "maintenance_status": "s109",
+        "message": "s10a",
+        "name": "s10b",
+        "notify_subscriber": true,
+        "published_at": "s10d",
+        "start_at": "s10e",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      },
+      "STATUS_PAGE_MAINTENANCE02": {
+        "affected_component_id": "AFFECTED_COMPONENT01",
+        "component_maintenance_period": [],
+        "end_at": "s188",
+        "id": "STATUS_PAGE_MAINTENANCE02",
+        "idempotency_key": "s18a",
+        "maintenance_status": "s18b",
+        "message": "s18c",
+        "name": "s18d",
+        "notify_subscriber": true,
+        "published_at": "s18f",
+        "start_at": "s190",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      }
+    }
+  },
+  "new": {
+    "status_page_maintenance": {
+      "status_page_maintenance_ref01": {
+        "affected_component_id": "AFFECTED_COMPONENT01",
+        "component_maintenance_period": [],
+        "end_at": "s20a",
+        "idempotency_key": "s20c",
+        "maintenance_status": "s20d",
+        "message": "s20e",
+        "name": "s20f",
+        "notify_subscriber": true,
+        "published_at": "s211",
+        "start_at": "s212",
+        "status_page_id": "STATUS_PAGE01",
+        "update": []
+      }
+    }
+  }
+}

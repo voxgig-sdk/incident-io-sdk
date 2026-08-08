@@ -31,7 +31,7 @@ func TestAlertRouteDirect(t *testing.T) {
 
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v3/alert_routes",
+			"path":   "v2/alert_routes",
 			"method": "GET",
 			"params": map[string]any{},
 		})
@@ -100,7 +100,7 @@ func TestAlertRouteDirect(t *testing.T) {
 		}
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v3/alert_routes/{id}",
+			"path":   "v2/alert_routes/{id}",
 			"method": "GET",
 			"params": params,
 			"query":  query,

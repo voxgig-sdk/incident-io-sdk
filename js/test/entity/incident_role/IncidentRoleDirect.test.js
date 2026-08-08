@@ -35,7 +35,7 @@ describe('IncidentRoleDirect', async () => {
     const params = {}
     if (setup.live) {
       const listResult = await client.direct({
-        path: 'v2/incident_roles',
+        path: 'v1/incident_roles',
         method: 'GET',
         params: {
 
@@ -53,7 +53,7 @@ describe('IncidentRoleDirect', async () => {
     }
 
     const result = await client.direct({
-      path: 'v2/incident_roles/{id}',
+      path: 'v1/incident_roles/{id}',
       method: 'GET',
       params,
     })
@@ -77,7 +77,7 @@ describe('IncidentRoleDirect', async () => {
     const params = {}
 
     const result = await client.direct({
-      path: 'v2/incident_roles',
+      path: 'v1/incident_roles',
       method: 'GET',
       params,
     })

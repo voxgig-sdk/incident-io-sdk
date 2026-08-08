@@ -5,5 +5,31 @@ main: kit: flow: BasicEscalationsV2Flow:
   entity: "escalations_v2",
   kind: "basic",
   name: "BasicEscalationsV2Flow",
+  step: [
+    {
+      input: {
+        ref: "escalations_v2_ref01"
+      }
+
+      match: {
+        escalation_id: "escalation01"
+      }
+
+      op: "create"
+    }
+
+    {
+      input: {
+        ref: "escalations_v2_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "escalations_v201"
+      }
+
+      op: "remove"
+    }
+  ],
   "key$": "BasicEscalationsV2Flow"
 }

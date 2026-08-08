@@ -15,7 +15,9 @@ type Action struct {
 	CompletedAt *string `json:"completed_at,omitempty"`
 	CreatedAt string `json:"created_at"`
 	Creator map[string]any `json:"creator"`
-	Description string `json:"description"`
+	Description *string `json:"description,omitempty"`
+	ExternalIssueReference *map[string]any `json:"external_issue_reference,omitempty"`
+	FollowUp bool `json:"follow_up"`
 	Id string `json:"id"`
 	IncidentId string `json:"incident_id"`
 	Status string `json:"status"`
@@ -35,6 +37,8 @@ type ActionListMatch struct {
 	CreatedAt *string `json:"created_at,omitempty"`
 	Creator *map[string]any `json:"creator,omitempty"`
 	Description *string `json:"description,omitempty"`
+	ExternalIssueReference *map[string]any `json:"external_issue_reference,omitempty"`
+	FollowUp *bool `json:"follow_up,omitempty"`
 	Id *string `json:"id,omitempty"`
 	IncidentId *string `json:"incident_id,omitempty"`
 	Status *string `json:"status,omitempty"`
@@ -48,7 +52,9 @@ type ActionCreateData struct {
 	CompletedAt *string `json:"completed_at,omitempty"`
 	CreatedAt string `json:"created_at"`
 	Creator map[string]any `json:"creator"`
-	Description string `json:"description"`
+	Description *string `json:"description,omitempty"`
+	ExternalIssueReference *map[string]any `json:"external_issue_reference,omitempty"`
+	FollowUp bool `json:"follow_up"`
 	Id string `json:"id"`
 	IncidentId string `json:"incident_id"`
 	Status string `json:"status"`
@@ -64,6 +70,8 @@ type ActionUpdateData struct {
 	CreatedAt *string `json:"created_at,omitempty"`
 	Creator *map[string]any `json:"creator,omitempty"`
 	Description *string `json:"description,omitempty"`
+	ExternalIssueReference *map[string]any `json:"external_issue_reference,omitempty"`
+	FollowUp *bool `json:"follow_up,omitempty"`
 	IncidentId *string `json:"incident_id,omitempty"`
 	Status *string `json:"status,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -109,6 +117,22 @@ type AlertListMatch struct {
 	Status *string `json:"status,omitempty"`
 	Title *string `json:"title,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// AlertCreateData is the typed request payload for Alert.CreateTyped.
+type AlertCreateData struct {
+	Id string `json:"id"`
+	AlertGroupId *[]any `json:"alert_group_id,omitempty"`
+	AlertSourceId string `json:"alert_source_id"`
+	Attribute []any `json:"attribute"`
+	CreatedAt string `json:"created_at"`
+	DeduplicationKey string `json:"deduplication_key"`
+	Description *string `json:"description,omitempty"`
+	ResolvedAt *string `json:"resolved_at,omitempty"`
+	SourceUrl *string `json:"source_url,omitempty"`
+	Status string `json:"status"`
+	Title string `json:"title"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 // AlertAttribute is the typed data model for the alert_attribute entity.
@@ -226,6 +250,7 @@ type AlertNoteRemoveMatch struct {
 // AlertRoute is the typed data model for the alert_route entity.
 type AlertRoute struct {
 	AlertSource []any `json:"alert_source"`
+	ChannelConfig []any `json:"channel_config"`
 	ConditionGroup []any `json:"condition_group"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Enabled bool `json:"enabled"`
@@ -234,8 +259,10 @@ type AlertRoute struct {
 	GroupingConfig map[string]any `json:"grouping_config"`
 	Id string `json:"id"`
 	IncidentConfig map[string]any `json:"incident_config"`
+	IncidentTemplate map[string]any `json:"incident_template"`
 	IsPrivate bool `json:"is_private"`
 	MessageConfig map[string]any `json:"message_config"`
+	MessageTemplate *map[string]any `json:"message_template,omitempty"`
 	Name string `json:"name"`
 	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -250,6 +277,7 @@ type AlertRouteLoadMatch struct {
 // AlertRouteListMatch is the typed request payload for AlertRoute.ListTyped.
 type AlertRouteListMatch struct {
 	AlertSource *[]any `json:"alert_source,omitempty"`
+	ChannelConfig *[]any `json:"channel_config,omitempty"`
 	ConditionGroup *[]any `json:"condition_group,omitempty"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
@@ -258,8 +286,10 @@ type AlertRouteListMatch struct {
 	GroupingConfig *map[string]any `json:"grouping_config,omitempty"`
 	Id *string `json:"id,omitempty"`
 	IncidentConfig *map[string]any `json:"incident_config,omitempty"`
+	IncidentTemplate *map[string]any `json:"incident_template,omitempty"`
 	IsPrivate *bool `json:"is_private,omitempty"`
 	MessageConfig *map[string]any `json:"message_config,omitempty"`
+	MessageTemplate *map[string]any `json:"message_template,omitempty"`
 	Name *string `json:"name,omitempty"`
 	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -269,6 +299,7 @@ type AlertRouteListMatch struct {
 // AlertRouteCreateData is the typed request payload for AlertRoute.CreateTyped.
 type AlertRouteCreateData struct {
 	AlertSource []any `json:"alert_source"`
+	ChannelConfig []any `json:"channel_config"`
 	ConditionGroup []any `json:"condition_group"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Enabled bool `json:"enabled"`
@@ -277,8 +308,10 @@ type AlertRouteCreateData struct {
 	GroupingConfig map[string]any `json:"grouping_config"`
 	Id string `json:"id"`
 	IncidentConfig map[string]any `json:"incident_config"`
+	IncidentTemplate map[string]any `json:"incident_template"`
 	IsPrivate bool `json:"is_private"`
 	MessageConfig map[string]any `json:"message_config"`
+	MessageTemplate *map[string]any `json:"message_template,omitempty"`
 	Name string `json:"name"`
 	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -289,6 +322,7 @@ type AlertRouteCreateData struct {
 type AlertRouteUpdateData struct {
 	Id string `json:"id"`
 	AlertSource *[]any `json:"alert_source,omitempty"`
+	ChannelConfig *[]any `json:"channel_config,omitempty"`
 	ConditionGroup *[]any `json:"condition_group,omitempty"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
@@ -296,8 +330,10 @@ type AlertRouteUpdateData struct {
 	Expression *[]any `json:"expression,omitempty"`
 	GroupingConfig *map[string]any `json:"grouping_config,omitempty"`
 	IncidentConfig *map[string]any `json:"incident_config,omitempty"`
+	IncidentTemplate *map[string]any `json:"incident_template,omitempty"`
 	IsPrivate *bool `json:"is_private,omitempty"`
 	MessageConfig *map[string]any `json:"message_config,omitempty"`
+	MessageTemplate *map[string]any `json:"message_template,omitempty"`
 	Name *string `json:"name,omitempty"`
 	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -396,6 +432,7 @@ type ApiKey struct {
 	Comment *string `json:"comment,omitempty"`
 	CreatedAt string `json:"created_at"`
 	Creator map[string]any `json:"creator"`
+	GracePeriodMinute int `json:"grace_period_minute"`
 	Id string `json:"id"`
 	LastUsedAt *string `json:"last_used_at,omitempty"`
 	Name string `json:"name"`
@@ -417,6 +454,7 @@ type ApiKeyListMatch struct {
 	Comment *string `json:"comment,omitempty"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Creator *map[string]any `json:"creator,omitempty"`
+	GracePeriodMinute *int `json:"grace_period_minute,omitempty"`
 	Id *string `json:"id,omitempty"`
 	LastUsedAt *string `json:"last_used_at,omitempty"`
 	Name *string `json:"name,omitempty"`
@@ -433,6 +471,7 @@ type ApiKeyCreateData struct {
 	Comment *string `json:"comment,omitempty"`
 	CreatedAt string `json:"created_at"`
 	Creator map[string]any `json:"creator"`
+	GracePeriodMinute int `json:"grace_period_minute"`
 	Id string `json:"id"`
 	LastUsedAt *string `json:"last_used_at,omitempty"`
 	Name string `json:"name"`
@@ -450,6 +489,7 @@ type ApiKeyUpdateData struct {
 	Comment *string `json:"comment,omitempty"`
 	CreatedAt *string `json:"created_at,omitempty"`
 	Creator *map[string]any `json:"creator,omitempty"`
+	GracePeriodMinute *int `json:"grace_period_minute,omitempty"`
 	LastUsedAt *string `json:"last_used_at,omitempty"`
 	Name *string `json:"name,omitempty"`
 	Role *[]any `json:"role,omitempty"`
@@ -465,6 +505,277 @@ type ApiKeyRemoveMatch struct {
 	Id string `json:"id"`
 }
 
+// CatalogEntry is the typed data model for the catalog_entry entity.
+type CatalogEntry struct {
+	Alias *[]any `json:"alias,omitempty"`
+	ArchivedAt *string `json:"archived_at,omitempty"`
+	AttributeValue map[string]any `json:"attribute_value"`
+	CatalogEntry map[string]any `json:"catalog_entry"`
+	CatalogType map[string]any `json:"catalog_type"`
+	CatalogTypeId string `json:"catalog_type_id"`
+	CreatedAt string `json:"created_at"`
+	ExternalId *string `json:"external_id,omitempty"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	Rank *int `json:"rank,omitempty"`
+	UpdateAttribute *[]any `json:"update_attribute,omitempty"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// CatalogEntryLoadMatch is the typed request payload for CatalogEntry.LoadTyped.
+type CatalogEntryLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// CatalogEntryListMatch is the typed request payload for CatalogEntry.ListTyped.
+type CatalogEntryListMatch struct {
+	Alias *[]any `json:"alias,omitempty"`
+	ArchivedAt *string `json:"archived_at,omitempty"`
+	AttributeValue *map[string]any `json:"attribute_value,omitempty"`
+	CatalogEntry *map[string]any `json:"catalog_entry,omitempty"`
+	CatalogType *map[string]any `json:"catalog_type,omitempty"`
+	CatalogTypeId *string `json:"catalog_type_id,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	ExternalId *string `json:"external_id,omitempty"`
+	Id *string `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Rank *int `json:"rank,omitempty"`
+	UpdateAttribute *[]any `json:"update_attribute,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// CatalogEntryCreateData is the typed request payload for CatalogEntry.CreateTyped.
+type CatalogEntryCreateData struct {
+	Alias *[]any `json:"alias,omitempty"`
+	ArchivedAt *string `json:"archived_at,omitempty"`
+	AttributeValue map[string]any `json:"attribute_value"`
+	CatalogEntry map[string]any `json:"catalog_entry"`
+	CatalogType map[string]any `json:"catalog_type"`
+	CatalogTypeId string `json:"catalog_type_id"`
+	CreatedAt string `json:"created_at"`
+	ExternalId *string `json:"external_id,omitempty"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	Rank *int `json:"rank,omitempty"`
+	UpdateAttribute *[]any `json:"update_attribute,omitempty"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// CatalogEntryUpdateData is the typed request payload for CatalogEntry.UpdateTyped.
+type CatalogEntryUpdateData struct {
+	Id string `json:"id"`
+	Alias *[]any `json:"alias,omitempty"`
+	ArchivedAt *string `json:"archived_at,omitempty"`
+	AttributeValue *map[string]any `json:"attribute_value,omitempty"`
+	CatalogEntry *map[string]any `json:"catalog_entry,omitempty"`
+	CatalogType *map[string]any `json:"catalog_type,omitempty"`
+	CatalogTypeId *string `json:"catalog_type_id,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	ExternalId *string `json:"external_id,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Rank *int `json:"rank,omitempty"`
+	UpdateAttribute *[]any `json:"update_attribute,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// CatalogResource is the typed data model for the catalog_resource entity.
+type CatalogResource struct {
+	Category string `json:"category"`
+	Description string `json:"description"`
+	EngineResourceType string `json:"engine_resource_type"`
+	Label string `json:"label"`
+	Type string `json:"type"`
+	ValueDocstring string `json:"value_docstring"`
+}
+
+// CatalogResourceListMatch is the typed request payload for CatalogResource.ListTyped.
+type CatalogResourceListMatch struct {
+	Category *string `json:"category,omitempty"`
+	Description *string `json:"description,omitempty"`
+	EngineResourceType *string `json:"engine_resource_type,omitempty"`
+	Label *string `json:"label,omitempty"`
+	Type *string `json:"type,omitempty"`
+	ValueDocstring *string `json:"value_docstring,omitempty"`
+}
+
+// CatalogType is the typed data model for the catalog_type entity.
+type CatalogType struct {
+	Annotation map[string]any `json:"annotation"`
+	Category []any `json:"category"`
+	Color string `json:"color"`
+	CreatedAt string `json:"created_at"`
+	Description string `json:"description"`
+	DynamicResourceParameter *string `json:"dynamic_resource_parameter,omitempty"`
+	EngineResourceType string `json:"engine_resource_type"`
+	EstimatedCount *int `json:"estimated_count,omitempty"`
+	Icon string `json:"icon"`
+	Id string `json:"id"`
+	IsEditable bool `json:"is_editable"`
+	IsTeamType *bool `json:"is_team_type,omitempty"`
+	LastSyncedAt *string `json:"last_synced_at,omitempty"`
+	Name string `json:"name"`
+	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
+	Ranked bool `json:"ranked"`
+	RegistryType *string `json:"registry_type,omitempty"`
+	RequiredIntegration *[]any `json:"required_integration,omitempty"`
+	Schema map[string]any `json:"schema"`
+	SemanticType string `json:"semantic_type"`
+	SourceRepoUrl *string `json:"source_repo_url,omitempty"`
+	TypeName string `json:"type_name"`
+	UpdatedAt string `json:"updated_at"`
+	UseNameAsIdentifier bool `json:"use_name_as_identifier"`
+}
+
+// CatalogTypeLoadMatch is the typed request payload for CatalogType.LoadTyped.
+type CatalogTypeLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// CatalogTypeListMatch is the typed request payload for CatalogType.ListTyped.
+type CatalogTypeListMatch struct {
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	Category *[]any `json:"category,omitempty"`
+	Color *string `json:"color,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	Description *string `json:"description,omitempty"`
+	DynamicResourceParameter *string `json:"dynamic_resource_parameter,omitempty"`
+	EngineResourceType *string `json:"engine_resource_type,omitempty"`
+	EstimatedCount *int `json:"estimated_count,omitempty"`
+	Icon *string `json:"icon,omitempty"`
+	Id *string `json:"id,omitempty"`
+	IsEditable *bool `json:"is_editable,omitempty"`
+	IsTeamType *bool `json:"is_team_type,omitempty"`
+	LastSyncedAt *string `json:"last_synced_at,omitempty"`
+	Name *string `json:"name,omitempty"`
+	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
+	Ranked *bool `json:"ranked,omitempty"`
+	RegistryType *string `json:"registry_type,omitempty"`
+	RequiredIntegration *[]any `json:"required_integration,omitempty"`
+	Schema *map[string]any `json:"schema,omitempty"`
+	SemanticType *string `json:"semantic_type,omitempty"`
+	SourceRepoUrl *string `json:"source_repo_url,omitempty"`
+	TypeName *string `json:"type_name,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+	UseNameAsIdentifier *bool `json:"use_name_as_identifier,omitempty"`
+}
+
+// CatalogTypeCreateData is the typed request payload for CatalogType.CreateTyped.
+type CatalogTypeCreateData struct {
+	Annotation map[string]any `json:"annotation"`
+	Category []any `json:"category"`
+	Color string `json:"color"`
+	CreatedAt string `json:"created_at"`
+	Description string `json:"description"`
+	DynamicResourceParameter *string `json:"dynamic_resource_parameter,omitempty"`
+	EngineResourceType string `json:"engine_resource_type"`
+	EstimatedCount *int `json:"estimated_count,omitempty"`
+	Icon string `json:"icon"`
+	Id string `json:"id"`
+	IsEditable bool `json:"is_editable"`
+	IsTeamType *bool `json:"is_team_type,omitempty"`
+	LastSyncedAt *string `json:"last_synced_at,omitempty"`
+	Name string `json:"name"`
+	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
+	Ranked bool `json:"ranked"`
+	RegistryType *string `json:"registry_type,omitempty"`
+	RequiredIntegration *[]any `json:"required_integration,omitempty"`
+	Schema map[string]any `json:"schema"`
+	SemanticType string `json:"semantic_type"`
+	SourceRepoUrl *string `json:"source_repo_url,omitempty"`
+	TypeName string `json:"type_name"`
+	UpdatedAt string `json:"updated_at"`
+	UseNameAsIdentifier bool `json:"use_name_as_identifier"`
+}
+
+// CatalogTypeUpdateData is the typed request payload for CatalogType.UpdateTyped.
+type CatalogTypeUpdateData struct {
+	Id string `json:"id"`
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	Category *[]any `json:"category,omitempty"`
+	Color *string `json:"color,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	Description *string `json:"description,omitempty"`
+	DynamicResourceParameter *string `json:"dynamic_resource_parameter,omitempty"`
+	EngineResourceType *string `json:"engine_resource_type,omitempty"`
+	EstimatedCount *int `json:"estimated_count,omitempty"`
+	Icon *string `json:"icon,omitempty"`
+	IsEditable *bool `json:"is_editable,omitempty"`
+	IsTeamType *bool `json:"is_team_type,omitempty"`
+	LastSyncedAt *string `json:"last_synced_at,omitempty"`
+	Name *string `json:"name,omitempty"`
+	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
+	Ranked *bool `json:"ranked,omitempty"`
+	RegistryType *string `json:"registry_type,omitempty"`
+	RequiredIntegration *[]any `json:"required_integration,omitempty"`
+	Schema *map[string]any `json:"schema,omitempty"`
+	SemanticType *string `json:"semantic_type,omitempty"`
+	SourceRepoUrl *string `json:"source_repo_url,omitempty"`
+	TypeName *string `json:"type_name,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+	UseNameAsIdentifier *bool `json:"use_name_as_identifier,omitempty"`
+}
+
+// CatalogTypeSchema is the typed data model for the catalog_type_schema entity.
+type CatalogTypeSchema struct {
+	Annotation map[string]any `json:"annotation"`
+	Attribute []any `json:"attribute"`
+	Category []any `json:"category"`
+	Color string `json:"color"`
+	CreatedAt string `json:"created_at"`
+	Description string `json:"description"`
+	DynamicResourceParameter *string `json:"dynamic_resource_parameter,omitempty"`
+	EngineResourceType string `json:"engine_resource_type"`
+	EstimatedCount *int `json:"estimated_count,omitempty"`
+	Icon string `json:"icon"`
+	Id string `json:"id"`
+	IsEditable bool `json:"is_editable"`
+	IsTeamType *bool `json:"is_team_type,omitempty"`
+	LastSyncedAt *string `json:"last_synced_at,omitempty"`
+	Name string `json:"name"`
+	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
+	Ranked bool `json:"ranked"`
+	RegistryType *string `json:"registry_type,omitempty"`
+	RequiredIntegration *[]any `json:"required_integration,omitempty"`
+	Schema map[string]any `json:"schema"`
+	SemanticType string `json:"semantic_type"`
+	SourceRepoUrl *string `json:"source_repo_url,omitempty"`
+	TypeName string `json:"type_name"`
+	UpdatedAt string `json:"updated_at"`
+	UseNameAsIdentifier bool `json:"use_name_as_identifier"`
+	Version int `json:"version"`
+}
+
+// CatalogTypeSchemaCreateData is the typed request payload for CatalogTypeSchema.CreateTyped.
+type CatalogTypeSchemaCreateData struct {
+	CatalogTypeId string `json:"catalog_type_id"`
+	Annotation map[string]any `json:"annotation"`
+	Attribute []any `json:"attribute"`
+	Category []any `json:"category"`
+	Color string `json:"color"`
+	CreatedAt string `json:"created_at"`
+	Description string `json:"description"`
+	DynamicResourceParameter *string `json:"dynamic_resource_parameter,omitempty"`
+	EngineResourceType string `json:"engine_resource_type"`
+	EstimatedCount *int `json:"estimated_count,omitempty"`
+	Icon string `json:"icon"`
+	Id string `json:"id"`
+	IsEditable bool `json:"is_editable"`
+	IsTeamType *bool `json:"is_team_type,omitempty"`
+	LastSyncedAt *string `json:"last_synced_at,omitempty"`
+	Name string `json:"name"`
+	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
+	Ranked bool `json:"ranked"`
+	RegistryType *string `json:"registry_type,omitempty"`
+	RequiredIntegration *[]any `json:"required_integration,omitempty"`
+	Schema map[string]any `json:"schema"`
+	SemanticType string `json:"semantic_type"`
+	SourceRepoUrl *string `json:"source_repo_url,omitempty"`
+	TypeName string `json:"type_name"`
+	UpdatedAt string `json:"updated_at"`
+	UseNameAsIdentifier bool `json:"use_name_as_identifier"`
+	Version int `json:"version"`
+}
+
 // CustomField is the typed data model for the custom_field entity.
 type CustomField struct {
 	CatalogTypeId *string `json:"catalog_type_id,omitempty"`
@@ -477,6 +788,13 @@ type CustomField struct {
 	HelptextCatalogAttributeId *string `json:"helptext_catalog_attribute_id,omitempty"`
 	Id string `json:"id"`
 	Name string `json:"name"`
+	Option []any `json:"option"`
+	Required *string `json:"required,omitempty"`
+	RequiredV2 *string `json:"required_v2,omitempty"`
+	ShowBeforeClosure bool `json:"show_before_closure"`
+	ShowBeforeCreation bool `json:"show_before_creation"`
+	ShowBeforeUpdate bool `json:"show_before_update"`
+	ShowInAnnouncementPost *bool `json:"show_in_announcement_post,omitempty"`
 	UpdatedAt string `json:"updated_at"`
 }
 
@@ -497,6 +815,13 @@ type CustomFieldListMatch struct {
 	HelptextCatalogAttributeId *string `json:"helptext_catalog_attribute_id,omitempty"`
 	Id *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
+	Option *[]any `json:"option,omitempty"`
+	Required *string `json:"required,omitempty"`
+	RequiredV2 *string `json:"required_v2,omitempty"`
+	ShowBeforeClosure *bool `json:"show_before_closure,omitempty"`
+	ShowBeforeCreation *bool `json:"show_before_creation,omitempty"`
+	ShowBeforeUpdate *bool `json:"show_before_update,omitempty"`
+	ShowInAnnouncementPost *bool `json:"show_in_announcement_post,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
@@ -512,6 +837,13 @@ type CustomFieldCreateData struct {
 	HelptextCatalogAttributeId *string `json:"helptext_catalog_attribute_id,omitempty"`
 	Id string `json:"id"`
 	Name string `json:"name"`
+	Option []any `json:"option"`
+	Required *string `json:"required,omitempty"`
+	RequiredV2 *string `json:"required_v2,omitempty"`
+	ShowBeforeClosure bool `json:"show_before_closure"`
+	ShowBeforeCreation bool `json:"show_before_creation"`
+	ShowBeforeUpdate bool `json:"show_before_update"`
+	ShowInAnnouncementPost *bool `json:"show_in_announcement_post,omitempty"`
 	UpdatedAt string `json:"updated_at"`
 }
 
@@ -527,6 +859,13 @@ type CustomFieldUpdateData struct {
 	GroupByCatalogAttributeId *string `json:"group_by_catalog_attribute_id,omitempty"`
 	HelptextCatalogAttributeId *string `json:"helptext_catalog_attribute_id,omitempty"`
 	Name *string `json:"name,omitempty"`
+	Option *[]any `json:"option,omitempty"`
+	Required *string `json:"required,omitempty"`
+	RequiredV2 *string `json:"required_v2,omitempty"`
+	ShowBeforeClosure *bool `json:"show_before_closure,omitempty"`
+	ShowBeforeCreation *bool `json:"show_before_creation,omitempty"`
+	ShowBeforeUpdate *bool `json:"show_before_update,omitempty"`
+	ShowInAnnouncementPost *bool `json:"show_in_announcement_post,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
@@ -575,6 +914,68 @@ type CustomFieldOptionUpdateData struct {
 // CustomFieldOptionRemoveMatch is the typed request payload for CustomFieldOption.RemoveTyped.
 type CustomFieldOptionRemoveMatch struct {
 	Id string `json:"id"`
+}
+
+// Escalation is the typed data model for the escalation entity.
+type Escalation struct {
+	CreatedAt string `json:"created_at"`
+	Creator map[string]any `json:"creator"`
+	Description *string `json:"description,omitempty"`
+	EscalationPathId *string `json:"escalation_path_id,omitempty"`
+	Event []any `json:"event"`
+	Id string `json:"id"`
+	IdempotencyKey string `json:"idempotency_key"`
+	IncidentId *string `json:"incident_id,omitempty"`
+	Priority map[string]any `json:"priority"`
+	RelatedAlert []any `json:"related_alert"`
+	RelatedIncident []any `json:"related_incident"`
+	Status string `json:"status"`
+	Title string `json:"title"`
+	UpdatedAt string `json:"updated_at"`
+	UserId *[]any `json:"user_id,omitempty"`
+}
+
+// EscalationLoadMatch is the typed request payload for Escalation.LoadTyped.
+type EscalationLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// EscalationListMatch is the typed request payload for Escalation.ListTyped.
+type EscalationListMatch struct {
+	CreatedAt *string `json:"created_at,omitempty"`
+	Creator *map[string]any `json:"creator,omitempty"`
+	Description *string `json:"description,omitempty"`
+	EscalationPathId *string `json:"escalation_path_id,omitempty"`
+	Event *[]any `json:"event,omitempty"`
+	Id *string `json:"id,omitempty"`
+	IdempotencyKey *string `json:"idempotency_key,omitempty"`
+	IncidentId *string `json:"incident_id,omitempty"`
+	Priority *map[string]any `json:"priority,omitempty"`
+	RelatedAlert *[]any `json:"related_alert,omitempty"`
+	RelatedIncident *[]any `json:"related_incident,omitempty"`
+	Status *string `json:"status,omitempty"`
+	Title *string `json:"title,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+	UserId *[]any `json:"user_id,omitempty"`
+}
+
+// EscalationCreateData is the typed request payload for Escalation.CreateTyped.
+type EscalationCreateData struct {
+	CreatedAt string `json:"created_at"`
+	Creator map[string]any `json:"creator"`
+	Description *string `json:"description,omitempty"`
+	EscalationPathId *string `json:"escalation_path_id,omitempty"`
+	Event []any `json:"event"`
+	Id string `json:"id"`
+	IdempotencyKey string `json:"idempotency_key"`
+	IncidentId *string `json:"incident_id,omitempty"`
+	Priority map[string]any `json:"priority"`
+	RelatedAlert []any `json:"related_alert"`
+	RelatedIncident []any `json:"related_incident"`
+	Status string `json:"status"`
+	Title string `json:"title"`
+	UpdatedAt string `json:"updated_at"`
+	UserId *[]any `json:"user_id,omitempty"`
 }
 
 // FollowUp is the typed data model for the follow_up entity.
@@ -690,6 +1091,7 @@ type Incident struct {
 	HasDebrief *bool `json:"has_debrief,omitempty"`
 	Id string `json:"id"`
 	IdempotencyKey string `json:"idempotency_key"`
+	Incident map[string]any `json:"incident"`
 	IncidentRoleAssignment []any `json:"incident_role_assignment"`
 	IncidentStatus map[string]any `json:"incident_status"`
 	IncidentStatusId *string `json:"incident_status_id,omitempty"`
@@ -698,6 +1100,7 @@ type Incident struct {
 	IncidentTypeId *string `json:"incident_type_id,omitempty"`
 	Mode string `json:"mode"`
 	Name string `json:"name"`
+	NotifyIncidentChannel bool `json:"notify_incident_channel"`
 	Permalink *string `json:"permalink,omitempty"`
 	PostmortemDocumentId *[]any `json:"postmortem_document_id,omitempty"`
 	PostmortemDocumentUrl *string `json:"postmortem_document_url,omitempty"`
@@ -709,7 +1112,11 @@ type Incident struct {
 	SlackChannelName *string `json:"slack_channel_name,omitempty"`
 	SlackChannelNameOverride *string `json:"slack_channel_name_override,omitempty"`
 	SlackTeamId string `json:"slack_team_id"`
+	SourceMessageChannelId *string `json:"source_message_channel_id,omitempty"`
+	SourceMessageTimestamp *string `json:"source_message_timestamp,omitempty"`
+	Status string `json:"status"`
 	Summary *string `json:"summary,omitempty"`
+	Timestamp *[]any `json:"timestamp,omitempty"`
 	UpdatedAt string `json:"updated_at"`
 	Visibility string `json:"visibility"`
 	WorkloadMinutesLate *float64 `json:"workload_minutes_late,omitempty"`
@@ -734,6 +1141,7 @@ type IncidentListMatch struct {
 	HasDebrief *bool `json:"has_debrief,omitempty"`
 	Id *string `json:"id,omitempty"`
 	IdempotencyKey *string `json:"idempotency_key,omitempty"`
+	Incident *map[string]any `json:"incident,omitempty"`
 	IncidentRoleAssignment *[]any `json:"incident_role_assignment,omitempty"`
 	IncidentStatus *map[string]any `json:"incident_status,omitempty"`
 	IncidentStatusId *string `json:"incident_status_id,omitempty"`
@@ -742,6 +1150,7 @@ type IncidentListMatch struct {
 	IncidentTypeId *string `json:"incident_type_id,omitempty"`
 	Mode *string `json:"mode,omitempty"`
 	Name *string `json:"name,omitempty"`
+	NotifyIncidentChannel *bool `json:"notify_incident_channel,omitempty"`
 	Permalink *string `json:"permalink,omitempty"`
 	PostmortemDocumentId *[]any `json:"postmortem_document_id,omitempty"`
 	PostmortemDocumentUrl *string `json:"postmortem_document_url,omitempty"`
@@ -753,7 +1162,11 @@ type IncidentListMatch struct {
 	SlackChannelName *string `json:"slack_channel_name,omitempty"`
 	SlackChannelNameOverride *string `json:"slack_channel_name_override,omitempty"`
 	SlackTeamId *string `json:"slack_team_id,omitempty"`
+	SourceMessageChannelId *string `json:"source_message_channel_id,omitempty"`
+	SourceMessageTimestamp *string `json:"source_message_timestamp,omitempty"`
+	Status *string `json:"status,omitempty"`
 	Summary *string `json:"summary,omitempty"`
+	Timestamp *[]any `json:"timestamp,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
 	Visibility *string `json:"visibility,omitempty"`
 	WorkloadMinutesLate *float64 `json:"workload_minutes_late,omitempty"`
@@ -773,6 +1186,7 @@ type IncidentCreateData struct {
 	HasDebrief *bool `json:"has_debrief,omitempty"`
 	Id string `json:"id"`
 	IdempotencyKey string `json:"idempotency_key"`
+	Incident map[string]any `json:"incident"`
 	IncidentRoleAssignment []any `json:"incident_role_assignment"`
 	IncidentStatus map[string]any `json:"incident_status"`
 	IncidentStatusId *string `json:"incident_status_id,omitempty"`
@@ -781,6 +1195,7 @@ type IncidentCreateData struct {
 	IncidentTypeId *string `json:"incident_type_id,omitempty"`
 	Mode string `json:"mode"`
 	Name string `json:"name"`
+	NotifyIncidentChannel bool `json:"notify_incident_channel"`
 	Permalink *string `json:"permalink,omitempty"`
 	PostmortemDocumentId *[]any `json:"postmortem_document_id,omitempty"`
 	PostmortemDocumentUrl *string `json:"postmortem_document_url,omitempty"`
@@ -792,13 +1207,33 @@ type IncidentCreateData struct {
 	SlackChannelName *string `json:"slack_channel_name,omitempty"`
 	SlackChannelNameOverride *string `json:"slack_channel_name_override,omitempty"`
 	SlackTeamId string `json:"slack_team_id"`
+	SourceMessageChannelId *string `json:"source_message_channel_id,omitempty"`
+	SourceMessageTimestamp *string `json:"source_message_timestamp,omitempty"`
+	Status string `json:"status"`
 	Summary *string `json:"summary,omitempty"`
+	Timestamp *[]any `json:"timestamp,omitempty"`
 	UpdatedAt string `json:"updated_at"`
 	Visibility string `json:"visibility"`
 	WorkloadMinutesLate *float64 `json:"workload_minutes_late,omitempty"`
 	WorkloadMinutesSleeping *float64 `json:"workload_minutes_sleeping,omitempty"`
 	WorkloadMinutesTotal *float64 `json:"workload_minutes_total,omitempty"`
 	WorkloadMinutesWorking *float64 `json:"workload_minutes_working,omitempty"`
+}
+
+// IncidentAlert is the typed data model for the incident_alert entity.
+type IncidentAlert struct {
+	Alert map[string]any `json:"alert"`
+	AlertRouteId *string `json:"alert_route_id,omitempty"`
+	Id string `json:"id"`
+	Incident map[string]any `json:"incident"`
+}
+
+// IncidentAlertListMatch is the typed request payload for IncidentAlert.ListTyped.
+type IncidentAlertListMatch struct {
+	Alert *map[string]any `json:"alert,omitempty"`
+	AlertRouteId *string `json:"alert_route_id,omitempty"`
+	Id *string `json:"id,omitempty"`
+	Incident *map[string]any `json:"incident,omitempty"`
 }
 
 // IncidentAttachment is the typed data model for the incident_attachment entity.
@@ -886,6 +1321,7 @@ type IncidentRole struct {
 	Id string `json:"id"`
 	Instruction string `json:"instruction"`
 	Name string `json:"name"`
+	Required *bool `json:"required,omitempty"`
 	RoleType string `json:"role_type"`
 	Shortform string `json:"shortform"`
 	UpdatedAt string `json:"updated_at"`
@@ -903,6 +1339,7 @@ type IncidentRoleListMatch struct {
 	Id *string `json:"id,omitempty"`
 	Instruction *string `json:"instruction,omitempty"`
 	Name *string `json:"name,omitempty"`
+	Required *bool `json:"required,omitempty"`
 	RoleType *string `json:"role_type,omitempty"`
 	Shortform *string `json:"shortform,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -915,6 +1352,7 @@ type IncidentRoleCreateData struct {
 	Id string `json:"id"`
 	Instruction string `json:"instruction"`
 	Name string `json:"name"`
+	Required *bool `json:"required,omitempty"`
 	RoleType string `json:"role_type"`
 	Shortform string `json:"shortform"`
 	UpdatedAt string `json:"updated_at"`
@@ -927,6 +1365,7 @@ type IncidentRoleUpdateData struct {
 	Description *string `json:"description,omitempty"`
 	Instruction *string `json:"instruction,omitempty"`
 	Name *string `json:"name,omitempty"`
+	Required *bool `json:"required,omitempty"`
 	RoleType *string `json:"role_type,omitempty"`
 	Shortform *string `json:"shortform,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -1234,6 +1673,259 @@ type PostmortemDocumentUpdateData struct {
 	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
+// Schedule is the typed data model for the schedule entity.
+type Schedule struct {
+	Annotation map[string]any `json:"annotation"`
+	Config map[string]any `json:"config"`
+	CreatedAt string `json:"created_at"`
+	CurrentShift *[]any `json:"current_shift,omitempty"`
+	HolidaysPublicConfig map[string]any `json:"holidays_public_config"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	NextShift *[]any `json:"next_shift,omitempty"`
+	Permalink string `json:"permalink"`
+	Schedule map[string]any `json:"schedule"`
+	TeamId []any `json:"team_id"`
+	Timezone string `json:"timezone"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// ScheduleLoadMatch is the typed request payload for Schedule.LoadTyped.
+type ScheduleLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// ScheduleListMatch is the typed request payload for Schedule.ListTyped.
+type ScheduleListMatch struct {
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	Config *map[string]any `json:"config,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	CurrentShift *[]any `json:"current_shift,omitempty"`
+	HolidaysPublicConfig *map[string]any `json:"holidays_public_config,omitempty"`
+	Id *string `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
+	NextShift *[]any `json:"next_shift,omitempty"`
+	Permalink *string `json:"permalink,omitempty"`
+	Schedule *map[string]any `json:"schedule,omitempty"`
+	TeamId *[]any `json:"team_id,omitempty"`
+	Timezone *string `json:"timezone,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// ScheduleCreateData is the typed request payload for Schedule.CreateTyped.
+type ScheduleCreateData struct {
+	Annotation map[string]any `json:"annotation"`
+	Config map[string]any `json:"config"`
+	CreatedAt string `json:"created_at"`
+	CurrentShift *[]any `json:"current_shift,omitempty"`
+	HolidaysPublicConfig map[string]any `json:"holidays_public_config"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	NextShift *[]any `json:"next_shift,omitempty"`
+	Permalink string `json:"permalink"`
+	Schedule map[string]any `json:"schedule"`
+	TeamId []any `json:"team_id"`
+	Timezone string `json:"timezone"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// ScheduleUpdateData is the typed request payload for Schedule.UpdateTyped.
+type ScheduleUpdateData struct {
+	Id string `json:"id"`
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	Config *map[string]any `json:"config,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	CurrentShift *[]any `json:"current_shift,omitempty"`
+	HolidaysPublicConfig *map[string]any `json:"holidays_public_config,omitempty"`
+	Name *string `json:"name,omitempty"`
+	NextShift *[]any `json:"next_shift,omitempty"`
+	Permalink *string `json:"permalink,omitempty"`
+	Schedule *map[string]any `json:"schedule,omitempty"`
+	TeamId *[]any `json:"team_id,omitempty"`
+	Timezone *string `json:"timezone,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// ScheduleRemoveMatch is the typed request payload for Schedule.RemoveTyped.
+type ScheduleRemoveMatch struct {
+	Id string `json:"id"`
+}
+
+// ScheduleEntry is the typed data model for the schedule_entry entity.
+type ScheduleEntry struct {
+	PaginationMeta map[string]any `json:"pagination_meta"`
+	ScheduleEntry map[string]any `json:"schedule_entry"`
+}
+
+// ScheduleEntryLoadMatch is the typed request payload for ScheduleEntry.LoadTyped.
+type ScheduleEntryLoadMatch struct {
+	PaginationMeta *map[string]any `json:"pagination_meta,omitempty"`
+	ScheduleEntry *map[string]any `json:"schedule_entry,omitempty"`
+}
+
+// ScheduleReplica is the typed data model for the schedule_replica entity.
+type ScheduleReplica struct {
+	CreatedAt string `json:"created_at"`
+	Id string `json:"id"`
+	LastSyncError *string `json:"last_sync_error,omitempty"`
+	LastSyncedAt *string `json:"last_synced_at,omitempty"`
+	MirrorWindowDay *int `json:"mirror_window_day,omitempty"`
+	ReplicaFallbackUserId string `json:"replica_fallback_user_id"`
+	ReplicaProvider string `json:"replica_provider"`
+	ReplicaProviderId string `json:"replica_provider_id"`
+	ScheduleId string `json:"schedule_id"`
+	ScheduleReplica map[string]any `json:"schedule_replica"`
+	Source []any `json:"source"`
+	UpdatedAt string `json:"updated_at"`
+	UserStatus []any `json:"user_status"`
+}
+
+// ScheduleReplicaLoadMatch is the typed request payload for ScheduleReplica.LoadTyped.
+type ScheduleReplicaLoadMatch struct {
+	Id string `json:"id"`
+	ScheduleId string `json:"schedule_id"`
+}
+
+// ScheduleReplicaListMatch is the typed request payload for ScheduleReplica.ListTyped.
+type ScheduleReplicaListMatch struct {
+	Id string `json:"id"`
+}
+
+// ScheduleReplicaCreateData is the typed request payload for ScheduleReplica.CreateTyped.
+type ScheduleReplicaCreateData struct {
+	Id string `json:"id"`
+	CreatedAt string `json:"created_at"`
+	LastSyncError *string `json:"last_sync_error,omitempty"`
+	LastSyncedAt *string `json:"last_synced_at,omitempty"`
+	MirrorWindowDay *int `json:"mirror_window_day,omitempty"`
+	ReplicaFallbackUserId string `json:"replica_fallback_user_id"`
+	ReplicaProvider string `json:"replica_provider"`
+	ReplicaProviderId string `json:"replica_provider_id"`
+	ScheduleId string `json:"schedule_id"`
+	ScheduleReplica map[string]any `json:"schedule_replica"`
+	Source []any `json:"source"`
+	UpdatedAt string `json:"updated_at"`
+	UserStatus []any `json:"user_status"`
+}
+
+// ScheduleSyncRule is the typed data model for the schedule_sync_rule entity.
+type ScheduleSyncRule struct {
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	CreatedAt string `json:"created_at"`
+	Id string `json:"id"`
+	PermanentMemberUserId []any `json:"permanent_member_user_id"`
+	RotationId *string `json:"rotation_id,omitempty"`
+	ScheduleId string `json:"schedule_id"`
+	ScheduleSyncRule map[string]any `json:"schedule_sync_rule"`
+	ScheduleSyncTarget map[string]any `json:"schedule_sync_target"`
+	ScheduleSyncTargetId string `json:"schedule_sync_target_id"`
+	SyncType string `json:"sync_type"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// ScheduleSyncRuleLoadMatch is the typed request payload for ScheduleSyncRule.LoadTyped.
+type ScheduleSyncRuleLoadMatch struct {
+	Id string `json:"id"`
+	ScheduleId string `json:"schedule_id"`
+}
+
+// ScheduleSyncRuleListMatch is the typed request payload for ScheduleSyncRule.ListTyped.
+type ScheduleSyncRuleListMatch struct {
+	Id string `json:"id"`
+}
+
+// ScheduleSyncRuleCreateData is the typed request payload for ScheduleSyncRule.CreateTyped.
+type ScheduleSyncRuleCreateData struct {
+	Id string `json:"id"`
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	CreatedAt string `json:"created_at"`
+	PermanentMemberUserId []any `json:"permanent_member_user_id"`
+	RotationId *string `json:"rotation_id,omitempty"`
+	ScheduleId string `json:"schedule_id"`
+	ScheduleSyncRule map[string]any `json:"schedule_sync_rule"`
+	ScheduleSyncTarget map[string]any `json:"schedule_sync_target"`
+	ScheduleSyncTargetId string `json:"schedule_sync_target_id"`
+	SyncType string `json:"sync_type"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// ScheduleSyncRuleUpdateData is the typed request payload for ScheduleSyncRule.UpdateTyped.
+type ScheduleSyncRuleUpdateData struct {
+	Id string `json:"id"`
+	ScheduleId string `json:"schedule_id"`
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	PermanentMemberUserId *[]any `json:"permanent_member_user_id,omitempty"`
+	RotationId *string `json:"rotation_id,omitempty"`
+	ScheduleSyncRule *map[string]any `json:"schedule_sync_rule,omitempty"`
+	ScheduleSyncTarget *map[string]any `json:"schedule_sync_target,omitempty"`
+	ScheduleSyncTargetId *string `json:"schedule_sync_target_id,omitempty"`
+	SyncType *string `json:"sync_type,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// ScheduleSyncTarget is the typed data model for the schedule_sync_target entity.
+type ScheduleSyncTarget struct {
+	AddBotToGroup bool `json:"add_bot_to_group"`
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	CreatedAt string `json:"created_at"`
+	Id string `json:"id"`
+	LinkedSchedule []any `json:"linked_schedule"`
+	ScheduleSyncTarget map[string]any `json:"schedule_sync_target"`
+	SlackTeamId string `json:"slack_team_id"`
+	SlackUserGroupId string `json:"slack_user_group_id"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// ScheduleSyncTargetLoadMatch is the typed request payload for ScheduleSyncTarget.LoadTyped.
+type ScheduleSyncTargetLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// ScheduleSyncTargetListMatch is the typed request payload for ScheduleSyncTarget.ListTyped.
+type ScheduleSyncTargetListMatch struct {
+	AddBotToGroup *bool `json:"add_bot_to_group,omitempty"`
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	Id *string `json:"id,omitempty"`
+	LinkedSchedule *[]any `json:"linked_schedule,omitempty"`
+	ScheduleSyncTarget *map[string]any `json:"schedule_sync_target,omitempty"`
+	SlackTeamId *string `json:"slack_team_id,omitempty"`
+	SlackUserGroupId *string `json:"slack_user_group_id,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// ScheduleSyncTargetCreateData is the typed request payload for ScheduleSyncTarget.CreateTyped.
+type ScheduleSyncTargetCreateData struct {
+	AddBotToGroup bool `json:"add_bot_to_group"`
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	CreatedAt string `json:"created_at"`
+	Id string `json:"id"`
+	LinkedSchedule []any `json:"linked_schedule"`
+	ScheduleSyncTarget map[string]any `json:"schedule_sync_target"`
+	SlackTeamId string `json:"slack_team_id"`
+	SlackUserGroupId string `json:"slack_user_group_id"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// ScheduleSyncTargetUpdateData is the typed request payload for ScheduleSyncTarget.UpdateTyped.
+type ScheduleSyncTargetUpdateData struct {
+	Id string `json:"id"`
+	AddBotToGroup *bool `json:"add_bot_to_group,omitempty"`
+	Annotation *map[string]any `json:"annotation,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	LinkedSchedule *[]any `json:"linked_schedule,omitempty"`
+	ScheduleSyncTarget *map[string]any `json:"schedule_sync_target,omitempty"`
+	SlackTeamId *string `json:"slack_team_id,omitempty"`
+	SlackUserGroupId *string `json:"slack_user_group_id,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// ScheduleSyncTargetRemoveMatch is the typed request payload for ScheduleSyncTarget.RemoveTyped.
+type ScheduleSyncTargetRemoveMatch struct {
+	Id string `json:"id"`
+}
+
 // Secret is the typed data model for the secret entity.
 type Secret struct {
 	CreatedAt string `json:"created_at"`
@@ -1241,7 +1933,7 @@ type Secret struct {
 	Id string `json:"id"`
 	LastFourChar *string `json:"last_four_char,omitempty"`
 	Name string `json:"name"`
-	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
+	OwningTeamId []any `json:"owning_team_id"`
 	Secret map[string]any `json:"secret"`
 	UpdatedAt string `json:"updated_at"`
 	Value string `json:"value"`
@@ -1274,7 +1966,7 @@ type SecretCreateData struct {
 	Id string `json:"id"`
 	LastFourChar *string `json:"last_four_char,omitempty"`
 	Name string `json:"name"`
-	OwningTeamId *[]any `json:"owning_team_id,omitempty"`
+	OwningTeamId []any `json:"owning_team_id"`
 	Secret map[string]any `json:"secret"`
 	UpdatedAt string `json:"updated_at"`
 	Value string `json:"value"`
@@ -1300,6 +1992,234 @@ type SecretRemoveMatch struct {
 	Id string `json:"id"`
 }
 
+// Severity is the typed data model for the severity entity.
+type Severity struct {
+	CreatedAt string `json:"created_at"`
+	Description string `json:"description"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	Rank int `json:"rank"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// SeverityLoadMatch is the typed request payload for Severity.LoadTyped.
+type SeverityLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// SeverityListMatch is the typed request payload for Severity.ListTyped.
+type SeverityListMatch struct {
+	CreatedAt *string `json:"created_at,omitempty"`
+	Description *string `json:"description,omitempty"`
+	Id *string `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Rank *int `json:"rank,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// SeverityCreateData is the typed request payload for Severity.CreateTyped.
+type SeverityCreateData struct {
+	CreatedAt string `json:"created_at"`
+	Description string `json:"description"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	Rank int `json:"rank"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// SeverityUpdateData is the typed request payload for Severity.UpdateTyped.
+type SeverityUpdateData struct {
+	Id string `json:"id"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	Description *string `json:"description,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Rank *int `json:"rank,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+}
+
+// StatusPage is the typed data model for the status_page entity.
+type StatusPage struct {
+	Description *string `json:"description,omitempty"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	PublicUrl *string `json:"public_url,omitempty"`
+}
+
+// StatusPageListMatch is the typed request payload for StatusPage.ListTyped.
+type StatusPageListMatch struct {
+	Description *string `json:"description,omitempty"`
+	Id *string `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
+	PublicUrl *string `json:"public_url,omitempty"`
+}
+
+// StatusPageIncident is the typed data model for the status_page_incident entity.
+type StatusPageIncident struct {
+	ComponentImpact []any `json:"component_impact"`
+	ComponentStatus *[]any `json:"component_status,omitempty"`
+	Id string `json:"id"`
+	IdempotencyKey string `json:"idempotency_key"`
+	IncidentStatus string `json:"incident_status"`
+	Message string `json:"message"`
+	Name string `json:"name"`
+	NotifySubscriber bool `json:"notify_subscriber"`
+	PublishedAt string `json:"published_at"`
+	StatusPageId string `json:"status_page_id"`
+	Update []any `json:"update"`
+}
+
+// StatusPageIncidentLoadMatch is the typed request payload for StatusPageIncident.LoadTyped.
+type StatusPageIncidentLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// StatusPageIncidentListMatch is the typed request payload for StatusPageIncident.ListTyped.
+type StatusPageIncidentListMatch struct {
+	ComponentImpact *[]any `json:"component_impact,omitempty"`
+	ComponentStatus *[]any `json:"component_status,omitempty"`
+	Id *string `json:"id,omitempty"`
+	IdempotencyKey *string `json:"idempotency_key,omitempty"`
+	IncidentStatus *string `json:"incident_status,omitempty"`
+	Message *string `json:"message,omitempty"`
+	Name *string `json:"name,omitempty"`
+	NotifySubscriber *bool `json:"notify_subscriber,omitempty"`
+	PublishedAt *string `json:"published_at,omitempty"`
+	StatusPageId *string `json:"status_page_id,omitempty"`
+	Update *[]any `json:"update,omitempty"`
+}
+
+// StatusPageIncidentCreateData is the typed request payload for StatusPageIncident.CreateTyped.
+type StatusPageIncidentCreateData struct {
+	ComponentImpact []any `json:"component_impact"`
+	ComponentStatus *[]any `json:"component_status,omitempty"`
+	Id string `json:"id"`
+	IdempotencyKey string `json:"idempotency_key"`
+	IncidentStatus string `json:"incident_status"`
+	Message string `json:"message"`
+	Name string `json:"name"`
+	NotifySubscriber bool `json:"notify_subscriber"`
+	PublishedAt string `json:"published_at"`
+	StatusPageId string `json:"status_page_id"`
+	Update []any `json:"update"`
+}
+
+// StatusPageIncidentUpdateData is the typed request payload for StatusPageIncident.UpdateTyped.
+type StatusPageIncidentUpdateData struct {
+	Id string `json:"id"`
+	ComponentImpact *[]any `json:"component_impact,omitempty"`
+	ComponentStatus *[]any `json:"component_status,omitempty"`
+	IdempotencyKey *string `json:"idempotency_key,omitempty"`
+	IncidentStatus *string `json:"incident_status,omitempty"`
+	Message *string `json:"message,omitempty"`
+	Name *string `json:"name,omitempty"`
+	NotifySubscriber *bool `json:"notify_subscriber,omitempty"`
+	PublishedAt *string `json:"published_at,omitempty"`
+	StatusPageId *string `json:"status_page_id,omitempty"`
+	Update *[]any `json:"update,omitempty"`
+}
+
+// StatusPageIncidentUpdate is the typed data model for the status_page_incident_update entity.
+type StatusPageIncidentUpdate struct {
+	ComponentStatus *[]any `json:"component_status,omitempty"`
+	IncidentStatus *string `json:"incident_status,omitempty"`
+	Message string `json:"message"`
+	NotifySubscriber bool `json:"notify_subscriber"`
+	StatusPageIncidentId string `json:"status_page_incident_id"`
+}
+
+// StatusPageIncidentUpdateCreateData is the typed request payload for StatusPageIncidentUpdate.CreateTyped.
+type StatusPageIncidentUpdateCreateData struct {
+	ComponentStatus *[]any `json:"component_status,omitempty"`
+	IncidentStatus *string `json:"incident_status,omitempty"`
+	Message string `json:"message"`
+	NotifySubscriber bool `json:"notify_subscriber"`
+	StatusPageIncidentId string `json:"status_page_incident_id"`
+}
+
+// StatusPageMaintenance is the typed data model for the status_page_maintenance entity.
+type StatusPageMaintenance struct {
+	AffectedComponentId []any `json:"affected_component_id"`
+	ComponentMaintenancePeriod []any `json:"component_maintenance_period"`
+	EndAt string `json:"end_at"`
+	Id string `json:"id"`
+	IdempotencyKey string `json:"idempotency_key"`
+	MaintenanceStatus string `json:"maintenance_status"`
+	Message string `json:"message"`
+	Name string `json:"name"`
+	NotifySubscriber bool `json:"notify_subscriber"`
+	PublishedAt string `json:"published_at"`
+	StartAt string `json:"start_at"`
+	StatusPageId string `json:"status_page_id"`
+	Update []any `json:"update"`
+}
+
+// StatusPageMaintenanceLoadMatch is the typed request payload for StatusPageMaintenance.LoadTyped.
+type StatusPageMaintenanceLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// StatusPageMaintenanceListMatch is the typed request payload for StatusPageMaintenance.ListTyped.
+type StatusPageMaintenanceListMatch struct {
+	AffectedComponentId *[]any `json:"affected_component_id,omitempty"`
+	ComponentMaintenancePeriod *[]any `json:"component_maintenance_period,omitempty"`
+	EndAt *string `json:"end_at,omitempty"`
+	Id *string `json:"id,omitempty"`
+	IdempotencyKey *string `json:"idempotency_key,omitempty"`
+	MaintenanceStatus *string `json:"maintenance_status,omitempty"`
+	Message *string `json:"message,omitempty"`
+	Name *string `json:"name,omitempty"`
+	NotifySubscriber *bool `json:"notify_subscriber,omitempty"`
+	PublishedAt *string `json:"published_at,omitempty"`
+	StartAt *string `json:"start_at,omitempty"`
+	StatusPageId *string `json:"status_page_id,omitempty"`
+	Update *[]any `json:"update,omitempty"`
+}
+
+// StatusPageMaintenanceCreateData is the typed request payload for StatusPageMaintenance.CreateTyped.
+type StatusPageMaintenanceCreateData struct {
+	AffectedComponentId []any `json:"affected_component_id"`
+	ComponentMaintenancePeriod []any `json:"component_maintenance_period"`
+	EndAt string `json:"end_at"`
+	Id string `json:"id"`
+	IdempotencyKey string `json:"idempotency_key"`
+	MaintenanceStatus string `json:"maintenance_status"`
+	Message string `json:"message"`
+	Name string `json:"name"`
+	NotifySubscriber bool `json:"notify_subscriber"`
+	PublishedAt string `json:"published_at"`
+	StartAt string `json:"start_at"`
+	StatusPageId string `json:"status_page_id"`
+	Update []any `json:"update"`
+}
+
+// StatusPageMaintenanceUpdate is the typed data model for the status_page_maintenance_update entity.
+type StatusPageMaintenanceUpdate struct {
+	ComponentStatus *[]any `json:"component_status,omitempty"`
+	MaintenanceStatus *string `json:"maintenance_status,omitempty"`
+	Message string `json:"message"`
+	NotifySubscriber bool `json:"notify_subscriber"`
+	StatusPageMaintenanceId string `json:"status_page_maintenance_id"`
+}
+
+// StatusPageMaintenanceUpdateCreateData is the typed request payload for StatusPageMaintenanceUpdate.CreateTyped.
+type StatusPageMaintenanceUpdateCreateData struct {
+	ComponentStatus *[]any `json:"component_status,omitempty"`
+	MaintenanceStatus *string `json:"maintenance_status,omitempty"`
+	Message string `json:"message"`
+	NotifySubscriber bool `json:"notify_subscriber"`
+	StatusPageMaintenanceId string `json:"status_page_maintenance_id"`
+}
+
+// StatusPageStructure is the typed data model for the status_page_structure entity.
+type StatusPageStructure struct {
+	Item []any `json:"item"`
+}
+
+// StatusPageStructureLoadMatch is the typed request payload for StatusPageStructure.LoadTyped.
+type StatusPageStructureLoadMatch struct {
+	Id string `json:"id"`
+}
+
 // Team is the typed data model for the team entity.
 type Team struct {
 	CatalogEntry map[string]any `json:"catalog_entry"`
@@ -1319,6 +2239,34 @@ type TeamListMatch struct {
 	Id *string `json:"id,omitempty"`
 	Member *[]any `json:"member,omitempty"`
 	Name *string `json:"name,omitempty"`
+}
+
+// TelemetryDataSource is the typed data model for the telemetry_data_source entity.
+type TelemetryDataSource struct {
+	CreatedAt string `json:"created_at"`
+	DatadogConfig *map[string]any `json:"datadog_config,omitempty"`
+	Enabled bool `json:"enabled"`
+	GrafanaConfig *map[string]any `json:"grafana_config,omitempty"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	Provider string `json:"provider"`
+	SourceType string `json:"source_type"`
+	UpdatedAt string `json:"updated_at"`
+	Version *string `json:"version,omitempty"`
+}
+
+// TelemetryDataSourceUpdateData is the typed request payload for TelemetryDataSource.UpdateTyped.
+type TelemetryDataSourceUpdateData struct {
+	Id string `json:"id"`
+	CreatedAt *string `json:"created_at,omitempty"`
+	DatadogConfig *map[string]any `json:"datadog_config,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
+	GrafanaConfig *map[string]any `json:"grafana_config,omitempty"`
+	Name *string `json:"name,omitempty"`
+	Provider *string `json:"provider,omitempty"`
+	SourceType *string `json:"source_type,omitempty"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
+	Version *string `json:"version,omitempty"`
 }
 
 // User is the typed data model for the user entity.

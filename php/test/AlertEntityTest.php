@@ -62,7 +62,7 @@ class AlertEntityTest extends TestCase
         $setup = alert_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["list", "load"] as $_op) {
+        foreach (["create", "list", "load"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "alert." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
@@ -77,20 +77,26 @@ class AlertEntityTest extends TestCase
         }
         $client = $setup["client"];
 
-        // Bootstrap entity data from existing test data.
-        $alert_ref01_data_raw = Vs::items(Helpers::to_map(
-            Vs::getpath($setup["data"], "existing.alert")));
-        $alert_ref01_data = null;
-        if (count($alert_ref01_data_raw) > 0) {
-            $alert_ref01_data = Helpers::to_map($alert_ref01_data_raw[0][1]);
-        }
+        // CREATE
+        $alert_ref01_ent = $client->Alert(null);
+        $alert_ref01_data = Helpers::to_map(Vs::getprop(
+            Vs::getpath($setup["data"], "new.alert"), "alert_ref01"));
+
+        $alert_ref01_data_result = $alert_ref01_ent->create($alert_ref01_data, null);
+        $alert_ref01_data = Helpers::to_map($alert_ref01_data_result);
+        $this->assertNotNull($alert_ref01_data);
+        $this->assertNotNull($alert_ref01_data["id"]);
 
         // LIST
-        $alert_ref01_ent = $client->Alert(null);
         $alert_ref01_match = [];
 
         $alert_ref01_list_result = $alert_ref01_ent->list($alert_ref01_match, null);
         $this->assertIsArray($alert_ref01_list_result);
+
+        $found_item = sdk_select(
+            Runner::entity_list_to_data($alert_ref01_list_result),
+            ["id" => $alert_ref01_data["id"]]);
+        $this->assertNotEmpty($found_item);
 
         // LOAD
         $alert_ref01_match_dt0 = [

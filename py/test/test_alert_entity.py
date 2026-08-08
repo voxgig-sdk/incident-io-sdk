@@ -61,7 +61,7 @@ class TestAlertEntity:
         # multiple ops; skipping any one skips the whole flow (steps depend
         # on each other).
         _live = setup.get("live", False)
-        for _op in ["list", "load"]:
+        for _op in ["create", "list", "load"]:
             _skip, _reason = runner.is_control_skipped("entityOp", "alert." + _op, "live" if _live else "unit")
             if _skip:
                 pytest.skip(_reason or "skipped via sdk-test-control.json")
@@ -73,19 +73,25 @@ class TestAlertEntity:
                         "set INCIDENTIO_TEST_ALERT_ENTID JSON to run live")
         client = setup["client"]
 
-        # Bootstrap entity data from existing test data.
-        alert_ref01_data_raw = vs.items(helpers.to_map(
-            vs.getpath(setup["data"], "existing.alert")))
-        alert_ref01_data = None
-        if len(alert_ref01_data_raw) > 0:
-            alert_ref01_data = helpers.to_map(alert_ref01_data_raw[0][1])
+        # CREATE
+        alert_ref01_ent = client.Alert(None)
+        alert_ref01_data = helpers.to_map(vs.getprop(
+            vs.getpath(setup["data"], "new.alert"), "alert_ref01"))
+
+        alert_ref01_data = helpers.to_map(alert_ref01_ent.create(alert_ref01_data, None))
+        assert alert_ref01_data is not None
+        assert alert_ref01_data["id"] is not None
 
         # LIST
-        alert_ref01_ent = client.Alert(None)
         alert_ref01_match = {}
 
         alert_ref01_list_result = alert_ref01_ent.list(alert_ref01_match, None)
         assert isinstance(alert_ref01_list_result, list)
+
+        found_item = vs.select(
+            runner.entity_list_to_data(alert_ref01_list_result),
+            {"id": alert_ref01_data["id"]})
+        assert not vs.isempty(found_item)
 
         # LOAD
         alert_ref01_match_dt0 = {

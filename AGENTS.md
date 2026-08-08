@@ -30,7 +30,7 @@ Each feature is generated into every SDK target — as a directory
 `<lang>/src/feature/<name>/` (ts/js) or a flat file in the `<lang>/feature/`
 package (other languages). Each target's guide documents its features.
 
-**Entities** (29): `Action`, `Alert`, `AlertAttribute`, `AlertNote`, `AlertRoute`, `AlertSource`, `ApiKey`, `CustomField`, `CustomFieldOption`, `FollowUp`, `Incident`, `IncidentAttachment`, `IncidentMembership`, `IncidentParticipant`, `IncidentParticipantWorkload`, `IncidentRelationship`, `IncidentRole`, `IncidentStatus`, `IncidentTimestamp`, `IncidentType`, `IncidentUpdate`, `IpAllowlist`, `MaintenanceWindow`, `PostmortemDocument`, `Secret`, `Team`, `User`, `Workflow`, `WorkflowRun`.
+**Entities** (48): `Action`, `Alert`, `AlertAttribute`, `AlertNote`, `AlertRoute`, `AlertSource`, `ApiKey`, `CatalogEntry`, `CatalogResource`, `CatalogType`, `CatalogTypeSchema`, `CustomField`, `CustomFieldOption`, `Escalation`, `FollowUp`, `Incident`, `IncidentAlert`, `IncidentAttachment`, `IncidentMembership`, `IncidentParticipant`, `IncidentParticipantWorkload`, `IncidentRelationship`, `IncidentRole`, `IncidentStatus`, `IncidentTimestamp`, `IncidentType`, `IncidentUpdate`, `IpAllowlist`, `MaintenanceWindow`, `PostmortemDocument`, `Schedule`, `ScheduleEntry`, `ScheduleReplica`, `ScheduleSyncRule`, `ScheduleSyncTarget`, `Secret`, `Severity`, `StatusPage`, `StatusPageIncident`, `StatusPageIncidentUpdate`, `StatusPageMaintenance`, `StatusPageMaintenanceUpdate`, `StatusPageStructure`, `Team`, `TelemetryDataSource`, `User`, `Workflow`, `WorkflowRun`.
 
 ## Generating and updating the SDK
 

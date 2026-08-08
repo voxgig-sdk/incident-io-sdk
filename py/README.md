@@ -50,14 +50,15 @@ except Exception as err:
     print(f"list failed: {err}")
 ```
 
-### 3. Load an action
+### 3. Load a schedulereplica
 
+ScheduleReplica is nested under schedule, so provide the `schedule_id`.
 `load()` returns the bare record (a `dict`) and raises on error.
 
 ```python
 try:
-    action = client.Action().load({"id": "example_id"})
-    print(action)
+    schedulereplica = client.ScheduleReplica().load({"schedule_id": "example_schedule_id", "id": "example_id"})
+    print(schedulereplica)
 except Exception as err:
     print(f"load failed: {err}")
 ```
@@ -66,7 +67,7 @@ except Exception as err:
 
 ```python
 # Create — returns the bare created record (a dict)
-created = client.Action().create({"assignee": {}, "created_at": "example_created_at", "creator": {}, "description": "example_description", "id": "example_id", "incident_id": "example_incident_id", "status": "example_status", "updated_at": "example_updated_at"})
+created = client.Action().create({"assignee": {}, "created_at": "example_created_at", "creator": {}, "follow_up": True, "id": "example_id", "incident_id": "example_incident_id", "status": "example_status", "updated_at": "example_updated_at"})
 
 # Update — the created record's id is a plain dict key
 client.Action().update({"id": created["id"], "assignee": {}, "assignee_id": "example_assignee_id"})
@@ -82,8 +83,8 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    incidenttypes = client.IncidentType().list()
-    print(incidenttypes)
+    incidentroles = client.IncidentRole().list()
+    print(incidentroles)
 except Exception as err:
     print(f"list failed: {err}")
 ```
@@ -150,8 +151,8 @@ Create a mock client for unit testing — no server required:
 client = IncidentIoSDK.test()
 
 # Entity ops return the bare record and raise on error.
-incidenttype = client.IncidentType().list()
-# incidenttype contains the mock response record
+incidentrole = client.IncidentRole().list()
+# incidentrole contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -234,10 +235,16 @@ Creates a test-mode client with mock transport. Both arguments may be `None`.
 | `AlertRoute` | `(data) -> AlertRouteEntity` | Create an AlertRoute entity instance. |
 | `AlertSource` | `(data) -> AlertSourceEntity` | Create an AlertSource entity instance. |
 | `ApiKey` | `(data) -> ApiKeyEntity` | Create an ApiKey entity instance. |
+| `CatalogEntry` | `(data) -> CatalogEntryEntity` | Create a CatalogEntry entity instance. |
+| `CatalogResource` | `(data) -> CatalogResourceEntity` | Create a CatalogResource entity instance. |
+| `CatalogType` | `(data) -> CatalogTypeEntity` | Create a CatalogType entity instance. |
+| `CatalogTypeSchema` | `(data) -> CatalogTypeSchemaEntity` | Create a CatalogTypeSchema entity instance. |
 | `CustomField` | `(data) -> CustomFieldEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `(data) -> CustomFieldOptionEntity` | Create a CustomFieldOption entity instance. |
+| `Escalation` | `(data) -> EscalationEntity` | Create an Escalation entity instance. |
 | `FollowUp` | `(data) -> FollowUpEntity` | Create a FollowUp entity instance. |
 | `Incident` | `(data) -> IncidentEntity` | Create an Incident entity instance. |
+| `IncidentAlert` | `(data) -> IncidentAlertEntity` | Create an IncidentAlert entity instance. |
 | `IncidentAttachment` | `(data) -> IncidentAttachmentEntity` | Create an IncidentAttachment entity instance. |
 | `IncidentMembership` | `(data) -> IncidentMembershipEntity` | Create an IncidentMembership entity instance. |
 | `IncidentParticipant` | `(data) -> IncidentParticipantEntity` | Create an IncidentParticipant entity instance. |
@@ -251,8 +258,21 @@ Creates a test-mode client with mock transport. Both arguments may be `None`.
 | `IpAllowlist` | `(data) -> IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `MaintenanceWindow` | `(data) -> MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
 | `PostmortemDocument` | `(data) -> PostmortemDocumentEntity` | Create a PostmortemDocument entity instance. |
+| `Schedule` | `(data) -> ScheduleEntity` | Create a Schedule entity instance. |
+| `ScheduleEntry` | `(data) -> ScheduleEntryEntity` | Create a ScheduleEntry entity instance. |
+| `ScheduleReplica` | `(data) -> ScheduleReplicaEntity` | Create a ScheduleReplica entity instance. |
+| `ScheduleSyncRule` | `(data) -> ScheduleSyncRuleEntity` | Create a ScheduleSyncRule entity instance. |
+| `ScheduleSyncTarget` | `(data) -> ScheduleSyncTargetEntity` | Create a ScheduleSyncTarget entity instance. |
 | `Secret` | `(data) -> SecretEntity` | Create a Secret entity instance. |
+| `Severity` | `(data) -> SeverityEntity` | Create a Severity entity instance. |
+| `StatusPage` | `(data) -> StatusPageEntity` | Create a StatusPage entity instance. |
+| `StatusPageIncident` | `(data) -> StatusPageIncidentEntity` | Create a StatusPageIncident entity instance. |
+| `StatusPageIncidentUpdate` | `(data) -> StatusPageIncidentUpdateEntity` | Create a StatusPageIncidentUpdate entity instance. |
+| `StatusPageMaintenance` | `(data) -> StatusPageMaintenanceEntity` | Create a StatusPageMaintenance entity instance. |
+| `StatusPageMaintenanceUpdate` | `(data) -> StatusPageMaintenanceUpdateEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
+| `StatusPageStructure` | `(data) -> StatusPageStructureEntity` | Create a StatusPageStructure entity instance. |
 | `Team` | `(data) -> TeamEntity` | Create a Team entity instance. |
+| `TelemetryDataSource` | `(data) -> TelemetryDataSourceEntity` | Create a TelemetryDataSource entity instance. |
 | `User` | `(data) -> UserEntity` | Create an User entity instance. |
 | `Workflow` | `(data) -> WorkflowEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `(data) -> WorkflowRunEntity` | Create a WorkflowRun entity instance. |
@@ -305,6 +325,8 @@ On error, `ok` is `False` and `err` contains the error value.
 | `created_at` |  |
 | `creator` |  |
 | `description` |  |
+| `external_issue_reference` |  |
+| `follow_up` |  |
 | `id` |  |
 | `incident_id` |  |
 | `status` |  |
@@ -331,9 +353,9 @@ API path: `/v2/actions`
 | `title` |  |
 | `updated_at` |  |
 
-Operations: List, Load.
+Operations: Create, List, Load.
 
-API path: `/v2/alerts`
+API path: `/v2/alerts/{id}/actions/resolve`
 
 #### AlertAttribute
 
@@ -373,6 +395,7 @@ API path: `/v1/alert_notes`
 | Field | Description |
 | --- | --- |
 | `alert_source` |  |
+| `channel_config` |  |
 | `condition_group` |  |
 | `created_at` |  |
 | `enabled` |  |
@@ -381,8 +404,10 @@ API path: `/v1/alert_notes`
 | `grouping_config` |  |
 | `id` |  |
 | `incident_config` |  |
+| `incident_template` |  |
 | `is_private` |  |
 | `message_config` |  |
+| `message_template` |  |
 | `name` |  |
 | `owning_team_id` |  |
 | `updated_at` |  |
@@ -390,7 +415,7 @@ API path: `/v1/alert_notes`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v3/alert_routes`
+API path: `/v2/alert_routes`
 
 #### AlertSource
 
@@ -422,6 +447,7 @@ API path: `/v2/alert_sources`
 | `comment` |  |
 | `created_at` |  |
 | `creator` |  |
+| `grace_period_minute` |  |
 | `id` |  |
 | `last_used_at` |  |
 | `name` |  |
@@ -434,7 +460,112 @@ API path: `/v2/alert_sources`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v1/api_keys`
+API path: `/v1/api_keys/{id}/actions/rotate`
+
+#### CatalogEntry
+
+| Field | Description |
+| --- | --- |
+| `alias` |  |
+| `archived_at` |  |
+| `attribute_value` |  |
+| `catalog_entry` |  |
+| `catalog_type` |  |
+| `catalog_type_id` |  |
+| `created_at` |  |
+| `external_id` |  |
+| `id` |  |
+| `name` |  |
+| `rank` |  |
+| `update_attribute` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/catalog_entries`
+
+#### CatalogResource
+
+| Field | Description |
+| --- | --- |
+| `category` |  |
+| `description` |  |
+| `engine_resource_type` |  |
+| `label` |  |
+| `type` |  |
+| `value_docstring` |  |
+
+Operations: List.
+
+API path: `/v2/catalog_resources`
+
+#### CatalogType
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `category` |  |
+| `color` |  |
+| `created_at` |  |
+| `description` |  |
+| `dynamic_resource_parameter` |  |
+| `engine_resource_type` |  |
+| `estimated_count` |  |
+| `icon` |  |
+| `id` |  |
+| `is_editable` |  |
+| `is_team_type` |  |
+| `last_synced_at` |  |
+| `name` |  |
+| `owning_team_id` |  |
+| `ranked` |  |
+| `registry_type` |  |
+| `required_integration` |  |
+| `schema` |  |
+| `semantic_type` |  |
+| `source_repo_url` |  |
+| `type_name` |  |
+| `updated_at` |  |
+| `use_name_as_identifier` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/catalog_types`
+
+#### CatalogTypeSchema
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `attribute` |  |
+| `category` |  |
+| `color` |  |
+| `created_at` |  |
+| `description` |  |
+| `dynamic_resource_parameter` |  |
+| `engine_resource_type` |  |
+| `estimated_count` |  |
+| `icon` |  |
+| `id` |  |
+| `is_editable` |  |
+| `is_team_type` |  |
+| `last_synced_at` |  |
+| `name` |  |
+| `owning_team_id` |  |
+| `ranked` |  |
+| `registry_type` |  |
+| `required_integration` |  |
+| `schema` |  |
+| `semantic_type` |  |
+| `source_repo_url` |  |
+| `type_name` |  |
+| `updated_at` |  |
+| `use_name_as_identifier` |  |
+| `version` |  |
+
+Operations: Create.
+
+API path: `/v2/catalog_types/{id}/actions/update_schema`
 
 #### CustomField
 
@@ -450,11 +581,18 @@ API path: `/v1/api_keys`
 | `helptext_catalog_attribute_id` |  |
 | `id` |  |
 | `name` |  |
+| `option` |  |
+| `required` |  |
+| `required_v2` |  |
+| `show_before_closure` |  |
+| `show_before_creation` |  |
+| `show_before_update` |  |
+| `show_in_announcement_post` |  |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/custom_fields`
+API path: `/v1/custom_fields`
 
 #### CustomFieldOption
 
@@ -468,6 +606,30 @@ API path: `/v2/custom_fields`
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/custom_field_options`
+
+#### Escalation
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `creator` |  |
+| `description` |  |
+| `escalation_path_id` |  |
+| `event` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `incident_id` |  |
+| `priority` |  |
+| `related_alert` |  |
+| `related_incident` |  |
+| `status` |  |
+| `title` |  |
+| `updated_at` |  |
+| `user_id` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/escalations`
 
 #### FollowUp
 
@@ -510,6 +672,7 @@ API path: `/v2/follow_ups`
 | `has_debrief` |  |
 | `id` |  |
 | `idempotency_key` |  |
+| `incident` |  |
 | `incident_role_assignment` |  |
 | `incident_status` |  |
 | `incident_status_id` |  |
@@ -518,6 +681,7 @@ API path: `/v2/follow_ups`
 | `incident_type_id` |  |
 | `mode` |  |
 | `name` |  |
+| `notify_incident_channel` |  |
 | `permalink` |  |
 | `postmortem_document_id` |  |
 | `postmortem_document_url` |  |
@@ -529,7 +693,11 @@ API path: `/v2/follow_ups`
 | `slack_channel_name` |  |
 | `slack_channel_name_override` |  |
 | `slack_team_id` |  |
+| `source_message_channel_id` |  |
+| `source_message_timestamp` |  |
+| `status` |  |
 | `summary` |  |
+| `timestamp` |  |
 | `updated_at` |  |
 | `visibility` |  |
 | `workload_minutes_late` |  |
@@ -539,7 +707,20 @@ API path: `/v2/follow_ups`
 
 Operations: Create, List, Load.
 
-API path: `/v2/incidents`
+API path: `/v2/incidents/{id}/actions/edit`
+
+#### IncidentAlert
+
+| Field | Description |
+| --- | --- |
+| `alert` |  |
+| `alert_route_id` |  |
+| `id` |  |
+| `incident` |  |
+
+Operations: List.
+
+API path: `/v2/incident_alerts`
 
 #### IncidentAttachment
 
@@ -608,13 +789,14 @@ API path: `/v1/incident_relationships`
 | `id` |  |
 | `instruction` |  |
 | `name` |  |
+| `required` |  |
 | `role_type` |  |
 | `shortform` |  |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/incident_roles`
+API path: `/v1/incident_roles`
 
 #### IncidentStatus
 
@@ -738,6 +920,99 @@ Operations: List, Load, Update.
 
 API path: `/v1/postmortem_documents`
 
+#### Schedule
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `config` |  |
+| `created_at` |  |
+| `current_shift` |  |
+| `holidays_public_config` |  |
+| `id` |  |
+| `name` |  |
+| `next_shift` |  |
+| `permalink` |  |
+| `schedule` |  |
+| `team_id` |  |
+| `timezone` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedules`
+
+#### ScheduleEntry
+
+| Field | Description |
+| --- | --- |
+| `pagination_meta` |  |
+| `schedule_entry` |  |
+
+Operations: Load.
+
+API path: `/v2/schedule_entries`
+
+#### ScheduleReplica
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `id` |  |
+| `last_sync_error` |  |
+| `last_synced_at` |  |
+| `mirror_window_day` |  |
+| `replica_fallback_user_id` |  |
+| `replica_provider` |  |
+| `replica_provider_id` |  |
+| `schedule_id` |  |
+| `schedule_replica` |  |
+| `source` |  |
+| `updated_at` |  |
+| `user_status` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/schedules/{schedule_id}/replicas`
+
+#### ScheduleSyncRule
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `created_at` |  |
+| `id` |  |
+| `permanent_member_user_id` |  |
+| `rotation_id` |  |
+| `schedule_id` |  |
+| `schedule_sync_rule` |  |
+| `schedule_sync_target` |  |
+| `schedule_sync_target_id` |  |
+| `sync_type` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/schedules/{schedule_id}/sync_rules`
+
+#### ScheduleSyncTarget
+
+| Field | Description |
+| --- | --- |
+| `add_bot_to_group` |  |
+| `annotation` |  |
+| `created_at` |  |
+| `id` |  |
+| `linked_schedule` |  |
+| `schedule_sync_target` |  |
+| `slack_team_id` |  |
+| `slack_user_group_id` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedule_sync_targets`
+
 #### Secret
 
 | Field | Description |
@@ -755,7 +1030,115 @@ API path: `/v1/postmortem_documents`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/secrets`
+API path: `/v2/secrets/{id}/actions/rotate`
+
+#### Severity
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `description` |  |
+| `id` |  |
+| `name` |  |
+| `rank` |  |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v1/severities`
+
+#### StatusPage
+
+| Field | Description |
+| --- | --- |
+| `description` |  |
+| `id` |  |
+| `name` |  |
+| `public_url` |  |
+
+Operations: List.
+
+API path: `/v2/status_pages`
+
+#### StatusPageIncident
+
+| Field | Description |
+| --- | --- |
+| `component_impact` |  |
+| `component_status` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `incident_status` |  |
+| `message` |  |
+| `name` |  |
+| `notify_subscriber` |  |
+| `published_at` |  |
+| `status_page_id` |  |
+| `update` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/status_page_incidents`
+
+#### StatusPageIncidentUpdate
+
+| Field | Description |
+| --- | --- |
+| `component_status` |  |
+| `incident_status` |  |
+| `message` |  |
+| `notify_subscriber` |  |
+| `status_page_incident_id` |  |
+
+Operations: Create.
+
+API path: `/v2/status_page_incident_updates`
+
+#### StatusPageMaintenance
+
+| Field | Description |
+| --- | --- |
+| `affected_component_id` |  |
+| `component_maintenance_period` |  |
+| `end_at` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `maintenance_status` |  |
+| `message` |  |
+| `name` |  |
+| `notify_subscriber` |  |
+| `published_at` |  |
+| `start_at` |  |
+| `status_page_id` |  |
+| `update` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/status_page_maintenances`
+
+#### StatusPageMaintenanceUpdate
+
+| Field | Description |
+| --- | --- |
+| `component_status` |  |
+| `maintenance_status` |  |
+| `message` |  |
+| `notify_subscriber` |  |
+| `status_page_maintenance_id` |  |
+
+Operations: Create.
+
+API path: `/v2/status_page_maintenance_updates`
+
+#### StatusPageStructure
+
+| Field | Description |
+| --- | --- |
+| `item` |  |
+
+Operations: Load.
+
+API path: `/v2/status_page_structures/{status_page_id}`
 
 #### Team
 
@@ -769,6 +1152,25 @@ API path: `/v2/secrets`
 Operations: List, Load.
 
 API path: `/v3/teams`
+
+#### TelemetryDataSource
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `datadog_config` |  |
+| `enabled` |  |
+| `grafana_config` |  |
+| `id` |  |
+| `name` |  |
+| `provider` |  |
+| `source_type` |  |
+| `updated_at` |  |
+| `version` |  |
+
+Operations: Update.
+
+API path: `/v2/telemetry/data_sources/{id}`
 
 #### User
 
@@ -874,6 +1276,8 @@ Create an instance: `action = client.Action()`
 | `created_at` | `str` |  |
 | `creator` | `dict` |  |
 | `description` | `str` |  |
+| `external_issue_reference` | `dict` |  |
+| `follow_up` | `bool` |  |
 | `id` | `str` |  |
 | `incident_id` | `str` |  |
 | `status` | `str` |  |
@@ -898,7 +1302,7 @@ action = client.Action().create({
     "assignee": {},  # dict
     "created_at": "example_created_at",  # str
     "creator": {},  # dict
-    "description": "example_description",  # str
+    "follow_up": True,  # bool
     "id": "example_id",  # str
     "incident_id": "example_incident_id",  # str
     "status": "example_status",  # str
@@ -915,6 +1319,7 @@ Create an instance: `alert = client.Alert()`
 
 | Method | Description |
 | --- | --- |
+| `create(data)` | Create a new entity with the given data. |
 | `list()` | List entities, optionally matching the given criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
@@ -945,6 +1350,21 @@ alert = client.Alert().load({"id": "alert_id"})
 
 ```python
 alerts = client.Alert().list()
+```
+
+#### Example: Create
+
+```python
+alert = client.Alert().create({
+    "id": "example_id",  # str
+    "alert_source_id": "example_alert_source_id",  # str
+    "attribute": [],  # list
+    "created_at": "example_created_at",  # str
+    "deduplication_key": "example_deduplication_key",  # str
+    "status": "example_status",  # str
+    "title": "example_title",  # str
+    "updated_at": "example_updated_at",  # str
+})
 ```
 
 
@@ -1071,6 +1491,7 @@ Create an instance: `alert_route = client.AlertRoute()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `alert_source` | `list` |  |
+| `channel_config` | `list` |  |
 | `condition_group` | `list` |  |
 | `created_at` | `str` |  |
 | `enabled` | `bool` |  |
@@ -1079,8 +1500,10 @@ Create an instance: `alert_route = client.AlertRoute()`
 | `grouping_config` | `dict` |  |
 | `id` | `str` |  |
 | `incident_config` | `dict` |  |
+| `incident_template` | `dict` |  |
 | `is_private` | `bool` |  |
 | `message_config` | `dict` |  |
+| `message_template` | `dict` |  |
 | `name` | `str` |  |
 | `owning_team_id` | `list` |  |
 | `updated_at` | `str` |  |
@@ -1103,6 +1526,7 @@ alert_routes = client.AlertRoute().list()
 ```python
 alert_route = client.AlertRoute().create({
     "alert_source": [],  # list
+    "channel_config": [],  # list
     "condition_group": [],  # list
     "enabled": True,  # bool
     "escalation_config": {},  # dict
@@ -1110,6 +1534,7 @@ alert_route = client.AlertRoute().create({
     "grouping_config": {},  # dict
     "id": "example_id",  # str
     "incident_config": {},  # dict
+    "incident_template": {},  # dict
     "is_private": True,  # bool
     "message_config": {},  # dict
     "name": "example_name",  # str
@@ -1200,6 +1625,7 @@ Create an instance: `api_key = client.ApiKey()`
 | `comment` | `str` |  |
 | `created_at` | `str` |  |
 | `creator` | `dict` |  |
+| `grace_period_minute` | `int` |  |
 | `id` | `str` |  |
 | `last_used_at` | `str` |  |
 | `name` | `str` |  |
@@ -1228,6 +1654,7 @@ api_keys = client.ApiKey().list()
 api_key = client.ApiKey().create({
     "created_at": "example_created_at",  # str
     "creator": {},  # dict
+    "grace_period_minute": 1,  # int
     "id": "example_id",  # str
     "name": "example_name",  # str
     "role": [],  # list
@@ -1236,6 +1663,239 @@ api_key = client.ApiKey().create({
     "team_role": [],  # list
     "team_role_name": [],  # list
     "token_last_issued_at": "example_token_last_issued_at",  # str
+})
+```
+
+
+### CatalogEntry
+
+Create an instance: `catalog_entry = client.CatalogEntry()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alias` | `list` |  |
+| `archived_at` | `str` |  |
+| `attribute_value` | `dict` |  |
+| `catalog_entry` | `dict` |  |
+| `catalog_type` | `dict` |  |
+| `catalog_type_id` | `str` |  |
+| `created_at` | `str` |  |
+| `external_id` | `str` |  |
+| `id` | `str` |  |
+| `name` | `str` |  |
+| `rank` | `int` |  |
+| `update_attribute` | `list` |  |
+| `updated_at` | `str` |  |
+
+#### Example: Load
+
+```python
+catalog_entry = client.CatalogEntry().load({"id": "catalog_entry_id"})
+```
+
+#### Example: List
+
+```python
+catalog_entrys = client.CatalogEntry().list()
+```
+
+#### Example: Create
+
+```python
+catalog_entry = client.CatalogEntry().create({
+    "attribute_value": {},  # dict
+    "catalog_entry": {},  # dict
+    "catalog_type": {},  # dict
+    "catalog_type_id": "example_catalog_type_id",  # str
+    "created_at": "example_created_at",  # str
+    "id": "example_id",  # str
+    "name": "example_name",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+
+### CatalogResource
+
+Create an instance: `catalog_resource = client.CatalogResource()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list()` | List entities, optionally matching the given criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `category` | `str` |  |
+| `description` | `str` |  |
+| `engine_resource_type` | `str` |  |
+| `label` | `str` |  |
+| `type` | `str` |  |
+| `value_docstring` | `str` |  |
+
+#### Example: List
+
+```python
+catalog_resources = client.CatalogResource().list()
+```
+
+
+### CatalogType
+
+Create an instance: `catalog_type = client.CatalogType()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `dict` |  |
+| `category` | `list` |  |
+| `color` | `str` |  |
+| `created_at` | `str` |  |
+| `description` | `str` |  |
+| `dynamic_resource_parameter` | `str` |  |
+| `engine_resource_type` | `str` |  |
+| `estimated_count` | `int` |  |
+| `icon` | `str` |  |
+| `id` | `str` |  |
+| `is_editable` | `bool` |  |
+| `is_team_type` | `bool` |  |
+| `last_synced_at` | `str` |  |
+| `name` | `str` |  |
+| `owning_team_id` | `list` |  |
+| `ranked` | `bool` |  |
+| `registry_type` | `str` |  |
+| `required_integration` | `list` |  |
+| `schema` | `dict` |  |
+| `semantic_type` | `str` |  |
+| `source_repo_url` | `str` |  |
+| `type_name` | `str` |  |
+| `updated_at` | `str` |  |
+| `use_name_as_identifier` | `bool` |  |
+
+#### Example: Load
+
+```python
+catalog_type = client.CatalogType().load({"id": "catalog_type_id"})
+```
+
+#### Example: List
+
+```python
+catalog_types = client.CatalogType().list()
+```
+
+#### Example: Create
+
+```python
+catalog_type = client.CatalogType().create({
+    "annotation": {},  # dict
+    "category": [],  # list
+    "color": "example_color",  # str
+    "created_at": "example_created_at",  # str
+    "description": "example_description",  # str
+    "engine_resource_type": "example_engine_resource_type",  # str
+    "icon": "example_icon",  # str
+    "id": "example_id",  # str
+    "is_editable": True,  # bool
+    "name": "example_name",  # str
+    "ranked": True,  # bool
+    "schema": {},  # dict
+    "semantic_type": "example_semantic_type",  # str
+    "type_name": "example_type_name",  # str
+    "updated_at": "example_updated_at",  # str
+    "use_name_as_identifier": True,  # bool
+})
+```
+
+
+### CatalogTypeSchema
+
+Create an instance: `catalog_type_schema = client.CatalogTypeSchema()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `dict` |  |
+| `attribute` | `list` |  |
+| `category` | `list` |  |
+| `color` | `str` |  |
+| `created_at` | `str` |  |
+| `description` | `str` |  |
+| `dynamic_resource_parameter` | `str` |  |
+| `engine_resource_type` | `str` |  |
+| `estimated_count` | `int` |  |
+| `icon` | `str` |  |
+| `id` | `str` |  |
+| `is_editable` | `bool` |  |
+| `is_team_type` | `bool` |  |
+| `last_synced_at` | `str` |  |
+| `name` | `str` |  |
+| `owning_team_id` | `list` |  |
+| `ranked` | `bool` |  |
+| `registry_type` | `str` |  |
+| `required_integration` | `list` |  |
+| `schema` | `dict` |  |
+| `semantic_type` | `str` |  |
+| `source_repo_url` | `str` |  |
+| `type_name` | `str` |  |
+| `updated_at` | `str` |  |
+| `use_name_as_identifier` | `bool` |  |
+| `version` | `int` |  |
+
+#### Example: Create
+
+```python
+catalog_type_schema = client.CatalogTypeSchema().create({
+    "catalog_type_id": "example_catalog_type_id",  # str
+    "annotation": {},  # dict
+    "attribute": [],  # list
+    "category": [],  # list
+    "color": "example_color",  # str
+    "created_at": "example_created_at",  # str
+    "description": "example_description",  # str
+    "engine_resource_type": "example_engine_resource_type",  # str
+    "icon": "example_icon",  # str
+    "id": "example_id",  # str
+    "is_editable": True,  # bool
+    "name": "example_name",  # str
+    "ranked": True,  # bool
+    "schema": {},  # dict
+    "semantic_type": "example_semantic_type",  # str
+    "type_name": "example_type_name",  # str
+    "updated_at": "example_updated_at",  # str
+    "use_name_as_identifier": True,  # bool
+    "version": 1,  # int
 })
 ```
 
@@ -1268,6 +1928,13 @@ Create an instance: `custom_field = client.CustomField()`
 | `helptext_catalog_attribute_id` | `str` |  |
 | `id` | `str` |  |
 | `name` | `str` |  |
+| `option` | `list` |  |
+| `required` | `str` |  |
+| `required_v2` | `str` |  |
+| `show_before_closure` | `bool` |  |
+| `show_before_creation` | `bool` |  |
+| `show_before_update` | `bool` |  |
+| `show_in_announcement_post` | `bool` |  |
 | `updated_at` | `str` |  |
 
 #### Example: Load
@@ -1293,6 +1960,10 @@ custom_field = client.CustomField().create({
     "fixed_filter": {},  # dict
     "id": "example_id",  # str
     "name": "example_name",  # str
+    "option": [],  # list
+    "show_before_closure": True,  # bool
+    "show_before_creation": True,  # bool
+    "show_before_update": True,  # bool
     "updated_at": "example_updated_at",  # str
 })
 ```
@@ -1341,6 +2012,69 @@ custom_field_option = client.CustomFieldOption().create({
     "id": "example_id",  # str
     "sort_key": 1,  # int
     "value": "example_value",  # str
+})
+```
+
+
+### Escalation
+
+Create an instance: `escalation = client.Escalation()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `str` |  |
+| `creator` | `dict` |  |
+| `description` | `str` |  |
+| `escalation_path_id` | `str` |  |
+| `event` | `list` |  |
+| `id` | `str` |  |
+| `idempotency_key` | `str` |  |
+| `incident_id` | `str` |  |
+| `priority` | `dict` |  |
+| `related_alert` | `list` |  |
+| `related_incident` | `list` |  |
+| `status` | `str` |  |
+| `title` | `str` |  |
+| `updated_at` | `str` |  |
+| `user_id` | `list` |  |
+
+#### Example: Load
+
+```python
+escalation = client.Escalation().load({"id": "escalation_id"})
+```
+
+#### Example: List
+
+```python
+escalations = client.Escalation().list()
+```
+
+#### Example: Create
+
+```python
+escalation = client.Escalation().create({
+    "created_at": "example_created_at",  # str
+    "creator": {},  # dict
+    "event": [],  # list
+    "id": "example_id",  # str
+    "idempotency_key": "example_idempotency_key",  # str
+    "priority": {},  # dict
+    "related_alert": [],  # list
+    "related_incident": [],  # list
+    "status": "example_status",  # str
+    "title": "example_title",  # str
+    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -1440,6 +2174,7 @@ Create an instance: `incident = client.Incident()`
 | `has_debrief` | `bool` |  |
 | `id` | `str` |  |
 | `idempotency_key` | `str` |  |
+| `incident` | `dict` |  |
 | `incident_role_assignment` | `list` |  |
 | `incident_status` | `dict` |  |
 | `incident_status_id` | `str` |  |
@@ -1448,6 +2183,7 @@ Create an instance: `incident = client.Incident()`
 | `incident_type_id` | `str` |  |
 | `mode` | `str` |  |
 | `name` | `str` |  |
+| `notify_incident_channel` | `bool` |  |
 | `permalink` | `str` |  |
 | `postmortem_document_id` | `list` |  |
 | `postmortem_document_url` | `str` |  |
@@ -1459,7 +2195,11 @@ Create an instance: `incident = client.Incident()`
 | `slack_channel_name` | `str` |  |
 | `slack_channel_name_override` | `str` |  |
 | `slack_team_id` | `str` |  |
+| `source_message_channel_id` | `str` |  |
+| `source_message_timestamp` | `str` |  |
+| `status` | `str` |  |
 | `summary` | `str` |  |
+| `timestamp` | `list` |  |
 | `updated_at` | `str` |  |
 | `visibility` | `str` |  |
 | `workload_minutes_late` | `float` |  |
@@ -1489,18 +2229,47 @@ incident = client.Incident().create({
     "external_issue_reference": {},  # dict
     "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
+    "incident": {},  # dict
     "incident_role_assignment": [],  # list
     "incident_status": {},  # dict
     "incident_type": {},  # dict
     "mode": "example_mode",  # str
     "name": "example_name",  # str
+    "notify_incident_channel": True,  # bool
     "reference": "example_reference",  # str
     "severity": {},  # dict
     "slack_channel_id": "example_slack_channel_id",  # str
     "slack_team_id": "example_slack_team_id",  # str
+    "status": "example_status",  # str
     "updated_at": "example_updated_at",  # str
     "visibility": "example_visibility",  # str
 })
+```
+
+
+### IncidentAlert
+
+Create an instance: `incident_alert = client.IncidentAlert()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list()` | List entities, optionally matching the given criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert` | `dict` |  |
+| `alert_route_id` | `str` |  |
+| `id` | `str` |  |
+| `incident` | `dict` |  |
+
+#### Example: List
+
+```python
+incident_alerts = client.IncidentAlert().list()
 ```
 
 
@@ -1665,6 +2434,7 @@ Create an instance: `incident_role = client.IncidentRole()`
 | `id` | `str` |  |
 | `instruction` | `str` |  |
 | `name` | `str` |  |
+| `required` | `bool` |  |
 | `role_type` | `str` |  |
 | `shortform` | `str` |  |
 | `updated_at` | `str` |  |
@@ -1985,6 +2755,267 @@ postmortem_documents = client.PostmortemDocument().list()
 ```
 
 
+### Schedule
+
+Create an instance: `schedule = client.Schedule()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `dict` |  |
+| `config` | `dict` |  |
+| `created_at` | `str` |  |
+| `current_shift` | `list` |  |
+| `holidays_public_config` | `dict` |  |
+| `id` | `str` |  |
+| `name` | `str` |  |
+| `next_shift` | `list` |  |
+| `permalink` | `str` |  |
+| `schedule` | `dict` |  |
+| `team_id` | `list` |  |
+| `timezone` | `str` |  |
+| `updated_at` | `str` |  |
+
+#### Example: Load
+
+```python
+schedule = client.Schedule().load({"id": "schedule_id"})
+```
+
+#### Example: List
+
+```python
+schedules = client.Schedule().list()
+```
+
+#### Example: Create
+
+```python
+schedule = client.Schedule().create({
+    "annotation": {},  # dict
+    "config": {},  # dict
+    "created_at": "example_created_at",  # str
+    "holidays_public_config": {},  # dict
+    "id": "example_id",  # str
+    "name": "example_name",  # str
+    "permalink": "example_permalink",  # str
+    "schedule": {},  # dict
+    "team_id": [],  # list
+    "timezone": "example_timezone",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+
+### ScheduleEntry
+
+Create an instance: `schedule_entry = client.ScheduleEntry()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `pagination_meta` | `dict` |  |
+| `schedule_entry` | `dict` |  |
+
+#### Example: Load
+
+```python
+schedule_entry = client.ScheduleEntry().load()
+```
+
+
+### ScheduleReplica
+
+Create an instance: `schedule_replica = client.ScheduleReplica()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `str` |  |
+| `id` | `str` |  |
+| `last_sync_error` | `str` |  |
+| `last_synced_at` | `str` |  |
+| `mirror_window_day` | `int` |  |
+| `replica_fallback_user_id` | `str` |  |
+| `replica_provider` | `str` |  |
+| `replica_provider_id` | `str` |  |
+| `schedule_id` | `str` |  |
+| `schedule_replica` | `dict` |  |
+| `source` | `list` |  |
+| `updated_at` | `str` |  |
+| `user_status` | `list` |  |
+
+#### Example: Load
+
+```python
+schedule_replica = client.ScheduleReplica().load({"id": "schedule_replica_id", "schedule_id": "schedule_id"})
+```
+
+#### Example: List
+
+```python
+schedule_replicas = client.ScheduleReplica().list()
+```
+
+#### Example: Create
+
+```python
+schedule_replica = client.ScheduleReplica().create({
+    "id": "example_id",  # str
+    "created_at": "example_created_at",  # str
+    "replica_fallback_user_id": "example_replica_fallback_user_id",  # str
+    "replica_provider": "example_replica_provider",  # str
+    "replica_provider_id": "example_replica_provider_id",  # str
+    "schedule_id": "example_schedule_id",  # str
+    "schedule_replica": {},  # dict
+    "source": [],  # list
+    "updated_at": "example_updated_at",  # str
+    "user_status": [],  # list
+})
+```
+
+
+### ScheduleSyncRule
+
+Create an instance: `schedule_sync_rule = client.ScheduleSyncRule()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `dict` |  |
+| `created_at` | `str` |  |
+| `id` | `str` |  |
+| `permanent_member_user_id` | `list` |  |
+| `rotation_id` | `str` |  |
+| `schedule_id` | `str` |  |
+| `schedule_sync_rule` | `dict` |  |
+| `schedule_sync_target` | `dict` |  |
+| `schedule_sync_target_id` | `str` |  |
+| `sync_type` | `str` |  |
+| `updated_at` | `str` |  |
+
+#### Example: Load
+
+```python
+schedule_sync_rule = client.ScheduleSyncRule().load({"id": "schedule_sync_rule_id", "schedule_id": "schedule_id"})
+```
+
+#### Example: List
+
+```python
+schedule_sync_rules = client.ScheduleSyncRule().list()
+```
+
+#### Example: Create
+
+```python
+schedule_sync_rule = client.ScheduleSyncRule().create({
+    "id": "example_id",  # str
+    "created_at": "example_created_at",  # str
+    "permanent_member_user_id": [],  # list
+    "schedule_id": "example_schedule_id",  # str
+    "schedule_sync_rule": {},  # dict
+    "schedule_sync_target": {},  # dict
+    "schedule_sync_target_id": "example_schedule_sync_target_id",  # str
+    "sync_type": "example_sync_type",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+
+### ScheduleSyncTarget
+
+Create an instance: `schedule_sync_target = client.ScheduleSyncTarget()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `add_bot_to_group` | `bool` |  |
+| `annotation` | `dict` |  |
+| `created_at` | `str` |  |
+| `id` | `str` |  |
+| `linked_schedule` | `list` |  |
+| `schedule_sync_target` | `dict` |  |
+| `slack_team_id` | `str` |  |
+| `slack_user_group_id` | `str` |  |
+| `updated_at` | `str` |  |
+
+#### Example: Load
+
+```python
+schedule_sync_target = client.ScheduleSyncTarget().load({"id": "schedule_sync_target_id"})
+```
+
+#### Example: List
+
+```python
+schedule_sync_targets = client.ScheduleSyncTarget().list()
+```
+
+#### Example: Create
+
+```python
+schedule_sync_target = client.ScheduleSyncTarget().create({
+    "add_bot_to_group": True,  # bool
+    "created_at": "example_created_at",  # str
+    "id": "example_id",  # str
+    "linked_schedule": [],  # list
+    "schedule_sync_target": {},  # dict
+    "slack_team_id": "example_slack_team_id",  # str
+    "slack_user_group_id": "example_slack_user_group_id",  # str
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+
 ### Secret
 
 Create an instance: `secret = client.Secret()`
@@ -2033,11 +3064,295 @@ secret = client.Secret().create({
     "created_at": "example_created_at",  # str
     "id": "example_id",  # str
     "name": "example_name",  # str
+    "owning_team_id": [],  # list
     "secret": {},  # dict
     "updated_at": "example_updated_at",  # str
     "value": "example_value",  # str
     "version": [],  # list
 })
+```
+
+
+### Severity
+
+Create an instance: `severity = client.Severity()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `str` |  |
+| `description` | `str` |  |
+| `id` | `str` |  |
+| `name` | `str` |  |
+| `rank` | `int` |  |
+| `updated_at` | `str` |  |
+
+#### Example: Load
+
+```python
+severity = client.Severity().load({"id": "severity_id"})
+```
+
+#### Example: List
+
+```python
+severitys = client.Severity().list()
+```
+
+#### Example: Create
+
+```python
+severity = client.Severity().create({
+    "created_at": "example_created_at",  # str
+    "description": "example_description",  # str
+    "id": "example_id",  # str
+    "name": "example_name",  # str
+    "rank": 1,  # int
+    "updated_at": "example_updated_at",  # str
+})
+```
+
+
+### StatusPage
+
+Create an instance: `status_page = client.StatusPage()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list()` | List entities, optionally matching the given criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `str` |  |
+| `id` | `str` |  |
+| `name` | `str` |  |
+| `public_url` | `str` |  |
+
+#### Example: List
+
+```python
+status_pages = client.StatusPage().list()
+```
+
+
+### StatusPageIncident
+
+Create an instance: `status_page_incident = client.StatusPageIncident()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_impact` | `list` |  |
+| `component_status` | `list` |  |
+| `id` | `str` |  |
+| `idempotency_key` | `str` |  |
+| `incident_status` | `str` |  |
+| `message` | `str` |  |
+| `name` | `str` |  |
+| `notify_subscriber` | `bool` |  |
+| `published_at` | `str` |  |
+| `status_page_id` | `str` |  |
+| `update` | `list` |  |
+
+#### Example: Load
+
+```python
+status_page_incident = client.StatusPageIncident().load({"id": "status_page_incident_id"})
+```
+
+#### Example: List
+
+```python
+status_page_incidents = client.StatusPageIncident().list()
+```
+
+#### Example: Create
+
+```python
+status_page_incident = client.StatusPageIncident().create({
+    "component_impact": [],  # list
+    "id": "example_id",  # str
+    "idempotency_key": "example_idempotency_key",  # str
+    "incident_status": "example_incident_status",  # str
+    "message": "example_message",  # str
+    "name": "example_name",  # str
+    "notify_subscriber": True,  # bool
+    "published_at": "example_published_at",  # str
+    "status_page_id": "example_status_page_id",  # str
+    "update": [],  # list
+})
+```
+
+
+### StatusPageIncidentUpdate
+
+Create an instance: `status_page_incident_update = client.StatusPageIncidentUpdate()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `list` |  |
+| `incident_status` | `str` |  |
+| `message` | `str` |  |
+| `notify_subscriber` | `bool` |  |
+| `status_page_incident_id` | `str` |  |
+
+#### Example: Create
+
+```python
+status_page_incident_update = client.StatusPageIncidentUpdate().create({
+    "message": "example_message",  # str
+    "notify_subscriber": True,  # bool
+    "status_page_incident_id": "example_status_page_incident_id",  # str
+})
+```
+
+
+### StatusPageMaintenance
+
+Create an instance: `status_page_maintenance = client.StatusPageMaintenance()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `affected_component_id` | `list` |  |
+| `component_maintenance_period` | `list` |  |
+| `end_at` | `str` |  |
+| `id` | `str` |  |
+| `idempotency_key` | `str` |  |
+| `maintenance_status` | `str` |  |
+| `message` | `str` |  |
+| `name` | `str` |  |
+| `notify_subscriber` | `bool` |  |
+| `published_at` | `str` |  |
+| `start_at` | `str` |  |
+| `status_page_id` | `str` |  |
+| `update` | `list` |  |
+
+#### Example: Load
+
+```python
+status_page_maintenance = client.StatusPageMaintenance().load({"id": "status_page_maintenance_id"})
+```
+
+#### Example: List
+
+```python
+status_page_maintenances = client.StatusPageMaintenance().list()
+```
+
+#### Example: Create
+
+```python
+status_page_maintenance = client.StatusPageMaintenance().create({
+    "affected_component_id": [],  # list
+    "component_maintenance_period": [],  # list
+    "end_at": "example_end_at",  # str
+    "id": "example_id",  # str
+    "idempotency_key": "example_idempotency_key",  # str
+    "maintenance_status": "example_maintenance_status",  # str
+    "message": "example_message",  # str
+    "name": "example_name",  # str
+    "notify_subscriber": True,  # bool
+    "published_at": "example_published_at",  # str
+    "start_at": "example_start_at",  # str
+    "status_page_id": "example_status_page_id",  # str
+    "update": [],  # list
+})
+```
+
+
+### StatusPageMaintenanceUpdate
+
+Create an instance: `status_page_maintenance_update = client.StatusPageMaintenanceUpdate()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `list` |  |
+| `maintenance_status` | `str` |  |
+| `message` | `str` |  |
+| `notify_subscriber` | `bool` |  |
+| `status_page_maintenance_id` | `str` |  |
+
+#### Example: Create
+
+```python
+status_page_maintenance_update = client.StatusPageMaintenanceUpdate().create({
+    "message": "example_message",  # str
+    "notify_subscriber": True,  # bool
+    "status_page_maintenance_id": "example_status_page_maintenance_id",  # str
+})
+```
+
+
+### StatusPageStructure
+
+Create an instance: `status_page_structure = client.StatusPageStructure()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `item` | `list` |  |
+
+#### Example: Load
+
+```python
+status_page_structure = client.StatusPageStructure().load({"id": "status_page_structure_id"})
 ```
 
 
@@ -2072,6 +3387,32 @@ team = client.Team().load({"id": "team_id"})
 ```python
 teams = client.Team().list()
 ```
+
+
+### TelemetryDataSource
+
+Create an instance: `telemetry_data_source = client.TelemetryDataSource()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `str` |  |
+| `datadog_config` | `dict` |  |
+| `enabled` | `bool` |  |
+| `grafana_config` | `dict` |  |
+| `id` | `str` |  |
+| `name` | `str` |  |
+| `provider` | `str` |  |
+| `source_type` | `str` |  |
+| `updated_at` | `str` |  |
+| `version` | `str` |  |
 
 
 ### User
@@ -2308,11 +3649,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-incidenttype = client.IncidentType()
-incidenttype.list()
+incidentrole = client.IncidentRole()
+incidentrole.list()
 
-# incidenttype.data_get() now returns the incidenttype data from the last list
-# incidenttype.match_get() returns the last match criteria
+# incidentrole.data_get() now returns the incidentrole data from the last list
+# incidentrole.match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

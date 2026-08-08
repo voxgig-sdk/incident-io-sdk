@@ -49,7 +49,7 @@ describe('IncidentRoleDirect', async () => {
     }
 
     const result: any = await client.direct({
-      path: 'v2/incident_roles/{id}',
+      path: 'v1/incident_roles/{id}',
       method: 'GET',
       params,
       query,
@@ -82,7 +82,7 @@ describe('IncidentRoleDirect', async () => {
     const query: any = {}
 
     const result: any = await client.direct({
-      path: 'v2/incident_roles',
+      path: 'v1/incident_roles',
       method: 'GET',
       params,
       query,

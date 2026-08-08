@@ -1,0 +1,61 @@
+# Entity: status_page_structure
+
+main: kit: entity: status_page_structure: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "item"
+      req: true
+      type: "`$ARRAY`"
+    }
+  ]
+
+  name: "status_page_structure"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "abc123"
+                kind: "param"
+                name: "id"
+                orig: "status_page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/status_page_structures/{status_page_id}"
+          parts: [
+            "v2"
+            "status_page_structures"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              status_page_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.current_structure`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

@@ -1,0 +1,395 @@
+# Entity: catalog_type
+
+main: kit: entity: catalog_type: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "annotation"
+      op: {
+        create: {
+          req: false
+          type: "`$OBJECT`"
+        }
+        update: {
+          req: false
+          type: "`$OBJECT`"
+        }
+      }
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "category"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "color"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+        update: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "description"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "dynamic_resource_parameter"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "engine_resource_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "estimated_count"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "icon"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+        update: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "is_editable"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_team_type"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "last_synced_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "owning_team_id"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "ranked"
+      op: {
+        create: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+        update: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+      }
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "registry_type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "required_integration"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "schema"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "semantic_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "source_repo_url"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "type_name"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "use_name_as_identifier"
+      op: {
+        create: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+        update: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+      }
+      req: true
+      type: "`$BOOLEAN`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "catalog_type"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/catalog_types"
+          parts: [
+            "v2"
+            "catalog_types"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_type`"
+          }
+        }
+        {
+          method: "POST"
+          orig: "/v3/catalog_types"
+          parts: [
+            "v3"
+            "catalog_types"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_type`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/v2/catalog_types"
+          parts: [
+            "v2"
+            "catalog_types"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_types`"
+          }
+        }
+        {
+          method: "GET"
+          orig: "/v3/catalog_types"
+          parts: [
+            "v3"
+            "catalog_types"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_types`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/catalog_types/{id}"
+          parts: [
+            "v2"
+            "catalog_types"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_type`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v3/catalog_types/{id}"
+          parts: [
+            "v3"
+            "catalog_types"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_type`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/catalog_types/{id}"
+          parts: [
+            "v2"
+            "catalog_types"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_type`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v3/catalog_types/{id}"
+          parts: [
+            "v3"
+            "catalog_types"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_type`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

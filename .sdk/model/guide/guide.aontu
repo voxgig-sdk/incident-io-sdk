@@ -5,4 +5,45 @@
 @"base-guide.aontu"
 
 
+# ---------------------------------------------------------------------------
+# Entity corrections.
+#
+# incident.io names response envelopes <Namespace><Verb>ResultV<N>. apidef
+# resolves most of them back to the real resource, but these last few cannot
+# be: their operation namespace does not match any path segment
+# (/v2/escalation_paths is served by "Escalations V2#ListPaths"), or the
+# operation is namespace-only with no object (Catalog V2, Utilities V1).
+#
+# Deactivate them here. base-guide.aontu is merged, not overwritten, so these
+# survive regeneration.
+# ---------------------------------------------------------------------------
 
+guide: entity: {
+  alert_events_v2: active: false
+  catalog_v2: active: false
+  catalog_v3: active: false
+  escalations_create_path_result_v2: active: false
+  escalations_list_paths_result_v2: active: false
+  escalations_show_path_result_v2: active: false
+  escalations_update_path_result_v2: active: false
+  escalations_v2: active: false
+  follow_ups_connect_external_issue_result_v2: active: false
+  heartbeat_v2: active: false
+  incident_memberships_v1: active: false
+  incidents_import_postmortem_document_result_v2: active: false
+  postmortem_documents_attach_result_v1: active: false
+  postmortem_documents_show_content_result_v1: active: false
+  schedules_create_override_result_v2: active: false
+  schedules_list_overrides_result_v2: active: false
+  schedules_preview_schedule_entries_result_v2: active: false
+  schedules_v2: active: false
+  severities_v1: active: false
+  status_pages_create_status_page_retrospective_incident_result_v2: active: false
+  status_pages_list_response_incidents_result_v1: active: false
+  users_list_notification_methods_result_v2: active: false
+  users_list_notification_rules_result_v2: active: false
+  users_show_paging_provider_result_v2: active: false
+  users_v2: active: false
+  utilities_identity_result_v1: active: false
+  utilities_v1: active: false
+}

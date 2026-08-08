@@ -21,7 +21,7 @@ describe("CustomFieldDirect", function()
 
 
     local result, err = client:direct({
-      path = "v2/custom_fields",
+      path = "v1/custom_fields",
       method = "GET",
       params = {},
     })
@@ -70,7 +70,7 @@ describe("CustomFieldDirect", function()
     end
 
     local result, err = client:direct({
-      path = "v2/custom_fields/{id}",
+      path = "v1/custom_fields/{id}",
       method = "GET",
       params = params,
       query = query,

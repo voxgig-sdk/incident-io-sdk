@@ -56,6 +56,41 @@ main: kit: entity: custom_field: {
       type: "`$STRING`"
     }
     {
+      name: "option"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "required"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "required_v2"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "show_before_closure"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "show_before_creation"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "show_before_update"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "show_in_announcement_post"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
       name: "updated_at"
       req: true
       type: "`$STRING`"
@@ -72,6 +107,18 @@ main: kit: entity: custom_field: {
     create: {
       name: "create"
       points: [
+        {
+          method: "POST"
+          orig: "/v1/custom_fields"
+          parts: [
+            "v1"
+            "custom_fields"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.custom_field`"
+          }
+        }
         {
           method: "POST"
           orig: "/v2/custom_fields"
@@ -91,6 +138,18 @@ main: kit: entity: custom_field: {
       points: [
         {
           method: "GET"
+          orig: "/v1/custom_fields"
+          parts: [
+            "v1"
+            "custom_fields"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.custom_fields`"
+          }
+        }
+        {
+          method: "GET"
           orig: "/v2/custom_fields"
           parts: [
             "v2"
@@ -106,6 +165,36 @@ main: kit: entity: custom_field: {
     load: {
       name: "load"
       points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v1/custom_fields/{id}"
+          parts: [
+            "v1"
+            "custom_fields"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.custom_field`"
+          }
+        }
         {
           args: {
             params: [
@@ -155,6 +244,36 @@ main: kit: entity: custom_field: {
             ]
           }
           method: "DELETE"
+          orig: "/v1/custom_fields/{id}"
+          parts: [
+            "v1"
+            "custom_fields"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
           orig: "/v2/custom_fields/{id}"
           parts: [
             "v2"
@@ -176,6 +295,36 @@ main: kit: entity: custom_field: {
     update: {
       name: "update"
       points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v1/custom_fields/{id}"
+          parts: [
+            "v1"
+            "custom_fields"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.custom_field`"
+          }
+        }
         {
           args: {
             params: [

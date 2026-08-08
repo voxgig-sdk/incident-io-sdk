@@ -53,17 +53,35 @@ func init() {
 	core.NewApiKeyEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewApiKeyEntity(client, entopts)
 	}
+	core.NewCatalogEntryEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewCatalogEntryEntity(client, entopts)
+	}
+	core.NewCatalogResourceEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewCatalogResourceEntity(client, entopts)
+	}
+	core.NewCatalogTypeEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewCatalogTypeEntity(client, entopts)
+	}
+	core.NewCatalogTypeSchemaEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewCatalogTypeSchemaEntity(client, entopts)
+	}
 	core.NewCustomFieldEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewCustomFieldEntity(client, entopts)
 	}
 	core.NewCustomFieldOptionEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewCustomFieldOptionEntity(client, entopts)
 	}
+	core.NewEscalationEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewEscalationEntity(client, entopts)
+	}
 	core.NewFollowUpEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewFollowUpEntity(client, entopts)
 	}
 	core.NewIncidentEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewIncidentEntity(client, entopts)
+	}
+	core.NewIncidentAlertEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewIncidentAlertEntity(client, entopts)
 	}
 	core.NewIncidentAttachmentEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewIncidentAttachmentEntity(client, entopts)
@@ -104,11 +122,50 @@ func init() {
 	core.NewPostmortemDocumentEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewPostmortemDocumentEntity(client, entopts)
 	}
+	core.NewScheduleEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewScheduleEntity(client, entopts)
+	}
+	core.NewScheduleEntryEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewScheduleEntryEntity(client, entopts)
+	}
+	core.NewScheduleReplicaEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewScheduleReplicaEntity(client, entopts)
+	}
+	core.NewScheduleSyncRuleEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewScheduleSyncRuleEntity(client, entopts)
+	}
+	core.NewScheduleSyncTargetEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewScheduleSyncTargetEntity(client, entopts)
+	}
 	core.NewSecretEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewSecretEntity(client, entopts)
 	}
+	core.NewSeverityEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewSeverityEntity(client, entopts)
+	}
+	core.NewStatusPageEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPageEntity(client, entopts)
+	}
+	core.NewStatusPageIncidentEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPageIncidentEntity(client, entopts)
+	}
+	core.NewStatusPageIncidentUpdateEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPageIncidentUpdateEntity(client, entopts)
+	}
+	core.NewStatusPageMaintenanceEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPageMaintenanceEntity(client, entopts)
+	}
+	core.NewStatusPageMaintenanceUpdateEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPageMaintenanceUpdateEntity(client, entopts)
+	}
+	core.NewStatusPageStructureEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPageStructureEntity(client, entopts)
+	}
 	core.NewTeamEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewTeamEntity(client, entopts)
+	}
+	core.NewTelemetryDataSourceEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewTelemetryDataSourceEntity(client, entopts)
 	}
 	core.NewUserEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewUserEntity(client, entopts)

@@ -1,0 +1,78 @@
+# Entity: schedule_entry
+
+main: kit: entity: schedule_entry: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "pagination_meta"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "schedule_entry"
+      req: true
+      type: "`$OBJECT`"
+    }
+  ]
+
+  name: "schedule_entry"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "2021-01-01T00:00:00Z"
+                kind: "query"
+                name: "entry_window_end"
+                orig: "entry_window_end"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "2021-01-01T00:00:00Z"
+                kind: "query"
+                name: "entry_window_start"
+                orig: "entry_window_start"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "schedule_id"
+                orig: "schedule_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/schedule_entries"
+          parts: [
+            "v2"
+            "schedule_entries"
+          ]
+          select: {
+            exist: [
+              "entry_window_end"
+              "entry_window_start"
+              "schedule_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

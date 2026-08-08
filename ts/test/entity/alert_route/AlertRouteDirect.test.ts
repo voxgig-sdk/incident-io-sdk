@@ -49,7 +49,7 @@ describe('AlertRouteDirect', async () => {
     }
 
     const result: any = await client.direct({
-      path: 'v3/alert_routes/{id}',
+      path: 'v2/alert_routes/{id}',
       method: 'GET',
       params,
       query,
@@ -80,9 +80,12 @@ describe('AlertRouteDirect', async () => {
 
     const params: any = {}
     const query: any = {}
+    if (setup.live) {
+      query.page_size = 25
+    }
 
     const result: any = await client.direct({
-      path: 'v3/alert_routes',
+      path: 'v2/alert_routes',
       method: 'GET',
       params,
       query,

@@ -31,7 +31,7 @@ func TestIncidentRoleDirect(t *testing.T) {
 
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v2/incident_roles",
+			"path":   "v1/incident_roles",
 			"method": "GET",
 			"params": map[string]any{},
 		})
@@ -100,7 +100,7 @@ func TestIncidentRoleDirect(t *testing.T) {
 		}
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v2/incident_roles/{id}",
+			"path":   "v1/incident_roles/{id}",
 			"method": "GET",
 			"params": params,
 			"query":  query,

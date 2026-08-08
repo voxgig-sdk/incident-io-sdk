@@ -67,7 +67,7 @@ class TestIncidentDirect:
             params["id"] = "direct01"
 
         result = client.direct({
-            "path": "v2/incidents/{id}",
+            "path": "v1/incidents/{id}",
             "method": "GET",
             "params": params,
             "query": query,

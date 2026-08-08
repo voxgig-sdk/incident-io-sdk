@@ -35,7 +35,7 @@ describe('CustomFieldDirect', async () => {
     const params = {}
     if (setup.live) {
       const listResult = await client.direct({
-        path: 'v2/custom_fields',
+        path: 'v1/custom_fields',
         method: 'GET',
         params: {
 
@@ -53,7 +53,7 @@ describe('CustomFieldDirect', async () => {
     }
 
     const result = await client.direct({
-      path: 'v2/custom_fields/{id}',
+      path: 'v1/custom_fields/{id}',
       method: 'GET',
       params,
     })
@@ -77,7 +77,7 @@ describe('CustomFieldDirect', async () => {
     const params = {}
 
     const result = await client.direct({
-      path: 'v2/custom_fields',
+      path: 'v1/custom_fields',
       method: 'GET',
       params,
     })

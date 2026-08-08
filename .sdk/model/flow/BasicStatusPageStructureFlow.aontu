@@ -1,0 +1,32 @@
+# BasicStatusPageStructureFlow
+
+main: kit: flow: BasicStatusPageStructureFlow:
+{
+  entity: "status_page_structure",
+  kind: "basic",
+  name: "BasicStatusPageStructureFlow",
+  step: [
+    {
+      input: {
+        ref: "status_page_structure_ref01",
+        srcdatavar: "status_page_structure_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "status_page_structure01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_page_structure_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPageStructureFlow"
+}

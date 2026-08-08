@@ -100,7 +100,7 @@ func TestIncidentDirect(t *testing.T) {
 		}
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v2/incidents/{id}",
+			"path":   "v1/incidents/{id}",
 			"method": "GET",
 			"params": params,
 			"query":  query,

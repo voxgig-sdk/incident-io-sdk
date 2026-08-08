@@ -2,47 +2,51 @@
   "existing": {
     "incident_role": {
       "INCIDENT_ROLE00": {
-        "created_at": "s50",
-        "description": "s51",
+        "created_at": "s5a",
+        "description": "s5b",
         "id": "INCIDENT_ROLE00",
-        "instruction": "s53",
-        "name": "s54",
-        "role_type": "s55",
-        "shortform": "s56",
-        "updated_at": "s57"
+        "instruction": "s5d",
+        "name": "s5e",
+        "required": false,
+        "role_type": "s60",
+        "shortform": "s61",
+        "updated_at": "s62"
       },
       "INCIDENT_ROLE01": {
-        "created_at": "sa0",
-        "description": "sa1",
+        "created_at": "sb4",
+        "description": "sb5",
         "id": "INCIDENT_ROLE01",
-        "instruction": "sa3",
-        "name": "sa4",
-        "role_type": "sa5",
-        "shortform": "sa6",
-        "updated_at": "sa7"
+        "instruction": "sb7",
+        "name": "sb8",
+        "required": false,
+        "role_type": "sba",
+        "shortform": "sbb",
+        "updated_at": "sbc"
       },
       "INCIDENT_ROLE02": {
-        "created_at": "sf0",
-        "description": "sf1",
+        "created_at": "s10e",
+        "description": "s10f",
         "id": "INCIDENT_ROLE02",
-        "instruction": "sf3",
-        "name": "sf4",
-        "role_type": "sf5",
-        "shortform": "sf6",
-        "updated_at": "sf7"
+        "instruction": "s111",
+        "name": "s112",
+        "required": false,
+        "role_type": "s114",
+        "shortform": "s115",
+        "updated_at": "s116"
       }
     }
   },
   "new": {
     "incident_role": {
       "incident_role_ref01": {
-        "created_at": "s140",
-        "description": "s141",
-        "instruction": "s143",
-        "name": "s144",
-        "role_type": "s145",
-        "shortform": "s146",
-        "updated_at": "s147"
+        "created_at": "s168",
+        "description": "s169",
+        "instruction": "s16b",
+        "name": "s16c",
+        "required": false,
+        "role_type": "s16e",
+        "shortform": "s16f",
+        "updated_at": "s170"
       }
     }
   }

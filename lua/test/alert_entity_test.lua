@@ -60,7 +60,7 @@ describe("AlertEntity", function()
     local setup = alert_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"list", "load"}) do
+    for _, _op in ipairs({"create", "list", "load"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "alert." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
@@ -75,21 +75,28 @@ describe("AlertEntity", function()
     end
     local client = setup.client
 
-    -- Bootstrap entity data from existing test data.
-    local alert_ref01_data_raw = vs.items(helpers.to_map(
-      vs.getpath(setup.data, "existing.alert")))
-    local alert_ref01_data = nil
-    if #alert_ref01_data_raw > 0 then
-      alert_ref01_data = helpers.to_map(alert_ref01_data_raw[1][2])
-    end
+    -- CREATE
+    local alert_ref01_ent = client:Alert(nil)
+    local alert_ref01_data = helpers.to_map(vs.getprop(
+      vs.getpath(setup.data, "new.alert"), "alert_ref01"))
+
+    local alert_ref01_data_result, err = alert_ref01_ent:create(alert_ref01_data, nil)
+    assert.is_nil(err)
+    alert_ref01_data = helpers.to_map(alert_ref01_data_result)
+    assert.is_not_nil(alert_ref01_data)
+    assert.is_not_nil(alert_ref01_data["id"])
 
     -- LIST
-    local alert_ref01_ent = client:Alert(nil)
     local alert_ref01_match = {}
 
     local alert_ref01_list_result, err = alert_ref01_ent:list(alert_ref01_match, nil)
     assert.is_nil(err)
     assert.is_table(alert_ref01_list_result)
+
+    local found_item = vs.select(
+      runner.entity_list_to_data(alert_ref01_list_result),
+      { id = alert_ref01_data["id"] })
+    assert.is_false(vs.isempty(found_item))
 
     -- LOAD
     local alert_ref01_match_dt0 = {

@@ -1,0 +1,75 @@
+# Entity: catalog_resource
+
+main: kit: entity: catalog_resource: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "category"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "description"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "engine_resource_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "label"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "value_docstring"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "catalog_resource"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          method: "GET"
+          orig: "/v2/catalog_resources"
+          parts: [
+            "v2"
+            "catalog_resources"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.resources`"
+          }
+        }
+        {
+          method: "GET"
+          orig: "/v3/catalog_resources"
+          parts: [
+            "v3"
+            "catalog_resources"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.resources`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

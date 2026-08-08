@@ -1,0 +1,52 @@
+# BasicStatusPageMaintenanceFlow
+
+main: kit: flow: BasicStatusPageMaintenanceFlow:
+{
+  entity: "status_page_maintenance",
+  kind: "basic",
+  name: "BasicStatusPageMaintenanceFlow",
+  step: [
+    {
+      input: {
+        ref: "status_page_maintenance_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "status_page_maintenance_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "status_page_maintenance_ref01",
+        srcdatavar: "status_page_maintenance_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "status_page_maintenance01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_page_maintenance_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPageMaintenanceFlow"
+}

@@ -1,0 +1,41 @@
+{
+  "existing": {
+    "severity": {
+      "SEVERITY00": {
+        "created_at": "s3c",
+        "description": "s3d",
+        "id": "SEVERITY00",
+        "name": "s3f",
+        "rank": "s40",
+        "updated_at": "s41"
+      },
+      "SEVERITY01": {
+        "created_at": "s78",
+        "description": "s79",
+        "id": "SEVERITY01",
+        "name": "s7b",
+        "rank": "s7c",
+        "updated_at": "s7d"
+      },
+      "SEVERITY02": {
+        "created_at": "sb4",
+        "description": "sb5",
+        "id": "SEVERITY02",
+        "name": "sb7",
+        "rank": "sb8",
+        "updated_at": "sb9"
+      }
+    }
+  },
+  "new": {
+    "severity": {
+      "severity_ref01": {
+        "created_at": "sf0",
+        "description": "sf1",
+        "name": "sf3",
+        "rank": "sf4",
+        "updated_at": "sf5"
+      }
+    }
+  }
+}

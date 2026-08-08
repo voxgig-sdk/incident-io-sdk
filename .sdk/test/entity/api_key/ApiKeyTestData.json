@@ -2,63 +2,67 @@
   "existing": {
     "api_key": {
       "API_KEY00": {
-        "comment": "s78",
-        "created_at": "s79",
+        "comment": "s82",
+        "created_at": "s83",
         "creator": {},
+        "grace_period_minute": "s85",
         "id": "API_KEY00",
-        "last_used_at": "s7c",
-        "name": "s7d",
+        "last_used_at": "s87",
+        "name": "s88",
         "role": [],
         "role_name": [],
         "team_id": "TEAM01",
         "team_role": [],
         "team_role_name": [],
-        "token_last_issued_at": "s83"
+        "token_last_issued_at": "s8e"
       },
       "API_KEY01": {
-        "comment": "sf0",
-        "created_at": "sf1",
+        "comment": "s104",
+        "created_at": "s105",
         "creator": {},
+        "grace_period_minute": "s107",
         "id": "API_KEY01",
-        "last_used_at": "sf4",
-        "name": "sf5",
+        "last_used_at": "s109",
+        "name": "s10a",
         "role": [],
         "role_name": [],
         "team_id": "TEAM01",
         "team_role": [],
         "team_role_name": [],
-        "token_last_issued_at": "sfb"
+        "token_last_issued_at": "s110"
       },
       "API_KEY02": {
-        "comment": "s168",
-        "created_at": "s169",
+        "comment": "s186",
+        "created_at": "s187",
         "creator": {},
+        "grace_period_minute": "s189",
         "id": "API_KEY02",
-        "last_used_at": "s16c",
-        "name": "s16d",
+        "last_used_at": "s18b",
+        "name": "s18c",
         "role": [],
         "role_name": [],
         "team_id": "TEAM01",
         "team_role": [],
         "team_role_name": [],
-        "token_last_issued_at": "s173"
+        "token_last_issued_at": "s192"
       }
     }
   },
   "new": {
     "api_key": {
       "api_key_ref01": {
-        "comment": "s1e0",
-        "created_at": "s1e1",
+        "comment": "s208",
+        "created_at": "s209",
         "creator": {},
-        "last_used_at": "s1e4",
-        "name": "s1e5",
+        "grace_period_minute": "s20b",
+        "last_used_at": "s20d",
+        "name": "s20e",
         "role": [],
         "role_name": [],
         "team_id": "TEAM01",
         "team_role": [],
         "team_role_name": [],
-        "token_last_issued_at": "s1eb"
+        "token_last_issued_at": "s214"
       }
     }
   }

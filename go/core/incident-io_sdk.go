@@ -307,6 +307,38 @@ func (sdk *IncidentIoSDK) ApiKey(data map[string]any) IncidentIoEntity {
 }
 
 
+// CatalogEntry returns a CatalogEntry entity bound to this client.
+// Idiomatic usage: client.CatalogEntry(nil).List(nil, nil) or
+// client.CatalogEntry(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) CatalogEntry(data map[string]any) IncidentIoEntity {
+	return NewCatalogEntryEntityFunc(sdk, data)
+}
+
+
+// CatalogResource returns a CatalogResource entity bound to this client.
+// Idiomatic usage: client.CatalogResource(nil).List(nil, nil) or
+// client.CatalogResource(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) CatalogResource(data map[string]any) IncidentIoEntity {
+	return NewCatalogResourceEntityFunc(sdk, data)
+}
+
+
+// CatalogType returns a CatalogType entity bound to this client.
+// Idiomatic usage: client.CatalogType(nil).List(nil, nil) or
+// client.CatalogType(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) CatalogType(data map[string]any) IncidentIoEntity {
+	return NewCatalogTypeEntityFunc(sdk, data)
+}
+
+
+// CatalogTypeSchema returns a CatalogTypeSchema entity bound to this client.
+// Idiomatic usage: client.CatalogTypeSchema(nil).List(nil, nil) or
+// client.CatalogTypeSchema(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) CatalogTypeSchema(data map[string]any) IncidentIoEntity {
+	return NewCatalogTypeSchemaEntityFunc(sdk, data)
+}
+
+
 // CustomField returns a CustomField entity bound to this client.
 // Idiomatic usage: client.CustomField(nil).List(nil, nil) or
 // client.CustomField(nil).Load(map[string]any{"id": ...}, nil).
@@ -323,6 +355,14 @@ func (sdk *IncidentIoSDK) CustomFieldOption(data map[string]any) IncidentIoEntit
 }
 
 
+// Escalation returns a Escalation entity bound to this client.
+// Idiomatic usage: client.Escalation(nil).List(nil, nil) or
+// client.Escalation(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) Escalation(data map[string]any) IncidentIoEntity {
+	return NewEscalationEntityFunc(sdk, data)
+}
+
+
 // FollowUp returns a FollowUp entity bound to this client.
 // Idiomatic usage: client.FollowUp(nil).List(nil, nil) or
 // client.FollowUp(nil).Load(map[string]any{"id": ...}, nil).
@@ -336,6 +376,14 @@ func (sdk *IncidentIoSDK) FollowUp(data map[string]any) IncidentIoEntity {
 // client.Incident(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) Incident(data map[string]any) IncidentIoEntity {
 	return NewIncidentEntityFunc(sdk, data)
+}
+
+
+// IncidentAlert returns a IncidentAlert entity bound to this client.
+// Idiomatic usage: client.IncidentAlert(nil).List(nil, nil) or
+// client.IncidentAlert(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) IncidentAlert(data map[string]any) IncidentIoEntity {
+	return NewIncidentAlertEntityFunc(sdk, data)
 }
 
 
@@ -443,6 +491,46 @@ func (sdk *IncidentIoSDK) PostmortemDocument(data map[string]any) IncidentIoEnti
 }
 
 
+// Schedule returns a Schedule entity bound to this client.
+// Idiomatic usage: client.Schedule(nil).List(nil, nil) or
+// client.Schedule(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) Schedule(data map[string]any) IncidentIoEntity {
+	return NewScheduleEntityFunc(sdk, data)
+}
+
+
+// ScheduleEntry returns a ScheduleEntry entity bound to this client.
+// Idiomatic usage: client.ScheduleEntry(nil).List(nil, nil) or
+// client.ScheduleEntry(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) ScheduleEntry(data map[string]any) IncidentIoEntity {
+	return NewScheduleEntryEntityFunc(sdk, data)
+}
+
+
+// ScheduleReplica returns a ScheduleReplica entity bound to this client.
+// Idiomatic usage: client.ScheduleReplica(nil).List(nil, nil) or
+// client.ScheduleReplica(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) ScheduleReplica(data map[string]any) IncidentIoEntity {
+	return NewScheduleReplicaEntityFunc(sdk, data)
+}
+
+
+// ScheduleSyncRule returns a ScheduleSyncRule entity bound to this client.
+// Idiomatic usage: client.ScheduleSyncRule(nil).List(nil, nil) or
+// client.ScheduleSyncRule(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) ScheduleSyncRule(data map[string]any) IncidentIoEntity {
+	return NewScheduleSyncRuleEntityFunc(sdk, data)
+}
+
+
+// ScheduleSyncTarget returns a ScheduleSyncTarget entity bound to this client.
+// Idiomatic usage: client.ScheduleSyncTarget(nil).List(nil, nil) or
+// client.ScheduleSyncTarget(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) ScheduleSyncTarget(data map[string]any) IncidentIoEntity {
+	return NewScheduleSyncTargetEntityFunc(sdk, data)
+}
+
+
 // Secret returns a Secret entity bound to this client.
 // Idiomatic usage: client.Secret(nil).List(nil, nil) or
 // client.Secret(nil).Load(map[string]any{"id": ...}, nil).
@@ -451,11 +539,75 @@ func (sdk *IncidentIoSDK) Secret(data map[string]any) IncidentIoEntity {
 }
 
 
+// Severity returns a Severity entity bound to this client.
+// Idiomatic usage: client.Severity(nil).List(nil, nil) or
+// client.Severity(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) Severity(data map[string]any) IncidentIoEntity {
+	return NewSeverityEntityFunc(sdk, data)
+}
+
+
+// StatusPage returns a StatusPage entity bound to this client.
+// Idiomatic usage: client.StatusPage(nil).List(nil, nil) or
+// client.StatusPage(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPage(data map[string]any) IncidentIoEntity {
+	return NewStatusPageEntityFunc(sdk, data)
+}
+
+
+// StatusPageIncident returns a StatusPageIncident entity bound to this client.
+// Idiomatic usage: client.StatusPageIncident(nil).List(nil, nil) or
+// client.StatusPageIncident(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPageIncident(data map[string]any) IncidentIoEntity {
+	return NewStatusPageIncidentEntityFunc(sdk, data)
+}
+
+
+// StatusPageIncidentUpdate returns a StatusPageIncidentUpdate entity bound to this client.
+// Idiomatic usage: client.StatusPageIncidentUpdate(nil).List(nil, nil) or
+// client.StatusPageIncidentUpdate(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPageIncidentUpdate(data map[string]any) IncidentIoEntity {
+	return NewStatusPageIncidentUpdateEntityFunc(sdk, data)
+}
+
+
+// StatusPageMaintenance returns a StatusPageMaintenance entity bound to this client.
+// Idiomatic usage: client.StatusPageMaintenance(nil).List(nil, nil) or
+// client.StatusPageMaintenance(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPageMaintenance(data map[string]any) IncidentIoEntity {
+	return NewStatusPageMaintenanceEntityFunc(sdk, data)
+}
+
+
+// StatusPageMaintenanceUpdate returns a StatusPageMaintenanceUpdate entity bound to this client.
+// Idiomatic usage: client.StatusPageMaintenanceUpdate(nil).List(nil, nil) or
+// client.StatusPageMaintenanceUpdate(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPageMaintenanceUpdate(data map[string]any) IncidentIoEntity {
+	return NewStatusPageMaintenanceUpdateEntityFunc(sdk, data)
+}
+
+
+// StatusPageStructure returns a StatusPageStructure entity bound to this client.
+// Idiomatic usage: client.StatusPageStructure(nil).List(nil, nil) or
+// client.StatusPageStructure(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPageStructure(data map[string]any) IncidentIoEntity {
+	return NewStatusPageStructureEntityFunc(sdk, data)
+}
+
+
 // Team returns a Team entity bound to this client.
 // Idiomatic usage: client.Team(nil).List(nil, nil) or
 // client.Team(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) Team(data map[string]any) IncidentIoEntity {
 	return NewTeamEntityFunc(sdk, data)
+}
+
+
+// TelemetryDataSource returns a TelemetryDataSource entity bound to this client.
+// Idiomatic usage: client.TelemetryDataSource(nil).List(nil, nil) or
+// client.TelemetryDataSource(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) TelemetryDataSource(data map[string]any) IncidentIoEntity {
+	return NewTelemetryDataSourceEntityFunc(sdk, data)
 }
 
 

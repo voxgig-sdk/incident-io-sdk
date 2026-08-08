@@ -1,0 +1,58 @@
+# Entity: status_page_maintenance_update
+
+main: kit: entity: status_page_maintenance_update: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "component_status"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "maintenance_status"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "message"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "notify_subscriber"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "status_page_maintenance_id"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  name: "status_page_maintenance_update"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/status_page_maintenance_updates"
+          parts: [
+            "v2"
+            "status_page_maintenance_updates"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.status_page_maintenance_update`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

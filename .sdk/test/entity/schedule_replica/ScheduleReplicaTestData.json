@@ -1,0 +1,69 @@
+{
+  "existing": {
+    "schedule_replica": {
+      "SCHEDULE_REPLICA00": {
+        "created_at": "s82",
+        "id": "SCHEDULE_REPLICA00",
+        "last_sync_error": "s84",
+        "last_synced_at": "s85",
+        "mirror_window_day": "s86",
+        "replica_fallback_user_id": "REPLICA_FALLBACK_USER01",
+        "replica_provider": "s88",
+        "replica_provider_id": "REPLICA_PROVIDER01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_replica": {},
+        "source": [],
+        "updated_at": "s8d",
+        "user_status": []
+      },
+      "SCHEDULE_REPLICA01": {
+        "created_at": "s104",
+        "id": "SCHEDULE_REPLICA01",
+        "last_sync_error": "s106",
+        "last_synced_at": "s107",
+        "mirror_window_day": "s108",
+        "replica_fallback_user_id": "REPLICA_FALLBACK_USER01",
+        "replica_provider": "s10a",
+        "replica_provider_id": "REPLICA_PROVIDER01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_replica": {},
+        "source": [],
+        "updated_at": "s10f",
+        "user_status": []
+      },
+      "SCHEDULE_REPLICA02": {
+        "created_at": "s186",
+        "id": "SCHEDULE_REPLICA02",
+        "last_sync_error": "s188",
+        "last_synced_at": "s189",
+        "mirror_window_day": "s18a",
+        "replica_fallback_user_id": "REPLICA_FALLBACK_USER01",
+        "replica_provider": "s18c",
+        "replica_provider_id": "REPLICA_PROVIDER01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_replica": {},
+        "source": [],
+        "updated_at": "s191",
+        "user_status": []
+      }
+    }
+  },
+  "new": {
+    "schedule_replica": {
+      "schedule_replica_ref01": {
+        "created_at": "s208",
+        "last_sync_error": "s20a",
+        "last_synced_at": "s20b",
+        "mirror_window_day": "s20c",
+        "replica_fallback_user_id": "REPLICA_FALLBACK_USER01",
+        "replica_provider": "s20e",
+        "replica_provider_id": "REPLICA_PROVIDER01",
+        "schedule_id": "SCHEDULE01",
+        "schedule_replica": {},
+        "source": [],
+        "updated_at": "s213",
+        "user_status": []
+      }
+    }
+  }
+}

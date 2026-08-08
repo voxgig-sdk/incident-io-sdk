@@ -3,54 +3,63 @@
     "alert_route": {
       "ALERT_ROUTE00": {
         "alert_source": [],
+        "channel_config": [],
         "condition_group": [],
-        "created_at": "s98",
-        "enabled": false,
+        "created_at": "sb7",
+        "enabled": true,
         "escalation_config": {},
         "expression": [],
         "grouping_config": {},
         "id": "ALERT_ROUTE00",
         "incident_config": {},
+        "incident_template": {},
         "is_private": false,
         "message_config": {},
-        "name": "sa1",
+        "message_template": {},
+        "name": "sc2",
         "owning_team_id": "OWNING_TEAM01",
-        "updated_at": "sa3",
-        "version": "sa4"
+        "updated_at": "sc4",
+        "version": "sc5"
       },
       "ALERT_ROUTE01": {
         "alert_source": [],
+        "channel_config": [],
         "condition_group": [],
-        "created_at": "s12e",
-        "enabled": false,
+        "created_at": "s16b",
+        "enabled": true,
         "escalation_config": {},
         "expression": [],
         "grouping_config": {},
         "id": "ALERT_ROUTE01",
         "incident_config": {},
+        "incident_template": {},
         "is_private": false,
         "message_config": {},
-        "name": "s137",
+        "message_template": {},
+        "name": "s176",
         "owning_team_id": "OWNING_TEAM01",
-        "updated_at": "s139",
-        "version": "s13a"
+        "updated_at": "s178",
+        "version": "s179"
       },
       "ALERT_ROUTE02": {
         "alert_source": [],
+        "channel_config": [],
         "condition_group": [],
-        "created_at": "s1c4",
-        "enabled": false,
+        "created_at": "s21f",
+        "enabled": true,
         "escalation_config": {},
         "expression": [],
         "grouping_config": {},
         "id": "ALERT_ROUTE02",
         "incident_config": {},
+        "incident_template": {},
         "is_private": false,
         "message_config": {},
-        "name": "s1cd",
+        "message_template": {},
+        "name": "s22a",
         "owning_team_id": "OWNING_TEAM01",
-        "updated_at": "s1cf",
-        "version": "s1d0"
+        "updated_at": "s22c",
+        "version": "s22d"
       }
     }
   },
@@ -58,19 +67,22 @@
     "alert_route": {
       "alert_route_ref01": {
         "alert_source": [],
+        "channel_config": [],
         "condition_group": [],
-        "created_at": "s25a",
-        "enabled": false,
+        "created_at": "s2d3",
+        "enabled": true,
         "escalation_config": {},
         "expression": [],
         "grouping_config": {},
         "incident_config": {},
+        "incident_template": {},
         "is_private": false,
         "message_config": {},
-        "name": "s263",
+        "message_template": {},
+        "name": "s2de",
         "owning_team_id": "OWNING_TEAM01",
-        "updated_at": "s265",
-        "version": "s266"
+        "updated_at": "s2e0",
+        "version": "s2e1"
       }
     }
   }

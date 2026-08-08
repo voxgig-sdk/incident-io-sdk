@@ -1,0 +1,42 @@
+{
+  "existing": {
+    "catalog_resource": {
+      "CATALOG_RESOURCE00": {
+        "category": "s3c",
+        "description": "s3d",
+        "engine_resource_type": "s3e",
+        "label": "s3f",
+        "type": "s40",
+        "value_docstring": "s41"
+      },
+      "CATALOG_RESOURCE01": {
+        "category": "s78",
+        "description": "s79",
+        "engine_resource_type": "s7a",
+        "label": "s7b",
+        "type": "s7c",
+        "value_docstring": "s7d"
+      },
+      "CATALOG_RESOURCE02": {
+        "category": "sb4",
+        "description": "sb5",
+        "engine_resource_type": "sb6",
+        "label": "sb7",
+        "type": "sb8",
+        "value_docstring": "sb9"
+      }
+    }
+  },
+  "new": {
+    "catalog_resource": {
+      "catalog_resource_ref01": {
+        "category": "sf0",
+        "description": "sf1",
+        "engine_resource_type": "sf2",
+        "label": "sf3",
+        "type": "sf4",
+        "value_docstring": "sf5"
+      }
+    }
+  }
+}

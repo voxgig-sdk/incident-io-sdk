@@ -1,0 +1,29 @@
+# BasicTelemetryDataSourceFlow
+
+main: kit: flow: BasicTelemetryDataSourceFlow:
+{
+  entity: "telemetry_data_source",
+  kind: "basic",
+  name: "BasicTelemetryDataSourceFlow",
+  step: [
+    {
+      input: {
+        ref: "telemetry_data_source_ref01",
+        srcdatavar: "telemetry_data_source_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-telemetry_data_source_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicTelemetryDataSourceFlow"
+}

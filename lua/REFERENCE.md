@@ -68,6 +68,22 @@ Create a new `AlertSource` entity instance. Pass `nil` for no initial data.
 
 Create a new `ApiKey` entity instance. Pass `nil` for no initial data.
 
+#### `CatalogEntry(data)`
+
+Create a new `CatalogEntry` entity instance. Pass `nil` for no initial data.
+
+#### `CatalogResource(data)`
+
+Create a new `CatalogResource` entity instance. Pass `nil` for no initial data.
+
+#### `CatalogType(data)`
+
+Create a new `CatalogType` entity instance. Pass `nil` for no initial data.
+
+#### `CatalogTypeSchema(data)`
+
+Create a new `CatalogTypeSchema` entity instance. Pass `nil` for no initial data.
+
 #### `CustomField(data)`
 
 Create a new `CustomField` entity instance. Pass `nil` for no initial data.
@@ -76,6 +92,10 @@ Create a new `CustomField` entity instance. Pass `nil` for no initial data.
 
 Create a new `CustomFieldOption` entity instance. Pass `nil` for no initial data.
 
+#### `Escalation(data)`
+
+Create a new `Escalation` entity instance. Pass `nil` for no initial data.
+
 #### `FollowUp(data)`
 
 Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
@@ -83,6 +103,10 @@ Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
 #### `Incident(data)`
 
 Create a new `Incident` entity instance. Pass `nil` for no initial data.
+
+#### `IncidentAlert(data)`
+
+Create a new `IncidentAlert` entity instance. Pass `nil` for no initial data.
 
 #### `IncidentAttachment(data)`
 
@@ -136,13 +160,65 @@ Create a new `MaintenanceWindow` entity instance. Pass `nil` for no initial data
 
 Create a new `PostmortemDocument` entity instance. Pass `nil` for no initial data.
 
+#### `Schedule(data)`
+
+Create a new `Schedule` entity instance. Pass `nil` for no initial data.
+
+#### `ScheduleEntry(data)`
+
+Create a new `ScheduleEntry` entity instance. Pass `nil` for no initial data.
+
+#### `ScheduleReplica(data)`
+
+Create a new `ScheduleReplica` entity instance. Pass `nil` for no initial data.
+
+#### `ScheduleSyncRule(data)`
+
+Create a new `ScheduleSyncRule` entity instance. Pass `nil` for no initial data.
+
+#### `ScheduleSyncTarget(data)`
+
+Create a new `ScheduleSyncTarget` entity instance. Pass `nil` for no initial data.
+
 #### `Secret(data)`
 
 Create a new `Secret` entity instance. Pass `nil` for no initial data.
 
+#### `Severity(data)`
+
+Create a new `Severity` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPage(data)`
+
+Create a new `StatusPage` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageIncident(data)`
+
+Create a new `StatusPageIncident` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageIncidentUpdate(data)`
+
+Create a new `StatusPageIncidentUpdate` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageMaintenance(data)`
+
+Create a new `StatusPageMaintenance` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageMaintenanceUpdate(data)`
+
+Create a new `StatusPageMaintenanceUpdate` entity instance. Pass `nil` for no initial data.
+
+#### `StatusPageStructure(data)`
+
+Create a new `StatusPageStructure` entity instance. Pass `nil` for no initial data.
+
 #### `Team(data)`
 
 Create a new `Team` entity instance. Pass `nil` for no initial data.
+
+#### `TelemetryDataSource(data)`
+
+Create a new `TelemetryDataSource` entity instance. Pass `nil` for no initial data.
 
 #### `User(data)`
 
@@ -207,11 +283,30 @@ local action = client:Action(nil)
 | `completed_at` | `string` | No |  |
 | `created_at` | `string` | Yes |  |
 | `creator` | `table` | Yes |  |
-| `description` | `string` | Yes |  |
+| `description` | `string` | No |  |
+| `external_issue_reference` | `table` | No |  |
+| `follow_up` | `boolean` | Yes |  |
 | `id` | `string` | Yes |  |
 | `incident_id` | `string` | Yes |  |
 | `status` | `string` | Yes |  |
 | `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignee` | - | - | - | - | - |
+| `assignee_id` | - | - | - | - | - |
+| `completed_at` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `creator` | - | - | - | - | - |
+| `description` | Yes | Yes | Yes | Yes | - |
+| `external_issue_reference` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `incident_id` | - | - | - | - | - |
+| `status` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -224,7 +319,7 @@ local result, err = client:Action():create({
   assignee = --[[ table ]],
   created_at = --[[ string ]],
   creator = --[[ table ]],
-  description = --[[ string ]],
+  follow_up = --[[ boolean ]],
   id = --[[ string ]],
   incident_id = --[[ string ]],
   status = --[[ string ]],
@@ -321,6 +416,23 @@ local alert = client:Alert(nil)
 | `updated_at` | `string` | Yes |  |
 
 ### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:Alert():create({
+  id = --[[ string ]],
+  alert_source_id = --[[ string ]],
+  attribute = --[[ table ]],
+  created_at = --[[ string ]],
+  deduplication_key = --[[ string ]],
+  status = --[[ string ]],
+  title = --[[ string ]],
+  updated_at = --[[ string ]],
+})
+```
 
 #### `list(reqmatch, ctrl) -> any, err`
 
@@ -590,6 +702,7 @@ local alert_route = client:AlertRoute(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `alert_source` | `table` | Yes |  |
+| `channel_config` | `table` | Yes |  |
 | `condition_group` | `table` | Yes |  |
 | `created_at` | `string` | No |  |
 | `enabled` | `boolean` | Yes |  |
@@ -598,8 +711,10 @@ local alert_route = client:AlertRoute(nil)
 | `grouping_config` | `table` | Yes |  |
 | `id` | `string` | Yes |  |
 | `incident_config` | `table` | Yes |  |
+| `incident_template` | `table` | Yes |  |
 | `is_private` | `boolean` | Yes |  |
 | `message_config` | `table` | Yes |  |
+| `message_template` | `table` | No |  |
 | `name` | `string` | Yes |  |
 | `owning_team_id` | `table` | No |  |
 | `updated_at` | `string` | No |  |
@@ -614,6 +729,7 @@ Create a new entity with the given data.
 ```lua
 local result, err = client:AlertRoute():create({
   alert_source = --[[ table ]],
+  channel_config = --[[ table ]],
   condition_group = --[[ table ]],
   enabled = --[[ boolean ]],
   escalation_config = --[[ table ]],
@@ -621,6 +737,7 @@ local result, err = client:AlertRoute():create({
   grouping_config = --[[ table ]],
   id = --[[ string ]],
   incident_config = --[[ table ]],
+  incident_template = --[[ table ]],
   is_private = --[[ boolean ]],
   message_config = --[[ table ]],
   name = --[[ string ]],
@@ -815,6 +932,7 @@ local api_key = client:ApiKey(nil)
 | `comment` | `string` | No |  |
 | `created_at` | `string` | Yes |  |
 | `creator` | `table` | Yes |  |
+| `grace_period_minute` | `number` | Yes |  |
 | `id` | `string` | Yes |  |
 | `last_used_at` | `string` | No |  |
 | `name` | `string` | Yes |  |
@@ -835,6 +953,7 @@ Create a new entity with the given data.
 local result, err = client:ApiKey():create({
   created_at = --[[ string ]],
   creator = --[[ table ]],
+  grace_period_minute = --[[ number ]],
   id = --[[ string ]],
   name = --[[ string ]],
   role = --[[ table ]],
@@ -911,6 +1030,426 @@ Return the entity name.
 
 ---
 
+## CatalogEntryEntity
+
+```lua
+local catalog_entry = client:CatalogEntry(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alias` | `table` | No |  |
+| `archived_at` | `string` | No |  |
+| `attribute_value` | `table` | Yes |  |
+| `catalog_entry` | `table` | Yes |  |
+| `catalog_type` | `table` | Yes |  |
+| `catalog_type_id` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `external_id` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `rank` | `number` | No |  |
+| `update_attribute` | `table` | No |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `alias` | - | Yes | - | - |
+| `archived_at` | - | - | - | - |
+| `attribute_value` | - | - | - | - |
+| `catalog_entry` | - | - | - | - |
+| `catalog_type` | - | - | - | - |
+| `catalog_type_id` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `external_id` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | Yes | - | - |
+| `update_attribute` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:CatalogEntry():create({
+  attribute_value = --[[ table ]],
+  catalog_entry = --[[ table ]],
+  catalog_type = --[[ table ]],
+  catalog_type_id = --[[ string ]],
+  created_at = --[[ string ]],
+  id = --[[ string ]],
+  name = --[[ string ]],
+  updated_at = --[[ string ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:CatalogEntry():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:CatalogEntry():load({ id = "catalog_entry_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`.
+
+```lua
+local result, err = client:CatalogEntry():update({
+  id = "catalog_entry_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogEntryEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## CatalogResourceEntity
+
+```lua
+local catalog_resource = client:CatalogResource(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `category` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `label` | `string` | Yes |  |
+| `type` | `string` | Yes |  |
+| `value_docstring` | `string` | Yes |  |
+
+### Operations
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:CatalogResource():list()
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogResourceEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## CatalogTypeEntity
+
+```lua
+local catalog_type = client:CatalogType(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `table` | Yes |  |
+| `category` | `table` | Yes |  |
+| `color` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `dynamic_resource_parameter` | `string` | No |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `estimated_count` | `number` | No |  |
+| `icon` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `is_editable` | `boolean` | Yes |  |
+| `is_team_type` | `boolean` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `owning_team_id` | `table` | No |  |
+| `ranked` | `boolean` | Yes |  |
+| `registry_type` | `string` | No |  |
+| `required_integration` | `table` | No |  |
+| `schema` | `table` | Yes |  |
+| `semantic_type` | `string` | Yes |  |
+| `source_repo_url` | `string` | No |  |
+| `type_name` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `use_name_as_identifier` | `boolean` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | Yes | Yes |
+| `category` | - | - | Yes | Yes |
+| `color` | - | - | Yes | Yes |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - |
+| `engine_resource_type` | - | - | - | - |
+| `estimated_count` | - | - | - | - |
+| `icon` | - | - | Yes | Yes |
+| `id` | - | - | - | - |
+| `is_editable` | - | - | - | - |
+| `is_team_type` | - | - | - | - |
+| `last_synced_at` | - | - | - | - |
+| `name` | - | - | - | - |
+| `owning_team_id` | - | - | - | - |
+| `ranked` | - | - | Yes | Yes |
+| `registry_type` | - | - | - | - |
+| `required_integration` | - | - | - | - |
+| `schema` | - | - | - | - |
+| `semantic_type` | - | - | - | - |
+| `source_repo_url` | - | - | - | - |
+| `type_name` | - | - | Yes | - |
+| `updated_at` | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:CatalogType():create({
+  annotation = --[[ table ]],
+  category = --[[ table ]],
+  color = --[[ string ]],
+  created_at = --[[ string ]],
+  description = --[[ string ]],
+  engine_resource_type = --[[ string ]],
+  icon = --[[ string ]],
+  id = --[[ string ]],
+  is_editable = --[[ boolean ]],
+  name = --[[ string ]],
+  ranked = --[[ boolean ]],
+  schema = --[[ table ]],
+  semantic_type = --[[ string ]],
+  type_name = --[[ string ]],
+  updated_at = --[[ string ]],
+  use_name_as_identifier = --[[ boolean ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:CatalogType():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:CatalogType():load({ id = "catalog_type_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`.
+
+```lua
+local result, err = client:CatalogType():update({
+  id = "catalog_type_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogTypeEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## CatalogTypeSchemaEntity
+
+```lua
+local catalog_type_schema = client:CatalogTypeSchema(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `table` | Yes |  |
+| `attribute` | `table` | Yes |  |
+| `category` | `table` | Yes |  |
+| `color` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `dynamic_resource_parameter` | `string` | No |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `estimated_count` | `number` | No |  |
+| `icon` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `is_editable` | `boolean` | Yes |  |
+| `is_team_type` | `boolean` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `owning_team_id` | `table` | No |  |
+| `ranked` | `boolean` | Yes |  |
+| `registry_type` | `string` | No |  |
+| `required_integration` | `table` | No |  |
+| `schema` | `table` | Yes |  |
+| `semantic_type` | `string` | Yes |  |
+| `source_repo_url` | `string` | No |  |
+| `type_name` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `use_name_as_identifier` | `boolean` | Yes |  |
+| `version` | `number` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:CatalogTypeSchema():create({
+  catalog_type_id = --[[ string ]],
+  annotation = --[[ table ]],
+  attribute = --[[ table ]],
+  category = --[[ table ]],
+  color = --[[ string ]],
+  created_at = --[[ string ]],
+  description = --[[ string ]],
+  engine_resource_type = --[[ string ]],
+  icon = --[[ string ]],
+  id = --[[ string ]],
+  is_editable = --[[ boolean ]],
+  name = --[[ string ]],
+  ranked = --[[ boolean ]],
+  schema = --[[ table ]],
+  semantic_type = --[[ string ]],
+  type_name = --[[ string ]],
+  updated_at = --[[ string ]],
+  use_name_as_identifier = --[[ boolean ]],
+  version = --[[ number ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogTypeSchemaEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```lua
@@ -931,6 +1470,13 @@ local custom_field = client:CustomField(nil)
 | `helptext_catalog_attribute_id` | `string` | No |  |
 | `id` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `option` | `table` | Yes |  |
+| `required` | `string` | No |  |
+| `required_v2` | `string` | No |  |
+| `show_before_closure` | `boolean` | Yes |  |
+| `show_before_creation` | `boolean` | Yes |  |
+| `show_before_update` | `boolean` | Yes |  |
+| `show_in_announcement_post` | `boolean` | No |  |
 | `updated_at` | `string` | Yes |  |
 
 ### Operations
@@ -948,6 +1494,10 @@ local result, err = client:CustomField():create({
   fixed_filter = --[[ table ]],
   id = --[[ string ]],
   name = --[[ string ]],
+  option = --[[ table ]],
+  show_before_closure = --[[ boolean ]],
+  show_before_creation = --[[ boolean ]],
+  show_before_update = --[[ boolean ]],
   updated_at = --[[ string ]],
 })
 ```
@@ -1121,6 +1671,100 @@ Return the entity name.
 
 ---
 
+## EscalationEntity
+
+```lua
+local escalation = client:Escalation(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `creator` | `table` | Yes |  |
+| `description` | `string` | No |  |
+| `escalation_path_id` | `string` | No |  |
+| `event` | `table` | Yes |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `incident_id` | `string` | No |  |
+| `priority` | `table` | Yes |  |
+| `related_alert` | `table` | Yes |  |
+| `related_incident` | `table` | Yes |  |
+| `status` | `string` | Yes |  |
+| `title` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `user_id` | `table` | No |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:Escalation():create({
+  created_at = --[[ string ]],
+  creator = --[[ table ]],
+  event = --[[ table ]],
+  id = --[[ string ]],
+  idempotency_key = --[[ string ]],
+  priority = --[[ table ]],
+  related_alert = --[[ table ]],
+  related_incident = --[[ table ]],
+  status = --[[ string ]],
+  title = --[[ string ]],
+  updated_at = --[[ string ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:Escalation():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:Escalation():load({ id = "escalation_id" })
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `EscalationEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpEntity
 
 ```lua
@@ -1282,6 +1926,7 @@ local incident = client:Incident(nil)
 | `has_debrief` | `boolean` | No |  |
 | `id` | `string` | Yes |  |
 | `idempotency_key` | `string` | Yes |  |
+| `incident` | `table` | Yes |  |
 | `incident_role_assignment` | `table` | Yes |  |
 | `incident_status` | `table` | Yes |  |
 | `incident_status_id` | `string` | No |  |
@@ -1290,6 +1935,7 @@ local incident = client:Incident(nil)
 | `incident_type_id` | `string` | No |  |
 | `mode` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `notify_incident_channel` | `boolean` | Yes |  |
 | `permalink` | `string` | No |  |
 | `postmortem_document_id` | `table` | No |  |
 | `postmortem_document_url` | `string` | No |  |
@@ -1301,7 +1947,11 @@ local incident = client:Incident(nil)
 | `slack_channel_name` | `string` | No |  |
 | `slack_channel_name_override` | `string` | No |  |
 | `slack_team_id` | `string` | Yes |  |
+| `source_message_channel_id` | `string` | No |  |
+| `source_message_timestamp` | `string` | No |  |
+| `status` | `string` | Yes |  |
 | `summary` | `string` | No |  |
+| `timestamp` | `table` | No |  |
 | `updated_at` | `string` | Yes |  |
 | `visibility` | `string` | Yes |  |
 | `workload_minutes_late` | `number` | No |  |
@@ -1322,6 +1972,7 @@ local incident = client:Incident(nil)
 | `has_debrief` | - | - | - |
 | `id` | - | - | - |
 | `idempotency_key` | - | - | - |
+| `incident` | - | - | - |
 | `incident_role_assignment` | - | - | Yes |
 | `incident_status` | - | - | - |
 | `incident_status_id` | - | - | - |
@@ -1330,6 +1981,7 @@ local incident = client:Incident(nil)
 | `incident_type_id` | - | - | - |
 | `mode` | - | - | Yes |
 | `name` | - | - | Yes |
+| `notify_incident_channel` | - | - | - |
 | `permalink` | - | - | - |
 | `postmortem_document_id` | - | - | - |
 | `postmortem_document_url` | - | - | - |
@@ -1341,7 +1993,11 @@ local incident = client:Incident(nil)
 | `slack_channel_name` | - | - | - |
 | `slack_channel_name_override` | - | - | - |
 | `slack_team_id` | - | - | Yes |
+| `source_message_channel_id` | - | - | - |
+| `source_message_timestamp` | - | - | - |
+| `status` | - | - | Yes |
 | `summary` | - | - | - |
+| `timestamp` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -1363,15 +2019,18 @@ local result, err = client:Incident():create({
   external_issue_reference = --[[ table ]],
   id = --[[ string ]],
   idempotency_key = --[[ string ]],
+  incident = --[[ table ]],
   incident_role_assignment = --[[ table ]],
   incident_status = --[[ table ]],
   incident_type = --[[ table ]],
   mode = --[[ string ]],
   name = --[[ string ]],
+  notify_incident_channel = --[[ boolean ]],
   reference = --[[ string ]],
   severity = --[[ table ]],
   slack_channel_id = --[[ string ]],
   slack_team_id = --[[ string ]],
+  status = --[[ string ]],
   updated_at = --[[ string ]],
   visibility = --[[ string ]],
 })
@@ -1414,6 +2073,61 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `IncidentEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## IncidentAlertEntity
+
+```lua
+local incident_alert = client:IncidentAlert(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alert` | `table` | Yes |  |
+| `alert_route_id` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `incident` | `table` | Yes |  |
+
+### Operations
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:IncidentAlert():list()
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `IncidentAlertEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -1729,9 +2443,24 @@ local incident_role = client:IncidentRole(nil)
 | `id` | `string` | Yes |  |
 | `instruction` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `required` | `boolean` | No |  |
 | `role_type` | `string` | Yes |  |
 | `shortform` | `string` | Yes |  |
 | `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `instruction` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `required` | - | - | Yes | - | - |
+| `role_type` | - | - | - | - | - |
+| `shortform` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2391,6 +3120,481 @@ Return the entity name.
 
 ---
 
+## ScheduleEntity
+
+```lua
+local schedule = client:Schedule(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `table` | Yes |  |
+| `config` | `table` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `current_shift` | `table` | No |  |
+| `holidays_public_config` | `table` | Yes |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `next_shift` | `table` | No |  |
+| `permalink` | `string` | Yes |  |
+| `schedule` | `table` | Yes |  |
+| `team_id` | `table` | Yes |  |
+| `timezone` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:Schedule():create({
+  annotation = --[[ table ]],
+  config = --[[ table ]],
+  created_at = --[[ string ]],
+  holidays_public_config = --[[ table ]],
+  id = --[[ string ]],
+  name = --[[ string ]],
+  permalink = --[[ string ]],
+  schedule = --[[ table ]],
+  team_id = --[[ table ]],
+  timezone = --[[ string ]],
+  updated_at = --[[ string ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:Schedule():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:Schedule():load({ id = "schedule_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria.
+
+```lua
+local result, err = client:Schedule():remove({ id = "schedule_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`.
+
+```lua
+local result, err = client:Schedule():update({
+  id = "schedule_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleEntryEntity
+
+```lua
+local schedule_entry = client:ScheduleEntry(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `pagination_meta` | `table` | Yes |  |
+| `schedule_entry` | `table` | Yes |  |
+
+### Operations
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:ScheduleEntry():load()
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleEntryEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleReplicaEntity
+
+```lua
+local schedule_replica = client:ScheduleReplica(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `last_sync_error` | `string` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `mirror_window_day` | `number` | No |  |
+| `replica_fallback_user_id` | `string` | Yes |  |
+| `replica_provider` | `string` | Yes |  |
+| `replica_provider_id` | `string` | Yes |  |
+| `schedule_id` | `string` | Yes |  |
+| `schedule_replica` | `table` | Yes |  |
+| `source` | `table` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `user_status` | `table` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:ScheduleReplica():create({
+  id = --[[ string ]],
+  created_at = --[[ string ]],
+  replica_fallback_user_id = --[[ string ]],
+  replica_provider = --[[ string ]],
+  replica_provider_id = --[[ string ]],
+  schedule_id = --[[ string ]],
+  schedule_replica = --[[ table ]],
+  source = --[[ table ]],
+  updated_at = --[[ string ]],
+  user_status = --[[ table ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:ScheduleReplica():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:ScheduleReplica():load({ id = "schedule_replica_id", schedule_id = "schedule_id" })
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleReplicaEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleSyncRuleEntity
+
+```lua
+local schedule_sync_rule = client:ScheduleSyncRule(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `table` | No |  |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `permanent_member_user_id` | `table` | Yes |  |
+| `rotation_id` | `string` | No |  |
+| `schedule_id` | `string` | Yes |  |
+| `schedule_sync_rule` | `table` | Yes |  |
+| `schedule_sync_target` | `table` | Yes |  |
+| `schedule_sync_target_id` | `string` | Yes |  |
+| `sync_type` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `id` | - | - | - | - |
+| `permanent_member_user_id` | - | - | - | Yes |
+| `rotation_id` | - | - | - | - |
+| `schedule_id` | - | - | - | - |
+| `schedule_sync_rule` | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - |
+| `sync_type` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:ScheduleSyncRule():create({
+  id = --[[ string ]],
+  created_at = --[[ string ]],
+  permanent_member_user_id = --[[ table ]],
+  schedule_id = --[[ string ]],
+  schedule_sync_rule = --[[ table ]],
+  schedule_sync_target = --[[ table ]],
+  schedule_sync_target_id = --[[ string ]],
+  sync_type = --[[ string ]],
+  updated_at = --[[ string ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:ScheduleSyncRule():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:ScheduleSyncRule():load({ id = "schedule_sync_rule_id", schedule_id = "schedule_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`.
+
+```lua
+local result, err = client:ScheduleSyncRule():update({
+  id = "schedule_sync_rule_id",
+  schedule_id = "schedule_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleSyncRuleEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleSyncTargetEntity
+
+```lua
+local schedule_sync_target = client:ScheduleSyncTarget(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `add_bot_to_group` | `boolean` | Yes |  |
+| `annotation` | `table` | No |  |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `linked_schedule` | `table` | Yes |  |
+| `schedule_sync_target` | `table` | Yes |  |
+| `slack_team_id` | `string` | Yes |  |
+| `slack_user_group_id` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:ScheduleSyncTarget():create({
+  add_bot_to_group = --[[ boolean ]],
+  created_at = --[[ string ]],
+  id = --[[ string ]],
+  linked_schedule = --[[ table ]],
+  schedule_sync_target = --[[ table ]],
+  slack_team_id = --[[ string ]],
+  slack_user_group_id = --[[ string ]],
+  updated_at = --[[ string ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:ScheduleSyncTarget():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:ScheduleSyncTarget():load({ id = "schedule_sync_target_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria.
+
+```lua
+local result, err = client:ScheduleSyncTarget():remove({ id = "schedule_sync_target_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`.
+
+```lua
+local result, err = client:ScheduleSyncTarget():update({
+  id = "schedule_sync_target_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleSyncTargetEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## SecretEntity
 
 ```lua
@@ -2406,7 +3610,7 @@ local secret = client:Secret(nil)
 | `id` | `string` | Yes |  |
 | `last_four_char` | `string` | No |  |
 | `name` | `string` | Yes |  |
-| `owning_team_id` | `table` | No |  |
+| `owning_team_id` | `table` | Yes |  |
 | `secret` | `table` | Yes |  |
 | `updated_at` | `string` | Yes |  |
 | `value` | `string` | Yes |  |
@@ -2421,7 +3625,7 @@ local secret = client:Secret(nil)
 | `id` | - | - | - | - | - |
 | `last_four_char` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
-| `owning_team_id` | - | Yes | - | Yes | - |
+| `owning_team_id` | - | - | Yes | Yes | - |
 | `secret` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 | `value` | - | - | - | - | - |
@@ -2438,6 +3642,7 @@ local result, err = client:Secret():create({
   created_at = --[[ string ]],
   id = --[[ string ]],
   name = --[[ string ]],
+  owning_team_id = --[[ table ]],
   secret = --[[ table ]],
   updated_at = --[[ string ]],
   value = --[[ string ]],
@@ -2510,6 +3715,529 @@ Return the entity name.
 
 ---
 
+## SeverityEntity
+
+```lua
+local severity = client:Severity(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `rank` | `number` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | - | Yes | Yes |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:Severity():create({
+  created_at = --[[ string ]],
+  description = --[[ string ]],
+  id = --[[ string ]],
+  name = --[[ string ]],
+  rank = --[[ number ]],
+  updated_at = --[[ string ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:Severity():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:Severity():load({ id = "severity_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`.
+
+```lua
+local result, err = client:Severity():update({
+  id = "severity_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `SeverityEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageEntity
+
+```lua
+local status_page = client:StatusPage(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `description` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `public_url` | `string` | No |  |
+
+### Operations
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:StatusPage():list()
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageIncidentEntity
+
+```lua
+local status_page_incident = client:StatusPageIncident(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_impact` | `table` | Yes |  |
+| `component_status` | `table` | No |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `incident_status` | `string` | Yes |  |
+| `message` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `notify_subscriber` | `boolean` | Yes |  |
+| `published_at` | `string` | Yes |  |
+| `status_page_id` | `string` | Yes |  |
+| `update` | `table` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:StatusPageIncident():create({
+  component_impact = --[[ table ]],
+  id = --[[ string ]],
+  idempotency_key = --[[ string ]],
+  incident_status = --[[ string ]],
+  message = --[[ string ]],
+  name = --[[ string ]],
+  notify_subscriber = --[[ boolean ]],
+  published_at = --[[ string ]],
+  status_page_id = --[[ string ]],
+  update = --[[ table ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:StatusPageIncident():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:StatusPageIncident():load({ id = "status_page_incident_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`.
+
+```lua
+local result, err = client:StatusPageIncident():update({
+  id = "status_page_incident_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageIncidentEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageIncidentUpdateEntity
+
+```lua
+local status_page_incident_update = client:StatusPageIncidentUpdate(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `table` | No |  |
+| `incident_status` | `string` | No |  |
+| `message` | `string` | Yes |  |
+| `notify_subscriber` | `boolean` | Yes |  |
+| `status_page_incident_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:StatusPageIncidentUpdate():create({
+  message = --[[ string ]],
+  notify_subscriber = --[[ boolean ]],
+  status_page_incident_id = --[[ string ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageIncidentUpdateEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageMaintenanceEntity
+
+```lua
+local status_page_maintenance = client:StatusPageMaintenance(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `affected_component_id` | `table` | Yes |  |
+| `component_maintenance_period` | `table` | Yes |  |
+| `end_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `maintenance_status` | `string` | Yes |  |
+| `message` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `notify_subscriber` | `boolean` | Yes |  |
+| `published_at` | `string` | Yes |  |
+| `start_at` | `string` | Yes |  |
+| `status_page_id` | `string` | Yes |  |
+| `update` | `table` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:StatusPageMaintenance():create({
+  affected_component_id = --[[ table ]],
+  component_maintenance_period = --[[ table ]],
+  end_at = --[[ string ]],
+  id = --[[ string ]],
+  idempotency_key = --[[ string ]],
+  maintenance_status = --[[ string ]],
+  message = --[[ string ]],
+  name = --[[ string ]],
+  notify_subscriber = --[[ boolean ]],
+  published_at = --[[ string ]],
+  start_at = --[[ string ]],
+  status_page_id = --[[ string ]],
+  update = --[[ table ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array.
+
+```lua
+local results, err = client:StatusPageMaintenance():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:StatusPageMaintenance():load({ id = "status_page_maintenance_id" })
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageMaintenanceEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageMaintenanceUpdateEntity
+
+```lua
+local status_page_maintenance_update = client:StatusPageMaintenanceUpdate(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `table` | No |  |
+| `maintenance_status` | `string` | No |  |
+| `message` | `string` | Yes |  |
+| `notify_subscriber` | `boolean` | Yes |  |
+| `status_page_maintenance_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data.
+
+```lua
+local result, err = client:StatusPageMaintenanceUpdate():create({
+  message = --[[ string ]],
+  notify_subscriber = --[[ boolean ]],
+  status_page_maintenance_id = --[[ string ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageMaintenanceUpdateEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageStructureEntity
+
+```lua
+local status_page_structure = client:StatusPageStructure(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `item` | `table` | Yes |  |
+
+### Operations
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria.
+
+```lua
+local result, err = client:StatusPageStructure():load({ id = "status_page_structure_id" })
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPageStructureEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## TeamEntity
 
 ```lua
@@ -2564,6 +4292,85 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `TeamEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## TelemetryDataSourceEntity
+
+```lua
+local telemetry_data_source = client:TelemetryDataSource(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `datadog_config` | `table` | No |  |
+| `enabled` | `boolean` | Yes |  |
+| `grafana_config` | `table` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `provider` | `string` | Yes |  |
+| `source_type` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `version` | `string` | No |  |
+
+### Field Usage by Operation
+
+| Field | update |
+| --- | --- |
+| `created_at` | - |
+| `datadog_config` | - |
+| `enabled` | - |
+| `grafana_config` | - |
+| `id` | - |
+| `name` | Yes |
+| `provider` | - |
+| `source_type` | - |
+| `updated_at` | - |
+| `version` | - |
+
+### Operations
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`.
+
+```lua
+local result, err = client:TelemetryDataSource():update({
+  id = "id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`

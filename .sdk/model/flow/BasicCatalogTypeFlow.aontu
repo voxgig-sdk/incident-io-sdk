@@ -1,0 +1,71 @@
+# BasicCatalogTypeFlow
+
+main: kit: flow: BasicCatalogTypeFlow:
+{
+  entity: "catalog_type",
+  kind: "basic",
+  name: "BasicCatalogTypeFlow",
+  step: [
+    {
+      input: {
+        ref: "catalog_type_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "catalog_type_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "catalog_type_ref01",
+        srcdatavar: "catalog_type_ref01_data",
+        suffix: "_up0",
+        textfield: "color"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-catalog_type_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "catalog_type_ref01",
+        srcdatavar: "catalog_type_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "catalog_type01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-catalog_type_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCatalogTypeFlow"
+}

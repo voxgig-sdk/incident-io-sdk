@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "incident_alert": {
+      "INCIDENT_ALERT00": {
+        "alert": {},
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "INCIDENT_ALERT00",
+        "incident": {}
+      },
+      "INCIDENT_ALERT01": {
+        "alert": {},
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "INCIDENT_ALERT01",
+        "incident": {}
+      },
+      "INCIDENT_ALERT02": {
+        "alert": {},
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "INCIDENT_ALERT02",
+        "incident": {}
+      }
+    }
+  },
+  "new": {
+    "incident_alert": {
+      "incident_alert_ref01": {
+        "alert": {},
+        "alert_route_id": "ALERT_ROUTE01",
+        "incident": {}
+      }
+    }
+  }
+}

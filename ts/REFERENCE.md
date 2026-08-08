@@ -132,6 +132,54 @@ Create a new `ApiKey` entity instance.
 
 **Returns:** `ApiKeyEntity` instance.
 
+#### `CatalogEntry(data?: object)`
+
+Create a new `CatalogEntry` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `CatalogEntryEntity` instance.
+
+#### `CatalogResource(data?: object)`
+
+Create a new `CatalogResource` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `CatalogResourceEntity` instance.
+
+#### `CatalogType(data?: object)`
+
+Create a new `CatalogType` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `CatalogTypeEntity` instance.
+
+#### `CatalogTypeSchema(data?: object)`
+
+Create a new `CatalogTypeSchema` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `CatalogTypeSchemaEntity` instance.
+
 #### `CustomField(data?: object)`
 
 Create a new `CustomField` entity instance.
@@ -156,6 +204,18 @@ Create a new `CustomFieldOption` entity instance.
 
 **Returns:** `CustomFieldOptionEntity` instance.
 
+#### `Escalation(data?: object)`
+
+Create a new `Escalation` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `EscalationEntity` instance.
+
 #### `FollowUp(data?: object)`
 
 Create a new `FollowUp` entity instance.
@@ -179,6 +239,18 @@ Create a new `Incident` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `IncidentEntity` instance.
+
+#### `IncidentAlert(data?: object)`
+
+Create a new `IncidentAlert` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `IncidentAlertEntity` instance.
 
 #### `IncidentAttachment(data?: object)`
 
@@ -336,6 +408,66 @@ Create a new `PostmortemDocument` entity instance.
 
 **Returns:** `PostmortemDocumentEntity` instance.
 
+#### `Schedule(data?: object)`
+
+Create a new `Schedule` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `ScheduleEntity` instance.
+
+#### `ScheduleEntry(data?: object)`
+
+Create a new `ScheduleEntry` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `ScheduleEntryEntity` instance.
+
+#### `ScheduleReplica(data?: object)`
+
+Create a new `ScheduleReplica` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `ScheduleReplicaEntity` instance.
+
+#### `ScheduleSyncRule(data?: object)`
+
+Create a new `ScheduleSyncRule` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `ScheduleSyncRuleEntity` instance.
+
+#### `ScheduleSyncTarget(data?: object)`
+
+Create a new `ScheduleSyncTarget` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `ScheduleSyncTargetEntity` instance.
+
 #### `Secret(data?: object)`
 
 Create a new `Secret` entity instance.
@@ -348,6 +480,90 @@ Create a new `Secret` entity instance.
 
 **Returns:** `SecretEntity` instance.
 
+#### `Severity(data?: object)`
+
+Create a new `Severity` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `SeverityEntity` instance.
+
+#### `StatusPage(data?: object)`
+
+Create a new `StatusPage` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `StatusPageEntity` instance.
+
+#### `StatusPageIncident(data?: object)`
+
+Create a new `StatusPageIncident` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `StatusPageIncidentEntity` instance.
+
+#### `StatusPageIncidentUpdate(data?: object)`
+
+Create a new `StatusPageIncidentUpdate` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `StatusPageIncidentUpdateEntity` instance.
+
+#### `StatusPageMaintenance(data?: object)`
+
+Create a new `StatusPageMaintenance` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `StatusPageMaintenanceEntity` instance.
+
+#### `StatusPageMaintenanceUpdate(data?: object)`
+
+Create a new `StatusPageMaintenanceUpdate` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `StatusPageMaintenanceUpdateEntity` instance.
+
+#### `StatusPageStructure(data?: object)`
+
+Create a new `StatusPageStructure` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `StatusPageStructureEntity` instance.
+
 #### `Team(data?: object)`
 
 Create a new `Team` entity instance.
@@ -359,6 +575,18 @@ Create a new `Team` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `TeamEntity` instance.
+
+#### `TelemetryDataSource(data?: object)`
+
+Create a new `TelemetryDataSource` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `TelemetryDataSourceEntity` instance.
 
 #### `User(data?: object)`
 
@@ -457,11 +685,30 @@ const action = client.Action()
 | `completed_at` | `string` | No |  |
 | `created_at` | `string` | Yes |  |
 | `creator` | `Record<string, any>` | Yes |  |
-| `description` | `string` | Yes |  |
+| `description` | `string` | No |  |
+| `external_issue_reference` | `Record<string, any>` | No |  |
+| `follow_up` | `boolean` | Yes |  |
 | `id` | `string` | Yes |  |
 | `incident_id` | `string` | Yes |  |
 | `status` | `string` | Yes |  |
 | `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignee` | - | - | - | - | - |
+| `assignee_id` | - | - | - | - | - |
+| `completed_at` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `creator` | - | - | - | - | - |
+| `description` | Yes | Yes | Yes | Yes | - |
+| `external_issue_reference` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `incident_id` | - | - | - | - | - |
+| `status` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -474,7 +721,7 @@ const result = await client.Action().create({
   assignee: {},
   created_at: 'example_created_at',
   creator: {},
-  description: 'example_description',
+  follow_up: true,
   id: 'example_id',
   incident_id: 'example_incident_id',
   status: 'example_status',
@@ -569,6 +816,23 @@ const alert = client.Alert()
 | `updated_at` | `string` | Yes |  |
 
 ### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.Alert().create({
+  id: 'example_id',
+  alert_source_id: 'example_alert_source_id',
+  attribute: [],
+  created_at: 'example_created_at',
+  deduplication_key: 'example_deduplication_key',
+  status: 'example_status',
+  title: 'example_title',
+  updated_at: 'example_updated_at',
+})
+```
 
 #### `list(match: object, ctrl?: object)`
 
@@ -832,6 +1096,7 @@ const alert_route = client.AlertRoute()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `alert_source` | `any[]` | Yes |  |
+| `channel_config` | `any[]` | Yes |  |
 | `condition_group` | `any[]` | Yes |  |
 | `created_at` | `string` | No |  |
 | `enabled` | `boolean` | Yes |  |
@@ -840,8 +1105,10 @@ const alert_route = client.AlertRoute()
 | `grouping_config` | `Record<string, any>` | Yes |  |
 | `id` | `string` | Yes |  |
 | `incident_config` | `Record<string, any>` | Yes |  |
+| `incident_template` | `Record<string, any>` | Yes |  |
 | `is_private` | `boolean` | Yes |  |
 | `message_config` | `Record<string, any>` | Yes |  |
+| `message_template` | `Record<string, any>` | No |  |
 | `name` | `string` | Yes |  |
 | `owning_team_id` | `any[]` | No |  |
 | `updated_at` | `string` | No |  |
@@ -856,6 +1123,7 @@ Create a new entity with the given data.
 ```ts
 const result = await client.AlertRoute().create({
   alert_source: [],
+  channel_config: [],
   condition_group: [],
   enabled: true,
   escalation_config: {},
@@ -863,6 +1131,7 @@ const result = await client.AlertRoute().create({
   grouping_config: {},
   id: 'example_id',
   incident_config: {},
+  incident_template: {},
   is_private: true,
   message_config: {},
   name: 'example_name',
@@ -1053,6 +1322,7 @@ const api_key = client.ApiKey()
 | `comment` | `string` | No |  |
 | `created_at` | `string` | Yes |  |
 | `creator` | `Record<string, any>` | Yes |  |
+| `grace_period_minute` | `number` | Yes |  |
 | `id` | `string` | Yes |  |
 | `last_used_at` | `string` | No |  |
 | `name` | `string` | Yes |  |
@@ -1073,6 +1343,7 @@ Create a new entity with the given data.
 const result = await client.ApiKey().create({
   created_at: 'example_created_at',
   creator: {},
+  grace_period_minute: 1,
   id: 'example_id',
   name: 'example_name',
   role: [],
@@ -1147,6 +1418,418 @@ Return a copy of the entity options.
 
 ---
 
+## CatalogEntryEntity
+
+```ts
+const catalog_entry = client.CatalogEntry()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alias` | `any[]` | No |  |
+| `archived_at` | `string` | No |  |
+| `attribute_value` | `Record<string, any>` | Yes |  |
+| `catalog_entry` | `Record<string, any>` | Yes |  |
+| `catalog_type` | `Record<string, any>` | Yes |  |
+| `catalog_type_id` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `external_id` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `rank` | `number` | No |  |
+| `update_attribute` | `any[]` | No |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `alias` | - | Yes | - | - |
+| `archived_at` | - | - | - | - |
+| `attribute_value` | - | - | - | - |
+| `catalog_entry` | - | - | - | - |
+| `catalog_type` | - | - | - | - |
+| `catalog_type_id` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `external_id` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | Yes | - | - |
+| `update_attribute` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.CatalogEntry().create({
+  attribute_value: {},
+  catalog_entry: {},
+  catalog_type: {},
+  catalog_type_id: 'example_catalog_type_id',
+  created_at: 'example_created_at',
+  id: 'example_id',
+  name: 'example_name',
+  updated_at: 'example_updated_at',
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.CatalogEntry().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.CatalogEntry().load({ id: 'catalog_entry_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```ts
+const result = await client.CatalogEntry().update({
+  id: 'catalog_entry_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `CatalogEntryEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## CatalogResourceEntity
+
+```ts
+const catalog_resource = client.CatalogResource()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `category` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `label` | `string` | Yes |  |
+| `type` | `string` | Yes |  |
+| `value_docstring` | `string` | Yes |  |
+
+### Operations
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.CatalogResource().list()
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `CatalogResourceEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## CatalogTypeEntity
+
+```ts
+const catalog_type = client.CatalogType()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `Record<string, any>` | Yes |  |
+| `category` | `any[]` | Yes |  |
+| `color` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `dynamic_resource_parameter` | `string` | No |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `estimated_count` | `number` | No |  |
+| `icon` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `is_editable` | `boolean` | Yes |  |
+| `is_team_type` | `boolean` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `owning_team_id` | `any[]` | No |  |
+| `ranked` | `boolean` | Yes |  |
+| `registry_type` | `string` | No |  |
+| `required_integration` | `any[]` | No |  |
+| `schema` | `Record<string, any>` | Yes |  |
+| `semantic_type` | `string` | Yes |  |
+| `source_repo_url` | `string` | No |  |
+| `type_name` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `use_name_as_identifier` | `boolean` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | Yes | Yes |
+| `category` | - | - | Yes | Yes |
+| `color` | - | - | Yes | Yes |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - |
+| `engine_resource_type` | - | - | - | - |
+| `estimated_count` | - | - | - | - |
+| `icon` | - | - | Yes | Yes |
+| `id` | - | - | - | - |
+| `is_editable` | - | - | - | - |
+| `is_team_type` | - | - | - | - |
+| `last_synced_at` | - | - | - | - |
+| `name` | - | - | - | - |
+| `owning_team_id` | - | - | - | - |
+| `ranked` | - | - | Yes | Yes |
+| `registry_type` | - | - | - | - |
+| `required_integration` | - | - | - | - |
+| `schema` | - | - | - | - |
+| `semantic_type` | - | - | - | - |
+| `source_repo_url` | - | - | - | - |
+| `type_name` | - | - | Yes | - |
+| `updated_at` | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.CatalogType().create({
+  annotation: {},
+  category: [],
+  color: 'example_color',
+  created_at: 'example_created_at',
+  description: 'example_description',
+  engine_resource_type: 'example_engine_resource_type',
+  icon: 'example_icon',
+  id: 'example_id',
+  is_editable: true,
+  name: 'example_name',
+  ranked: true,
+  schema: {},
+  semantic_type: 'example_semantic_type',
+  type_name: 'example_type_name',
+  updated_at: 'example_updated_at',
+  use_name_as_identifier: true,
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.CatalogType().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.CatalogType().load({ id: 'catalog_type_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```ts
+const result = await client.CatalogType().update({
+  id: 'catalog_type_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `CatalogTypeEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## CatalogTypeSchemaEntity
+
+```ts
+const catalog_type_schema = client.CatalogTypeSchema()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `Record<string, any>` | Yes |  |
+| `attribute` | `any[]` | Yes |  |
+| `category` | `any[]` | Yes |  |
+| `color` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `dynamic_resource_parameter` | `string` | No |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `estimated_count` | `number` | No |  |
+| `icon` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `is_editable` | `boolean` | Yes |  |
+| `is_team_type` | `boolean` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `owning_team_id` | `any[]` | No |  |
+| `ranked` | `boolean` | Yes |  |
+| `registry_type` | `string` | No |  |
+| `required_integration` | `any[]` | No |  |
+| `schema` | `Record<string, any>` | Yes |  |
+| `semantic_type` | `string` | Yes |  |
+| `source_repo_url` | `string` | No |  |
+| `type_name` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `use_name_as_identifier` | `boolean` | Yes |  |
+| `version` | `number` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.CatalogTypeSchema().create({
+  catalog_type_id: 'example_catalog_type_id',
+  annotation: {},
+  attribute: [],
+  category: [],
+  color: 'example_color',
+  created_at: 'example_created_at',
+  description: 'example_description',
+  engine_resource_type: 'example_engine_resource_type',
+  icon: 'example_icon',
+  id: 'example_id',
+  is_editable: true,
+  name: 'example_name',
+  ranked: true,
+  schema: {},
+  semantic_type: 'example_semantic_type',
+  type_name: 'example_type_name',
+  updated_at: 'example_updated_at',
+  use_name_as_identifier: true,
+  version: 1,
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `CatalogTypeSchemaEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## CustomFieldEntity
 
 ```ts
@@ -1167,6 +1850,13 @@ const custom_field = client.CustomField()
 | `helptext_catalog_attribute_id` | `string` | No |  |
 | `id` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `option` | `any[]` | Yes |  |
+| `required` | `string` | No |  |
+| `required_v2` | `string` | No |  |
+| `show_before_closure` | `boolean` | Yes |  |
+| `show_before_creation` | `boolean` | Yes |  |
+| `show_before_update` | `boolean` | Yes |  |
+| `show_in_announcement_post` | `boolean` | No |  |
 | `updated_at` | `string` | Yes |  |
 
 ### Operations
@@ -1184,6 +1874,10 @@ const result = await client.CustomField().create({
   fixed_filter: {},
   id: 'example_id',
   name: 'example_name',
+  option: [],
+  show_before_closure: true,
+  show_before_creation: true,
+  show_before_update: true,
   updated_at: 'example_updated_at',
 })
 ```
@@ -1340,6 +2034,98 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `CustomFieldOptionEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## EscalationEntity
+
+```ts
+const escalation = client.Escalation()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `creator` | `Record<string, any>` | Yes |  |
+| `description` | `string` | No |  |
+| `escalation_path_id` | `string` | No |  |
+| `event` | `any[]` | Yes |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `incident_id` | `string` | No |  |
+| `priority` | `Record<string, any>` | Yes |  |
+| `related_alert` | `any[]` | Yes |  |
+| `related_incident` | `any[]` | Yes |  |
+| `status` | `string` | Yes |  |
+| `title` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `user_id` | `any[]` | No |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.Escalation().create({
+  created_at: 'example_created_at',
+  creator: {},
+  event: [],
+  id: 'example_id',
+  idempotency_key: 'example_idempotency_key',
+  priority: {},
+  related_alert: [],
+  related_incident: [],
+  status: 'example_status',
+  title: 'example_title',
+  updated_at: 'example_updated_at',
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.Escalation().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.Escalation().load({ id: 'escalation_id' })
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `EscalationEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -1512,6 +2298,7 @@ const incident = client.Incident()
 | `has_debrief` | `boolean` | No |  |
 | `id` | `string` | Yes |  |
 | `idempotency_key` | `string` | Yes |  |
+| `incident` | `Record<string, any>` | Yes |  |
 | `incident_role_assignment` | `any[]` | Yes |  |
 | `incident_status` | `Record<string, any>` | Yes |  |
 | `incident_status_id` | `string` | No |  |
@@ -1520,6 +2307,7 @@ const incident = client.Incident()
 | `incident_type_id` | `string` | No |  |
 | `mode` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `notify_incident_channel` | `boolean` | Yes |  |
 | `permalink` | `string` | No |  |
 | `postmortem_document_id` | `any[]` | No |  |
 | `postmortem_document_url` | `string` | No |  |
@@ -1531,7 +2319,11 @@ const incident = client.Incident()
 | `slack_channel_name` | `string` | No |  |
 | `slack_channel_name_override` | `string` | No |  |
 | `slack_team_id` | `string` | Yes |  |
+| `source_message_channel_id` | `string` | No |  |
+| `source_message_timestamp` | `string` | No |  |
+| `status` | `string` | Yes |  |
 | `summary` | `string` | No |  |
+| `timestamp` | `any[]` | No |  |
 | `updated_at` | `string` | Yes |  |
 | `visibility` | `string` | Yes |  |
 | `workload_minutes_late` | `number` | No |  |
@@ -1552,6 +2344,7 @@ const incident = client.Incident()
 | `has_debrief` | - | - | - |
 | `id` | - | - | - |
 | `idempotency_key` | - | - | - |
+| `incident` | - | - | - |
 | `incident_role_assignment` | - | - | Yes |
 | `incident_status` | - | - | - |
 | `incident_status_id` | - | - | - |
@@ -1560,6 +2353,7 @@ const incident = client.Incident()
 | `incident_type_id` | - | - | - |
 | `mode` | - | - | Yes |
 | `name` | - | - | Yes |
+| `notify_incident_channel` | - | - | - |
 | `permalink` | - | - | - |
 | `postmortem_document_id` | - | - | - |
 | `postmortem_document_url` | - | - | - |
@@ -1571,7 +2365,11 @@ const incident = client.Incident()
 | `slack_channel_name` | - | - | - |
 | `slack_channel_name_override` | - | - | - |
 | `slack_team_id` | - | - | Yes |
+| `source_message_channel_id` | - | - | - |
+| `source_message_timestamp` | - | - | - |
+| `status` | - | - | Yes |
 | `summary` | - | - | - |
+| `timestamp` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -1593,15 +2391,18 @@ const result = await client.Incident().create({
   external_issue_reference: {},
   id: 'example_id',
   idempotency_key: 'example_idempotency_key',
+  incident: {},
   incident_role_assignment: [],
   incident_status: {},
   incident_type: {},
   mode: 'example_mode',
   name: 'example_name',
+  notify_incident_channel: true,
   reference: 'example_reference',
   severity: {},
   slack_channel_id: 'example_slack_channel_id',
   slack_team_id: 'example_slack_team_id',
+  status: 'example_status',
   updated_at: 'example_updated_at',
   visibility: 'example_visibility',
 })
@@ -1638,6 +2439,59 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `IncidentEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## IncidentAlertEntity
+
+```ts
+const incident_alert = client.IncidentAlert()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alert` | `Record<string, any>` | Yes |  |
+| `alert_route_id` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `incident` | `Record<string, any>` | Yes |  |
+
+### Operations
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.IncidentAlert().list()
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `IncidentAlertEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -1947,9 +2801,24 @@ const incident_role = client.IncidentRole()
 | `id` | `string` | Yes |  |
 | `instruction` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `required` | `boolean` | No |  |
 | `role_type` | `string` | Yes |  |
 | `shortform` | `string` | Yes |  |
 | `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `instruction` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `required` | - | - | Yes | - | - |
+| `role_type` | - | - | - | - | - |
+| `shortform` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2593,6 +3462,471 @@ Return a copy of the entity options.
 
 ---
 
+## ScheduleEntity
+
+```ts
+const schedule = client.Schedule()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `Record<string, any>` | Yes |  |
+| `config` | `Record<string, any>` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `current_shift` | `any[]` | No |  |
+| `holidays_public_config` | `Record<string, any>` | Yes |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `next_shift` | `any[]` | No |  |
+| `permalink` | `string` | Yes |  |
+| `schedule` | `Record<string, any>` | Yes |  |
+| `team_id` | `any[]` | Yes |  |
+| `timezone` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.Schedule().create({
+  annotation: {},
+  config: {},
+  created_at: 'example_created_at',
+  holidays_public_config: {},
+  id: 'example_id',
+  name: 'example_name',
+  permalink: 'example_permalink',
+  schedule: {},
+  team_id: [],
+  timezone: 'example_timezone',
+  updated_at: 'example_updated_at',
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.Schedule().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.Schedule().load({ id: 'schedule_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria.
+
+```ts
+const result = await client.Schedule().remove({ id: 'schedule_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```ts
+const result = await client.Schedule().update({
+  id: 'schedule_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `ScheduleEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## ScheduleEntryEntity
+
+```ts
+const schedule_entry = client.ScheduleEntry()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `pagination_meta` | `Record<string, any>` | Yes |  |
+| `schedule_entry` | `Record<string, any>` | Yes |  |
+
+### Operations
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.ScheduleEntry().load()
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `ScheduleEntryEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## ScheduleReplicaEntity
+
+```ts
+const schedule_replica = client.ScheduleReplica()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `last_sync_error` | `string` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `mirror_window_day` | `number` | No |  |
+| `replica_fallback_user_id` | `string` | Yes |  |
+| `replica_provider` | `string` | Yes |  |
+| `replica_provider_id` | `string` | Yes |  |
+| `schedule_id` | `string` | Yes |  |
+| `schedule_replica` | `Record<string, any>` | Yes |  |
+| `source` | `any[]` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `user_status` | `any[]` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.ScheduleReplica().create({
+  id: 'example_id',
+  created_at: 'example_created_at',
+  replica_fallback_user_id: 'example_replica_fallback_user_id',
+  replica_provider: 'example_replica_provider',
+  replica_provider_id: 'example_replica_provider_id',
+  schedule_id: 'example_schedule_id',
+  schedule_replica: {},
+  source: [],
+  updated_at: 'example_updated_at',
+  user_status: [],
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.ScheduleReplica().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.ScheduleReplica().load({ id: 'schedule_replica_id', schedule_id: 'schedule_id' })
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `ScheduleReplicaEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## ScheduleSyncRuleEntity
+
+```ts
+const schedule_sync_rule = client.ScheduleSyncRule()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `Record<string, any>` | No |  |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `permanent_member_user_id` | `any[]` | Yes |  |
+| `rotation_id` | `string` | No |  |
+| `schedule_id` | `string` | Yes |  |
+| `schedule_sync_rule` | `Record<string, any>` | Yes |  |
+| `schedule_sync_target` | `Record<string, any>` | Yes |  |
+| `schedule_sync_target_id` | `string` | Yes |  |
+| `sync_type` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `id` | - | - | - | - |
+| `permanent_member_user_id` | - | - | - | Yes |
+| `rotation_id` | - | - | - | - |
+| `schedule_id` | - | - | - | - |
+| `schedule_sync_rule` | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - |
+| `sync_type` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.ScheduleSyncRule().create({
+  id: 'example_id',
+  created_at: 'example_created_at',
+  permanent_member_user_id: [],
+  schedule_id: 'example_schedule_id',
+  schedule_sync_rule: {},
+  schedule_sync_target: {},
+  schedule_sync_target_id: 'example_schedule_sync_target_id',
+  sync_type: 'example_sync_type',
+  updated_at: 'example_updated_at',
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.ScheduleSyncRule().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.ScheduleSyncRule().load({ id: 'schedule_sync_rule_id', schedule_id: 'schedule_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```ts
+const result = await client.ScheduleSyncRule().update({
+  id: 'schedule_sync_rule_id',
+  schedule_id: 'schedule_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `ScheduleSyncRuleEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## ScheduleSyncTargetEntity
+
+```ts
+const schedule_sync_target = client.ScheduleSyncTarget()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `add_bot_to_group` | `boolean` | Yes |  |
+| `annotation` | `Record<string, any>` | No |  |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `linked_schedule` | `any[]` | Yes |  |
+| `schedule_sync_target` | `Record<string, any>` | Yes |  |
+| `slack_team_id` | `string` | Yes |  |
+| `slack_user_group_id` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.ScheduleSyncTarget().create({
+  add_bot_to_group: true,
+  created_at: 'example_created_at',
+  id: 'example_id',
+  linked_schedule: [],
+  schedule_sync_target: {},
+  slack_team_id: 'example_slack_team_id',
+  slack_user_group_id: 'example_slack_user_group_id',
+  updated_at: 'example_updated_at',
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.ScheduleSyncTarget().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.ScheduleSyncTarget().load({ id: 'schedule_sync_target_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria.
+
+```ts
+const result = await client.ScheduleSyncTarget().remove({ id: 'schedule_sync_target_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```ts
+const result = await client.ScheduleSyncTarget().update({
+  id: 'schedule_sync_target_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `ScheduleSyncTargetEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## SecretEntity
 
 ```ts
@@ -2608,7 +3942,7 @@ const secret = client.Secret()
 | `id` | `string` | Yes |  |
 | `last_four_char` | `string` | No |  |
 | `name` | `string` | Yes |  |
-| `owning_team_id` | `any[]` | No |  |
+| `owning_team_id` | `any[]` | Yes |  |
 | `secret` | `Record<string, any>` | Yes |  |
 | `updated_at` | `string` | Yes |  |
 | `value` | `string` | Yes |  |
@@ -2623,7 +3957,7 @@ const secret = client.Secret()
 | `id` | - | - | - | - | - |
 | `last_four_char` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
-| `owning_team_id` | - | Yes | - | Yes | - |
+| `owning_team_id` | - | - | Yes | Yes | - |
 | `secret` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 | `value` | - | - | - | - | - |
@@ -2640,6 +3974,7 @@ const result = await client.Secret().create({
   created_at: 'example_created_at',
   id: 'example_id',
   name: 'example_name',
+  owning_team_id: [],
   secret: {},
   updated_at: 'example_updated_at',
   value: 'example_value',
@@ -2710,6 +4045,515 @@ Return a copy of the entity options.
 
 ---
 
+## SeverityEntity
+
+```ts
+const severity = client.Severity()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `rank` | `number` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | - | Yes | Yes |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.Severity().create({
+  created_at: 'example_created_at',
+  description: 'example_description',
+  id: 'example_id',
+  name: 'example_name',
+  rank: 1,
+  updated_at: 'example_updated_at',
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.Severity().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.Severity().load({ id: 'severity_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```ts
+const result = await client.Severity().update({
+  id: 'severity_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `SeverityEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## StatusPageEntity
+
+```ts
+const status_page = client.StatusPage()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `description` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `public_url` | `string` | No |  |
+
+### Operations
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.StatusPage().list()
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `StatusPageEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## StatusPageIncidentEntity
+
+```ts
+const status_page_incident = client.StatusPageIncident()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_impact` | `any[]` | Yes |  |
+| `component_status` | `any[]` | No |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `incident_status` | `string` | Yes |  |
+| `message` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `notify_subscriber` | `boolean` | Yes |  |
+| `published_at` | `string` | Yes |  |
+| `status_page_id` | `string` | Yes |  |
+| `update` | `any[]` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.StatusPageIncident().create({
+  component_impact: [],
+  id: 'example_id',
+  idempotency_key: 'example_idempotency_key',
+  incident_status: 'example_incident_status',
+  message: 'example_message',
+  name: 'example_name',
+  notify_subscriber: true,
+  published_at: 'example_published_at',
+  status_page_id: 'example_status_page_id',
+  update: [],
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.StatusPageIncident().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.StatusPageIncident().load({ id: 'status_page_incident_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```ts
+const result = await client.StatusPageIncident().update({
+  id: 'status_page_incident_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `StatusPageIncidentEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## StatusPageIncidentUpdateEntity
+
+```ts
+const status_page_incident_update = client.StatusPageIncidentUpdate()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `any[]` | No |  |
+| `incident_status` | `string` | No |  |
+| `message` | `string` | Yes |  |
+| `notify_subscriber` | `boolean` | Yes |  |
+| `status_page_incident_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.StatusPageIncidentUpdate().create({
+  message: 'example_message',
+  notify_subscriber: true,
+  status_page_incident_id: 'example_status_page_incident_id',
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `StatusPageIncidentUpdateEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## StatusPageMaintenanceEntity
+
+```ts
+const status_page_maintenance = client.StatusPageMaintenance()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `affected_component_id` | `any[]` | Yes |  |
+| `component_maintenance_period` | `any[]` | Yes |  |
+| `end_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `maintenance_status` | `string` | Yes |  |
+| `message` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `notify_subscriber` | `boolean` | Yes |  |
+| `published_at` | `string` | Yes |  |
+| `start_at` | `string` | Yes |  |
+| `status_page_id` | `string` | Yes |  |
+| `update` | `any[]` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.StatusPageMaintenance().create({
+  affected_component_id: [],
+  component_maintenance_period: [],
+  end_at: 'example_end_at',
+  id: 'example_id',
+  idempotency_key: 'example_idempotency_key',
+  maintenance_status: 'example_maintenance_status',
+  message: 'example_message',
+  name: 'example_name',
+  notify_subscriber: true,
+  published_at: 'example_published_at',
+  start_at: 'example_start_at',
+  status_page_id: 'example_status_page_id',
+  update: [],
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Returns an array.
+
+```ts
+const results = await client.StatusPageMaintenance().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.StatusPageMaintenance().load({ id: 'status_page_maintenance_id' })
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `StatusPageMaintenanceEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## StatusPageMaintenanceUpdateEntity
+
+```ts
+const status_page_maintenance_update = client.StatusPageMaintenanceUpdate()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `any[]` | No |  |
+| `maintenance_status` | `string` | No |  |
+| `message` | `string` | Yes |  |
+| `notify_subscriber` | `boolean` | Yes |  |
+| `status_page_maintenance_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data.
+
+```ts
+const result = await client.StatusPageMaintenanceUpdate().create({
+  message: 'example_message',
+  notify_subscriber: true,
+  status_page_maintenance_id: 'example_status_page_maintenance_id',
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `StatusPageMaintenanceUpdateEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## StatusPageStructureEntity
+
+```ts
+const status_page_structure = client.StatusPageStructure()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `item` | `any[]` | Yes |  |
+
+### Operations
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria.
+
+```ts
+const result = await client.StatusPageStructure().load({ id: 'status_page_structure_id' })
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `StatusPageStructureEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## TeamEntity
 
 ```ts
@@ -2758,6 +4602,83 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `TeamEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## TelemetryDataSourceEntity
+
+```ts
+const telemetry_data_source = client.TelemetryDataSource()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `datadog_config` | `Record<string, any>` | No |  |
+| `enabled` | `boolean` | Yes |  |
+| `grafana_config` | `Record<string, any>` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `provider` | `string` | Yes |  |
+| `source_type` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `version` | `string` | No |  |
+
+### Field Usage by Operation
+
+| Field | update |
+| --- | --- |
+| `created_at` | - |
+| `datadog_config` | - |
+| `enabled` | - |
+| `grafana_config` | - |
+| `id` | - |
+| `name` | Yes |
+| `provider` | - |
+| `source_type` | - |
+| `updated_at` | - |
+| `version` | - |
+
+### Operations
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`.
+
+```ts
+const result = await client.TelemetryDataSource().update({
+  id: 'id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `client()`

@@ -57,6 +57,11 @@ main: kit: entity: incident: {
       type: "`$STRING`"
     }
     {
+      name: "incident"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
       name: "incident_role_assignment"
       op: {
         create: {
@@ -113,6 +118,11 @@ main: kit: entity: incident: {
       }
       req: true
       type: "`$STRING`"
+    }
+    {
+      name: "notify_incident_channel"
+      req: true
+      type: "`$BOOLEAN`"
     }
     {
       name: "permalink"
@@ -176,9 +186,35 @@ main: kit: entity: incident: {
       type: "`$STRING`"
     }
     {
+      name: "source_message_channel_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "source_message_timestamp"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "status"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      req: true
+      type: "`$STRING`"
+    }
+    {
       name: "summary"
       req: false
       type: "`$STRING`"
+    }
+    {
+      name: "timestamp"
+      req: false
+      type: "`$ARRAY`"
     }
     {
       name: "updated_at"
@@ -222,6 +258,53 @@ main: kit: entity: incident: {
     create: {
       name: "create"
       points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01G18REBY9AYH6CMWCJ2CVCYCH"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/incidents/{id}/actions/edit"
+          parts: [
+            "v2"
+            "incidents"
+            "{id}"
+            "actions"
+            "edit"
+          ]
+          select: {
+            "$action": "action_edit"
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: {
+              incident: "`reqdata`"
+            }
+            res: "`body.incident`"
+          }
+        }
+        {
+          method: "POST"
+          orig: "/v1/incidents"
+          parts: [
+            "v1"
+            "incidents"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.incident`"
+          }
+        }
         {
           method: "POST"
           orig: "/v2/incidents"
@@ -418,11 +501,90 @@ main: kit: entity: incident: {
             res: "`body`"
           }
         }
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: [
+                  "declined"
+                ]
+                kind: "query"
+                name: "status"
+                orig: "status"
+                reqd: false
+                type: "`$ARRAY`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v1/incidents"
+          parts: [
+            "v1"
+            "incidents"
+          ]
+          select: {
+            exist: [
+              "after"
+              "page_size"
+              "status"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
       ]
     }
     load: {
       name: "load"
       points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v1/incidents/{id}"
+          parts: [
+            "v1"
+            "incidents"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.incident`"
+          }
+        }
         {
           args: {
             params: [

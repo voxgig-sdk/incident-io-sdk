@@ -21,7 +21,7 @@ describe("AlertRouteDirect", function()
 
 
     local result, err = client:direct({
-      path = "v3/alert_routes",
+      path = "v2/alert_routes",
       method = "GET",
       params = {},
     })
@@ -70,7 +70,7 @@ describe("AlertRouteDirect", function()
     end
 
     local result, err = client:direct({
-      path = "v3/alert_routes/{id}",
+      path = "v2/alert_routes/{id}",
       method = "GET",
       params = params,
       query = query,

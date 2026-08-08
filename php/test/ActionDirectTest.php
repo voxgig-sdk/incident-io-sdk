@@ -25,7 +25,7 @@ class ActionDirectTest extends TestCase
 
 
         $result = $client->direct([
-            "path" => "v2/actions",
+            "path" => "v1/actions",
             "method" => "GET",
             "params" => [],
         ]);
@@ -75,7 +75,7 @@ class ActionDirectTest extends TestCase
         }
 
         $result = $client->direct([
-            "path" => "v2/actions/{id}",
+            "path" => "v1/actions/{id}",
             "method" => "GET",
             "params" => $params,
             "query" => $query,

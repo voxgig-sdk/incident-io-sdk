@@ -2,12 +2,15 @@
   "existing": {
     "escalations_v2": {
       "ESCALATIONS_V200": {
+        "escalation_id": "ESCALATION01",
         "id": "ESCALATIONS_V200"
       },
       "ESCALATIONS_V201": {
+        "escalation_id": "ESCALATION01",
         "id": "ESCALATIONS_V201"
       },
       "ESCALATIONS_V202": {
+        "escalation_id": "ESCALATION01",
         "id": "ESCALATIONS_V202"
       }
     }

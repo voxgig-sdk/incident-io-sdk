@@ -1,0 +1,71 @@
+# BasicStatusPageIncidentFlow
+
+main: kit: flow: BasicStatusPageIncidentFlow:
+{
+  entity: "status_page_incident",
+  kind: "basic",
+  name: "BasicStatusPageIncidentFlow",
+  step: [
+    {
+      input: {
+        ref: "status_page_incident_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "status_page_incident_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "status_page_incident_ref01",
+        srcdatavar: "status_page_incident_ref01_data",
+        suffix: "_up0",
+        textfield: "idempotency_key"
+      }
+
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_page_incident_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "status_page_incident_ref01",
+        srcdatavar: "status_page_incident_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "status_page_incident01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_page_incident_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPageIncidentFlow"
+}

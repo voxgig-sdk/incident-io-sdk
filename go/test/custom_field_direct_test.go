@@ -31,7 +31,7 @@ func TestCustomFieldDirect(t *testing.T) {
 
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v2/custom_fields",
+			"path":   "v1/custom_fields",
 			"method": "GET",
 			"params": map[string]any{},
 		})
@@ -100,7 +100,7 @@ func TestCustomFieldDirect(t *testing.T) {
 		}
 
 		result, err := client.Direct(map[string]any{
-			"path":   "v2/custom_fields/{id}",
+			"path":   "v1/custom_fields/{id}",
 			"method": "GET",
 			"params": params,
 			"query":  query,

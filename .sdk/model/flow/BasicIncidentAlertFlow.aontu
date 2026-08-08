@@ -1,0 +1,22 @@
+# BasicIncidentAlertFlow
+
+main: kit: flow: BasicIncidentAlertFlow:
+{
+  entity: "incident_alert",
+  kind: "basic",
+  name: "BasicIncidentAlertFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_alert_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentAlertFlow"
+}

@@ -12,7 +12,9 @@
 ---@field completed_at? string
 ---@field created_at string
 ---@field creator table
----@field description string
+---@field description? string
+---@field external_issue_reference? table
+---@field follow_up boolean
 ---@field id string
 ---@field incident_id string
 ---@field status string
@@ -28,6 +30,8 @@
 ---@field created_at? string
 ---@field creator? table
 ---@field description? string
+---@field external_issue_reference? table
+---@field follow_up? boolean
 ---@field id? string
 ---@field incident_id? string
 ---@field status? string
@@ -39,7 +43,9 @@
 ---@field completed_at? string
 ---@field created_at string
 ---@field creator table
----@field description string
+---@field description? string
+---@field external_issue_reference? table
+---@field follow_up boolean
 ---@field id string
 ---@field incident_id string
 ---@field status string
@@ -53,6 +59,8 @@
 ---@field created_at? string
 ---@field creator? table
 ---@field description? string
+---@field external_issue_reference? table
+---@field follow_up? boolean
 ---@field incident_id? string
 ---@field status? string
 ---@field updated_at? string
@@ -90,6 +98,20 @@
 ---@field status? string
 ---@field title? string
 ---@field updated_at? string
+
+---@class AlertCreateData
+---@field id string
+---@field alert_group_id? table
+---@field alert_source_id string
+---@field attribute table
+---@field created_at string
+---@field deduplication_key string
+---@field description? string
+---@field resolved_at? string
+---@field source_url? string
+---@field status string
+---@field title string
+---@field updated_at string
 
 ---@class AlertAttribute
 ---@field array boolean
@@ -181,6 +203,7 @@
 
 ---@class AlertRoute
 ---@field alert_source table
+---@field channel_config table
 ---@field condition_group table
 ---@field created_at? string
 ---@field enabled boolean
@@ -189,8 +212,10 @@
 ---@field grouping_config table
 ---@field id string
 ---@field incident_config table
+---@field incident_template table
 ---@field is_private boolean
 ---@field message_config table
+---@field message_template? table
 ---@field name string
 ---@field owning_team_id? table
 ---@field updated_at? string
@@ -201,6 +226,7 @@
 
 ---@class AlertRouteListMatch
 ---@field alert_source? table
+---@field channel_config? table
 ---@field condition_group? table
 ---@field created_at? string
 ---@field enabled? boolean
@@ -209,8 +235,10 @@
 ---@field grouping_config? table
 ---@field id? string
 ---@field incident_config? table
+---@field incident_template? table
 ---@field is_private? boolean
 ---@field message_config? table
+---@field message_template? table
 ---@field name? string
 ---@field owning_team_id? table
 ---@field updated_at? string
@@ -218,6 +246,7 @@
 
 ---@class AlertRouteCreateData
 ---@field alert_source table
+---@field channel_config table
 ---@field condition_group table
 ---@field created_at? string
 ---@field enabled boolean
@@ -226,8 +255,10 @@
 ---@field grouping_config table
 ---@field id string
 ---@field incident_config table
+---@field incident_template table
 ---@field is_private boolean
 ---@field message_config table
+---@field message_template? table
 ---@field name string
 ---@field owning_team_id? table
 ---@field updated_at? string
@@ -236,6 +267,7 @@
 ---@class AlertRouteUpdateData
 ---@field id string
 ---@field alert_source? table
+---@field channel_config? table
 ---@field condition_group? table
 ---@field created_at? string
 ---@field enabled? boolean
@@ -243,8 +275,10 @@
 ---@field expression? table
 ---@field grouping_config? table
 ---@field incident_config? table
+---@field incident_template? table
 ---@field is_private? boolean
 ---@field message_config? table
+---@field message_template? table
 ---@field name? string
 ---@field owning_team_id? table
 ---@field updated_at? string
@@ -327,6 +361,7 @@
 ---@field comment? string
 ---@field created_at string
 ---@field creator table
+---@field grace_period_minute number
 ---@field id string
 ---@field last_used_at? string
 ---@field name string
@@ -344,6 +379,7 @@
 ---@field comment? string
 ---@field created_at? string
 ---@field creator? table
+---@field grace_period_minute? number
 ---@field id? string
 ---@field last_used_at? string
 ---@field name? string
@@ -358,6 +394,7 @@
 ---@field comment? string
 ---@field created_at string
 ---@field creator table
+---@field grace_period_minute number
 ---@field id string
 ---@field last_used_at? string
 ---@field name string
@@ -373,6 +410,7 @@
 ---@field comment? string
 ---@field created_at? string
 ---@field creator? table
+---@field grace_period_minute? number
 ---@field last_used_at? string
 ---@field name? string
 ---@field role? table
@@ -385,6 +423,249 @@
 ---@class ApiKeyRemoveMatch
 ---@field id string
 
+---@class CatalogEntry
+---@field alias? table
+---@field archived_at? string
+---@field attribute_value table
+---@field catalog_entry table
+---@field catalog_type table
+---@field catalog_type_id string
+---@field created_at string
+---@field external_id? string
+---@field id string
+---@field name string
+---@field rank? number
+---@field update_attribute? table
+---@field updated_at string
+
+---@class CatalogEntryLoadMatch
+---@field id string
+
+---@class CatalogEntryListMatch
+---@field alias? table
+---@field archived_at? string
+---@field attribute_value? table
+---@field catalog_entry? table
+---@field catalog_type? table
+---@field catalog_type_id? string
+---@field created_at? string
+---@field external_id? string
+---@field id? string
+---@field name? string
+---@field rank? number
+---@field update_attribute? table
+---@field updated_at? string
+
+---@class CatalogEntryCreateData
+---@field alias? table
+---@field archived_at? string
+---@field attribute_value table
+---@field catalog_entry table
+---@field catalog_type table
+---@field catalog_type_id string
+---@field created_at string
+---@field external_id? string
+---@field id string
+---@field name string
+---@field rank? number
+---@field update_attribute? table
+---@field updated_at string
+
+---@class CatalogEntryUpdateData
+---@field id string
+---@field alias? table
+---@field archived_at? string
+---@field attribute_value? table
+---@field catalog_entry? table
+---@field catalog_type? table
+---@field catalog_type_id? string
+---@field created_at? string
+---@field external_id? string
+---@field name? string
+---@field rank? number
+---@field update_attribute? table
+---@field updated_at? string
+
+---@class CatalogResource
+---@field category string
+---@field description string
+---@field engine_resource_type string
+---@field label string
+---@field type string
+---@field value_docstring string
+
+---@class CatalogResourceListMatch
+---@field category? string
+---@field description? string
+---@field engine_resource_type? string
+---@field label? string
+---@field type? string
+---@field value_docstring? string
+
+---@class CatalogType
+---@field annotation table
+---@field category table
+---@field color string
+---@field created_at string
+---@field description string
+---@field dynamic_resource_parameter? string
+---@field engine_resource_type string
+---@field estimated_count? number
+---@field icon string
+---@field id string
+---@field is_editable boolean
+---@field is_team_type? boolean
+---@field last_synced_at? string
+---@field name string
+---@field owning_team_id? table
+---@field ranked boolean
+---@field registry_type? string
+---@field required_integration? table
+---@field schema table
+---@field semantic_type string
+---@field source_repo_url? string
+---@field type_name string
+---@field updated_at string
+---@field use_name_as_identifier boolean
+
+---@class CatalogTypeLoadMatch
+---@field id string
+
+---@class CatalogTypeListMatch
+---@field annotation? table
+---@field category? table
+---@field color? string
+---@field created_at? string
+---@field description? string
+---@field dynamic_resource_parameter? string
+---@field engine_resource_type? string
+---@field estimated_count? number
+---@field icon? string
+---@field id? string
+---@field is_editable? boolean
+---@field is_team_type? boolean
+---@field last_synced_at? string
+---@field name? string
+---@field owning_team_id? table
+---@field ranked? boolean
+---@field registry_type? string
+---@field required_integration? table
+---@field schema? table
+---@field semantic_type? string
+---@field source_repo_url? string
+---@field type_name? string
+---@field updated_at? string
+---@field use_name_as_identifier? boolean
+
+---@class CatalogTypeCreateData
+---@field annotation table
+---@field category table
+---@field color string
+---@field created_at string
+---@field description string
+---@field dynamic_resource_parameter? string
+---@field engine_resource_type string
+---@field estimated_count? number
+---@field icon string
+---@field id string
+---@field is_editable boolean
+---@field is_team_type? boolean
+---@field last_synced_at? string
+---@field name string
+---@field owning_team_id? table
+---@field ranked boolean
+---@field registry_type? string
+---@field required_integration? table
+---@field schema table
+---@field semantic_type string
+---@field source_repo_url? string
+---@field type_name string
+---@field updated_at string
+---@field use_name_as_identifier boolean
+
+---@class CatalogTypeUpdateData
+---@field id string
+---@field annotation? table
+---@field category? table
+---@field color? string
+---@field created_at? string
+---@field description? string
+---@field dynamic_resource_parameter? string
+---@field engine_resource_type? string
+---@field estimated_count? number
+---@field icon? string
+---@field is_editable? boolean
+---@field is_team_type? boolean
+---@field last_synced_at? string
+---@field name? string
+---@field owning_team_id? table
+---@field ranked? boolean
+---@field registry_type? string
+---@field required_integration? table
+---@field schema? table
+---@field semantic_type? string
+---@field source_repo_url? string
+---@field type_name? string
+---@field updated_at? string
+---@field use_name_as_identifier? boolean
+
+---@class CatalogTypeSchema
+---@field annotation table
+---@field attribute table
+---@field category table
+---@field color string
+---@field created_at string
+---@field description string
+---@field dynamic_resource_parameter? string
+---@field engine_resource_type string
+---@field estimated_count? number
+---@field icon string
+---@field id string
+---@field is_editable boolean
+---@field is_team_type? boolean
+---@field last_synced_at? string
+---@field name string
+---@field owning_team_id? table
+---@field ranked boolean
+---@field registry_type? string
+---@field required_integration? table
+---@field schema table
+---@field semantic_type string
+---@field source_repo_url? string
+---@field type_name string
+---@field updated_at string
+---@field use_name_as_identifier boolean
+---@field version number
+
+---@class CatalogTypeSchemaCreateData
+---@field catalog_type_id string
+---@field annotation table
+---@field attribute table
+---@field category table
+---@field color string
+---@field created_at string
+---@field description string
+---@field dynamic_resource_parameter? string
+---@field engine_resource_type string
+---@field estimated_count? number
+---@field icon string
+---@field id string
+---@field is_editable boolean
+---@field is_team_type? boolean
+---@field last_synced_at? string
+---@field name string
+---@field owning_team_id? table
+---@field ranked boolean
+---@field registry_type? string
+---@field required_integration? table
+---@field schema table
+---@field semantic_type string
+---@field source_repo_url? string
+---@field type_name string
+---@field updated_at string
+---@field use_name_as_identifier boolean
+---@field version number
+
 ---@class CustomField
 ---@field catalog_type_id? string
 ---@field created_at string
@@ -396,6 +677,13 @@
 ---@field helptext_catalog_attribute_id? string
 ---@field id string
 ---@field name string
+---@field option table
+---@field required? string
+---@field required_v2? string
+---@field show_before_closure boolean
+---@field show_before_creation boolean
+---@field show_before_update boolean
+---@field show_in_announcement_post? boolean
 ---@field updated_at string
 
 ---@class CustomFieldLoadMatch
@@ -412,6 +700,13 @@
 ---@field helptext_catalog_attribute_id? string
 ---@field id? string
 ---@field name? string
+---@field option? table
+---@field required? string
+---@field required_v2? string
+---@field show_before_closure? boolean
+---@field show_before_creation? boolean
+---@field show_before_update? boolean
+---@field show_in_announcement_post? boolean
 ---@field updated_at? string
 
 ---@class CustomFieldCreateData
@@ -425,6 +720,13 @@
 ---@field helptext_catalog_attribute_id? string
 ---@field id string
 ---@field name string
+---@field option table
+---@field required? string
+---@field required_v2? string
+---@field show_before_closure boolean
+---@field show_before_creation boolean
+---@field show_before_update boolean
+---@field show_in_announcement_post? boolean
 ---@field updated_at string
 
 ---@class CustomFieldUpdateData
@@ -438,6 +740,13 @@
 ---@field group_by_catalog_attribute_id? string
 ---@field helptext_catalog_attribute_id? string
 ---@field name? string
+---@field option? table
+---@field required? string
+---@field required_v2? string
+---@field show_before_closure? boolean
+---@field show_before_creation? boolean
+---@field show_before_update? boolean
+---@field show_in_announcement_post? boolean
 ---@field updated_at? string
 
 ---@class CustomFieldRemoveMatch
@@ -472,6 +781,60 @@
 
 ---@class CustomFieldOptionRemoveMatch
 ---@field id string
+
+---@class Escalation
+---@field created_at string
+---@field creator table
+---@field description? string
+---@field escalation_path_id? string
+---@field event table
+---@field id string
+---@field idempotency_key string
+---@field incident_id? string
+---@field priority table
+---@field related_alert table
+---@field related_incident table
+---@field status string
+---@field title string
+---@field updated_at string
+---@field user_id? table
+
+---@class EscalationLoadMatch
+---@field id string
+
+---@class EscalationListMatch
+---@field created_at? string
+---@field creator? table
+---@field description? string
+---@field escalation_path_id? string
+---@field event? table
+---@field id? string
+---@field idempotency_key? string
+---@field incident_id? string
+---@field priority? table
+---@field related_alert? table
+---@field related_incident? table
+---@field status? string
+---@field title? string
+---@field updated_at? string
+---@field user_id? table
+
+---@class EscalationCreateData
+---@field created_at string
+---@field creator table
+---@field description? string
+---@field escalation_path_id? string
+---@field event table
+---@field id string
+---@field idempotency_key string
+---@field incident_id? string
+---@field priority table
+---@field related_alert table
+---@field related_incident table
+---@field status string
+---@field title string
+---@field updated_at string
+---@field user_id? table
 
 ---@class FollowUp
 ---@field assignee table
@@ -573,6 +936,7 @@
 ---@field has_debrief? boolean
 ---@field id string
 ---@field idempotency_key string
+---@field incident table
 ---@field incident_role_assignment table
 ---@field incident_status table
 ---@field incident_status_id? string
@@ -581,6 +945,7 @@
 ---@field incident_type_id? string
 ---@field mode string
 ---@field name string
+---@field notify_incident_channel boolean
 ---@field permalink? string
 ---@field postmortem_document_id? table
 ---@field postmortem_document_url? string
@@ -592,7 +957,11 @@
 ---@field slack_channel_name? string
 ---@field slack_channel_name_override? string
 ---@field slack_team_id string
+---@field source_message_channel_id? string
+---@field source_message_timestamp? string
+---@field status string
 ---@field summary? string
+---@field timestamp? table
 ---@field updated_at string
 ---@field visibility string
 ---@field workload_minutes_late? number
@@ -613,6 +982,7 @@
 ---@field has_debrief? boolean
 ---@field id? string
 ---@field idempotency_key? string
+---@field incident? table
 ---@field incident_role_assignment? table
 ---@field incident_status? table
 ---@field incident_status_id? string
@@ -621,6 +991,7 @@
 ---@field incident_type_id? string
 ---@field mode? string
 ---@field name? string
+---@field notify_incident_channel? boolean
 ---@field permalink? string
 ---@field postmortem_document_id? table
 ---@field postmortem_document_url? string
@@ -632,7 +1003,11 @@
 ---@field slack_channel_name? string
 ---@field slack_channel_name_override? string
 ---@field slack_team_id? string
+---@field source_message_channel_id? string
+---@field source_message_timestamp? string
+---@field status? string
 ---@field summary? string
+---@field timestamp? table
 ---@field updated_at? string
 ---@field visibility? string
 ---@field workload_minutes_late? number
@@ -650,6 +1025,7 @@
 ---@field has_debrief? boolean
 ---@field id string
 ---@field idempotency_key string
+---@field incident table
 ---@field incident_role_assignment table
 ---@field incident_status table
 ---@field incident_status_id? string
@@ -658,6 +1034,7 @@
 ---@field incident_type_id? string
 ---@field mode string
 ---@field name string
+---@field notify_incident_channel boolean
 ---@field permalink? string
 ---@field postmortem_document_id? table
 ---@field postmortem_document_url? string
@@ -669,13 +1046,29 @@
 ---@field slack_channel_name? string
 ---@field slack_channel_name_override? string
 ---@field slack_team_id string
+---@field source_message_channel_id? string
+---@field source_message_timestamp? string
+---@field status string
 ---@field summary? string
+---@field timestamp? table
 ---@field updated_at string
 ---@field visibility string
 ---@field workload_minutes_late? number
 ---@field workload_minutes_sleeping? number
 ---@field workload_minutes_total? number
 ---@field workload_minutes_working? number
+
+---@class IncidentAlert
+---@field alert table
+---@field alert_route_id? string
+---@field id string
+---@field incident table
+
+---@class IncidentAlertListMatch
+---@field alert? table
+---@field alert_route_id? string
+---@field id? string
+---@field incident? table
 
 ---@class IncidentAttachment
 ---@field id string
@@ -737,6 +1130,7 @@
 ---@field id string
 ---@field instruction string
 ---@field name string
+---@field required? boolean
 ---@field role_type string
 ---@field shortform string
 ---@field updated_at string
@@ -750,6 +1144,7 @@
 ---@field id? string
 ---@field instruction? string
 ---@field name? string
+---@field required? boolean
 ---@field role_type? string
 ---@field shortform? string
 ---@field updated_at? string
@@ -760,6 +1155,7 @@
 ---@field id string
 ---@field instruction string
 ---@field name string
+---@field required? boolean
 ---@field role_type string
 ---@field shortform string
 ---@field updated_at string
@@ -770,6 +1166,7 @@
 ---@field description? string
 ---@field instruction? string
 ---@field name? string
+---@field required? boolean
 ---@field role_type? string
 ---@field shortform? string
 ---@field updated_at? string
@@ -1020,13 +1417,220 @@
 ---@field type? string
 ---@field updated_at? string
 
+---@class Schedule
+---@field annotation table
+---@field config table
+---@field created_at string
+---@field current_shift? table
+---@field holidays_public_config table
+---@field id string
+---@field name string
+---@field next_shift? table
+---@field permalink string
+---@field schedule table
+---@field team_id table
+---@field timezone string
+---@field updated_at string
+
+---@class ScheduleLoadMatch
+---@field id string
+
+---@class ScheduleListMatch
+---@field annotation? table
+---@field config? table
+---@field created_at? string
+---@field current_shift? table
+---@field holidays_public_config? table
+---@field id? string
+---@field name? string
+---@field next_shift? table
+---@field permalink? string
+---@field schedule? table
+---@field team_id? table
+---@field timezone? string
+---@field updated_at? string
+
+---@class ScheduleCreateData
+---@field annotation table
+---@field config table
+---@field created_at string
+---@field current_shift? table
+---@field holidays_public_config table
+---@field id string
+---@field name string
+---@field next_shift? table
+---@field permalink string
+---@field schedule table
+---@field team_id table
+---@field timezone string
+---@field updated_at string
+
+---@class ScheduleUpdateData
+---@field id string
+---@field annotation? table
+---@field config? table
+---@field created_at? string
+---@field current_shift? table
+---@field holidays_public_config? table
+---@field name? string
+---@field next_shift? table
+---@field permalink? string
+---@field schedule? table
+---@field team_id? table
+---@field timezone? string
+---@field updated_at? string
+
+---@class ScheduleRemoveMatch
+---@field id string
+
+---@class ScheduleEntry
+---@field pagination_meta table
+---@field schedule_entry table
+
+---@class ScheduleEntryLoadMatch
+---@field pagination_meta? table
+---@field schedule_entry? table
+
+---@class ScheduleReplica
+---@field created_at string
+---@field id string
+---@field last_sync_error? string
+---@field last_synced_at? string
+---@field mirror_window_day? number
+---@field replica_fallback_user_id string
+---@field replica_provider string
+---@field replica_provider_id string
+---@field schedule_id string
+---@field schedule_replica table
+---@field source table
+---@field updated_at string
+---@field user_status table
+
+---@class ScheduleReplicaLoadMatch
+---@field id string
+---@field schedule_id string
+
+---@class ScheduleReplicaListMatch
+---@field id string
+
+---@class ScheduleReplicaCreateData
+---@field id string
+---@field created_at string
+---@field last_sync_error? string
+---@field last_synced_at? string
+---@field mirror_window_day? number
+---@field replica_fallback_user_id string
+---@field replica_provider string
+---@field replica_provider_id string
+---@field schedule_id string
+---@field schedule_replica table
+---@field source table
+---@field updated_at string
+---@field user_status table
+
+---@class ScheduleSyncRule
+---@field annotation? table
+---@field created_at string
+---@field id string
+---@field permanent_member_user_id table
+---@field rotation_id? string
+---@field schedule_id string
+---@field schedule_sync_rule table
+---@field schedule_sync_target table
+---@field schedule_sync_target_id string
+---@field sync_type string
+---@field updated_at string
+
+---@class ScheduleSyncRuleLoadMatch
+---@field id string
+---@field schedule_id string
+
+---@class ScheduleSyncRuleListMatch
+---@field id string
+
+---@class ScheduleSyncRuleCreateData
+---@field id string
+---@field annotation? table
+---@field created_at string
+---@field permanent_member_user_id table
+---@field rotation_id? string
+---@field schedule_id string
+---@field schedule_sync_rule table
+---@field schedule_sync_target table
+---@field schedule_sync_target_id string
+---@field sync_type string
+---@field updated_at string
+
+---@class ScheduleSyncRuleUpdateData
+---@field id string
+---@field schedule_id string
+---@field annotation? table
+---@field created_at? string
+---@field permanent_member_user_id? table
+---@field rotation_id? string
+---@field schedule_sync_rule? table
+---@field schedule_sync_target? table
+---@field schedule_sync_target_id? string
+---@field sync_type? string
+---@field updated_at? string
+
+---@class ScheduleSyncTarget
+---@field add_bot_to_group boolean
+---@field annotation? table
+---@field created_at string
+---@field id string
+---@field linked_schedule table
+---@field schedule_sync_target table
+---@field slack_team_id string
+---@field slack_user_group_id string
+---@field updated_at string
+
+---@class ScheduleSyncTargetLoadMatch
+---@field id string
+
+---@class ScheduleSyncTargetListMatch
+---@field add_bot_to_group? boolean
+---@field annotation? table
+---@field created_at? string
+---@field id? string
+---@field linked_schedule? table
+---@field schedule_sync_target? table
+---@field slack_team_id? string
+---@field slack_user_group_id? string
+---@field updated_at? string
+
+---@class ScheduleSyncTargetCreateData
+---@field add_bot_to_group boolean
+---@field annotation? table
+---@field created_at string
+---@field id string
+---@field linked_schedule table
+---@field schedule_sync_target table
+---@field slack_team_id string
+---@field slack_user_group_id string
+---@field updated_at string
+
+---@class ScheduleSyncTargetUpdateData
+---@field id string
+---@field add_bot_to_group? boolean
+---@field annotation? table
+---@field created_at? string
+---@field linked_schedule? table
+---@field schedule_sync_target? table
+---@field slack_team_id? string
+---@field slack_user_group_id? string
+---@field updated_at? string
+
+---@class ScheduleSyncTargetRemoveMatch
+---@field id string
+
 ---@class Secret
 ---@field created_at string
 ---@field description? string
 ---@field id string
 ---@field last_four_char? string
 ---@field name string
----@field owning_team_id? table
+---@field owning_team_id table
 ---@field secret table
 ---@field updated_at string
 ---@field value string
@@ -1053,7 +1657,7 @@
 ---@field id string
 ---@field last_four_char? string
 ---@field name string
----@field owning_team_id? table
+---@field owning_team_id table
 ---@field secret table
 ---@field updated_at string
 ---@field value string
@@ -1074,6 +1678,190 @@
 ---@class SecretRemoveMatch
 ---@field id string
 
+---@class Severity
+---@field created_at string
+---@field description string
+---@field id string
+---@field name string
+---@field rank number
+---@field updated_at string
+
+---@class SeverityLoadMatch
+---@field id string
+
+---@class SeverityListMatch
+---@field created_at? string
+---@field description? string
+---@field id? string
+---@field name? string
+---@field rank? number
+---@field updated_at? string
+
+---@class SeverityCreateData
+---@field created_at string
+---@field description string
+---@field id string
+---@field name string
+---@field rank number
+---@field updated_at string
+
+---@class SeverityUpdateData
+---@field id string
+---@field created_at? string
+---@field description? string
+---@field name? string
+---@field rank? number
+---@field updated_at? string
+
+---@class StatusPage
+---@field description? string
+---@field id string
+---@field name string
+---@field public_url? string
+
+---@class StatusPageListMatch
+---@field description? string
+---@field id? string
+---@field name? string
+---@field public_url? string
+
+---@class StatusPageIncident
+---@field component_impact table
+---@field component_status? table
+---@field id string
+---@field idempotency_key string
+---@field incident_status string
+---@field message string
+---@field name string
+---@field notify_subscriber boolean
+---@field published_at string
+---@field status_page_id string
+---@field update table
+
+---@class StatusPageIncidentLoadMatch
+---@field id string
+
+---@class StatusPageIncidentListMatch
+---@field component_impact? table
+---@field component_status? table
+---@field id? string
+---@field idempotency_key? string
+---@field incident_status? string
+---@field message? string
+---@field name? string
+---@field notify_subscriber? boolean
+---@field published_at? string
+---@field status_page_id? string
+---@field update? table
+
+---@class StatusPageIncidentCreateData
+---@field component_impact table
+---@field component_status? table
+---@field id string
+---@field idempotency_key string
+---@field incident_status string
+---@field message string
+---@field name string
+---@field notify_subscriber boolean
+---@field published_at string
+---@field status_page_id string
+---@field update table
+
+---@class StatusPageIncidentUpdateData
+---@field id string
+---@field component_impact? table
+---@field component_status? table
+---@field idempotency_key? string
+---@field incident_status? string
+---@field message? string
+---@field name? string
+---@field notify_subscriber? boolean
+---@field published_at? string
+---@field status_page_id? string
+---@field update? table
+
+---@class StatusPageIncidentUpdate
+---@field component_status? table
+---@field incident_status? string
+---@field message string
+---@field notify_subscriber boolean
+---@field status_page_incident_id string
+
+---@class StatusPageIncidentUpdateCreateData
+---@field component_status? table
+---@field incident_status? string
+---@field message string
+---@field notify_subscriber boolean
+---@field status_page_incident_id string
+
+---@class StatusPageMaintenance
+---@field affected_component_id table
+---@field component_maintenance_period table
+---@field end_at string
+---@field id string
+---@field idempotency_key string
+---@field maintenance_status string
+---@field message string
+---@field name string
+---@field notify_subscriber boolean
+---@field published_at string
+---@field start_at string
+---@field status_page_id string
+---@field update table
+
+---@class StatusPageMaintenanceLoadMatch
+---@field id string
+
+---@class StatusPageMaintenanceListMatch
+---@field affected_component_id? table
+---@field component_maintenance_period? table
+---@field end_at? string
+---@field id? string
+---@field idempotency_key? string
+---@field maintenance_status? string
+---@field message? string
+---@field name? string
+---@field notify_subscriber? boolean
+---@field published_at? string
+---@field start_at? string
+---@field status_page_id? string
+---@field update? table
+
+---@class StatusPageMaintenanceCreateData
+---@field affected_component_id table
+---@field component_maintenance_period table
+---@field end_at string
+---@field id string
+---@field idempotency_key string
+---@field maintenance_status string
+---@field message string
+---@field name string
+---@field notify_subscriber boolean
+---@field published_at string
+---@field start_at string
+---@field status_page_id string
+---@field update table
+
+---@class StatusPageMaintenanceUpdate
+---@field component_status? table
+---@field maintenance_status? string
+---@field message string
+---@field notify_subscriber boolean
+---@field status_page_maintenance_id string
+
+---@class StatusPageMaintenanceUpdateCreateData
+---@field component_status? table
+---@field maintenance_status? string
+---@field message string
+---@field notify_subscriber boolean
+---@field status_page_maintenance_id string
+
+---@class StatusPageStructure
+---@field item table
+
+---@class StatusPageStructureLoadMatch
+---@field id string
+
 ---@class Team
 ---@field catalog_entry table
 ---@field id string
@@ -1088,6 +1876,30 @@
 ---@field id? string
 ---@field member? table
 ---@field name? string
+
+---@class TelemetryDataSource
+---@field created_at string
+---@field datadog_config? table
+---@field enabled boolean
+---@field grafana_config? table
+---@field id string
+---@field name string
+---@field provider string
+---@field source_type string
+---@field updated_at string
+---@field version? string
+
+---@class TelemetryDataSourceUpdateData
+---@field id string
+---@field created_at? string
+---@field datadog_config? table
+---@field enabled? boolean
+---@field grafana_config? table
+---@field name? string
+---@field provider? string
+---@field source_type? string
+---@field updated_at? string
+---@field version? string
 
 ---@class User
 ---@field base_role table

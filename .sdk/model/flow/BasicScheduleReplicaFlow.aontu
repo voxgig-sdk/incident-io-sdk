@@ -1,0 +1,61 @@
+# BasicScheduleReplicaFlow
+
+main: kit: flow: BasicScheduleReplicaFlow:
+{
+  entity: "schedule_replica",
+  kind: "basic",
+  name: "BasicScheduleReplicaFlow",
+  step: [
+    {
+      input: {
+        ref: "schedule_replica_ref01"
+      }
+
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "create"
+    }
+
+    {
+      match: {
+        schedule_id: "schedule01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "schedule_replica_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "schedule_replica_ref01",
+        srcdatavar: "schedule_replica_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "schedule_replica01",
+        schedule_id: "schedule01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedule_replica_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicScheduleReplicaFlow"
+}

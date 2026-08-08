@@ -364,6 +364,78 @@ class IncidentIoSDK
     }
 
 
+    private $_catalog_entry = null;
+
+    // Canonical facade: $client->CatalogEntry()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->catalog_entry()
+    // resolves here too.
+    public function CatalogEntry($data = null)
+    {
+        require_once __DIR__ . '/entity/catalog_entry_entity.php';
+        if ($data === null) {
+            if ($this->_catalog_entry === null) {
+                $this->_catalog_entry = new CatalogEntryEntity($this, null);
+            }
+            return $this->_catalog_entry;
+        }
+        return new CatalogEntryEntity($this, $data);
+    }
+
+
+    private $_catalog_resource = null;
+
+    // Canonical facade: $client->CatalogResource()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->catalog_resource()
+    // resolves here too.
+    public function CatalogResource($data = null)
+    {
+        require_once __DIR__ . '/entity/catalog_resource_entity.php';
+        if ($data === null) {
+            if ($this->_catalog_resource === null) {
+                $this->_catalog_resource = new CatalogResourceEntity($this, null);
+            }
+            return $this->_catalog_resource;
+        }
+        return new CatalogResourceEntity($this, $data);
+    }
+
+
+    private $_catalog_type = null;
+
+    // Canonical facade: $client->CatalogType()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->catalog_type()
+    // resolves here too.
+    public function CatalogType($data = null)
+    {
+        require_once __DIR__ . '/entity/catalog_type_entity.php';
+        if ($data === null) {
+            if ($this->_catalog_type === null) {
+                $this->_catalog_type = new CatalogTypeEntity($this, null);
+            }
+            return $this->_catalog_type;
+        }
+        return new CatalogTypeEntity($this, $data);
+    }
+
+
+    private $_catalog_type_schema = null;
+
+    // Canonical facade: $client->CatalogTypeSchema()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->catalog_type_schema()
+    // resolves here too.
+    public function CatalogTypeSchema($data = null)
+    {
+        require_once __DIR__ . '/entity/catalog_type_schema_entity.php';
+        if ($data === null) {
+            if ($this->_catalog_type_schema === null) {
+                $this->_catalog_type_schema = new CatalogTypeSchemaEntity($this, null);
+            }
+            return $this->_catalog_type_schema;
+        }
+        return new CatalogTypeSchemaEntity($this, $data);
+    }
+
+
     private $_custom_field = null;
 
     // Canonical facade: $client->CustomField()->list() / ->load(["id" => ...]).
@@ -400,6 +472,24 @@ class IncidentIoSDK
     }
 
 
+    private $_escalation = null;
+
+    // Canonical facade: $client->Escalation()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->escalation()
+    // resolves here too.
+    public function Escalation($data = null)
+    {
+        require_once __DIR__ . '/entity/escalation_entity.php';
+        if ($data === null) {
+            if ($this->_escalation === null) {
+                $this->_escalation = new EscalationEntity($this, null);
+            }
+            return $this->_escalation;
+        }
+        return new EscalationEntity($this, $data);
+    }
+
+
     private $_follow_up = null;
 
     // Canonical facade: $client->FollowUp()->list() / ->load(["id" => ...]).
@@ -433,6 +523,24 @@ class IncidentIoSDK
             return $this->_incident;
         }
         return new IncidentEntity($this, $data);
+    }
+
+
+    private $_incident_alert = null;
+
+    // Canonical facade: $client->IncidentAlert()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->incident_alert()
+    // resolves here too.
+    public function IncidentAlert($data = null)
+    {
+        require_once __DIR__ . '/entity/incident_alert_entity.php';
+        if ($data === null) {
+            if ($this->_incident_alert === null) {
+                $this->_incident_alert = new IncidentAlertEntity($this, null);
+            }
+            return $this->_incident_alert;
+        }
+        return new IncidentAlertEntity($this, $data);
     }
 
 
@@ -670,6 +778,96 @@ class IncidentIoSDK
     }
 
 
+    private $_schedule = null;
+
+    // Canonical facade: $client->Schedule()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->schedule()
+    // resolves here too.
+    public function Schedule($data = null)
+    {
+        require_once __DIR__ . '/entity/schedule_entity.php';
+        if ($data === null) {
+            if ($this->_schedule === null) {
+                $this->_schedule = new ScheduleEntity($this, null);
+            }
+            return $this->_schedule;
+        }
+        return new ScheduleEntity($this, $data);
+    }
+
+
+    private $_schedule_entry = null;
+
+    // Canonical facade: $client->ScheduleEntry()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->schedule_entry()
+    // resolves here too.
+    public function ScheduleEntry($data = null)
+    {
+        require_once __DIR__ . '/entity/schedule_entry_entity.php';
+        if ($data === null) {
+            if ($this->_schedule_entry === null) {
+                $this->_schedule_entry = new ScheduleEntryEntity($this, null);
+            }
+            return $this->_schedule_entry;
+        }
+        return new ScheduleEntryEntity($this, $data);
+    }
+
+
+    private $_schedule_replica = null;
+
+    // Canonical facade: $client->ScheduleReplica()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->schedule_replica()
+    // resolves here too.
+    public function ScheduleReplica($data = null)
+    {
+        require_once __DIR__ . '/entity/schedule_replica_entity.php';
+        if ($data === null) {
+            if ($this->_schedule_replica === null) {
+                $this->_schedule_replica = new ScheduleReplicaEntity($this, null);
+            }
+            return $this->_schedule_replica;
+        }
+        return new ScheduleReplicaEntity($this, $data);
+    }
+
+
+    private $_schedule_sync_rule = null;
+
+    // Canonical facade: $client->ScheduleSyncRule()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->schedule_sync_rule()
+    // resolves here too.
+    public function ScheduleSyncRule($data = null)
+    {
+        require_once __DIR__ . '/entity/schedule_sync_rule_entity.php';
+        if ($data === null) {
+            if ($this->_schedule_sync_rule === null) {
+                $this->_schedule_sync_rule = new ScheduleSyncRuleEntity($this, null);
+            }
+            return $this->_schedule_sync_rule;
+        }
+        return new ScheduleSyncRuleEntity($this, $data);
+    }
+
+
+    private $_schedule_sync_target = null;
+
+    // Canonical facade: $client->ScheduleSyncTarget()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->schedule_sync_target()
+    // resolves here too.
+    public function ScheduleSyncTarget($data = null)
+    {
+        require_once __DIR__ . '/entity/schedule_sync_target_entity.php';
+        if ($data === null) {
+            if ($this->_schedule_sync_target === null) {
+                $this->_schedule_sync_target = new ScheduleSyncTargetEntity($this, null);
+            }
+            return $this->_schedule_sync_target;
+        }
+        return new ScheduleSyncTargetEntity($this, $data);
+    }
+
+
     private $_secret = null;
 
     // Canonical facade: $client->Secret()->list() / ->load(["id" => ...]).
@@ -688,6 +886,132 @@ class IncidentIoSDK
     }
 
 
+    private $_severity = null;
+
+    // Canonical facade: $client->Severity()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->severity()
+    // resolves here too.
+    public function Severity($data = null)
+    {
+        require_once __DIR__ . '/entity/severity_entity.php';
+        if ($data === null) {
+            if ($this->_severity === null) {
+                $this->_severity = new SeverityEntity($this, null);
+            }
+            return $this->_severity;
+        }
+        return new SeverityEntity($this, $data);
+    }
+
+
+    private $_status_page = null;
+
+    // Canonical facade: $client->StatusPage()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_page()
+    // resolves here too.
+    public function StatusPage($data = null)
+    {
+        require_once __DIR__ . '/entity/status_page_entity.php';
+        if ($data === null) {
+            if ($this->_status_page === null) {
+                $this->_status_page = new StatusPageEntity($this, null);
+            }
+            return $this->_status_page;
+        }
+        return new StatusPageEntity($this, $data);
+    }
+
+
+    private $_status_page_incident = null;
+
+    // Canonical facade: $client->StatusPageIncident()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_page_incident()
+    // resolves here too.
+    public function StatusPageIncident($data = null)
+    {
+        require_once __DIR__ . '/entity/status_page_incident_entity.php';
+        if ($data === null) {
+            if ($this->_status_page_incident === null) {
+                $this->_status_page_incident = new StatusPageIncidentEntity($this, null);
+            }
+            return $this->_status_page_incident;
+        }
+        return new StatusPageIncidentEntity($this, $data);
+    }
+
+
+    private $_status_page_incident_update = null;
+
+    // Canonical facade: $client->StatusPageIncidentUpdate()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_page_incident_update()
+    // resolves here too.
+    public function StatusPageIncidentUpdate($data = null)
+    {
+        require_once __DIR__ . '/entity/status_page_incident_update_entity.php';
+        if ($data === null) {
+            if ($this->_status_page_incident_update === null) {
+                $this->_status_page_incident_update = new StatusPageIncidentUpdateEntity($this, null);
+            }
+            return $this->_status_page_incident_update;
+        }
+        return new StatusPageIncidentUpdateEntity($this, $data);
+    }
+
+
+    private $_status_page_maintenance = null;
+
+    // Canonical facade: $client->StatusPageMaintenance()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_page_maintenance()
+    // resolves here too.
+    public function StatusPageMaintenance($data = null)
+    {
+        require_once __DIR__ . '/entity/status_page_maintenance_entity.php';
+        if ($data === null) {
+            if ($this->_status_page_maintenance === null) {
+                $this->_status_page_maintenance = new StatusPageMaintenanceEntity($this, null);
+            }
+            return $this->_status_page_maintenance;
+        }
+        return new StatusPageMaintenanceEntity($this, $data);
+    }
+
+
+    private $_status_page_maintenance_update = null;
+
+    // Canonical facade: $client->StatusPageMaintenanceUpdate()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_page_maintenance_update()
+    // resolves here too.
+    public function StatusPageMaintenanceUpdate($data = null)
+    {
+        require_once __DIR__ . '/entity/status_page_maintenance_update_entity.php';
+        if ($data === null) {
+            if ($this->_status_page_maintenance_update === null) {
+                $this->_status_page_maintenance_update = new StatusPageMaintenanceUpdateEntity($this, null);
+            }
+            return $this->_status_page_maintenance_update;
+        }
+        return new StatusPageMaintenanceUpdateEntity($this, $data);
+    }
+
+
+    private $_status_page_structure = null;
+
+    // Canonical facade: $client->StatusPageStructure()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_page_structure()
+    // resolves here too.
+    public function StatusPageStructure($data = null)
+    {
+        require_once __DIR__ . '/entity/status_page_structure_entity.php';
+        if ($data === null) {
+            if ($this->_status_page_structure === null) {
+                $this->_status_page_structure = new StatusPageStructureEntity($this, null);
+            }
+            return $this->_status_page_structure;
+        }
+        return new StatusPageStructureEntity($this, $data);
+    }
+
+
     private $_team = null;
 
     // Canonical facade: $client->Team()->list() / ->load(["id" => ...]).
@@ -703,6 +1027,24 @@ class IncidentIoSDK
             return $this->_team;
         }
         return new TeamEntity($this, $data);
+    }
+
+
+    private $_telemetry_data_source = null;
+
+    // Canonical facade: $client->TelemetryDataSource()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->telemetry_data_source()
+    // resolves here too.
+    public function TelemetryDataSource($data = null)
+    {
+        require_once __DIR__ . '/entity/telemetry_data_source_entity.php';
+        if ($data === null) {
+            if ($this->_telemetry_data_source === null) {
+                $this->_telemetry_data_source = new TelemetryDataSourceEntity($this, null);
+            }
+            return $this->_telemetry_data_source;
+        }
+        return new TelemetryDataSourceEntity($this, $data);
     }
 
 

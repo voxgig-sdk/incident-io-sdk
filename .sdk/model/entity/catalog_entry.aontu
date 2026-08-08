@@ -1,0 +1,376 @@
+# Entity: catalog_entry
+
+main: kit: entity: catalog_entry: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "alias"
+      op: {
+        list: {
+          req: true
+          type: "`$ARRAY`"
+        }
+      }
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "archived_at"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "attribute_value"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "catalog_entry"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "catalog_type"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "catalog_type_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "external_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "rank"
+      op: {
+        list: {
+          req: true
+          type: "`$INTEGER`"
+        }
+      }
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "update_attribute"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "catalog_entry"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/catalog_entries"
+          parts: [
+            "v2"
+            "catalog_entries"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_entry`"
+          }
+        }
+        {
+          method: "POST"
+          orig: "/v3/catalog_entries"
+          parts: [
+            "v3"
+            "catalog_entries"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_entry`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "catalog_type_id"
+                orig: "catalog_type_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: "abc123"
+                kind: "query"
+                name: "identifier"
+                orig: "identifier"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: true
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v3/catalog_entries"
+          parts: [
+            "v3"
+            "catalog_entries"
+          ]
+          select: {
+            exist: [
+              "after"
+              "catalog_type_id"
+              "identifier"
+              "page_size"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "catalog_type_id"
+                orig: "catalog_type_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/catalog_entries"
+          parts: [
+            "v2"
+            "catalog_entries"
+          ]
+          select: {
+            exist: [
+              "after"
+              "catalog_type_id"
+              "page_size"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: true
+                kind: "query"
+                name: "expand"
+                orig: "expand"
+                reqd: false
+                type: "`$BOOLEAN`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v3/catalog_entries/{id}"
+          parts: [
+            "v3"
+            "catalog_entries"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "expand"
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_entry`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/catalog_entries/{id}"
+          parts: [
+            "v2"
+            "catalog_entries"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_entry`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/catalog_entries/{id}"
+          parts: [
+            "v2"
+            "catalog_entries"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_entry`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v3/catalog_entries/{id}"
+          parts: [
+            "v3"
+            "catalog_entries"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.catalog_entry`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

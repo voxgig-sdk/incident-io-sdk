@@ -2,19 +2,32 @@
   "existing": {
     "catalog_v3": {
       "CATALOG_V300": {
+        "catalog_type_id": "CATALOG_TYPE01",
+        "entry": [],
+        "update_attribute": [],
         "id": "CATALOG_V300"
       },
       "CATALOG_V301": {
+        "catalog_type_id": "CATALOG_TYPE01",
+        "entry": [],
+        "update_attribute": [],
         "id": "CATALOG_V301"
       },
       "CATALOG_V302": {
+        "catalog_type_id": "CATALOG_TYPE01",
+        "entry": [],
+        "update_attribute": [],
         "id": "CATALOG_V302"
       }
     }
   },
   "new": {
     "catalog_v3": {
-      "catalog_v3_ref01": {}
+      "catalog_v3_ref01": {
+        "catalog_type_id": "CATALOG_TYPE01",
+        "entry": [],
+        "update_attribute": []
+      }
     }
   }
 }

@@ -1,0 +1,28 @@
+# BasicScheduleEntryFlow
+
+main: kit: flow: BasicScheduleEntryFlow:
+{
+  entity: "schedule_entry",
+  kind: "basic",
+  name: "BasicScheduleEntryFlow",
+  step: [
+    {
+      input: {
+        ref: "schedule_entry_ref01",
+        srcdatavar: "schedule_entry_ref01_data",
+        suffix: "_dt0"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedule_entry_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicScheduleEntryFlow"
+}

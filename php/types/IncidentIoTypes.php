@@ -20,7 +20,9 @@ class Action
     public ?string $completed_at = null;
     public string $created_at;
     public array $creator;
-    public string $description;
+    public ?string $description = null;
+    public ?array $external_issue_reference = null;
+    public bool $follow_up;
     public string $id;
     public string $incident_id;
     public string $status;
@@ -42,6 +44,8 @@ class ActionListMatch
     public ?string $created_at = null;
     public ?array $creator = null;
     public ?string $description = null;
+    public ?array $external_issue_reference = null;
+    public ?bool $follow_up = null;
     public ?string $id = null;
     public ?string $incident_id = null;
     public ?string $status = null;
@@ -56,7 +60,9 @@ class ActionCreateData
     public ?string $completed_at = null;
     public string $created_at;
     public array $creator;
-    public string $description;
+    public ?string $description = null;
+    public ?array $external_issue_reference = null;
+    public bool $follow_up;
     public string $id;
     public string $incident_id;
     public string $status;
@@ -73,6 +79,8 @@ class ActionUpdateData
     public ?string $created_at = null;
     public ?array $creator = null;
     public ?string $description = null;
+    public ?array $external_issue_reference = null;
+    public ?bool $follow_up = null;
     public ?string $incident_id = null;
     public ?string $status = null;
     public ?string $updated_at = null;
@@ -122,6 +130,23 @@ class AlertListMatch
     public ?string $status = null;
     public ?string $title = null;
     public ?string $updated_at = null;
+}
+
+/** Request payload for Alert#create. */
+class AlertCreateData
+{
+    public string $id;
+    public ?array $alert_group_id = null;
+    public string $alert_source_id;
+    public array $attribute;
+    public string $created_at;
+    public string $deduplication_key;
+    public ?string $description = null;
+    public ?string $resolved_at = null;
+    public ?string $source_url = null;
+    public string $status;
+    public string $title;
+    public string $updated_at;
 }
 
 /** AlertAttribute entity data model. */
@@ -252,6 +277,7 @@ class AlertNoteRemoveMatch
 class AlertRoute
 {
     public array $alert_source;
+    public array $channel_config;
     public array $condition_group;
     public ?string $created_at = null;
     public bool $enabled;
@@ -260,8 +286,10 @@ class AlertRoute
     public array $grouping_config;
     public string $id;
     public array $incident_config;
+    public array $incident_template;
     public bool $is_private;
     public array $message_config;
+    public ?array $message_template = null;
     public string $name;
     public ?array $owning_team_id = null;
     public ?string $updated_at = null;
@@ -278,6 +306,7 @@ class AlertRouteLoadMatch
 class AlertRouteListMatch
 {
     public ?array $alert_source = null;
+    public ?array $channel_config = null;
     public ?array $condition_group = null;
     public ?string $created_at = null;
     public ?bool $enabled = null;
@@ -286,8 +315,10 @@ class AlertRouteListMatch
     public ?array $grouping_config = null;
     public ?string $id = null;
     public ?array $incident_config = null;
+    public ?array $incident_template = null;
     public ?bool $is_private = null;
     public ?array $message_config = null;
+    public ?array $message_template = null;
     public ?string $name = null;
     public ?array $owning_team_id = null;
     public ?string $updated_at = null;
@@ -298,6 +329,7 @@ class AlertRouteListMatch
 class AlertRouteCreateData
 {
     public array $alert_source;
+    public array $channel_config;
     public array $condition_group;
     public ?string $created_at = null;
     public bool $enabled;
@@ -306,8 +338,10 @@ class AlertRouteCreateData
     public array $grouping_config;
     public string $id;
     public array $incident_config;
+    public array $incident_template;
     public bool $is_private;
     public array $message_config;
+    public ?array $message_template = null;
     public string $name;
     public ?array $owning_team_id = null;
     public ?string $updated_at = null;
@@ -319,6 +353,7 @@ class AlertRouteUpdateData
 {
     public string $id;
     public ?array $alert_source = null;
+    public ?array $channel_config = null;
     public ?array $condition_group = null;
     public ?string $created_at = null;
     public ?bool $enabled = null;
@@ -326,8 +361,10 @@ class AlertRouteUpdateData
     public ?array $expression = null;
     public ?array $grouping_config = null;
     public ?array $incident_config = null;
+    public ?array $incident_template = null;
     public ?bool $is_private = null;
     public ?array $message_config = null;
+    public ?array $message_template = null;
     public ?string $name = null;
     public ?array $owning_team_id = null;
     public ?string $updated_at = null;
@@ -434,6 +471,7 @@ class ApiKey
     public ?string $comment = null;
     public string $created_at;
     public array $creator;
+    public int $grace_period_minute;
     public string $id;
     public ?string $last_used_at = null;
     public string $name;
@@ -457,6 +495,7 @@ class ApiKeyListMatch
     public ?string $comment = null;
     public ?string $created_at = null;
     public ?array $creator = null;
+    public ?int $grace_period_minute = null;
     public ?string $id = null;
     public ?string $last_used_at = null;
     public ?string $name = null;
@@ -474,6 +513,7 @@ class ApiKeyCreateData
     public ?string $comment = null;
     public string $created_at;
     public array $creator;
+    public int $grace_period_minute;
     public string $id;
     public ?string $last_used_at = null;
     public string $name;
@@ -492,6 +532,7 @@ class ApiKeyUpdateData
     public ?string $comment = null;
     public ?string $created_at = null;
     public ?array $creator = null;
+    public ?int $grace_period_minute = null;
     public ?string $last_used_at = null;
     public ?string $name = null;
     public ?array $role = null;
@@ -508,6 +549,291 @@ class ApiKeyRemoveMatch
     public string $id;
 }
 
+/** CatalogEntry entity data model. */
+class CatalogEntry
+{
+    public ?array $alias = null;
+    public ?string $archived_at = null;
+    public array $attribute_value;
+    public array $catalog_entry;
+    public array $catalog_type;
+    public string $catalog_type_id;
+    public string $created_at;
+    public ?string $external_id = null;
+    public string $id;
+    public string $name;
+    public ?int $rank = null;
+    public ?array $update_attribute = null;
+    public string $updated_at;
+}
+
+/** Request payload for CatalogEntry#load. */
+class CatalogEntryLoadMatch
+{
+    public string $id;
+}
+
+/** Request payload for CatalogEntry#list. */
+class CatalogEntryListMatch
+{
+    public ?array $alias = null;
+    public ?string $archived_at = null;
+    public ?array $attribute_value = null;
+    public ?array $catalog_entry = null;
+    public ?array $catalog_type = null;
+    public ?string $catalog_type_id = null;
+    public ?string $created_at = null;
+    public ?string $external_id = null;
+    public ?string $id = null;
+    public ?string $name = null;
+    public ?int $rank = null;
+    public ?array $update_attribute = null;
+    public ?string $updated_at = null;
+}
+
+/** Request payload for CatalogEntry#create. */
+class CatalogEntryCreateData
+{
+    public ?array $alias = null;
+    public ?string $archived_at = null;
+    public array $attribute_value;
+    public array $catalog_entry;
+    public array $catalog_type;
+    public string $catalog_type_id;
+    public string $created_at;
+    public ?string $external_id = null;
+    public string $id;
+    public string $name;
+    public ?int $rank = null;
+    public ?array $update_attribute = null;
+    public string $updated_at;
+}
+
+/** Request payload for CatalogEntry#update. */
+class CatalogEntryUpdateData
+{
+    public string $id;
+    public ?array $alias = null;
+    public ?string $archived_at = null;
+    public ?array $attribute_value = null;
+    public ?array $catalog_entry = null;
+    public ?array $catalog_type = null;
+    public ?string $catalog_type_id = null;
+    public ?string $created_at = null;
+    public ?string $external_id = null;
+    public ?string $name = null;
+    public ?int $rank = null;
+    public ?array $update_attribute = null;
+    public ?string $updated_at = null;
+}
+
+/** CatalogResource entity data model. */
+class CatalogResource
+{
+    public string $category;
+    public string $description;
+    public string $engine_resource_type;
+    public string $label;
+    public string $type;
+    public string $value_docstring;
+}
+
+/** Request payload for CatalogResource#list. */
+class CatalogResourceListMatch
+{
+    public ?string $category = null;
+    public ?string $description = null;
+    public ?string $engine_resource_type = null;
+    public ?string $label = null;
+    public ?string $type = null;
+    public ?string $value_docstring = null;
+}
+
+/** CatalogType entity data model. */
+class CatalogType
+{
+    public array $annotation;
+    public array $category;
+    public string $color;
+    public string $created_at;
+    public string $description;
+    public ?string $dynamic_resource_parameter = null;
+    public string $engine_resource_type;
+    public ?int $estimated_count = null;
+    public string $icon;
+    public string $id;
+    public bool $is_editable;
+    public ?bool $is_team_type = null;
+    public ?string $last_synced_at = null;
+    public string $name;
+    public ?array $owning_team_id = null;
+    public bool $ranked;
+    public ?string $registry_type = null;
+    public ?array $required_integration = null;
+    public array $schema;
+    public string $semantic_type;
+    public ?string $source_repo_url = null;
+    public string $type_name;
+    public string $updated_at;
+    public bool $use_name_as_identifier;
+}
+
+/** Request payload for CatalogType#load. */
+class CatalogTypeLoadMatch
+{
+    public string $id;
+}
+
+/** Request payload for CatalogType#list. */
+class CatalogTypeListMatch
+{
+    public ?array $annotation = null;
+    public ?array $category = null;
+    public ?string $color = null;
+    public ?string $created_at = null;
+    public ?string $description = null;
+    public ?string $dynamic_resource_parameter = null;
+    public ?string $engine_resource_type = null;
+    public ?int $estimated_count = null;
+    public ?string $icon = null;
+    public ?string $id = null;
+    public ?bool $is_editable = null;
+    public ?bool $is_team_type = null;
+    public ?string $last_synced_at = null;
+    public ?string $name = null;
+    public ?array $owning_team_id = null;
+    public ?bool $ranked = null;
+    public ?string $registry_type = null;
+    public ?array $required_integration = null;
+    public ?array $schema = null;
+    public ?string $semantic_type = null;
+    public ?string $source_repo_url = null;
+    public ?string $type_name = null;
+    public ?string $updated_at = null;
+    public ?bool $use_name_as_identifier = null;
+}
+
+/** Request payload for CatalogType#create. */
+class CatalogTypeCreateData
+{
+    public array $annotation;
+    public array $category;
+    public string $color;
+    public string $created_at;
+    public string $description;
+    public ?string $dynamic_resource_parameter = null;
+    public string $engine_resource_type;
+    public ?int $estimated_count = null;
+    public string $icon;
+    public string $id;
+    public bool $is_editable;
+    public ?bool $is_team_type = null;
+    public ?string $last_synced_at = null;
+    public string $name;
+    public ?array $owning_team_id = null;
+    public bool $ranked;
+    public ?string $registry_type = null;
+    public ?array $required_integration = null;
+    public array $schema;
+    public string $semantic_type;
+    public ?string $source_repo_url = null;
+    public string $type_name;
+    public string $updated_at;
+    public bool $use_name_as_identifier;
+}
+
+/** Request payload for CatalogType#update. */
+class CatalogTypeUpdateData
+{
+    public string $id;
+    public ?array $annotation = null;
+    public ?array $category = null;
+    public ?string $color = null;
+    public ?string $created_at = null;
+    public ?string $description = null;
+    public ?string $dynamic_resource_parameter = null;
+    public ?string $engine_resource_type = null;
+    public ?int $estimated_count = null;
+    public ?string $icon = null;
+    public ?bool $is_editable = null;
+    public ?bool $is_team_type = null;
+    public ?string $last_synced_at = null;
+    public ?string $name = null;
+    public ?array $owning_team_id = null;
+    public ?bool $ranked = null;
+    public ?string $registry_type = null;
+    public ?array $required_integration = null;
+    public ?array $schema = null;
+    public ?string $semantic_type = null;
+    public ?string $source_repo_url = null;
+    public ?string $type_name = null;
+    public ?string $updated_at = null;
+    public ?bool $use_name_as_identifier = null;
+}
+
+/** CatalogTypeSchema entity data model. */
+class CatalogTypeSchema
+{
+    public array $annotation;
+    public array $attribute;
+    public array $category;
+    public string $color;
+    public string $created_at;
+    public string $description;
+    public ?string $dynamic_resource_parameter = null;
+    public string $engine_resource_type;
+    public ?int $estimated_count = null;
+    public string $icon;
+    public string $id;
+    public bool $is_editable;
+    public ?bool $is_team_type = null;
+    public ?string $last_synced_at = null;
+    public string $name;
+    public ?array $owning_team_id = null;
+    public bool $ranked;
+    public ?string $registry_type = null;
+    public ?array $required_integration = null;
+    public array $schema;
+    public string $semantic_type;
+    public ?string $source_repo_url = null;
+    public string $type_name;
+    public string $updated_at;
+    public bool $use_name_as_identifier;
+    public int $version;
+}
+
+/** Request payload for CatalogTypeSchema#create. */
+class CatalogTypeSchemaCreateData
+{
+    public string $catalog_type_id;
+    public array $annotation;
+    public array $attribute;
+    public array $category;
+    public string $color;
+    public string $created_at;
+    public string $description;
+    public ?string $dynamic_resource_parameter = null;
+    public string $engine_resource_type;
+    public ?int $estimated_count = null;
+    public string $icon;
+    public string $id;
+    public bool $is_editable;
+    public ?bool $is_team_type = null;
+    public ?string $last_synced_at = null;
+    public string $name;
+    public ?array $owning_team_id = null;
+    public bool $ranked;
+    public ?string $registry_type = null;
+    public ?array $required_integration = null;
+    public array $schema;
+    public string $semantic_type;
+    public ?string $source_repo_url = null;
+    public string $type_name;
+    public string $updated_at;
+    public bool $use_name_as_identifier;
+    public int $version;
+}
+
 /** CustomField entity data model. */
 class CustomField
 {
@@ -521,6 +847,13 @@ class CustomField
     public ?string $helptext_catalog_attribute_id = null;
     public string $id;
     public string $name;
+    public array $option;
+    public ?string $required = null;
+    public ?string $required_v2 = null;
+    public bool $show_before_closure;
+    public bool $show_before_creation;
+    public bool $show_before_update;
+    public ?bool $show_in_announcement_post = null;
     public string $updated_at;
 }
 
@@ -543,6 +876,13 @@ class CustomFieldListMatch
     public ?string $helptext_catalog_attribute_id = null;
     public ?string $id = null;
     public ?string $name = null;
+    public ?array $option = null;
+    public ?string $required = null;
+    public ?string $required_v2 = null;
+    public ?bool $show_before_closure = null;
+    public ?bool $show_before_creation = null;
+    public ?bool $show_before_update = null;
+    public ?bool $show_in_announcement_post = null;
     public ?string $updated_at = null;
 }
 
@@ -559,6 +899,13 @@ class CustomFieldCreateData
     public ?string $helptext_catalog_attribute_id = null;
     public string $id;
     public string $name;
+    public array $option;
+    public ?string $required = null;
+    public ?string $required_v2 = null;
+    public bool $show_before_closure;
+    public bool $show_before_creation;
+    public bool $show_before_update;
+    public ?bool $show_in_announcement_post = null;
     public string $updated_at;
 }
 
@@ -575,6 +922,13 @@ class CustomFieldUpdateData
     public ?string $group_by_catalog_attribute_id = null;
     public ?string $helptext_catalog_attribute_id = null;
     public ?string $name = null;
+    public ?array $option = null;
+    public ?string $required = null;
+    public ?string $required_v2 = null;
+    public ?bool $show_before_closure = null;
+    public ?bool $show_before_creation = null;
+    public ?bool $show_before_update = null;
+    public ?bool $show_in_announcement_post = null;
     public ?string $updated_at = null;
 }
 
@@ -630,6 +984,72 @@ class CustomFieldOptionUpdateData
 class CustomFieldOptionRemoveMatch
 {
     public string $id;
+}
+
+/** Escalation entity data model. */
+class Escalation
+{
+    public string $created_at;
+    public array $creator;
+    public ?string $description = null;
+    public ?string $escalation_path_id = null;
+    public array $event;
+    public string $id;
+    public string $idempotency_key;
+    public ?string $incident_id = null;
+    public array $priority;
+    public array $related_alert;
+    public array $related_incident;
+    public string $status;
+    public string $title;
+    public string $updated_at;
+    public ?array $user_id = null;
+}
+
+/** Request payload for Escalation#load. */
+class EscalationLoadMatch
+{
+    public string $id;
+}
+
+/** Request payload for Escalation#list. */
+class EscalationListMatch
+{
+    public ?string $created_at = null;
+    public ?array $creator = null;
+    public ?string $description = null;
+    public ?string $escalation_path_id = null;
+    public ?array $event = null;
+    public ?string $id = null;
+    public ?string $idempotency_key = null;
+    public ?string $incident_id = null;
+    public ?array $priority = null;
+    public ?array $related_alert = null;
+    public ?array $related_incident = null;
+    public ?string $status = null;
+    public ?string $title = null;
+    public ?string $updated_at = null;
+    public ?array $user_id = null;
+}
+
+/** Request payload for Escalation#create. */
+class EscalationCreateData
+{
+    public string $created_at;
+    public array $creator;
+    public ?string $description = null;
+    public ?string $escalation_path_id = null;
+    public array $event;
+    public string $id;
+    public string $idempotency_key;
+    public ?string $incident_id = null;
+    public array $priority;
+    public array $related_alert;
+    public array $related_incident;
+    public string $status;
+    public string $title;
+    public string $updated_at;
+    public ?array $user_id = null;
 }
 
 /** FollowUp entity data model. */
@@ -752,6 +1172,7 @@ class Incident
     public ?bool $has_debrief = null;
     public string $id;
     public string $idempotency_key;
+    public array $incident;
     public array $incident_role_assignment;
     public array $incident_status;
     public ?string $incident_status_id = null;
@@ -760,6 +1181,7 @@ class Incident
     public ?string $incident_type_id = null;
     public string $mode;
     public string $name;
+    public bool $notify_incident_channel;
     public ?string $permalink = null;
     public ?array $postmortem_document_id = null;
     public ?string $postmortem_document_url = null;
@@ -771,7 +1193,11 @@ class Incident
     public ?string $slack_channel_name = null;
     public ?string $slack_channel_name_override = null;
     public string $slack_team_id;
+    public ?string $source_message_channel_id = null;
+    public ?string $source_message_timestamp = null;
+    public string $status;
     public ?string $summary = null;
+    public ?array $timestamp = null;
     public string $updated_at;
     public string $visibility;
     public ?float $workload_minutes_late = null;
@@ -798,6 +1224,7 @@ class IncidentListMatch
     public ?bool $has_debrief = null;
     public ?string $id = null;
     public ?string $idempotency_key = null;
+    public ?array $incident = null;
     public ?array $incident_role_assignment = null;
     public ?array $incident_status = null;
     public ?string $incident_status_id = null;
@@ -806,6 +1233,7 @@ class IncidentListMatch
     public ?string $incident_type_id = null;
     public ?string $mode = null;
     public ?string $name = null;
+    public ?bool $notify_incident_channel = null;
     public ?string $permalink = null;
     public ?array $postmortem_document_id = null;
     public ?string $postmortem_document_url = null;
@@ -817,7 +1245,11 @@ class IncidentListMatch
     public ?string $slack_channel_name = null;
     public ?string $slack_channel_name_override = null;
     public ?string $slack_team_id = null;
+    public ?string $source_message_channel_id = null;
+    public ?string $source_message_timestamp = null;
+    public ?string $status = null;
     public ?string $summary = null;
+    public ?array $timestamp = null;
     public ?string $updated_at = null;
     public ?string $visibility = null;
     public ?float $workload_minutes_late = null;
@@ -838,6 +1270,7 @@ class IncidentCreateData
     public ?bool $has_debrief = null;
     public string $id;
     public string $idempotency_key;
+    public array $incident;
     public array $incident_role_assignment;
     public array $incident_status;
     public ?string $incident_status_id = null;
@@ -846,6 +1279,7 @@ class IncidentCreateData
     public ?string $incident_type_id = null;
     public string $mode;
     public string $name;
+    public bool $notify_incident_channel;
     public ?string $permalink = null;
     public ?array $postmortem_document_id = null;
     public ?string $postmortem_document_url = null;
@@ -857,13 +1291,35 @@ class IncidentCreateData
     public ?string $slack_channel_name = null;
     public ?string $slack_channel_name_override = null;
     public string $slack_team_id;
+    public ?string $source_message_channel_id = null;
+    public ?string $source_message_timestamp = null;
+    public string $status;
     public ?string $summary = null;
+    public ?array $timestamp = null;
     public string $updated_at;
     public string $visibility;
     public ?float $workload_minutes_late = null;
     public ?float $workload_minutes_sleeping = null;
     public ?float $workload_minutes_total = null;
     public ?float $workload_minutes_working = null;
+}
+
+/** IncidentAlert entity data model. */
+class IncidentAlert
+{
+    public array $alert;
+    public ?string $alert_route_id = null;
+    public string $id;
+    public array $incident;
+}
+
+/** Request payload for IncidentAlert#list. */
+class IncidentAlertListMatch
+{
+    public ?array $alert = null;
+    public ?string $alert_route_id = null;
+    public ?string $id = null;
+    public ?array $incident = null;
 }
 
 /** IncidentAttachment entity data model. */
@@ -964,6 +1420,7 @@ class IncidentRole
     public string $id;
     public string $instruction;
     public string $name;
+    public ?bool $required = null;
     public string $role_type;
     public string $shortform;
     public string $updated_at;
@@ -983,6 +1440,7 @@ class IncidentRoleListMatch
     public ?string $id = null;
     public ?string $instruction = null;
     public ?string $name = null;
+    public ?bool $required = null;
     public ?string $role_type = null;
     public ?string $shortform = null;
     public ?string $updated_at = null;
@@ -996,6 +1454,7 @@ class IncidentRoleCreateData
     public string $id;
     public string $instruction;
     public string $name;
+    public ?bool $required = null;
     public string $role_type;
     public string $shortform;
     public string $updated_at;
@@ -1009,6 +1468,7 @@ class IncidentRoleUpdateData
     public ?string $description = null;
     public ?string $instruction = null;
     public ?string $name = null;
+    public ?bool $required = null;
     public ?string $role_type = null;
     public ?string $shortform = null;
     public ?string $updated_at = null;
@@ -1344,6 +1804,282 @@ class PostmortemDocumentUpdateData
     public ?string $updated_at = null;
 }
 
+/** Schedule entity data model. */
+class Schedule
+{
+    public array $annotation;
+    public array $config;
+    public string $created_at;
+    public ?array $current_shift = null;
+    public array $holidays_public_config;
+    public string $id;
+    public string $name;
+    public ?array $next_shift = null;
+    public string $permalink;
+    public array $schedule;
+    public array $team_id;
+    public string $timezone;
+    public string $updated_at;
+}
+
+/** Request payload for Schedule#load. */
+class ScheduleLoadMatch
+{
+    public string $id;
+}
+
+/** Request payload for Schedule#list. */
+class ScheduleListMatch
+{
+    public ?array $annotation = null;
+    public ?array $config = null;
+    public ?string $created_at = null;
+    public ?array $current_shift = null;
+    public ?array $holidays_public_config = null;
+    public ?string $id = null;
+    public ?string $name = null;
+    public ?array $next_shift = null;
+    public ?string $permalink = null;
+    public ?array $schedule = null;
+    public ?array $team_id = null;
+    public ?string $timezone = null;
+    public ?string $updated_at = null;
+}
+
+/** Request payload for Schedule#create. */
+class ScheduleCreateData
+{
+    public array $annotation;
+    public array $config;
+    public string $created_at;
+    public ?array $current_shift = null;
+    public array $holidays_public_config;
+    public string $id;
+    public string $name;
+    public ?array $next_shift = null;
+    public string $permalink;
+    public array $schedule;
+    public array $team_id;
+    public string $timezone;
+    public string $updated_at;
+}
+
+/** Request payload for Schedule#update. */
+class ScheduleUpdateData
+{
+    public string $id;
+    public ?array $annotation = null;
+    public ?array $config = null;
+    public ?string $created_at = null;
+    public ?array $current_shift = null;
+    public ?array $holidays_public_config = null;
+    public ?string $name = null;
+    public ?array $next_shift = null;
+    public ?string $permalink = null;
+    public ?array $schedule = null;
+    public ?array $team_id = null;
+    public ?string $timezone = null;
+    public ?string $updated_at = null;
+}
+
+/** Request payload for Schedule#remove. */
+class ScheduleRemoveMatch
+{
+    public string $id;
+}
+
+/** ScheduleEntry entity data model. */
+class ScheduleEntry
+{
+    public array $pagination_meta;
+    public array $schedule_entry;
+}
+
+/** Request payload for ScheduleEntry#load. */
+class ScheduleEntryLoadMatch
+{
+    public ?array $pagination_meta = null;
+    public ?array $schedule_entry = null;
+}
+
+/** ScheduleReplica entity data model. */
+class ScheduleReplica
+{
+    public string $created_at;
+    public string $id;
+    public ?string $last_sync_error = null;
+    public ?string $last_synced_at = null;
+    public ?int $mirror_window_day = null;
+    public string $replica_fallback_user_id;
+    public string $replica_provider;
+    public string $replica_provider_id;
+    public string $schedule_id;
+    public array $schedule_replica;
+    public array $source;
+    public string $updated_at;
+    public array $user_status;
+}
+
+/** Request payload for ScheduleReplica#load. */
+class ScheduleReplicaLoadMatch
+{
+    public string $id;
+    public string $schedule_id;
+}
+
+/** Request payload for ScheduleReplica#list. */
+class ScheduleReplicaListMatch
+{
+    public string $id;
+}
+
+/** Request payload for ScheduleReplica#create. */
+class ScheduleReplicaCreateData
+{
+    public string $id;
+    public string $created_at;
+    public ?string $last_sync_error = null;
+    public ?string $last_synced_at = null;
+    public ?int $mirror_window_day = null;
+    public string $replica_fallback_user_id;
+    public string $replica_provider;
+    public string $replica_provider_id;
+    public string $schedule_id;
+    public array $schedule_replica;
+    public array $source;
+    public string $updated_at;
+    public array $user_status;
+}
+
+/** ScheduleSyncRule entity data model. */
+class ScheduleSyncRule
+{
+    public ?array $annotation = null;
+    public string $created_at;
+    public string $id;
+    public array $permanent_member_user_id;
+    public ?string $rotation_id = null;
+    public string $schedule_id;
+    public array $schedule_sync_rule;
+    public array $schedule_sync_target;
+    public string $schedule_sync_target_id;
+    public string $sync_type;
+    public string $updated_at;
+}
+
+/** Request payload for ScheduleSyncRule#load. */
+class ScheduleSyncRuleLoadMatch
+{
+    public string $id;
+    public string $schedule_id;
+}
+
+/** Request payload for ScheduleSyncRule#list. */
+class ScheduleSyncRuleListMatch
+{
+    public string $id;
+}
+
+/** Request payload for ScheduleSyncRule#create. */
+class ScheduleSyncRuleCreateData
+{
+    public string $id;
+    public ?array $annotation = null;
+    public string $created_at;
+    public array $permanent_member_user_id;
+    public ?string $rotation_id = null;
+    public string $schedule_id;
+    public array $schedule_sync_rule;
+    public array $schedule_sync_target;
+    public string $schedule_sync_target_id;
+    public string $sync_type;
+    public string $updated_at;
+}
+
+/** Request payload for ScheduleSyncRule#update. */
+class ScheduleSyncRuleUpdateData
+{
+    public string $id;
+    public string $schedule_id;
+    public ?array $annotation = null;
+    public ?string $created_at = null;
+    public ?array $permanent_member_user_id = null;
+    public ?string $rotation_id = null;
+    public ?array $schedule_sync_rule = null;
+    public ?array $schedule_sync_target = null;
+    public ?string $schedule_sync_target_id = null;
+    public ?string $sync_type = null;
+    public ?string $updated_at = null;
+}
+
+/** ScheduleSyncTarget entity data model. */
+class ScheduleSyncTarget
+{
+    public bool $add_bot_to_group;
+    public ?array $annotation = null;
+    public string $created_at;
+    public string $id;
+    public array $linked_schedule;
+    public array $schedule_sync_target;
+    public string $slack_team_id;
+    public string $slack_user_group_id;
+    public string $updated_at;
+}
+
+/** Request payload for ScheduleSyncTarget#load. */
+class ScheduleSyncTargetLoadMatch
+{
+    public string $id;
+}
+
+/** Request payload for ScheduleSyncTarget#list. */
+class ScheduleSyncTargetListMatch
+{
+    public ?bool $add_bot_to_group = null;
+    public ?array $annotation = null;
+    public ?string $created_at = null;
+    public ?string $id = null;
+    public ?array $linked_schedule = null;
+    public ?array $schedule_sync_target = null;
+    public ?string $slack_team_id = null;
+    public ?string $slack_user_group_id = null;
+    public ?string $updated_at = null;
+}
+
+/** Request payload for ScheduleSyncTarget#create. */
+class ScheduleSyncTargetCreateData
+{
+    public bool $add_bot_to_group;
+    public ?array $annotation = null;
+    public string $created_at;
+    public string $id;
+    public array $linked_schedule;
+    public array $schedule_sync_target;
+    public string $slack_team_id;
+    public string $slack_user_group_id;
+    public string $updated_at;
+}
+
+/** Request payload for ScheduleSyncTarget#update. */
+class ScheduleSyncTargetUpdateData
+{
+    public string $id;
+    public ?bool $add_bot_to_group = null;
+    public ?array $annotation = null;
+    public ?string $created_at = null;
+    public ?array $linked_schedule = null;
+    public ?array $schedule_sync_target = null;
+    public ?string $slack_team_id = null;
+    public ?string $slack_user_group_id = null;
+    public ?string $updated_at = null;
+}
+
+/** Request payload for ScheduleSyncTarget#remove. */
+class ScheduleSyncTargetRemoveMatch
+{
+    public string $id;
+}
+
 /** Secret entity data model. */
 class Secret
 {
@@ -1352,7 +2088,7 @@ class Secret
     public string $id;
     public ?string $last_four_char = null;
     public string $name;
-    public ?array $owning_team_id = null;
+    public array $owning_team_id;
     public array $secret;
     public string $updated_at;
     public string $value;
@@ -1388,7 +2124,7 @@ class SecretCreateData
     public string $id;
     public ?string $last_four_char = null;
     public string $name;
-    public ?array $owning_team_id = null;
+    public array $owning_team_id;
     public array $secret;
     public string $updated_at;
     public string $value;
@@ -1416,6 +2152,256 @@ class SecretRemoveMatch
     public string $id;
 }
 
+/** Severity entity data model. */
+class Severity
+{
+    public string $created_at;
+    public string $description;
+    public string $id;
+    public string $name;
+    public int $rank;
+    public string $updated_at;
+}
+
+/** Request payload for Severity#load. */
+class SeverityLoadMatch
+{
+    public string $id;
+}
+
+/** Request payload for Severity#list. */
+class SeverityListMatch
+{
+    public ?string $created_at = null;
+    public ?string $description = null;
+    public ?string $id = null;
+    public ?string $name = null;
+    public ?int $rank = null;
+    public ?string $updated_at = null;
+}
+
+/** Request payload for Severity#create. */
+class SeverityCreateData
+{
+    public string $created_at;
+    public string $description;
+    public string $id;
+    public string $name;
+    public int $rank;
+    public string $updated_at;
+}
+
+/** Request payload for Severity#update. */
+class SeverityUpdateData
+{
+    public string $id;
+    public ?string $created_at = null;
+    public ?string $description = null;
+    public ?string $name = null;
+    public ?int $rank = null;
+    public ?string $updated_at = null;
+}
+
+/** StatusPage entity data model. */
+class StatusPage
+{
+    public ?string $description = null;
+    public string $id;
+    public string $name;
+    public ?string $public_url = null;
+}
+
+/** Request payload for StatusPage#list. */
+class StatusPageListMatch
+{
+    public ?string $description = null;
+    public ?string $id = null;
+    public ?string $name = null;
+    public ?string $public_url = null;
+}
+
+/** StatusPageIncident entity data model. */
+class StatusPageIncident
+{
+    public array $component_impact;
+    public ?array $component_status = null;
+    public string $id;
+    public string $idempotency_key;
+    public string $incident_status;
+    public string $message;
+    public string $name;
+    public bool $notify_subscriber;
+    public string $published_at;
+    public string $status_page_id;
+    public array $update;
+}
+
+/** Request payload for StatusPageIncident#load. */
+class StatusPageIncidentLoadMatch
+{
+    public string $id;
+}
+
+/** Request payload for StatusPageIncident#list. */
+class StatusPageIncidentListMatch
+{
+    public ?array $component_impact = null;
+    public ?array $component_status = null;
+    public ?string $id = null;
+    public ?string $idempotency_key = null;
+    public ?string $incident_status = null;
+    public ?string $message = null;
+    public ?string $name = null;
+    public ?bool $notify_subscriber = null;
+    public ?string $published_at = null;
+    public ?string $status_page_id = null;
+    public ?array $update = null;
+}
+
+/** Request payload for StatusPageIncident#create. */
+class StatusPageIncidentCreateData
+{
+    public array $component_impact;
+    public ?array $component_status = null;
+    public string $id;
+    public string $idempotency_key;
+    public string $incident_status;
+    public string $message;
+    public string $name;
+    public bool $notify_subscriber;
+    public string $published_at;
+    public string $status_page_id;
+    public array $update;
+}
+
+/** Request payload for StatusPageIncident#update. */
+class StatusPageIncidentUpdateData
+{
+    public string $id;
+    public ?array $component_impact = null;
+    public ?array $component_status = null;
+    public ?string $idempotency_key = null;
+    public ?string $incident_status = null;
+    public ?string $message = null;
+    public ?string $name = null;
+    public ?bool $notify_subscriber = null;
+    public ?string $published_at = null;
+    public ?string $status_page_id = null;
+    public ?array $update = null;
+}
+
+/** StatusPageIncidentUpdate entity data model. */
+class StatusPageIncidentUpdate
+{
+    public ?array $component_status = null;
+    public ?string $incident_status = null;
+    public string $message;
+    public bool $notify_subscriber;
+    public string $status_page_incident_id;
+}
+
+/** Request payload for StatusPageIncidentUpdate#create. */
+class StatusPageIncidentUpdateCreateData
+{
+    public ?array $component_status = null;
+    public ?string $incident_status = null;
+    public string $message;
+    public bool $notify_subscriber;
+    public string $status_page_incident_id;
+}
+
+/** StatusPageMaintenance entity data model. */
+class StatusPageMaintenance
+{
+    public array $affected_component_id;
+    public array $component_maintenance_period;
+    public string $end_at;
+    public string $id;
+    public string $idempotency_key;
+    public string $maintenance_status;
+    public string $message;
+    public string $name;
+    public bool $notify_subscriber;
+    public string $published_at;
+    public string $start_at;
+    public string $status_page_id;
+    public array $update;
+}
+
+/** Request payload for StatusPageMaintenance#load. */
+class StatusPageMaintenanceLoadMatch
+{
+    public string $id;
+}
+
+/** Request payload for StatusPageMaintenance#list. */
+class StatusPageMaintenanceListMatch
+{
+    public ?array $affected_component_id = null;
+    public ?array $component_maintenance_period = null;
+    public ?string $end_at = null;
+    public ?string $id = null;
+    public ?string $idempotency_key = null;
+    public ?string $maintenance_status = null;
+    public ?string $message = null;
+    public ?string $name = null;
+    public ?bool $notify_subscriber = null;
+    public ?string $published_at = null;
+    public ?string $start_at = null;
+    public ?string $status_page_id = null;
+    public ?array $update = null;
+}
+
+/** Request payload for StatusPageMaintenance#create. */
+class StatusPageMaintenanceCreateData
+{
+    public array $affected_component_id;
+    public array $component_maintenance_period;
+    public string $end_at;
+    public string $id;
+    public string $idempotency_key;
+    public string $maintenance_status;
+    public string $message;
+    public string $name;
+    public bool $notify_subscriber;
+    public string $published_at;
+    public string $start_at;
+    public string $status_page_id;
+    public array $update;
+}
+
+/** StatusPageMaintenanceUpdate entity data model. */
+class StatusPageMaintenanceUpdate
+{
+    public ?array $component_status = null;
+    public ?string $maintenance_status = null;
+    public string $message;
+    public bool $notify_subscriber;
+    public string $status_page_maintenance_id;
+}
+
+/** Request payload for StatusPageMaintenanceUpdate#create. */
+class StatusPageMaintenanceUpdateCreateData
+{
+    public ?array $component_status = null;
+    public ?string $maintenance_status = null;
+    public string $message;
+    public bool $notify_subscriber;
+    public string $status_page_maintenance_id;
+}
+
+/** StatusPageStructure entity data model. */
+class StatusPageStructure
+{
+    public array $item;
+}
+
+/** Request payload for StatusPageStructure#load. */
+class StatusPageStructureLoadMatch
+{
+    public string $id;
+}
+
 /** Team entity data model. */
 class Team
 {
@@ -1438,6 +2424,36 @@ class TeamListMatch
     public ?string $id = null;
     public ?array $member = null;
     public ?string $name = null;
+}
+
+/** TelemetryDataSource entity data model. */
+class TelemetryDataSource
+{
+    public string $created_at;
+    public ?array $datadog_config = null;
+    public bool $enabled;
+    public ?array $grafana_config = null;
+    public string $id;
+    public string $name;
+    public string $provider;
+    public string $source_type;
+    public string $updated_at;
+    public ?string $version = null;
+}
+
+/** Request payload for TelemetryDataSource#update. */
+class TelemetryDataSourceUpdateData
+{
+    public string $id;
+    public ?string $created_at = null;
+    public ?array $datadog_config = null;
+    public ?bool $enabled = null;
+    public ?array $grafana_config = null;
+    public ?string $name = null;
+    public ?string $provider = null;
+    public ?string $source_type = null;
+    public ?string $updated_at = null;
+    public ?string $version = null;
 }
 
 /** User entity data model. */

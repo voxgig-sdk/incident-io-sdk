@@ -35,7 +35,7 @@ describe('ActionDirect', async () => {
     const params = {}
     if (setup.live) {
       const listResult = await client.direct({
-        path: 'v2/actions',
+        path: 'v1/actions',
         method: 'GET',
         params: {
 
@@ -53,7 +53,7 @@ describe('ActionDirect', async () => {
     }
 
     const result = await client.direct({
-      path: 'v2/actions/{id}',
+      path: 'v1/actions/{id}',
       method: 'GET',
       params,
     })
@@ -77,7 +77,7 @@ describe('ActionDirect', async () => {
     const params = {}
 
     const result = await client.direct({
-      path: 'v2/actions',
+      path: 'v1/actions',
       method: 'GET',
       params,
     })

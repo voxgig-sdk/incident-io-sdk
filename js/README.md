@@ -54,7 +54,7 @@ const created = await client.Action().create({
   assignee: {},
   created_at: 'example_created_at',
   creator: {},
-  description: 'example_description',
+  follow_up: true,
   id: 'example_id',
   incident_id: 'example_incident_id',
   status: 'example_status',
@@ -103,8 +103,8 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const incidenttypes = await client.IncidentType().list()
-  console.log(incidenttypes)
+  const incidentroles = await client.IncidentRole().list()
+  console.log(incidentroles)
 } catch (err) {
   console.error('list failed:', err)
 }
@@ -170,9 +170,9 @@ Create a mock client for unit testing — no server required:
 ```js
 const client = IncidentIoSDK.test()
 
-const incidenttype = await client.IncidentType().list()
-// incidenttype is a bare entity populated with mock response data
-console.log(incidenttype)
+const incidentrole = await client.IncidentRole().list()
+// incidentrole is a bare entity populated with mock response data
+console.log(incidentrole)
 ```
 
 You can also use the instance method:
@@ -187,7 +187,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```js
-const entity = client.IncidentType()
+const entity = client.IncidentRole()
 
 // First call runs the operation and stores its result
 await entity.list()
@@ -266,10 +266,16 @@ new IncidentIoSDK(options?)
 | `AlertRoute(data?)` | `AlertRouteEntity` | Create an AlertRoute entity instance. |
 | `AlertSource(data?)` | `AlertSourceEntity` | Create an AlertSource entity instance. |
 | `ApiKey(data?)` | `ApiKeyEntity` | Create an ApiKey entity instance. |
+| `CatalogEntry(data?)` | `CatalogEntryEntity` | Create a CatalogEntry entity instance. |
+| `CatalogResource(data?)` | `CatalogResourceEntity` | Create a CatalogResource entity instance. |
+| `CatalogType(data?)` | `CatalogTypeEntity` | Create a CatalogType entity instance. |
+| `CatalogTypeSchema(data?)` | `CatalogTypeSchemaEntity` | Create a CatalogTypeSchema entity instance. |
 | `CustomField(data?)` | `CustomFieldEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption(data?)` | `CustomFieldOptionEntity` | Create a CustomFieldOption entity instance. |
+| `Escalation(data?)` | `EscalationEntity` | Create an Escalation entity instance. |
 | `FollowUp(data?)` | `FollowUpEntity` | Create a FollowUp entity instance. |
 | `Incident(data?)` | `IncidentEntity` | Create an Incident entity instance. |
+| `IncidentAlert(data?)` | `IncidentAlertEntity` | Create an IncidentAlert entity instance. |
 | `IncidentAttachment(data?)` | `IncidentAttachmentEntity` | Create an IncidentAttachment entity instance. |
 | `IncidentMembership(data?)` | `IncidentMembershipEntity` | Create an IncidentMembership entity instance. |
 | `IncidentParticipant(data?)` | `IncidentParticipantEntity` | Create an IncidentParticipant entity instance. |
@@ -283,8 +289,21 @@ new IncidentIoSDK(options?)
 | `IpAllowlist(data?)` | `IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `MaintenanceWindow(data?)` | `MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
 | `PostmortemDocument(data?)` | `PostmortemDocumentEntity` | Create a PostmortemDocument entity instance. |
+| `Schedule(data?)` | `ScheduleEntity` | Create a Schedule entity instance. |
+| `ScheduleEntry(data?)` | `ScheduleEntryEntity` | Create a ScheduleEntry entity instance. |
+| `ScheduleReplica(data?)` | `ScheduleReplicaEntity` | Create a ScheduleReplica entity instance. |
+| `ScheduleSyncRule(data?)` | `ScheduleSyncRuleEntity` | Create a ScheduleSyncRule entity instance. |
+| `ScheduleSyncTarget(data?)` | `ScheduleSyncTargetEntity` | Create a ScheduleSyncTarget entity instance. |
 | `Secret(data?)` | `SecretEntity` | Create a Secret entity instance. |
+| `Severity(data?)` | `SeverityEntity` | Create a Severity entity instance. |
+| `StatusPage(data?)` | `StatusPageEntity` | Create a StatusPage entity instance. |
+| `StatusPageIncident(data?)` | `StatusPageIncidentEntity` | Create a StatusPageIncident entity instance. |
+| `StatusPageIncidentUpdate(data?)` | `StatusPageIncidentUpdateEntity` | Create a StatusPageIncidentUpdate entity instance. |
+| `StatusPageMaintenance(data?)` | `StatusPageMaintenanceEntity` | Create a StatusPageMaintenance entity instance. |
+| `StatusPageMaintenanceUpdate(data?)` | `StatusPageMaintenanceUpdateEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
+| `StatusPageStructure(data?)` | `StatusPageStructureEntity` | Create a StatusPageStructure entity instance. |
 | `Team(data?)` | `TeamEntity` | Create a Team entity instance. |
+| `TelemetryDataSource(data?)` | `TelemetryDataSourceEntity` | Create a TelemetryDataSource entity instance. |
 | `User(data?)` | `UserEntity` | Create an User entity instance. |
 | `Workflow(data?)` | `WorkflowEntity` | Create a Workflow entity instance. |
 | `WorkflowRun(data?)` | `WorkflowRunEntity` | Create a WorkflowRun entity instance. |
@@ -369,6 +388,8 @@ The `prepare()` method returns:
 | `created_at` |  |
 | `creator` |  |
 | `description` |  |
+| `external_issue_reference` |  |
+| `follow_up` |  |
 | `id` |  |
 | `incident_id` |  |
 | `status` |  |
@@ -395,9 +416,9 @@ API path: `/v2/actions`
 | `title` |  |
 | `updated_at` |  |
 
-Operations: list, load.
+Operations: create, list, load.
 
-API path: `/v2/alerts`
+API path: `/v2/alerts/{id}/actions/resolve`
 
 #### AlertAttribute
 
@@ -437,6 +458,7 @@ API path: `/v1/alert_notes`
 | Field | Description |
 | --- | --- |
 | `alert_source` |  |
+| `channel_config` |  |
 | `condition_group` |  |
 | `created_at` |  |
 | `enabled` |  |
@@ -445,8 +467,10 @@ API path: `/v1/alert_notes`
 | `grouping_config` |  |
 | `id` |  |
 | `incident_config` |  |
+| `incident_template` |  |
 | `is_private` |  |
 | `message_config` |  |
+| `message_template` |  |
 | `name` |  |
 | `owning_team_id` |  |
 | `updated_at` |  |
@@ -454,7 +478,7 @@ API path: `/v1/alert_notes`
 
 Operations: create, list, load, remove, update.
 
-API path: `/v3/alert_routes`
+API path: `/v2/alert_routes`
 
 #### AlertSource
 
@@ -486,6 +510,7 @@ API path: `/v2/alert_sources`
 | `comment` |  |
 | `created_at` |  |
 | `creator` |  |
+| `grace_period_minute` |  |
 | `id` |  |
 | `last_used_at` |  |
 | `name` |  |
@@ -498,7 +523,112 @@ API path: `/v2/alert_sources`
 
 Operations: create, list, load, remove, update.
 
-API path: `/v1/api_keys`
+API path: `/v1/api_keys/{id}/actions/rotate`
+
+#### CatalogEntry
+
+| Field | Description |
+| --- | --- |
+| `alias` |  |
+| `archived_at` |  |
+| `attribute_value` |  |
+| `catalog_entry` |  |
+| `catalog_type` |  |
+| `catalog_type_id` |  |
+| `created_at` |  |
+| `external_id` |  |
+| `id` |  |
+| `name` |  |
+| `rank` |  |
+| `update_attribute` |  |
+| `updated_at` |  |
+
+Operations: create, list, load, update.
+
+API path: `/v2/catalog_entries`
+
+#### CatalogResource
+
+| Field | Description |
+| --- | --- |
+| `category` |  |
+| `description` |  |
+| `engine_resource_type` |  |
+| `label` |  |
+| `type` |  |
+| `value_docstring` |  |
+
+Operations: list.
+
+API path: `/v2/catalog_resources`
+
+#### CatalogType
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `category` |  |
+| `color` |  |
+| `created_at` |  |
+| `description` |  |
+| `dynamic_resource_parameter` |  |
+| `engine_resource_type` |  |
+| `estimated_count` |  |
+| `icon` |  |
+| `id` |  |
+| `is_editable` |  |
+| `is_team_type` |  |
+| `last_synced_at` |  |
+| `name` |  |
+| `owning_team_id` |  |
+| `ranked` |  |
+| `registry_type` |  |
+| `required_integration` |  |
+| `schema` |  |
+| `semantic_type` |  |
+| `source_repo_url` |  |
+| `type_name` |  |
+| `updated_at` |  |
+| `use_name_as_identifier` |  |
+
+Operations: create, list, load, update.
+
+API path: `/v2/catalog_types`
+
+#### CatalogTypeSchema
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `attribute` |  |
+| `category` |  |
+| `color` |  |
+| `created_at` |  |
+| `description` |  |
+| `dynamic_resource_parameter` |  |
+| `engine_resource_type` |  |
+| `estimated_count` |  |
+| `icon` |  |
+| `id` |  |
+| `is_editable` |  |
+| `is_team_type` |  |
+| `last_synced_at` |  |
+| `name` |  |
+| `owning_team_id` |  |
+| `ranked` |  |
+| `registry_type` |  |
+| `required_integration` |  |
+| `schema` |  |
+| `semantic_type` |  |
+| `source_repo_url` |  |
+| `type_name` |  |
+| `updated_at` |  |
+| `use_name_as_identifier` |  |
+| `version` |  |
+
+Operations: create.
+
+API path: `/v2/catalog_types/{id}/actions/update_schema`
 
 #### CustomField
 
@@ -514,11 +644,18 @@ API path: `/v1/api_keys`
 | `helptext_catalog_attribute_id` |  |
 | `id` |  |
 | `name` |  |
+| `option` |  |
+| `required` |  |
+| `required_v2` |  |
+| `show_before_closure` |  |
+| `show_before_creation` |  |
+| `show_before_update` |  |
+| `show_in_announcement_post` |  |
 | `updated_at` |  |
 
 Operations: create, list, load, remove, update.
 
-API path: `/v2/custom_fields`
+API path: `/v1/custom_fields`
 
 #### CustomFieldOption
 
@@ -532,6 +669,30 @@ API path: `/v2/custom_fields`
 Operations: create, list, load, remove, update.
 
 API path: `/v1/custom_field_options`
+
+#### Escalation
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `creator` |  |
+| `description` |  |
+| `escalation_path_id` |  |
+| `event` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `incident_id` |  |
+| `priority` |  |
+| `related_alert` |  |
+| `related_incident` |  |
+| `status` |  |
+| `title` |  |
+| `updated_at` |  |
+| `user_id` |  |
+
+Operations: create, list, load.
+
+API path: `/v2/escalations`
 
 #### FollowUp
 
@@ -574,6 +735,7 @@ API path: `/v2/follow_ups`
 | `has_debrief` |  |
 | `id` |  |
 | `idempotency_key` |  |
+| `incident` |  |
 | `incident_role_assignment` |  |
 | `incident_status` |  |
 | `incident_status_id` |  |
@@ -582,6 +744,7 @@ API path: `/v2/follow_ups`
 | `incident_type_id` |  |
 | `mode` |  |
 | `name` |  |
+| `notify_incident_channel` |  |
 | `permalink` |  |
 | `postmortem_document_id` |  |
 | `postmortem_document_url` |  |
@@ -593,7 +756,11 @@ API path: `/v2/follow_ups`
 | `slack_channel_name` |  |
 | `slack_channel_name_override` |  |
 | `slack_team_id` |  |
+| `source_message_channel_id` |  |
+| `source_message_timestamp` |  |
+| `status` |  |
 | `summary` |  |
+| `timestamp` |  |
 | `updated_at` |  |
 | `visibility` |  |
 | `workload_minutes_late` |  |
@@ -603,7 +770,20 @@ API path: `/v2/follow_ups`
 
 Operations: create, list, load.
 
-API path: `/v2/incidents`
+API path: `/v2/incidents/{id}/actions/edit`
+
+#### IncidentAlert
+
+| Field | Description |
+| --- | --- |
+| `alert` |  |
+| `alert_route_id` |  |
+| `id` |  |
+| `incident` |  |
+
+Operations: list.
+
+API path: `/v2/incident_alerts`
 
 #### IncidentAttachment
 
@@ -672,13 +852,14 @@ API path: `/v1/incident_relationships`
 | `id` |  |
 | `instruction` |  |
 | `name` |  |
+| `required` |  |
 | `role_type` |  |
 | `shortform` |  |
 | `updated_at` |  |
 
 Operations: create, list, load, remove, update.
 
-API path: `/v2/incident_roles`
+API path: `/v1/incident_roles`
 
 #### IncidentStatus
 
@@ -802,6 +983,99 @@ Operations: list, load, update.
 
 API path: `/v1/postmortem_documents`
 
+#### Schedule
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `config` |  |
+| `created_at` |  |
+| `current_shift` |  |
+| `holidays_public_config` |  |
+| `id` |  |
+| `name` |  |
+| `next_shift` |  |
+| `permalink` |  |
+| `schedule` |  |
+| `team_id` |  |
+| `timezone` |  |
+| `updated_at` |  |
+
+Operations: create, list, load, remove, update.
+
+API path: `/v2/schedules`
+
+#### ScheduleEntry
+
+| Field | Description |
+| --- | --- |
+| `pagination_meta` |  |
+| `schedule_entry` |  |
+
+Operations: load.
+
+API path: `/v2/schedule_entries`
+
+#### ScheduleReplica
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `id` |  |
+| `last_sync_error` |  |
+| `last_synced_at` |  |
+| `mirror_window_day` |  |
+| `replica_fallback_user_id` |  |
+| `replica_provider` |  |
+| `replica_provider_id` |  |
+| `schedule_id` |  |
+| `schedule_replica` |  |
+| `source` |  |
+| `updated_at` |  |
+| `user_status` |  |
+
+Operations: create, list, load.
+
+API path: `/v2/schedules/{schedule_id}/replicas`
+
+#### ScheduleSyncRule
+
+| Field | Description |
+| --- | --- |
+| `annotation` |  |
+| `created_at` |  |
+| `id` |  |
+| `permanent_member_user_id` |  |
+| `rotation_id` |  |
+| `schedule_id` |  |
+| `schedule_sync_rule` |  |
+| `schedule_sync_target` |  |
+| `schedule_sync_target_id` |  |
+| `sync_type` |  |
+| `updated_at` |  |
+
+Operations: create, list, load, update.
+
+API path: `/v2/schedules/{schedule_id}/sync_rules`
+
+#### ScheduleSyncTarget
+
+| Field | Description |
+| --- | --- |
+| `add_bot_to_group` |  |
+| `annotation` |  |
+| `created_at` |  |
+| `id` |  |
+| `linked_schedule` |  |
+| `schedule_sync_target` |  |
+| `slack_team_id` |  |
+| `slack_user_group_id` |  |
+| `updated_at` |  |
+
+Operations: create, list, load, remove, update.
+
+API path: `/v2/schedule_sync_targets`
+
 #### Secret
 
 | Field | Description |
@@ -819,7 +1093,115 @@ API path: `/v1/postmortem_documents`
 
 Operations: create, list, load, remove, update.
 
-API path: `/v2/secrets`
+API path: `/v2/secrets/{id}/actions/rotate`
+
+#### Severity
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `description` |  |
+| `id` |  |
+| `name` |  |
+| `rank` |  |
+| `updated_at` |  |
+
+Operations: create, list, load, update.
+
+API path: `/v1/severities`
+
+#### StatusPage
+
+| Field | Description |
+| --- | --- |
+| `description` |  |
+| `id` |  |
+| `name` |  |
+| `public_url` |  |
+
+Operations: list.
+
+API path: `/v2/status_pages`
+
+#### StatusPageIncident
+
+| Field | Description |
+| --- | --- |
+| `component_impact` |  |
+| `component_status` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `incident_status` |  |
+| `message` |  |
+| `name` |  |
+| `notify_subscriber` |  |
+| `published_at` |  |
+| `status_page_id` |  |
+| `update` |  |
+
+Operations: create, list, load, update.
+
+API path: `/v2/status_page_incidents`
+
+#### StatusPageIncidentUpdate
+
+| Field | Description |
+| --- | --- |
+| `component_status` |  |
+| `incident_status` |  |
+| `message` |  |
+| `notify_subscriber` |  |
+| `status_page_incident_id` |  |
+
+Operations: create.
+
+API path: `/v2/status_page_incident_updates`
+
+#### StatusPageMaintenance
+
+| Field | Description |
+| --- | --- |
+| `affected_component_id` |  |
+| `component_maintenance_period` |  |
+| `end_at` |  |
+| `id` |  |
+| `idempotency_key` |  |
+| `maintenance_status` |  |
+| `message` |  |
+| `name` |  |
+| `notify_subscriber` |  |
+| `published_at` |  |
+| `start_at` |  |
+| `status_page_id` |  |
+| `update` |  |
+
+Operations: create, list, load.
+
+API path: `/v2/status_page_maintenances`
+
+#### StatusPageMaintenanceUpdate
+
+| Field | Description |
+| --- | --- |
+| `component_status` |  |
+| `maintenance_status` |  |
+| `message` |  |
+| `notify_subscriber` |  |
+| `status_page_maintenance_id` |  |
+
+Operations: create.
+
+API path: `/v2/status_page_maintenance_updates`
+
+#### StatusPageStructure
+
+| Field | Description |
+| --- | --- |
+| `item` |  |
+
+Operations: load.
+
+API path: `/v2/status_page_structures/{status_page_id}`
 
 #### Team
 
@@ -833,6 +1215,25 @@ API path: `/v2/secrets`
 Operations: list, load.
 
 API path: `/v3/teams`
+
+#### TelemetryDataSource
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `datadog_config` |  |
+| `enabled` |  |
+| `grafana_config` |  |
+| `id` |  |
+| `name` |  |
+| `provider` |  |
+| `source_type` |  |
+| `updated_at` |  |
+| `version` |  |
+
+Operations: update.
+
+API path: `/v2/telemetry/data_sources/{id}`
 
 #### User
 
@@ -938,6 +1339,8 @@ Create an instance: `const action = client.Action()`
 | `created_at` | `string` |  |
 | `creator` | `Object` |  |
 | `description` | `string` |  |
+| `external_issue_reference` | `Object` |  |
+| `follow_up` | `boolean` |  |
 | `id` | `string` |  |
 | `incident_id` | `string` |  |
 | `status` | `string` |  |
@@ -962,7 +1365,7 @@ const action = await client.Action().create({
   assignee: {},
   created_at: 'example_created_at',
   creator: {},
-  description: 'example_description',
+  follow_up: true,
   id: 'example_id',
   incident_id: 'example_incident_id',
   status: 'example_status',
@@ -979,6 +1382,7 @@ Create an instance: `const alert = client.Alert()`
 
 | Method | Description |
 | --- | --- |
+| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
@@ -1009,6 +1413,21 @@ const alert = await client.Alert().load({ id: 'alert_id' })
 
 ```ts
 const alerts = await client.Alert().list()
+```
+
+#### Example: Create
+
+```ts
+const alert = await client.Alert().create({
+  id: 'example_id',
+  alert_source_id: 'example_alert_source_id',
+  attribute: [],
+  created_at: 'example_created_at',
+  deduplication_key: 'example_deduplication_key',
+  status: 'example_status',
+  title: 'example_title',
+  updated_at: 'example_updated_at',
+})
 ```
 
 
@@ -1135,6 +1554,7 @@ Create an instance: `const alert_route = client.AlertRoute()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `alert_source` | `Array` |  |
+| `channel_config` | `Array` |  |
 | `condition_group` | `Array` |  |
 | `created_at` | `string` |  |
 | `enabled` | `boolean` |  |
@@ -1143,8 +1563,10 @@ Create an instance: `const alert_route = client.AlertRoute()`
 | `grouping_config` | `Object` |  |
 | `id` | `string` |  |
 | `incident_config` | `Object` |  |
+| `incident_template` | `Object` |  |
 | `is_private` | `boolean` |  |
 | `message_config` | `Object` |  |
+| `message_template` | `Object` |  |
 | `name` | `string` |  |
 | `owning_team_id` | `Array` |  |
 | `updated_at` | `string` |  |
@@ -1167,6 +1589,7 @@ const alert_routes = await client.AlertRoute().list()
 ```ts
 const alert_route = await client.AlertRoute().create({
   alert_source: [],
+  channel_config: [],
   condition_group: [],
   enabled: true,
   escalation_config: {},
@@ -1174,6 +1597,7 @@ const alert_route = await client.AlertRoute().create({
   grouping_config: {},
   id: 'example_id',
   incident_config: {},
+  incident_template: {},
   is_private: true,
   message_config: {},
   name: 'example_name',
@@ -1264,6 +1688,7 @@ Create an instance: `const api_key = client.ApiKey()`
 | `comment` | `string` |  |
 | `created_at` | `string` |  |
 | `creator` | `Object` |  |
+| `grace_period_minute` | `number` |  |
 | `id` | `string` |  |
 | `last_used_at` | `string` |  |
 | `name` | `string` |  |
@@ -1292,6 +1717,7 @@ const api_keys = await client.ApiKey().list()
 const api_key = await client.ApiKey().create({
   created_at: 'example_created_at',
   creator: {},
+  grace_period_minute: 1,
   id: 'example_id',
   name: 'example_name',
   role: [],
@@ -1300,6 +1726,239 @@ const api_key = await client.ApiKey().create({
   team_role: [],
   team_role_name: [],
   token_last_issued_at: 'example_token_last_issued_at',
+})
+```
+
+
+### CatalogEntry
+
+Create an instance: `const catalog_entry = client.CatalogEntry()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alias` | `Array` |  |
+| `archived_at` | `string` |  |
+| `attribute_value` | `Object` |  |
+| `catalog_entry` | `Object` |  |
+| `catalog_type` | `Object` |  |
+| `catalog_type_id` | `string` |  |
+| `created_at` | `string` |  |
+| `external_id` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `rank` | `number` |  |
+| `update_attribute` | `Array` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```ts
+const catalog_entry = await client.CatalogEntry().load({ id: 'catalog_entry_id' })
+```
+
+#### Example: List
+
+```ts
+const catalog_entrys = await client.CatalogEntry().list()
+```
+
+#### Example: Create
+
+```ts
+const catalog_entry = await client.CatalogEntry().create({
+  attribute_value: {},
+  catalog_entry: {},
+  catalog_type: {},
+  catalog_type_id: 'example_catalog_type_id',
+  created_at: 'example_created_at',
+  id: 'example_id',
+  name: 'example_name',
+  updated_at: 'example_updated_at',
+})
+```
+
+
+### CatalogResource
+
+Create an instance: `const catalog_resource = client.CatalogResource()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `category` | `string` |  |
+| `description` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `label` | `string` |  |
+| `type` | `string` |  |
+| `value_docstring` | `string` |  |
+
+#### Example: List
+
+```ts
+const catalog_resources = await client.CatalogResource().list()
+```
+
+
+### CatalogType
+
+Create an instance: `const catalog_type = client.CatalogType()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `Object` |  |
+| `category` | `Array` |  |
+| `color` | `string` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `dynamic_resource_parameter` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `estimated_count` | `number` |  |
+| `icon` | `string` |  |
+| `id` | `string` |  |
+| `is_editable` | `boolean` |  |
+| `is_team_type` | `boolean` |  |
+| `last_synced_at` | `string` |  |
+| `name` | `string` |  |
+| `owning_team_id` | `Array` |  |
+| `ranked` | `boolean` |  |
+| `registry_type` | `string` |  |
+| `required_integration` | `Array` |  |
+| `schema` | `Object` |  |
+| `semantic_type` | `string` |  |
+| `source_repo_url` | `string` |  |
+| `type_name` | `string` |  |
+| `updated_at` | `string` |  |
+| `use_name_as_identifier` | `boolean` |  |
+
+#### Example: Load
+
+```ts
+const catalog_type = await client.CatalogType().load({ id: 'catalog_type_id' })
+```
+
+#### Example: List
+
+```ts
+const catalog_types = await client.CatalogType().list()
+```
+
+#### Example: Create
+
+```ts
+const catalog_type = await client.CatalogType().create({
+  annotation: {},
+  category: [],
+  color: 'example_color',
+  created_at: 'example_created_at',
+  description: 'example_description',
+  engine_resource_type: 'example_engine_resource_type',
+  icon: 'example_icon',
+  id: 'example_id',
+  is_editable: true,
+  name: 'example_name',
+  ranked: true,
+  schema: {},
+  semantic_type: 'example_semantic_type',
+  type_name: 'example_type_name',
+  updated_at: 'example_updated_at',
+  use_name_as_identifier: true,
+})
+```
+
+
+### CatalogTypeSchema
+
+Create an instance: `const catalog_type_schema = client.CatalogTypeSchema()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `Object` |  |
+| `attribute` | `Array` |  |
+| `category` | `Array` |  |
+| `color` | `string` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `dynamic_resource_parameter` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `estimated_count` | `number` |  |
+| `icon` | `string` |  |
+| `id` | `string` |  |
+| `is_editable` | `boolean` |  |
+| `is_team_type` | `boolean` |  |
+| `last_synced_at` | `string` |  |
+| `name` | `string` |  |
+| `owning_team_id` | `Array` |  |
+| `ranked` | `boolean` |  |
+| `registry_type` | `string` |  |
+| `required_integration` | `Array` |  |
+| `schema` | `Object` |  |
+| `semantic_type` | `string` |  |
+| `source_repo_url` | `string` |  |
+| `type_name` | `string` |  |
+| `updated_at` | `string` |  |
+| `use_name_as_identifier` | `boolean` |  |
+| `version` | `number` |  |
+
+#### Example: Create
+
+```ts
+const catalog_type_schema = await client.CatalogTypeSchema().create({
+  catalog_type_id: 'example_catalog_type_id',
+  annotation: {},
+  attribute: [],
+  category: [],
+  color: 'example_color',
+  created_at: 'example_created_at',
+  description: 'example_description',
+  engine_resource_type: 'example_engine_resource_type',
+  icon: 'example_icon',
+  id: 'example_id',
+  is_editable: true,
+  name: 'example_name',
+  ranked: true,
+  schema: {},
+  semantic_type: 'example_semantic_type',
+  type_name: 'example_type_name',
+  updated_at: 'example_updated_at',
+  use_name_as_identifier: true,
+  version: 1,
 })
 ```
 
@@ -1332,6 +1991,13 @@ Create an instance: `const custom_field = client.CustomField()`
 | `helptext_catalog_attribute_id` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
+| `option` | `Array` |  |
+| `required` | `string` |  |
+| `required_v2` | `string` |  |
+| `show_before_closure` | `boolean` |  |
+| `show_before_creation` | `boolean` |  |
+| `show_before_update` | `boolean` |  |
+| `show_in_announcement_post` | `boolean` |  |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -1357,6 +2023,10 @@ const custom_field = await client.CustomField().create({
   fixed_filter: {},
   id: 'example_id',
   name: 'example_name',
+  option: [],
+  show_before_closure: true,
+  show_before_creation: true,
+  show_before_update: true,
   updated_at: 'example_updated_at',
 })
 ```
@@ -1405,6 +2075,69 @@ const custom_field_option = await client.CustomFieldOption().create({
   id: 'example_id',
   sort_key: 1,
   value: 'example_value',
+})
+```
+
+
+### Escalation
+
+Create an instance: `const escalation = client.Escalation()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `creator` | `Object` |  |
+| `description` | `string` |  |
+| `escalation_path_id` | `string` |  |
+| `event` | `Array` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `incident_id` | `string` |  |
+| `priority` | `Object` |  |
+| `related_alert` | `Array` |  |
+| `related_incident` | `Array` |  |
+| `status` | `string` |  |
+| `title` | `string` |  |
+| `updated_at` | `string` |  |
+| `user_id` | `Array` |  |
+
+#### Example: Load
+
+```ts
+const escalation = await client.Escalation().load({ id: 'escalation_id' })
+```
+
+#### Example: List
+
+```ts
+const escalations = await client.Escalation().list()
+```
+
+#### Example: Create
+
+```ts
+const escalation = await client.Escalation().create({
+  created_at: 'example_created_at',
+  creator: {},
+  event: [],
+  id: 'example_id',
+  idempotency_key: 'example_idempotency_key',
+  priority: {},
+  related_alert: [],
+  related_incident: [],
+  status: 'example_status',
+  title: 'example_title',
+  updated_at: 'example_updated_at',
 })
 ```
 
@@ -1504,6 +2237,7 @@ Create an instance: `const incident = client.Incident()`
 | `has_debrief` | `boolean` |  |
 | `id` | `string` |  |
 | `idempotency_key` | `string` |  |
+| `incident` | `Object` |  |
 | `incident_role_assignment` | `Array` |  |
 | `incident_status` | `Object` |  |
 | `incident_status_id` | `string` |  |
@@ -1512,6 +2246,7 @@ Create an instance: `const incident = client.Incident()`
 | `incident_type_id` | `string` |  |
 | `mode` | `string` |  |
 | `name` | `string` |  |
+| `notify_incident_channel` | `boolean` |  |
 | `permalink` | `string` |  |
 | `postmortem_document_id` | `Array` |  |
 | `postmortem_document_url` | `string` |  |
@@ -1523,7 +2258,11 @@ Create an instance: `const incident = client.Incident()`
 | `slack_channel_name` | `string` |  |
 | `slack_channel_name_override` | `string` |  |
 | `slack_team_id` | `string` |  |
+| `source_message_channel_id` | `string` |  |
+| `source_message_timestamp` | `string` |  |
+| `status` | `string` |  |
 | `summary` | `string` |  |
+| `timestamp` | `Array` |  |
 | `updated_at` | `string` |  |
 | `visibility` | `string` |  |
 | `workload_minutes_late` | `number` |  |
@@ -1553,18 +2292,47 @@ const incident = await client.Incident().create({
   external_issue_reference: {},
   id: 'example_id',
   idempotency_key: 'example_idempotency_key',
+  incident: {},
   incident_role_assignment: [],
   incident_status: {},
   incident_type: {},
   mode: 'example_mode',
   name: 'example_name',
+  notify_incident_channel: true,
   reference: 'example_reference',
   severity: {},
   slack_channel_id: 'example_slack_channel_id',
   slack_team_id: 'example_slack_team_id',
+  status: 'example_status',
   updated_at: 'example_updated_at',
   visibility: 'example_visibility',
 })
+```
+
+
+### IncidentAlert
+
+Create an instance: `const incident_alert = client.IncidentAlert()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert` | `Object` |  |
+| `alert_route_id` | `string` |  |
+| `id` | `string` |  |
+| `incident` | `Object` |  |
+
+#### Example: List
+
+```ts
+const incident_alerts = await client.IncidentAlert().list()
 ```
 
 
@@ -1729,6 +2497,7 @@ Create an instance: `const incident_role = client.IncidentRole()`
 | `id` | `string` |  |
 | `instruction` | `string` |  |
 | `name` | `string` |  |
+| `required` | `boolean` |  |
 | `role_type` | `string` |  |
 | `shortform` | `string` |  |
 | `updated_at` | `string` |  |
@@ -2049,6 +2818,267 @@ const postmortem_documents = await client.PostmortemDocument().list()
 ```
 
 
+### Schedule
+
+Create an instance: `const schedule = client.Schedule()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `Object` |  |
+| `config` | `Object` |  |
+| `created_at` | `string` |  |
+| `current_shift` | `Array` |  |
+| `holidays_public_config` | `Object` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `next_shift` | `Array` |  |
+| `permalink` | `string` |  |
+| `schedule` | `Object` |  |
+| `team_id` | `Array` |  |
+| `timezone` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```ts
+const schedule = await client.Schedule().load({ id: 'schedule_id' })
+```
+
+#### Example: List
+
+```ts
+const schedules = await client.Schedule().list()
+```
+
+#### Example: Create
+
+```ts
+const schedule = await client.Schedule().create({
+  annotation: {},
+  config: {},
+  created_at: 'example_created_at',
+  holidays_public_config: {},
+  id: 'example_id',
+  name: 'example_name',
+  permalink: 'example_permalink',
+  schedule: {},
+  team_id: [],
+  timezone: 'example_timezone',
+  updated_at: 'example_updated_at',
+})
+```
+
+
+### ScheduleEntry
+
+Create an instance: `const schedule_entry = client.ScheduleEntry()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `pagination_meta` | `Object` |  |
+| `schedule_entry` | `Object` |  |
+
+#### Example: Load
+
+```ts
+const schedule_entry = await client.ScheduleEntry().load()
+```
+
+
+### ScheduleReplica
+
+Create an instance: `const schedule_replica = client.ScheduleReplica()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `last_sync_error` | `string` |  |
+| `last_synced_at` | `string` |  |
+| `mirror_window_day` | `number` |  |
+| `replica_fallback_user_id` | `string` |  |
+| `replica_provider` | `string` |  |
+| `replica_provider_id` | `string` |  |
+| `schedule_id` | `string` |  |
+| `schedule_replica` | `Object` |  |
+| `source` | `Array` |  |
+| `updated_at` | `string` |  |
+| `user_status` | `Array` |  |
+
+#### Example: Load
+
+```ts
+const schedule_replica = await client.ScheduleReplica().load({ id: 'schedule_replica_id', schedule_id: 'schedule_id' })
+```
+
+#### Example: List
+
+```ts
+const schedule_replicas = await client.ScheduleReplica().list()
+```
+
+#### Example: Create
+
+```ts
+const schedule_replica = await client.ScheduleReplica().create({
+  id: 'example_id',
+  created_at: 'example_created_at',
+  replica_fallback_user_id: 'example_replica_fallback_user_id',
+  replica_provider: 'example_replica_provider',
+  replica_provider_id: 'example_replica_provider_id',
+  schedule_id: 'example_schedule_id',
+  schedule_replica: {},
+  source: [],
+  updated_at: 'example_updated_at',
+  user_status: [],
+})
+```
+
+
+### ScheduleSyncRule
+
+Create an instance: `const schedule_sync_rule = client.ScheduleSyncRule()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `Object` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `permanent_member_user_id` | `Array` |  |
+| `rotation_id` | `string` |  |
+| `schedule_id` | `string` |  |
+| `schedule_sync_rule` | `Object` |  |
+| `schedule_sync_target` | `Object` |  |
+| `schedule_sync_target_id` | `string` |  |
+| `sync_type` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```ts
+const schedule_sync_rule = await client.ScheduleSyncRule().load({ id: 'schedule_sync_rule_id', schedule_id: 'schedule_id' })
+```
+
+#### Example: List
+
+```ts
+const schedule_sync_rules = await client.ScheduleSyncRule().list()
+```
+
+#### Example: Create
+
+```ts
+const schedule_sync_rule = await client.ScheduleSyncRule().create({
+  id: 'example_id',
+  created_at: 'example_created_at',
+  permanent_member_user_id: [],
+  schedule_id: 'example_schedule_id',
+  schedule_sync_rule: {},
+  schedule_sync_target: {},
+  schedule_sync_target_id: 'example_schedule_sync_target_id',
+  sync_type: 'example_sync_type',
+  updated_at: 'example_updated_at',
+})
+```
+
+
+### ScheduleSyncTarget
+
+Create an instance: `const schedule_sync_target = client.ScheduleSyncTarget()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `add_bot_to_group` | `boolean` |  |
+| `annotation` | `Object` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `linked_schedule` | `Array` |  |
+| `schedule_sync_target` | `Object` |  |
+| `slack_team_id` | `string` |  |
+| `slack_user_group_id` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```ts
+const schedule_sync_target = await client.ScheduleSyncTarget().load({ id: 'schedule_sync_target_id' })
+```
+
+#### Example: List
+
+```ts
+const schedule_sync_targets = await client.ScheduleSyncTarget().list()
+```
+
+#### Example: Create
+
+```ts
+const schedule_sync_target = await client.ScheduleSyncTarget().create({
+  add_bot_to_group: true,
+  created_at: 'example_created_at',
+  id: 'example_id',
+  linked_schedule: [],
+  schedule_sync_target: {},
+  slack_team_id: 'example_slack_team_id',
+  slack_user_group_id: 'example_slack_user_group_id',
+  updated_at: 'example_updated_at',
+})
+```
+
+
 ### Secret
 
 Create an instance: `const secret = client.Secret()`
@@ -2097,11 +3127,295 @@ const secret = await client.Secret().create({
   created_at: 'example_created_at',
   id: 'example_id',
   name: 'example_name',
+  owning_team_id: [],
   secret: {},
   updated_at: 'example_updated_at',
   value: 'example_value',
   version: [],
 })
+```
+
+
+### Severity
+
+Create an instance: `const severity = client.Severity()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `rank` | `number` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```ts
+const severity = await client.Severity().load({ id: 'severity_id' })
+```
+
+#### Example: List
+
+```ts
+const severitys = await client.Severity().list()
+```
+
+#### Example: Create
+
+```ts
+const severity = await client.Severity().create({
+  created_at: 'example_created_at',
+  description: 'example_description',
+  id: 'example_id',
+  name: 'example_name',
+  rank: 1,
+  updated_at: 'example_updated_at',
+})
+```
+
+
+### StatusPage
+
+Create an instance: `const status_page = client.StatusPage()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `public_url` | `string` |  |
+
+#### Example: List
+
+```ts
+const status_pages = await client.StatusPage().list()
+```
+
+
+### StatusPageIncident
+
+Create an instance: `const status_page_incident = client.StatusPageIncident()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_impact` | `Array` |  |
+| `component_status` | `Array` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `incident_status` | `string` |  |
+| `message` | `string` |  |
+| `name` | `string` |  |
+| `notify_subscriber` | `boolean` |  |
+| `published_at` | `string` |  |
+| `status_page_id` | `string` |  |
+| `update` | `Array` |  |
+
+#### Example: Load
+
+```ts
+const status_page_incident = await client.StatusPageIncident().load({ id: 'status_page_incident_id' })
+```
+
+#### Example: List
+
+```ts
+const status_page_incidents = await client.StatusPageIncident().list()
+```
+
+#### Example: Create
+
+```ts
+const status_page_incident = await client.StatusPageIncident().create({
+  component_impact: [],
+  id: 'example_id',
+  idempotency_key: 'example_idempotency_key',
+  incident_status: 'example_incident_status',
+  message: 'example_message',
+  name: 'example_name',
+  notify_subscriber: true,
+  published_at: 'example_published_at',
+  status_page_id: 'example_status_page_id',
+  update: [],
+})
+```
+
+
+### StatusPageIncidentUpdate
+
+Create an instance: `const status_page_incident_update = client.StatusPageIncidentUpdate()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `Array` |  |
+| `incident_status` | `string` |  |
+| `message` | `string` |  |
+| `notify_subscriber` | `boolean` |  |
+| `status_page_incident_id` | `string` |  |
+
+#### Example: Create
+
+```ts
+const status_page_incident_update = await client.StatusPageIncidentUpdate().create({
+  message: 'example_message',
+  notify_subscriber: true,
+  status_page_incident_id: 'example_status_page_incident_id',
+})
+```
+
+
+### StatusPageMaintenance
+
+Create an instance: `const status_page_maintenance = client.StatusPageMaintenance()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `affected_component_id` | `Array` |  |
+| `component_maintenance_period` | `Array` |  |
+| `end_at` | `string` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `maintenance_status` | `string` |  |
+| `message` | `string` |  |
+| `name` | `string` |  |
+| `notify_subscriber` | `boolean` |  |
+| `published_at` | `string` |  |
+| `start_at` | `string` |  |
+| `status_page_id` | `string` |  |
+| `update` | `Array` |  |
+
+#### Example: Load
+
+```ts
+const status_page_maintenance = await client.StatusPageMaintenance().load({ id: 'status_page_maintenance_id' })
+```
+
+#### Example: List
+
+```ts
+const status_page_maintenances = await client.StatusPageMaintenance().list()
+```
+
+#### Example: Create
+
+```ts
+const status_page_maintenance = await client.StatusPageMaintenance().create({
+  affected_component_id: [],
+  component_maintenance_period: [],
+  end_at: 'example_end_at',
+  id: 'example_id',
+  idempotency_key: 'example_idempotency_key',
+  maintenance_status: 'example_maintenance_status',
+  message: 'example_message',
+  name: 'example_name',
+  notify_subscriber: true,
+  published_at: 'example_published_at',
+  start_at: 'example_start_at',
+  status_page_id: 'example_status_page_id',
+  update: [],
+})
+```
+
+
+### StatusPageMaintenanceUpdate
+
+Create an instance: `const status_page_maintenance_update = client.StatusPageMaintenanceUpdate()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `Array` |  |
+| `maintenance_status` | `string` |  |
+| `message` | `string` |  |
+| `notify_subscriber` | `boolean` |  |
+| `status_page_maintenance_id` | `string` |  |
+
+#### Example: Create
+
+```ts
+const status_page_maintenance_update = await client.StatusPageMaintenanceUpdate().create({
+  message: 'example_message',
+  notify_subscriber: true,
+  status_page_maintenance_id: 'example_status_page_maintenance_id',
+})
+```
+
+
+### StatusPageStructure
+
+Create an instance: `const status_page_structure = client.StatusPageStructure()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `item` | `Array` |  |
+
+#### Example: Load
+
+```ts
+const status_page_structure = await client.StatusPageStructure().load({ id: 'status_page_structure_id' })
 ```
 
 
@@ -2136,6 +3450,32 @@ const team = await client.Team().load({ id: 'team_id' })
 ```ts
 const teams = await client.Team().list()
 ```
+
+
+### TelemetryDataSource
+
+Create an instance: `const telemetry_data_source = client.TelemetryDataSource()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `datadog_config` | `Object` |  |
+| `enabled` | `boolean` |  |
+| `grafana_config` | `Object` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `provider` | `string` |  |
+| `source_type` | `string` |  |
+| `updated_at` | `string` |  |
+| `version` | `string` |  |
 
 
 ### User
@@ -2365,11 +3705,11 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const incidenttype = client.IncidentType()
-await incidenttype.list()
+const incidentrole = client.IncidentRole()
+await incidentrole.list()
 
-// incidenttype.data() now returns the incidenttype data from the last `list`
-// incidenttype.match() returns the last match criteria
+// incidentrole.data() now returns the incidentrole data from the last `list`
+// incidentrole.match() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

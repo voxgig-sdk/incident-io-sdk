@@ -129,7 +129,7 @@ Both tools take the same argument object:
 
 | Field | Type | Notes |
 |-------|------|-------|
-| `entity` | string | One of the 29 supported entities (see below). |
+| `entity` | string | One of the 48 supported entities (see below). |
 | `query` | object | Optional match map. `{"id":N}` for load; omit or `{}` for list. |
 
 JSON schemas are emitted by the SDK from the `Args` struct's `json` /
@@ -151,9 +151,9 @@ JSON schemas are emitted by the SDK from the `Args` struct's `json` /
 
 ### Entities
 
-The 29 entities valid as the `entity` argument:
+The 48 entities valid as the `entity` argument:
 
-action | alert | alert_attribute | alert_note | alert_route | alert_source | api_key | custom_field | custom_field_option | follow_up | incident | incident_attachment | incident_membership | incident_participant | incident_participant_workload | incident_relationship | incident_role | incident_status | incident_timestamp | incident_type | incident_update | ip_allowlist | maintenance_window | postmortem_document | secret | team | user | workflow | workflow_run
+action | alert | alert_attribute | alert_note | alert_route | alert_source | api_key | catalog_entry | catalog_resource | catalog_type | catalog_type_schema | custom_field | custom_field_option | escalation | follow_up | incident | incident_alert | incident_attachment | incident_membership | incident_participant | incident_participant_workload | incident_relationship | incident_role | incident_status | incident_timestamp | incident_type | incident_update | ip_allowlist | maintenance_window | postmortem_document | schedule | schedule_entry | schedule_replica | schedule_sync_rule | schedule_sync_target | secret | severity | status_page | status_page_incident | status_page_incident_update | status_page_maintenance | status_page_maintenance_update | status_page_structure | team | telemetry_data_source | user | workflow | workflow_run
 
 ### Smoke test via HTTP (raw JSON-RPC)
 

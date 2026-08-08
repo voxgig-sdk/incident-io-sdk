@@ -11,6 +11,11 @@ main: kit: entity: alert_route: {
       type: "`$ARRAY`"
     }
     {
+      name: "channel_config"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
       name: "condition_group"
       req: true
       type: "`$ARRAY`"
@@ -51,6 +56,11 @@ main: kit: entity: alert_route: {
       type: "`$OBJECT`"
     }
     {
+      name: "incident_template"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
       name: "is_private"
       req: true
       type: "`$BOOLEAN`"
@@ -58,6 +68,11 @@ main: kit: entity: alert_route: {
     {
       name: "message_config"
       req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "message_template"
+      req: false
       type: "`$OBJECT`"
     }
     {
@@ -94,6 +109,18 @@ main: kit: entity: alert_route: {
       points: [
         {
           method: "POST"
+          orig: "/v2/alert_routes"
+          parts: [
+            "v2"
+            "alert_routes"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_route`"
+          }
+        }
+        {
+          method: "POST"
           orig: "/v3/alert_routes"
           parts: [
             "v3"
@@ -109,6 +136,44 @@ main: kit: entity: alert_route: {
     list: {
       name: "list"
       points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: true
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/alert_routes"
+          parts: [
+            "v2"
+            "alert_routes"
+          ]
+          select: {
+            exist: [
+              "after"
+              "page_size"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
         {
           args: {
             query: [
@@ -166,6 +231,36 @@ main: kit: entity: alert_route: {
             ]
           }
           method: "GET"
+          orig: "/v2/alert_routes/{id}"
+          parts: [
+            "v2"
+            "alert_routes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_route`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
           orig: "/v3/alert_routes/{id}"
           parts: [
             "v3"
@@ -201,6 +296,36 @@ main: kit: entity: alert_route: {
             ]
           }
           method: "DELETE"
+          orig: "/v2/alert_routes/{id}"
+          parts: [
+            "v2"
+            "alert_routes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
           orig: "/v3/alert_routes/{id}"
           parts: [
             "v3"
@@ -222,6 +347,36 @@ main: kit: entity: alert_route: {
     update: {
       name: "update"
       points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/alert_routes/{id}"
+          parts: [
+            "v2"
+            "alert_routes"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.alert_route`"
+          }
+        }
         {
           args: {
             params: [

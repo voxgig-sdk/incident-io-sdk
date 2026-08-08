@@ -35,7 +35,7 @@ describe('AlertRouteDirect', async () => {
     const params = {}
     if (setup.live) {
       const listResult = await client.direct({
-        path: 'v3/alert_routes',
+        path: 'v2/alert_routes',
         method: 'GET',
         params: {
 
@@ -53,7 +53,7 @@ describe('AlertRouteDirect', async () => {
     }
 
     const result = await client.direct({
-      path: 'v3/alert_routes/{id}',
+      path: 'v2/alert_routes/{id}',
       method: 'GET',
       params,
     })
@@ -77,7 +77,7 @@ describe('AlertRouteDirect', async () => {
     const params = {}
 
     const result = await client.direct({
-      path: 'v3/alert_routes',
+      path: 'v2/alert_routes',
       method: 'GET',
       params,
     })

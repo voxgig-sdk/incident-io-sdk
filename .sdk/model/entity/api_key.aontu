@@ -21,6 +21,11 @@ main: kit: entity: api_key: {
       type: "`$OBJECT`"
     }
     {
+      name: "grace_period_minute"
+      req: true
+      type: "`$INTEGER`"
+    }
+    {
       name: "id"
       req: true
       type: "`$STRING`"
@@ -77,6 +82,39 @@ main: kit: entity: api_key: {
     create: {
       name: "create"
       points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v1/api_keys/{id}/actions/rotate"
+          parts: [
+            "v1"
+            "api_keys"
+            "{id}"
+            "actions"
+            "rotate"
+          ]
+          select: {
+            "$action": "action_rotate"
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.api_key`"
+          }
+        }
         {
           method: "POST"
           orig: "/v1/api_keys"

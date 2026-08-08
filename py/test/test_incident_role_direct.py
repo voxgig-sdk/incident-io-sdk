@@ -25,7 +25,7 @@ class TestIncidentRoleDirect:
 
 
         result = client.direct({
-            "path": "v2/incident_roles",
+            "path": "v1/incident_roles",
             "method": "GET",
             "params": {},
         })
@@ -67,7 +67,7 @@ class TestIncidentRoleDirect:
             params["id"] = "direct01"
 
         result = client.direct({
-            "path": "v2/incident_roles/{id}",
+            "path": "v1/incident_roles/{id}",
             "method": "GET",
             "params": params,
             "query": query,

@@ -67,7 +67,7 @@ func main() {
     fmt.Println(action)
 
     // Create a action.
-    created, err := client.Action(nil).Create(map[string]any{"assignee": map[string]any{}, "created_at": "example_created_at", "creator": map[string]any{}, "description": "example_description", "id": "example_id", "incident_id": "example_incident_id", "status": "example_status", "updated_at": "example_updated_at"}, nil)
+    created, err := client.Action(nil).Create(map[string]any{"assignee": map[string]any{}, "created_at": "example_created_at", "creator": map[string]any{}, "follow_up": true, "id": "example_id", "incident_id": "example_incident_id", "status": "example_status", "updated_at": "example_updated_at"}, nil)
     if err != nil {
         panic(err)
     }
@@ -96,12 +96,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-incidenttypes, err := client.IncidentType(nil).List(nil, nil)
+incidentroles, err := client.IncidentRole(nil).List(nil, nil)
 if err != nil {
     // handle err
     return
 }
-_ = incidenttypes
+_ = incidentroles
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -165,13 +165,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-incidentType, err := client.IncidentType(nil).List(
+incidentRole, err := client.IncidentRole(nil).List(
     nil, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentType) // the returned mock data
+fmt.Println(incidentRole) // the returned mock data
 ```
 
 ### Use a custom fetch function
@@ -255,10 +255,16 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `AlertRoute` | `(data map[string]any) IncidentIoEntity` | Create an AlertRoute entity instance. |
 | `AlertSource` | `(data map[string]any) IncidentIoEntity` | Create an AlertSource entity instance. |
 | `ApiKey` | `(data map[string]any) IncidentIoEntity` | Create an ApiKey entity instance. |
+| `CatalogEntry` | `(data map[string]any) IncidentIoEntity` | Create a CatalogEntry entity instance. |
+| `CatalogResource` | `(data map[string]any) IncidentIoEntity` | Create a CatalogResource entity instance. |
+| `CatalogType` | `(data map[string]any) IncidentIoEntity` | Create a CatalogType entity instance. |
+| `CatalogTypeSchema` | `(data map[string]any) IncidentIoEntity` | Create a CatalogTypeSchema entity instance. |
 | `CustomField` | `(data map[string]any) IncidentIoEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `(data map[string]any) IncidentIoEntity` | Create a CustomFieldOption entity instance. |
+| `Escalation` | `(data map[string]any) IncidentIoEntity` | Create an Escalation entity instance. |
 | `FollowUp` | `(data map[string]any) IncidentIoEntity` | Create a FollowUp entity instance. |
 | `Incident` | `(data map[string]any) IncidentIoEntity` | Create an Incident entity instance. |
+| `IncidentAlert` | `(data map[string]any) IncidentIoEntity` | Create an IncidentAlert entity instance. |
 | `IncidentAttachment` | `(data map[string]any) IncidentIoEntity` | Create an IncidentAttachment entity instance. |
 | `IncidentMembership` | `(data map[string]any) IncidentIoEntity` | Create an IncidentMembership entity instance. |
 | `IncidentParticipant` | `(data map[string]any) IncidentIoEntity` | Create an IncidentParticipant entity instance. |
@@ -272,8 +278,21 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `IpAllowlist` | `(data map[string]any) IncidentIoEntity` | Create an IpAllowlist entity instance. |
 | `MaintenanceWindow` | `(data map[string]any) IncidentIoEntity` | Create a MaintenanceWindow entity instance. |
 | `PostmortemDocument` | `(data map[string]any) IncidentIoEntity` | Create a PostmortemDocument entity instance. |
+| `Schedule` | `(data map[string]any) IncidentIoEntity` | Create a Schedule entity instance. |
+| `ScheduleEntry` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleEntry entity instance. |
+| `ScheduleReplica` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleReplica entity instance. |
+| `ScheduleSyncRule` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleSyncRule entity instance. |
+| `ScheduleSyncTarget` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleSyncTarget entity instance. |
 | `Secret` | `(data map[string]any) IncidentIoEntity` | Create a Secret entity instance. |
+| `Severity` | `(data map[string]any) IncidentIoEntity` | Create a Severity entity instance. |
+| `StatusPage` | `(data map[string]any) IncidentIoEntity` | Create a StatusPage entity instance. |
+| `StatusPageIncident` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageIncident entity instance. |
+| `StatusPageIncidentUpdate` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageIncidentUpdate entity instance. |
+| `StatusPageMaintenance` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageMaintenance entity instance. |
+| `StatusPageMaintenanceUpdate` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
+| `StatusPageStructure` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageStructure entity instance. |
 | `Team` | `(data map[string]any) IncidentIoEntity` | Create a Team entity instance. |
+| `TelemetryDataSource` | `(data map[string]any) IncidentIoEntity` | Create a TelemetryDataSource entity instance. |
 | `User` | `(data map[string]any) IncidentIoEntity` | Create an User entity instance. |
 | `Workflow` | `(data map[string]any) IncidentIoEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `(data map[string]any) IncidentIoEntity` | Create a WorkflowRun entity instance. |
@@ -327,6 +346,8 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 | `"created_at"` |  |
 | `"creator"` |  |
 | `"description"` |  |
+| `"external_issue_reference"` |  |
+| `"follow_up"` |  |
 | `"id"` |  |
 | `"incident_id"` |  |
 | `"status"` |  |
@@ -353,9 +374,9 @@ API path: `/v2/actions`
 | `"title"` |  |
 | `"updated_at"` |  |
 
-Operations: List, Load.
+Operations: Create, List, Load.
 
-API path: `/v2/alerts`
+API path: `/v2/alerts/{id}/actions/resolve`
 
 #### AlertAttribute
 
@@ -395,6 +416,7 @@ API path: `/v1/alert_notes`
 | Field | Description |
 | --- | --- |
 | `"alert_source"` |  |
+| `"channel_config"` |  |
 | `"condition_group"` |  |
 | `"created_at"` |  |
 | `"enabled"` |  |
@@ -403,8 +425,10 @@ API path: `/v1/alert_notes`
 | `"grouping_config"` |  |
 | `"id"` |  |
 | `"incident_config"` |  |
+| `"incident_template"` |  |
 | `"is_private"` |  |
 | `"message_config"` |  |
+| `"message_template"` |  |
 | `"name"` |  |
 | `"owning_team_id"` |  |
 | `"updated_at"` |  |
@@ -412,7 +436,7 @@ API path: `/v1/alert_notes`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v3/alert_routes`
+API path: `/v2/alert_routes`
 
 #### AlertSource
 
@@ -444,6 +468,7 @@ API path: `/v2/alert_sources`
 | `"comment"` |  |
 | `"created_at"` |  |
 | `"creator"` |  |
+| `"grace_period_minute"` |  |
 | `"id"` |  |
 | `"last_used_at"` |  |
 | `"name"` |  |
@@ -456,7 +481,112 @@ API path: `/v2/alert_sources`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v1/api_keys`
+API path: `/v1/api_keys/{id}/actions/rotate`
+
+#### CatalogEntry
+
+| Field | Description |
+| --- | --- |
+| `"alias"` |  |
+| `"archived_at"` |  |
+| `"attribute_value"` |  |
+| `"catalog_entry"` |  |
+| `"catalog_type"` |  |
+| `"catalog_type_id"` |  |
+| `"created_at"` |  |
+| `"external_id"` |  |
+| `"id"` |  |
+| `"name"` |  |
+| `"rank"` |  |
+| `"update_attribute"` |  |
+| `"updated_at"` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/catalog_entries`
+
+#### CatalogResource
+
+| Field | Description |
+| --- | --- |
+| `"category"` |  |
+| `"description"` |  |
+| `"engine_resource_type"` |  |
+| `"label"` |  |
+| `"type"` |  |
+| `"value_docstring"` |  |
+
+Operations: List.
+
+API path: `/v2/catalog_resources`
+
+#### CatalogType
+
+| Field | Description |
+| --- | --- |
+| `"annotation"` |  |
+| `"category"` |  |
+| `"color"` |  |
+| `"created_at"` |  |
+| `"description"` |  |
+| `"dynamic_resource_parameter"` |  |
+| `"engine_resource_type"` |  |
+| `"estimated_count"` |  |
+| `"icon"` |  |
+| `"id"` |  |
+| `"is_editable"` |  |
+| `"is_team_type"` |  |
+| `"last_synced_at"` |  |
+| `"name"` |  |
+| `"owning_team_id"` |  |
+| `"ranked"` |  |
+| `"registry_type"` |  |
+| `"required_integration"` |  |
+| `"schema"` |  |
+| `"semantic_type"` |  |
+| `"source_repo_url"` |  |
+| `"type_name"` |  |
+| `"updated_at"` |  |
+| `"use_name_as_identifier"` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/catalog_types`
+
+#### CatalogTypeSchema
+
+| Field | Description |
+| --- | --- |
+| `"annotation"` |  |
+| `"attribute"` |  |
+| `"category"` |  |
+| `"color"` |  |
+| `"created_at"` |  |
+| `"description"` |  |
+| `"dynamic_resource_parameter"` |  |
+| `"engine_resource_type"` |  |
+| `"estimated_count"` |  |
+| `"icon"` |  |
+| `"id"` |  |
+| `"is_editable"` |  |
+| `"is_team_type"` |  |
+| `"last_synced_at"` |  |
+| `"name"` |  |
+| `"owning_team_id"` |  |
+| `"ranked"` |  |
+| `"registry_type"` |  |
+| `"required_integration"` |  |
+| `"schema"` |  |
+| `"semantic_type"` |  |
+| `"source_repo_url"` |  |
+| `"type_name"` |  |
+| `"updated_at"` |  |
+| `"use_name_as_identifier"` |  |
+| `"version"` |  |
+
+Operations: Create.
+
+API path: `/v2/catalog_types/{id}/actions/update_schema`
 
 #### CustomField
 
@@ -472,11 +602,18 @@ API path: `/v1/api_keys`
 | `"helptext_catalog_attribute_id"` |  |
 | `"id"` |  |
 | `"name"` |  |
+| `"option"` |  |
+| `"required"` |  |
+| `"required_v2"` |  |
+| `"show_before_closure"` |  |
+| `"show_before_creation"` |  |
+| `"show_before_update"` |  |
+| `"show_in_announcement_post"` |  |
 | `"updated_at"` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/custom_fields`
+API path: `/v1/custom_fields`
 
 #### CustomFieldOption
 
@@ -490,6 +627,30 @@ API path: `/v2/custom_fields`
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/custom_field_options`
+
+#### Escalation
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"creator"` |  |
+| `"description"` |  |
+| `"escalation_path_id"` |  |
+| `"event"` |  |
+| `"id"` |  |
+| `"idempotency_key"` |  |
+| `"incident_id"` |  |
+| `"priority"` |  |
+| `"related_alert"` |  |
+| `"related_incident"` |  |
+| `"status"` |  |
+| `"title"` |  |
+| `"updated_at"` |  |
+| `"user_id"` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/escalations`
 
 #### FollowUp
 
@@ -532,6 +693,7 @@ API path: `/v2/follow_ups`
 | `"has_debrief"` |  |
 | `"id"` |  |
 | `"idempotency_key"` |  |
+| `"incident"` |  |
 | `"incident_role_assignment"` |  |
 | `"incident_status"` |  |
 | `"incident_status_id"` |  |
@@ -540,6 +702,7 @@ API path: `/v2/follow_ups`
 | `"incident_type_id"` |  |
 | `"mode"` |  |
 | `"name"` |  |
+| `"notify_incident_channel"` |  |
 | `"permalink"` |  |
 | `"postmortem_document_id"` |  |
 | `"postmortem_document_url"` |  |
@@ -551,7 +714,11 @@ API path: `/v2/follow_ups`
 | `"slack_channel_name"` |  |
 | `"slack_channel_name_override"` |  |
 | `"slack_team_id"` |  |
+| `"source_message_channel_id"` |  |
+| `"source_message_timestamp"` |  |
+| `"status"` |  |
 | `"summary"` |  |
+| `"timestamp"` |  |
 | `"updated_at"` |  |
 | `"visibility"` |  |
 | `"workload_minutes_late"` |  |
@@ -561,7 +728,20 @@ API path: `/v2/follow_ups`
 
 Operations: Create, List, Load.
 
-API path: `/v2/incidents`
+API path: `/v2/incidents/{id}/actions/edit`
+
+#### IncidentAlert
+
+| Field | Description |
+| --- | --- |
+| `"alert"` |  |
+| `"alert_route_id"` |  |
+| `"id"` |  |
+| `"incident"` |  |
+
+Operations: List.
+
+API path: `/v2/incident_alerts`
 
 #### IncidentAttachment
 
@@ -630,13 +810,14 @@ API path: `/v1/incident_relationships`
 | `"id"` |  |
 | `"instruction"` |  |
 | `"name"` |  |
+| `"required"` |  |
 | `"role_type"` |  |
 | `"shortform"` |  |
 | `"updated_at"` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/incident_roles`
+API path: `/v1/incident_roles`
 
 #### IncidentStatus
 
@@ -760,6 +941,99 @@ Operations: List, Load, Update.
 
 API path: `/v1/postmortem_documents`
 
+#### Schedule
+
+| Field | Description |
+| --- | --- |
+| `"annotation"` |  |
+| `"config"` |  |
+| `"created_at"` |  |
+| `"current_shift"` |  |
+| `"holidays_public_config"` |  |
+| `"id"` |  |
+| `"name"` |  |
+| `"next_shift"` |  |
+| `"permalink"` |  |
+| `"schedule"` |  |
+| `"team_id"` |  |
+| `"timezone"` |  |
+| `"updated_at"` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedules`
+
+#### ScheduleEntry
+
+| Field | Description |
+| --- | --- |
+| `"pagination_meta"` |  |
+| `"schedule_entry"` |  |
+
+Operations: Load.
+
+API path: `/v2/schedule_entries`
+
+#### ScheduleReplica
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"id"` |  |
+| `"last_sync_error"` |  |
+| `"last_synced_at"` |  |
+| `"mirror_window_day"` |  |
+| `"replica_fallback_user_id"` |  |
+| `"replica_provider"` |  |
+| `"replica_provider_id"` |  |
+| `"schedule_id"` |  |
+| `"schedule_replica"` |  |
+| `"source"` |  |
+| `"updated_at"` |  |
+| `"user_status"` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/schedules/{schedule_id}/replicas`
+
+#### ScheduleSyncRule
+
+| Field | Description |
+| --- | --- |
+| `"annotation"` |  |
+| `"created_at"` |  |
+| `"id"` |  |
+| `"permanent_member_user_id"` |  |
+| `"rotation_id"` |  |
+| `"schedule_id"` |  |
+| `"schedule_sync_rule"` |  |
+| `"schedule_sync_target"` |  |
+| `"schedule_sync_target_id"` |  |
+| `"sync_type"` |  |
+| `"updated_at"` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/schedules/{schedule_id}/sync_rules`
+
+#### ScheduleSyncTarget
+
+| Field | Description |
+| --- | --- |
+| `"add_bot_to_group"` |  |
+| `"annotation"` |  |
+| `"created_at"` |  |
+| `"id"` |  |
+| `"linked_schedule"` |  |
+| `"schedule_sync_target"` |  |
+| `"slack_team_id"` |  |
+| `"slack_user_group_id"` |  |
+| `"updated_at"` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedule_sync_targets`
+
 #### Secret
 
 | Field | Description |
@@ -777,7 +1051,115 @@ API path: `/v1/postmortem_documents`
 
 Operations: Create, List, Load, Remove, Update.
 
-API path: `/v2/secrets`
+API path: `/v2/secrets/{id}/actions/rotate`
+
+#### Severity
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"description"` |  |
+| `"id"` |  |
+| `"name"` |  |
+| `"rank"` |  |
+| `"updated_at"` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v1/severities`
+
+#### StatusPage
+
+| Field | Description |
+| --- | --- |
+| `"description"` |  |
+| `"id"` |  |
+| `"name"` |  |
+| `"public_url"` |  |
+
+Operations: List.
+
+API path: `/v2/status_pages`
+
+#### StatusPageIncident
+
+| Field | Description |
+| --- | --- |
+| `"component_impact"` |  |
+| `"component_status"` |  |
+| `"id"` |  |
+| `"idempotency_key"` |  |
+| `"incident_status"` |  |
+| `"message"` |  |
+| `"name"` |  |
+| `"notify_subscriber"` |  |
+| `"published_at"` |  |
+| `"status_page_id"` |  |
+| `"update"` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/status_page_incidents`
+
+#### StatusPageIncidentUpdate
+
+| Field | Description |
+| --- | --- |
+| `"component_status"` |  |
+| `"incident_status"` |  |
+| `"message"` |  |
+| `"notify_subscriber"` |  |
+| `"status_page_incident_id"` |  |
+
+Operations: Create.
+
+API path: `/v2/status_page_incident_updates`
+
+#### StatusPageMaintenance
+
+| Field | Description |
+| --- | --- |
+| `"affected_component_id"` |  |
+| `"component_maintenance_period"` |  |
+| `"end_at"` |  |
+| `"id"` |  |
+| `"idempotency_key"` |  |
+| `"maintenance_status"` |  |
+| `"message"` |  |
+| `"name"` |  |
+| `"notify_subscriber"` |  |
+| `"published_at"` |  |
+| `"start_at"` |  |
+| `"status_page_id"` |  |
+| `"update"` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/status_page_maintenances`
+
+#### StatusPageMaintenanceUpdate
+
+| Field | Description |
+| --- | --- |
+| `"component_status"` |  |
+| `"maintenance_status"` |  |
+| `"message"` |  |
+| `"notify_subscriber"` |  |
+| `"status_page_maintenance_id"` |  |
+
+Operations: Create.
+
+API path: `/v2/status_page_maintenance_updates`
+
+#### StatusPageStructure
+
+| Field | Description |
+| --- | --- |
+| `"item"` |  |
+
+Operations: Load.
+
+API path: `/v2/status_page_structures/{status_page_id}`
 
 #### Team
 
@@ -791,6 +1173,25 @@ API path: `/v2/secrets`
 Operations: List, Load.
 
 API path: `/v3/teams`
+
+#### TelemetryDataSource
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"datadog_config"` |  |
+| `"enabled"` |  |
+| `"grafana_config"` |  |
+| `"id"` |  |
+| `"name"` |  |
+| `"provider"` |  |
+| `"source_type"` |  |
+| `"updated_at"` |  |
+| `"version"` |  |
+
+Operations: Update.
+
+API path: `/v2/telemetry/data_sources/{id}`
 
 #### User
 
@@ -896,6 +1297,8 @@ Create an instance: `action := client.Action(nil)`
 | `created_at` | `string` |  |
 | `creator` | `map[string]any` |  |
 | `description` | `string` |  |
+| `external_issue_reference` | `map[string]any` |  |
+| `follow_up` | `bool` |  |
 | `id` | `string` |  |
 | `incident_id` | `string` |  |
 | `status` | `string` |  |
@@ -928,7 +1331,7 @@ result, err := client.Action(nil).Create(map[string]any{
     "assignee": map[string]any{},
     "created_at": "example_created_at",
     "creator": map[string]any{},
-    "description": "example_description",
+    "follow_up": true,
     "id": "example_id",
     "incident_id": "example_incident_id",
     "status": "example_status",
@@ -951,6 +1354,7 @@ Create an instance: `alert := client.Alert(nil)`
 | --- | --- |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 
 #### Fields
 
@@ -987,6 +1391,25 @@ if err != nil {
     panic(err)
 }
 fmt.Println(alerts) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.Alert(nil).Create(map[string]any{
+    "id": "example_id",
+    "alert_source_id": "example_alert_source_id",
+    "attribute": []any{},
+    "created_at": "example_created_at",
+    "deduplication_key": "example_deduplication_key",
+    "status": "example_status",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -1137,6 +1560,7 @@ Create an instance: `alertRoute := client.AlertRoute(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `alert_source` | `[]any` |  |
+| `channel_config` | `[]any` |  |
 | `condition_group` | `[]any` |  |
 | `created_at` | `string` |  |
 | `enabled` | `bool` |  |
@@ -1145,8 +1569,10 @@ Create an instance: `alertRoute := client.AlertRoute(nil)`
 | `grouping_config` | `map[string]any` |  |
 | `id` | `string` |  |
 | `incident_config` | `map[string]any` |  |
+| `incident_template` | `map[string]any` |  |
 | `is_private` | `bool` |  |
 | `message_config` | `map[string]any` |  |
+| `message_template` | `map[string]any` |  |
 | `name` | `string` |  |
 | `owning_team_id` | `[]any` |  |
 | `updated_at` | `string` |  |
@@ -1177,6 +1603,7 @@ fmt.Println(alertRoutes) // the array of records
 ```go
 result, err := client.AlertRoute(nil).Create(map[string]any{
     "alert_source": []any{},
+    "channel_config": []any{},
     "condition_group": []any{},
     "enabled": true,
     "escalation_config": map[string]any{},
@@ -1184,6 +1611,7 @@ result, err := client.AlertRoute(nil).Create(map[string]any{
     "grouping_config": map[string]any{},
     "id": "example_id",
     "incident_config": map[string]any{},
+    "incident_template": map[string]any{},
     "is_private": true,
     "message_config": map[string]any{},
     "name": "example_name",
@@ -1290,6 +1718,7 @@ Create an instance: `apiKey := client.ApiKey(nil)`
 | `comment` | `string` |  |
 | `created_at` | `string` |  |
 | `creator` | `map[string]any` |  |
+| `grace_period_minute` | `int` |  |
 | `id` | `string` |  |
 | `last_used_at` | `string` |  |
 | `name` | `string` |  |
@@ -1326,6 +1755,7 @@ fmt.Println(apiKeys) // the array of records
 result, err := client.ApiKey(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "creator": map[string]any{},
+    "grace_period_minute": 1,
     "id": "example_id",
     "name": "example_name",
     "role": []any{},
@@ -1334,6 +1764,271 @@ result, err := client.ApiKey(nil).Create(map[string]any{
     "team_role": []any{},
     "team_role_name": []any{},
     "token_last_issued_at": "example_token_last_issued_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### CatalogEntry
+
+Create an instance: `catalogEntry := client.CatalogEntry(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alias` | `[]any` |  |
+| `archived_at` | `string` |  |
+| `attribute_value` | `map[string]any` |  |
+| `catalog_entry` | `map[string]any` |  |
+| `catalog_type` | `map[string]any` |  |
+| `catalog_type_id` | `string` |  |
+| `created_at` | `string` |  |
+| `external_id` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `rank` | `int` |  |
+| `update_attribute` | `[]any` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```go
+catalogEntry, err := client.CatalogEntry(nil).Load(map[string]any{"id": "catalog_entry_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(catalogEntry) // the loaded record
+```
+
+#### Example: List
+
+```go
+catalogEntrys, err := client.CatalogEntry(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(catalogEntrys) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.CatalogEntry(nil).Create(map[string]any{
+    "attribute_value": map[string]any{},
+    "catalog_entry": map[string]any{},
+    "catalog_type": map[string]any{},
+    "catalog_type_id": "example_catalog_type_id",
+    "created_at": "example_created_at",
+    "id": "example_id",
+    "name": "example_name",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### CatalogResource
+
+Create an instance: `catalogResource := client.CatalogResource(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `category` | `string` |  |
+| `description` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `label` | `string` |  |
+| `type` | `string` |  |
+| `value_docstring` | `string` |  |
+
+#### Example: List
+
+```go
+catalogResources, err := client.CatalogResource(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(catalogResources) // the array of records
+```
+
+
+### CatalogType
+
+Create an instance: `catalogType := client.CatalogType(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `map[string]any` |  |
+| `category` | `[]any` |  |
+| `color` | `string` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `dynamic_resource_parameter` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `estimated_count` | `int` |  |
+| `icon` | `string` |  |
+| `id` | `string` |  |
+| `is_editable` | `bool` |  |
+| `is_team_type` | `bool` |  |
+| `last_synced_at` | `string` |  |
+| `name` | `string` |  |
+| `owning_team_id` | `[]any` |  |
+| `ranked` | `bool` |  |
+| `registry_type` | `string` |  |
+| `required_integration` | `[]any` |  |
+| `schema` | `map[string]any` |  |
+| `semantic_type` | `string` |  |
+| `source_repo_url` | `string` |  |
+| `type_name` | `string` |  |
+| `updated_at` | `string` |  |
+| `use_name_as_identifier` | `bool` |  |
+
+#### Example: Load
+
+```go
+catalogType, err := client.CatalogType(nil).Load(map[string]any{"id": "catalog_type_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(catalogType) // the loaded record
+```
+
+#### Example: List
+
+```go
+catalogTypes, err := client.CatalogType(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(catalogTypes) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.CatalogType(nil).Create(map[string]any{
+    "annotation": map[string]any{},
+    "category": []any{},
+    "color": "example_color",
+    "created_at": "example_created_at",
+    "description": "example_description",
+    "engine_resource_type": "example_engine_resource_type",
+    "icon": "example_icon",
+    "id": "example_id",
+    "is_editable": true,
+    "name": "example_name",
+    "ranked": true,
+    "schema": map[string]any{},
+    "semantic_type": "example_semantic_type",
+    "type_name": "example_type_name",
+    "updated_at": "example_updated_at",
+    "use_name_as_identifier": true,
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### CatalogTypeSchema
+
+Create an instance: `catalogTypeSchema := client.CatalogTypeSchema(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `map[string]any` |  |
+| `attribute` | `[]any` |  |
+| `category` | `[]any` |  |
+| `color` | `string` |  |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `dynamic_resource_parameter` | `string` |  |
+| `engine_resource_type` | `string` |  |
+| `estimated_count` | `int` |  |
+| `icon` | `string` |  |
+| `id` | `string` |  |
+| `is_editable` | `bool` |  |
+| `is_team_type` | `bool` |  |
+| `last_synced_at` | `string` |  |
+| `name` | `string` |  |
+| `owning_team_id` | `[]any` |  |
+| `ranked` | `bool` |  |
+| `registry_type` | `string` |  |
+| `required_integration` | `[]any` |  |
+| `schema` | `map[string]any` |  |
+| `semantic_type` | `string` |  |
+| `source_repo_url` | `string` |  |
+| `type_name` | `string` |  |
+| `updated_at` | `string` |  |
+| `use_name_as_identifier` | `bool` |  |
+| `version` | `int` |  |
+
+#### Example: Create
+
+```go
+result, err := client.CatalogTypeSchema(nil).Create(map[string]any{
+    "catalog_type_id": "example_catalog_type_id",
+    "annotation": map[string]any{},
+    "attribute": []any{},
+    "category": []any{},
+    "color": "example_color",
+    "created_at": "example_created_at",
+    "description": "example_description",
+    "engine_resource_type": "example_engine_resource_type",
+    "icon": "example_icon",
+    "id": "example_id",
+    "is_editable": true,
+    "name": "example_name",
+    "ranked": true,
+    "schema": map[string]any{},
+    "semantic_type": "example_semantic_type",
+    "type_name": "example_type_name",
+    "updated_at": "example_updated_at",
+    "use_name_as_identifier": true,
+    "version": 1,
 }, nil)
 if err != nil {
     panic(err)
@@ -1370,6 +2065,13 @@ Create an instance: `customField := client.CustomField(nil)`
 | `helptext_catalog_attribute_id` | `string` |  |
 | `id` | `string` |  |
 | `name` | `string` |  |
+| `option` | `[]any` |  |
+| `required` | `string` |  |
+| `required_v2` | `string` |  |
+| `show_before_closure` | `bool` |  |
+| `show_before_creation` | `bool` |  |
+| `show_before_update` | `bool` |  |
+| `show_in_announcement_post` | `bool` |  |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -1403,6 +2105,10 @@ result, err := client.CustomField(nil).Create(map[string]any{
     "fixed_filter": map[string]any{},
     "id": "example_id",
     "name": "example_name",
+    "option": []any{},
+    "show_before_closure": true,
+    "show_before_creation": true,
+    "show_before_update": true,
     "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
@@ -1463,6 +2169,81 @@ result, err := client.CustomFieldOption(nil).Create(map[string]any{
     "id": "example_id",
     "sort_key": 1,
     "value": "example_value",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### Escalation
+
+Create an instance: `escalation := client.Escalation(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `creator` | `map[string]any` |  |
+| `description` | `string` |  |
+| `escalation_path_id` | `string` |  |
+| `event` | `[]any` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `incident_id` | `string` |  |
+| `priority` | `map[string]any` |  |
+| `related_alert` | `[]any` |  |
+| `related_incident` | `[]any` |  |
+| `status` | `string` |  |
+| `title` | `string` |  |
+| `updated_at` | `string` |  |
+| `user_id` | `[]any` |  |
+
+#### Example: Load
+
+```go
+escalation, err := client.Escalation(nil).Load(map[string]any{"id": "escalation_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(escalation) // the loaded record
+```
+
+#### Example: List
+
+```go
+escalations, err := client.Escalation(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(escalations) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.Escalation(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "creator": map[string]any{},
+    "event": []any{},
+    "id": "example_id",
+    "idempotency_key": "example_idempotency_key",
+    "priority": map[string]any{},
+    "related_alert": []any{},
+    "related_incident": []any{},
+    "status": "example_status",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -1578,6 +2359,7 @@ Create an instance: `incident := client.Incident(nil)`
 | `has_debrief` | `bool` |  |
 | `id` | `string` |  |
 | `idempotency_key` | `string` |  |
+| `incident` | `map[string]any` |  |
 | `incident_role_assignment` | `[]any` |  |
 | `incident_status` | `map[string]any` |  |
 | `incident_status_id` | `string` |  |
@@ -1586,6 +2368,7 @@ Create an instance: `incident := client.Incident(nil)`
 | `incident_type_id` | `string` |  |
 | `mode` | `string` |  |
 | `name` | `string` |  |
+| `notify_incident_channel` | `bool` |  |
 | `permalink` | `string` |  |
 | `postmortem_document_id` | `[]any` |  |
 | `postmortem_document_url` | `string` |  |
@@ -1597,7 +2380,11 @@ Create an instance: `incident := client.Incident(nil)`
 | `slack_channel_name` | `string` |  |
 | `slack_channel_name_override` | `string` |  |
 | `slack_team_id` | `string` |  |
+| `source_message_channel_id` | `string` |  |
+| `source_message_timestamp` | `string` |  |
+| `status` | `string` |  |
 | `summary` | `string` |  |
+| `timestamp` | `[]any` |  |
 | `updated_at` | `string` |  |
 | `visibility` | `string` |  |
 | `workload_minutes_late` | `float64` |  |
@@ -1635,15 +2422,18 @@ result, err := client.Incident(nil).Create(map[string]any{
     "external_issue_reference": map[string]any{},
     "id": "example_id",
     "idempotency_key": "example_idempotency_key",
+    "incident": map[string]any{},
     "incident_role_assignment": []any{},
     "incident_status": map[string]any{},
     "incident_type": map[string]any{},
     "mode": "example_mode",
     "name": "example_name",
+    "notify_incident_channel": true,
     "reference": "example_reference",
     "severity": map[string]any{},
     "slack_channel_id": "example_slack_channel_id",
     "slack_team_id": "example_slack_team_id",
+    "status": "example_status",
     "updated_at": "example_updated_at",
     "visibility": "example_visibility",
 }, nil)
@@ -1651,6 +2441,36 @@ if err != nil {
     panic(err)
 }
 fmt.Println(result)
+```
+
+
+### IncidentAlert
+
+Create an instance: `incidentAlert := client.IncidentAlert(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert` | `map[string]any` |  |
+| `alert_route_id` | `string` |  |
+| `id` | `string` |  |
+| `incident` | `map[string]any` |  |
+
+#### Example: List
+
+```go
+incidentAlerts, err := client.IncidentAlert(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(incidentAlerts) // the array of records
 ```
 
 
@@ -1839,6 +2659,7 @@ Create an instance: `incidentRole := client.IncidentRole(nil)`
 | `id` | `string` |  |
 | `instruction` | `string` |  |
 | `name` | `string` |  |
+| `required` | `bool` |  |
 | `role_type` | `string` |  |
 | `shortform` | `string` |  |
 | `updated_at` | `string` |  |
@@ -2227,6 +3048,319 @@ fmt.Println(postmortemDocuments) // the array of records
 ```
 
 
+### Schedule
+
+Create an instance: `schedule := client.Schedule(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `map[string]any` |  |
+| `config` | `map[string]any` |  |
+| `created_at` | `string` |  |
+| `current_shift` | `[]any` |  |
+| `holidays_public_config` | `map[string]any` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `next_shift` | `[]any` |  |
+| `permalink` | `string` |  |
+| `schedule` | `map[string]any` |  |
+| `team_id` | `[]any` |  |
+| `timezone` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```go
+schedule, err := client.Schedule(nil).Load(map[string]any{"id": "schedule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(schedule) // the loaded record
+```
+
+#### Example: List
+
+```go
+schedules, err := client.Schedule(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(schedules) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.Schedule(nil).Create(map[string]any{
+    "annotation": map[string]any{},
+    "config": map[string]any{},
+    "created_at": "example_created_at",
+    "holidays_public_config": map[string]any{},
+    "id": "example_id",
+    "name": "example_name",
+    "permalink": "example_permalink",
+    "schedule": map[string]any{},
+    "team_id": []any{},
+    "timezone": "example_timezone",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### ScheduleEntry
+
+Create an instance: `scheduleEntry := client.ScheduleEntry(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `pagination_meta` | `map[string]any` |  |
+| `schedule_entry` | `map[string]any` |  |
+
+#### Example: Load
+
+```go
+scheduleEntry, err := client.ScheduleEntry(nil).Load(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(scheduleEntry) // the loaded record
+```
+
+
+### ScheduleReplica
+
+Create an instance: `scheduleReplica := client.ScheduleReplica(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `last_sync_error` | `string` |  |
+| `last_synced_at` | `string` |  |
+| `mirror_window_day` | `int` |  |
+| `replica_fallback_user_id` | `string` |  |
+| `replica_provider` | `string` |  |
+| `replica_provider_id` | `string` |  |
+| `schedule_id` | `string` |  |
+| `schedule_replica` | `map[string]any` |  |
+| `source` | `[]any` |  |
+| `updated_at` | `string` |  |
+| `user_status` | `[]any` |  |
+
+#### Example: Load
+
+```go
+scheduleReplica, err := client.ScheduleReplica(nil).Load(map[string]any{"id": "schedule_replica_id", "schedule_id": "schedule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(scheduleReplica) // the loaded record
+```
+
+#### Example: List
+
+```go
+scheduleReplicas, err := client.ScheduleReplica(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(scheduleReplicas) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.ScheduleReplica(nil).Create(map[string]any{
+    "id": "example_id",
+    "created_at": "example_created_at",
+    "replica_fallback_user_id": "example_replica_fallback_user_id",
+    "replica_provider": "example_replica_provider",
+    "replica_provider_id": "example_replica_provider_id",
+    "schedule_id": "example_schedule_id",
+    "schedule_replica": map[string]any{},
+    "source": []any{},
+    "updated_at": "example_updated_at",
+    "user_status": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### ScheduleSyncRule
+
+Create an instance: `scheduleSyncRule := client.ScheduleSyncRule(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotation` | `map[string]any` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `permanent_member_user_id` | `[]any` |  |
+| `rotation_id` | `string` |  |
+| `schedule_id` | `string` |  |
+| `schedule_sync_rule` | `map[string]any` |  |
+| `schedule_sync_target` | `map[string]any` |  |
+| `schedule_sync_target_id` | `string` |  |
+| `sync_type` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```go
+scheduleSyncRule, err := client.ScheduleSyncRule(nil).Load(map[string]any{"id": "schedule_sync_rule_id", "schedule_id": "schedule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(scheduleSyncRule) // the loaded record
+```
+
+#### Example: List
+
+```go
+scheduleSyncRules, err := client.ScheduleSyncRule(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(scheduleSyncRules) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.ScheduleSyncRule(nil).Create(map[string]any{
+    "id": "example_id",
+    "created_at": "example_created_at",
+    "permanent_member_user_id": []any{},
+    "schedule_id": "example_schedule_id",
+    "schedule_sync_rule": map[string]any{},
+    "schedule_sync_target": map[string]any{},
+    "schedule_sync_target_id": "example_schedule_sync_target_id",
+    "sync_type": "example_sync_type",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### ScheduleSyncTarget
+
+Create an instance: `scheduleSyncTarget := client.ScheduleSyncTarget(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `add_bot_to_group` | `bool` |  |
+| `annotation` | `map[string]any` |  |
+| `created_at` | `string` |  |
+| `id` | `string` |  |
+| `linked_schedule` | `[]any` |  |
+| `schedule_sync_target` | `map[string]any` |  |
+| `slack_team_id` | `string` |  |
+| `slack_user_group_id` | `string` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```go
+scheduleSyncTarget, err := client.ScheduleSyncTarget(nil).Load(map[string]any{"id": "schedule_sync_target_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(scheduleSyncTarget) // the loaded record
+```
+
+#### Example: List
+
+```go
+scheduleSyncTargets, err := client.ScheduleSyncTarget(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(scheduleSyncTargets) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.ScheduleSyncTarget(nil).Create(map[string]any{
+    "add_bot_to_group": true,
+    "created_at": "example_created_at",
+    "id": "example_id",
+    "linked_schedule": []any{},
+    "schedule_sync_target": map[string]any{},
+    "slack_team_id": "example_slack_team_id",
+    "slack_user_group_id": "example_slack_user_group_id",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
 ### Secret
 
 Create an instance: `secret := client.Secret(nil)`
@@ -2283,6 +3417,7 @@ result, err := client.Secret(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "id": "example_id",
     "name": "example_name",
+    "owning_team_id": []any{},
     "secret": map[string]any{},
     "updated_at": "example_updated_at",
     "value": "example_value",
@@ -2292,6 +3427,341 @@ if err != nil {
     panic(err)
 }
 fmt.Println(result)
+```
+
+
+### Severity
+
+Create an instance: `severity := client.Severity(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `rank` | `int` |  |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```go
+severity, err := client.Severity(nil).Load(map[string]any{"id": "severity_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(severity) // the loaded record
+```
+
+#### Example: List
+
+```go
+severitys, err := client.Severity(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(severitys) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.Severity(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "description": "example_description",
+    "id": "example_id",
+    "name": "example_name",
+    "rank": 1,
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### StatusPage
+
+Create an instance: `statusPage := client.StatusPage(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `public_url` | `string` |  |
+
+#### Example: List
+
+```go
+statusPages, err := client.StatusPage(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPages) // the array of records
+```
+
+
+### StatusPageIncident
+
+Create an instance: `statusPageIncident := client.StatusPageIncident(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_impact` | `[]any` |  |
+| `component_status` | `[]any` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `incident_status` | `string` |  |
+| `message` | `string` |  |
+| `name` | `string` |  |
+| `notify_subscriber` | `bool` |  |
+| `published_at` | `string` |  |
+| `status_page_id` | `string` |  |
+| `update` | `[]any` |  |
+
+#### Example: Load
+
+```go
+statusPageIncident, err := client.StatusPageIncident(nil).Load(map[string]any{"id": "status_page_incident_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPageIncident) // the loaded record
+```
+
+#### Example: List
+
+```go
+statusPageIncidents, err := client.StatusPageIncident(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPageIncidents) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.StatusPageIncident(nil).Create(map[string]any{
+    "component_impact": []any{},
+    "id": "example_id",
+    "idempotency_key": "example_idempotency_key",
+    "incident_status": "example_incident_status",
+    "message": "example_message",
+    "name": "example_name",
+    "notify_subscriber": true,
+    "published_at": "example_published_at",
+    "status_page_id": "example_status_page_id",
+    "update": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### StatusPageIncidentUpdate
+
+Create an instance: `statusPageIncidentUpdate := client.StatusPageIncidentUpdate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `[]any` |  |
+| `incident_status` | `string` |  |
+| `message` | `string` |  |
+| `notify_subscriber` | `bool` |  |
+| `status_page_incident_id` | `string` |  |
+
+#### Example: Create
+
+```go
+result, err := client.StatusPageIncidentUpdate(nil).Create(map[string]any{
+    "message": "example_message",
+    "notify_subscriber": true,
+    "status_page_incident_id": "example_status_page_incident_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### StatusPageMaintenance
+
+Create an instance: `statusPageMaintenance := client.StatusPageMaintenance(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `affected_component_id` | `[]any` |  |
+| `component_maintenance_period` | `[]any` |  |
+| `end_at` | `string` |  |
+| `id` | `string` |  |
+| `idempotency_key` | `string` |  |
+| `maintenance_status` | `string` |  |
+| `message` | `string` |  |
+| `name` | `string` |  |
+| `notify_subscriber` | `bool` |  |
+| `published_at` | `string` |  |
+| `start_at` | `string` |  |
+| `status_page_id` | `string` |  |
+| `update` | `[]any` |  |
+
+#### Example: Load
+
+```go
+statusPageMaintenance, err := client.StatusPageMaintenance(nil).Load(map[string]any{"id": "status_page_maintenance_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPageMaintenance) // the loaded record
+```
+
+#### Example: List
+
+```go
+statusPageMaintenances, err := client.StatusPageMaintenance(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPageMaintenances) // the array of records
+```
+
+#### Example: Create
+
+```go
+result, err := client.StatusPageMaintenance(nil).Create(map[string]any{
+    "affected_component_id": []any{},
+    "component_maintenance_period": []any{},
+    "end_at": "example_end_at",
+    "id": "example_id",
+    "idempotency_key": "example_idempotency_key",
+    "maintenance_status": "example_maintenance_status",
+    "message": "example_message",
+    "name": "example_name",
+    "notify_subscriber": true,
+    "published_at": "example_published_at",
+    "start_at": "example_start_at",
+    "status_page_id": "example_status_page_id",
+    "update": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### StatusPageMaintenanceUpdate
+
+Create an instance: `statusPageMaintenanceUpdate := client.StatusPageMaintenanceUpdate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `component_status` | `[]any` |  |
+| `maintenance_status` | `string` |  |
+| `message` | `string` |  |
+| `notify_subscriber` | `bool` |  |
+| `status_page_maintenance_id` | `string` |  |
+
+#### Example: Create
+
+```go
+result, err := client.StatusPageMaintenanceUpdate(nil).Create(map[string]any{
+    "message": "example_message",
+    "notify_subscriber": true,
+    "status_page_maintenance_id": "example_status_page_maintenance_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
+
+### StatusPageStructure
+
+Create an instance: `statusPageStructure := client.StatusPageStructure(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `item` | `[]any` |  |
+
+#### Example: Load
+
+```go
+statusPageStructure, err := client.StatusPageStructure(nil).Load(map[string]any{"id": "status_page_structure_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPageStructure) // the loaded record
 ```
 
 
@@ -2334,6 +3804,32 @@ if err != nil {
 }
 fmt.Println(teams) // the array of records
 ```
+
+
+### TelemetryDataSource
+
+Create an instance: `telemetryDataSource := client.TelemetryDataSource(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `datadog_config` | `map[string]any` |  |
+| `enabled` | `bool` |  |
+| `grafana_config` | `map[string]any` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `provider` | `string` |  |
+| `source_type` | `string` |  |
+| `updated_at` | `string` |  |
+| `version` | `string` |  |
 
 
 ### User
@@ -2596,11 +4092,11 @@ Entity instances are stateful. After a successful `List`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-incidenttype := client.IncidentType(nil)
-incidenttype.List(nil, nil)
+incidentrole := client.IncidentRole(nil)
+incidentrole.List(nil, nil)
 
-// incidenttype.Data() now returns the incidenttype data from the last list
-// incidenttype.Match() returns the last match criteria
+// incidentrole.Data() now returns the incidentrole data from the last list
+// incidentrole.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

@@ -1,0 +1,21 @@
+{
+  point: "warning"
+  when: 1786231451396
+  err: {
+    name: "TypeError"
+    message: "Cannot set properties of undefined (setting 'op')"
+    stack: `TypeError: Cannot set properties of undefined (setting 'op')
+    at /home/richard/Projects/voxgig/apidef/ts/dist/transform/operation.js:26:32
+    at /home/richard/Projects/voxgig/apidef/ts/node_modules/jostraca/dist/util/basic.js:91:43
+    at Array.map (<anonymous>)
+    at each (/home/richard/Projects/voxgig/apidef/ts/node_modules/jostraca/dist/util/basic.js:91:23)
+    at operationTransform (/home/richard/Projects/voxgig/apidef/ts/dist/transform/operation.js:10:25)
+    at Object.generate (/home/richard/Projects/voxgig/apidef/ts/dist/apidef.js:192:54)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Object.build [as action] (/home/richard/Projects/voxgig/apidef/ts/dist/apidef.js:346:16)
+    at async Object.local_producer [as build] (/home/richard/Projects/voxgig-sdk/incident-io-sdk/.sdk/node_modules/@voxgig/model/dist/producer/local.js:60:24)
+    at async BuildImpl.run (/home/richard/Projects/voxgig-sdk/incident-io-sdk/.sdk/node_modules/@voxgig/model/dist/build.js:60:30)`
+  }
+
+  note: "!! BUILD FAILED !! Cannot set properties of undefined (setting 'op')"
+}

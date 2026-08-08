@@ -1,0 +1,29 @@
+{
+  "existing": {
+    "schedule_entry": {
+      "SCHEDULE_ENTRY00": {
+        "pagination_meta": {},
+        "schedule_entry": {},
+        "id": "SCHEDULE_ENTRY00"
+      },
+      "SCHEDULE_ENTRY01": {
+        "pagination_meta": {},
+        "schedule_entry": {},
+        "id": "SCHEDULE_ENTRY01"
+      },
+      "SCHEDULE_ENTRY02": {
+        "pagination_meta": {},
+        "schedule_entry": {},
+        "id": "SCHEDULE_ENTRY02"
+      }
+    }
+  },
+  "new": {
+    "schedule_entry": {
+      "schedule_entry_ref01": {
+        "pagination_meta": {},
+        "schedule_entry": {}
+      }
+    }
+  }
+}

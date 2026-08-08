@@ -1,0 +1,22 @@
+# BasicCatalogTypeSchemaFlow
+
+main: kit: flow: BasicCatalogTypeSchemaFlow:
+{
+  entity: "catalog_type_schema",
+  kind: "basic",
+  name: "BasicCatalogTypeSchemaFlow",
+  step: [
+    {
+      input: {
+        ref: "catalog_type_schema_ref01"
+      }
+
+      match: {
+        catalog_type_id: "catalog_type01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicCatalogTypeSchemaFlow"
+}

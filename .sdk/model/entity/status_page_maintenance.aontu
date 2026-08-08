@@ -1,0 +1,240 @@
+# Entity: status_page_maintenance
+
+main: kit: entity: status_page_maintenance: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "affected_component_id"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "component_maintenance_period"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "end_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "idempotency_key"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "maintenance_status"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "message"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "notify_subscriber"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "published_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "start_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "status_page_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "update"
+      req: true
+      type: "`$ARRAY`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "status_page_maintenance"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/status_page_maintenances"
+          parts: [
+            "v2"
+            "status_page_maintenances"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.status_page_maintenance`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG1"
+                kind: "query"
+                name: "component_id"
+                orig: "component_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "2021-08-17T13:28:57.801578Z"
+                kind: "query"
+                name: "end_at"
+                orig: "end_at"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG2"
+                kind: "query"
+                name: "group_id"
+                orig: "group_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: "2021-08-17T13:28:57.801578Z"
+                kind: "query"
+                name: "start_at"
+                orig: "start_at"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "status_page_id"
+                orig: "status_page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG3"
+                kind: "query"
+                name: "sub_page_id"
+                orig: "sub_page_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/status_page_maintenances"
+          parts: [
+            "v2"
+            "status_page_maintenances"
+          ]
+          select: {
+            exist: [
+              "after"
+              "component_id"
+              "end_at"
+              "group_id"
+              "page_size"
+              "start_at"
+              "status_page_id"
+              "sub_page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG1"
+                kind: "param"
+                name: "id"
+                orig: "status_page_maintenance_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/status_page_maintenances/{status_page_maintenance_id}"
+          parts: [
+            "v2"
+            "status_page_maintenances"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              status_page_maintenance_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.status_page_maintenance`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

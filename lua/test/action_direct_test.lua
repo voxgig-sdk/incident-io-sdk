@@ -21,7 +21,7 @@ describe("ActionDirect", function()
 
 
     local result, err = client:direct({
-      path = "v2/actions",
+      path = "v1/actions",
       method = "GET",
       params = {},
     })
@@ -70,7 +70,7 @@ describe("ActionDirect", function()
     end
 
     local result, err = client:direct({
-      path = "v2/actions/{id}",
+      path = "v1/actions/{id}",
       method = "GET",
       params = params,
       query = query,

@@ -1,0 +1,269 @@
+# Entity: escalation
+
+main: kit: entity: escalation: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "creator"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "description"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "escalation_path_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "event"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "idempotency_key"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "priority"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "related_alert"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "related_incident"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "status"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "title"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "user_id"
+      req: false
+      type: "`$ARRAY`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "escalation"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/escalations"
+          parts: [
+            "v2"
+            "escalations"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.escalation`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: {
+                  one_of: [
+                    "01J479052SSQAA4531ASFPR3BF"
+                  ]
+                }
+                kind: "query"
+                name: "alert"
+                orig: "alert"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  gte: [
+                    "2021-08-17"
+                  ]
+                }
+                kind: "query"
+                name: "created_at"
+                orig: "created_at"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  one_of: [
+                    "01J479052SSQAA4531ASFPR3BF"
+                  ]
+                }
+                kind: "query"
+                name: "escalation_path"
+                orig: "escalation_path"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  starts_with: [
+                    "team-a:"
+                  ]
+                }
+                kind: "query"
+                name: "idempotency_key"
+                orig: "idempotency_key"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: {
+                  one_of: [
+                    "triggered"
+                  ]
+                }
+                kind: "query"
+                name: "status"
+                orig: "status"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+              {
+                example: {
+                  gte: [
+                    "2021-08-17"
+                  ]
+                }
+                kind: "query"
+                name: "updated_at"
+                orig: "updated_at"
+                reqd: false
+                type: "`$OBJECT`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/escalations"
+          parts: [
+            "v2"
+            "escalations"
+          ]
+          select: {
+            exist: [
+              "after"
+              "alert"
+              "created_at"
+              "escalation_path"
+              "idempotency_key"
+              "page_size"
+              "status"
+              "updated_at"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/escalations/{id}"
+          parts: [
+            "v2"
+            "escalations"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.escalation`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

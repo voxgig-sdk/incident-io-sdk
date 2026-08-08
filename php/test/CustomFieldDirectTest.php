@@ -25,7 +25,7 @@ class CustomFieldDirectTest extends TestCase
 
 
         $result = $client->direct([
-            "path" => "v2/custom_fields",
+            "path" => "v1/custom_fields",
             "method" => "GET",
             "params" => [],
         ]);
@@ -75,7 +75,7 @@ class CustomFieldDirectTest extends TestCase
         }
 
         $result = $client->direct([
-            "path" => "v2/custom_fields/{id}",
+            "path" => "v1/custom_fields/{id}",
             "method" => "GET",
             "params" => $params,
             "query" => $query,

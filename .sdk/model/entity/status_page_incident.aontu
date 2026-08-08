@@ -1,0 +1,270 @@
+# Entity: status_page_incident
+
+main: kit: entity: status_page_incident: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "component_impact"
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "component_status"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "idempotency_key"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "incident_status"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "message"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "notify_subscriber"
+      req: true
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "published_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "status_page_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "update"
+      req: true
+      type: "`$ARRAY`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "status_page_incident"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          method: "POST"
+          orig: "/v2/status_page_incidents"
+          parts: [
+            "v2"
+            "status_page_incidents"
+          ]
+          transform: {
+            req: "`reqdata`"
+            res: "`body.status_page_incident`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            query: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG1"
+                kind: "query"
+                name: "component_id"
+                orig: "component_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "2021-08-17T13:28:57.801578Z"
+                kind: "query"
+                name: "end_at"
+                orig: "end_at"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG2"
+                kind: "query"
+                name: "group_id"
+                orig: "group_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: "2021-08-17T13:28:57.801578Z"
+                kind: "query"
+                name: "start_at"
+                orig: "start_at"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG0"
+                kind: "query"
+                name: "status_page_id"
+                orig: "status_page_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG3"
+                kind: "query"
+                name: "sub_page_id"
+                orig: "sub_page_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/status_page_incidents"
+          parts: [
+            "v2"
+            "status_page_incidents"
+          ]
+          select: {
+            exist: [
+              "after"
+              "component_id"
+              "end_at"
+              "group_id"
+              "page_size"
+              "start_at"
+              "status_page_id"
+              "sub_page_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG1"
+                kind: "param"
+                name: "id"
+                orig: "status_page_incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/status_page_incidents/{status_page_incident_id}"
+          parts: [
+            "v2"
+            "status_page_incidents"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              status_page_incident_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.status_page_incident`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FCNDV6P870EA6S7TK1DSYDG1"
+                kind: "param"
+                name: "id"
+                orig: "status_page_incident_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/status_page_incidents/{status_page_incident_id}"
+          parts: [
+            "v2"
+            "status_page_incidents"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              status_page_incident_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.status_page_incident`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

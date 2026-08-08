@@ -1,0 +1,286 @@
+# Entity: schedule_sync_rule
+
+main: kit: entity: schedule_sync_rule: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "annotation"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "created_at"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "permanent_member_user_id"
+      op: {
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      req: true
+      type: "`$ARRAY`"
+    }
+    {
+      name: "rotation_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "schedule_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "schedule_sync_rule"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "schedule_sync_target"
+      req: true
+      type: "`$OBJECT`"
+    }
+    {
+      name: "schedule_sync_target_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "sync_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "updated_at"
+      req: true
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "schedule_sync_rule"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "param"
+                name: "id"
+                orig: "schedule_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/schedules/{schedule_id}/sync_rules"
+          parts: [
+            "v2"
+            "schedules"
+            "{id}"
+            "sync_rules"
+          ]
+          rename: {
+            param: {
+              schedule_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "id"
+            ]
+          }
+          transform: {
+            req: {
+              schedule_sync_rule: "`reqdata`"
+            }
+            res: "`body.schedule_sync_rule`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "param"
+                name: "id"
+                orig: "schedule_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: "01JXYZ000000000000000000CD"
+                kind: "query"
+                name: "after"
+                orig: "after"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 25
+                kind: "query"
+                name: "page_size"
+                orig: "page_size"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/schedules/{schedule_id}/sync_rules"
+          parts: [
+            "v2"
+            "schedules"
+            "{id}"
+            "sync_rules"
+          ]
+          rename: {
+            param: {
+              schedule_id: "id"
+            }
+          }
+          select: {
+            exist: [
+              "after"
+              "id"
+              "page_size"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01JXYZ000000000000000000CD"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "param"
+                name: "schedule_id"
+                orig: "schedule_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/schedules/{schedule_id}/sync_rules/{id}"
+          parts: [
+            "v2"
+            "schedules"
+            "{schedule_id}"
+            "sync_rules"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+              "schedule_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.schedule_sync_rule`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            params: [
+              {
+                example: "01JXYZ000000000000000000CD"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: "01FDAG4SAP5TYPT98WGR2N7W91"
+                kind: "param"
+                name: "schedule_id"
+                orig: "schedule_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/schedules/{schedule_id}/sync_rules/{id}"
+          parts: [
+            "v2"
+            "schedules"
+            "{schedule_id}"
+            "sync_rules"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "id"
+              "schedule_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.schedule_sync_rule`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "schedule"
+      ]
+    ]
+  }
+
+
+
+}

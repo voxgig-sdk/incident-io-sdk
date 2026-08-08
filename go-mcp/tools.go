@@ -16,7 +16,7 @@ import (
 // reqdata map passed through to the SDK. For load, `query` should be
 // `{"id": <value>}`. For list, omit `query` or pass an empty map.
 type Args struct {
-	Entity string         `json:"entity" jsonschema:"action | alert | alert_attribute | alert_note | alert_route | alert_source | api_key | custom_field | custom_field_option | follow_up | incident | incident_attachment | incident_membership | incident_participant | incident_participant_workload | incident_relationship | incident_role | incident_status | incident_timestamp | incident_type | incident_update | ip_allowlist | maintenance_window | postmortem_document | secret | team | user | workflow | workflow_run"`
+	Entity string         `json:"entity" jsonschema:"action | alert | alert_attribute | alert_note | alert_route | alert_source | api_key | catalog_entry | catalog_resource | catalog_type | catalog_type_schema | custom_field | custom_field_option | escalation | follow_up | incident | incident_alert | incident_attachment | incident_membership | incident_participant | incident_participant_workload | incident_relationship | incident_role | incident_status | incident_timestamp | incident_type | incident_update | ip_allowlist | maintenance_window | postmortem_document | schedule | schedule_entry | schedule_replica | schedule_sync_rule | schedule_sync_target | secret | severity | status_page | status_page_incident | status_page_incident_update | status_page_maintenance | status_page_maintenance_update | status_page_structure | team | telemetry_data_source | user | workflow | workflow_run"`
 	Query  map[string]any `json:"query,omitempty" jsonschema:"optional match map e.g. {\"id\":1} for load, omit for list"`
 }
 
@@ -91,14 +91,26 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.AlertSource(nil), nil
 	case "api_key":
 		return client.ApiKey(nil), nil
+	case "catalog_entry":
+		return client.CatalogEntry(nil), nil
+	case "catalog_resource":
+		return client.CatalogResource(nil), nil
+	case "catalog_type":
+		return client.CatalogType(nil), nil
+	case "catalog_type_schema":
+		return client.CatalogTypeSchema(nil), nil
 	case "custom_field":
 		return client.CustomField(nil), nil
 	case "custom_field_option":
 		return client.CustomFieldOption(nil), nil
+	case "escalation":
+		return client.Escalation(nil), nil
 	case "follow_up":
 		return client.FollowUp(nil), nil
 	case "incident":
 		return client.Incident(nil), nil
+	case "incident_alert":
+		return client.IncidentAlert(nil), nil
 	case "incident_attachment":
 		return client.IncidentAttachment(nil), nil
 	case "incident_membership":
@@ -125,10 +137,36 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.MaintenanceWindow(nil), nil
 	case "postmortem_document":
 		return client.PostmortemDocument(nil), nil
+	case "schedule":
+		return client.Schedule(nil), nil
+	case "schedule_entry":
+		return client.ScheduleEntry(nil), nil
+	case "schedule_replica":
+		return client.ScheduleReplica(nil), nil
+	case "schedule_sync_rule":
+		return client.ScheduleSyncRule(nil), nil
+	case "schedule_sync_target":
+		return client.ScheduleSyncTarget(nil), nil
 	case "secret":
 		return client.Secret(nil), nil
+	case "severity":
+		return client.Severity(nil), nil
+	case "status_page":
+		return client.StatusPage(nil), nil
+	case "status_page_incident":
+		return client.StatusPageIncident(nil), nil
+	case "status_page_incident_update":
+		return client.StatusPageIncidentUpdate(nil), nil
+	case "status_page_maintenance":
+		return client.StatusPageMaintenance(nil), nil
+	case "status_page_maintenance_update":
+		return client.StatusPageMaintenanceUpdate(nil), nil
+	case "status_page_structure":
+		return client.StatusPageStructure(nil), nil
 	case "team":
 		return client.Team(nil), nil
+	case "telemetry_data_source":
+		return client.TelemetryDataSource(nil), nil
 	case "user":
 		return client.User(nil), nil
 	case "workflow":

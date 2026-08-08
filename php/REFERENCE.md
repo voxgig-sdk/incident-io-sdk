@@ -69,6 +69,22 @@ Create a new `AlertSourceEntity` instance. Pass `null` for no initial data.
 
 Create a new `ApiKeyEntity` instance. Pass `null` for no initial data.
 
+#### `CatalogEntry($data = null)`
+
+Create a new `CatalogEntryEntity` instance. Pass `null` for no initial data.
+
+#### `CatalogResource($data = null)`
+
+Create a new `CatalogResourceEntity` instance. Pass `null` for no initial data.
+
+#### `CatalogType($data = null)`
+
+Create a new `CatalogTypeEntity` instance. Pass `null` for no initial data.
+
+#### `CatalogTypeSchema($data = null)`
+
+Create a new `CatalogTypeSchemaEntity` instance. Pass `null` for no initial data.
+
 #### `CustomField($data = null)`
 
 Create a new `CustomFieldEntity` instance. Pass `null` for no initial data.
@@ -77,6 +93,10 @@ Create a new `CustomFieldEntity` instance. Pass `null` for no initial data.
 
 Create a new `CustomFieldOptionEntity` instance. Pass `null` for no initial data.
 
+#### `Escalation($data = null)`
+
+Create a new `EscalationEntity` instance. Pass `null` for no initial data.
+
 #### `FollowUp($data = null)`
 
 Create a new `FollowUpEntity` instance. Pass `null` for no initial data.
@@ -84,6 +104,10 @@ Create a new `FollowUpEntity` instance. Pass `null` for no initial data.
 #### `Incident($data = null)`
 
 Create a new `IncidentEntity` instance. Pass `null` for no initial data.
+
+#### `IncidentAlert($data = null)`
+
+Create a new `IncidentAlertEntity` instance. Pass `null` for no initial data.
 
 #### `IncidentAttachment($data = null)`
 
@@ -137,13 +161,65 @@ Create a new `MaintenanceWindowEntity` instance. Pass `null` for no initial data
 
 Create a new `PostmortemDocumentEntity` instance. Pass `null` for no initial data.
 
+#### `Schedule($data = null)`
+
+Create a new `ScheduleEntity` instance. Pass `null` for no initial data.
+
+#### `ScheduleEntry($data = null)`
+
+Create a new `ScheduleEntryEntity` instance. Pass `null` for no initial data.
+
+#### `ScheduleReplica($data = null)`
+
+Create a new `ScheduleReplicaEntity` instance. Pass `null` for no initial data.
+
+#### `ScheduleSyncRule($data = null)`
+
+Create a new `ScheduleSyncRuleEntity` instance. Pass `null` for no initial data.
+
+#### `ScheduleSyncTarget($data = null)`
+
+Create a new `ScheduleSyncTargetEntity` instance. Pass `null` for no initial data.
+
 #### `Secret($data = null)`
 
 Create a new `SecretEntity` instance. Pass `null` for no initial data.
 
+#### `Severity($data = null)`
+
+Create a new `SeverityEntity` instance. Pass `null` for no initial data.
+
+#### `StatusPage($data = null)`
+
+Create a new `StatusPageEntity` instance. Pass `null` for no initial data.
+
+#### `StatusPageIncident($data = null)`
+
+Create a new `StatusPageIncidentEntity` instance. Pass `null` for no initial data.
+
+#### `StatusPageIncidentUpdate($data = null)`
+
+Create a new `StatusPageIncidentUpdateEntity` instance. Pass `null` for no initial data.
+
+#### `StatusPageMaintenance($data = null)`
+
+Create a new `StatusPageMaintenanceEntity` instance. Pass `null` for no initial data.
+
+#### `StatusPageMaintenanceUpdate($data = null)`
+
+Create a new `StatusPageMaintenanceUpdateEntity` instance. Pass `null` for no initial data.
+
+#### `StatusPageStructure($data = null)`
+
+Create a new `StatusPageStructureEntity` instance. Pass `null` for no initial data.
+
 #### `Team($data = null)`
 
 Create a new `TeamEntity` instance. Pass `null` for no initial data.
+
+#### `TelemetryDataSource($data = null)`
+
+Create a new `TelemetryDataSourceEntity` instance. Pass `null` for no initial data.
 
 #### `User($data = null)`
 
@@ -209,11 +285,30 @@ $action = $client->Action();
 | `completed_at` | `string` | No |  |
 | `created_at` | `string` | Yes |  |
 | `creator` | `array` | Yes |  |
-| `description` | `string` | Yes |  |
+| `description` | `string` | No |  |
+| `external_issue_reference` | `array` | No |  |
+| `follow_up` | `bool` | Yes |  |
 | `id` | `string` | Yes |  |
 | `incident_id` | `string` | Yes |  |
 | `status` | `string` | Yes |  |
 | `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignee` | - | - | - | - | - |
+| `assignee_id` | - | - | - | - | - |
+| `completed_at` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `creator` | - | - | - | - | - |
+| `description` | Yes | Yes | Yes | Yes | - |
+| `external_issue_reference` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `incident_id` | - | - | - | - | - |
+| `status` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -226,7 +321,7 @@ $result = $client->Action()->create([
   "assignee" => null, // array
   "created_at" => null, // string
   "creator" => null, // array
-  "description" => null, // string
+  "follow_up" => null, // bool
   "id" => null, // string
   "incident_id" => null, // string
   "status" => null, // string
@@ -323,6 +418,23 @@ $alert = $client->Alert();
 | `updated_at` | `string` | Yes |  |
 
 ### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->Alert()->create([
+  "id" => null, // string
+  "alert_source_id" => null, // string
+  "attribute" => null, // array
+  "created_at" => null, // string
+  "deduplication_key" => null, // string
+  "status" => null, // string
+  "title" => null, // string
+  "updated_at" => null, // string
+]);
+```
 
 #### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
@@ -592,6 +704,7 @@ $alert_route = $client->AlertRoute();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `alert_source` | `array` | Yes |  |
+| `channel_config` | `array` | Yes |  |
 | `condition_group` | `array` | Yes |  |
 | `created_at` | `string` | No |  |
 | `enabled` | `bool` | Yes |  |
@@ -600,8 +713,10 @@ $alert_route = $client->AlertRoute();
 | `grouping_config` | `array` | Yes |  |
 | `id` | `string` | Yes |  |
 | `incident_config` | `array` | Yes |  |
+| `incident_template` | `array` | Yes |  |
 | `is_private` | `bool` | Yes |  |
 | `message_config` | `array` | Yes |  |
+| `message_template` | `array` | No |  |
 | `name` | `string` | Yes |  |
 | `owning_team_id` | `array` | No |  |
 | `updated_at` | `string` | No |  |
@@ -616,6 +731,7 @@ Create a new entity with the given data. Throws on error.
 ```php
 $result = $client->AlertRoute()->create([
   "alert_source" => null, // array
+  "channel_config" => null, // array
   "condition_group" => null, // array
   "enabled" => null, // bool
   "escalation_config" => null, // array
@@ -623,6 +739,7 @@ $result = $client->AlertRoute()->create([
   "grouping_config" => null, // array
   "id" => null, // string
   "incident_config" => null, // array
+  "incident_template" => null, // array
   "is_private" => null, // bool
   "message_config" => null, // array
   "name" => null, // string
@@ -817,6 +934,7 @@ $api_key = $client->ApiKey();
 | `comment` | `string` | No |  |
 | `created_at` | `string` | Yes |  |
 | `creator` | `array` | Yes |  |
+| `grace_period_minute` | `int` | Yes |  |
 | `id` | `string` | Yes |  |
 | `last_used_at` | `string` | No |  |
 | `name` | `string` | Yes |  |
@@ -837,6 +955,7 @@ Create a new entity with the given data. Throws on error.
 $result = $client->ApiKey()->create([
   "created_at" => null, // string
   "creator" => null, // array
+  "grace_period_minute" => null, // int
   "id" => null, // string
   "name" => null, // string
   "role" => null, // array
@@ -913,6 +1032,426 @@ Return the entity name.
 
 ---
 
+## CatalogEntryEntity
+
+```php
+$catalog_entry = $client->CatalogEntry();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alias` | `array` | No |  |
+| `archived_at` | `string` | No |  |
+| `attribute_value` | `array` | Yes |  |
+| `catalog_entry` | `array` | Yes |  |
+| `catalog_type` | `array` | Yes |  |
+| `catalog_type_id` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `external_id` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `rank` | `int` | No |  |
+| `update_attribute` | `array` | No |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `alias` | - | Yes | - | - |
+| `archived_at` | - | - | - | - |
+| `attribute_value` | - | - | - | - |
+| `catalog_entry` | - | - | - | - |
+| `catalog_type` | - | - | - | - |
+| `catalog_type_id` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `external_id` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | Yes | - | - |
+| `update_attribute` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->CatalogEntry()->create([
+  "attribute_value" => null, // array
+  "catalog_entry" => null, // array
+  "catalog_type" => null, // array
+  "catalog_type_id" => null, // string
+  "created_at" => null, // string
+  "id" => null, // string
+  "name" => null, // string
+  "updated_at" => null, // string
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->CatalogEntry()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->CatalogEntry()->load(["id" => "catalog_entry_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Throws on error.
+
+```php
+$result = $client->CatalogEntry()->update([
+  "id" => "catalog_entry_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): CatalogEntryEntity`
+
+Create a new `CatalogEntryEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## CatalogResourceEntity
+
+```php
+$catalog_resource = $client->CatalogResource();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `category` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `label` | `string` | Yes |  |
+| `type` | `string` | Yes |  |
+| `value_docstring` | `string` | Yes |  |
+
+### Operations
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->CatalogResource()->list();
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): CatalogResourceEntity`
+
+Create a new `CatalogResourceEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## CatalogTypeEntity
+
+```php
+$catalog_type = $client->CatalogType();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `array` | Yes |  |
+| `category` | `array` | Yes |  |
+| `color` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `dynamic_resource_parameter` | `string` | No |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `estimated_count` | `int` | No |  |
+| `icon` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `is_editable` | `bool` | Yes |  |
+| `is_team_type` | `bool` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `owning_team_id` | `array` | No |  |
+| `ranked` | `bool` | Yes |  |
+| `registry_type` | `string` | No |  |
+| `required_integration` | `array` | No |  |
+| `schema` | `array` | Yes |  |
+| `semantic_type` | `string` | Yes |  |
+| `source_repo_url` | `string` | No |  |
+| `type_name` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `use_name_as_identifier` | `bool` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | Yes | Yes |
+| `category` | - | - | Yes | Yes |
+| `color` | - | - | Yes | Yes |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - |
+| `engine_resource_type` | - | - | - | - |
+| `estimated_count` | - | - | - | - |
+| `icon` | - | - | Yes | Yes |
+| `id` | - | - | - | - |
+| `is_editable` | - | - | - | - |
+| `is_team_type` | - | - | - | - |
+| `last_synced_at` | - | - | - | - |
+| `name` | - | - | - | - |
+| `owning_team_id` | - | - | - | - |
+| `ranked` | - | - | Yes | Yes |
+| `registry_type` | - | - | - | - |
+| `required_integration` | - | - | - | - |
+| `schema` | - | - | - | - |
+| `semantic_type` | - | - | - | - |
+| `source_repo_url` | - | - | - | - |
+| `type_name` | - | - | Yes | - |
+| `updated_at` | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->CatalogType()->create([
+  "annotation" => null, // array
+  "category" => null, // array
+  "color" => null, // string
+  "created_at" => null, // string
+  "description" => null, // string
+  "engine_resource_type" => null, // string
+  "icon" => null, // string
+  "id" => null, // string
+  "is_editable" => null, // bool
+  "name" => null, // string
+  "ranked" => null, // bool
+  "schema" => null, // array
+  "semantic_type" => null, // string
+  "type_name" => null, // string
+  "updated_at" => null, // string
+  "use_name_as_identifier" => null, // bool
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->CatalogType()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->CatalogType()->load(["id" => "catalog_type_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Throws on error.
+
+```php
+$result = $client->CatalogType()->update([
+  "id" => "catalog_type_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): CatalogTypeEntity`
+
+Create a new `CatalogTypeEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## CatalogTypeSchemaEntity
+
+```php
+$catalog_type_schema = $client->CatalogTypeSchema();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `array` | Yes |  |
+| `attribute` | `array` | Yes |  |
+| `category` | `array` | Yes |  |
+| `color` | `string` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `dynamic_resource_parameter` | `string` | No |  |
+| `engine_resource_type` | `string` | Yes |  |
+| `estimated_count` | `int` | No |  |
+| `icon` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `is_editable` | `bool` | Yes |  |
+| `is_team_type` | `bool` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `name` | `string` | Yes |  |
+| `owning_team_id` | `array` | No |  |
+| `ranked` | `bool` | Yes |  |
+| `registry_type` | `string` | No |  |
+| `required_integration` | `array` | No |  |
+| `schema` | `array` | Yes |  |
+| `semantic_type` | `string` | Yes |  |
+| `source_repo_url` | `string` | No |  |
+| `type_name` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `use_name_as_identifier` | `bool` | Yes |  |
+| `version` | `int` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->CatalogTypeSchema()->create([
+  "catalog_type_id" => null, // string
+  "annotation" => null, // array
+  "attribute" => null, // array
+  "category" => null, // array
+  "color" => null, // string
+  "created_at" => null, // string
+  "description" => null, // string
+  "engine_resource_type" => null, // string
+  "icon" => null, // string
+  "id" => null, // string
+  "is_editable" => null, // bool
+  "name" => null, // string
+  "ranked" => null, // bool
+  "schema" => null, // array
+  "semantic_type" => null, // string
+  "type_name" => null, // string
+  "updated_at" => null, // string
+  "use_name_as_identifier" => null, // bool
+  "version" => null, // int
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): CatalogTypeSchemaEntity`
+
+Create a new `CatalogTypeSchemaEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```php
@@ -933,6 +1472,13 @@ $custom_field = $client->CustomField();
 | `helptext_catalog_attribute_id` | `string` | No |  |
 | `id` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `option` | `array` | Yes |  |
+| `required` | `string` | No |  |
+| `required_v2` | `string` | No |  |
+| `show_before_closure` | `bool` | Yes |  |
+| `show_before_creation` | `bool` | Yes |  |
+| `show_before_update` | `bool` | Yes |  |
+| `show_in_announcement_post` | `bool` | No |  |
 | `updated_at` | `string` | Yes |  |
 
 ### Operations
@@ -950,6 +1496,10 @@ $result = $client->CustomField()->create([
   "fixed_filter" => null, // array
   "id" => null, // string
   "name" => null, // string
+  "option" => null, // array
+  "show_before_closure" => null, // bool
+  "show_before_creation" => null, // bool
+  "show_before_update" => null, // bool
   "updated_at" => null, // string
 ]);
 ```
@@ -1123,6 +1673,100 @@ Return the entity name.
 
 ---
 
+## EscalationEntity
+
+```php
+$escalation = $client->Escalation();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `creator` | `array` | Yes |  |
+| `description` | `string` | No |  |
+| `escalation_path_id` | `string` | No |  |
+| `event` | `array` | Yes |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `incident_id` | `string` | No |  |
+| `priority` | `array` | Yes |  |
+| `related_alert` | `array` | Yes |  |
+| `related_incident` | `array` | Yes |  |
+| `status` | `string` | Yes |  |
+| `title` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `user_id` | `array` | No |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->Escalation()->create([
+  "created_at" => null, // string
+  "creator" => null, // array
+  "event" => null, // array
+  "id" => null, // string
+  "idempotency_key" => null, // string
+  "priority" => null, // array
+  "related_alert" => null, // array
+  "related_incident" => null, // array
+  "status" => null, // string
+  "title" => null, // string
+  "updated_at" => null, // string
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->Escalation()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->Escalation()->load(["id" => "escalation_id"]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): EscalationEntity`
+
+Create a new `EscalationEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpEntity
 
 ```php
@@ -1284,6 +1928,7 @@ $incident = $client->Incident();
 | `has_debrief` | `bool` | No |  |
 | `id` | `string` | Yes |  |
 | `idempotency_key` | `string` | Yes |  |
+| `incident` | `array` | Yes |  |
 | `incident_role_assignment` | `array` | Yes |  |
 | `incident_status` | `array` | Yes |  |
 | `incident_status_id` | `string` | No |  |
@@ -1292,6 +1937,7 @@ $incident = $client->Incident();
 | `incident_type_id` | `string` | No |  |
 | `mode` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `notify_incident_channel` | `bool` | Yes |  |
 | `permalink` | `string` | No |  |
 | `postmortem_document_id` | `array` | No |  |
 | `postmortem_document_url` | `string` | No |  |
@@ -1303,7 +1949,11 @@ $incident = $client->Incident();
 | `slack_channel_name` | `string` | No |  |
 | `slack_channel_name_override` | `string` | No |  |
 | `slack_team_id` | `string` | Yes |  |
+| `source_message_channel_id` | `string` | No |  |
+| `source_message_timestamp` | `string` | No |  |
+| `status` | `string` | Yes |  |
 | `summary` | `string` | No |  |
+| `timestamp` | `array` | No |  |
 | `updated_at` | `string` | Yes |  |
 | `visibility` | `string` | Yes |  |
 | `workload_minutes_late` | `float` | No |  |
@@ -1324,6 +1974,7 @@ $incident = $client->Incident();
 | `has_debrief` | - | - | - |
 | `id` | - | - | - |
 | `idempotency_key` | - | - | - |
+| `incident` | - | - | - |
 | `incident_role_assignment` | - | - | Yes |
 | `incident_status` | - | - | - |
 | `incident_status_id` | - | - | - |
@@ -1332,6 +1983,7 @@ $incident = $client->Incident();
 | `incident_type_id` | - | - | - |
 | `mode` | - | - | Yes |
 | `name` | - | - | Yes |
+| `notify_incident_channel` | - | - | - |
 | `permalink` | - | - | - |
 | `postmortem_document_id` | - | - | - |
 | `postmortem_document_url` | - | - | - |
@@ -1343,7 +1995,11 @@ $incident = $client->Incident();
 | `slack_channel_name` | - | - | - |
 | `slack_channel_name_override` | - | - | - |
 | `slack_team_id` | - | - | Yes |
+| `source_message_channel_id` | - | - | - |
+| `source_message_timestamp` | - | - | - |
+| `status` | - | - | Yes |
 | `summary` | - | - | - |
+| `timestamp` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -1365,15 +2021,18 @@ $result = $client->Incident()->create([
   "external_issue_reference" => null, // array
   "id" => null, // string
   "idempotency_key" => null, // string
+  "incident" => null, // array
   "incident_role_assignment" => null, // array
   "incident_status" => null, // array
   "incident_type" => null, // array
   "mode" => null, // string
   "name" => null, // string
+  "notify_incident_channel" => null, // bool
   "reference" => null, // string
   "severity" => null, // array
   "slack_channel_id" => null, // string
   "slack_team_id" => null, // string
+  "status" => null, // string
   "updated_at" => null, // string
   "visibility" => null, // string
 ]);
@@ -1416,6 +2075,61 @@ Set the entity match criteria.
 #### `make(): IncidentEntity`
 
 Create a new `IncidentEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## IncidentAlertEntity
+
+```php
+$incident_alert = $client->IncidentAlert();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `alert` | `array` | Yes |  |
+| `alert_route_id` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `incident` | `array` | Yes |  |
+
+### Operations
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->IncidentAlert()->list();
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): IncidentAlertEntity`
+
+Create a new `IncidentAlertEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -1731,9 +2445,24 @@ $incident_role = $client->IncidentRole();
 | `id` | `string` | Yes |  |
 | `instruction` | `string` | Yes |  |
 | `name` | `string` | Yes |  |
+| `required` | `bool` | No |  |
 | `role_type` | `string` | Yes |  |
 | `shortform` | `string` | Yes |  |
 | `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `instruction` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `required` | - | - | Yes | - | - |
+| `role_type` | - | - | - | - | - |
+| `shortform` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2393,6 +3122,481 @@ Return the entity name.
 
 ---
 
+## ScheduleEntity
+
+```php
+$schedule = $client->Schedule();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `array` | Yes |  |
+| `config` | `array` | Yes |  |
+| `created_at` | `string` | Yes |  |
+| `current_shift` | `array` | No |  |
+| `holidays_public_config` | `array` | Yes |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `next_shift` | `array` | No |  |
+| `permalink` | `string` | Yes |  |
+| `schedule` | `array` | Yes |  |
+| `team_id` | `array` | Yes |  |
+| `timezone` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->Schedule()->create([
+  "annotation" => null, // array
+  "config" => null, // array
+  "created_at" => null, // string
+  "holidays_public_config" => null, // array
+  "id" => null, // string
+  "name" => null, // string
+  "permalink" => null, // string
+  "schedule" => null, // array
+  "team_id" => null, // array
+  "timezone" => null, // string
+  "updated_at" => null, // string
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->Schedule()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->Schedule()->load(["id" => "schedule_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->Schedule()->remove(["id" => "schedule_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Throws on error.
+
+```php
+$result = $client->Schedule()->update([
+  "id" => "schedule_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): ScheduleEntity`
+
+Create a new `ScheduleEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleEntryEntity
+
+```php
+$schedule_entry = $client->ScheduleEntry();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `pagination_meta` | `array` | Yes |  |
+| `schedule_entry` | `array` | Yes |  |
+
+### Operations
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->ScheduleEntry()->load();
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): ScheduleEntryEntity`
+
+Create a new `ScheduleEntryEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleReplicaEntity
+
+```php
+$schedule_replica = $client->ScheduleReplica();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `last_sync_error` | `string` | No |  |
+| `last_synced_at` | `string` | No |  |
+| `mirror_window_day` | `int` | No |  |
+| `replica_fallback_user_id` | `string` | Yes |  |
+| `replica_provider` | `string` | Yes |  |
+| `replica_provider_id` | `string` | Yes |  |
+| `schedule_id` | `string` | Yes |  |
+| `schedule_replica` | `array` | Yes |  |
+| `source` | `array` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `user_status` | `array` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->ScheduleReplica()->create([
+  "id" => null, // string
+  "created_at" => null, // string
+  "replica_fallback_user_id" => null, // string
+  "replica_provider" => null, // string
+  "replica_provider_id" => null, // string
+  "schedule_id" => null, // string
+  "schedule_replica" => null, // array
+  "source" => null, // array
+  "updated_at" => null, // string
+  "user_status" => null, // array
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->ScheduleReplica()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->ScheduleReplica()->load(["id" => "schedule_replica_id", "schedule_id" => "schedule_id"]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): ScheduleReplicaEntity`
+
+Create a new `ScheduleReplicaEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleSyncRuleEntity
+
+```php
+$schedule_sync_rule = $client->ScheduleSyncRule();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotation` | `array` | No |  |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `permanent_member_user_id` | `array` | Yes |  |
+| `rotation_id` | `string` | No |  |
+| `schedule_id` | `string` | Yes |  |
+| `schedule_sync_rule` | `array` | Yes |  |
+| `schedule_sync_target` | `array` | Yes |  |
+| `schedule_sync_target_id` | `string` | Yes |  |
+| `sync_type` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `annotation` | - | - | - | - |
+| `created_at` | - | - | - | - |
+| `id` | - | - | - | - |
+| `permanent_member_user_id` | - | - | - | Yes |
+| `rotation_id` | - | - | - | - |
+| `schedule_id` | - | - | - | - |
+| `schedule_sync_rule` | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - |
+| `sync_type` | - | - | - | - |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->ScheduleSyncRule()->create([
+  "id" => null, // string
+  "created_at" => null, // string
+  "permanent_member_user_id" => null, // array
+  "schedule_id" => null, // string
+  "schedule_sync_rule" => null, // array
+  "schedule_sync_target" => null, // array
+  "schedule_sync_target_id" => null, // string
+  "sync_type" => null, // string
+  "updated_at" => null, // string
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->ScheduleSyncRule()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->ScheduleSyncRule()->load(["id" => "schedule_sync_rule_id", "schedule_id" => "schedule_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Throws on error.
+
+```php
+$result = $client->ScheduleSyncRule()->update([
+  "id" => "schedule_sync_rule_id",
+  "schedule_id" => "schedule_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): ScheduleSyncRuleEntity`
+
+Create a new `ScheduleSyncRuleEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## ScheduleSyncTargetEntity
+
+```php
+$schedule_sync_target = $client->ScheduleSyncTarget();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `add_bot_to_group` | `bool` | Yes |  |
+| `annotation` | `array` | No |  |
+| `created_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `linked_schedule` | `array` | Yes |  |
+| `schedule_sync_target` | `array` | Yes |  |
+| `slack_team_id` | `string` | Yes |  |
+| `slack_user_group_id` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->ScheduleSyncTarget()->create([
+  "add_bot_to_group" => null, // bool
+  "created_at" => null, // string
+  "id" => null, // string
+  "linked_schedule" => null, // array
+  "schedule_sync_target" => null, // array
+  "slack_team_id" => null, // string
+  "slack_user_group_id" => null, // string
+  "updated_at" => null, // string
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->ScheduleSyncTarget()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->ScheduleSyncTarget()->load(["id" => "schedule_sync_target_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->ScheduleSyncTarget()->remove(["id" => "schedule_sync_target_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Throws on error.
+
+```php
+$result = $client->ScheduleSyncTarget()->update([
+  "id" => "schedule_sync_target_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): ScheduleSyncTargetEntity`
+
+Create a new `ScheduleSyncTargetEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## SecretEntity
 
 ```php
@@ -2408,7 +3612,7 @@ $secret = $client->Secret();
 | `id` | `string` | Yes |  |
 | `last_four_char` | `string` | No |  |
 | `name` | `string` | Yes |  |
-| `owning_team_id` | `array` | No |  |
+| `owning_team_id` | `array` | Yes |  |
 | `secret` | `array` | Yes |  |
 | `updated_at` | `string` | Yes |  |
 | `value` | `string` | Yes |  |
@@ -2423,7 +3627,7 @@ $secret = $client->Secret();
 | `id` | - | - | - | - | - |
 | `last_four_char` | - | - | - | - | - |
 | `name` | - | - | - | - | - |
-| `owning_team_id` | - | Yes | - | Yes | - |
+| `owning_team_id` | - | - | Yes | Yes | - |
 | `secret` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
 | `value` | - | - | - | - | - |
@@ -2440,6 +3644,7 @@ $result = $client->Secret()->create([
   "created_at" => null, // string
   "id" => null, // string
   "name" => null, // string
+  "owning_team_id" => null, // array
   "secret" => null, // array
   "updated_at" => null, // string
   "value" => null, // string
@@ -2512,6 +3717,529 @@ Return the entity name.
 
 ---
 
+## SeverityEntity
+
+```php
+$severity = $client->Severity();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `description` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `rank` | `int` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update |
+| --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - |
+| `description` | - | - | - | - |
+| `id` | - | - | - | - |
+| `name` | - | - | - | - |
+| `rank` | - | - | Yes | Yes |
+| `updated_at` | - | - | - | - |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->Severity()->create([
+  "created_at" => null, // string
+  "description" => null, // string
+  "id" => null, // string
+  "name" => null, // string
+  "rank" => null, // int
+  "updated_at" => null, // string
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->Severity()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->Severity()->load(["id" => "severity_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Throws on error.
+
+```php
+$result = $client->Severity()->update([
+  "id" => "severity_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): SeverityEntity`
+
+Create a new `SeverityEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageEntity
+
+```php
+$status_page = $client->StatusPage();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `description` | `string` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `public_url` | `string` | No |  |
+
+### Operations
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->StatusPage()->list();
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): StatusPageEntity`
+
+Create a new `StatusPageEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageIncidentEntity
+
+```php
+$status_page_incident = $client->StatusPageIncident();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_impact` | `array` | Yes |  |
+| `component_status` | `array` | No |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `incident_status` | `string` | Yes |  |
+| `message` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `published_at` | `string` | Yes |  |
+| `status_page_id` | `string` | Yes |  |
+| `update` | `array` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->StatusPageIncident()->create([
+  "component_impact" => null, // array
+  "id" => null, // string
+  "idempotency_key" => null, // string
+  "incident_status" => null, // string
+  "message" => null, // string
+  "name" => null, // string
+  "notify_subscriber" => null, // bool
+  "published_at" => null, // string
+  "status_page_id" => null, // string
+  "update" => null, // array
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->StatusPageIncident()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->StatusPageIncident()->load(["id" => "status_page_incident_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Throws on error.
+
+```php
+$result = $client->StatusPageIncident()->update([
+  "id" => "status_page_incident_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): StatusPageIncidentEntity`
+
+Create a new `StatusPageIncidentEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageIncidentUpdateEntity
+
+```php
+$status_page_incident_update = $client->StatusPageIncidentUpdate();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `array` | No |  |
+| `incident_status` | `string` | No |  |
+| `message` | `string` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `status_page_incident_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->StatusPageIncidentUpdate()->create([
+  "message" => null, // string
+  "notify_subscriber" => null, // bool
+  "status_page_incident_id" => null, // string
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): StatusPageIncidentUpdateEntity`
+
+Create a new `StatusPageIncidentUpdateEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageMaintenanceEntity
+
+```php
+$status_page_maintenance = $client->StatusPageMaintenance();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `affected_component_id` | `array` | Yes |  |
+| `component_maintenance_period` | `array` | Yes |  |
+| `end_at` | `string` | Yes |  |
+| `id` | `string` | Yes |  |
+| `idempotency_key` | `string` | Yes |  |
+| `maintenance_status` | `string` | Yes |  |
+| `message` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `published_at` | `string` | Yes |  |
+| `start_at` | `string` | Yes |  |
+| `status_page_id` | `string` | Yes |  |
+| `update` | `array` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->StatusPageMaintenance()->create([
+  "affected_component_id" => null, // array
+  "component_maintenance_period" => null, // array
+  "end_at" => null, // string
+  "id" => null, // string
+  "idempotency_key" => null, // string
+  "maintenance_status" => null, // string
+  "message" => null, // string
+  "name" => null, // string
+  "notify_subscriber" => null, // bool
+  "published_at" => null, // string
+  "start_at" => null, // string
+  "status_page_id" => null, // string
+  "update" => null, // array
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array. Throws on error.
+
+```php
+$results = $client->StatusPageMaintenance()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->StatusPageMaintenance()->load(["id" => "status_page_maintenance_id"]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): StatusPageMaintenanceEntity`
+
+Create a new `StatusPageMaintenanceEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageMaintenanceUpdateEntity
+
+```php
+$status_page_maintenance_update = $client->StatusPageMaintenanceUpdate();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `component_status` | `array` | No |  |
+| `maintenance_status` | `string` | No |  |
+| `message` | `string` | Yes |  |
+| `notify_subscriber` | `bool` | Yes |  |
+| `status_page_maintenance_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Throws on error.
+
+```php
+$result = $client->StatusPageMaintenanceUpdate()->create([
+  "message" => null, // string
+  "notify_subscriber" => null, // bool
+  "status_page_maintenance_id" => null, // string
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): StatusPageMaintenanceUpdateEntity`
+
+Create a new `StatusPageMaintenanceUpdateEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## StatusPageStructureEntity
+
+```php
+$status_page_structure = $client->StatusPageStructure();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `item` | `array` | Yes |  |
+
+### Operations
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Throws on error.
+
+```php
+$result = $client->StatusPageStructure()->load(["id" => "status_page_structure_id"]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): StatusPageStructureEntity`
+
+Create a new `StatusPageStructureEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## TeamEntity
 
 ```php
@@ -2566,6 +4294,85 @@ Set the entity match criteria.
 #### `make(): TeamEntity`
 
 Create a new `TeamEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## TelemetryDataSourceEntity
+
+```php
+$telemetry_data_source = $client->TelemetryDataSource();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `datadog_config` | `array` | No |  |
+| `enabled` | `bool` | Yes |  |
+| `grafana_config` | `array` | No |  |
+| `id` | `string` | Yes |  |
+| `name` | `string` | Yes |  |
+| `provider` | `string` | Yes |  |
+| `source_type` | `string` | Yes |  |
+| `updated_at` | `string` | Yes |  |
+| `version` | `string` | No |  |
+
+### Field Usage by Operation
+
+| Field | update |
+| --- | --- |
+| `created_at` | - |
+| `datadog_config` | - |
+| `enabled` | - |
+| `grafana_config` | - |
+| `id` | - |
+| `name` | Yes |
+| `provider` | - |
+| `source_type` | - |
+| `updated_at` | - |
+| `version` | - |
+
+### Operations
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Throws on error.
+
+```php
+$result = $client->TelemetryDataSource()->update([
+  "id" => "id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): TelemetryDataSourceEntity`
+
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `get_name(): string`

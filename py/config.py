@@ -26,10 +26,16 @@ def make_config():
                 "alert_route": {},
                 "alert_source": {},
                 "api_key": {},
+                "catalog_entry": {},
+                "catalog_resource": {},
+                "catalog_type": {},
+                "catalog_type_schema": {},
                 "custom_field": {},
                 "custom_field_option": {},
+                "escalation": {},
                 "follow_up": {},
                 "incident": {},
+                "incident_alert": {},
                 "incident_attachment": {},
                 "incident_membership": {},
                 "incident_participant": {},
@@ -43,8 +49,21 @@ def make_config():
                 "ip_allowlist": {},
                 "maintenance_window": {},
                 "postmortem_document": {},
+                "schedule": {},
+                "schedule_entry": {},
+                "schedule_replica": {},
+                "schedule_sync_rule": {},
+                "schedule_sync_target": {},
                 "secret": {},
+                "severity": {},
+                "status_page": {},
+                "status_page_incident": {},
+                "status_page_incident_update": {},
+                "status_page_maintenance": {},
+                "status_page_maintenance_update": {},
+                "status_page_structure": {},
                 "team": {},
+                "telemetry_data_source": {},
                 "user": {},
                 "workflow": {},
                 "workflow_run": {},
@@ -91,37 +110,69 @@ def make_config():
           {
             "active": True,
             "name": "description",
-            "req": True,
+            "op": {
+              "create": {
+                "req": True,
+                "type": "`$STRING`",
+              },
+              "list": {
+                "req": True,
+                "type": "`$STRING`",
+              },
+              "load": {
+                "req": True,
+                "type": "`$STRING`",
+              },
+              "update": {
+                "req": True,
+                "type": "`$STRING`",
+              },
+            },
+            "req": False,
             "type": "`$STRING`",
             "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "external_issue_reference",
+            "req": False,
+            "type": "`$OBJECT`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "follow_up",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 7,
           },
           {
             "active": True,
             "name": "id",
             "req": True,
             "type": "`$STRING`",
-            "index$": 6,
+            "index$": 8,
           },
           {
             "active": True,
             "name": "incident_id",
             "req": True,
             "type": "`$STRING`",
-            "index$": 7,
+            "index$": 9,
           },
           {
             "active": True,
             "name": "status",
             "req": True,
             "type": "`$STRING`",
-            "index$": 8,
+            "index$": 10,
           },
           {
             "active": True,
             "name": "updated_at",
             "req": True,
             "type": "`$STRING`",
-            "index$": 9,
+            "index$": 11,
           },
         ],
         "name": "action",
@@ -168,6 +219,58 @@ def make_config():
                     },
                     {
                       "active": True,
+                      "example": "real",
+                      "kind": "query",
+                      "name": "incident_mode",
+                      "orig": "incident_mode",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": True,
+                      "kind": "query",
+                      "name": "is_follow_up",
+                      "orig": "is_follow_up",
+                      "reqd": False,
+                      "type": "`$BOOLEAN`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v1/actions",
+                "parts": [
+                  "v1",
+                  "actions",
+                ],
+                "select": {
+                  "exist": [
+                    "incident_id",
+                    "incident_mode",
+                    "is_follow_up",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.actions`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "query",
+                      "name": "incident_id",
+                      "orig": "incident_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
                       "example": "standard",
                       "kind": "query",
                       "name": "incident_mode",
@@ -193,7 +296,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.actions`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "list",
@@ -202,6 +305,40 @@ def make_config():
             "input": "data",
             "name": "load",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v1/actions/{id}",
+                "parts": [
+                  "v1",
+                  "actions",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.action`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -234,7 +371,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.action`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "load",
@@ -415,6 +552,50 @@ def make_config():
         ],
         "name": "alert",
         "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "POST",
+                "orig": "/v2/alerts/{id}/actions/resolve",
+                "parts": [
+                  "v2",
+                  "alerts",
+                  "{id}",
+                  "actions",
+                  "resolve",
+                ],
+                "select": {
+                  "$action": "action_resolve",
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.alert`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
           "list": {
             "input": "data",
             "name": "list",
@@ -1155,101 +1336,122 @@ def make_config():
           },
           {
             "active": True,
-            "name": "condition_group",
+            "name": "channel_config",
             "req": True,
             "type": "`$ARRAY`",
             "index$": 1,
           },
           {
             "active": True,
+            "name": "condition_group",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 2,
+          },
+          {
+            "active": True,
             "name": "created_at",
             "req": False,
             "type": "`$STRING`",
-            "index$": 2,
+            "index$": 3,
           },
           {
             "active": True,
             "name": "enabled",
             "req": True,
             "type": "`$BOOLEAN`",
-            "index$": 3,
+            "index$": 4,
           },
           {
             "active": True,
             "name": "escalation_config",
             "req": True,
             "type": "`$OBJECT`",
-            "index$": 4,
+            "index$": 5,
           },
           {
             "active": True,
             "name": "expression",
             "req": True,
             "type": "`$ARRAY`",
-            "index$": 5,
+            "index$": 6,
           },
           {
             "active": True,
             "name": "grouping_config",
             "req": True,
             "type": "`$OBJECT`",
-            "index$": 6,
+            "index$": 7,
           },
           {
             "active": True,
             "name": "id",
             "req": True,
             "type": "`$STRING`",
-            "index$": 7,
+            "index$": 8,
           },
           {
             "active": True,
             "name": "incident_config",
             "req": True,
             "type": "`$OBJECT`",
-            "index$": 8,
-          },
-          {
-            "active": True,
-            "name": "is_private",
-            "req": True,
-            "type": "`$BOOLEAN`",
             "index$": 9,
           },
           {
             "active": True,
-            "name": "message_config",
+            "name": "incident_template",
             "req": True,
             "type": "`$OBJECT`",
             "index$": 10,
           },
           {
             "active": True,
+            "name": "is_private",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "message_config",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 12,
+          },
+          {
+            "active": True,
+            "name": "message_template",
+            "req": False,
+            "type": "`$OBJECT`",
+            "index$": 13,
+          },
+          {
+            "active": True,
             "name": "name",
             "req": True,
             "type": "`$STRING`",
-            "index$": 11,
+            "index$": 14,
           },
           {
             "active": True,
             "name": "owning_team_id",
             "req": False,
             "type": "`$ARRAY`",
-            "index$": 12,
+            "index$": 15,
           },
           {
             "active": True,
             "name": "updated_at",
             "req": False,
             "type": "`$STRING`",
-            "index$": 13,
+            "index$": 16,
           },
           {
             "active": True,
             "name": "version",
             "req": True,
             "type": "`$INTEGER`",
-            "index$": 14,
+            "index$": 17,
           },
         ],
         "name": "alert_route",
@@ -1258,6 +1460,22 @@ def make_config():
             "input": "data",
             "name": "create",
             "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/alert_routes",
+                "parts": [
+                  "v2",
+                  "alert_routes",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.alert_route`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {},
@@ -1272,7 +1490,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.alert_route`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "create",
@@ -1281,6 +1499,48 @@ def make_config():
             "input": "data",
             "name": "list",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": True,
+                      "type": "`$INTEGER`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/alert_routes",
+                "parts": [
+                  "v2",
+                  "alert_routes",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "page_size",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -1321,7 +1581,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "list",
@@ -1330,6 +1590,40 @@ def make_config():
             "input": "data",
             "name": "load",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/alert_routes/{id}",
+                "parts": [
+                  "v2",
+                  "alert_routes",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.alert_route`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -1362,7 +1656,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.alert_route`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "load",
@@ -1371,6 +1665,40 @@ def make_config():
             "input": "data",
             "name": "remove",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "DELETE",
+                "orig": "/v2/alert_routes/{id}",
+                "parts": [
+                  "v2",
+                  "alert_routes",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -1403,7 +1731,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "remove",
@@ -1412,6 +1740,40 @@ def make_config():
             "input": "data",
             "name": "update",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v2/alert_routes/{id}",
+                "parts": [
+                  "v2",
+                  "alert_routes",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.alert_route`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -1444,7 +1806,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.alert_route`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "update",
@@ -1756,66 +2118,73 @@ def make_config():
           },
           {
             "active": True,
+            "name": "grace_period_minute",
+            "req": True,
+            "type": "`$INTEGER`",
+            "index$": 3,
+          },
+          {
+            "active": True,
             "name": "id",
             "req": True,
             "type": "`$STRING`",
-            "index$": 3,
+            "index$": 4,
           },
           {
             "active": True,
             "name": "last_used_at",
             "req": False,
             "type": "`$STRING`",
-            "index$": 4,
+            "index$": 5,
           },
           {
             "active": True,
             "name": "name",
             "req": True,
             "type": "`$STRING`",
-            "index$": 5,
+            "index$": 6,
           },
           {
             "active": True,
             "name": "role",
             "req": True,
             "type": "`$ARRAY`",
-            "index$": 6,
+            "index$": 7,
           },
           {
             "active": True,
             "name": "role_name",
             "req": True,
             "type": "`$ARRAY`",
-            "index$": 7,
+            "index$": 8,
           },
           {
             "active": True,
             "name": "team_id",
             "req": True,
             "type": "`$ARRAY`",
-            "index$": 8,
+            "index$": 9,
           },
           {
             "active": True,
             "name": "team_role",
             "req": True,
             "type": "`$ARRAY`",
-            "index$": 9,
+            "index$": 10,
           },
           {
             "active": True,
             "name": "team_role_name",
             "req": True,
             "type": "`$ARRAY`",
-            "index$": 10,
+            "index$": 11,
           },
           {
             "active": True,
             "name": "token_last_issued_at",
             "req": True,
             "type": "`$STRING`",
-            "index$": 11,
+            "index$": 12,
           },
         ],
         "name": "api_key",
@@ -1824,6 +2193,43 @@ def make_config():
             "input": "data",
             "name": "create",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "POST",
+                "orig": "/v1/api_keys/{id}/actions/rotate",
+                "parts": [
+                  "v1",
+                  "api_keys",
+                  "{id}",
+                  "actions",
+                  "rotate",
+                ],
+                "select": {
+                  "$action": "action_rotate",
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.api_key`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {},
@@ -1838,7 +2244,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.api_key`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "create",
@@ -2020,6 +2426,1289 @@ def make_config():
           "ancestors": [],
         },
       },
+      "catalog_entry": {
+        "fields": [
+          {
+            "active": True,
+            "name": "alias",
+            "op": {
+              "list": {
+                "req": True,
+                "type": "`$ARRAY`",
+              },
+            },
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "archived_at",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "attribute_value",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "catalog_entry",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "catalog_type",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "catalog_type_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "external_id",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "rank",
+            "op": {
+              "list": {
+                "req": True,
+                "type": "`$INTEGER`",
+              },
+            },
+            "req": False,
+            "type": "`$INTEGER`",
+            "index$": 10,
+          },
+          {
+            "active": True,
+            "name": "update_attribute",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 12,
+          },
+        ],
+        "name": "catalog_entry",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/catalog_entries",
+                "parts": [
+                  "v2",
+                  "catalog_entries",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_entry`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v3/catalog_entries",
+                "parts": [
+                  "v3",
+                  "catalog_entries",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_entry`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "query",
+                      "name": "catalog_type_id",
+                      "orig": "catalog_type_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "abc123",
+                      "kind": "query",
+                      "name": "identifier",
+                      "orig": "identifier",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": True,
+                      "type": "`$INTEGER`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v3/catalog_entries",
+                "parts": [
+                  "v3",
+                  "catalog_entries",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "catalog_type_id",
+                    "identifier",
+                    "page_size",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "query",
+                      "name": "catalog_type_id",
+                      "orig": "catalog_type_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/catalog_entries",
+                "parts": [
+                  "v2",
+                  "catalog_entries",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "catalog_type_id",
+                    "page_size",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                  "query": [
+                    {
+                      "active": True,
+                      "example": True,
+                      "kind": "query",
+                      "name": "expand",
+                      "orig": "expand",
+                      "reqd": False,
+                      "type": "`$BOOLEAN`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v3/catalog_entries/{id}",
+                "parts": [
+                  "v3",
+                  "catalog_entries",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "expand",
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_entry`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/catalog_entries/{id}",
+                "parts": [
+                  "v2",
+                  "catalog_entries",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_entry`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "load",
+          },
+          "update": {
+            "input": "data",
+            "name": "update",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v2/catalog_entries/{id}",
+                "parts": [
+                  "v2",
+                  "catalog_entries",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_entry`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v3/catalog_entries/{id}",
+                "parts": [
+                  "v3",
+                  "catalog_entries",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_entry`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "update",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "catalog_resource": {
+        "fields": [
+          {
+            "active": True,
+            "name": "category",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "description",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "engine_resource_type",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "label",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "type",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "value_docstring",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+        ],
+        "name": "catalog_resource",
+        "op": {
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "GET",
+                "orig": "/v2/catalog_resources",
+                "parts": [
+                  "v2",
+                  "catalog_resources",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.resources`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {},
+                "method": "GET",
+                "orig": "/v3/catalog_resources",
+                "parts": [
+                  "v3",
+                  "catalog_resources",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.resources`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "list",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "catalog_type": {
+        "fields": [
+          {
+            "active": True,
+            "name": "annotation",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$OBJECT`",
+              },
+              "update": {
+                "req": False,
+                "type": "`$OBJECT`",
+              },
+            },
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "category",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$ARRAY`",
+              },
+              "update": {
+                "req": False,
+                "type": "`$ARRAY`",
+              },
+            },
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "color",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$STRING`",
+              },
+              "update": {
+                "req": False,
+                "type": "`$STRING`",
+              },
+            },
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "description",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "dynamic_resource_parameter",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "engine_resource_type",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "estimated_count",
+            "req": False,
+            "type": "`$INTEGER`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "icon",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$STRING`",
+              },
+              "update": {
+                "req": False,
+                "type": "`$STRING`",
+              },
+            },
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "is_editable",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 10,
+          },
+          {
+            "active": True,
+            "name": "is_team_type",
+            "req": False,
+            "type": "`$BOOLEAN`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "last_synced_at",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 12,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 13,
+          },
+          {
+            "active": True,
+            "name": "owning_team_id",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 14,
+          },
+          {
+            "active": True,
+            "name": "ranked",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$BOOLEAN`",
+              },
+              "update": {
+                "req": False,
+                "type": "`$BOOLEAN`",
+              },
+            },
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 15,
+          },
+          {
+            "active": True,
+            "name": "registry_type",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 16,
+          },
+          {
+            "active": True,
+            "name": "required_integration",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 17,
+          },
+          {
+            "active": True,
+            "name": "schema",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 18,
+          },
+          {
+            "active": True,
+            "name": "semantic_type",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 19,
+          },
+          {
+            "active": True,
+            "name": "source_repo_url",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 20,
+          },
+          {
+            "active": True,
+            "name": "type_name",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$STRING`",
+              },
+            },
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 21,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 22,
+          },
+          {
+            "active": True,
+            "name": "use_name_as_identifier",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$BOOLEAN`",
+              },
+              "update": {
+                "req": False,
+                "type": "`$BOOLEAN`",
+              },
+            },
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 23,
+          },
+        ],
+        "name": "catalog_type",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/catalog_types",
+                "parts": [
+                  "v2",
+                  "catalog_types",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_type`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v3/catalog_types",
+                "parts": [
+                  "v3",
+                  "catalog_types",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_type`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "GET",
+                "orig": "/v2/catalog_types",
+                "parts": [
+                  "v2",
+                  "catalog_types",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_types`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {},
+                "method": "GET",
+                "orig": "/v3/catalog_types",
+                "parts": [
+                  "v3",
+                  "catalog_types",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_types`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/catalog_types/{id}",
+                "parts": [
+                  "v2",
+                  "catalog_types",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_type`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v3/catalog_types/{id}",
+                "parts": [
+                  "v3",
+                  "catalog_types",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_type`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "load",
+          },
+          "update": {
+            "input": "data",
+            "name": "update",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v2/catalog_types/{id}",
+                "parts": [
+                  "v2",
+                  "catalog_types",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_type`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v3/catalog_types/{id}",
+                "parts": [
+                  "v3",
+                  "catalog_types",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_type`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "update",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "catalog_type_schema": {
+        "fields": [
+          {
+            "active": True,
+            "name": "annotation",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "attribute",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "category",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "color",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "description",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "dynamic_resource_parameter",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "engine_resource_type",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "estimated_count",
+            "req": False,
+            "type": "`$INTEGER`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "icon",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 10,
+          },
+          {
+            "active": True,
+            "name": "is_editable",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "is_team_type",
+            "req": False,
+            "type": "`$BOOLEAN`",
+            "index$": 12,
+          },
+          {
+            "active": True,
+            "name": "last_synced_at",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 13,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 14,
+          },
+          {
+            "active": True,
+            "name": "owning_team_id",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 15,
+          },
+          {
+            "active": True,
+            "name": "ranked",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 16,
+          },
+          {
+            "active": True,
+            "name": "registry_type",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 17,
+          },
+          {
+            "active": True,
+            "name": "required_integration",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 18,
+          },
+          {
+            "active": True,
+            "name": "schema",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 19,
+          },
+          {
+            "active": True,
+            "name": "semantic_type",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 20,
+          },
+          {
+            "active": True,
+            "name": "source_repo_url",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 21,
+          },
+          {
+            "active": True,
+            "name": "type_name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 22,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 23,
+          },
+          {
+            "active": True,
+            "name": "use_name_as_identifier",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 24,
+          },
+          {
+            "active": True,
+            "name": "version",
+            "req": True,
+            "type": "`$INTEGER`",
+            "index$": 25,
+          },
+        ],
+        "name": "catalog_type_schema",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "catalog_type_id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "POST",
+                "orig": "/v2/catalog_types/{id}/actions/update_schema",
+                "parts": [
+                  "v2",
+                  "catalog_types",
+                  "{catalog_type_id}",
+                  "actions",
+                  "update_schema",
+                ],
+                "rename": {
+                  "param": {
+                    "id": "catalog_type_id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "catalog_type_id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_type`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "catalog_type_id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "POST",
+                "orig": "/v3/catalog_types/{id}/actions/update_schema",
+                "parts": [
+                  "v3",
+                  "catalog_types",
+                  "{catalog_type_id}",
+                  "actions",
+                  "update_schema",
+                ],
+                "rename": {
+                  "param": {
+                    "id": "catalog_type_id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "catalog_type_id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.catalog_type`",
+                },
+                "index$": 1,
+              },
+            ],
+            "key$": "create",
+          },
+        },
+        "relations": {
+          "ancestors": [
+            [
+              "catalog_type",
+            ],
+          ],
+        },
+      },
       "custom_field": {
         "fields": [
           {
@@ -2094,10 +3783,59 @@ def make_config():
           },
           {
             "active": True,
+            "name": "option",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 10,
+          },
+          {
+            "active": True,
+            "name": "required",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "required_v2",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 12,
+          },
+          {
+            "active": True,
+            "name": "show_before_closure",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 13,
+          },
+          {
+            "active": True,
+            "name": "show_before_creation",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 14,
+          },
+          {
+            "active": True,
+            "name": "show_before_update",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 15,
+          },
+          {
+            "active": True,
+            "name": "show_in_announcement_post",
+            "req": False,
+            "type": "`$BOOLEAN`",
+            "index$": 16,
+          },
+          {
+            "active": True,
             "name": "updated_at",
             "req": True,
             "type": "`$STRING`",
-            "index$": 10,
+            "index$": 17,
           },
         ],
         "name": "custom_field",
@@ -2106,6 +3844,22 @@ def make_config():
             "input": "data",
             "name": "create",
             "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v1/custom_fields",
+                "parts": [
+                  "v1",
+                  "custom_fields",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.custom_field`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {},
@@ -2120,7 +3874,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.custom_field`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "create",
@@ -2129,6 +3883,22 @@ def make_config():
             "input": "data",
             "name": "list",
             "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "GET",
+                "orig": "/v1/custom_fields",
+                "parts": [
+                  "v1",
+                  "custom_fields",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.custom_fields`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {},
@@ -2143,7 +3913,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.custom_fields`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "list",
@@ -2152,6 +3922,40 @@ def make_config():
             "input": "data",
             "name": "load",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v1/custom_fields/{id}",
+                "parts": [
+                  "v1",
+                  "custom_fields",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.custom_field`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -2184,7 +3988,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.custom_field`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "load",
@@ -2193,6 +3997,40 @@ def make_config():
             "input": "data",
             "name": "remove",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "DELETE",
+                "orig": "/v1/custom_fields/{id}",
+                "parts": [
+                  "v1",
+                  "custom_fields",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -2225,7 +4063,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "remove",
@@ -2234,6 +4072,40 @@ def make_config():
             "input": "data",
             "name": "update",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v1/custom_fields/{id}",
+                "parts": [
+                  "v1",
+                  "custom_fields",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.custom_field`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -2266,7 +4138,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.custom_field`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "update",
@@ -2519,6 +4391,318 @@ def make_config():
               },
             ],
             "key$": "update",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "escalation": {
+        "fields": [
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "creator",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "description",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "escalation_path_id",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "event",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "idempotency_key",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "incident_id",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "priority",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "related_alert",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "related_incident",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 10,
+          },
+          {
+            "active": True,
+            "name": "status",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "title",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 12,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 13,
+          },
+          {
+            "active": True,
+            "name": "user_id",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 14,
+          },
+        ],
+        "name": "escalation",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/escalations",
+                "parts": [
+                  "v2",
+                  "escalations",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.escalation`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": {
+                        "one_of": [
+                          "01J479052SSQAA4531ASFPR3BF",
+                        ],
+                      },
+                      "kind": "query",
+                      "name": "alert",
+                      "orig": "alert",
+                      "reqd": False,
+                      "type": "`$OBJECT`",
+                    },
+                    {
+                      "active": True,
+                      "example": {
+                        "gte": [
+                          "2021-08-17",
+                        ],
+                      },
+                      "kind": "query",
+                      "name": "created_at",
+                      "orig": "created_at",
+                      "reqd": False,
+                      "type": "`$OBJECT`",
+                    },
+                    {
+                      "active": True,
+                      "example": {
+                        "one_of": [
+                          "01J479052SSQAA4531ASFPR3BF",
+                        ],
+                      },
+                      "kind": "query",
+                      "name": "escalation_path",
+                      "orig": "escalation_path",
+                      "reqd": False,
+                      "type": "`$OBJECT`",
+                    },
+                    {
+                      "active": True,
+                      "example": {
+                        "starts_with": [
+                          "team-a:",
+                        ],
+                      },
+                      "kind": "query",
+                      "name": "idempotency_key",
+                      "orig": "idempotency_key",
+                      "reqd": False,
+                      "type": "`$OBJECT`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                    {
+                      "active": True,
+                      "example": {
+                        "one_of": [
+                          "triggered",
+                        ],
+                      },
+                      "kind": "query",
+                      "name": "status",
+                      "orig": "status",
+                      "reqd": False,
+                      "type": "`$OBJECT`",
+                    },
+                    {
+                      "active": True,
+                      "example": {
+                        "gte": [
+                          "2021-08-17",
+                        ],
+                      },
+                      "kind": "query",
+                      "name": "updated_at",
+                      "orig": "updated_at",
+                      "reqd": False,
+                      "type": "`$OBJECT`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/escalations",
+                "parts": [
+                  "v2",
+                  "escalations",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "alert",
+                    "created_at",
+                    "escalation_path",
+                    "idempotency_key",
+                    "page_size",
+                    "status",
+                    "updated_at",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01G0J1EXE7AXZ2C93K61WBPYEH",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/escalations/{id}",
+                "parts": [
+                  "v2",
+                  "escalations",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.escalation`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
           },
         },
         "relations": {
@@ -2956,6 +5140,13 @@ def make_config():
           },
           {
             "active": True,
+            "name": "incident",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 9,
+          },
+          {
+            "active": True,
             "name": "incident_role_assignment",
             "op": {
               "create": {
@@ -2965,42 +5156,42 @@ def make_config():
             },
             "req": True,
             "type": "`$ARRAY`",
-            "index$": 9,
+            "index$": 10,
           },
           {
             "active": True,
             "name": "incident_status",
             "req": True,
             "type": "`$OBJECT`",
-            "index$": 10,
+            "index$": 11,
           },
           {
             "active": True,
             "name": "incident_status_id",
             "req": False,
             "type": "`$STRING`",
-            "index$": 11,
+            "index$": 12,
           },
           {
             "active": True,
             "name": "incident_timestamp_value",
             "req": False,
             "type": "`$ARRAY`",
-            "index$": 12,
+            "index$": 13,
           },
           {
             "active": True,
             "name": "incident_type",
             "req": True,
             "type": "`$OBJECT`",
-            "index$": 13,
+            "index$": 14,
           },
           {
             "active": True,
             "name": "incident_type_id",
             "req": False,
             "type": "`$STRING`",
-            "index$": 14,
+            "index$": 15,
           },
           {
             "active": True,
@@ -3013,7 +5204,7 @@ def make_config():
             },
             "req": True,
             "type": "`$STRING`",
-            "index$": 15,
+            "index$": 16,
           },
           {
             "active": True,
@@ -3026,77 +5217,84 @@ def make_config():
             },
             "req": True,
             "type": "`$STRING`",
-            "index$": 16,
+            "index$": 17,
+          },
+          {
+            "active": True,
+            "name": "notify_incident_channel",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 18,
           },
           {
             "active": True,
             "name": "permalink",
             "req": False,
             "type": "`$STRING`",
-            "index$": 17,
+            "index$": 19,
           },
           {
             "active": True,
             "name": "postmortem_document_id",
             "req": False,
             "type": "`$ARRAY`",
-            "index$": 18,
+            "index$": 20,
           },
           {
             "active": True,
             "name": "postmortem_document_url",
             "req": False,
             "type": "`$STRING`",
-            "index$": 19,
+            "index$": 21,
           },
           {
             "active": True,
             "name": "reference",
             "req": True,
             "type": "`$STRING`",
-            "index$": 20,
+            "index$": 22,
           },
           {
             "active": True,
             "name": "retrospective_incident_option",
             "req": False,
             "type": "`$OBJECT`",
-            "index$": 21,
+            "index$": 23,
           },
           {
             "active": True,
             "name": "severity",
             "req": True,
             "type": "`$OBJECT`",
-            "index$": 22,
+            "index$": 24,
           },
           {
             "active": True,
             "name": "severity_id",
             "req": False,
             "type": "`$STRING`",
-            "index$": 23,
+            "index$": 25,
           },
           {
             "active": True,
             "name": "slack_channel_id",
             "req": True,
             "type": "`$STRING`",
-            "index$": 24,
+            "index$": 26,
           },
           {
             "active": True,
             "name": "slack_channel_name",
             "req": False,
             "type": "`$STRING`",
-            "index$": 25,
+            "index$": 27,
           },
           {
             "active": True,
             "name": "slack_channel_name_override",
             "req": False,
             "type": "`$STRING`",
-            "index$": 26,
+            "index$": 28,
           },
           {
             "active": True,
@@ -3109,56 +5307,90 @@ def make_config():
             },
             "req": True,
             "type": "`$STRING`",
-            "index$": 27,
+            "index$": 29,
+          },
+          {
+            "active": True,
+            "name": "source_message_channel_id",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 30,
+          },
+          {
+            "active": True,
+            "name": "source_message_timestamp",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 31,
+          },
+          {
+            "active": True,
+            "name": "status",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$STRING`",
+              },
+            },
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 32,
           },
           {
             "active": True,
             "name": "summary",
             "req": False,
             "type": "`$STRING`",
-            "index$": 28,
+            "index$": 33,
+          },
+          {
+            "active": True,
+            "name": "timestamp",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 34,
           },
           {
             "active": True,
             "name": "updated_at",
             "req": True,
             "type": "`$STRING`",
-            "index$": 29,
+            "index$": 35,
           },
           {
             "active": True,
             "name": "visibility",
             "req": True,
             "type": "`$STRING`",
-            "index$": 30,
+            "index$": 36,
           },
           {
             "active": True,
             "name": "workload_minutes_late",
             "req": False,
             "type": "`$NUMBER`",
-            "index$": 31,
+            "index$": 37,
           },
           {
             "active": True,
             "name": "workload_minutes_sleeping",
             "req": False,
             "type": "`$NUMBER`",
-            "index$": 32,
+            "index$": 38,
           },
           {
             "active": True,
             "name": "workload_minutes_total",
             "req": False,
             "type": "`$NUMBER`",
-            "index$": 33,
+            "index$": 39,
           },
           {
             "active": True,
             "name": "workload_minutes_working",
             "req": False,
             "type": "`$NUMBER`",
-            "index$": 34,
+            "index$": 40,
           },
         ],
         "name": "incident",
@@ -3167,6 +5399,61 @@ def make_config():
             "input": "data",
             "name": "create",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01G18REBY9AYH6CMWCJ2CVCYCH",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "POST",
+                "orig": "/v2/incidents/{id}/actions/edit",
+                "parts": [
+                  "v2",
+                  "incidents",
+                  "{id}",
+                  "actions",
+                  "edit",
+                ],
+                "select": {
+                  "$action": "action_edit",
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": {
+                    "incident": "`reqdata`",
+                  },
+                  "res": "`body.incident`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v1/incidents",
+                "parts": [
+                  "v1",
+                  "incidents",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.incident`",
+                },
+                "index$": 1,
+              },
               {
                 "active": True,
                 "args": {},
@@ -3181,7 +5468,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.incident`",
                 },
-                "index$": 0,
+                "index$": 2,
               },
             ],
             "key$": "create",
@@ -3384,6 +5671,60 @@ def make_config():
                 },
                 "index$": 0,
               },
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                    {
+                      "active": True,
+                      "example": [
+                        "declined",
+                      ],
+                      "kind": "query",
+                      "name": "status",
+                      "orig": "status",
+                      "reqd": False,
+                      "type": "`$ARRAY`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v1/incidents",
+                "parts": [
+                  "v1",
+                  "incidents",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "page_size",
+                    "status",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 1,
+              },
             ],
             "key$": "list",
           },
@@ -3391,6 +5732,40 @@ def make_config():
             "input": "data",
             "name": "load",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v1/incidents/{id}",
+                "parts": [
+                  "v1",
+                  "incidents",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.incident`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -3423,10 +5798,117 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.incident`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "load",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "incident_alert": {
+        "fields": [
+          {
+            "active": True,
+            "name": "alert",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "alert_route_id",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "incident",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 3,
+          },
+        ],
+        "name": "incident_alert",
+        "op": {
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG1",
+                      "kind": "query",
+                      "name": "alert_id",
+                      "orig": "alert_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "query",
+                      "name": "incident_id",
+                      "orig": "incident_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": True,
+                      "type": "`$INTEGER`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/incident_alerts",
+                "parts": [
+                  "v2",
+                  "incident_alerts",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "alert_id",
+                    "incident_id",
+                    "page_size",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
           },
         },
         "relations": {
@@ -3896,24 +6378,37 @@ def make_config():
           },
           {
             "active": True,
-            "name": "role_type",
-            "req": True,
-            "type": "`$STRING`",
+            "name": "required",
+            "op": {
+              "create": {
+                "req": True,
+                "type": "`$BOOLEAN`",
+              },
+            },
+            "req": False,
+            "type": "`$BOOLEAN`",
             "index$": 5,
           },
           {
             "active": True,
-            "name": "shortform",
+            "name": "role_type",
             "req": True,
             "type": "`$STRING`",
             "index$": 6,
           },
           {
             "active": True,
-            "name": "updated_at",
+            "name": "shortform",
             "req": True,
             "type": "`$STRING`",
             "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
           },
         ],
         "name": "incident_role",
@@ -3922,6 +6417,22 @@ def make_config():
             "input": "data",
             "name": "create",
             "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v1/incident_roles",
+                "parts": [
+                  "v1",
+                  "incident_roles",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.incident_role`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {},
@@ -3936,7 +6447,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.incident_role`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "create",
@@ -3945,6 +6456,22 @@ def make_config():
             "input": "data",
             "name": "list",
             "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "GET",
+                "orig": "/v1/incident_roles",
+                "parts": [
+                  "v1",
+                  "incident_roles",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.incident_roles`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {},
@@ -3959,7 +6486,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.incident_roles`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "list",
@@ -3968,6 +6495,40 @@ def make_config():
             "input": "data",
             "name": "load",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v1/incident_roles/{id}",
+                "parts": [
+                  "v1",
+                  "incident_roles",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.incident_role`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -4000,7 +6561,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.incident_role`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "load",
@@ -4009,6 +6570,40 @@ def make_config():
             "input": "data",
             "name": "remove",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "DELETE",
+                "orig": "/v1/incident_roles/{id}",
+                "parts": [
+                  "v1",
+                  "incident_roles",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -4041,7 +6636,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "remove",
@@ -4050,6 +6645,40 @@ def make_config():
             "input": "data",
             "name": "update",
             "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v1/incident_roles/{id}",
+                "parts": [
+                  "v1",
+                  "incident_roles",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.incident_role`",
+                },
+                "index$": 0,
+              },
               {
                 "active": True,
                 "args": {
@@ -4082,7 +6711,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.incident_role`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "update",
@@ -5353,6 +7982,1237 @@ def make_config():
           "ancestors": [],
         },
       },
+      "schedule": {
+        "fields": [
+          {
+            "active": True,
+            "name": "annotation",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "config",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "current_shift",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "holidays_public_config",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "next_shift",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "permalink",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "schedule",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "team_id",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 10,
+          },
+          {
+            "active": True,
+            "name": "timezone",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 12,
+          },
+        ],
+        "name": "schedule",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/schedules",
+                "parts": [
+                  "v2",
+                  "schedules",
+                ],
+                "select": {},
+                "transform": {
+                  "req": {
+                    "schedule": "`reqdata`",
+                  },
+                  "res": "`body.schedule`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedules",
+                "parts": [
+                  "v2",
+                  "schedules",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "page_size",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01G0J1EXE7AXZ2C93K61WBPYEH",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedules/{id}",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.schedule`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+          "remove": {
+            "input": "data",
+            "name": "remove",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01G0J1EXE7AXZ2C93K61WBPYEH",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "DELETE",
+                "orig": "/v2/schedules/{id}",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "remove",
+          },
+          "update": {
+            "input": "data",
+            "name": "update",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01G0J1EXE7AXZ2C93K61WBPYEH",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v2/schedules/{id}",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": {
+                    "schedule": "`reqdata`",
+                  },
+                  "res": "`body.schedule`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "update",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "schedule_entry": {
+        "fields": [
+          {
+            "active": True,
+            "name": "pagination_meta",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "schedule_entry",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 1,
+          },
+        ],
+        "name": "schedule_entry",
+        "op": {
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "2021-01-01T00:00:00Z",
+                      "kind": "query",
+                      "name": "entry_window_end",
+                      "orig": "entry_window_end",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "2021-01-01T00:00:00Z",
+                      "kind": "query",
+                      "name": "entry_window_start",
+                      "orig": "entry_window_start",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "schedule_id",
+                      "orig": "schedule_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedule_entries",
+                "parts": [
+                  "v2",
+                  "schedule_entries",
+                ],
+                "select": {
+                  "exist": [
+                    "entry_window_end",
+                    "entry_window_start",
+                    "schedule_id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "schedule_replica": {
+        "fields": [
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "last_sync_error",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "last_synced_at",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "mirror_window_day",
+            "req": False,
+            "type": "`$INTEGER`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "replica_fallback_user_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "replica_provider",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "replica_provider_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "schedule_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "schedule_replica",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "source",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 10,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "user_status",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 12,
+          },
+        ],
+        "name": "schedule_replica",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "schedule_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "POST",
+                "orig": "/v2/schedules/{schedule_id}/replicas",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{id}",
+                  "replicas",
+                ],
+                "rename": {
+                  "param": {
+                    "schedule_id": "id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": {
+                    "schedule_replica": "`reqdata`",
+                  },
+                  "res": "`body.schedule_replica`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "schedule_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedules/{schedule_id}/replicas",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{id}",
+                  "replicas",
+                ],
+                "rename": {
+                  "param": {
+                    "schedule_id": "id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.schedule_replicas`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "schedule_id",
+                      "orig": "schedule_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 1,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedules/{schedule_id}/replicas/{id}",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{schedule_id}",
+                  "replicas",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                    "schedule_id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.schedule_replica`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+        },
+        "relations": {
+          "ancestors": [
+            [
+              "schedule",
+            ],
+          ],
+        },
+      },
+      "schedule_sync_rule": {
+        "fields": [
+          {
+            "active": True,
+            "name": "annotation",
+            "req": False,
+            "type": "`$OBJECT`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "permanent_member_user_id",
+            "op": {
+              "update": {
+                "req": False,
+                "type": "`$ARRAY`",
+              },
+            },
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "rotation_id",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "schedule_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "schedule_sync_rule",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "schedule_sync_target",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "schedule_sync_target_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "sync_type",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 10,
+          },
+        ],
+        "name": "schedule_sync_rule",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "schedule_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "POST",
+                "orig": "/v2/schedules/{schedule_id}/sync_rules",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{id}",
+                  "sync_rules",
+                ],
+                "rename": {
+                  "param": {
+                    "schedule_id": "id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": {
+                    "schedule_sync_rule": "`reqdata`",
+                  },
+                  "res": "`body.schedule_sync_rule`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "schedule_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01JXYZ000000000000000000CD",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedules/{schedule_id}/sync_rules",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{id}",
+                  "sync_rules",
+                ],
+                "rename": {
+                  "param": {
+                    "schedule_id": "id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "after",
+                    "id",
+                    "page_size",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01JXYZ000000000000000000CD",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "schedule_id",
+                      "orig": "schedule_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 1,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedules/{schedule_id}/sync_rules/{id}",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{schedule_id}",
+                  "sync_rules",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                    "schedule_id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.schedule_sync_rule`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+          "update": {
+            "input": "data",
+            "name": "update",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01JXYZ000000000000000000CD",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "param",
+                      "name": "schedule_id",
+                      "orig": "schedule_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 1,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v2/schedules/{schedule_id}/sync_rules/{id}",
+                "parts": [
+                  "v2",
+                  "schedules",
+                  "{schedule_id}",
+                  "sync_rules",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                    "schedule_id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.schedule_sync_rule`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "update",
+          },
+        },
+        "relations": {
+          "ancestors": [
+            [
+              "schedule",
+            ],
+          ],
+        },
+      },
+      "schedule_sync_target": {
+        "fields": [
+          {
+            "active": True,
+            "name": "add_bot_to_group",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "annotation",
+            "req": False,
+            "type": "`$OBJECT`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "linked_schedule",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "schedule_sync_target",
+            "req": True,
+            "type": "`$OBJECT`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "slack_team_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "slack_user_group_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
+          },
+        ],
+        "name": "schedule_sync_target",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/schedule_sync_targets",
+                "parts": [
+                  "v2",
+                  "schedule_sync_targets",
+                ],
+                "select": {},
+                "transform": {
+                  "req": {
+                    "schedule_sync_target": "`reqdata`",
+                  },
+                  "res": "`body.schedule_sync_target`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedule_sync_targets",
+                "parts": [
+                  "v2",
+                  "schedule_sync_targets",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "page_size",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "abc123",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/schedule_sync_targets/{id}",
+                "parts": [
+                  "v2",
+                  "schedule_sync_targets",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.schedule_sync_target`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+          "remove": {
+            "input": "data",
+            "name": "remove",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "abc123",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "DELETE",
+                "orig": "/v2/schedule_sync_targets/{id}",
+                "parts": [
+                  "v2",
+                  "schedule_sync_targets",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "remove",
+          },
+          "update": {
+            "input": "data",
+            "name": "update",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "abc123",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v2/schedule_sync_targets/{id}",
+                "parts": [
+                  "v2",
+                  "schedule_sync_targets",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.schedule_sync_target`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "update",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
       "secret": {
         "fields": [
           {
@@ -5394,16 +9254,16 @@ def make_config():
             "active": True,
             "name": "owning_team_id",
             "op": {
-              "list": {
-                "req": True,
+              "create": {
+                "req": False,
                 "type": "`$ARRAY`",
               },
               "update": {
-                "req": True,
+                "req": False,
                 "type": "`$ARRAY`",
               },
             },
-            "req": False,
+            "req": True,
             "type": "`$ARRAY`",
             "index$": 5,
           },
@@ -5444,6 +9304,43 @@ def make_config():
             "points": [
               {
                 "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "POST",
+                "orig": "/v2/secrets/{id}/actions/rotate",
+                "parts": [
+                  "v2",
+                  "secrets",
+                  "{id}",
+                  "actions",
+                  "rotate",
+                ],
+                "select": {
+                  "$action": "action_rotate",
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.secret`",
+                },
+                "index$": 0,
+              },
+              {
+                "active": True,
                 "args": {},
                 "method": "POST",
                 "orig": "/v2/secrets",
@@ -5456,7 +9353,7 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.secret`",
                 },
-                "index$": 0,
+                "index$": 1,
               },
             ],
             "key$": "create",
@@ -5650,6 +9547,1072 @@ def make_config():
           "ancestors": [],
         },
       },
+      "severity": {
+        "fields": [
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "description",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "rank",
+            "op": {
+              "create": {
+                "req": False,
+                "type": "`$INTEGER`",
+              },
+              "update": {
+                "req": False,
+                "type": "`$INTEGER`",
+              },
+            },
+            "req": True,
+            "type": "`$INTEGER`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+        ],
+        "name": "severity",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v1/severities",
+                "parts": [
+                  "v1",
+                  "severities",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.severity`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "GET",
+                "orig": "/v1/severities",
+                "parts": [
+                  "v1",
+                  "severities",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.severities`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v1/severities/{id}",
+                "parts": [
+                  "v1",
+                  "severities",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.severity`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+          "update": {
+            "input": "data",
+            "name": "update",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v1/severities/{id}",
+                "parts": [
+                  "v1",
+                  "severities",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.severity`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "update",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "status_page": {
+        "fields": [
+          {
+            "active": True,
+            "name": "description",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "public_url",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+        ],
+        "name": "status_page",
+        "op": {
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/status_pages",
+                "parts": [
+                  "v2",
+                  "status_pages",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "page_size",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "status_page_incident": {
+        "fields": [
+          {
+            "active": True,
+            "name": "component_impact",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "component_status",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "idempotency_key",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "incident_status",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "message",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "notify_subscriber",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "published_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "status_page_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "update",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 10,
+          },
+        ],
+        "name": "status_page_incident",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/status_page_incidents",
+                "parts": [
+                  "v2",
+                  "status_page_incidents",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.status_page_incident`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG1",
+                      "kind": "query",
+                      "name": "component_id",
+                      "orig": "component_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "2021-08-17T13:28:57.801578Z",
+                      "kind": "query",
+                      "name": "end_at",
+                      "orig": "end_at",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG2",
+                      "kind": "query",
+                      "name": "group_id",
+                      "orig": "group_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                    {
+                      "active": True,
+                      "example": "2021-08-17T13:28:57.801578Z",
+                      "kind": "query",
+                      "name": "start_at",
+                      "orig": "start_at",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "query",
+                      "name": "status_page_id",
+                      "orig": "status_page_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG3",
+                      "kind": "query",
+                      "name": "sub_page_id",
+                      "orig": "sub_page_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/status_page_incidents",
+                "parts": [
+                  "v2",
+                  "status_page_incidents",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "component_id",
+                    "end_at",
+                    "group_id",
+                    "page_size",
+                    "start_at",
+                    "status_page_id",
+                    "sub_page_id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG1",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "status_page_incident_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/status_page_incidents/{status_page_incident_id}",
+                "parts": [
+                  "v2",
+                  "status_page_incidents",
+                  "{id}",
+                ],
+                "rename": {
+                  "param": {
+                    "status_page_incident_id": "id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.status_page_incident`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+          "update": {
+            "input": "data",
+            "name": "update",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG1",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "status_page_incident_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v2/status_page_incidents/{status_page_incident_id}",
+                "parts": [
+                  "v2",
+                  "status_page_incidents",
+                  "{id}",
+                ],
+                "rename": {
+                  "param": {
+                    "status_page_incident_id": "id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.status_page_incident`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "update",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "status_page_incident_update": {
+        "fields": [
+          {
+            "active": True,
+            "name": "component_status",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "incident_status",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "message",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "notify_subscriber",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "status_page_incident_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+        ],
+        "name": "status_page_incident_update",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/status_page_incident_updates",
+                "parts": [
+                  "v2",
+                  "status_page_incident_updates",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.status_page_incident_update`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "status_page_maintenance": {
+        "fields": [
+          {
+            "active": True,
+            "name": "affected_component_id",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "component_maintenance_period",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "end_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "idempotency_key",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "maintenance_status",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "message",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "notify_subscriber",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "published_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 9,
+          },
+          {
+            "active": True,
+            "name": "start_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 10,
+          },
+          {
+            "active": True,
+            "name": "status_page_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 11,
+          },
+          {
+            "active": True,
+            "name": "update",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 12,
+          },
+        ],
+        "name": "status_page_maintenance",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/status_page_maintenances",
+                "parts": [
+                  "v2",
+                  "status_page_maintenances",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.status_page_maintenance`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+          "list": {
+            "input": "data",
+            "name": "list",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "query": [
+                    {
+                      "active": True,
+                      "example": "01FDAG4SAP5TYPT98WGR2N7W91",
+                      "kind": "query",
+                      "name": "after",
+                      "orig": "after",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG1",
+                      "kind": "query",
+                      "name": "component_id",
+                      "orig": "component_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "2021-08-17T13:28:57.801578Z",
+                      "kind": "query",
+                      "name": "end_at",
+                      "orig": "end_at",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG2",
+                      "kind": "query",
+                      "name": "group_id",
+                      "orig": "group_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": 25,
+                      "kind": "query",
+                      "name": "page_size",
+                      "orig": "page_size",
+                      "reqd": False,
+                      "type": "`$INTEGER`",
+                    },
+                    {
+                      "active": True,
+                      "example": "2021-08-17T13:28:57.801578Z",
+                      "kind": "query",
+                      "name": "start_at",
+                      "orig": "start_at",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+                      "kind": "query",
+                      "name": "status_page_id",
+                      "orig": "status_page_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                    },
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG3",
+                      "kind": "query",
+                      "name": "sub_page_id",
+                      "orig": "sub_page_id",
+                      "reqd": False,
+                      "type": "`$STRING`",
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/status_page_maintenances",
+                "parts": [
+                  "v2",
+                  "status_page_maintenances",
+                ],
+                "select": {
+                  "exist": [
+                    "after",
+                    "component_id",
+                    "end_at",
+                    "group_id",
+                    "page_size",
+                    "start_at",
+                    "status_page_id",
+                    "sub_page_id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "list",
+          },
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01FCNDV6P870EA6S7TK1DSYDG1",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "status_page_maintenance_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/status_page_maintenances/{status_page_maintenance_id}",
+                "parts": [
+                  "v2",
+                  "status_page_maintenances",
+                  "{id}",
+                ],
+                "rename": {
+                  "param": {
+                    "status_page_maintenance_id": "id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.status_page_maintenance`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "status_page_maintenance_update": {
+        "fields": [
+          {
+            "active": True,
+            "name": "component_status",
+            "req": False,
+            "type": "`$ARRAY`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "maintenance_status",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "message",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "notify_subscriber",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "status_page_maintenance_id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+        ],
+        "name": "status_page_maintenance_update",
+        "op": {
+          "create": {
+            "input": "data",
+            "name": "create",
+            "points": [
+              {
+                "active": True,
+                "args": {},
+                "method": "POST",
+                "orig": "/v2/status_page_maintenance_updates",
+                "parts": [
+                  "v2",
+                  "status_page_maintenance_updates",
+                ],
+                "select": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.status_page_maintenance_update`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "create",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "status_page_structure": {
+        "fields": [
+          {
+            "active": True,
+            "name": "item",
+            "req": True,
+            "type": "`$ARRAY`",
+            "index$": 0,
+          },
+        ],
+        "name": "status_page_structure",
+        "op": {
+          "load": {
+            "input": "data",
+            "name": "load",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "abc123",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "status_page_id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "GET",
+                "orig": "/v2/status_page_structures/{status_page_id}",
+                "parts": [
+                  "v2",
+                  "status_page_structures",
+                  "{id}",
+                ],
+                "rename": {
+                  "param": {
+                    "status_page_id": "id",
+                  },
+                },
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.current_structure`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "load",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
       "team": {
         "fields": [
           {
@@ -5772,6 +10735,134 @@ def make_config():
               },
             ],
             "key$": "load",
+          },
+        },
+        "relations": {
+          "ancestors": [],
+        },
+      },
+      "telemetry_data_source": {
+        "fields": [
+          {
+            "active": True,
+            "name": "created_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 0,
+          },
+          {
+            "active": True,
+            "name": "datadog_config",
+            "req": False,
+            "type": "`$OBJECT`",
+            "index$": 1,
+          },
+          {
+            "active": True,
+            "name": "enabled",
+            "req": True,
+            "type": "`$BOOLEAN`",
+            "index$": 2,
+          },
+          {
+            "active": True,
+            "name": "grafana_config",
+            "req": False,
+            "type": "`$OBJECT`",
+            "index$": 3,
+          },
+          {
+            "active": True,
+            "name": "id",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 4,
+          },
+          {
+            "active": True,
+            "name": "name",
+            "op": {
+              "update": {
+                "req": False,
+                "type": "`$STRING`",
+              },
+            },
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 5,
+          },
+          {
+            "active": True,
+            "name": "provider",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 6,
+          },
+          {
+            "active": True,
+            "name": "source_type",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 7,
+          },
+          {
+            "active": True,
+            "name": "updated_at",
+            "req": True,
+            "type": "`$STRING`",
+            "index$": 8,
+          },
+          {
+            "active": True,
+            "name": "version",
+            "req": False,
+            "type": "`$STRING`",
+            "index$": 9,
+          },
+        ],
+        "name": "telemetry_data_source",
+        "op": {
+          "update": {
+            "input": "data",
+            "name": "update",
+            "points": [
+              {
+                "active": True,
+                "args": {
+                  "params": [
+                    {
+                      "active": True,
+                      "example": "01G0J1EXE7AXZ2C93K61WBPYEH",
+                      "kind": "param",
+                      "name": "id",
+                      "orig": "id",
+                      "reqd": True,
+                      "type": "`$STRING`",
+                      "index$": 0,
+                    },
+                  ],
+                },
+                "method": "PUT",
+                "orig": "/v2/telemetry/data_sources/{id}",
+                "parts": [
+                  "v2",
+                  "telemetry",
+                  "data_sources",
+                  "{id}",
+                ],
+                "select": {
+                  "exist": [
+                    "id",
+                  ],
+                },
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.data_source`",
+                },
+                "index$": 0,
+              },
+            ],
+            "key$": "update",
           },
         },
         "relations": {

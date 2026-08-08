@@ -7,6 +7,14 @@ main: kit: flow: BasicAlertFlow:
   name: "BasicAlertFlow",
   step: [
     {
+      input: {
+        ref: "alert_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
       op: "list",
       valid: [
         {
