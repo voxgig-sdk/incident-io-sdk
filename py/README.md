@@ -1,6 +1,6 @@
 # IncidentIo Python SDK
 
-
+incident.io API clients in TypeScript, JavaScript, Go, Python, PHP and Lua, plus an MCP server for AI agents — all generated from incident.io's public OpenAPI spec, so every surface stays in sync with the API.
 
 The Python SDK for the IncidentIo API — an entity-oriented client following Pythonic conventions.
 

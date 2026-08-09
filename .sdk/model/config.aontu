@@ -14,3 +14,58 @@ main: kit: config: {
   }
 
 }
+
+
+# ---------------------------------------------------------------------------
+# README content.
+#
+# The top-level README.md is GENERATED (sdkgen ReadmeTop), so hand-editing it
+# is lost on the next `npm run generate`. These slots are the supported way to
+# supply the prose — they live in this file, which is not generated, so they
+# survive regeneration and the README stays reproducible from config alone.
+#
+# Slots read by ReadmeTop: tagline, about_md, summary, website, docs_url,
+# homepage, license_md, license_short, entity_desc, meta_source, contact.
+# ---------------------------------------------------------------------------
+
+main: kit: info: {
+
+  tagline: `incident.io API clients in TypeScript, JavaScript, Go, Python, PHP and Lua, plus an MCP server for AI agents — all generated from incident.io's public OpenAPI spec, so every surface stays in sync with the API.`
+
+  about_md: `Voxgig builds public SDK and MCP examples for APIs we think are interesting. This is one
+of those. MIT-licensed, take whatever's useful.
+
+All of it comes from one spec. Change the spec, regenerate, and every surface updates
+together. None of them drift.
+
+## Honest state
+
+Generated from incident.io's public OpenAPI spec. Not production-tuned. Use it as a starting
+point or a reference.
+
+**Scope.** Generated from the complete published spec — all 121 paths across its three API
+versions — with no hand-editing of the spec: 48 entities, 147 operations.
+
+incident.io names every response envelope ` + "`" + `<Namespace><Verb>ResultV<N>` + "`" + `, which earlier generator
+versions classified as entities in their own right. @voxgig/apidef 6.4.x folds those back
+into the resource they wrap. A handful of operations are namespace-only (` + "`" + `Catalog V2` + "`" + `,
+` + "`" + `Utilities V1` + "`" + `) or carry an operation namespace matching no path segment
+(` + "`" + `/v2/escalation_paths` + "`" + ` is served by ` + "`" + `Escalations V2#ListPaths` + "`" + `); those are switched off in
+` + "`" + `.sdk/model/guide/guide.aontu` + "`" + `, the supported way to correct a classification.
+
+Everything here is reproducible from the spec plus the committed config — clone,
+` + "`" + `npm install` + "`" + ` in ` + "`" + `.sdk/` + "`" + `, ` + "`" + `npm run generate` + "`" + `.
+
+**Known rough edge:** entity descriptions come from the spec's operation summaries, so a few
+read as terse restatements of the entity name. The spec has no per-schema descriptions.
+
+When teams want SDKs like these production-grade, idiomatic per language, tested, documented,
+and released through a real pipeline, Voxgig does that work as a consulting engagement. The
+toolkit also generates Java, C#, Swift, Kotlin, Rust and more if your customers need them.`
+
+  # NOTE: summary/title/version/website are set by api/api-info.aontu from the
+  # spec. aontu UNIFIES rather than overrides, so setting them here too is a
+  # build error unless the value is identical. Only fill slots apidef leaves
+  # empty; to change a spec-derived one, use a `*` default in api-info.
+  docs_url: 'https://api-docs.incident.io'
+}
