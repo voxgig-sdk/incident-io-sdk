@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "module": "nodenext",
     "noEmitOnError": true,
@@ -11,6 +12,7 @@
     "target": "es2022",
     "types": ["node"],
     "declaration": true,
-    "declarationDir": "../dist"
+    "declarationDir": "../dist",
+    "composite": true
   }
 }

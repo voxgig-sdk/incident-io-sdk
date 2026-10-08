@@ -1,0 +1,22 @@
+# BasicScheduleEntriesListPayloadV2Flow
+
+main: kit: flow: BasicScheduleEntriesListPayloadV2Flow:
+{
+  entity: "schedule_entries_list_payload_v2",
+  kind: "basic",
+  name: "BasicScheduleEntriesListPayloadV2Flow",
+  step: [
+    {
+      i: {
+        ref: "schedule_entries_list_payload_v2_ref01"
+      }
+
+      m: {
+        schedule_id: "schedule01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicScheduleEntriesListPayloadV2Flow"
+}

@@ -1,0 +1,122 @@
+# Entity: call_routes_update_option_result_v2
+
+main: kit: entity: call_routes_update_option_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    digit: {
+      h: "Digit"
+      n: "digit"
+      r: true
+      sh: "The keypad digit a caller presses to choose this option"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this option"
+      t: "`$STRING`"
+    }
+    path: {
+      h: "Path"
+      n: "path"
+      r: true
+      sh: "Who we page when a caller chooses this option"
+      t: "`$ARRAY`"
+    }
+    prompt: {
+      h: "Prompt"
+      n: "prompt"
+      r: true
+      sh: "What we read out to offer this option, via text-to-speech in the route's language, exactly as written"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "call_routes_update_option_result_v2"
+  op: {
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "digit"
+            "path"
+            "prompt"
+          ]
+          co: {
+            id: "PUT /v2/call_routes/{call_route_id}/options/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "call_route_id"
+                or: "call_route_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/call_routes/{call_route_id}/options/{id}"
+          q: {
+            exist: [
+              "call_route_id"
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "call_routes"
+            }
+            {
+              var: "call_route_id"
+            }
+            {
+              lit: "options"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.option`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.call_route")]
+  ]
+
+}

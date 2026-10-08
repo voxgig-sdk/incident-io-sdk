@@ -7,16 +7,16 @@ main: kit: flow: BasicIncidentFlow:
   name: "BasicIncidentFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "incident_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
 
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -27,18 +27,18 @@ main: kit: flow: BasicIncidentFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "incident_ref01",
         srcdatavar: "incident_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "incident01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

@@ -11,8 +11,9 @@ main: kit: target: 'go-mcp': {
   ext: go
   comment: line: "//"
   module: name: 'incident-io'
+  base: 'node_modules/@voxgig/sdkgen/project/.sdk'
+  package: '@voxgig/sdkgen'
 
-  # Per-generation-phase activation. Mirrors go-cli — only Main runs.
   phase: {
     entity:     { active: false }
     feature:    { active: false }
@@ -25,18 +26,16 @@ main: kit: target: 'go-mcp': {
   # a relative replace to the sibling SDK at ../go and declares the
   # MCP Go SDK as a direct dep. See Main_go-mcp.ts.
   deps: {}
+
+  tool: write: *false | boolean
 }
 
 
-# Feature-deps map slot — every target carries this so the same
-# feature can specify per-target dep variants.
 main: kit: feature: &: target: 'go-mcp': deps: &: {
   kind: *'prod' | string
 }
 
 
-# Publication: tag-only — the Go module proxy resolves versions from the
-# go-mcp/vX.Y.Z GitHub tag; there is no package registry to upload to.
 main: kit: target: 'go-mcp': publish: {
-  tag: { active: true, via: 'root' }
+  tag: { via: 'root' }
 }

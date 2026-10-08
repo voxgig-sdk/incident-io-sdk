@@ -4,18 +4,21 @@ main: kit: entity: schedule_entry: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "pagination_meta"
-      req: true
-      type: "`$OBJECT`"
+  fields: {
+    pagination_meta: {
+      h: "Pagination Meta"
+      n: "pagination_meta"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "schedule_entry"
-      req: true
-      type: "`$OBJECT`"
+    schedule_entries: {
+      h: "Schedule Entries"
+      n: "schedule_entries"
+      r: true
+      sh: "The schedule entries for a window of time, grouped by where they come from."
+      t: "`$OBJECT`"
     }
-  ]
+  }
 
   name: "schedule_entry"
   op: {
@@ -23,48 +26,59 @@ main: kit: entity: schedule_entry: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedule_entries"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "2021-01-01T00:00:00Z"
-                kind: "query"
-                name: "entry_window_end"
-                orig: "entry_window_end"
-                reqd: false
-                type: "`$STRING`"
+                ex: "2021-01-01T00:00:00Z"
+                k: "query"
+                n: "entry_window_end"
+                or: "entry_window_end"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "2021-01-01T00:00:00Z"
-                kind: "query"
-                name: "entry_window_start"
-                orig: "entry_window_start"
-                reqd: false
-                type: "`$STRING`"
+                ex: "2021-01-01T00:00:00Z"
+                k: "query"
+                n: "entry_window_start"
+                or: "entry_window_start"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "schedule_id"
-                orig: "schedule_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "schedule_id"
+                or: "schedule_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedule_entries"
-          parts: [
-            "v2"
-            "schedule_entries"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/schedule_entries"
+          q: {
             exist: [
-              "entry_window_end"
-              "entry_window_start"
               "schedule_id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedule_entries"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }

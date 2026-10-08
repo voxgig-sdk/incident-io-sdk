@@ -8,11 +8,29 @@ local runner = require("test.runner")
 
 local _test_dir = debug.getinfo(1, "S").source:match("^@(.+/)")  or "./"
 
+-- main.kit.test.live.strict is true (the default is true): a live
+-- request that fails, or a live test missing an input it needs,
+-- fails the test.
+-- An account with no record for a test to read skips it either way.
+local LIVE_STRICT = true
+
+
 describe("IpAllowlistEntity", function()
   it("should create instance", function()
     local testsdk = sdk.test(nil, nil)
     local ent = testsdk:IpAllowlist(nil)
     assert.is_not_nil(ent)
+  end)
+
+  it("should refuse an invalid request", function()
+    local config = require("config_shared")()
+    if type(config.feature) ~= "table" or config.feature.validate == nil then
+      pending("feature not present in this SDK: validate")
+      return
+    end
+    local client = sdk.test(nil, { feature = { validate = { active = true } } })
+    local _, err = client:IpAllowlist(nil):load({ ["enabled"] = "x" }, nil)
+    assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 
   it("should run basic flow", function()
@@ -25,12 +43,6 @@ describe("IpAllowlistEntity", function()
         pending(_reason or "skipped via sdk-test-control.json")
         return
       end
-    end
-    -- The basic flow consumes synthetic IDs from the fixture. In live mode
-    -- without an *_ENTID env override, those IDs hit the live API and 4xx.
-    if setup.synthetic_only then
-      pending("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_IP_ALLOWLIST_ENTID JSON to run live")
-      return
     end
     local client = setup.client
 
@@ -53,7 +65,7 @@ describe("IpAllowlistEntity", function()
 
     local ip_allowlist_ref01_resdata_up0_result, err = ip_allowlist_ref01_ent:update(ip_allowlist_ref01_data_up0_up, nil)
     assert.is_nil(err)
-    local ip_allowlist_ref01_resdata_up0 = helpers.to_map(ip_allowlist_ref01_resdata_up0_result)
+    local ip_allowlist_ref01_resdata_up0 = helpers.to_map(type(ip_allowlist_ref01_resdata_up0_result) == 'table' and ip_allowlist_ref01_resdata_up0_result.data_get and ip_allowlist_ref01_resdata_up0_result:data_get() or ip_allowlist_ref01_resdata_up0_result)
     assert.is_not_nil(ip_allowlist_ref01_resdata_up0)
     assert.are.equal(ip_allowlist_ref01_resdata_up0[ip_allowlist_ref01_markdef_up0_name], ip_allowlist_ref01_markdef_up0_value)
 
@@ -95,40 +107,44 @@ function ip_allowlist_basic_setup(extra)
     }
   )
 
-  -- Detect ENTID env override before envOverride consumes it. When live
-  -- mode is on without a real override, the basic test runs against synthetic
-  -- IDs from the fixture and 4xx's. Surface this so the test can skip.
-  local entid_env_raw = os.getenv("INCIDENTIO_TEST_IP_ALLOWLIST_ENTID")
+  -- Whether *_ENTID supplied the idmap, read before env_override consumes
+  -- it: without it, the ids a live flow binds are the fixture's synthetic ones.
+  local entid_env_raw = os.getenv("INCIDENT_IO_TEST_IP_ALLOWLIST_ENTID")
   local idmap_overridden = entid_env_raw ~= nil and entid_env_raw:match("^%s*{") ~= nil
 
   local env = runner.env_override({
-    ["INCIDENTIO_TEST_IP_ALLOWLIST_ENTID"] = idmap,
-    ["INCIDENTIO_TEST_LIVE"] = "FALSE",
-    ["INCIDENTIO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_TEST_IP_ALLOWLIST_ENTID"] = idmap,
+    ["INCIDENT_IO_TEST_LIVE"] = "FALSE",
+    ["INCIDENT_IO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_APIKEY"] = "",
   })
 
   local idmap_resolved = helpers.to_map(
-    env["INCIDENTIO_TEST_IP_ALLOWLIST_ENTID"])
+    env["INCIDENT_IO_TEST_IP_ALLOWLIST_ENTID"])
   if idmap_resolved == nil then
     idmap_resolved = helpers.to_map(idmap)
   end
 
-  if env["INCIDENTIO_TEST_LIVE"] == "TRUE" then
+  if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
+      -- FIRST, so the generated fields below win: sdk-test-control.json's
+      -- test.client.options adds to the live client, it does not redirect it.
+      runner.live_client_options(),
       {
+        apikey = env["INCIDENT_IO_APIKEY"],
       },
       extra or {},
     })
     client = sdk.new(helpers.to_map(merged_opts))
   end
 
-  local live = env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+  local live = env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
   return {
     client = client,
     data = entity_data,
     idmap = idmap_resolved,
     env = env,
-    explain = env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+    explain = env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
     live = live,
     synthetic_only = live and not idmap_overridden,
     now = os.time() * 1000,

@@ -1,5 +1,5 @@
 {
-  "name": "voxgig-sdk/incident-io",
+  "name": "voxgig-sdk/incident-io-sdk",
   "description": "Unofficial generated PHP SDK for the incident.io public API. Not affiliated with or endorsed by the upstream API provider.",
   "type": "library",
   "keywords": ["voxgig", "sdk", "generated-sdk", "openapi", "api-client", "incident-io"],
@@ -21,7 +21,7 @@
   },
   "autoload": {
     "files": ["incidentio_sdk.php"],
-    "classmap": ["core/", "entity/", "feature/", "types/", "utility/", "config.php", "features.php"]
+    "classmap": ["core/", "entity/", "feature/", "types/", "utility/", "config.php", "schema.php", "features.php"]
   },
   "autoload-dev": {
     "classmap": ["test/"]

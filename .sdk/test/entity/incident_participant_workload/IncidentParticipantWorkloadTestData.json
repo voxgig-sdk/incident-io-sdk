@@ -30,5 +30,12 @@
         "workload": {}
       }
     }
+  },
+  "requests": {
+    "GET /v2/incident_participant_workloads": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

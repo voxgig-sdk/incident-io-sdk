@@ -3,17 +3,17 @@
     "schedule_entry": {
       "SCHEDULE_ENTRY00": {
         "pagination_meta": {},
-        "schedule_entry": {},
+        "schedule_entries": {},
         "id": "SCHEDULE_ENTRY00"
       },
       "SCHEDULE_ENTRY01": {
         "pagination_meta": {},
-        "schedule_entry": {},
+        "schedule_entries": {},
         "id": "SCHEDULE_ENTRY01"
       },
       "SCHEDULE_ENTRY02": {
         "pagination_meta": {},
-        "schedule_entry": {},
+        "schedule_entries": {},
         "id": "SCHEDULE_ENTRY02"
       }
     }
@@ -22,8 +22,15 @@
     "schedule_entry": {
       "schedule_entry_ref01": {
         "pagination_meta": {},
-        "schedule_entry": {}
+        "schedule_entries": {}
       }
+    }
+  },
+  "requests": {
+    "GET /v2/schedule_entries": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

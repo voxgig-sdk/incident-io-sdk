@@ -8,11 +8,29 @@ local runner = require("test.runner")
 
 local _test_dir = debug.getinfo(1, "S").source:match("^@(.+/)")  or "./"
 
+-- main.kit.test.live.strict is true (the default is true): a live
+-- request that fails, or a live test missing an input it needs,
+-- fails the test.
+-- An account with no record for a test to read skips it either way.
+local LIVE_STRICT = true
+
+
 describe("CatalogTypeSchemaEntity", function()
   it("should create instance", function()
     local testsdk = sdk.test(nil, nil)
     local ent = testsdk:CatalogTypeSchema(nil)
     assert.is_not_nil(ent)
+  end)
+
+  it("should refuse an invalid request", function()
+    local config = require("config_shared")()
+    if type(config.feature) ~= "table" or config.feature.validate == nil then
+      pending("feature not present in this SDK: validate")
+      return
+    end
+    local client = sdk.test(nil, { feature = { validate = { active = true } } })
+    local _, err = client:CatalogTypeSchema(nil):create({ ["catalog_type_id"] = 1, ["annotations"] = "x", ["attributes"] = "x", ["categories"] = "x", ["color"] = "x", ["created_at"] = "x", ["description"] = "x", ["engine_resource_type"] = "x", ["icon"] = "x", ["id"] = "x", ["is_editable"] = true, ["name"] = "x", ["ranked"] = true, ["schema"] = "x", ["semantic_type"] = "x", ["type_name"] = "x", ["updated_at"] = "x", ["use_name_as_identifier"] = true, ["version"] = 1 }, nil)
+    assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 
   it("should run basic flow", function()
@@ -26,11 +44,12 @@ describe("CatalogTypeSchemaEntity", function()
         return
       end
     end
-    -- The basic flow consumes synthetic IDs from the fixture. In live mode
-    -- without an *_ENTID env override, those IDs hit the live API and 4xx.
-    if setup.synthetic_only then
-      pending("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_CATALOG_TYPE_SCHEMA_ENTID JSON to run live")
-      return
+    if setup.live then
+      for _, _live_key in ipairs({"catalog_type01"}) do
+        if setup.synthetic_only or setup.idmap[_live_key] == nil then
+          runner.live_miss(pending, LIVE_STRICT, "Live entity test blocked: needs " .. _live_key .. " via INCIDENT_IO_TEST_CATALOG_TYPE_SCHEMA_ENTID")
+        end
+      end
     end
     local client = setup.client
 
@@ -42,7 +61,7 @@ describe("CatalogTypeSchemaEntity", function()
 
     local catalog_type_schema_ref01_data_result, err = catalog_type_schema_ref01_ent:create(catalog_type_schema_ref01_data, nil)
     assert.is_nil(err)
-    catalog_type_schema_ref01_data = helpers.to_map(catalog_type_schema_ref01_data_result)
+    catalog_type_schema_ref01_data = helpers.to_map(type(catalog_type_schema_ref01_data_result) == 'table' and catalog_type_schema_ref01_data_result.data_get and catalog_type_schema_ref01_data_result:data_get() or catalog_type_schema_ref01_data_result)
     assert.is_not_nil(catalog_type_schema_ref01_data)
     assert.is_not_nil(catalog_type_schema_ref01_data["id"])
 
@@ -78,40 +97,44 @@ function catalog_type_schema_basic_setup(extra)
     }
   )
 
-  -- Detect ENTID env override before envOverride consumes it. When live
-  -- mode is on without a real override, the basic test runs against synthetic
-  -- IDs from the fixture and 4xx's. Surface this so the test can skip.
-  local entid_env_raw = os.getenv("INCIDENTIO_TEST_CATALOG_TYPE_SCHEMA_ENTID")
+  -- Whether *_ENTID supplied the idmap, read before env_override consumes
+  -- it: without it, the ids a live flow binds are the fixture's synthetic ones.
+  local entid_env_raw = os.getenv("INCIDENT_IO_TEST_CATALOG_TYPE_SCHEMA_ENTID")
   local idmap_overridden = entid_env_raw ~= nil and entid_env_raw:match("^%s*{") ~= nil
 
   local env = runner.env_override({
-    ["INCIDENTIO_TEST_CATALOG_TYPE_SCHEMA_ENTID"] = idmap,
-    ["INCIDENTIO_TEST_LIVE"] = "FALSE",
-    ["INCIDENTIO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_TEST_CATALOG_TYPE_SCHEMA_ENTID"] = idmap,
+    ["INCIDENT_IO_TEST_LIVE"] = "FALSE",
+    ["INCIDENT_IO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_APIKEY"] = "",
   })
 
   local idmap_resolved = helpers.to_map(
-    env["INCIDENTIO_TEST_CATALOG_TYPE_SCHEMA_ENTID"])
+    env["INCIDENT_IO_TEST_CATALOG_TYPE_SCHEMA_ENTID"])
   if idmap_resolved == nil then
     idmap_resolved = helpers.to_map(idmap)
   end
 
-  if env["INCIDENTIO_TEST_LIVE"] == "TRUE" then
+  if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
+      -- FIRST, so the generated fields below win: sdk-test-control.json's
+      -- test.client.options adds to the live client, it does not redirect it.
+      runner.live_client_options(),
       {
+        apikey = env["INCIDENT_IO_APIKEY"],
       },
       extra or {},
     })
     client = sdk.new(helpers.to_map(merged_opts))
   end
 
-  local live = env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+  local live = env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
   return {
     client = client,
     data = entity_data,
     idmap = idmap_resolved,
     env = env,
-    explain = env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+    explain = env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
     live = live,
     synthetic_only = live and not idmap_overridden,
     now = os.time() * 1000,

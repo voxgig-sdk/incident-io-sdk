@@ -1,0 +1,44 @@
+{
+  "existing": {
+    "call_transcript_entry": {
+      "CALL_TRANSCRIPT_ENTRY00": {
+        "content": "s32",
+        "id": "CALL_TRANSCRIPT_ENTRY00",
+        "medium": "s34",
+        "participant_name": "s35",
+        "timestamp": "s36"
+      },
+      "CALL_TRANSCRIPT_ENTRY01": {
+        "content": "s64",
+        "id": "CALL_TRANSCRIPT_ENTRY01",
+        "medium": "s66",
+        "participant_name": "s67",
+        "timestamp": "s68"
+      },
+      "CALL_TRANSCRIPT_ENTRY02": {
+        "content": "s96",
+        "id": "CALL_TRANSCRIPT_ENTRY02",
+        "medium": "s98",
+        "participant_name": "s99",
+        "timestamp": "s9a"
+      }
+    }
+  },
+  "new": {
+    "call_transcript_entry": {
+      "call_transcript_entry_ref01": {
+        "content": "sc8",
+        "medium": "sca",
+        "participant_name": "scb",
+        "timestamp": "scc"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/call_transcript_entries": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

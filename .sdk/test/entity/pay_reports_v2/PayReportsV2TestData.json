@@ -1,0 +1,30 @@
+{
+  "existing": {
+    "pay_reports_v2": {
+      "PAY_REPORTS_V200": {
+        "pay_report_id": "PAY_REPORT01",
+        "id": "PAY_REPORTS_V200"
+      },
+      "PAY_REPORTS_V201": {
+        "pay_report_id": "PAY_REPORT01",
+        "id": "PAY_REPORTS_V201"
+      },
+      "PAY_REPORTS_V202": {
+        "pay_report_id": "PAY_REPORT01",
+        "id": "PAY_REPORTS_V202"
+      }
+    }
+  },
+  "new": {
+    "pay_reports_v2": {
+      "pay_reports_v2_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /v2/pay_reports/{id}/download": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

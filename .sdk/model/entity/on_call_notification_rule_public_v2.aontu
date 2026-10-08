@@ -1,0 +1,124 @@
+# Entity: on_call_notification_rule_public_v2
+
+main: kit: entity: on_call_notification_rule_public_v2: {
+
+  alias: field: {}
+
+  fields: {
+    app: {
+      h: "App"
+      n: "app"
+      r: true
+      t: "`$OBJECT`"
+    }
+    delay_seconds: {
+      fo: "int64"
+      h: "Delay Seconds"
+      n: "delay_seconds"
+      r: false
+      sh: "Delay in seconds before this rule activates."
+      t: "`$INTEGER`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this notification rule"
+      t: "`$STRING`"
+    }
+    method_target: {
+      h: "Method Target"
+      n: "method_target"
+      r: true
+      t: "`$OBJECT`"
+    }
+    method_type: {
+      h: "Method Type"
+      n: "method_type"
+      r: true
+      sh: "The high-level type of notification method."
+      t: "`$STRING`"
+    }
+    phone: {
+      h: "Phone"
+      n: "phone"
+      r: true
+      t: "`$OBJECT`"
+    }
+    rule_type: {
+      h: "Rule Type"
+      n: "rule_type"
+      r: true
+      sh: "The urgency level this rule applies to"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "on_call_notification_rule_public_v2"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/users/{user_id}/notification_rules"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "user_id"
+                or: "user_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/users/{user_id}/notification_rules"
+          q: {
+            exist: [
+              "user_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "user_id"
+            }
+            {
+              lit: "notification_rules"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.notification_rules`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.user")]
+  ]
+
+}

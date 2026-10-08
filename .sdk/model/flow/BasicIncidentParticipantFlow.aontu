@@ -7,14 +7,14 @@ main: kit: flow: BasicIncidentParticipantFlow:
   name: "BasicIncidentParticipantFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "incident_participant_ref01",
         srcdatavar: "incident_participant_ref01_data",
         suffix: "_dt0"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

@@ -21,5 +21,12 @@
         "incident": {}
       }
     }
+  },
+  "requests": {
+    "GET /v1/incident_relationships": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

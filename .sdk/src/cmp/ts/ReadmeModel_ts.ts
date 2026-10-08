@@ -1,5 +1,5 @@
 
-import { cmp, each, Content, isAuthActive } from '@voxgig/sdkgen'
+import { cmp, each, Content, isAuthActive, isHttpBasicAuth, serverVariables } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -14,26 +14,24 @@ const ReadmeModel = cmp(function ReadmeModel(props: any) {
   const entityList = each(entity).filter((e: any) => e.active !== false)
 
   // Model-driven op rows for the shared entity interface: emit a
-  // load/list/create/update/remove row only for operations at least one active
+  // load/list/create/update/patch/remove row only for operations at least one active
   // entity actually exposes (a read-only entity has just list+load) — never
   // document an operation no entity has.
   const opUnion = new Set<string>()
   entityList.forEach((e: any) => Object.keys(e.op || {})
     .forEach((o: string) => { if (e.op[o] && e.op[o].active !== false) opUnion.add(o) }))
   const opRowDefs: Record<string, string> = {
-    load: '| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria. |',
-    list: '| `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria. |',
-    create: '| `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity. |',
-    update: '| `update` | `update(reqdata?, ctrl?): Promise<Entity>` | Update an existing entity. |',
-    remove: '| `remove` | `remove(reqmatch?, ctrl?): Promise<void>` | Remove an entity. |',
+    load: '| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria, and return it. |',
+    list: '| `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria, one per record. |',
+    create: '| `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity, and return it. |',
+    update: '| `update` | `update(reqdata?, ctrl?): Promise<Entity>` | Update an existing entity, and return it. |',
+    patch: '| `patch` | `patch(reqdata?, ctrl?): Promise<Entity>` | Change part of an existing entity, and return it. |',
+    remove: '| `remove` | `remove(reqmatch?, ctrl?): Promise<Entity>` | Remove an entity, and return it marked as deleted. |',
   }
-  const opRows = ['load', 'list', 'create', 'update', 'remove']
+  const opRows = ['load', 'list', 'create', 'update', 'patch', 'remove']
     .filter((o) => opUnion.has(o)).map((o) => opRowDefs[o]).join('\n')
 
-  // Model-driven return-value bullets: describe only the operations that
-  // actually exist (single-object ops among load/create/update, plus
-  // list/remove) — never document return semantics for a missing op.
-  const singleOps = ['load', 'create', 'update'].filter((o) => opUnion.has(o))
+  const singleOps = ['load', 'create', 'update', 'patch'].filter((o) => opUnion.has(o))
     .map((o) => '`' + o + '`')
   const retBullets: string[] = []
   if (singleOps.length) {
@@ -46,22 +44,39 @@ const ReadmeModel = cmp(function ReadmeModel(props: any) {
     retBullets.push('- `list` resolves to an **array** of entity objects (iterate it directly;\n  there is no `.data` and no `.ok`).')
   }
   if (opUnion.has('remove')) {
-    retBullets.push('- `remove` resolves to `void`.')
+    retBullets.push('- `remove` resolves to the entity, marked as deleted.')
   }
   const returnBullets = retBullets.join('\n')
 
   const authActive = isAuthActive(model)
+  const authBasic = authActive && isHttpBasicAuth(model)
   const apikeyOptionType = authActive ? `\n  apikey?: string` : ''
+  const secretOptionType = authBasic ? `\n  secret?: string` : ''
   const apikeyOptionRow = authActive
     ? '| `apikey` | `string` | API key for authentication. |\n'
     : ''
+  const secretOptionRow = authBasic
+    ? '| `secret` | `string` | API secret for authentication. |\n'
+    : ''
+
+  // Server variables are not one option among many: without them the
+  // constructor THROWS, because the base URL is a template. Documented
+  // first for that reason, and named individually so a reader knows what
+  // to supply without going back to the spec.
+  const svars = serverVariables(model)
+  const serverOptionType = 0 === svars.length ? '' :
+    `\n  server?: { ${svars.map((v: any) => `${v.name}: string`).join(', ')} }`
+  const serverOptionRow = 0 === svars.length ? '' :
+    '| `server` | `object` | **Required.** Values for the server-URL variables: ' +
+    svars.map((v: any) => '`' + v.name + '`').join(', ') +
+    '. The API base URL is a template over them. |\n'
 
   Content(`### ${model.const.Name}SDK
 
 #### Constructor
 
 \`\`\`ts
-new ${model.const.Name}SDK(options?: {${apikeyOptionType}
+new ${model.const.Name}SDK(options?: {${apikeyOptionType}${secretOptionType}${serverOptionType}
   base?: string
   prefix?: string
   suffix?: string
@@ -72,7 +87,7 @@ new ${model.const.Name}SDK(options?: {${apikeyOptionType}
 
 | Option | Type | Description |
 | --- | --- | --- |
-${apikeyOptionRow}| \`base\` | \`string\` | Base URL of the API server. |
+${serverOptionRow}${apikeyOptionRow}${secretOptionRow}| \`base\` | \`string\` | Base URL of the API server. |
 | \`prefix\` | \`string\` | URL path prefix prepended to all requests. |
 | \`suffix\` | \`string\` | URL path suffix appended to all requests. |
 | \`feature\` | \`object\` | Feature activation flags (e.g. \`{ test: { active: true } }\`). |
@@ -119,8 +134,8 @@ ${opRows}
 
 #### Return values
 
-Entity operations resolve to the entity data directly — there is no
-result envelope:
+Entity operations resolve to the entity itself — there is no result
+envelope, and an entity's \`data()\` reads its record:
 
 ${returnBullets}
 
@@ -161,13 +176,13 @@ The \`prepare()\` method returns:
 `)
 
   each(entityList, (ent: any) => {
-    const fields = ent.fields || []
+    const fields = Object.values(ent.fields || {})
     const opnames = Object.keys(ent.op || {})
     const ops = ent.op || {}
     const points = each(ops).map((op: any) =>
       op.points ? each(op.points) : []
     ).flat()
-    const path = points.length > 0 ? (points[0] as any).orig || '' : ''
+    const path = points.length > 0 ? (points[0] as any).o || '' : ''
 
     Content(`#### ${ent.Name}
 
@@ -175,7 +190,7 @@ The \`prepare()\` method returns:
 | --- | --- |
 `)
     each(fields, (field: any) => {
-      Content(`| \`${field.name}\` | ${field.short || ''} |
+      Content(`| \`${field.n}\` | ${field.sh || ''} |
 `)
     })
 

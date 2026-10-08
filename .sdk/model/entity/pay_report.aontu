@@ -1,0 +1,355 @@
+# Entity: pay_report
+
+main: kit: entity: pay_report: {
+
+  alias: field: {}
+
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this report was created"
+      t: "`$STRING`"
+    }
+    creator: {
+      h: "Creator"
+      n: "creator"
+      r: false
+      t: "`$OBJECT`"
+    }
+    end_date: {
+      h: "End Date"
+      n: "end_date"
+      r: true
+      sh: "Last date (YYYY-MM-DD) this report includes shifts from, inclusive"
+      t: "`$STRING`"
+    }
+    error_code: {
+      h: "Error Code"
+      n: "error_code"
+      r: false
+      sh: "Why a report could not be generated"
+      t: "`$STRING`"
+    }
+    error_message: {
+      h: "Error Message"
+      n: "error_message"
+      r: false
+      sh: "What went wrong, written for whoever asked for the report."
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this pay report"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name for this report"
+      t: "`$STRING`"
+    }
+    overlapping_shifts: {
+      h: "Overlapping Shifts"
+      n: "overlapping_shifts"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "How time spent on more than one schedule at once was paid"
+      t: "`$STRING`"
+    }
+    pay_config_expression: {
+      h: "Pay Config Expression"
+      n: "pay_config_expression"
+      r: true
+      t: "`$OBJECT`"
+    }
+    pay_config_id: {
+      h: "Pay Config Id"
+      n: "pay_config_id"
+      r: false
+      sh: "The pay config to price every shift with."
+      t: "`$STRING`"
+    }
+    published_at: {
+      fo: "date-time"
+      h: "Published At"
+      n: "published_at"
+      r: false
+      sh: "When this report was published."
+      t: "`$STRING`"
+    }
+    rotation_filters: {
+      h: "Rotation Filters"
+      n: "rotation_filters"
+      r: false
+      sh: "Narrows some of these schedules to a subset of their rotations."
+      t: "`$ARRAY`"
+    }
+    schedule_ids: {
+      h: "Schedule Ids"
+      n: "schedule_ids"
+      r: true
+      sh: "The schedules this report covers"
+      t: "`$ARRAY`"
+    }
+    start_date: {
+      h: "Start Date"
+      n: "start_date"
+      r: true
+      sh: "First date (YYYY-MM-DD) this report includes shifts from, inclusive"
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: true
+      sh: "How far a report has got through being generated"
+      t: "`$STRING`"
+    }
+    total_duration_seconds: {
+      fo: "int64"
+      h: "Total Duration Seconds"
+      n: "total_duration_seconds"
+      r: false
+      sh: "Total time spent on-call across every shift in this report, in seconds."
+      t: "`$INTEGER`"
+    }
+    total_pay_by_currency: {
+      h: "Total Pay By Currency"
+      n: "total_pay_by_currency"
+      r: false
+      sh: "Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency."
+      t: "`$OBJECT`"
+    }
+    unpaid_shifts: {
+      h: "Unpaid Shifts"
+      n: "unpaid_shifts"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "Whether shifts that priced to zero are part of the report"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this report was last updated"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "pay_report"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "end_date"
+            "name"
+            "overlapping_shifts"
+            "pay_config_expression"
+            "pay_config_id"
+            "rotation_filters"
+            "schedule_ids"
+            "start_date"
+            "unpaid_shifts"
+          ]
+          co: {
+            id: "POST /v2/pay_reports"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/pay_reports"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_reports"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.pay_report`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/pay_reports"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/pay_reports"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_reports"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.pay_reports`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/pay_reports/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/pay_reports/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_reports"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.pay_report`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v2/pay_reports/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v2/pay_reports/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_reports"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

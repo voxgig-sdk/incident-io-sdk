@@ -19,7 +19,6 @@ import type {
   CatalogTypeSchemaCreateData,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class CatalogTypeSchemaEntity extends IncidentIoEntityBase<CatalogTypeSchema> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -38,13 +37,14 @@ class CatalogTypeSchemaEntity extends IncidentIoEntityBase<CatalogTypeSchema> {
 
 
 
-  async create(this: any, reqdata?: CatalogTypeSchemaCreateData, ctrl?: Control): Promise<CatalogTypeSchema> {
+  async create(this: any, reqdata?: CatalogTypeSchemaCreateData, ctrl?: Control): Promise<CatalogTypeSchemaEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -124,12 +124,20 @@ class CatalogTypeSchemaEntity extends IncidentIoEntityBase<CatalogTypeSchema> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -138,11 +146,12 @@ class CatalogTypeSchemaEntity extends IncidentIoEntityBase<CatalogTypeSchema> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<CatalogTypeSchema> return stays clean under strict null checks.
+        // Promise<CatalogTypeSchemaEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

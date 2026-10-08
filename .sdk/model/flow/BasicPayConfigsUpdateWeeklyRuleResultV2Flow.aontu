@@ -1,0 +1,33 @@
+# BasicPayConfigsUpdateWeeklyRuleResultV2Flow
+
+main: kit: flow: BasicPayConfigsUpdateWeeklyRuleResultV2Flow:
+{
+  entity: "pay_configs_update_weekly_rule_result_v2",
+  kind: "basic",
+  name: "BasicPayConfigsUpdateWeeklyRuleResultV2Flow",
+  step: [
+    {
+      d: {
+        pay_config_id: "pay_config01"
+      }
+
+      i: {
+        ref: "pay_configs_update_weekly_rule_result_v2_ref01",
+        srcdatavar: "pay_configs_update_weekly_rule_result_v2_ref01_data",
+        suffix: "_up0",
+        textfield: "end_time"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-pay_configs_update_weekly_rule_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPayConfigsUpdateWeeklyRuleResultV2Flow"
+}

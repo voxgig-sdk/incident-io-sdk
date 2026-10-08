@@ -1,0 +1,26 @@
+# BasicCallRoutesListOptionsResultV2Flow
+
+main: kit: flow: BasicCallRoutesListOptionsResultV2Flow:
+{
+  entity: "call_routes_list_options_result_v2",
+  kind: "basic",
+  name: "BasicCallRoutesListOptionsResultV2Flow",
+  step: [
+    {
+      m: {
+        call_route_id: "call_route01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "call_routes_list_options_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCallRoutesListOptionsResultV2Flow"
+}

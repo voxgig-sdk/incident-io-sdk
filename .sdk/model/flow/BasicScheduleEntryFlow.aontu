@@ -7,14 +7,14 @@ main: kit: flow: BasicScheduleEntryFlow:
   name: "BasicScheduleEntryFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "schedule_entry_ref01",
         srcdatavar: "schedule_entry_ref01_data",
         suffix: "_dt0"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

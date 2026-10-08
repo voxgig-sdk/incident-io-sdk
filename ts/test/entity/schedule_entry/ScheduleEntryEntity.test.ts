@@ -1,19 +1,21 @@
 
-const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
 
 import Path from 'node:path'
 import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
-import { IncidentIoSDK, BaseFeature, stdutil } from '../../..'
+import { IncidentIoSDK, BaseFeature, config, stdutil } from '../../..'
 
 import {
   envOverride,
+  liveClientOptions,
   liveDelay,
+  loadEnvLocal,
   makeCtrl,
   makeMatch,
   makeReqdata,
@@ -23,11 +25,14 @@ import {
 } from '../../utility'
 
 
+loadEnvLocal(__dirname + '/../../../.env.local')
+
+
 describe('ScheduleEntryEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when INCIDENTIO_TEST_LIVE=TRUE.
-  afterEach(liveDelay('INCIDENTIO_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = IncidentIoSDK.test()
@@ -36,20 +41,29 @@ describe('ScheduleEntryEntity', async () => {
   })
 
 
+  test('validate', async (t) => {
+    if (null == (config as any).feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.ScheduleEntry().load({"entry_window_end":1,"schedule_id":"x"} as any),
+      (err: any) => 'validate_failed' === err.code)
+  })
+
+
+
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE
     for (const op of ['load']) {
-      if (maybeSkipControl(t, 'entityOp', 'schedule_entry.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'schedule_entry.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set INCIDENT_IO_TEST_SCHEDULE_ENTRY_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"pagination_meta":{"a":true,"h":"Pagination Meta","n":"pagination_meta","r":true,"t":"`$OBJECT`","key$":"pagination_meta","index$":0},"schedule_entries":{"a":true,"h":"Schedule Entries","n":"schedule_entries","r":true,"sh":"The schedule entries for a window of time, grouped by where they come from.","t":"`$OBJECT`","key$":"schedule_entries","index$":1}},"name":"schedule_entry","op":{"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /v2/schedule_entries","source":"openapi3","version":2},"g":{"query":[{"a":true,"ex":"2021-01-01T00:00:00Z","k":"query","n":"entry_window_end","or":"entry_window_end","r":false,"t":"`$STRING`","index$":0},{"a":true,"ex":"2021-01-01T00:00:00Z","k":"query","n":"entry_window_start","or":"entry_window_start","r":false,"t":"`$STRING`","index$":1},{"a":true,"ex":"01FDAG4SAP5TYPT98WGR2N7W91","k":"query","n":"schedule_id","or":"schedule_id","r":true,"t":"`$STRING`","index$":2}]},"k":"http","m":"GET","o":"/v2/schedule_entries","q":{"exist":["schedule_id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"schedule_entries"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"load"}},"relations":{"ancestors":[]},"key$":"schedule_entry","name__orig":"schedule_entry","Name":"ScheduleEntry","name_":"schedule_entry","name-":"schedule-entry","NAME":"SCHEDULE_ENTRY","index$":86}, {"active":true,"entity":"schedule_entry","key$":"BasicScheduleEntryFlow","kind":"basic","name":"BasicScheduleEntryFlow","param":{},"step":[{"a":true,"d":{},"i":{"ref":"schedule_entry_ref01","srcdatavar":"schedule_entry_ref01_data","suffix":"_dt0"},"m":{},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-schedule_entry_ref01"}}],"index$":0}]}, 'ScheduleEntry', {"GET /v2/schedule_entries":{"protocol":"http","parameters":[{"allowEmptyValue":true,"description":"The ID of the schedule to get entries for.","example":"01FDAG4SAP5TYPT98WGR2N7W91","in":"query","name":"schedule_id","required":true,"schema":{"description":"The ID of the schedule to get entries for.","example":"01FDAG4SAP5TYPT98WGR2N7W91","type":"string"},"index$":0},{"allowEmptyValue":true,"description":"The start of the window to get entries for. May also carry an opaque pagination cursor previously returned in `pagination_meta.after` — pass it back here unchanged to fetch the next page (leave `entry_window_end` unchanged from the original request).","example":"2021-01-01T00:00:00Z","in":"query","name":"entry_window_start","schema":{"description":"The start of the window to get entries for. May also carry an opaque pagination cursor previously returned in `pagination_meta.after` — pass it back here unchanged to fetch the next page (leave `entry_window_end` unchanged from the original request).","example":"2021-01-01T00:00:00Z","type":"string"},"index$":1},{"allowEmptyValue":true,"description":"The end of the window to get entries for.","example":"2021-01-01T00:00:00Z","in":"query","name":"entry_window_end","schema":{"description":"The end of the window to get entries for.","example":"2021-01-01T00:00:00Z","format":"date-time","type":"string"},"index$":2}]}}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -62,7 +76,7 @@ describe('ScheduleEntryEntity', async () => {
     // LOAD
     const schedule_entry_ref01_ent = client.ScheduleEntry()
     const schedule_entry_ref01_match_dt0: any = {}
-    const schedule_entry_ref01_data_dt0 = await schedule_entry_ref01_ent.load(schedule_entry_ref01_match_dt0)
+    const schedule_entry_ref01_data_dt0 = (await schedule_entry_ref01_ent.load(schedule_entry_ref01_match_dt0)).data()
     assert(null != schedule_entry_ref01_data_dt0)
 
 
@@ -70,6 +84,12 @@ describe('ScheduleEntryEntity', async () => {
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra?: any) {
   // TODO: fix test def options
@@ -102,28 +122,38 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['INCIDENT_IO_TEST_SCHEDULE_ENTRY_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'INCIDENT_IO_TEST_SCHEDULE_ENTRY_ENTID': idmap,
     'INCIDENT_IO_TEST_LIVE': 'FALSE',
     'INCIDENT_IO_TEST_EXPLAIN': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
   idmap = env['INCIDENT_IO_TEST_SCHEDULE_ENTRY_ENTID']
 
   const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['INCIDENT_IO_TEST_SCHEDULE_ENTRY_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new IncidentIoSDK(merge([
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
       {
+        apikey: env.INCIDENT_IO_APIKEY,
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when the
+      // last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey
+      // and server values above and handed the SDK undefined. Harmless
+      // while there was nothing in that object; not harmless now.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -136,7 +166,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.INCIDENT_IO_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 

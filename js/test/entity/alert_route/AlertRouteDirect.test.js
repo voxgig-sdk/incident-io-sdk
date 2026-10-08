@@ -1,8 +1,8 @@
 
 const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
+require('../../utility').loadEnvLocal(envlocal)
 
-const { test, describe } = require('node:test')
+const { test, describe, afterEach } = require('node:test')
 const assert = require('node:assert')
 
 
@@ -10,10 +10,20 @@ const { IncidentIoSDK } = require('../../..')
 
 const {
   envOverride,
+  liveClientOptions,
+  liveDelay,
+  skipIfMissingIds,
+  liveMiss,
+  liveEmpty,
+  describeLive,
 } = require('../../utility')
 
 
 describe('AlertRouteDirect', async () => {
+
+  // Per-test live pacing. Delay is read from sdk-test-control.json's
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
 
   test('direct-exists', async () => {
     const sdk = new IncidentIoSDK({
@@ -28,7 +38,8 @@ describe('AlertRouteDirect', async () => {
   })
 
 
-  test('direct-load-alert_route', async () => {
+  test('direct-load-alert_route', async (t) => {
+    if (liveScenariosActive()) { t.skip('Covered by live operation scenarios'); return }
     const setup = directSetup({ id: 'direct01' })
     const { client, calls } = setup
 
@@ -41,12 +52,19 @@ describe('AlertRouteDirect', async () => {
 
         },
       })
-      assert(listResult.ok === true)
-      const listData = listResult.data
-      if (!Array.isArray(listData) || listData.length === 0) {
-        return // skip: no entities to load in live mode
+      if (!listResult.ok || listResult.status < 200 || listResult.status >= 300) {
+        return void liveMiss(t, LIVE_STRICT, 'Live list discovery failed: ' + describeLive(listResult))
       }
-      params.id = listData[0].id
+      if (!Array.isArray(listResult.data)) {
+        return void liveMiss(t, LIVE_STRICT, 'Live list discovery returned no list: ' + describeLive(listResult))
+      }
+      if (0 === listResult.data.length) {
+        return void liveEmpty(t, 'The account has no alert_route record to load')
+      }
+      if (null == listResult.data[0]?.id) {
+        return void liveMiss(t, LIVE_STRICT, 'Live load blocked: discovery returned no usable identity')
+      }
+      params.id = listResult.data[0].id
 
     } else {
       params.id = 'direct01'
@@ -58,11 +76,17 @@ describe('AlertRouteDirect', async () => {
       params,
     })
 
-    assert(result.ok === true)
-    assert(result.status === 200)
-    assert(null != result.data)
-
-    if (!setup.live) {
+    if (setup.live) {
+      if (!result.ok || result.status < 200 || result.status >= 300) {
+        return void liveMiss(t, LIVE_STRICT, 'Live load failed: ' + describeLive(result))
+      }
+      if (!(null != result.data)) {
+        return void liveMiss(t, LIVE_STRICT, 'Live load returned no data: ' + describeLive(result))
+      }
+    } else {
+      assert(result.ok === true)
+      assert(result.status === 200)
+      assert(null != result.data)
       assert(result.data.id === 'direct01')
       assert(calls.length === 1)
       assert(calls[0].init.method === 'GET')
@@ -70,7 +94,8 @@ describe('AlertRouteDirect', async () => {
     }
   })
 
-  test('direct-list-alert_route', async () => {
+  test('direct-list-alert_route', async (t) => {
+    if (liveScenariosActive()) { t.skip('Covered by live operation scenarios'); return }
     const setup = directSetup([{ id: 'direct01' }, { id: 'direct02' }])
     const { client, calls } = setup
 
@@ -82,11 +107,17 @@ describe('AlertRouteDirect', async () => {
       params,
     })
 
-    assert(result.ok === true)
-    assert(result.status === 200)
-    assert(Array.isArray(result.data))
-
-    if (!setup.live) {
+    if (setup.live) {
+      if (!result.ok || result.status < 200 || result.status >= 300) {
+        return void liveMiss(t, LIVE_STRICT, 'Live list failed: ' + describeLive(result))
+      }
+      if (!(Array.isArray(result.data))) {
+        return void liveMiss(t, LIVE_STRICT, 'Live list returned no list: ' + describeLive(result))
+      }
+    } else {
+      assert(result.ok === true)
+      assert(result.status === 200)
+      assert(Array.isArray(result.data))
       assert(result.data.length === 2)
       assert(calls.length === 1)
       assert(calls[0].init.method === 'GET')
@@ -97,21 +128,33 @@ describe('AlertRouteDirect', async () => {
 
 
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
+
+function liveScenariosActive() { return false && process.env.INCIDENT_IO_TEST_LIVE === 'TRUE' }
 function directSetup(mockres) {
   const calls = []
 
   const env = envOverride({
-    'INCIDENTIO_TEST_ALERT_ROUTE_ENTID': {},
-    'INCIDENTIO_TEST_LIVE': 'FALSE',
+    'INCIDENT_IO_TEST_ALERT_ROUTE_ENTID': {},
+    'INCIDENT_IO_TEST_LIVE': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
-  const live = 'TRUE' === env.INCIDENTIO_TEST_LIVE
+  const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
 
   if (live) {
-    const client = new IncidentIoSDK({
-    })
+    // Merged so the generated fields win: sdk-test-control.json's
+    // test.client.options adds to the live client, it does not redirect it.
+    const client = new IncidentIoSDK(
+      Object.assign({}, liveClientOptions(), {
+      apikey: env.INCIDENT_IO_APIKEY,
+      }))
 
-    let idmap = env['INCIDENTIO_TEST_ALERT_ROUTE_ENTID']
+    let idmap = env['INCIDENT_IO_TEST_ALERT_ROUTE_ENTID']
     if ('string' === typeof idmap && idmap.startsWith('{')) {
       idmap = JSON.parse(idmap)
     }

@@ -20,7 +20,6 @@ import type {
   TeamListMatch,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class TeamEntity extends IncidentIoEntityBase<Team> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -37,14 +36,15 @@ class TeamEntity extends IncidentIoEntityBase<Team> {
 
 
 
-  async load(this: any, reqmatch?: TeamLoadMatch, ctrl?: Control): Promise<Team> {
+  async load(this: any, reqmatch?: TeamLoadMatch, ctrl?: Control): Promise<TeamEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -128,12 +128,20 @@ class TeamEntity extends IncidentIoEntityBase<Team> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -142,7 +150,7 @@ class TeamEntity extends IncidentIoEntityBase<Team> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Team> return stays clean under strict null checks.
+        // Promise<TeamEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -150,14 +158,15 @@ class TeamEntity extends IncidentIoEntityBase<Team> {
 
 
 
-  async list(this: any, reqmatch?: TeamListMatch, ctrl?: Control): Promise<Team[]> {
+  async list(this: any, reqmatch?: TeamListMatch, ctrl?: Control): Promise<TeamEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -240,9 +249,15 @@ class TeamEntity extends IncidentIoEntityBase<Team> {
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -251,11 +266,12 @@ class TeamEntity extends IncidentIoEntityBase<Team> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Team[]> return stays clean under strict null checks.
+        // Promise<TeamEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

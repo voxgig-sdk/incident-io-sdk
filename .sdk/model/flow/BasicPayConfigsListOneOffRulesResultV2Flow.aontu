@@ -1,0 +1,26 @@
+# BasicPayConfigsListOneOffRulesResultV2Flow
+
+main: kit: flow: BasicPayConfigsListOneOffRulesResultV2Flow:
+{
+  entity: "pay_configs_list_one_off_rules_result_v2",
+  kind: "basic",
+  name: "BasicPayConfigsListOneOffRulesResultV2Flow",
+  step: [
+    {
+      m: {
+        pay_config_id: "pay_config01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "pay_configs_list_one_off_rules_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPayConfigsListOneOffRulesResultV2Flow"
+}

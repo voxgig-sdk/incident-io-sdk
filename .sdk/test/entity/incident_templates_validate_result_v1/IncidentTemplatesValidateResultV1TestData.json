@@ -1,0 +1,44 @@
+{
+  "existing": {
+    "incident_templates_validate_result_v1": {
+      "INCIDENT_TEMPLATES_VALIDATE_RESULT_V100": {
+        "expressions": [],
+        "name": "s29",
+        "template": {},
+        "warnings": [],
+        "id": "INCIDENT_TEMPLATES_VALIDATE_RESULT_V100"
+      },
+      "INCIDENT_TEMPLATES_VALIDATE_RESULT_V101": {
+        "expressions": [],
+        "name": "s51",
+        "template": {},
+        "warnings": [],
+        "id": "INCIDENT_TEMPLATES_VALIDATE_RESULT_V101"
+      },
+      "INCIDENT_TEMPLATES_VALIDATE_RESULT_V102": {
+        "expressions": [],
+        "name": "s79",
+        "template": {},
+        "warnings": [],
+        "id": "INCIDENT_TEMPLATES_VALIDATE_RESULT_V102"
+      }
+    }
+  },
+  "new": {
+    "incident_templates_validate_result_v1": {
+      "incident_templates_validate_result_v1_ref01": {
+        "expressions": [],
+        "name": "sa1",
+        "template": {},
+        "warnings": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v1/incident_templates/actions/validate": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

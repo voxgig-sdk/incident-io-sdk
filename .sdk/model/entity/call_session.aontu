@@ -1,0 +1,114 @@
+# Entity: call_session
+
+main: kit: entity: call_session: {
+
+  alias: field: {}
+
+  fields: {
+    ended_at: {
+      fo: "date-time"
+      h: "Ended At"
+      n: "ended_at"
+      r: false
+      sh: "When the call session ended."
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this call session"
+      t: "`$STRING`"
+    }
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "The incident this call session belongs to"
+      t: "`$STRING`"
+    }
+    started_at: {
+      fo: "date-time"
+      h: "Started At"
+      n: "started_at"
+      r: true
+      sh: "When the call session started"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "call_session"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/call_sessions"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "query"
+                n: "incident_id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/call_sessions"
+          q: {
+            exist: [
+              "incident_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "call_sessions"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.call_sessions`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

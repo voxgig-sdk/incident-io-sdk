@@ -2,68 +2,94 @@
   "existing": {
     "status_page_maintenance": {
       "STATUS_PAGE_MAINTENANCE00": {
-        "affected_component_id": "AFFECTED_COMPONENT01",
-        "component_maintenance_period": [],
-        "end_at": "s84",
+        "affected_component_ids": [],
+        "automate_maintenance_status": false,
+        "component_maintenance_periods": [],
+        "end_at": "s8f",
         "id": "STATUS_PAGE_MAINTENANCE00",
-        "idempotency_key": "s86",
-        "maintenance_status": "s87",
-        "message": "s88",
-        "name": "s89",
-        "notify_subscriber": true,
-        "published_at": "s8b",
-        "start_at": "s8c",
+        "idempotency_key": "s91",
+        "maintenance_status": "s92",
+        "message": "s93",
+        "name": "s94",
+        "notify_subscribers": false,
+        "published_at": "s96",
+        "start_at": "s97",
         "status_page_id": "STATUS_PAGE01",
-        "update": []
+        "updates": []
       },
       "STATUS_PAGE_MAINTENANCE01": {
-        "affected_component_id": "AFFECTED_COMPONENT01",
-        "component_maintenance_period": [],
-        "end_at": "s106",
+        "affected_component_ids": [],
+        "automate_maintenance_status": false,
+        "component_maintenance_periods": [],
+        "end_at": "s11b",
         "id": "STATUS_PAGE_MAINTENANCE01",
-        "idempotency_key": "s108",
-        "maintenance_status": "s109",
-        "message": "s10a",
-        "name": "s10b",
-        "notify_subscriber": true,
-        "published_at": "s10d",
-        "start_at": "s10e",
+        "idempotency_key": "s11d",
+        "maintenance_status": "s11e",
+        "message": "s11f",
+        "name": "s120",
+        "notify_subscribers": false,
+        "published_at": "s122",
+        "start_at": "s123",
         "status_page_id": "STATUS_PAGE01",
-        "update": []
+        "updates": []
       },
       "STATUS_PAGE_MAINTENANCE02": {
-        "affected_component_id": "AFFECTED_COMPONENT01",
-        "component_maintenance_period": [],
-        "end_at": "s188",
+        "affected_component_ids": [],
+        "automate_maintenance_status": false,
+        "component_maintenance_periods": [],
+        "end_at": "s1a7",
         "id": "STATUS_PAGE_MAINTENANCE02",
-        "idempotency_key": "s18a",
-        "maintenance_status": "s18b",
-        "message": "s18c",
-        "name": "s18d",
-        "notify_subscriber": true,
-        "published_at": "s18f",
-        "start_at": "s190",
+        "idempotency_key": "s1a9",
+        "maintenance_status": "s1aa",
+        "message": "s1ab",
+        "name": "s1ac",
+        "notify_subscribers": false,
+        "published_at": "s1ae",
+        "start_at": "s1af",
         "status_page_id": "STATUS_PAGE01",
-        "update": []
+        "updates": []
       }
     }
   },
   "new": {
     "status_page_maintenance": {
       "status_page_maintenance_ref01": {
-        "affected_component_id": "AFFECTED_COMPONENT01",
-        "component_maintenance_period": [],
-        "end_at": "s20a",
-        "idempotency_key": "s20c",
-        "maintenance_status": "s20d",
-        "message": "s20e",
-        "name": "s20f",
-        "notify_subscriber": true,
-        "published_at": "s211",
-        "start_at": "s212",
+        "affected_component_ids": [],
+        "automate_maintenance_status": false,
+        "component_maintenance_periods": [],
+        "end_at": "s233",
+        "idempotency_key": "s235",
+        "maintenance_status": "s236",
+        "message": "s237",
+        "name": "s238",
+        "notify_subscribers": false,
+        "published_at": "s23a",
+        "start_at": "s23b",
         "status_page_id": "STATUS_PAGE01",
-        "update": []
+        "updates": []
       }
+    }
+  },
+  "requests": {
+    "POST /v2/status_page_maintenances": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/status_page_maintenances": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/status_page_maintenances/{status_page_maintenance_id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/status_page_maintenances/{status_page_maintenance_id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

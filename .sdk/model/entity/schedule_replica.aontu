@@ -4,73 +4,96 @@ main: kit: entity: schedule_replica: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this schedule replica was first created"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier of the schedule replica"
+      t: "`$STRING`"
     }
-    {
-      name: "last_sync_error"
-      req: false
-      type: "`$STRING`"
+    last_sync_error: {
+      h: "Last Sync Error"
+      n: "last_sync_error"
+      r: false
+      sh: "The most recent error encountered while syncing this replica to the external provider, if any."
+      t: "`$STRING`"
     }
-    {
-      name: "last_synced_at"
-      req: false
-      type: "`$STRING`"
+    last_synced_at: {
+      fo: "date-time"
+      h: "Last Synced At"
+      n: "last_synced_at"
+      r: false
+      sh: "When the replica was last successfully synced to the external provider."
+      t: "`$STRING`"
     }
-    {
-      name: "mirror_window_day"
-      req: false
-      type: "`$INTEGER`"
+    mirror_window_days: {
+      fo: "int64"
+      h: "Mirror Window Days"
+      n: "mirror_window_days"
+      r: false
+      sh: "How many days ahead to mirror this schedule into the external provider."
+      t: "`$INTEGER`"
     }
-    {
-      name: "replica_fallback_user_id"
-      req: true
-      type: "`$STRING`"
+    replica_fallback_user_id: {
+      h: "Replica Fallback User Id"
+      n: "replica_fallback_user_id"
+      r: true
+      sh: "The ID of a user in the external provider that will be assigned whenever nobody is on-call in the incident.io schedule."
+      t: "`$STRING`"
     }
-    {
-      name: "replica_provider"
-      req: true
-      type: "`$STRING`"
+    replica_provider: {
+      h: "Replica Provider"
+      n: "replica_provider"
+      r: true
+      sh: "The external provider where this schedule is replicated to"
+      t: "`$STRING`"
     }
-    {
-      name: "replica_provider_id"
-      req: true
-      type: "`$STRING`"
+    replica_provider_id: {
+      h: "Replica Provider Id"
+      n: "replica_provider_id"
+      r: true
+      sh: "The ID of the schedule in the external provider that this replica syncs to."
+      t: "`$STRING`"
     }
-    {
-      name: "schedule_id"
-      req: true
-      type: "`$STRING`"
+    schedule_id: {
+      h: "Schedule Id"
+      n: "schedule_id"
+      r: true
+      sh: "The ID of the incident.io schedule that this replica is syncing from"
+      t: "`$STRING`"
     }
-    {
-      name: "schedule_replica"
-      req: true
-      type: "`$OBJECT`"
+    sources: {
+      h: "Sources"
+      n: "sources"
+      r: true
+      sh: "The specific rotation and layer combinations from the schedule that are being replicated."
+      t: "`$ARRAY`"
     }
-    {
-      name: "source"
-      req: true
-      type: "`$ARRAY`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this schedule replica was last updated"
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    user_statuses: {
+      h: "User Statuses"
+      n: "user_statuses"
+      r: true
+      sh: "The mapping status of each incident.io user in the schedule to their corresponding user in the external provider."
+      t: "`$ARRAY`"
     }
-    {
-      name: "user_status"
-      req: true
-      type: "`$ARRAY`"
-    }
-  ]
+  }
 
   id: {
     field: "id"
@@ -83,37 +106,61 @@ main: kit: entity: schedule_replica: {
       name: "create"
       points: [
         {
-          args: {
+          bf: [
+            "mirror_window_days"
+            "replica_fallback_user_id"
+            "replica_provider"
+            "replica_provider_id"
+            "sources"
+          ]
+          co: {
+            id: "POST /v2/schedules/{schedule_id}/replicas"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "schedule_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "schedule_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "POST"
-          orig: "/v2/schedules/{schedule_id}/replicas"
-          parts: [
-            "v2"
-            "schedules"
-            "{id}"
-            "replicas"
-          ]
-          rename: {
-            param: {
-              schedule_id: "id"
-            }
-          }
-          select: {
+          m: "POST"
+          o: "/v2/schedules/{schedule_id}/replicas"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              schedule_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "replicas"
+            }
+          ]
+          t: {
             req: {
               schedule_replica: "`reqdata`"
             }
@@ -126,37 +173,54 @@ main: kit: entity: schedule_replica: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedules/{schedule_id}/replicas"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "schedule_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "schedule_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedules/{schedule_id}/replicas"
-          parts: [
-            "v2"
-            "schedules"
-            "{id}"
-            "replicas"
-          ]
-          rename: {
-            param: {
-              schedule_id: "id"
-            }
-          }
-          select: {
+          m: "GET"
+          o: "/v2/schedules/{schedule_id}/replicas"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              schedule_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "replicas"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.schedule_replicas`"
           }
@@ -167,42 +231,61 @@ main: kit: entity: schedule_replica: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedules/{schedule_id}/replicas/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "schedule_id"
-                orig: "schedule_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "schedule_id"
+                or: "schedule_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedules/{schedule_id}/replicas/{id}"
-          parts: [
-            "v2"
-            "schedules"
-            "{schedule_id}"
-            "replicas"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/schedules/{schedule_id}/replicas/{id}"
+          q: {
             exist: [
               "id"
               "schedule_id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "schedule_id"
+            }
+            {
+              lit: "replicas"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.schedule_replica`"
           }
@@ -211,14 +294,9 @@ main: kit: entity: schedule_replica: {
     }
   }
 
-  relations: {
-    ancestors: [
-      [
-        "schedule"
-      ]
-    ]
-  }
 
-
+  relations: ancestors: [
+    [path("$.main.kit.entity.schedule")]
+  ]
 
 }

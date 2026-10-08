@@ -1,5 +1,5 @@
 
-import { cmp, Content, isAuthActive, envName, entityIdField, entityDataIdField, pickExampleEntity, opRequestShape, safeVarName, exampleVarName, jsKey } from '@voxgig/sdkgen'
+import { cmp, Content, isAuthActive, isHttpBasicAuth, envName, entityIdField, entityDataIdField, pickExampleEntity, opRequestShape, safeVarName, exampleVarName, jsKey, requiredItems } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -14,12 +14,8 @@ const ReadmeHowto = cmp(function ReadmeHowto(props: any) {
   const { target, ctx$: { model } } = props
 
   const entity = getModelPath(model, `main.${KIT}.entity`)
-  // Pick an entity with a real op (prefer a read op) — never fabricate a
-  // `load` on an op-less entity like Cloudsmith's `Abort`. primaryOp is null
-  // only when NO entity exposes any op (a direct()-only SDK).
   const { entity: exampleEntity, primaryOp } = pickExampleEntity(entity)
   const eName = exampleEntity ? nom(exampleEntity, 'Name') : 'Entity'
-  // Variable-safe lowercase name (a `Delete` entity must not bind `delete`).
   const eVar = exampleVarName(eName.toLowerCase(), 'ts')
 
   const primaryOpDef = exampleEntity && primaryOp && exampleEntity.op && exampleEntity.op[primaryOp]
@@ -30,16 +26,14 @@ const ReadmeHowto = cmp(function ReadmeHowto(props: any) {
   const idF = exampleEntity ? entityIdField(exampleEntity) : null
   const dataIdF = exampleEntity ? entityDataIdField(exampleEntity) : null
 
-  // A type-correct, language-idiomatic argument for the primary op call.
   const primaryArg = (idPlaceholder: string): string => {
     if (!exampleEntity || !primaryOp) return ''
-    if ('list' === primaryOp) return ''
-    if (isMatchOp) {
+    if (isMatchOp || 'list' === primaryOp) {
       // Every REQUIRED match key (id first), not just idF — a composite-match
       // entity (e.g. Umbrella's FlatPermission, database_id + id) needs them all
       // to satisfy the typed <Name>LoadMatch. Mirrors ReadmeTopTest.
-      const items = opRequestShape(exampleEntity, primaryOp).items
-        .filter((it: any) => !it.optional || it.name === idF)
+      const items = (isMatchOp ? opRequestShape(exampleEntity, primaryOp).items
+        .filter((it: any) => !it.optional || it.name === idF) : requiredItems(exampleEntity, 'list'))
         .sort((a: any, b: any) => (a.name === idF ? 0 : 1) - (b.name === idF ? 0 : 1))
       if (0 === items.length) return ''
       const pairs = items.map((it: any) =>
@@ -47,28 +41,32 @@ const ReadmeHowto = cmp(function ReadmeHowto(props: any) {
           it.name === idF ? idPlaceholder : 'example_' + it.name)}`)
       return `{ ${pairs.join(', ')} }`
     }
-    // create / update: a body of the required writable fields.
+    const isIdField = (it: any) => it.name === idF || it.name === 'id'
     const items = opRequestShape(exampleEntity, primaryOp).items
-      .filter((it: any) => it.name !== idF && it.name !== 'id')
+      .filter((it: any) => !isIdField(it) || !it.optional)
     const required = items.filter((it: any) => !it.optional)
     const chosen = required.length ? required : items.slice(0, 3)
     const pairs = chosen.map((it: any) =>
-      `${jsKey(it.name)}: ${exampleValue(exampleEntity, primaryOpDef, it.name, 'example_' + it.name)}`)
+      `${jsKey(it.name)}: ${exampleValue(exampleEntity, primaryOpDef, it.name,
+        isIdField(it) ? idPlaceholder : 'example_' + it.name)}`)
     return `{ ${pairs.join(', ')} }`
   }
   const testCallArg = primaryArg('test01')
   const stateCallArg = primaryArg('example')
-  // Only read `.id` off the returned record when its data type carries one.
   const stateDataLine = dataIdF
     ? `console.log(data.${dataIdF})`
     : `console.log(data)`
 
   // The op-driven example lines, shown only when the SDK has an entity op.
   // A direct()-only SDK (no ops anywhere) shows a direct() test call instead.
-  const testModeExample = primaryOp
+  const testModeExample = 'list' === primaryOp
+    ? `const ${eVar}s = await client.${eName}().list(${testCallArg})
+// ${eVar}s is an array of ${eName} entities, one per mock record
+console.log(${eVar}s.map((${eVar}) => ${eVar}.data()))`
+    : primaryOp
     ? `const ${eVar} = await client.${eName}().${primaryOp}(${testCallArg})
-// ${eVar} is a bare entity populated with mock response data
-console.log(${eVar})`
+// ${eVar} is the ${eName} entity; .data() reads its mock record
+console.log(${eVar}.data())`
     : `const result = await client.direct({ path: '/api/resource', method: 'GET' })
 console.log(result)`
   const stateSection = primaryOp
@@ -91,11 +89,16 @@ ${stateDataLine}
     : ''
 
   const authActive = isAuthActive(model)
+  const authBasic = authActive && isHttpBasicAuth(model)
   const apikeyTesterCtor = authActive
-    ? `new ${model.const.Name}SDK({ apikey: '...' })`
+    ? `new ${model.const.Name}SDK({ apikey: '...'${authBasic ? `, secret: '...'` : ''} })`
     : `new ${model.const.Name}SDK()`
-  const apikeyExtendField = authActive ? `\n  apikey: '...',` : ''
-  const apikeyEnvLine = authActive ? `\n${envName(model)}_APIKEY=<your-key>` : ''
+  const apikeyExtendField = authActive
+    ? `\n  apikey: '...',${authBasic ? `\n  secret: '...',` : ''}`
+    : ''
+  const apikeyEnvLine = authActive
+    ? `\n${envName(model)}_APIKEY=<your-key>${authBasic ? `\n${envName(model)}_SECRET=<your-secret>` : ''}`
+    : ''
 
   Content(`### Make a direct HTTP request
 
@@ -108,9 +111,6 @@ const result = await client.direct({
   params: { id: 'example' },
 })
 
-if (result instanceof Error) {
-  throw result
-}
 if (result.ok) {
   console.log(result.status)  // 200
   console.log(result.data)    // response body
@@ -183,6 +183,11 @@ Then run:
 \`\`\`bash
 cd ts && npm test
 \`\`\`
+
+Live entity tests continue independent operations after errors and attempt
+supported cleanup. Their final result reports failures and missing prerequisites
+after the remaining work completes. The model and test inputs determine which
+API operations the generated scenarios cover.
 
 `)
 

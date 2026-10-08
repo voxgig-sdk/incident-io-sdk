@@ -23,7 +23,6 @@ import type {
   IncidentRoleRemoveMatch,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -40,14 +39,15 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
 
 
 
-  async load(this: any, reqmatch?: IncidentRoleLoadMatch, ctrl?: Control): Promise<IncidentRole> {
+  async load(this: any, reqmatch?: IncidentRoleLoadMatch, ctrl?: Control): Promise<IncidentRoleEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -131,12 +131,20 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -145,7 +153,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IncidentRole> return stays clean under strict null checks.
+        // Promise<IncidentRoleEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -153,14 +161,15 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
 
 
 
-  async list(this: any, reqmatch?: IncidentRoleListMatch, ctrl?: Control): Promise<IncidentRole[]> {
+  async list(this: any, reqmatch?: IncidentRoleListMatch, ctrl?: Control): Promise<IncidentRoleEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -243,9 +252,15 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -254,7 +269,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IncidentRole[]> return stays clean under strict null checks.
+        // Promise<IncidentRoleEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -262,13 +277,14 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
 
 
 
-  async create(this: any, reqdata?: IncidentRoleCreateData, ctrl?: Control): Promise<IncidentRole> {
+  async create(this: any, reqdata?: IncidentRoleCreateData, ctrl?: Control): Promise<IncidentRoleEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -348,12 +364,20 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -362,7 +386,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IncidentRole> return stays clean under strict null checks.
+        // Promise<IncidentRoleEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -370,14 +394,15 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
 
 
 
-  async update(this: any, reqdata?: IncidentRoleUpdateData, ctrl?: Control): Promise<IncidentRole> {
+  async update(this: any, reqdata?: IncidentRoleUpdateData, ctrl?: Control): Promise<IncidentRoleEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -462,12 +487,20 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -476,7 +509,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IncidentRole> return stays clean under strict null checks.
+        // Promise<IncidentRoleEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -484,14 +517,18 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
 
 
 
-  async remove(this: any, reqmatch?: IncidentRoleRemoveMatch, ctrl?: Control): Promise<IncidentRole> {
+
+  async remove(
+    this: any, reqmatch?: IncidentRoleRemoveMatch, ctrl?: Control,
+  ): Promise<IncidentRoleEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -576,12 +613,25 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      if (ctx.result && ctx.result.ok) {
+        this.markDeleted()
+        return this
+      }
+
+      return out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -590,7 +640,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase<IncidentRole> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IncidentRole> return stays clean under strict null checks.
+        // Promise<IncidentRoleEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }

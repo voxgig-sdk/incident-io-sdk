@@ -1,0 +1,99 @@
+{
+  "existing": {
+    "policy": {
+      "POLICY00": {
+        "assignment_rules": {},
+        "conditions": [],
+        "created_at": "s98",
+        "debrief": {},
+        "description": "s9a",
+        "expressions": [],
+        "follow_up": {},
+        "id": "POLICY00",
+        "name": "s9e",
+        "on_call_readiness": {},
+        "policy_type": "sa0",
+        "post_mortem": {},
+        "schedule": {},
+        "status": "sa3",
+        "updated_at": "sa4"
+      },
+      "POLICY01": {
+        "assignment_rules": {},
+        "conditions": [],
+        "created_at": "s12e",
+        "debrief": {},
+        "description": "s130",
+        "expressions": [],
+        "follow_up": {},
+        "id": "POLICY01",
+        "name": "s134",
+        "on_call_readiness": {},
+        "policy_type": "s136",
+        "post_mortem": {},
+        "schedule": {},
+        "status": "s139",
+        "updated_at": "s13a"
+      },
+      "POLICY02": {
+        "assignment_rules": {},
+        "conditions": [],
+        "created_at": "s1c4",
+        "debrief": {},
+        "description": "s1c6",
+        "expressions": [],
+        "follow_up": {},
+        "id": "POLICY02",
+        "name": "s1ca",
+        "on_call_readiness": {},
+        "policy_type": "s1cc",
+        "post_mortem": {},
+        "schedule": {},
+        "status": "s1cf",
+        "updated_at": "s1d0"
+      }
+    }
+  },
+  "new": {
+    "policy": {
+      "policy_ref01": {
+        "assignment_rules": {},
+        "conditions": [],
+        "created_at": "s25a",
+        "debrief": {},
+        "description": "s25c",
+        "expressions": [],
+        "follow_up": {},
+        "name": "s260",
+        "on_call_readiness": {},
+        "policy_type": "s262",
+        "post_mortem": {},
+        "schedule": {},
+        "status": "s265",
+        "updated_at": "s266"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/policies": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/policies": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/policies/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/policies/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

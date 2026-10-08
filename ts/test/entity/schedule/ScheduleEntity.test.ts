@@ -1,19 +1,21 @@
 
-const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
 
 import Path from 'node:path'
 import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
-import { IncidentIoSDK, BaseFeature, stdutil } from '../../..'
+import { IncidentIoSDK, BaseFeature, config, stdutil } from '../../..'
 
 import {
   envOverride,
+  liveClientOptions,
   liveDelay,
+  loadEnvLocal,
   makeCtrl,
   makeMatch,
   makeReqdata,
@@ -23,11 +25,14 @@ import {
 } from '../../utility'
 
 
+loadEnvLocal(__dirname + '/../../../.env.local')
+
+
 describe('ScheduleEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when INCIDENTIO_TEST_LIVE=TRUE.
-  afterEach(liveDelay('INCIDENTIO_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = IncidentIoSDK.test()
@@ -36,20 +41,75 @@ describe('ScheduleEntity', async () => {
   })
 
 
+  class FailHook extends BaseFeature {
+    name = 'failhook'
+    version = '0.0.1'
+    active = true
+    unexpected = 0
+    init() { }
+    PreSpec() { throw new Error('schedule hook failed') }
+    PreUnexpected() { this.unexpected++ }
+  }
+
+  test('stream-error', async () => {
+    const offline = { net: { offline: true } }
+    await assert.rejects(async () => {
+      for await (const _item of IncidentIoSDK.test(offline).Schedule().stream('list')) { }
+    }, /offline/)
+
+    for await (const _item of IncidentIoSDK.test(offline).Schedule()
+      .stream('list', undefined, { ctrl: { throw: false } })) { }
+
+    if (null != (config as any).feature?.rbac) {
+      const denied = IncidentIoSDK.test(undefined, { feature: { rbac: { active: true, deny: true } } })
+      await assert.rejects(async () => {
+        for await (const _item of denied.Schedule().stream('list')) { }
+      }, (err: any) => 'rbac_denied' === err.code)
+    }
+  })
+
+  test('stream-ctrl', async () => {
+    const explain: any = {}
+    const ctrl: any = { explain }
+    for await (const _item of IncidentIoSDK.test().Schedule().stream('list', undefined, { ctrl })) { }
+    assert.deepStrictEqual(Object.keys(ctrl), ['explain'])
+    assert(explain === ctrl.explain && 0 < Object.keys(explain).length)
+  })
+
+  test('unexpected', async () => {
+    const hook = new FailHook()
+    const client = new IncidentIoSDK({ feature: { test: { active: true } }, extend: [hook] })
+    await assert.rejects(client.Schedule().list(), /hook failed/)
+    assert(0 < hook.unexpected)
+
+    const fired = hook.unexpected
+    assert.strictEqual(await client.Schedule().list(undefined, { throw: false }), undefined)
+    assert(fired < hook.unexpected)
+  })
+
+  test('validate', async (t) => {
+    if (null == (config as any).feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.Schedule().list({"after":1} as any),
+      (err: any) => 'validate_failed' === err.code)
+  })
+
+
+
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE
     for (const op of ['create', 'list', 'update', 'load', 'remove']) {
-      if (maybeSkipControl(t, 'entityOp', 'schedule.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'schedule.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set INCIDENT_IO_TEST_SCHEDULE_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"annotations":{"a":true,"h":"Annotations","n":"annotations","op":{"create":{"req":false,"type":"`$OBJECT`"},"update":{"req":false,"type":"`$OBJECT`"}},"r":true,"sh":"Annotations that track metadata about this resource","t":"`$OBJECT`","key$":"annotations","index$":0},"config":{"a":true,"h":"Config","n":"config","op":{"create":{"req":false,"type":"`$OBJECT`"},"update":{"req":false,"type":"`$OBJECT`"}},"r":true,"t":"`$OBJECT`","key$":"config","index$":1},"created_at":{"a":true,"fo":"date-time","h":"Created At","n":"created_at","r":true,"t":"`$STRING`","key$":"created_at","index$":2},"current_shifts":{"a":true,"h":"Current Shifts","n":"current_shifts","r":false,"sh":"Shifts that are ongoing for this schedule","t":"`$ARRAY`","key$":"current_shifts","index$":3},"holidays_public_config":{"a":true,"h":"Holidays Public Config","n":"holidays_public_config","r":true,"t":"`$OBJECT`","key$":"holidays_public_config","index$":4},"id":{"a":true,"h":"Id","n":"id","r":true,"sh":"Unique internal ID of the schedule","t":"`$STRING`","key$":"id","index$":5},"name":{"a":true,"h":"Name","n":"name","op":{"create":{"req":false,"type":"`$STRING`"},"update":{"req":false,"type":"`$STRING`"}},"r":true,"sh":"Human readable name synced from external provider","t":"`$STRING`","key$":"name","index$":6},"next_shifts":{"a":true,"h":"Next Shifts","n":"next_shifts","r":false,"sh":"The shifts after the next changeover.","t":"`$ARRAY`","key$":"next_shifts","index$":7},"permalink":{"a":true,"h":"Permalink","n":"permalink","r":true,"sh":"A permanent link to this schedule in the incident.io dashboard","t":"`$STRING`","key$":"permalink","index$":8},"team_ids":{"a":true,"h":"Team Ids","n":"team_ids","op":{"create":{"req":false,"type":"`$ARRAY`"},"update":{"req":false,"type":"`$ARRAY`"}},"r":true,"sh":"IDs of teams that own this schedule","t":"`$ARRAY`","key$":"team_ids","index$":9},"timezone":{"a":true,"h":"Timezone","n":"timezone","op":{"create":{"req":false,"type":"`$STRING`"},"update":{"req":false,"type":"`$STRING`"}},"r":true,"sh":"Timezone of the schedule, as interpreted at the point of generating the report","t":"`$STRING`","key$":"timezone","index$":10},"updated_at":{"a":true,"fo":"date-time","h":"Updated At","n":"updated_at","r":true,"t":"`$STRING`","key$":"updated_at","index$":11}},"id":{"field":"id","name":"id"},"name":"schedule","op":{"create":{"input":"data","name":"create","points":[{"a":true,"bf":["annotations","config","holidays_public_config","name","team_ids","timezone"],"co":{"id":"POST /v2/schedules","source":"openapi3","version":2},"g":{},"k":"http","m":"POST","o":"/v2/schedules","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"schedules"}],"t":{"req":{"schedule":"`reqdata`"},"res":"`body.schedule`"},"index$":0}],"key$":"create"},"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /v2/schedules","source":"openapi3","version":2},"g":{"query":[{"a":true,"ex":"01FDAG4SAP5TYPT98WGR2N7W91","k":"query","n":"after","or":"after","r":false,"t":"`$STRING`","index$":0},{"a":true,"ex":25,"k":"query","n":"page_size","or":"page_size","r":false,"t":"`$INTEGER`","index$":1}]},"k":"http","m":"GET","o":"/v2/schedules","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"schedules"}],"t":{"req":"`reqdata`","res":"`body.schedules`"},"index$":0}],"key$":"list"},"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /v2/schedules/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01G0J1EXE7AXZ2C93K61WBPYEH","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/v2/schedules/{id}","q":{"exist":["id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"schedules"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body.schedule`"},"index$":0}],"key$":"load"},"remove":{"input":"data","name":"remove","points":[{"a":true,"co":{"id":"DELETE /v2/schedules/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01G0J1EXE7AXZ2C93K61WBPYEH","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"DELETE","o":"/v2/schedules/{id}","q":{"exist":["id"]},"r":{},"s":[{"lit":"v2"},{"lit":"schedules"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"remove"},"update":{"input":"data","name":"update","points":[{"a":true,"bf":["annotations","config","holidays_public_config","name","team_ids","timezone"],"co":{"id":"PUT /v2/schedules/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01G0J1EXE7AXZ2C93K61WBPYEH","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"PUT","o":"/v2/schedules/{id}","q":{"exist":["id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"schedules"},{"var":"id"}],"t":{"req":{"schedule":"`reqdata`"},"res":"`body.schedule`"},"index$":0}],"key$":"update"}},"relations":{"ancestors":[]},"key$":"schedule","name__orig":"schedule","Name":"Schedule","name_":"schedule","name-":"schedule","NAME":"SCHEDULE","index$":84}, {"active":true,"entity":"schedule","key$":"BasicScheduleFlow","kind":"basic","name":"BasicScheduleFlow","param":{},"step":[{"a":true,"d":{},"i":{"ref":"schedule_ref01"},"m":{},"o":"create","s":[],"v":[],"index$":0},{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"schedule_ref01"}}],"index$":1},{"a":true,"d":{},"i":{"ref":"schedule_ref01","srcdatavar":"schedule_ref01_data","suffix":"_up0","textfield":"created_at"},"m":{},"o":"update","s":[{"apply":"TextFieldMark","def":{"mark":"Mark01-schedule_ref01"}}],"v":[],"index$":2},{"a":true,"d":{},"i":{"ref":"schedule_ref01","srcdatavar":"schedule_ref01_data","suffix":"_dt0"},"m":{"id":"schedule01"},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-schedule_ref01"}}],"index$":3},{"a":true,"d":{},"i":{"ref":"schedule_ref01","suffix":"_rm0"},"m":{"id":"schedule01"},"o":"remove","s":[],"v":[],"index$":4},{"a":true,"d":{},"i":{"suffix":"_rt0"},"m":{},"o":"list","s":[],"v":[{"apply":"ItemNotExists","def":{"ref":"schedule_ref01"}}],"index$":5}]}, 'Schedule', {"POST /v2/schedules":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"schedule":{"annotations":{"incident.io/terraform/version":"version-of-terraform"},"config":{"rotations":[{"effective_from":"2021-08-17T13:28:57.801578Z","handover_start_at":"2021-08-17T13:28:57.801578Z","handovers":[{}],"id":"01G0J1EXE7AXZ2C93K61WBPYEH","layers":[{}],"name":"My Rotation","scheduling_mode":"fair","users":[{}],"working_interval":[{}],"working_intervals":[{}]}]},"holidays_public_config":{"country_codes":["abc123"]},"name":"Primary On-call Schedule","team_ids":["01JPQA75EPNEES4479P16P4XAB"],"timezone":"America/Los_Angeles"}},"schema":{"example":{"schedule":{"annotations":{"incident.io/terraform/version":"version-of-terraform"},"config":{"rotations":[{"effective_from":"2021-08-17T13:28:57.801578Z","handover_start_at":"2021-08-17T13:28:57.801578Z","handovers":[],"id":"01G0J1EXE7AXZ2C93K61WBPYEH","layers":[],"name":"My Rotation","scheduling_mode":"fair","users":[],"working_interval":[],"working_intervals":[]}]},"holidays_public_config":{"country_codes":["abc123"]},"name":"Primary On-call Schedule","team_ids":["01JPQA75EPNEES4479P16P4XAB"],"timezone":"America/Los_Angeles"}},"properties":{"schedule":{"example":{"annotations":{"incident.io/terraform/version":"version-of-terraform"},"config":{"rotations":[{}]},"holidays_public_config":{"country_codes":["abc123"]},"name":"Primary On-call Schedule","team_ids":["01JPQA75EPNEES4479P16P4XAB"],"timezone":"America/Los_Angeles"},"properties":{"annotations":{"additionalProperties":{"example":"abc123","type":"string"},"description":"Annotations that can track metadata about the schedule","example":{"incident.io/terraform/version":"version-of-terraform"},"type":"object","key$":"annotations"},"config":{"example":{"rotations":[]},"properties":{"rotations":{}},"type":"object","x-ref":"#/components/schemas/ScheduleConfigCreatePayloadV2","key$":"config"},"holidays_public_config":{"example":{"country_codes":[]},"properties":{"country_codes":{}},"required":["country_codes"],"type":"object","x-ref":"#/components/schemas/ScheduleHolidaysPublicConfigPayloadV2","key$":"holidays_public_config"},"name":{"description":"Name of the schedule","example":"Primary On-call Schedule","type":"string","key$":"name"},"team_ids":{"description":"IDs of teams that own this schedule","example":["01JPQA75EPNEES4479P16P4XAB"],"items":{"example":"abc123","type":"string"},"type":"array","key$":"team_ids"},"timezone":{"description":"Timezone of the schedule","example":"America/Los_Angeles","type":"string","key$":"timezone"}},"type":"object","x-ref":"#/components/schemas/ScheduleCreatePayloadV2","index$":1}},"required":["schedule"],"type":"object","x-ref":"#/components/schemas/SchedulesCreatePayloadV2"}}},"required":true},"parameters":[]},"GET /v2/schedules":{"protocol":"http","parameters":[{"allowEmptyValue":true,"description":"Note that next_shifts will only be returned when the page size is 25 or lower.","example":25,"in":"query","name":"page_size","schema":{"default":25,"description":"Note that next_shifts will only be returned when the page size is 25 or lower.","example":25,"format":"int64","maximum":10000,"minimum":1,"type":"integer"},"index$":0},{"allowEmptyValue":true,"description":"A schedule's ID. This endpoint will return a list of schedules after this ID in relation to the API response order.","examples":{"default":{"summary":"default","value":"01FDAG4SAP5TYPT98WGR2N7W91"}},"in":"query","name":"after","schema":{"description":"A schedule's ID. This endpoint will return a list of schedules after this ID in relation to the API response order.","example":"01FDAG4SAP5TYPT98WGR2N7W91","type":"string"},"index$":1}]},"GET /v2/schedules/{id}":{"protocol":"http","parameters":[{"description":"Unique internal ID of the schedule","example":"01G0J1EXE7AXZ2C93K61WBPYEH","in":"path","name":"id","required":true,"schema":{"description":"Unique internal ID of the schedule","example":"01G0J1EXE7AXZ2C93K61WBPYEH","type":"string"},"index$":0}]},"DELETE /v2/schedules/{id}":{"protocol":"http","parameters":[{"description":"Unique internal ID of the schedule","example":"01G0J1EXE7AXZ2C93K61WBPYEH","in":"path","name":"id","required":true,"schema":{"description":"Unique internal ID of the schedule","example":"01G0J1EXE7AXZ2C93K61WBPYEH","type":"string"},"index$":0}]},"PUT /v2/schedules/{id}":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"schedule":{"annotations":{"incident.io/terraform/version":"version-of-terraform"},"config":{"rotations":[{"effective_from":"2021-08-17T13:28:57.801578Z","handover_start_at":"2021-08-17T13:28:57.801578Z","handovers":[{}],"id":"01G0J1EXE7AXZ2C93K61WBPYEH","layers":[{}],"name":"My Rotation","scheduling_mode":"fair","users":[{}],"working_interval":[{}],"working_intervals":[{}]}]},"holidays_public_config":{"country_codes":["abc123"]},"name":"Primary On-call Schedule","team_ids":["01JPQA75EPNEES4479P16P4XAB"],"timezone":"America/Los_Angeles"}},"schema":{"example":{"schedule":{"annotations":{"incident.io/terraform/version":"version-of-terraform"},"config":{"rotations":[{"effective_from":"2021-08-17T13:28:57.801578Z","handover_start_at":"2021-08-17T13:28:57.801578Z","handovers":[],"id":"01G0J1EXE7AXZ2C93K61WBPYEH","layers":[],"name":"My Rotation","scheduling_mode":"fair","users":[],"working_interval":[],"working_intervals":[]}]},"holidays_public_config":{"country_codes":["abc123"]},"name":"Primary On-call Schedule","team_ids":["01JPQA75EPNEES4479P16P4XAB"],"timezone":"America/Los_Angeles"}},"properties":{"schedule":{"example":{"annotations":{"incident.io/terraform/version":"version-of-terraform"},"config":{"rotations":[{}]},"holidays_public_config":{"country_codes":["abc123"]},"name":"Primary On-call Schedule","team_ids":["01JPQA75EPNEES4479P16P4XAB"],"timezone":"America/Los_Angeles"},"properties":{"annotations":{"additionalProperties":{"example":"abc123","type":"string"},"description":"Annotations that can track metadata about the schedule","example":{"incident.io/terraform/version":"version-of-terraform"},"type":"object","key$":"annotations"},"config":{"example":{"rotations":[]},"properties":{"rotations":{}},"type":"object","x-ref":"#/components/schemas/ScheduleConfigUpdatePayloadV2","key$":"config"},"holidays_public_config":{"example":{"country_codes":[]},"properties":{"country_codes":{}},"required":["country_codes"],"type":"object","x-ref":"#/components/schemas/ScheduleHolidaysPublicConfigPayloadV2","key$":"holidays_public_config"},"name":{"description":"Name of the schedule","example":"Primary On-call Schedule","type":"string","key$":"name"},"team_ids":{"description":"IDs of teams that own this schedule","example":["01JPQA75EPNEES4479P16P4XAB"],"items":{"example":"abc123","type":"string"},"type":"array","key$":"team_ids"},"timezone":{"description":"Timezone of the schedule","example":"America/Los_Angeles","type":"string","key$":"timezone"}},"type":"object","x-ref":"#/components/schemas/ScheduleUpdatePayloadV2","index$":1}},"required":["schedule"],"type":"object","x-ref":"#/components/schemas/SchedulesUpdatePayloadV2"}}},"required":true},"parameters":[{"description":"The schedule ID to update.","example":"01G0J1EXE7AXZ2C93K61WBPYEH","in":"path","name":"id","required":true,"schema":{"description":"The schedule ID to update.","example":"01G0J1EXE7AXZ2C93K61WBPYEH","type":"string"},"index$":0}]}}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -62,14 +122,14 @@ describe('ScheduleEntity', async () => {
     const schedule_ref01_ent = client.Schedule()
     let schedule_ref01_data = setup.data.new.schedule['schedule_ref01']
 
-    schedule_ref01_data = await schedule_ref01_ent.create(schedule_ref01_data)
+    schedule_ref01_data = (await schedule_ref01_ent.create(schedule_ref01_data)).data()
     assert(null != schedule_ref01_data.id)
 
 
     // LIST
     const schedule_ref01_match: any = {}
 
-    const schedule_ref01_list = await schedule_ref01_ent.list(schedule_ref01_match)
+    const schedule_ref01_list = (await schedule_ref01_ent.list(schedule_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(schedule_ref01_list, { id: schedule_ref01_data.id })))
 
@@ -81,7 +141,7 @@ describe('ScheduleEntity', async () => {
     const schedule_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-schedule_ref01_' + setup.now }
     ;(schedule_ref01_data_up0 as any)[schedule_ref01_markdef_up0.name] = schedule_ref01_markdef_up0.value
 
-    const schedule_ref01_resdata_up0 = await schedule_ref01_ent.update(schedule_ref01_data_up0)
+    const schedule_ref01_resdata_up0 = (await schedule_ref01_ent.update(schedule_ref01_data_up0)).data()
     assert(schedule_ref01_resdata_up0.id === schedule_ref01_data_up0.id)
 
     assert((schedule_ref01_resdata_up0 as any)[schedule_ref01_markdef_up0.name] === schedule_ref01_markdef_up0.value)
@@ -90,7 +150,7 @@ describe('ScheduleEntity', async () => {
     // LOAD
     const schedule_ref01_match_dt0: any = {}
     schedule_ref01_match_dt0.id = schedule_ref01_data.id
-    const schedule_ref01_data_dt0 = await schedule_ref01_ent.load(schedule_ref01_match_dt0)
+    const schedule_ref01_data_dt0 = (await schedule_ref01_ent.load(schedule_ref01_match_dt0)).data()
     assert(schedule_ref01_data_dt0.id === schedule_ref01_data.id)
 
 
@@ -102,7 +162,7 @@ describe('ScheduleEntity', async () => {
     // LIST
     const schedule_ref01_match_rt0: any = {}
 
-    const schedule_ref01_list_rt0 = await schedule_ref01_ent.list(schedule_ref01_match_rt0)
+    const schedule_ref01_list_rt0 = (await schedule_ref01_ent.list(schedule_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(schedule_ref01_list_rt0, { id: schedule_ref01_data.id })))
 
@@ -111,6 +171,12 @@ describe('ScheduleEntity', async () => {
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra?: any) {
   // TODO: fix test def options
@@ -143,28 +209,38 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['INCIDENT_IO_TEST_SCHEDULE_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'INCIDENT_IO_TEST_SCHEDULE_ENTID': idmap,
     'INCIDENT_IO_TEST_LIVE': 'FALSE',
     'INCIDENT_IO_TEST_EXPLAIN': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
   idmap = env['INCIDENT_IO_TEST_SCHEDULE_ENTID']
 
   const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['INCIDENT_IO_TEST_SCHEDULE_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new IncidentIoSDK(merge([
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
       {
+        apikey: env.INCIDENT_IO_APIKEY,
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when the
+      // last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey
+      // and server values above and handed the SDK undefined. Harmless
+      // while there was nothing in that object; not harmless now.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -177,7 +253,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.INCIDENT_IO_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 

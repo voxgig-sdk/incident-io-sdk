@@ -1,5 +1,5 @@
 
-import { cmp, Content } from '@voxgig/sdkgen'
+import { cmp, Content, phpEntityAccessor, modelText } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -10,7 +10,7 @@ import {
 
 const ReadmeIntro = cmp(function ReadmeIntro(props: any) {
   const { target, ctx$: { model } } = props
-  const info = (model.main && model.main.kit && model.main.kit.info) || {}
+  const info = modelText(model)
   const tagline = info.tagline || ''
 
   // Derive a representative entity (and its operations) from the model so the
@@ -21,7 +21,7 @@ const ReadmeIntro = cmp(function ReadmeIntro(props: any) {
   // Model-driven op list — union of the operations the active entities
   // actually expose (a read-only entity has just list+load), in canonical
   // order; never claim create/update/remove exist when no entity has them.
-  const CANON_OPS = ['list', 'load', 'create', 'update', 'remove']
+  const CANON_OPS = ['list', 'load', 'create', 'update', 'patch', 'remove']
   const opSet = new Set<string>()
   Object.values(entity || {}).forEach((e: any) => {
     if (!e || e.active === false) return
@@ -34,7 +34,7 @@ const ReadmeIntro = cmp(function ReadmeIntro(props: any) {
   const opList = (opnames.length > 0 ? opnames : ['list', 'load']).join('`/`')
 
   const semantic = eName
-    ? `The SDK exposes the API as capitalised, semantic **Entities** — for example \`$client->${eName}()\` — with named operations (\`${opList}\`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
+    ? `The SDK exposes the API as capitalised, semantic **Entities** — for example \`$client->${phpEntityAccessor(eName)}()\` — with named operations (\`${opList}\`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
 
 `
     : ''

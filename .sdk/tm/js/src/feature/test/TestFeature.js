@@ -4,6 +4,39 @@ const { BaseFeature } = require('../base/BaseFeature')
 
 const S_NOT_FOUND = 'Not found'
 
+// The `%04x%04x%04x%04x` every other target mints, so the id's shape does not
+// depend on which language answered.
+function mintId() {
+  let out = ''
+  for (let i = 0; i < 4; i++) {
+    out += ((Math.random() * 0x10000) | 0).toString(16).padStart(4, '0')
+  }
+  return out
+}
+
+
+
+// The record the mock keeps: the request data without `$body`, which only the
+// wire carries.
+function recordOf(reqdata) {
+  const out = { ...(reqdata || {}) }
+  delete out.$body
+  return out
+}
+
+
+// The key a list response wraps each record under, where the response
+// transform is `["`$EACH`", "body", { "`$MERGE`": "`.<key>`" }]`.
+function itemEnvelopeKey(restf) {
+  if (!Array.isArray(restf) || 3 !== restf.length ||
+    '`$EACH`' !== restf[0] || 'body' !== restf[1]) {
+    return null
+  }
+  const merge = restf[2]?.['`$MERGE`']
+  const m = 'string' === typeof merge ? merge.match(/^`\.([^.`$]+)`$/) : null
+  return null == m ? null : m[1]
+}
+
 
 class TestFeature extends BaseFeature {
   version = '0.0.1'
@@ -58,11 +91,27 @@ class TestFeature extends BaseFeature {
       // whose responses happen to be unwrapped.
       function envelope(data) {
         const restf = getprop(getprop(ctx.point, 'transform', {}), 'res')
+        const itemkey = itemEnvelopeKey(restf)
+        if (null != itemkey && Array.isArray(data)) {
+          return data.map((item) => ({ [itemkey]: item }))
+        }
         if (null == data || 'string' !== typeof restf) {
           return data
         }
-        const m = restf.match(/^`body\.([^`.]+)`$/)
-        return null == m ? data : { [m[1]]: data }
+        // Rebuild whatever nesting the op's response transform unwraps, so
+        // the mock agrees with the model. Multi-segment on purpose: GraphQL
+        // ops unwrap `body.data.<field>` (and `body.data.<field>.<entity>`
+        // for mutation payloads), not just a single envelope property.
+        const m = restf.match(/^`body\.(.+)`$/)
+        if (null == m) {
+          return data
+        }
+        let out = data
+        const segs = m[1].split('.')
+        for (let i = segs.length - 1; 0 <= i; i--) {
+          out = { [segs[i]]: out }
+        }
+        return out
       }
 
       function respond(status, data, res) {
@@ -120,15 +169,16 @@ class TestFeature extends BaseFeature {
           return respond(200, out)
         }
       }
-      else if ('update' === op.name) {
-        const args = self.buildArgs(ctx, op, ctx.reqdata)
+      else if ('update' === op.name || 'patch' === op.name) {
+        const args = self.buildArgs(ctx, op, recordOf(ctx.reqdata))
         const found = select(entmap, args)
         const ent = getelem(found, 0)
         if (null == ent) {
+          // update miss: 404, never another record
           return respond(404, undefined, { statusText: S_NOT_FOUND })
         }
         else {
-          merge([ent, (ctx.reqdata || {})])
+          merge([ent, recordOf(ctx.reqdata)])
           delprop(ent, '$KEY')
           const out = clone(ent)
           return respond(200, out)
@@ -138,31 +188,29 @@ class TestFeature extends BaseFeature {
         const args = self.buildArgs(ctx, op, ctx.reqmatch)
         const found = select(entmap, args)
         const ent = getelem(found, 0)
-        if (null == ent) {
-          return respond(404, undefined, { statusText: S_NOT_FOUND })
-        }
-        else {
+        // Remove only the first matched entity. If nothing matches,
+        // succeed as a no-op rather than erroring.
+        if (null != ent) {
           delprop(entmap, getprop(ent, 'id'))
-          return respond(200)
         }
+        return respond(200)
       }
       else if ('create' === op.name) {
-        const args = self.buildArgs(ctx, op, ctx.reqdata)
+        const args = self.buildArgs(ctx, op, recordOf(ctx.reqdata))
         let id = param(ctx, 'id')
         if (null == id) {
-          id = ((1e4 * Math.random() | 0).toString(16) +
-            (1e4 * Math.random() | 0).toString(16) +
-            (1e4 * Math.random() | 0).toString(16) +
-            (1e4 * Math.random() | 0).toString(16)).padEnd(16, '0')
+          id = mintId()
         }
 
-        const ent = clone(ctx.reqdata)
+        const ent = clone(recordOf(ctx.reqdata))
         setprop(ent, 'id', id)
         setprop(entmap, id, ent)
         delprop(ent, '$KEY')
         const out = clone(ent)
         return respond(200, out)
       }
+
+      return respond(404, undefined, { statusText: 'Unknown operation' })
     }
 
     // Optional network behaviour simulation over the mock transport. Enable
@@ -191,10 +239,12 @@ class TestFeature extends BaseFeature {
       return max <= min ? min : min + ((max - min) >> 1)
     }
 
-    function sleep(ms) {
+    function sleep(ms, signal) {
       if (null == ms || 0 >= ms) { return Promise.resolve() }
-      if ('function' === typeof net.sleep) { return Promise.resolve(net.sleep(ms)) }
-      return new Promise((r) => setTimeout(r, ms))
+      if ('function' === typeof net.sleep) { return self._untilAbort(Promise.resolve(net.sleep(ms)), signal) }
+      let timer
+      return self._untilAbort(new Promise((r) => { timer = setTimeout(r, ms) }), signal,
+        () => clearTimeout(timer))
     }
 
     return async function netsimFetcher(ctx, url, fetchdef) {
@@ -202,15 +252,15 @@ class TestFeature extends BaseFeature {
       const call = self._netcalls
 
       if (true === net.offline) {
-        await sleep(pickLatency())
+        await sleep(pickLatency(), fetchdef?.signal)
         return ctx.error('netsim_offline', 'Simulated network offline (URL was: "' + url + '")')
       }
       if (call <= (net.errorTimes | 0)) {
-        await sleep(pickLatency())
+        await sleep(pickLatency(), fetchdef?.signal)
         return ctx.error('netsim_conn', 'Simulated connection error (call ' + call + ')')
       }
       if (call <= (net.failTimes | 0)) {
-        await sleep(pickLatency())
+        await sleep(pickLatency(), fetchdef?.signal)
         const status = null == net.failStatus ? 503 : net.failStatus
         return {
           status,
@@ -220,7 +270,7 @@ class TestFeature extends BaseFeature {
           headers: { forEach(_cb) { }, get(_k) { return undefined } },
         }
       }
-      await sleep(pickLatency())
+      await sleep(pickLatency(), fetchdef?.signal)
       return inner(ctx, url, fetchdef)
     }
   }
@@ -239,14 +289,40 @@ class TestFeature extends BaseFeature {
     const isempty = struct.isempty
 
     const opname = getprop(op, 'name')
-    const point =
-      getelem(getpath(ctx.config, [
-        'entity', getprop(ctx.entity, 'name'), 'op', opname, 'points']), -1)
+    const points = getpath(ctx.config, [
+      'entity', getprop(ctx.entity, 'name'), 'op', opname, 'points']) || []
 
-    const reqd = transform(
+    // Pick the entity's own endpoint, not a cross-reference from another
+    // resource that also returns it — the same rule makePoint falls back to,
+    // so the seed-data query is built from the endpoint the request will
+    // actually be sent to: a terminal `{id}` marks a record route, and
+    // failing that the shallower path wins.
+    const isterm = (pt) => {
+      const parts = pt.parts
+      const last = 0 < parts.length ? parts[parts.length - 1] : ''
+      return 'string' === typeof last && 0 === last.indexOf('{')
+    }
+
+    let point = getelem(points, 0)
+    for (let i = 1; i < points.length; i++) {
+      const cand = getelem(points, i)
+      if (isterm(cand) !== isterm(point) ? isterm(cand) :
+        cand.parts.length < point.parts.length) {
+        point = cand
+      }
+    }
+
+    // Path AND query: a path-only read misses a query-addressed record
+    // (e.g. GET /result?trace_id=), which has no path param at all.
+    const reqdParams = transform(
       select(getpath(point, ['args', 'params']), { reqd: true }),
       ['`$EACH`', '', '`$KEY.name`']
     )
+    const reqdQuery = transform(
+      select(getpath(point, ['args', 'query']), { reqd: true }),
+      ['`$EACH`', '', '`$KEY.name`']
+    )
+    const reqd = [...(reqdParams || []), ...(reqdQuery || [])]
 
     const qand = []
     const q = { '`$AND`': qand }

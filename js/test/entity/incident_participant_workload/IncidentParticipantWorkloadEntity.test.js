@@ -1,18 +1,22 @@
 
 const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
+require('../../utility').loadEnvLocal(envlocal)
 
 const Path = require('node:path')
 const Fs = require('node:fs')
 
-const { test, describe } = require('node:test')
+const { test, describe, afterEach } = require('node:test')
 const assert = require('node:assert')
+const { createLiveTransport } = require('../../live-runner')
+const { runLiveEntity } = require('../../live-entity')
 
 
 const { IncidentIoSDK, BaseFeature, stdutil, config } = require('../../..')
 
 const {
   envOverride,
+  liveClientOptions,
+  liveDelay,
   makeCtrl,
   makeMatch,
   makeReqdata,
@@ -23,6 +27,10 @@ const {
 
 describe('IncidentParticipantWorkloadEntity', async () => {
 
+  // Per-test live pacing. Delay is read from sdk-test-control.json's
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
+
   test('instance', async () => {
     const testsdk = IncidentIoSDK.test()
     const ent = testsdk.IncidentParticipantWorkload()
@@ -30,9 +38,74 @@ describe('IncidentParticipantWorkloadEntity', async () => {
   })
 
 
-  test('basic', async () => {
+  class FailHook extends BaseFeature {
+    constructor() {
+      super()
+      this.name = 'failhook'
+      this.version = '0.0.1'
+      this.active = true
+      this.unexpected = 0
+    }
+    init() { }
+    PreSpec() { throw new Error('incident_participant_workload hook failed') }
+    PreUnexpected() { this.unexpected++ }
+  }
 
+  test('stream-error', async () => {
+    const offline = { net: { offline: true } }
+    await assert.rejects(async () => {
+      for await (const _item of IncidentIoSDK.test(offline).IncidentParticipantWorkload().stream('list')) { }
+    }, /offline/)
+
+    for await (const _item of IncidentIoSDK.test(offline).IncidentParticipantWorkload()
+      .stream('list', undefined, { ctrl: { throw: false } })) { }
+
+    if (null != config.feature?.rbac) {
+      const denied = IncidentIoSDK.test(undefined, { feature: { rbac: { active: true, deny: true } } })
+      await assert.rejects(async () => {
+        for await (const _item of denied.IncidentParticipantWorkload().stream('list')) { }
+      }, (err) => 'rbac_denied' === err.code)
+    }
+  })
+
+  test('stream-ctrl', async () => {
+    const explain = {}
+    const ctrl = { explain }
+    for await (const _item of IncidentIoSDK.test().IncidentParticipantWorkload().stream('list', undefined, { ctrl })) { }
+    assert.deepStrictEqual(Object.keys(ctrl), ['explain'])
+    assert(explain === ctrl.explain && 0 < Object.keys(explain).length)
+  })
+
+  test('unexpected', async () => {
+    const hook = new FailHook()
+    const client = new IncidentIoSDK({ feature: { test: { active: true } }, extend: [hook] })
+    await assert.rejects(client.IncidentParticipantWorkload().list(), /hook failed/)
+    assert(0 < hook.unexpected)
+
+    const fired = hook.unexpected
+    assert.strictEqual(await client.IncidentParticipantWorkload().list(undefined, { throw: false }), undefined)
+    assert(fired < hook.unexpected)
+  })
+
+  test('validate', async (t) => {
+    if (null == config.feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.IncidentParticipantWorkload().list({"incident_id":1}),
+      (err) => 'validate_failed' === err.code)
+  })
+
+
+
+  test('basic', async (t) => {
+
+    
     const setup = basicSetup()
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"archived_at":{"a":true,"fo":"date-time","h":"Archived At","n":"archived_at","r":false,"sh":"When the user left the incident, if they are no longer an active participant","t":"`$STRING`","key$":"archived_at","index$":0},"participant_type":{"a":true,"h":"Participant Type","n":"participant_type","r":false,"sh":"The role they had in the incident","t":"`$STRING`","key$":"participant_type","index$":1},"user":{"a":true,"h":"User","n":"user","r":true,"t":"`$OBJECT`","key$":"user","index$":2},"workload":{"a":true,"h":"Workload","n":"workload","r":true,"t":"`$OBJECT`","key$":"workload","index$":3}},"name":"incident_participant_workload","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /v2/incident_participant_workloads","source":"openapi3","version":2},"g":{"query":[{"a":true,"ex":"01FCNDV6P870EA6S7TK1DSYD5H","k":"query","n":"incident_id","or":"incident_id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/v2/incident_participant_workloads","q":{"exist":["incident_id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"incident_participant_workloads"}],"t":{"req":"`reqdata`","res":"`body.incident_participant_workloads`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"incident_participant_workload","name__orig":"incident_participant_workload","Name":"IncidentParticipantWorkload","name_":"incident_participant_workload","name-":"incident-participant-workload","NAME":"INCIDENT_PARTICIPANT_WORKLOAD","index$":47}, {"active":true,"entity":"incident_participant_workload","key$":"BasicIncidentParticipantWorkloadFlow","kind":"basic","name":"BasicIncidentParticipantWorkloadFlow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"incident_participant_workload_ref01"}}],"index$":0}]}, 'IncidentParticipantWorkload', {"GET /v2/incident_participant_workloads":{"protocol":"http","parameters":[{"allowEmptyValue":true,"description":"Find participant workload for this incident","example":"01FCNDV6P870EA6S7TK1DSYD5H","in":"query","name":"incident_id","required":true,"schema":{"description":"Find participant workload for this incident","example":"01FCNDV6P870EA6S7TK1DSYD5H","type":"string"},"index$":0}]}}, { strict: LIVE_STRICT, t })
+    }
     const client = setup.client
     const struct = setup.struct
 
@@ -45,13 +118,19 @@ describe('IncidentParticipantWorkloadEntity', async () => {
     const incident_participant_workload_ref01_ent = client.IncidentParticipantWorkload()
     const incident_participant_workload_ref01_match = {}
 
-    const incident_participant_workload_ref01_list = await incident_participant_workload_ref01_ent.list(incident_participant_workload_ref01_match)
+    const incident_participant_workload_ref01_list = (await incident_participant_workload_ref01_ent.list(incident_participant_workload_ref01_match)).map((e) => e.data())
 
 
   })
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra) {
   // TODO: fix test def options
@@ -88,15 +167,32 @@ function basicSetup(extra) {
     'INCIDENT_IO_TEST_INCIDENT_PARTICIPANT_WORKLOAD_ENTID': idmap,
     'INCIDENT_IO_TEST_LIVE': 'FALSE',
     'INCIDENT_IO_TEST_EXPLAIN': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
   idmap = env['INCIDENT_IO_TEST_INCIDENT_PARTICIPANT_WORKLOAD_ENTID']
 
-  if ('TRUE' === env.INCIDENT_IO_TEST_LIVE) {
+  const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
+  const transport = createLiveTransport()
+  if (live) {
+    const rawIds = process.env['INCIDENT_IO_TEST_INCIDENT_PARTICIPANT_WORKLOAD_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new IncidentIoSDK(merge([
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
       {
+        apikey: env.INCIDENT_IO_APIKEY,
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when
+      // the last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey and
+      // server values above and handed the SDK undefined.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -108,6 +204,8 @@ function basicSetup(extra) {
     struct,
     data: entityData,
     explain: 'TRUE' === env.INCIDENT_IO_TEST_EXPLAIN,
+    live,
+    transport,
     now: Date.now(),
   }
 

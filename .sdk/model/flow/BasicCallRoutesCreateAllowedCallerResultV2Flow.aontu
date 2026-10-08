@@ -1,0 +1,22 @@
+# BasicCallRoutesCreateAllowedCallerResultV2Flow
+
+main: kit: flow: BasicCallRoutesCreateAllowedCallerResultV2Flow:
+{
+  entity: "call_routes_create_allowed_caller_result_v2",
+  kind: "basic",
+  name: "BasicCallRoutesCreateAllowedCallerResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "call_routes_create_allowed_caller_result_v2_ref01"
+      }
+
+      m: {
+        call_route_id: "call_route01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicCallRoutesCreateAllowedCallerResultV2Flow"
+}

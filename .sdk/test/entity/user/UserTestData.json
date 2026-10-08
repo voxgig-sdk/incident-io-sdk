@@ -3,35 +3,35 @@
     "user": {
       "USER00": {
         "base_role": {},
-        "custom_role": [],
+        "custom_roles": [],
         "email": "s5c",
         "id": "USER00",
         "is_active": true,
         "name": "s5f",
         "role": "s60",
-        "seat": {},
+        "seats": {},
         "slack_user_id": "SLACK_USER01"
       },
       "USER01": {
         "base_role": {},
-        "custom_role": [],
+        "custom_roles": [],
         "email": "sb6",
         "id": "USER01",
         "is_active": true,
         "name": "sb9",
         "role": "sba",
-        "seat": {},
+        "seats": {},
         "slack_user_id": "SLACK_USER01"
       },
       "USER02": {
         "base_role": {},
-        "custom_role": [],
+        "custom_roles": [],
         "email": "s110",
         "id": "USER02",
         "is_active": true,
         "name": "s113",
         "role": "s114",
-        "seat": {},
+        "seats": {},
         "slack_user_id": "SLACK_USER01"
       }
     }
@@ -40,14 +40,31 @@
     "user": {
       "user_ref01": {
         "base_role": {},
-        "custom_role": [],
+        "custom_roles": [],
         "email": "s16a",
         "is_active": true,
         "name": "s16d",
         "role": "s16e",
-        "seat": {},
+        "seats": {},
         "slack_user_id": "SLACK_USER01"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/users/{user_id}/paging_provider": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/users": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/users/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

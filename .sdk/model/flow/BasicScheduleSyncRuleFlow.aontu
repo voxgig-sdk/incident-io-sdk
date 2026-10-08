@@ -7,24 +7,24 @@ main: kit: flow: BasicScheduleSyncRuleFlow:
   name: "BasicScheduleSyncRuleFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "schedule_sync_rule_ref01"
       }
 
-      match: {
+      m: {
         schedule_id: "schedule01"
       }
 
-      op: "create"
+      o: "create"
     }
 
     {
-      match: {
+      m: {
         schedule_id: "schedule01"
       }
 
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -35,19 +35,19 @@ main: kit: flow: BasicScheduleSyncRuleFlow:
     }
 
     {
-      data: {
+      d: {
         schedule_id: "schedule01"
       }
 
-      input: {
+      i: {
         ref: "schedule_sync_rule_ref01",
         srcdatavar: "schedule_sync_rule_ref01_data",
         suffix: "_up0",
         textfield: "created_at"
       }
 
-      op: "update",
-      spec: [
+      o: "update",
+      s: [
         {
           apply: "TextFieldMark",
           def: {
@@ -58,19 +58,19 @@ main: kit: flow: BasicScheduleSyncRuleFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "schedule_sync_rule_ref01",
         srcdatavar: "schedule_sync_rule_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "schedule_sync_rule01",
         schedule_id: "schedule01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

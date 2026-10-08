@@ -1,0 +1,26 @@
+# BasicPayConfigsListWeeklyRulesResultV2Flow
+
+main: kit: flow: BasicPayConfigsListWeeklyRulesResultV2Flow:
+{
+  entity: "pay_configs_list_weekly_rules_result_v2",
+  kind: "basic",
+  name: "BasicPayConfigsListWeeklyRulesResultV2Flow",
+  step: [
+    {
+      m: {
+        pay_config_id: "pay_config01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "pay_configs_list_weekly_rules_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPayConfigsListWeeklyRulesResultV2Flow"
+}

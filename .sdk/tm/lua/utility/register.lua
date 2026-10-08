@@ -3,6 +3,7 @@
 local Utility = require("core.utility_type")
 
 local clean = require("utility.clean")
+local clean_explain = require("utility.clean_explain")
 local done = require("utility.done")
 local make_error = require("utility.make_error")
 local feature_add = require("utility.feature_add")
@@ -26,6 +27,7 @@ local prepare_method = require("utility.prepare_method")
 local prepare_params = require("utility.prepare_params")
 local prepare_path = require("utility.prepare_path")
 local prepare_query = require("utility.prepare_query")
+local graphql = require("utility.graphql")
 local result_basic = require("utility.result_basic")
 local result_body = require("utility.result_body")
 local result_headers = require("utility.result_headers")
@@ -34,7 +36,9 @@ local transform_response = require("utility.transform_response")
 
 
 local function register_all(u)
-  u.clean = clean
+  u.clean = clean.clean
+  u.clean_add = clean.clean_add
+  u.clean_explain = clean_explain
   u.done = done
   u.make_error = make_error
   u.feature_add = feature_add
@@ -58,6 +62,8 @@ local function register_all(u)
   u.prepare_params = prepare_params
   u.prepare_path = prepare_path
   u.prepare_query = prepare_query
+  u.graphql_body = graphql.body
+  u.graphql_errors = graphql.errors
   u.result_basic = result_basic
   u.result_body = result_body
   u.result_headers = result_headers

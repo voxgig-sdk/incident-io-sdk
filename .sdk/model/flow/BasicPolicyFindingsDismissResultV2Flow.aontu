@@ -1,0 +1,22 @@
+# BasicPolicyFindingsDismissResultV2Flow
+
+main: kit: flow: BasicPolicyFindingsDismissResultV2Flow:
+{
+  entity: "policy_findings_dismiss_result_v2",
+  kind: "basic",
+  name: "BasicPolicyFindingsDismissResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "policy_findings_dismiss_result_v2_ref01"
+      }
+
+      m: {
+        policy_finding_id: "policy_finding01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicPolicyFindingsDismissResultV2Flow"
+}

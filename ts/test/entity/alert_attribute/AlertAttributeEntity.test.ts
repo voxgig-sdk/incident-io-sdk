@@ -1,19 +1,21 @@
 
-const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
 
 import Path from 'node:path'
 import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
-import { IncidentIoSDK, BaseFeature, stdutil } from '../../..'
+import { IncidentIoSDK, BaseFeature, config, stdutil } from '../../..'
 
 import {
   envOverride,
+  liveClientOptions,
   liveDelay,
+  loadEnvLocal,
   makeCtrl,
   makeMatch,
   makeReqdata,
@@ -23,11 +25,14 @@ import {
 } from '../../utility'
 
 
+loadEnvLocal(__dirname + '/../../../.env.local')
+
+
 describe('AlertAttributeEntity', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when INCIDENTIO_TEST_LIVE=TRUE.
-  afterEach(liveDelay('INCIDENTIO_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
 
   test('instance', async () => {
     const testsdk = IncidentIoSDK.test()
@@ -36,20 +41,75 @@ describe('AlertAttributeEntity', async () => {
   })
 
 
+  class FailHook extends BaseFeature {
+    name = 'failhook'
+    version = '0.0.1'
+    active = true
+    unexpected = 0
+    init() { }
+    PreSpec() { throw new Error('alert_attribute hook failed') }
+    PreUnexpected() { this.unexpected++ }
+  }
+
+  test('stream-error', async () => {
+    const offline = { net: { offline: true } }
+    await assert.rejects(async () => {
+      for await (const _item of IncidentIoSDK.test(offline).AlertAttribute().stream('list')) { }
+    }, /offline/)
+
+    for await (const _item of IncidentIoSDK.test(offline).AlertAttribute()
+      .stream('list', undefined, { ctrl: { throw: false } })) { }
+
+    if (null != (config as any).feature?.rbac) {
+      const denied = IncidentIoSDK.test(undefined, { feature: { rbac: { active: true, deny: true } } })
+      await assert.rejects(async () => {
+        for await (const _item of denied.AlertAttribute().stream('list')) { }
+      }, (err: any) => 'rbac_denied' === err.code)
+    }
+  })
+
+  test('stream-ctrl', async () => {
+    const explain: any = {}
+    const ctrl: any = { explain }
+    for await (const _item of IncidentIoSDK.test().AlertAttribute().stream('list', undefined, { ctrl })) { }
+    assert.deepStrictEqual(Object.keys(ctrl), ['explain'])
+    assert(explain === ctrl.explain && 0 < Object.keys(explain).length)
+  })
+
+  test('unexpected', async () => {
+    const hook = new FailHook()
+    const client = new IncidentIoSDK({ feature: { test: { active: true } }, extend: [hook] })
+    await assert.rejects(client.AlertAttribute().list(), /hook failed/)
+    assert(0 < hook.unexpected)
+
+    const fired = hook.unexpected
+    assert.strictEqual(await client.AlertAttribute().list(undefined, { throw: false }), undefined)
+    assert(fired < hook.unexpected)
+  })
+
+  test('validate', async (t) => {
+    if (null == (config as any).feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.AlertAttribute().list({"array":"x"} as any),
+      (err: any) => 'validate_failed' === err.code)
+  })
+
+
+
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE
     for (const op of ['create', 'list', 'update', 'load', 'remove']) {
-      if (maybeSkipControl(t, 'entityOp', 'alert_attribute.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'alert_attribute.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set INCIDENT_IO_TEST_ALERT_ATTRIBUTE_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"array":{"a":true,"h":"Array","n":"array","r":true,"sh":"Whether this attribute is an array","t":"`$BOOLEAN`","key$":"array","index$":0},"emoji":{"a":true,"h":"Emoji","n":"emoji","r":false,"sh":"The emoji to display alongside this attribute in chat messages, stored without colons","t":"`$STRING`","key$":"emoji","index$":1},"id":{"a":true,"h":"Id","n":"id","r":true,"sh":"The ID of this attribute","t":"`$STRING`","key$":"id","index$":2},"name":{"a":true,"h":"Name","n":"name","r":true,"sh":"Unique name of this attribute","t":"`$STRING`","key$":"name","index$":3},"required":{"a":true,"h":"Required","n":"required","op":{"create":{"req":false,"type":"`$BOOLEAN`"},"update":{"req":false,"type":"`$BOOLEAN`"}},"r":true,"sh":"Whether this attribute is required.","t":"`$BOOLEAN`","key$":"required","index$":4},"type":{"a":true,"h":"Type","n":"type","r":true,"sh":"Engine resource name for this attribute","t":"`$STRING`","key$":"type","index$":5}},"id":{"field":"id","name":"id"},"name":"alert_attribute","op":{"create":{"input":"data","name":"create","points":[{"a":true,"bf":["array","emoji","name","required","type"],"co":{"id":"POST /v2/alert_attributes","source":"openapi3","version":2},"g":{},"k":"http","m":"POST","o":"/v2/alert_attributes","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"alert_attributes"}],"t":{"req":"`reqdata`","res":"`body.alert_attribute`"},"index$":0}],"key$":"create"},"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /v2/alert_attributes","source":"openapi3","version":2},"g":{},"k":"http","m":"GET","o":"/v2/alert_attributes","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"alert_attributes"}],"t":{"req":"`reqdata`","res":"`body.alert_attributes`"},"index$":0}],"key$":"list"},"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /v2/alert_attributes/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01GW2G3V0S59R238FAHPDS1R66","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/v2/alert_attributes/{id}","q":{"exist":["id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"alert_attributes"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body.alert_attribute`"},"index$":0}],"key$":"load"},"remove":{"input":"data","name":"remove","points":[{"a":true,"co":{"id":"DELETE /v2/alert_attributes/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01GW2G3V0S59R238FAHPDS1R66","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"DELETE","o":"/v2/alert_attributes/{id}","q":{"exist":["id"]},"r":{},"s":[{"lit":"v2"},{"lit":"alert_attributes"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"remove"},"update":{"input":"data","name":"update","points":[{"a":true,"bf":["array","emoji","name","required","type"],"co":{"id":"PUT /v2/alert_attributes/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01GW2G3V0S59R238FAHPDS1R66","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"PUT","o":"/v2/alert_attributes/{id}","q":{"exist":["id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"alert_attributes"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body.alert_attribute`"},"index$":0}],"key$":"update"}},"relations":{"ancestors":[]},"key$":"alert_attribute","name__orig":"alert_attribute","Name":"AlertAttribute","name_":"alert_attribute","name-":"alert-attribute","NAME":"ALERT_ATTRIBUTE","index$":2}, {"active":true,"entity":"alert_attribute","key$":"BasicAlertAttributeFlow","kind":"basic","name":"BasicAlertAttributeFlow","param":{},"step":[{"a":true,"d":{},"i":{"ref":"alert_attribute_ref01"},"m":{},"o":"create","s":[],"v":[],"index$":0},{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"alert_attribute_ref01"}}],"index$":1},{"a":true,"d":{},"i":{"ref":"alert_attribute_ref01","srcdatavar":"alert_attribute_ref01_data","suffix":"_up0","textfield":"emoji"},"m":{},"o":"update","s":[{"apply":"TextFieldMark","def":{"mark":"Mark01-alert_attribute_ref01"}}],"v":[],"index$":2},{"a":true,"d":{},"i":{"ref":"alert_attribute_ref01","srcdatavar":"alert_attribute_ref01_data","suffix":"_dt0"},"m":{"id":"alert_attribute01"},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-alert_attribute_ref01"}}],"index$":3},{"a":true,"d":{},"i":{"ref":"alert_attribute_ref01","suffix":"_rm0"},"m":{"id":"alert_attribute01"},"o":"remove","s":[],"v":[],"index$":4},{"a":true,"d":{},"i":{"suffix":"_rt0"},"m":{},"o":"list","s":[],"v":[{"apply":"ItemNotExists","def":{"ref":"alert_attribute_ref01"}}],"index$":5}]}, 'AlertAttribute', {"POST /v2/alert_attributes":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"array":false,"emoji":"fire","name":"service","required":false,"type":"CatalogEntry[\"01GW2G3V0S59R238FAHPDS1R67\"]"},"schema":{"example":{"array":false,"emoji":"fire","name":"service","required":false,"type":"CatalogEntry[\"01GW2G3V0S59R238FAHPDS1R67\"]"},"properties":{"array":{"description":"Whether this attribute is an array","example":false,"type":"boolean","key$":"array"},"emoji":{"description":"The emoji to display alongside this attribute in chat messages, stored without colons","example":"fire","type":"string","key$":"emoji"},"name":{"description":"Unique name of this attribute","example":"service","type":"string","key$":"name"},"required":{"description":"Whether this attribute is required. If this field is not set, the existing setting will be preserved.","example":false,"type":"boolean","key$":"required"},"type":{"description":"Engine resource name for this attribute","example":"CatalogEntry[\"01GW2G3V0S59R238FAHPDS1R67\"]","type":"string","key$":"type"}},"required":["name","type","array"],"type":"object","x-ref":"#/components/schemas/AlertAttributesCreatePayloadV2","index$":1}}},"required":true},"parameters":[]},"GET /v2/alert_attributes":{"protocol":"http","parameters":[]},"GET /v2/alert_attributes/{id}":{"protocol":"http","parameters":[{"description":"The ID of this attribute","example":"01GW2G3V0S59R238FAHPDS1R66","in":"path","name":"id","required":true,"schema":{"description":"The ID of this attribute","example":"01GW2G3V0S59R238FAHPDS1R66","type":"string"},"index$":0}]},"DELETE /v2/alert_attributes/{id}":{"protocol":"http","parameters":[{"description":"The ID of this attribute","example":"01GW2G3V0S59R238FAHPDS1R66","in":"path","name":"id","required":true,"schema":{"description":"The ID of this attribute","example":"01GW2G3V0S59R238FAHPDS1R66","type":"string"},"index$":0}]},"PUT /v2/alert_attributes/{id}":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"array":false,"emoji":"fire","name":"service","required":false,"type":"CatalogEntry[\"01GW2G3V0S59R238FAHPDS1R67\"]"},"schema":{"example":{"array":false,"emoji":"fire","name":"service","required":false,"type":"CatalogEntry[\"01GW2G3V0S59R238FAHPDS1R67\"]"},"properties":{"array":{"description":"Whether this attribute is an array","example":false,"type":"boolean","key$":"array"},"emoji":{"description":"The emoji to display alongside this attribute in chat messages, stored without colons","example":"fire","type":"string","key$":"emoji"},"name":{"description":"Unique name of this attribute","example":"service","type":"string","key$":"name"},"required":{"description":"Whether this attribute is required. If this field is not set, the existing setting will be preserved.","example":false,"type":"boolean","key$":"required"},"type":{"description":"Engine resource name for this attribute","example":"CatalogEntry[\"01GW2G3V0S59R238FAHPDS1R67\"]","type":"string","key$":"type"}},"required":["name","type","array"],"type":"object","x-ref":"#/components/schemas/AlertAttributesUpdatePayloadV2","index$":1}}},"required":true},"parameters":[{"description":"The ID of this attribute","example":"01GW2G3V0S59R238FAHPDS1R66","in":"path","name":"id","required":true,"schema":{"description":"The ID of this attribute","example":"01GW2G3V0S59R238FAHPDS1R66","type":"string"},"index$":0}]}}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -62,14 +122,14 @@ describe('AlertAttributeEntity', async () => {
     const alert_attribute_ref01_ent = client.AlertAttribute()
     let alert_attribute_ref01_data = setup.data.new.alert_attribute['alert_attribute_ref01']
 
-    alert_attribute_ref01_data = await alert_attribute_ref01_ent.create(alert_attribute_ref01_data)
+    alert_attribute_ref01_data = (await alert_attribute_ref01_ent.create(alert_attribute_ref01_data)).data()
     assert(null != alert_attribute_ref01_data.id)
 
 
     // LIST
     const alert_attribute_ref01_match: any = {}
 
-    const alert_attribute_ref01_list = await alert_attribute_ref01_ent.list(alert_attribute_ref01_match)
+    const alert_attribute_ref01_list = (await alert_attribute_ref01_ent.list(alert_attribute_ref01_match)).map((e: any) => e.data())
 
     assert(!isempty(select(alert_attribute_ref01_list, { id: alert_attribute_ref01_data.id })))
 
@@ -81,7 +141,7 @@ describe('AlertAttributeEntity', async () => {
     const alert_attribute_ref01_markdef_up0 = { name: 'emoji', value: 'Mark01-alert_attribute_ref01_' + setup.now }
     ;(alert_attribute_ref01_data_up0 as any)[alert_attribute_ref01_markdef_up0.name] = alert_attribute_ref01_markdef_up0.value
 
-    const alert_attribute_ref01_resdata_up0 = await alert_attribute_ref01_ent.update(alert_attribute_ref01_data_up0)
+    const alert_attribute_ref01_resdata_up0 = (await alert_attribute_ref01_ent.update(alert_attribute_ref01_data_up0)).data()
     assert(alert_attribute_ref01_resdata_up0.id === alert_attribute_ref01_data_up0.id)
 
     assert((alert_attribute_ref01_resdata_up0 as any)[alert_attribute_ref01_markdef_up0.name] === alert_attribute_ref01_markdef_up0.value)
@@ -90,7 +150,7 @@ describe('AlertAttributeEntity', async () => {
     // LOAD
     const alert_attribute_ref01_match_dt0: any = {}
     alert_attribute_ref01_match_dt0.id = alert_attribute_ref01_data.id
-    const alert_attribute_ref01_data_dt0 = await alert_attribute_ref01_ent.load(alert_attribute_ref01_match_dt0)
+    const alert_attribute_ref01_data_dt0 = (await alert_attribute_ref01_ent.load(alert_attribute_ref01_match_dt0)).data()
     assert(alert_attribute_ref01_data_dt0.id === alert_attribute_ref01_data.id)
 
 
@@ -102,7 +162,7 @@ describe('AlertAttributeEntity', async () => {
     // LIST
     const alert_attribute_ref01_match_rt0: any = {}
 
-    const alert_attribute_ref01_list_rt0 = await alert_attribute_ref01_ent.list(alert_attribute_ref01_match_rt0)
+    const alert_attribute_ref01_list_rt0 = (await alert_attribute_ref01_ent.list(alert_attribute_ref01_match_rt0)).map((e: any) => e.data())
 
     assert(isempty(select(alert_attribute_ref01_list_rt0, { id: alert_attribute_ref01_data.id })))
 
@@ -111,6 +171,12 @@ describe('AlertAttributeEntity', async () => {
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra?: any) {
   // TODO: fix test def options
@@ -143,28 +209,38 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['INCIDENT_IO_TEST_ALERT_ATTRIBUTE_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'INCIDENT_IO_TEST_ALERT_ATTRIBUTE_ENTID': idmap,
     'INCIDENT_IO_TEST_LIVE': 'FALSE',
     'INCIDENT_IO_TEST_EXPLAIN': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
   idmap = env['INCIDENT_IO_TEST_ALERT_ATTRIBUTE_ENTID']
 
   const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['INCIDENT_IO_TEST_ALERT_ATTRIBUTE_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new IncidentIoSDK(merge([
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
       {
+        apikey: env.INCIDENT_IO_APIKEY,
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when the
+      // last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey
+      // and server values above and handed the SDK undefined. Harmless
+      // while there was nothing in that object; not harmless now.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -177,7 +253,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.INCIDENT_IO_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 

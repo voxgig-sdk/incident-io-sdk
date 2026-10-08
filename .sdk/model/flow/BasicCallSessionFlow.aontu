@@ -1,0 +1,22 @@
+# BasicCallSessionFlow
+
+main: kit: flow: BasicCallSessionFlow:
+{
+  entity: "call_session",
+  kind: "basic",
+  name: "BasicCallSessionFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "call_session_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCallSessionFlow"
+}

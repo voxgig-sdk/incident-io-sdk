@@ -7,16 +7,16 @@ main: kit: flow: BasicStatusPageMaintenanceFlow:
   name: "BasicStatusPageMaintenanceFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "status_page_maintenance_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
 
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -27,18 +27,37 @@ main: kit: flow: BasicStatusPageMaintenanceFlow:
     }
 
     {
-      input: {
+      i: {
+        ref: "status_page_maintenance_ref01",
+        srcdatavar: "status_page_maintenance_ref01_data",
+        suffix: "_up0",
+        textfield: "end_at"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-status_page_maintenance_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
         ref: "status_page_maintenance_ref01",
         srcdatavar: "status_page_maintenance_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "status_page_maintenance01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

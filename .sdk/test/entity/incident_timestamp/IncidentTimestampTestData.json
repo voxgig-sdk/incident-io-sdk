@@ -4,17 +4,17 @@
       "INCIDENT_TIMESTAMP00": {
         "id": "INCIDENT_TIMESTAMP00",
         "name": "s1f",
-        "rank": "s20"
+        "rank": 32
       },
       "INCIDENT_TIMESTAMP01": {
         "id": "INCIDENT_TIMESTAMP01",
         "name": "s3d",
-        "rank": "s3e"
+        "rank": 62
       },
       "INCIDENT_TIMESTAMP02": {
         "id": "INCIDENT_TIMESTAMP02",
         "name": "s5b",
-        "rank": "s5c"
+        "rank": 92
       }
     }
   },
@@ -22,8 +22,20 @@
     "incident_timestamp": {
       "incident_timestamp_ref01": {
         "name": "s79",
-        "rank": "s7a"
+        "rank": 122
       }
+    }
+  },
+  "requests": {
+    "GET /v2/incident_timestamps": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/incident_timestamps/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

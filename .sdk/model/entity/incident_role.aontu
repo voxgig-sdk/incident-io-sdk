@@ -4,59 +4,79 @@ main: kit: entity: incident_role: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When the role was created"
+      t: "`$STRING`"
     }
-    {
-      name: "description"
-      req: true
-      type: "`$STRING`"
+    description: {
+      h: "Description"
+      n: "description"
+      r: true
+      sh: "Describes the purpose of the role"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for the role"
+      t: "`$STRING`"
     }
-    {
-      name: "instruction"
-      req: true
-      type: "`$STRING`"
+    instructions: {
+      h: "Instructions"
+      n: "instructions"
+      r: true
+      sh: "Provided to whoever is nominated for the role."
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name of the incident role"
+      t: "`$STRING`"
     }
-    {
-      name: "required"
+    required: {
+      h: "Required"
+      n: "required"
       op: {
         create: {
           req: true
           type: "`$BOOLEAN`"
         }
       }
-      req: false
-      type: "`$BOOLEAN`"
+      r: false
+      sh: "DEPRECATED: this will always be false."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "role_type"
-      req: true
-      type: "`$STRING`"
+    role_type: {
+      h: "Role Type"
+      n: "role_type"
+      r: true
+      sh: "Type of incident role"
+      t: "`$STRING`"
     }
-    {
-      name: "shortform"
-      req: true
-      type: "`$STRING`"
+    shortform: {
+      h: "Shortform"
+      n: "shortform"
+      r: true
+      sh: "Short human readable name for Slack."
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When the role was last updated"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -69,25 +89,64 @@ main: kit: entity: incident_role: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v1/incident_roles"
-          parts: [
-            "v1"
-            "incident_roles"
+          bf: [
+            "description"
+            "instructions"
+            "name"
+            "required"
+            "shortform"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/incident_roles"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/incident_roles"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_roles"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_role`"
           }
         }
         {
-          method: "POST"
-          orig: "/v2/incident_roles"
-          parts: [
-            "v2"
-            "incident_roles"
+          bf: [
+            "description"
+            "instructions"
+            "name"
+            "shortform"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/incident_roles"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/incident_roles"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_roles"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_role`"
           }
@@ -98,25 +157,51 @@ main: kit: entity: incident_role: {
       name: "list"
       points: [
         {
-          method: "GET"
-          orig: "/v1/incident_roles"
-          parts: [
-            "v1"
-            "incident_roles"
+          co: {
+            id: "GET /v1/incident_roles"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v1/incident_roles"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_roles"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.incident_roles`"
           }
         }
         {
-          method: "GET"
-          orig: "/v2/incident_roles"
-          parts: [
-            "v2"
-            "incident_roles"
+          co: {
+            id: "GET /v2/incident_roles"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v2/incident_roles"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_roles"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.incident_roles`"
           }
@@ -127,61 +212,91 @@ main: kit: entity: incident_role: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/incident_roles/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/incident_roles/{id}"
-          parts: [
-            "v1"
-            "incident_roles"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/incident_roles/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_roles"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_role`"
           }
         }
         {
-          args: {
+          co: {
+            id: "GET /v2/incident_roles/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/incident_roles/{id}"
-          parts: [
-            "v2"
-            "incident_roles"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/incident_roles/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_roles"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_role`"
           }
@@ -192,61 +307,83 @@ main: kit: entity: incident_role: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v1/incident_roles/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v1/incident_roles/{id}"
-          parts: [
-            "v1"
-            "incident_roles"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v1/incident_roles/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_roles"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
         }
         {
-          args: {
+          co: {
+            id: "DELETE /v2/incident_roles/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/incident_roles/{id}"
-          parts: [
-            "v2"
-            "incident_roles"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/incident_roles/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_roles"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -257,61 +394,104 @@ main: kit: entity: incident_role: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "description"
+            "instructions"
+            "name"
+            "required"
+            "shortform"
+          ]
+          co: {
+            id: "PUT /v1/incident_roles/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v1/incident_roles/{id}"
-          parts: [
-            "v1"
-            "incident_roles"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v1/incident_roles/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_roles"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_role`"
           }
         }
         {
-          args: {
+          bf: [
+            "description"
+            "instructions"
+            "name"
+            "shortform"
+          ]
+          co: {
+            id: "PUT /v2/incident_roles/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/incident_roles/{id}"
-          parts: [
-            "v2"
-            "incident_roles"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/incident_roles/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_roles"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_role`"
           }

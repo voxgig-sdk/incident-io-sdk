@@ -7,11 +7,11 @@ main: kit: flow: BasicIncidentMembershipFlow:
   name: "BasicIncidentMembershipFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "incident_membership_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
   ],
   "key$": "BasicIncidentMembershipFlow"

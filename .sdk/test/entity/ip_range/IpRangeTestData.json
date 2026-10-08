@@ -1,0 +1,33 @@
+{
+  "existing": {
+    "ip_range": {
+      "IP_RANGE00": {
+        "cidr": "s14",
+        "description": "s15"
+      },
+      "IP_RANGE01": {
+        "cidr": "s28",
+        "description": "s29"
+      },
+      "IP_RANGE02": {
+        "cidr": "s3c",
+        "description": "s3d"
+      }
+    }
+  },
+  "new": {
+    "ip_range": {
+      "ip_range_ref01": {
+        "cidr": "s50",
+        "description": "s51"
+      }
+    }
+  },
+  "requests": {
+    "GET /v1/ip_ranges": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

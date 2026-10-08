@@ -5,6 +5,10 @@ import {
   cmp, each, names, cmap,
   List, File, Content, Copy, Folder, Fragment, Line, FeatureHook,
   entityClassName, entityCollection,
+  inactiveFeatureExcludes,
+  pluginExcludes,
+  targetFeatures,
+  TEST_CONTROL_EXCLUDE
 } from '@voxgig/sdkgen'
 
 
@@ -21,6 +25,8 @@ import {
 
 import { Package } from './Package_py'
 import { Config } from './Config_py'
+import { Schema } from './Schema_py'
+import { PrepareAuth } from './PrepareAuth_py'
 import { Gitignore } from './Gitignore_py'
 import { MainEntity } from './MainEntity_py'
 import { EntityTypes } from './EntityTypes_py'
@@ -32,29 +38,64 @@ const Main = cmp(async function Main(props: any) {
   const { model } = props.ctx$
 
   const entity: ModelEntity = getModelPath(model, `main.${KIT}.entity`)
-  const feature = getModelPath(model, `main.${KIT}.feature`)
+  // Gated by the applicability tags, so this target never imports or
+  // registers a feature it has no source for. One rule, one place:
+  // helpers/applicability.
+  const feature = targetFeatures(model, target)
+
+  const secrets = null != (feature as any).secrets
+
+  const pkgdir = model.const.Name.toLowerCase() + '_sdk'
 
   Package({ target })
 
   Gitignore({})
 
-  // Copy tm/py files with replacements
   Copy({
     from: 'tm/' + target.name,
-    exclude: [/src\//],
+    exclude: [/src\//, /pkg\//, TEST_CONTROL_EXCLUDE, ...inactiveFeatureExcludes(props.ctx$, target)],
     replace: {
       ...props.ctx$.stdrep,
     }
   })
 
-  // Generate main SDK file
-  File({ name: model.const.Name.toLowerCase() + '_sdk.' + target.ext }, () => {
+  Folder({ name: pkgdir }, () => {
+
+  Copy({
+    from: 'tm/' + target.name + '/pkg',
+    exclude: [
+      ...inactiveFeatureExcludes(props.ctx$, target, 'tm/' + target.name + '/pkg'),
+      ...pluginExcludes(model),
+    ],
+    replace: {
+      ...props.ctx$.stdrep,
+    }
+  })
+
+  File({ name: '__init__.' + target.ext }, () => {
 
     Fragment(
       {
         from: Path.normalize(__dirname + '/../../../src/cmp/py/fragment/Main.fragment.py'),
         replace: {
           ...props.ctx$.stdrep,
+
+
+          '/(?<indent>[ \\t]*)#[ \\t]*#SecretsAccessor[ \\t]*\\n?/':
+            ({ indent }: any) => !secrets ? '' :
+              `${indent}def secrets(self):\n` +
+              `${indent}    _s = getattr(self, "_secrets", None)\n` +
+              `${indent}    return None if _s is None else _s.sekreto()\n\n`,
+
+          // prepare() bypasses the feature hook pipeline, so the PreSpec
+          // hook that resolves the secret for entity ops never runs on
+          // this path and the resolve has to be explicit. It RAISES on a
+          // broken provider - prepare() already raises on prepare_auth
+          // errors, so the direct path's error contract is unchanged.
+          '/(?<indent>[ \\t]*)#[ \\t]*#SecretsResolve[ \\t]*\\n?/':
+            ({ indent }: any) => !secrets ? '' :
+              `${indent}if getattr(self, "_secrets", None) is not None:\n` +
+              `${indent}    self._secrets.resolve()\n\n`,
 
           '#BuildFeatures': ({ indent }: any) => {
             each(feature, (feat: any) => {
@@ -71,7 +112,6 @@ self._utility.feature_hook(self._rootctx, "${name}")
         }
       },
 
-      // Entities - injected at SLOT
       () => {
         each(entity, (entity: ModelEntity) => {
           const entitySDK = getModelPath(model, `main.${KIT}.entity.${entity.name}`)
@@ -94,13 +134,12 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
 `)
       each(entity, (ent: any) => {
-        Content(`    from entity.${ent.name}_entity import ${entityClassName(ent, entityCollection(model))}
+        Content(`    from ${model.const.Name.toLowerCase()}_sdk.entity.${ent.name}_entity import ${entityClassName(ent, entityCollection(model))}
 `)
       })
     }
   })
 
-  // Generate the typed-model module (<sdk>_types.py) next to the main SDK file.
   EntityTypes({ target })
 
   // PEP 561 marker so the inline type hints ship to consumers. Emitted at the
@@ -110,54 +149,60 @@ if TYPE_CHECKING:
     Content(``)
   })
 
-  // Generate config module
   Folder({ name: '.' }, () => {
     Config({ target })
+    Schema({ target })
   })
 
-  // Generate feature factory module
+  PrepareAuth({ target })
+
   File({ name: 'features.' + target.ext }, () => {
     Content(`# ${model.const.Name} SDK feature factory
 
-from feature.base_feature import ${model.const.Name}BaseFeature
+from ${model.const.Name.toLowerCase()}_sdk.feature.base_feature import ${model.const.Name}BaseFeature
 `)
 
     each(feature, (feat: any) => {
       if (feat.name !== 'base') {
         const fname = feat.name.charAt(0).toUpperCase() + feat.name.slice(1)
-        Content(`from feature.${feat.name}_feature import ${model.const.Name}${fname}Feature
+        Content(`from ${model.const.Name.toLowerCase()}_sdk.feature.${feat.name}_feature import ${model.const.Name}${fname}Feature
 `)
       }
     })
 
     Content(`
 
-def _make_feature(name):
-    features = {
-        "base": lambda: ${model.const.Name}BaseFeature(),
+_FEATURES = {
+    "base": lambda: ${model.const.Name}BaseFeature(),
 `)
 
     each(feature, (feat: any) => {
       if (feat.name !== 'base') {
         const fname = feat.name.charAt(0).toUpperCase() + feat.name.slice(1)
-        Content(`        "${feat.name}": lambda: ${model.const.Name}${fname}Feature(),
+        Content(`    "${feat.name}": lambda: ${model.const.Name}${fname}Feature(),
 `)
       }
     })
 
-    Content(`    }
-    factory = features.get(name)
+    Content(`}
+
+
+def _make_feature(name):
+    factory = _FEATURES.get(name)
     if factory is not None:
         return factory()
-    return features["base"]()
+    return _FEATURES["base"]()
+
+
+# True when this SDK was generated with the named feature class - the
+# constructor's tolerance for extend-carried features reads this (an
+# active name with no generated class must not become a BaseFeature
+# stray when an extend instance carries it).
+def _has_feature(name):
+    return name in _FEATURES
 `)
   })
 
-  // Generate __init__.py files for sub-packages.
-  // NOTE: deliberately omit __init__.py at the language-root (py/) level —
-  // making py/ a package collides with the third-party `py` module on PyPI
-  // (a single-file `py.py`), which causes pytest to construct test module
-  // paths as `py.test.<file>` and fail with "'py' is not a package".
   Folder({ name: 'core' }, () => {
     File({ name: '__init__.' + target.ext }, () => {
       Content(``)
@@ -168,8 +213,6 @@ def _make_feature(name):
     File({ name: '__init__.' + target.ext }, () => {
       Content(``)
     })
-    // PEP 561 marker inside the type-bearing package so setuptools package-data
-    // ("*" = ["py.typed"]) bundles it into the wheel.
     File({ name: 'py.typed' }, () => {
       Content(``)
     })
@@ -185,6 +228,8 @@ def _make_feature(name):
     File({ name: '__init__.' + target.ext }, () => {
       Content(``)
     })
+  })
+
   })
 
 })

@@ -1,15 +1,8 @@
-/**
- * Shared utility functions for unit tests
- *
- * This module provides common helper functions used across unit tests
- * for creating test data, transformations, validations, and environment overrides.
- */
 
 import * as Fs from 'node:fs'
 import * as Path from 'node:path'
 
 
-// Creates a new step data structure within the data model
 function makeStepData(dm: Record<string, any>, stepname: string): Record<string, any> {
   dm.s[stepname] = {
     entity: undefined,
@@ -41,7 +34,6 @@ function makeReqdata(
 }
 
 
-// Validates data against validation rules and returns the result
 function makeValid(
   dm: Record<string, any>,
   validate: Function,
@@ -53,17 +45,14 @@ function makeValid(
 }
 
 
-// Creates a control object for test explanations when enabled
 function makeCtrl(explain: boolean) {
   return explain ? { explain: {} } : undefined
 }
-// CLAUDE: add a full stop to each function comment
 
-// Overrides configuration values with environment variables if available
 function envOverride(m: Record<string, any>) {
   if (
-    'TRUE' === process.env.PROJECTNAME_TEST_LIVE ||
-    'TRUE' === process.env.PROJECTNAME_TEST_OVERRIDE
+    'TRUE' === process.env.PROJECTENV_TEST_LIVE ||
+    'TRUE' === process.env.PROJECTENV_TEST_OVERRIDE
   ) {
     Object.entries(m).map(n => {
       let envval = process.env[n[0]]
@@ -74,7 +63,7 @@ function envOverride(m: Record<string, any>) {
     })
   }
 
-  m.PROJECTNAME_TEST_EXPLAIN = process.env.PROJECTNAME_TEST_EXPLAIN || m.PROJECTNAME_TEST_EXPLAIN
+  m.PROJECTENV_TEST_EXPLAIN = process.env.PROJECTENV_TEST_EXPLAIN || m.PROJECTENV_TEST_EXPLAIN
 
   return m
 }
@@ -88,8 +77,10 @@ type TestControl = {
     skip?: {
       live?: { direct?: any[], entityOp?: any[] }
       unit?: { direct?: any[], entityOp?: any[] }
+      definition?: { direct?: any[], entityOp?: any[] }
     }
     live?: { delayMs?: number }
+    client?: { options?: Record<string, any> }
     [k: string]: any
   }
   [k: string]: any
@@ -115,11 +106,11 @@ function loadTestControl(): TestControl {
 
 // Returns the skip decision for a given test name from sdk-test-control.json.
 // `kind` is 'direct' (matches by `test` field) or 'entityOp' (matches by
-// `entity` + `op`). `mode` is 'live' or 'unit'.
+// `entity` + `op`). `mode` is 'live', 'unit' or 'definition'.
 function isControlSkipped(
   kind: 'direct' | 'entityOp',
   name: string,
-  mode: 'live' | 'unit'
+  mode: 'live' | 'unit' | 'definition'
 ): { skip: boolean, reason?: string } {
   const ctrl = loadTestControl()
   const list = ctrl?.test?.skip?.[mode]?.[kind] ?? []
@@ -153,17 +144,61 @@ function maybeSkipControl(
 }
 
 
-// Skips the current live test when required idmap keys aren't supplied.
-// Generated tests call this when they would otherwise pass `undefined`
-// values into a path/query param and 4xx the request.
-function skipIfMissingIds(t: any, setup: any, requiredKeys: string[]): boolean {
+// A live test without the ids its request needs is blocked rather than sent
+// with `undefined` in a path or query parameter. Returns true when skipped.
+function skipIfMissingIds(t: any, setup: any, requiredKeys: string[], strict = true): boolean {
   if (!setup.live) return false
   const missing = requiredKeys.filter(k => null == setup.idmap?.[k])
-  if (missing.length > 0) {
-    t.skip(`live test needs ${missing.join(', ')} via *_ENTID env var (synthetic IDs only)`)
-    return true
+  return 0 < missing.length &&
+    liveMiss(t, strict, `Live test blocked: needs ${missing.join(', ')} via *_ENTID env var`)
+}
+
+
+// A live check that did not pass: strict fails the test, lenient skips it.
+function liveMiss(t: any, strict: boolean, reason: string): boolean {
+  if (strict) throw new Error(reason)
+  t.skip(reason)
+  return true
+}
+
+
+// An empty list is a valid answer, so a test needing a record skips.
+function liveEmpty(t: any, reason: string): boolean {
+  t.skip(reason)
+  return true
+}
+
+
+// The SDK's error, already bounded and cleaned, or else status and content type.
+function describeLive(result: any): string {
+  const err = result?.err
+  if (null != err) {
+    return String(err.message || err.code || err)
   }
-  return false
+  const headers = result?.headers
+  const type = 'function' === typeof headers?.get ? headers.get('content-type') :
+    Object.entries(headers || {}).find(([k]) => 'content-type' === k.toLowerCase())?.[1]
+  return 'HTTP ' + result?.status + (type ? ' ' + String(type).split(';')[0] : '')
+}
+
+
+const LIVE_RESERVED = ['base', 'prefix', 'suffix', 'server', 'apikey', 'secret']
+
+function liveClientOptions(): Record<string, any> {
+  const opts = loadTestControl()?.test?.client?.options
+
+  if (null == opts || 'object' !== typeof opts) {
+    return {}
+  }
+
+  const out: Record<string, any> = {}
+  for (const key of Object.keys(opts)) {
+    if (!LIVE_RESERVED.includes(key)) {
+      out[key] = (opts as any)[key]
+    }
+  }
+
+  return out
 }
 
 
@@ -188,6 +223,61 @@ function liveDelay(liveEnvVar: string): () => Promise<void> {
 }
 
 
+function loadEnvLocal(file: string): void {
+  let text: string
+  try {
+    text = Fs.readFileSync(file, 'utf8')
+  }
+  catch (err: any) {
+    if ('ENOENT' === err.code) {
+      return
+    }
+    throw err
+  }
+
+  for (const raw of text.split(/\r?\n/)) {
+    const line = raw.trim()
+
+    if ('' === line || line.startsWith('#')) {
+      continue
+    }
+
+    const eq = line.indexOf('=')
+    if (0 >= eq) {
+      continue
+    }
+
+    const key = line.slice(0, eq).trim().replace(/^export\s+/, '')
+    let val = line.slice(eq + 1).trim()
+
+    const quote = ("'" === val[0] || '"' === val[0]) ? val[0] : ''
+
+    if ('' !== quote) {
+      // Quoted: the value runs to the CLOSING quote, and a '#' inside it is
+      // part of the value. Anything after the closing quote is a comment.
+      const close = val.indexOf(quote, 1)
+      val = 0 < close ? val.slice(1, close) : val.slice(1)
+    }
+    else {
+      // Unquoted: the first '#' starts an inline comment, with or without
+      // preceding whitespace — `A=a#b` is `a` to dotenv, not `a#b`.
+      // Dropping this made `KEY=secret # note` resolve to the whole string
+      // including the note, and a generated live test would then send that
+      // as the credential. Verified against dotenv's own parse().
+      const hash = val.indexOf('#')
+      if (0 <= hash) {
+        val = val.slice(0, hash)
+      }
+      val = val.trim()
+    }
+
+    if (undefined === process.env[key]) {
+      process.env[key] = val
+    }
+  }
+}
+
+
 export {
   makeStepData,
   makeMatch,
@@ -199,6 +289,11 @@ export {
   isControlSkipped,
   maybeSkipControl,
   skipIfMissingIds,
+  liveMiss,
+  liveEmpty,
+  describeLive,
+  liveClientOptions,
   liveDelayMs,
   liveDelay,
+  loadEnvLocal,
 }

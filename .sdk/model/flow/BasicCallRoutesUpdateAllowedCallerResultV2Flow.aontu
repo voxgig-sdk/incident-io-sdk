@@ -1,0 +1,33 @@
+# BasicCallRoutesUpdateAllowedCallerResultV2Flow
+
+main: kit: flow: BasicCallRoutesUpdateAllowedCallerResultV2Flow:
+{
+  entity: "call_routes_update_allowed_caller_result_v2",
+  kind: "basic",
+  name: "BasicCallRoutesUpdateAllowedCallerResultV2Flow",
+  step: [
+    {
+      d: {
+        call_route_id: "call_route01"
+      }
+
+      i: {
+        ref: "call_routes_update_allowed_caller_result_v2_ref01",
+        srcdatavar: "call_routes_update_allowed_caller_result_v2_ref01_data",
+        suffix: "_up0",
+        textfield: "name"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-call_routes_update_allowed_caller_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCallRoutesUpdateAllowedCallerResultV2Flow"
+}

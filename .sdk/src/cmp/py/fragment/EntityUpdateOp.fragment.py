@@ -1,11 +1,11 @@
-from utility.voxgig_struct import voxgig_struct as vs
-from core import helpers
+from projectname_sdk.utility.voxgig_struct import voxgig_struct as vs
+from projectname_sdk.core import helpers
 
 entity_update_op = None
 
 # EJECT-START
 
-    def update(self, reqdata: EntityNameUpdateData, ctrl=None) -> EntityName:
+    def update(self, reqdata: EntityNameUpdateData, ctrl=None) -> EntyClass:
         utility = self._utility
         ctx = utility.make_context({
             "opname": "update",

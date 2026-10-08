@@ -2,68 +2,91 @@
   "existing": {
     "schedule": {
       "SCHEDULE00": {
-        "annotation": {},
+        "annotations": {},
         "config": {},
-        "created_at": "s84",
-        "current_shift": [],
+        "created_at": "s7a",
+        "current_shifts": [],
         "holidays_public_config": {},
         "id": "SCHEDULE00",
-        "name": "s88",
-        "next_shift": [],
-        "permalink": "s8a",
-        "schedule": {},
-        "team_id": "TEAM01",
-        "timezone": "s8d",
-        "updated_at": "s8e"
+        "name": "s7e",
+        "next_shifts": [],
+        "permalink": "s80",
+        "team_ids": [],
+        "timezone": "s82",
+        "updated_at": "s83"
       },
       "SCHEDULE01": {
-        "annotation": {},
+        "annotations": {},
         "config": {},
-        "created_at": "s106",
-        "current_shift": [],
+        "created_at": "sf2",
+        "current_shifts": [],
         "holidays_public_config": {},
         "id": "SCHEDULE01",
-        "name": "s10a",
-        "next_shift": [],
-        "permalink": "s10c",
-        "schedule": {},
-        "team_id": "TEAM01",
-        "timezone": "s10f",
-        "updated_at": "s110"
+        "name": "sf6",
+        "next_shifts": [],
+        "permalink": "sf8",
+        "team_ids": [],
+        "timezone": "sfa",
+        "updated_at": "sfb"
       },
       "SCHEDULE02": {
-        "annotation": {},
+        "annotations": {},
         "config": {},
-        "created_at": "s188",
-        "current_shift": [],
+        "created_at": "s16a",
+        "current_shifts": [],
         "holidays_public_config": {},
         "id": "SCHEDULE02",
-        "name": "s18c",
-        "next_shift": [],
-        "permalink": "s18e",
-        "schedule": {},
-        "team_id": "TEAM01",
-        "timezone": "s191",
-        "updated_at": "s192"
+        "name": "s16e",
+        "next_shifts": [],
+        "permalink": "s170",
+        "team_ids": [],
+        "timezone": "s172",
+        "updated_at": "s173"
       }
     }
   },
   "new": {
     "schedule": {
       "schedule_ref01": {
-        "annotation": {},
+        "annotations": {},
         "config": {},
-        "created_at": "s20a",
-        "current_shift": [],
+        "created_at": "s1e2",
+        "current_shifts": [],
         "holidays_public_config": {},
-        "name": "s20e",
-        "next_shift": [],
-        "permalink": "s210",
-        "schedule": {},
-        "team_id": "TEAM01",
-        "timezone": "s213",
-        "updated_at": "s214"
+        "name": "s1e6",
+        "next_shifts": [],
+        "permalink": "s1e8",
+        "team_ids": [],
+        "timezone": "s1ea",
+        "updated_at": "s1eb"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/schedules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/schedules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/schedules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/schedules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/schedules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

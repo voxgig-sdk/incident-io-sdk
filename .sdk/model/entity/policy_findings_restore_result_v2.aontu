@@ -1,0 +1,213 @@
+# Entity: policy_findings_restore_result_v2
+
+main: kit: entity: policy_findings_restore_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      t: "`$STRING`"
+    }
+    days: {
+      fo: "int64"
+      h: "Days"
+      n: "days"
+      r: false
+      sh: "Days outside the policy's due date"
+      t: "`$INTEGER`"
+    }
+    debrief: {
+      h: "Debrief"
+      n: "debrief"
+      r: true
+      sh: "Set when policy_type is debrief."
+      t: "`$OBJECT`"
+    }
+    dismissal: {
+      h: "Dismissal"
+      n: "dismissal"
+      r: true
+      t: "`$OBJECT`"
+    }
+    due_at: {
+      fo: "date-time"
+      h: "Due At"
+      n: "due_at"
+      r: false
+      sh: "When this finding becomes overdue"
+      t: "`$STRING`"
+    }
+    follow_up: {
+      h: "Follow Up"
+      n: "follow_up"
+      r: true
+      sh: "Set when policy_type is follow_up."
+      t: "`$OBJECT`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique ID of the finding"
+      t: "`$STRING`"
+    }
+    last_checked_at: {
+      fo: "date-time"
+      h: "Last Checked At"
+      n: "last_checked_at"
+      r: true
+      sh: "When this finding was last re-evaluated"
+      t: "`$STRING`"
+    }
+    on_call_readiness: {
+      h: "On Call Readiness"
+      n: "on_call_readiness"
+      r: true
+      sh: "Set when policy_type is on_call_readiness."
+      t: "`$OBJECT`"
+    }
+    policy_id: {
+      h: "Policy Id"
+      n: "policy_id"
+      r: true
+      sh: "The policy this finding was raised against"
+      t: "`$STRING`"
+    }
+    policy_type: {
+      h: "Policy Type"
+      n: "policy_type"
+      r: true
+      sh: "Type of the policy this finding was raised against"
+      t: "`$STRING`"
+    }
+    post_mortem: {
+      h: "Post Mortem"
+      n: "post_mortem"
+      r: true
+      sh: "Set when policy_type is post_mortem."
+      t: "`$OBJECT`"
+    }
+    responsible_users: {
+      h: "Responsible Users"
+      n: "responsible_users"
+      r: true
+      sh: "Who is expected to resolve this finding"
+      t: "`$ARRAY`"
+    }
+    schedule: {
+      h: "Schedule"
+      n: "schedule"
+      r: true
+      sh: "Set when policy_type is schedule."
+      t: "`$OBJECT`"
+    }
+    shift_conflict: {
+      h: "Shift Conflict"
+      n: "shift_conflict"
+      r: true
+      sh: "Set when policy_type is shift_conflict."
+      t: "`$OBJECT`"
+    }
+    state: {
+      h: "State"
+      n: "state"
+      r: true
+      sh: "Where this finding is in its lifecycle"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      t: "`$STRING`"
+    }
+    vacation_conflict: {
+      h: "Vacation Conflict"
+      n: "vacation_conflict"
+      r: true
+      sh: "Set when policy_type is vacation_conflict."
+      t: "`$OBJECT`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "policy_findings_restore_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /v2/policy_findings/{id}/actions/restore"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "policy_finding_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/policy_findings/{id}/actions/restore"
+          q: {
+            exist: [
+              "policy_finding_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "policy_finding_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "policy_findings"
+            }
+            {
+              var: "policy_finding_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "restore"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.policy_finding`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.policy_finding")]
+  ]
+
+}

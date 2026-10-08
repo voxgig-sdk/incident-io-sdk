@@ -1,4 +1,9 @@
 
+const { OPTSPEC } = require('../Schema')
+
+const { clean, cleanAdd, cleanAddSensitive, makeCleanConfig, splitvalues } = require('./CleanUtility')
+
+
 function makeOptions(ctx) {
   const utility = ctx.utility
   const options = ctx.options
@@ -7,9 +12,42 @@ function makeOptions(ctx) {
   const setprop = struct.setprop
   const merge = struct.merge
   const validate = struct.validate
-  const escre = struct.escre
+
+  // `auth: null` is the documented way to disable auth outright, and
+  // prepareAuth honours it before it ever reads the apikey. But it cannot
+  // survive validate: this target's struct rejects a stored null outright
+  // ("Expected field auth to be map, but found no value"), so passing it
+  // through turns the documented suppression into a CONSTRUCTION ERROR.
+  //
+  // Withhold the key for validate, then put the null back. Deleting rather
+  // than leaving it is what avoids the throw; restoring it afterwards is
+  // what stops the optspec's `auth` default from taking its place, which
+  // would transmit the credential the caller asked to withhold.
+  //
+  // Suppliedness cannot be recovered after validate, hence here. `null ===`
+  // rather than `null ==`, so an OMITTED auth is not read as a suppression.
+  const authsuppressed = null === (options || {}).auth
 
   let opts = { ...(options || {}) }
+
+  if (authsuppressed) {
+    delete opts.auth
+  }
+
+  // The secret registry exists BEFORE validation, fed from the raw input, so
+  // the constructor's own rejection of a mistyped credential is clean too.
+  let config = ctx.config || {}
+  let cfgopts = config.options || {}
+
+  // An absent block is left out, or merge would erase the defaults.
+  const layer = (b) => null != b && 'object' === typeof b && !Array.isArray(b) ? b : {}
+  const cleancfg = makeCleanConfig(merge([{}, OPTSPEC.clean,
+    struct.clone(layer(cfgopts.clean)), layer(opts.clean)]))
+  const cleanctx = { options: { __derived__: { clean: cleancfg } } }
+  cleanAddSensitive(cleanctx, settings(opts))
+  for (const raw of [...splitvalues(cfgopts.clean?.values), ...splitvalues(opts.clean?.values)]) {
+    cleanAdd(cleanctx, raw)
+  }
 
   // Feature add-order. `options.feature` may be given as an ordered ARRAY of
   // { name, active, ...opts } entries (the array position IS the order in
@@ -35,62 +73,20 @@ function makeOptions(ctx) {
     setprop(utility, key, val)
   }
 
-  let config = ctx.config || {}
-  let cfgopts = config.options || {}
 
-  // Standard SDK option values.
-  const optspec = {
-    apikey: '',
-    base: 'http://localhost:8000',
-    prefix: '',
-    suffix: '',
-    auth: {
-      prefix: ''
-    },
-    headers: {
-      '`$CHILD`': '`$STRING`'
-    },
-    allow: {
-      method: 'GET,PUT,POST,PATCH,DELETE,OPTIONS',
-      op: 'create,update,load,list,remove,command,direct'
-    },
-    entity: {
-      '`$CHILD`': {
-        '`$OPEN`': true,
-        active: false,
-        alias: {}
-      }
-    },
-    feature: {
-      '`$CHILD`': {
-        '`$OPEN`': true,
-        active: false,
-      }
-    },
-    utility: {},
-    system: {
-      fetch: undefined
-    },
-    test: {
-      active: false,
-      entity: {
-        '`$OPEN`': true,
-      }
-    },
-    clean: {
-      keys: 'key,token,id'
-    },
-    // Server-variable values for a templated base URL (OpenAPI server
-    // variables): `{name}` placeholders in `base` are substituted from
-    // this map at construction. Spec defaults arrive via the generated
-    // Config; user values override them.
-    server: {
-      '`$CHILD`': ''
-    }
-  }
-
-  // JavaScript specific option values.
-  optspec.system.fetch = opts.system?.fetch || global.fetch
+  // THE OPTION SPEC IS GENERATED, NOT WRITTEN HERE.
+  //
+  // `Spec.OPTSPEC` is built from the model: `main.kit.optspec` for the
+  // standard options, plus one entry per feature this target carries, taken
+  // from that feature's own `config.options` / `config.optspec`. Editing this
+  // file to add an option would put it back where it was — one of twenty
+  // hand-maintained copies of a schema nothing cross-checked — so add it to
+  // the model instead and every ported target validates it.
+  //
+  // NOT MUTATED. It is a module-level constant shared by every client this
+  // process constructs; the platform default below is applied to the RESULT,
+  // never to the spec.
+  const optspec = OPTSPEC
 
   // Clone the config side before merging: `config` is a module-level
   // singleton in ts/js, and merge would otherwise use its nested maps as
@@ -98,7 +94,27 @@ function makeOptions(ctx) {
   // contaminate every instance constructed after it.
   opts = merge([{}, struct.clone(cfgopts), opts])
 
-  opts = validate(opts, optspec)
+  try {
+    opts = validate(opts, optspec)
+  }
+  catch (err) {
+    throw clean(cleanctx, err)
+  }
+
+  // The platform fetch, supplied AFTER validate rather than as a spec
+  // default. `system.fetch` is declared `$ANY`, which passes a caller's own
+  // fetch through untouched but inserts nothing when the key is absent — and
+  // the spec is shared, so writing the default into it (as this did while the
+  // spec was a per-call literal) would hand one client's fetch to the next.
+  opts.system = opts.system || {}
+  if (null == opts.system.fetch) {
+    opts.system.fetch = global.fetch
+  }
+
+  // Restore the suppression the optspec default would otherwise erase.
+  if (authsuppressed) {
+    opts.auth = null
+  }
 
   // Resolve a templated base URL (e.g. https://{tenant_id}.hanko.io).
   // Every placeholder must resolve to a non-empty value: from
@@ -131,30 +147,47 @@ function makeOptions(ctx) {
   // otherwise order the map test-first, then the remaining names sorted, so
   // the outcome is deterministic and `test` is always the base transport.
   if (0 === featureorder.length) {
-    const names = Object.keys(opts.feature || {}).sort()
-    featureorder = names.indexOf('test') < 0
+    let names = Object.keys(opts.feature || {}).sort()
+    names = names.indexOf('test') < 0
       ? names
       : ['test'].concat(names.filter((n) => 'test' !== n))
+    // Station special case, mirroring test's: its transport wrap must
+    // sit immediately outside the base transport (inside retry/cache/
+    // netsim), so map-form activation hoists it to just after test -
+    // or first, when no test entry exists. Without this the sorted
+    // default would init station last and wrap OUTSIDE the recording
+    // features, turning its wire-truth events into fiction.
+    const si = names.indexOf('station')
+    if (0 <= si) {
+      names.splice(si, 1)
+      names.splice(names.indexOf('test') + 1, 0, 'station')
+    }
+    featureorder = names
   }
 
   opts.__derived__ = {
-    clean: {
-      keyre: undefined
-    },
+    clean: cleancfg,
     featureorder,
   }
 
-  const keyre = opts.clean.keys
-    .split(/\s*,\s*/)
-    .filter((s) => null != s && '' !== s)
-    .map((key) => escre(key)).join('|')
-
-  if ('' != keyre) {
-    opts.__derived__.clean.keyre = keyre
-  }
+  // Again over the merged result: the config's own defaults can carry one.
+  cleanAddSensitive({ options: opts }, settings(opts))
 
   return opts
 }
+
+// Registration skips entity blocks, and rbac's rules, keyed by entity and op names.
+function settings(opts) {
+  const plain = (b, name) => null != b && 'object' === typeof b && !Array.isArray(b)
+    ? { ...b, entity: undefined, ...('rbac' === name ? { rules: undefined } : {}) } : b
+  const feature = Array.isArray(opts.feature) ? opts.feature.map((b) => plain(b, b?.name))
+    : null != opts.feature && 'object' === typeof opts.feature
+      ? Object.fromEntries(Object.entries(opts.feature).map(([k, v]) => [k, plain(v, k)]))
+      : opts.feature
+  return { ...opts, clean: undefined, __derived__: undefined, entity: undefined,
+    test: plain(opts.test), feature }
+}
+
 
 module.exports = {
   makeOptions

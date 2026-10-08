@@ -4,19 +4,19 @@
       "TEAM00": {
         "catalog_entry": {},
         "id": "TEAM00",
-        "member": [],
+        "members": [],
         "name": "s2b"
       },
       "TEAM01": {
         "catalog_entry": {},
         "id": "TEAM01",
-        "member": [],
+        "members": [],
         "name": "s53"
       },
       "TEAM02": {
         "catalog_entry": {},
         "id": "TEAM02",
-        "member": [],
+        "members": [],
         "name": "s7b"
       }
     }
@@ -25,9 +25,21 @@
     "team": {
       "team_ref01": {
         "catalog_entry": {},
-        "member": [],
+        "members": [],
         "name": "sa3"
       }
+    }
+  },
+  "requests": {
+    "GET /v3/teams": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/teams/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

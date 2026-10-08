@@ -4,53 +4,68 @@ main: kit: entity: user: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "base_role"
-      req: true
-      type: "`$OBJECT`"
+  fields: {
+    base_role: {
+      h: "Base Role"
+      n: "base_role"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "custom_role"
-      req: true
-      type: "`$ARRAY`"
+    custom_roles: {
+      h: "Custom Roles"
+      n: "custom_roles"
+      r: true
+      t: "`$ARRAY`"
     }
-    {
-      name: "email"
-      req: false
-      type: "`$STRING`"
+    email: {
+      h: "Email"
+      n: "email"
+      r: false
+      sh: "Email address of the user."
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier of the user"
+      t: "`$STRING`"
     }
-    {
-      name: "is_active"
-      req: true
-      type: "`$BOOLEAN`"
+    is_active: {
+      h: "Is Active"
+      n: "is_active"
+      r: true
+      sh: "Whether the user is active."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Name of the user"
+      t: "`$STRING`"
     }
-    {
-      name: "role"
-      req: true
-      type: "`$STRING`"
+    role: {
+      h: "Role"
+      n: "role"
+      r: true
+      sh: "DEPRECATED: Role of the user as of March 9th 2023, this value is no longer updated."
+      t: "`$STRING`"
     }
-    {
-      name: "seat"
-      req: true
-      type: "`$OBJECT`"
+    seats: {
+      h: "Seats"
+      n: "seats"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "slack_user_id"
-      req: false
-      type: "`$STRING`"
+    slack_user_id: {
+      h: "Slack User Id"
+      n: "slack_user_id"
+      r: false
+      sh: "Slack ID of the user"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -59,72 +74,134 @@ main: kit: entity: user: {
 
   name: "user"
   op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "preferred_escalation_provider"
+          ]
+          co: {
+            id: "POST /v2/users/{user_id}/paging_provider"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "user_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/users/{user_id}/paging_provider"
+          q: {
+            "$action": "paging_provider"
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              user_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "paging_provider"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
     list: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/users"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "john.doe@incident.io"
-                kind: "query"
-                name: "email"
-                orig: "email"
-                reqd: false
-                type: "`$STRING`"
+                ex: "john.doe@incident.io"
+                k: "query"
+                n: "email"
+                or: "email"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: true
-                kind: "query"
-                name: "include_inactive"
-                orig: "include_inactive"
-                reqd: false
-                type: "`$BOOLEAN`"
+                ex: true
+                k: "query"
+                n: "include_inactive"
+                or: "include_inactive"
+                r: false
+                t: "`$BOOLEAN`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
               {
-                example: "U12345678"
-                kind: "query"
-                name: "slack_user_id"
-                orig: "slack_user_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "U12345678"
+                k: "query"
+                n: "slack_user_id"
+                or: "slack_user_id"
+                r: false
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/users"
-          parts: [
-            "v2"
-            "users"
+          m: "GET"
+          o: "/v2/users"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
           ]
-          select: {
-            exist: [
-              "after"
-              "email"
-              "include_inactive"
-              "page_size"
-              "slack_user_id"
-            ]
-          }
-          transform: {
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.users`"
           }
         }
       ]
@@ -133,31 +210,46 @@ main: kit: entity: user: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/users/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/users/{id}"
-          parts: [
-            "v2"
-            "users"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/users/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.user`"
           }

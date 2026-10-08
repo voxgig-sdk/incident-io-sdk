@@ -7,15 +7,15 @@ main: kit: flow: BasicIpAllowlistFlow:
   name: "BasicIpAllowlistFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "ip_allowlist_ref01",
         srcdatavar: "ip_allowlist_ref01_data",
         suffix: "_up0",
         textfield: "updated_at"
       }
 
-      op: "update",
-      spec: [
+      o: "update",
+      s: [
         {
           apply: "TextFieldMark",
           def: {
@@ -26,14 +26,14 @@ main: kit: flow: BasicIpAllowlistFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "ip_allowlist_ref01",
         srcdatavar: "ip_allowlist_ref01_data",
         suffix: "_dt0"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

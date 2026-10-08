@@ -1,5 +1,5 @@
 
-import { cmp, Content, isAuthActive, envName, canonKey, entityIdField, opRequestShape } from '@voxgig/sdkgen'
+import { cmp, Content, isAuthActive, envName, canonKey, canonScalarKey, entityIdField, opRequestShape, phpEntityAccessor, listMatchArg } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -12,7 +12,8 @@ import {
 // params render a typed literal; strings render the quoted placeholder (the
 // doc test EXECUTES this block, so a comment placeholder would break it).
 function phpLit(type: any, placeholder: string = 'example'): string {
-  const k = canonKey(type)
+  const k = canonScalarKey(type)
+  if ('NULL' === k) return 'null'
   if ('INTEGER' === k || 'NUMBER' === k) return '1'
   if ('BOOLEAN' === k) return 'true'
   if ('ARRAY' === k || 'OBJECT' === k) return '[]'
@@ -50,9 +51,9 @@ $client = ${ctor};
     let hasCall = false
 
     if (opnames.includes('list')) {
-      Content(`// List all ${eName.toLowerCase()}s (returns an array; throws on error)
-$${eName.toLowerCase()}s = $client->${eName}()->list();
-print_r($${eName.toLowerCase()}s);
+      Content(`// List all ${eName.toLowerCase()}s (an array of entities, one per record; throws on error)
+$${eName.toLowerCase()}s = $client->${phpEntityAccessor(eName)}()->list(${listMatchArg('php', exampleEntity)});
+print_r(array_map(fn($item) => $item->data_get(), $${eName.toLowerCase()}s));
 `)
       hasCall = true
     }
@@ -71,9 +72,9 @@ print_r($${eName.toLowerCase()}s);
             it.name === idF ? 'example_id' : 'example_' + it.name)}`).join(', ')}]`
         : ''
       Content(`
-// Load a specific ${eName.toLowerCase()} (returns the bare record; throws on error)
-$${eName.toLowerCase()} = $client->${eName}()->load(${loadArg});
-print_r($${eName.toLowerCase()});
+// Load a specific ${eName.toLowerCase()} (returns the entity; data_get() reads its record; throws on error)
+$${eName.toLowerCase()} = $client->${phpEntityAccessor(eName)}()->load(${loadArg});
+print_r($${eName.toLowerCase()}->data_get());
 `)
       hasCall = true
     }

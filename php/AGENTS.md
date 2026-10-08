@@ -43,7 +43,14 @@ the runtime under `.sdk/tm/php/feature/` and regenerate.
 
 | Feature | Runtime file | Active hooks |
 | --- | --- | --- |
-| **test** — In-memory mock transport for testing without a live server | `feature/TestFeature.php` | `GetData`, `GetMatch`, `PostConstruct`, `PostConstructEntity`, `PrePoint`, `PreRequest`, `PreResponse`, `PreResult`, `PreSpec`, `SetData`, `SetMatch` |
+| **debug** — Debug capture | `feature/DebugFeature.php` | `PreDone`, `PreRequest`, `PreResponse`, `PreUnexpected` |
+| **idempotency** — Idempotency | `feature/IdempotencyFeature.php` | `PreRequest` |
+| **metrics** — Metrics | `feature/MetricsFeature.php` | `PreDone`, `PrePoint`, `PreUnexpected` |
+| **paging** — Paging | `feature/PagingFeature.php` | `PreRequest`, `PreResult` |
+| **ratelimit** — Rate limiting | `feature/RatelimitFeature.php` | — |
+| **retry** — Retry | `feature/RetryFeature.php` | — |
+| **test** — Test transport | `feature/TestFeature.php` | `GetData`, `GetMatch`, `PostConstruct`, `PostConstructEntity`, `PrePoint`, `PreRequest`, `PreResponse`, `PreResult`, `PreSpec`, `SetData`, `SetMatch` |
+| **timeout** — Timeout | `feature/TimeoutFeature.php` | — |
 
 ---
 

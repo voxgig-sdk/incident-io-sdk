@@ -1,18 +1,22 @@
 
 const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
+require('../../utility').loadEnvLocal(envlocal)
 
 const Path = require('node:path')
 const Fs = require('node:fs')
 
-const { test, describe } = require('node:test')
+const { test, describe, afterEach } = require('node:test')
 const assert = require('node:assert')
+const { createLiveTransport } = require('../../live-runner')
+const { runLiveEntity } = require('../../live-entity')
 
 
 const { IncidentIoSDK, BaseFeature, stdutil, config } = require('../../..')
 
 const {
   envOverride,
+  liveClientOptions,
+  liveDelay,
   makeCtrl,
   makeMatch,
   makeReqdata,
@@ -23,6 +27,10 @@ const {
 
 describe('CatalogEntryEntity', async () => {
 
+  // Per-test live pacing. Delay is read from sdk-test-control.json's
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
+
   test('instance', async () => {
     const testsdk = IncidentIoSDK.test()
     const ent = testsdk.CatalogEntry()
@@ -30,9 +38,74 @@ describe('CatalogEntryEntity', async () => {
   })
 
 
-  test('basic', async () => {
+  class FailHook extends BaseFeature {
+    constructor() {
+      super()
+      this.name = 'failhook'
+      this.version = '0.0.1'
+      this.active = true
+      this.unexpected = 0
+    }
+    init() { }
+    PreSpec() { throw new Error('catalog_entry hook failed') }
+    PreUnexpected() { this.unexpected++ }
+  }
 
+  test('stream-error', async () => {
+    const offline = { net: { offline: true } }
+    await assert.rejects(async () => {
+      for await (const _item of IncidentIoSDK.test(offline).CatalogEntry().stream('list')) { }
+    }, /offline/)
+
+    for await (const _item of IncidentIoSDK.test(offline).CatalogEntry()
+      .stream('list', undefined, { ctrl: { throw: false } })) { }
+
+    if (null != config.feature?.rbac) {
+      const denied = IncidentIoSDK.test(undefined, { feature: { rbac: { active: true, deny: true } } })
+      await assert.rejects(async () => {
+        for await (const _item of denied.CatalogEntry().stream('list')) { }
+      }, (err) => 'rbac_denied' === err.code)
+    }
+  })
+
+  test('stream-ctrl', async () => {
+    const explain = {}
+    const ctrl = { explain }
+    for await (const _item of IncidentIoSDK.test().CatalogEntry().stream('list', undefined, { ctrl })) { }
+    assert.deepStrictEqual(Object.keys(ctrl), ['explain'])
+    assert(explain === ctrl.explain && 0 < Object.keys(explain).length)
+  })
+
+  test('unexpected', async () => {
+    const hook = new FailHook()
+    const client = new IncidentIoSDK({ feature: { test: { active: true } }, extend: [hook] })
+    await assert.rejects(client.CatalogEntry().list(), /hook failed/)
+    assert(0 < hook.unexpected)
+
+    const fired = hook.unexpected
+    assert.strictEqual(await client.CatalogEntry().list(undefined, { throw: false }), undefined)
+    assert(fired < hook.unexpected)
+  })
+
+  test('validate', async (t) => {
+    if (null == config.feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.CatalogEntry().list({"after":1,"catalog_type_id":"x"}),
+      (err) => 'validate_failed' === err.code)
+  })
+
+
+
+  test('basic', async (t) => {
+
+    
     const setup = basicSetup()
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"aliases":{"a":true,"h":"Aliases","n":"aliases","op":{"list":{"req":true,"type":"`$ARRAY`"}},"r":false,"sh":"Optional aliases that can be used to reference this entry","t":"`$ARRAY`","key$":"aliases","index$":0},"archived_at":{"a":true,"fo":"date-time","h":"Archived At","n":"archived_at","r":false,"sh":"When this entry was archived","t":"`$STRING`","key$":"archived_at","index$":1},"attribute_values":{"a":true,"h":"Attribute Values","n":"attribute_values","r":true,"sh":"Values of this entry","t":"`$OBJECT`","key$":"attribute_values","index$":2},"catalog_entry":{"a":true,"h":"Catalog Entry","n":"catalog_entry","r":true,"t":"`$OBJECT`","key$":"catalog_entry","index$":3},"catalog_type":{"a":true,"h":"Catalog Type","n":"catalog_type","r":true,"t":"`$OBJECT`","key$":"catalog_type","index$":4},"catalog_type_id":{"a":true,"h":"Catalog Type Id","n":"catalog_type_id","r":true,"sh":"ID of this catalog type","t":"`$STRING`","key$":"catalog_type_id","index$":5},"created_at":{"a":true,"fo":"date-time","h":"Created At","n":"created_at","r":true,"sh":"When this entry was created","t":"`$STRING`","key$":"created_at","index$":6},"external_id":{"a":true,"h":"External Id","n":"external_id","r":false,"sh":"An optional alternative ID for this entry, which is ensured to be unique for the type","t":"`$STRING`","key$":"external_id","index$":7},"id":{"a":true,"h":"Id","n":"id","r":true,"sh":"ID of this catalog entry","t":"`$STRING`","key$":"id","index$":8},"name":{"a":true,"h":"Name","n":"name","r":true,"sh":"Name is the human readable name of this entry","t":"`$STRING`","key$":"name","index$":9},"rank":{"a":true,"fo":"int32","h":"Rank","n":"rank","op":{"list":{"req":true,"type":"`$INTEGER`"}},"r":false,"sh":"When catalog type is ranked, this is used to help order things","t":"`$INTEGER`","key$":"rank","index$":10},"update_attributes":{"a":true,"h":"Update Attributes","n":"update_attributes","r":false,"sh":"If provided, only update these attribute_values keys.","t":"`$ARRAY`","key$":"update_attributes","index$":11},"updated_at":{"a":true,"fo":"date-time","h":"Updated At","n":"updated_at","r":true,"sh":"When this entry was last updated","t":"`$STRING`","key$":"updated_at","index$":12}},"id":{"field":"id","name":"id"},"name":"catalog_entry","op":{"create":{"input":"data","name":"create","points":[{"a":true,"bf":["aliases","attribute_values","catalog_type_id","external_id","name","rank"],"co":{"id":"POST /v2/catalog_entries","source":"openapi3","version":2},"g":{},"k":"http","m":"POST","o":"/v2/catalog_entries","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"catalog_entries"}],"t":{"req":"`reqdata`","res":"`body.catalog_entry`"},"index$":0},{"a":true,"bf":["aliases","attribute_values","catalog_type_id","external_id","name","rank"],"co":{"id":"POST /v3/catalog_entries","source":"openapi3","version":2},"g":{},"k":"http","m":"POST","o":"/v3/catalog_entries","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v3"},{"lit":"catalog_entries"}],"t":{"req":"`reqdata`","res":"`body.catalog_entry`"},"index$":1}],"key$":"create"},"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /v3/catalog_entries","source":"openapi3","version":2},"g":{"query":[{"a":true,"ex":"01FDAG4SAP5TYPT98WGR2N7W91","k":"query","n":"after","or":"after","r":false,"t":"`$STRING`","index$":0},{"a":true,"ex":"01FCNDV6P870EA6S7TK1DSYDG0","k":"query","n":"catalog_type_id","or":"catalog_type_id","r":true,"t":"`$STRING`","index$":1},{"a":true,"ex":"abc123","k":"query","n":"identifier","or":"identifier","r":false,"t":"`$STRING`","index$":2},{"a":true,"ex":25,"k":"query","n":"page_size","or":"page_size","r":true,"t":"`$INTEGER`","index$":3}]},"k":"http","m":"GET","o":"/v3/catalog_entries","q":{"exist":["catalog_type_id","page_size"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v3"},{"lit":"catalog_entries"}],"t":{"req":"`reqdata`","res":"`body.catalog_entries`"},"index$":0},{"a":true,"co":{"id":"GET /v2/catalog_entries","source":"openapi3","version":2},"g":{"query":[{"a":true,"ex":"01FDAG4SAP5TYPT98WGR2N7W91","k":"query","n":"after","or":"after","r":false,"t":"`$STRING`","index$":0},{"a":true,"ex":"01FCNDV6P870EA6S7TK1DSYDG0","k":"query","n":"catalog_type_id","or":"catalog_type_id","r":true,"t":"`$STRING`","index$":1},{"a":true,"ex":25,"k":"query","n":"page_size","or":"page_size","r":false,"t":"`$INTEGER`","index$":2}]},"k":"http","m":"GET","o":"/v2/catalog_entries","q":{"exist":["catalog_type_id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"catalog_entries"}],"t":{"req":"`reqdata`","res":"`body.catalog_entries`"},"index$":1}],"key$":"list"},"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /v2/catalog_entries/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01FCNDV6P870EA6S7TK1DSYDG0","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/v2/catalog_entries/{id}","q":{"exist":["id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"catalog_entries"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body.catalog_entry`"},"index$":0},{"a":true,"co":{"id":"GET /v3/catalog_entries/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01FCNDV6P870EA6S7TK1DSYDG0","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}],"query":[{"a":true,"ex":true,"k":"query","n":"expand","or":"expand","r":false,"t":"`$BOOLEAN`","index$":0}]},"k":"http","m":"GET","o":"/v3/catalog_entries/{id}","q":{"exist":["id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v3"},{"lit":"catalog_entries"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body.catalog_entry`"},"index$":1}],"key$":"load"},"update":{"input":"data","name":"update","points":[{"a":true,"bf":["aliases","attribute_values","external_id","name","rank"],"co":{"id":"PUT /v2/catalog_entries/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01FCNDV6P870EA6S7TK1DSYDG0","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"PUT","o":"/v2/catalog_entries/{id}","q":{"exist":["id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"catalog_entries"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body.catalog_entry`"},"index$":0},{"a":true,"bf":["aliases","attribute_values","external_id","name","rank","update_attributes"],"co":{"id":"PUT /v3/catalog_entries/{id}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01FCNDV6P870EA6S7TK1DSYDG0","k":"param","n":"id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"PUT","o":"/v3/catalog_entries/{id}","q":{"exist":["id"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v3"},{"lit":"catalog_entries"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body.catalog_entry`"},"index$":1}],"key$":"update"}},"relations":{"ancestors":[]},"key$":"catalog_entry","name__orig":"catalog_entry","Name":"CatalogEntry","name_":"catalog_entry","name-":"catalog-entry","NAME":"CATALOG_ENTRY","index$":27}, {"active":true,"entity":"catalog_entry","key$":"BasicCatalogEntryFlow","kind":"basic","name":"BasicCatalogEntryFlow","param":{},"step":[{"a":true,"d":{},"i":{"ref":"catalog_entry_ref01"},"m":{},"o":"create","s":[],"v":[],"index$":0},{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"catalog_entry_ref01"}}],"index$":1},{"a":true,"d":{},"i":{"ref":"catalog_entry_ref01","srcdatavar":"catalog_entry_ref01_data","suffix":"_up0","textfield":"archived_at"},"m":{},"o":"update","s":[{"apply":"TextFieldMark","def":{"mark":"Mark01-catalog_entry_ref01"}}],"v":[],"index$":2},{"a":true,"d":{},"i":{"ref":"catalog_entry_ref01","srcdatavar":"catalog_entry_ref01_data","suffix":"_dt0"},"m":{"id":"catalog_entry01"},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-catalog_entry_ref01"}}],"index$":3}]}, 'CatalogEntry', {"POST /v2/catalog_entries":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"aliases":["lawrence@incident.io","lawrence"],"attribute_values":{"abc123":{"array_value":[{"literal":"SEV123","reference":"incident.severity"}],"value":{"literal":"SEV123","reference":"incident.severity"}}},"catalog_type_id":"01FCNDV6P870EA6S7TK1DSYDG0","external_id":"761722cd-d1d7-477b-ac7e-90f9e079dc33","name":"Primary On-call","rank":3},"schema":{"example":{"aliases":["lawrence@incident.io","lawrence"],"attribute_values":{"abc123":{"array_value":[{"literal":"SEV123","reference":"incident.severity"}],"value":{"literal":"SEV123","reference":"incident.severity"}}},"catalog_type_id":"01FCNDV6P870EA6S7TK1DSYDG0","external_id":"761722cd-d1d7-477b-ac7e-90f9e079dc33","name":"Primary On-call","rank":3},"properties":{"aliases":{"description":"Optional aliases that can be used to reference this entry","example":["lawrence@incident.io","lawrence"],"items":{"example":"abc123","type":"string"},"type":"array","key$":"aliases"},"attribute_values":{"additionalProperties":{"example":{"array_value":[{}],"value":{"literal":"SEV123","reference":"incident.severity"}},"properties":{"array_value":{"description":"If set, this is the array value of the step parameter","example":[],"items":{},"type":"array"},"value":{"example":{},"properties":{},"type":"object","x-ref":"#/components/schemas/EngineParamBindingValuePayloadV2"}},"type":"object","x-ref":"#/components/schemas/EngineParamBindingPayloadV2"},"description":"Values of this entry","example":{"abc123":{"array_value":[{}],"value":{"literal":"SEV123","reference":"incident.severity"}}},"type":"object","key$":"attribute_values"},"catalog_type_id":{"description":"ID of this catalog type","example":"01FCNDV6P870EA6S7TK1DSYDG0","type":"string","key$":"catalog_type_id"},"external_id":{"description":"An optional alternative ID for this entry, which is ensured to be unique for the type","example":"761722cd-d1d7-477b-ac7e-90f9e079dc33","type":"string","key$":"external_id"},"name":{"description":"Name is the human readable name of this entry","example":"Primary On-call","type":"string","key$":"name"},"rank":{"description":"When catalog type is ranked, this is used to help order things","example":3,"format":"int32","type":"integer","key$":"rank"}},"required":["catalog_type_id","name","attribute_values"],"type":"object","x-ref":"#/components/schemas/CatalogCreateEntryPayloadV2","index$":1}}},"required":true},"parameters":[]},"POST /v3/catalog_entries":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"aliases":["lawrence@incident.io","lawrence"],"attribute_values":{"abc123":{"array_value":[{"literal":"SEV123"}],"value":{"literal":"SEV123"}}},"catalog_type_id":"01FCNDV6P870EA6S7TK1DSYDG0","external_id":"761722cd-d1d7-477b-ac7e-90f9e079dc33","name":"Primary On-call","rank":3},"schema":{"example":{"aliases":["lawrence@incident.io","lawrence"],"attribute_values":{"abc123":{"array_value":[{"literal":"SEV123"}],"value":{"literal":"SEV123"}}},"catalog_type_id":"01FCNDV6P870EA6S7TK1DSYDG0","external_id":"761722cd-d1d7-477b-ac7e-90f9e079dc33","name":"Primary On-call","rank":3},"properties":{"aliases":{"description":"Optional aliases that can be used to reference this entry","example":["lawrence@incident.io","lawrence"],"items":{"example":"abc123","type":"string"},"type":"array","key$":"aliases"},"attribute_values":{"additionalProperties":{"example":{"array_value":[{}],"value":{"literal":"SEV123"}},"properties":{"array_value":{"description":"If set, this is the array value of the step parameter","example":[],"items":{},"type":"array"},"value":{"example":{},"properties":{},"type":"object","x-ref":"#/components/schemas/CatalogEngineParamBindingValuePayloadV3"}},"type":"object","x-ref":"#/components/schemas/CatalogEngineParamBindingPayloadV3"},"description":"Values of this entry","example":{"abc123":{"array_value":[{}],"value":{"literal":"SEV123"}}},"type":"object","key$":"attribute_values"},"catalog_type_id":{"description":"ID of this catalog type","example":"01FCNDV6P870EA6S7TK1DSYDG0","type":"string","key$":"catalog_type_id"},"external_id":{"description":"An optional alternative ID for this entry, which is ensured to be unique for the type","example":"761722cd-d1d7-477b-ac7e-90f9e079dc33","type":"string","key$":"external_id"},"name":{"description":"Name is the human readable name of this entry","example":"Primary On-call","type":"string","key$":"name"},"rank":{"description":"When catalog type is ranked, this is used to help order things","example":3,"format":"int32","type":"integer","key$":"rank"}},"required":["catalog_type_id","name","attribute_values"],"type":"object","x-ref":"#/components/schemas/CatalogCreateEntryPayloadV3","index$":1}}},"required":true},"parameters":[]},"GET /v3/catalog_entries":{"protocol":"http","parameters":[{"allowEmptyValue":true,"description":"ID of this catalog type","example":"01FCNDV6P870EA6S7TK1DSYDG0","in":"query","name":"catalog_type_id","required":true,"schema":{"description":"ID of this catalog type","example":"01FCNDV6P870EA6S7TK1DSYDG0","type":"string"},"index$":0},{"allowEmptyValue":true,"description":"The integer number of records to return","examples":{"default":{"summary":"default","value":25}},"in":"query","name":"page_size","required":true,"schema":{"default":25,"description":"The integer number of records to return","example":25,"format":"int64","maximum":250,"minimum":1,"type":"integer"},"index$":1},{"allowEmptyValue":true,"description":"An record's ID. This endpoint will return a list of records after this ID in relation to the API response order.","examples":{"default":{"summary":"default","value":"01FDAG4SAP5TYPT98WGR2N7W91"}},"in":"query","name":"after","schema":{"description":"An record's ID. This endpoint will return a list of records after this ID in relation to the API response order.","example":"01FDAG4SAP5TYPT98WGR2N7W91","type":"string"},"index$":2},{"allowEmptyValue":true,"description":"If specified, only entries with this identifier will be returned. This will search by ID, external ID, and aliases.\n\nIf 'use name as identifier' is enabled for the catalog type, this will also match on name.","example":"abc123","in":"query","name":"identifier","schema":{"description":"If specified, only entries with this identifier will be returned. This will search by ID, external ID, and aliases.\n\nIf 'use name as identifier' is enabled for the catalog type, this will also match on name.","example":"abc123","type":"string"},"index$":3}]},"GET /v2/catalog_entries":{"protocol":"http","parameters":[{"allowEmptyValue":true,"description":"ID of this catalog type","example":"01FCNDV6P870EA6S7TK1DSYDG0","in":"query","name":"catalog_type_id","required":true,"schema":{"description":"ID of this catalog type","example":"01FCNDV6P870EA6S7TK1DSYDG0","type":"string"},"index$":0},{"allowEmptyValue":true,"description":"Integer number of records to return","example":25,"in":"query","name":"page_size","schema":{"default":25,"description":"Integer number of records to return","example":25,"format":"int64","maximum":250,"minimum":1,"type":"integer"},"index$":1},{"allowEmptyValue":true,"description":"An record's ID. This endpoint will return a list of records after this ID in relation to the API response order.","example":"01FDAG4SAP5TYPT98WGR2N7W91","in":"query","name":"after","schema":{"description":"An record's ID. This endpoint will return a list of records after this ID in relation to the API response order.","example":"01FDAG4SAP5TYPT98WGR2N7W91","type":"string"},"index$":2}]},"GET /v2/catalog_entries/{id}":{"protocol":"http","parameters":[{"description":"ID of this catalog entry","example":"01FCNDV6P870EA6S7TK1DSYDG0","in":"path","name":"id","required":true,"schema":{"description":"ID of this catalog entry","example":"01FCNDV6P870EA6S7TK1DSYDG0","type":"string"},"index$":0}]},"GET /v3/catalog_entries/{id}":{"protocol":"http","parameters":[{"allowEmptyValue":true,"description":"Whether to include details of all attribute links (forwards and backwards) within the response. Default behaviour (no query param) is to include only forward links. When expand is false, we only show attributes of the catalog entry itself.When expand is true, we show forward and backward links","example":true,"in":"query","name":"expand","schema":{"description":"Whether to include details of all attribute links (forwards and backwards) within the response. Default behaviour (no query param) is to include only forward links. When expand is false, we only show attributes of the catalog entry itself.When expand is true, we show forward and backward links","example":true,"type":"boolean"},"index$":0},{"description":"ID of this catalog entry","example":"01FCNDV6P870EA6S7TK1DSYDG0","in":"path","name":"id","required":true,"schema":{"description":"ID of this catalog entry","example":"01FCNDV6P870EA6S7TK1DSYDG0","type":"string"},"index$":1}]},"PUT /v2/catalog_entries/{id}":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"aliases":["lawrence@incident.io","lawrence"],"attribute_values":{"abc123":{"array_value":[{"literal":"SEV123","reference":"incident.severity"}],"value":{"literal":"SEV123","reference":"incident.severity"}}},"external_id":"761722cd-d1d7-477b-ac7e-90f9e079dc33","name":"Primary On-call","rank":3},"schema":{"example":{"aliases":["lawrence@incident.io","lawrence"],"attribute_values":{"abc123":{"array_value":[{"literal":"SEV123","reference":"incident.severity"}],"value":{"literal":"SEV123","reference":"incident.severity"}}},"external_id":"761722cd-d1d7-477b-ac7e-90f9e079dc33","name":"Primary On-call","rank":3},"properties":{"aliases":{"description":"Optional aliases that can be used to reference this entry","example":["lawrence@incident.io","lawrence"],"items":{"example":"abc123","type":"string"},"type":"array","key$":"aliases"},"attribute_values":{"additionalProperties":{"example":{"array_value":[{}],"value":{"literal":"SEV123","reference":"incident.severity"}},"properties":{"array_value":{"description":"If set, this is the array value of the step parameter","example":[],"items":{},"type":"array"},"value":{"example":{},"properties":{},"type":"object","x-ref":"#/components/schemas/EngineParamBindingValuePayloadV2"}},"type":"object","x-ref":"#/components/schemas/EngineParamBindingPayloadV2"},"description":"Values of this entry","example":{"abc123":{"array_value":[{}],"value":{"literal":"SEV123","reference":"incident.severity"}}},"type":"object","key$":"attribute_values"},"external_id":{"description":"An optional alternative ID for this entry, which is ensured to be unique for the type","example":"761722cd-d1d7-477b-ac7e-90f9e079dc33","type":"string","key$":"external_id"},"name":{"description":"Name is the human readable name of this entry","example":"Primary On-call","type":"string","key$":"name"},"rank":{"description":"When catalog type is ranked, this is used to help order things","example":3,"format":"int32","type":"integer","key$":"rank"}},"required":["name","attribute_values"],"type":"object","x-ref":"#/components/schemas/CatalogUpdateEntryPayloadV2","index$":1}}},"required":true},"parameters":[{"description":"ID of this catalog entry","example":"01FCNDV6P870EA6S7TK1DSYDG0","in":"path","name":"id","required":true,"schema":{"description":"ID of this catalog entry","example":"01FCNDV6P870EA6S7TK1DSYDG0","type":"string"},"index$":0}]},"PUT /v3/catalog_entries/{id}":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"aliases":["lawrence@incident.io","lawrence"],"attribute_values":{"abc123":{"array_value":[{"literal":"SEV123"}],"value":{"literal":"SEV123"}}},"external_id":"761722cd-d1d7-477b-ac7e-90f9e079dc33","name":"Primary On-call","rank":3,"update_attributes":["abc123"]},"schema":{"example":{"aliases":["lawrence@incident.io","lawrence"],"attribute_values":{"abc123":{"array_value":[{"literal":"SEV123"}],"value":{"literal":"SEV123"}}},"external_id":"761722cd-d1d7-477b-ac7e-90f9e079dc33","name":"Primary On-call","rank":3,"update_attributes":["abc123"]},"properties":{"aliases":{"description":"Optional aliases that can be used to reference this entry","example":["lawrence@incident.io","lawrence"],"items":{"example":"abc123","type":"string"},"type":"array","key$":"aliases"},"attribute_values":{"additionalProperties":{"example":{"array_value":[{}],"value":{"literal":"SEV123"}},"properties":{"array_value":{"description":"If set, this is the array value of the step parameter","example":[],"items":{},"type":"array"},"value":{"example":{},"properties":{},"type":"object","x-ref":"#/components/schemas/CatalogEngineParamBindingValuePayloadV3"}},"type":"object","x-ref":"#/components/schemas/CatalogEngineParamBindingPayloadV3"},"description":"Values of this entry","example":{"abc123":{"array_value":[{}],"value":{"literal":"SEV123"}}},"type":"object","key$":"attribute_values"},"external_id":{"description":"An optional alternative ID for this entry, which is ensured to be unique for the type","example":"761722cd-d1d7-477b-ac7e-90f9e079dc33","type":"string","key$":"external_id"},"name":{"description":"Name is the human readable name of this entry","example":"Primary On-call","type":"string","key$":"name"},"rank":{"description":"When catalog type is ranked, this is used to help order things","example":3,"format":"int32","type":"integer","key$":"rank"},"update_attributes":{"description":"If provided, only update these attribute_values keys. If not provided, update all attribute values.\nIf you specify an attribute key that's not in your payload, the associated attribute value will be cleared.","example":["abc123"],"items":{"example":"abc123","type":"string"},"type":"array","key$":"update_attributes"}},"required":["name","attribute_values"],"type":"object","x-ref":"#/components/schemas/CatalogUpdateEntryPayloadV3","index$":1}}},"required":true},"parameters":[{"description":"ID of this catalog entry","example":"01FCNDV6P870EA6S7TK1DSYDG0","in":"path","name":"id","required":true,"schema":{"description":"ID of this catalog entry","example":"01FCNDV6P870EA6S7TK1DSYDG0","type":"string"},"index$":0}]}}, { strict: LIVE_STRICT, t })
+    }
     const client = setup.client
     const struct = setup.struct
 
@@ -44,14 +117,14 @@ describe('CatalogEntryEntity', async () => {
     const catalog_entry_ref01_ent = client.CatalogEntry()
     let catalog_entry_ref01_data = setup.data.new.catalog_entry['catalog_entry_ref01']
 
-    catalog_entry_ref01_data = await catalog_entry_ref01_ent.create(catalog_entry_ref01_data)
+    catalog_entry_ref01_data = (await catalog_entry_ref01_ent.create(catalog_entry_ref01_data)).data()
     assert(null != catalog_entry_ref01_data.id)
 
 
     // LIST
     const catalog_entry_ref01_match = {}
 
-    const catalog_entry_ref01_list = await catalog_entry_ref01_ent.list(catalog_entry_ref01_match)
+    const catalog_entry_ref01_list = (await catalog_entry_ref01_ent.list(catalog_entry_ref01_match)).map((e) => e.data())
 
     assert(!isempty(select(catalog_entry_ref01_list, { id: catalog_entry_ref01_data.id })))
 
@@ -63,7 +136,7 @@ describe('CatalogEntryEntity', async () => {
     const catalog_entry_ref01_markdef_up0 = { name: 'archived_at', value: 'Mark01-catalog_entry_ref01_' + setup.now }
     catalog_entry_ref01_data_up0 [catalog_entry_ref01_markdef_up0.name] = catalog_entry_ref01_markdef_up0.value
 
-    const catalog_entry_ref01_resdata_up0 = await catalog_entry_ref01_ent.update(catalog_entry_ref01_data_up0)
+    const catalog_entry_ref01_resdata_up0 = (await catalog_entry_ref01_ent.update(catalog_entry_ref01_data_up0)).data()
     assert(catalog_entry_ref01_resdata_up0.id === catalog_entry_ref01_data_up0.id)
 
     assert(catalog_entry_ref01_resdata_up0[catalog_entry_ref01_markdef_up0.name] === catalog_entry_ref01_markdef_up0.value)
@@ -72,7 +145,7 @@ describe('CatalogEntryEntity', async () => {
     // LOAD
     const catalog_entry_ref01_match_dt0 = {}
     catalog_entry_ref01_match_dt0.id = catalog_entry_ref01_data.id
-    const catalog_entry_ref01_data_dt0 = await catalog_entry_ref01_ent.load(catalog_entry_ref01_match_dt0)
+    const catalog_entry_ref01_data_dt0 = (await catalog_entry_ref01_ent.load(catalog_entry_ref01_match_dt0)).data()
     assert(catalog_entry_ref01_data_dt0.id === catalog_entry_ref01_data.id)
 
 
@@ -80,6 +153,12 @@ describe('CatalogEntryEntity', async () => {
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra) {
   // TODO: fix test def options
@@ -116,15 +195,32 @@ function basicSetup(extra) {
     'INCIDENT_IO_TEST_CATALOG_ENTRY_ENTID': idmap,
     'INCIDENT_IO_TEST_LIVE': 'FALSE',
     'INCIDENT_IO_TEST_EXPLAIN': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
   idmap = env['INCIDENT_IO_TEST_CATALOG_ENTRY_ENTID']
 
-  if ('TRUE' === env.INCIDENT_IO_TEST_LIVE) {
+  const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
+  const transport = createLiveTransport()
+  if (live) {
+    const rawIds = process.env['INCIDENT_IO_TEST_CATALOG_ENTRY_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new IncidentIoSDK(merge([
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
       {
+        apikey: env.INCIDENT_IO_APIKEY,
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when
+      // the last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey and
+      // server values above and handed the SDK undefined.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -136,6 +232,8 @@ function basicSetup(extra) {
     struct,
     data: entityData,
     explain: 'TRUE' === env.INCIDENT_IO_TEST_EXPLAIN,
+    live,
+    transport,
     now: Date.now(),
   }
 

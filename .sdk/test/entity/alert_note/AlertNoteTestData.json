@@ -8,7 +8,7 @@
         "created_at": "s5d",
         "creator": {},
         "id": "ALERT_NOTE00",
-        "image": [],
+        "images": [],
         "last_edited_at": "s61",
         "updated_at": "s62"
       },
@@ -19,7 +19,7 @@
         "created_at": "sb7",
         "creator": {},
         "id": "ALERT_NOTE01",
-        "image": [],
+        "images": [],
         "last_edited_at": "sbb",
         "updated_at": "sbc"
       },
@@ -30,7 +30,7 @@
         "created_at": "s111",
         "creator": {},
         "id": "ALERT_NOTE02",
-        "image": [],
+        "images": [],
         "last_edited_at": "s115",
         "updated_at": "s116"
       }
@@ -44,10 +44,37 @@
         "content": "s16a",
         "created_at": "s16b",
         "creator": {},
-        "image": [],
+        "images": [],
         "last_edited_at": "s16f",
         "updated_at": "s170"
       }
+    }
+  },
+  "requests": {
+    "POST /v1/alert_notes": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/alert_notes": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/alert_notes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v1/alert_notes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v1/alert_notes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

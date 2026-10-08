@@ -1,0 +1,81 @@
+# Entity: identity
+
+main: kit: entity: identity: {
+
+  alias: field: {}
+
+  fields: {
+    dashboard_url: {
+      h: "Dashboard Url"
+      n: "dashboard_url"
+      r: true
+      sh: "The dashboard URL for this organisation"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "The name assigned to the current API Key"
+      t: "`$STRING`"
+    }
+    roles: {
+      h: "Roles"
+      n: "roles"
+      r: true
+      sh: "Which roles have been enabled for this key"
+      t: "`$ARRAY`"
+    }
+    team_roles: {
+      h: "Team Roles"
+      n: "team_roles"
+      r: true
+      sh: "If set, these roles apply to requests that operate on resources owned by any of the teams in the 'teams' array."
+      t: "`$ARRAY`"
+    }
+    teams: {
+      h: "Teams"
+      n: "teams"
+      r: true
+      sh: "Teams that this API key is scoped to."
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "identity"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v1/identity"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v1/identity"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "identity"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.identity`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

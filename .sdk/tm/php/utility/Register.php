@@ -23,6 +23,7 @@ require_once __DIR__ . '/MakeUrl.php';
 require_once __DIR__ . '/Param.php';
 require_once __DIR__ . '/PrepareAuth.php';
 require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
 require_once __DIR__ . '/PrepareHeaders.php';
 require_once __DIR__ . '/PrepareMethod.php';
 require_once __DIR__ . '/PrepareParams.php';
@@ -36,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 IncidentIoUtility::setRegistrar(function (IncidentIoUtility $u): void {
     $u->clean = [IncidentIoClean::class, 'call'];
+    $u->clean_add = [IncidentIoClean::class, 'add'];
+    $u->clean_explain = [IncidentIoDone::class, 'clean_explain'];
     $u->done = [IncidentIoDone::class, 'call'];
     $u->make_error = [IncidentIoMakeError::class, 'call'];
     $u->feature_add = [IncidentIoFeatureAdd::class, 'call'];
@@ -59,6 +62,8 @@ IncidentIoUtility::setRegistrar(function (IncidentIoUtility $u): void {
     $u->prepare_params = [IncidentIoPrepareParams::class, 'call'];
     $u->prepare_path = [IncidentIoPreparePath::class, 'call'];
     $u->prepare_query = [IncidentIoPrepareQuery::class, 'call'];
+    $u->graphql_body = [IncidentIoGraphql::class, 'body'];
+    $u->graphql_errors = [IncidentIoGraphql::class, 'errors'];
     $u->result_basic = [IncidentIoResultBasic::class, 'call'];
     $u->result_body = [IncidentIoResultBody::class, 'call'];
     $u->result_headers = [IncidentIoResultHeaders::class, 'call'];

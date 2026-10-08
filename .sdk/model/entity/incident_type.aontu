@@ -4,53 +4,73 @@ main: kit: entity: incident_type: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "create_in_triage"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    create_in_triage: {
+      h: "Create In Triage"
+      n: "create_in_triage"
+      r: true
+      sh: "Whether incidents of this must always, or can optionally, be created in triage"
+      t: "`$STRING`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this resource was created"
+      t: "`$STRING`"
     }
-    {
-      name: "description"
-      req: true
-      type: "`$STRING`"
+    description: {
+      h: "Description"
+      n: "description"
+      r: true
+      sh: "What is this incident type for?"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this Incident Type"
+      t: "`$STRING`"
     }
-    {
-      name: "is_default"
-      req: true
-      type: "`$BOOLEAN`"
+    is_default: {
+      h: "Is Default"
+      n: "is_default"
+      r: true
+      sh: "The default Incident Type is used when no other type is explicitly specified"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "The name of this Incident Type"
+      t: "`$STRING`"
     }
-    {
-      name: "owning_team_id"
-      req: false
-      type: "`$ARRAY`"
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      r: false
+      sh: "IDs of the teams that own this incident type"
+      t: "`$ARRAY`"
     }
-    {
-      name: "private_incidents_only"
-      req: true
-      type: "`$BOOLEAN`"
+    private_incidents_only: {
+      h: "Private Incidents Only"
+      n: "private_incidents_only"
+      r: true
+      sh: "Should all incidents created with this Incident Type be private?"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this resource was last updated"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -63,13 +83,26 @@ main: kit: entity: incident_type: {
       name: "list"
       points: [
         {
-          method: "GET"
-          orig: "/v1/incident_types"
-          parts: [
-            "v1"
-            "incident_types"
+          co: {
+            id: "GET /v1/incident_types"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v1/incident_types"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_types"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.incident_types`"
           }
@@ -80,31 +113,46 @@ main: kit: entity: incident_type: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/incident_types/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/incident_types/{id}"
-          parts: [
-            "v1"
-            "incident_types"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/incident_types/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_types"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_type`"
           }

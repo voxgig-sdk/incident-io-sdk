@@ -24,7 +24,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
   /**
    * @param {IncidentRoleLoadMatch} [reqmatch]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentRole>}
+   * @returns {Promise<IncidentRoleEntity>}
    */
   async load(reqmatch, ctrl) {
 
@@ -33,7 +33,8 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -117,12 +118,26 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -140,7 +155,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
   /**
    * @param {IncidentRoleListMatch} [reqmatch]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentRole[]>}
+   * @returns {Promise<IncidentRoleEntity[]>}
    */
   async list(reqmatch, ctrl) {
 
@@ -149,7 +164,8 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -232,9 +248,15 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
       return done(ctx)
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -252,7 +274,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
   /**
    * @param {IncidentRoleCreateData} [reqdata]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentRole>}
+   * @returns {Promise<IncidentRoleEntity>}
    */
   async create(reqdata, ctrl) {
 
@@ -260,7 +282,8 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -340,12 +363,26 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -363,7 +400,7 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
   /**
    * @param {IncidentRoleUpdateData} [reqdata]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentRole>}
+   * @returns {Promise<IncidentRoleEntity>}
    */
   async update(reqdata, ctrl) {
 
@@ -372,7 +409,8 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -457,12 +495,26 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -477,10 +529,11 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
 
 
 
+
   /**
    * @param {IncidentRoleRemoveMatch} [reqmatch]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentRole>}
+   * @returns {Promise<IncidentRoleEntity>}
    */
   async remove(reqmatch, ctrl) {
 
@@ -489,7 +542,8 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -574,12 +628,32 @@ class IncidentRoleEntity extends IncidentIoEntityBase {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      if (ctx.result && ctx.result.ok) {
+        // A removed entity keeps its data but is no longer a live record.
+        this.markDeleted()
+        return this
+      }
+
+      return out
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 

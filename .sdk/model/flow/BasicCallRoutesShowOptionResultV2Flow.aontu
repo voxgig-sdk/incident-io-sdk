@@ -1,0 +1,33 @@
+# BasicCallRoutesShowOptionResultV2Flow
+
+main: kit: flow: BasicCallRoutesShowOptionResultV2Flow:
+{
+  entity: "call_routes_show_option_result_v2",
+  kind: "basic",
+  name: "BasicCallRoutesShowOptionResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "call_routes_show_option_result_v2_ref01",
+        srcdatavar: "call_routes_show_option_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        call_route_id: "call_route01",
+        id: "call_routes_show_option_result_v201"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-call_routes_show_option_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCallRoutesShowOptionResultV2Flow"
+}

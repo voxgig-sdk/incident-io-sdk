@@ -21,7 +21,6 @@ import type {
   AlertCreateData,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class AlertEntity extends IncidentIoEntityBase<Alert> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -38,14 +37,15 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
 
 
 
-  async load(this: any, reqmatch?: AlertLoadMatch, ctrl?: Control): Promise<Alert> {
+  async load(this: any, reqmatch?: AlertLoadMatch, ctrl?: Control): Promise<AlertEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -129,12 +129,20 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -143,7 +151,7 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Alert> return stays clean under strict null checks.
+        // Promise<AlertEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -151,14 +159,15 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
 
 
 
-  async list(this: any, reqmatch?: AlertListMatch, ctrl?: Control): Promise<Alert[]> {
+  async list(this: any, reqmatch?: AlertListMatch, ctrl?: Control): Promise<AlertEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -241,9 +250,15 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -252,7 +267,7 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Alert[]> return stays clean under strict null checks.
+        // Promise<AlertEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -260,13 +275,14 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
 
 
 
-  async create(this: any, reqdata?: AlertCreateData, ctrl?: Control): Promise<Alert> {
+  async create(this: any, reqdata?: AlertCreateData, ctrl?: Control): Promise<AlertEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -346,12 +362,20 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -360,11 +384,12 @@ class AlertEntity extends IncidentIoEntityBase<Alert> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Alert> return stays clean under strict null checks.
+        // Promise<AlertEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

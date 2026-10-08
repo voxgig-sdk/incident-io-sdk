@@ -8,6 +8,37 @@ local runner = require("test.runner")
 
 local _test_dir = debug.getinfo(1, "S").source:match("^@(.+/)")  or "./"
 
+-- main.kit.test.live.strict is true (the default is true): a live
+-- request that fails, or a live test missing an input it needs,
+-- fails the test.
+-- An account with no record for a test to read skips it either way.
+local LIVE_STRICT = true
+
+
+local BaseFeature = require("feature.base_feature")
+
+local FailHook = {}
+FailHook.__index = FailHook
+setmetatable(FailHook, { __index = BaseFeature })
+
+function FailHook.new()
+  local self = setmetatable(BaseFeature.new(), FailHook)
+  self.name = "failhook"
+  self.unexpected = 0
+  return self
+end
+
+function FailHook:init(_ctx, _options) end
+function FailHook:PreSpec(_ctx) error("alert hook failed") end
+function FailHook:PreUnexpected(_ctx) self.unexpected = self.unexpected + 1 end
+
+local function errtext(err)
+  if type(err) == "table" then
+    return tostring(err.msg or err.message or "")
+  end
+  return tostring(err)
+end
+
 describe("AlertEntity", function()
   it("should create instance", function()
     local testsdk = sdk.test(nil, nil)
@@ -39,7 +70,7 @@ describe("AlertEntity", function()
     assert.are.equal(3, #seen)
 
     -- Inbound: streaming active -> yields each item from the feature.
-    local config = require("config")()
+    local config = require("config_shared")()
     if type(config.feature) == "table" and config.feature.streaming ~= nil then
       local streamsdk = sdk.test(seed, { feature = { streaming = { active = true } } })
       local got = {}
@@ -56,47 +87,95 @@ describe("AlertEntity", function()
     end
   end)
 
+  it("should report a failed stream", function()
+    local offline = { net = { offline = true } }
+    local ok, err = pcall(function()
+      for _ in sdk.test(offline, nil):Alert(nil):stream("list", nil, nil) do end
+    end)
+    assert.is_false(ok)
+    assert.truthy(string.find(errtext(err), "offline", 1, true))
+
+    for _ in sdk.test(offline, nil):Alert(nil):stream("list", nil, { ctrl = { throw = false } }) do end
+
+    local config = require("config_shared")()
+    if type(config.feature) == "table" and config.feature.rbac ~= nil then
+      local denied = sdk.test(nil, { feature = { rbac = { active = true, deny = true } } })
+      local dok, derr = pcall(function()
+        for _ in denied:Alert(nil):stream("list", nil, nil) do end
+      end)
+      assert.is_false(dok)
+      assert.are.equal("rbac_denied", type(derr) == "table" and derr.code or nil)
+    end
+  end)
+
+  it("should leave the caller's ctrl", function()
+    local explain = {}
+    local ctrl = { explain = explain }
+    for _ in sdk.test(nil, nil):Alert(nil):stream("list", nil, { ctrl = ctrl }) do end
+    assert.is_nil(ctrl.stream)
+    assert.are.equal(explain, ctrl.explain)
+    assert.is_not_nil(next(explain))
+  end)
+
+  it("should fire PreUnexpected", function()
+    local hook = FailHook.new()
+    local client = sdk.new({ feature = { test = { active = true } }, extend = { hook } })
+
+    local out, err = client:Alert(nil):list(nil, nil)
+    assert.is_nil(out)
+    assert.truthy(string.find(errtext(err), "hook failed", 1, true))
+    assert.is_true(hook.unexpected > 0)
+
+    local fired = hook.unexpected
+    out, err = client:Alert(nil):list(nil, { throw = false })
+    assert.is_nil(err)
+    assert.is_true(hook.unexpected > fired)
+  end)
+
+  it("should refuse an invalid request", function()
+    local config = require("config_shared")()
+    if type(config.feature) ~= "table" or config.feature.validate == nil then
+      pending("feature not present in this SDK: validate")
+      return
+    end
+    local client = sdk.test(nil, { feature = { validate = { active = true } } })
+    local _, err = client:Alert(nil):list({ ["after"] = 1, ["page_size"] = 1 }, nil)
+    assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
+  end)
+
   it("should run basic flow", function()
     local setup = alert_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"create", "list", "load"}) do
+    for _, _op in ipairs({"list", "load"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "alert." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
         return
       end
     end
-    -- The basic flow consumes synthetic IDs from the fixture. In live mode
-    -- without an *_ENTID env override, those IDs hit the live API and 4xx.
-    if setup.synthetic_only then
-      pending("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_ALERT_ENTID JSON to run live")
-      return
-    end
     local client = setup.client
+    if setup.live then
+      runner.live_existing(pending, setup, LIVE_STRICT, "alert", function()
+        return client:Alert(nil):list({}, nil)
+      end)
+    end
 
-    -- CREATE
-    local alert_ref01_ent = client:Alert(nil)
-    local alert_ref01_data = helpers.to_map(vs.getprop(
-      vs.getpath(setup.data, "new.alert"), "alert_ref01"))
-
-    local alert_ref01_data_result, err = alert_ref01_ent:create(alert_ref01_data, nil)
-    assert.is_nil(err)
-    alert_ref01_data = helpers.to_map(alert_ref01_data_result)
-    assert.is_not_nil(alert_ref01_data)
-    assert.is_not_nil(alert_ref01_data["id"])
+    -- Bootstrap entity data from existing test data.
+    local alert_ref01_data_raw = vs.items(helpers.to_map(
+      vs.getpath(setup.data, "existing.alert")))
+    local alert_ref01_data = nil
+    if #alert_ref01_data_raw > 0 then
+      alert_ref01_data = helpers.to_map(alert_ref01_data_raw[1][2])
+    end
 
     -- LIST
+    local alert_ref01_ent = client:Alert(nil)
     local alert_ref01_match = {}
 
     local alert_ref01_list_result, err = alert_ref01_ent:list(alert_ref01_match, nil)
     assert.is_nil(err)
     assert.is_table(alert_ref01_list_result)
-
-    local found_item = vs.select(
-      runner.entity_list_to_data(alert_ref01_list_result),
-      { id = alert_ref01_data["id"] })
-    assert.is_false(vs.isempty(found_item))
 
     -- LOAD
     local alert_ref01_match_dt0 = {
@@ -104,7 +183,7 @@ describe("AlertEntity", function()
     }
     local alert_ref01_data_dt0_loaded, err = alert_ref01_ent:load(alert_ref01_match_dt0, nil)
     assert.is_nil(err)
-    local alert_ref01_data_dt0_load_result = helpers.to_map(alert_ref01_data_dt0_loaded)
+    local alert_ref01_data_dt0_load_result = helpers.to_map(type(alert_ref01_data_dt0_loaded) == 'table' and alert_ref01_data_dt0_loaded.data_get and alert_ref01_data_dt0_loaded:data_get() or alert_ref01_data_dt0_loaded)
     assert.is_not_nil(alert_ref01_data_dt0_load_result)
     assert.are.equal(alert_ref01_data_dt0_load_result["id"], alert_ref01_data["id"])
 
@@ -140,40 +219,44 @@ function alert_basic_setup(extra)
     }
   )
 
-  -- Detect ENTID env override before envOverride consumes it. When live
-  -- mode is on without a real override, the basic test runs against synthetic
-  -- IDs from the fixture and 4xx's. Surface this so the test can skip.
-  local entid_env_raw = os.getenv("INCIDENTIO_TEST_ALERT_ENTID")
+  -- Whether *_ENTID supplied the idmap, read before env_override consumes
+  -- it: without it, the ids a live flow binds are the fixture's synthetic ones.
+  local entid_env_raw = os.getenv("INCIDENT_IO_TEST_ALERT_ENTID")
   local idmap_overridden = entid_env_raw ~= nil and entid_env_raw:match("^%s*{") ~= nil
 
   local env = runner.env_override({
-    ["INCIDENTIO_TEST_ALERT_ENTID"] = idmap,
-    ["INCIDENTIO_TEST_LIVE"] = "FALSE",
-    ["INCIDENTIO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_TEST_ALERT_ENTID"] = idmap,
+    ["INCIDENT_IO_TEST_LIVE"] = "FALSE",
+    ["INCIDENT_IO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_APIKEY"] = "",
   })
 
   local idmap_resolved = helpers.to_map(
-    env["INCIDENTIO_TEST_ALERT_ENTID"])
+    env["INCIDENT_IO_TEST_ALERT_ENTID"])
   if idmap_resolved == nil then
     idmap_resolved = helpers.to_map(idmap)
   end
 
-  if env["INCIDENTIO_TEST_LIVE"] == "TRUE" then
+  if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
+      -- FIRST, so the generated fields below win: sdk-test-control.json's
+      -- test.client.options adds to the live client, it does not redirect it.
+      runner.live_client_options(),
       {
+        apikey = env["INCIDENT_IO_APIKEY"],
       },
       extra or {},
     })
     client = sdk.new(helpers.to_map(merged_opts))
   end
 
-  local live = env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+  local live = env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
   return {
     client = client,
     data = entity_data,
     idmap = idmap_resolved,
     env = env,
-    explain = env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+    explain = env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
     live = live,
     synthetic_only = live and not idmap_overridden,
     now = os.time() * 1000,

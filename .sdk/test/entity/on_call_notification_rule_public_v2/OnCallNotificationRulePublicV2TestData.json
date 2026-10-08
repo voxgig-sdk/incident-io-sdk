@@ -1,0 +1,55 @@
+{
+  "existing": {
+    "on_call_notification_rule_public_v2": {
+      "ON_CALL_NOTIFICATION_RULE_PUBLIC_V200": {
+        "app": {},
+        "delay_seconds": 71,
+        "id": "ON_CALL_NOTIFICATION_RULE_PUBLIC_V200",
+        "method_target": {},
+        "method_type": "s4a",
+        "phone": {},
+        "rule_type": "s4c",
+        "user_id": "USER01"
+      },
+      "ON_CALL_NOTIFICATION_RULE_PUBLIC_V201": {
+        "app": {},
+        "delay_seconds": 141,
+        "id": "ON_CALL_NOTIFICATION_RULE_PUBLIC_V201",
+        "method_target": {},
+        "method_type": "s90",
+        "phone": {},
+        "rule_type": "s92",
+        "user_id": "USER01"
+      },
+      "ON_CALL_NOTIFICATION_RULE_PUBLIC_V202": {
+        "app": {},
+        "delay_seconds": 211,
+        "id": "ON_CALL_NOTIFICATION_RULE_PUBLIC_V202",
+        "method_target": {},
+        "method_type": "sd6",
+        "phone": {},
+        "rule_type": "sd8",
+        "user_id": "USER01"
+      }
+    }
+  },
+  "new": {
+    "on_call_notification_rule_public_v2": {
+      "on_call_notification_rule_public_v2_ref01": {
+        "app": {},
+        "delay_seconds": 281,
+        "method_target": {},
+        "method_type": "s11c",
+        "phone": {},
+        "rule_type": "s11e"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/users/{user_id}/notification_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

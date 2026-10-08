@@ -1,8 +1,11 @@
 package core
 
 import (
+	"encoding/json"
+	"fmt"
 	"math/rand"
 	"strconv"
+	"sync"
 
 	vs "github.com/voxgig-sdk/incident-io-sdk/go/utility/struct"
 )
@@ -20,6 +23,7 @@ type Context struct {
 	Entopts  map[string]any
 	Options  map[string]any
 	Opmap    map[string]*Operation
+	Opmu     *sync.Mutex
 	Response *Response
 	Result   *Result
 	Spec     *Spec
@@ -84,7 +88,7 @@ func NewContext(ctxmap map[string]any, basectx *Context) *Context {
 		} else if ctrl, ok := c.(*Control); ok {
 			ctx.Ctrl = ctrl
 		}
-	} else if basectx != nil && basectx.Ctrl != nil {
+	} else if basectx != nil && basectx.Ctrl != nil && getCtxProp(ctxmap, "opname") == nil {
 		ctx.Ctrl = basectx.Ctrl
 	}
 
@@ -156,9 +160,13 @@ func NewContext(ctxmap map[string]any, basectx *Context) *Context {
 	}
 	if ctx.Opmap == nil && basectx != nil {
 		ctx.Opmap = basectx.Opmap
+		ctx.Opmu = basectx.Opmu
 	}
 	if ctx.Opmap == nil {
 		ctx.Opmap = map[string]*Operation{}
+	}
+	if ctx.Opmu == nil {
+		ctx.Opmu = &sync.Mutex{}
 	}
 
 	// Data
@@ -227,17 +235,16 @@ func NewContext(ctxmap map[string]any, basectx *Context) *Context {
 }
 
 func (ctx *Context) resolveOp(opname string) *Operation {
-	// Cache key is `<entity>:<opname>` so two entities with the same op
-	// (e.g. both have a "list") get distinct cached Operations. Keying on
-	// opname alone caused the first-resolved entity's points to be served
-	// to every subsequent entity's call.
 	entname := ""
 	if ctx.Entity != nil {
 		entname = ctx.Entity.GetName()
 	}
 	cacheKey := entname + ":" + opname
 
-	if op, ok := ctx.Opmap[cacheKey]; ok && op != nil {
+	ctx.Opmu.Lock()
+	cached, cachedok := ctx.Opmap[cacheKey]
+	ctx.Opmu.Unlock()
+	if op, ok := cached, cachedok; ok && op != nil {
 		return op
 	}
 
@@ -245,10 +252,10 @@ func (ctx *Context) resolveOp(opname string) *Operation {
 		return NewOperation(map[string]any{})
 	}
 
-	opcfg := vs.GetPath([]any{"entity", entname, "op", opname}, ctx.Config)
+	opcfg := vs.GetPath(ctx.Config, []any{"entity", entname, "op", opname})
 
 	input := "match"
-	if opname == "update" || opname == "create" {
+	if opname == "update" || opname == "create" || opname == "patch" {
 		input = "data"
 	}
 
@@ -267,16 +274,62 @@ func (ctx *Context) resolveOp(opname string) *Operation {
 	}
 
 	op := NewOperation(map[string]any{
-		"entity":  entname,
-		"name":    opname,
-		"input":   input,
+		"entity": entname,
+		"name":   opname,
+		"input":  input,
 		"points": targets,
 	})
 
+	// Every request racing to build this Operation gets the one stored first.
+	ctx.Opmu.Lock()
+	defer ctx.Opmu.Unlock()
+	if stored, ok := ctx.Opmap[cacheKey]; ok && stored != nil {
+		return stored
+	}
 	ctx.Opmap[cacheKey] = op
 	return op
 }
 
 func (ctx *Context) MakeError(code string, msg string) *IncidentIoError {
 	return NewIncidentIoError(code, msg, ctx)
+}
+
+// The record a context serialises as; the options and the client stay out.
+func (ctx *Context) Record() map[string]any {
+	return map[string]any{
+		"id":       ctx.Id,
+		"op":       ctx.Op,
+		"spec":     ctx.Spec,
+		"entity":   ctx.Entity,
+		"result":   ctx.Result,
+		"response": ctx.Response,
+		"meta":     ctx.Meta,
+	}
+}
+
+// The serialised context leaves the pipeline (a logger, an error dump), so
+// it is cleaned; the live fields stay raw for the pipeline's own use. Value
+// receivers, so a dereferenced context prints the same way.
+func (ctx Context) cleaned() any {
+	record := ctx.Record()
+	if ctx.Utility != nil && ctx.Utility.Clean != nil {
+		return ctx.Utility.Clean(&ctx, record)
+	}
+	return record
+}
+
+func (ctx Context) MarshalJSON() ([]byte, error) {
+	return json.Marshal(ctx.cleaned())
+}
+
+func (ctx Context) String() string {
+	cleaned := ctx.cleaned()
+	if raw, err := json.Marshal(cleaned); err == nil {
+		return "Context " + string(raw)
+	}
+	return "Context " + fmt.Sprintf("%v", cleaned)
+}
+
+func (ctx Context) GoString() string {
+	return ctx.String()
 }

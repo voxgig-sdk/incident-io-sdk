@@ -22,7 +22,6 @@ import type {
   ScheduleSyncRuleUpdateData,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -39,14 +38,15 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
 
 
 
-  async load(this: any, reqmatch?: ScheduleSyncRuleLoadMatch, ctrl?: Control): Promise<ScheduleSyncRule> {
+  async load(this: any, reqmatch?: ScheduleSyncRuleLoadMatch, ctrl?: Control): Promise<ScheduleSyncRuleEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -130,12 +130,20 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -144,7 +152,7 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<ScheduleSyncRule> return stays clean under strict null checks.
+        // Promise<ScheduleSyncRuleEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -152,14 +160,15 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
 
 
 
-  async list(this: any, reqmatch?: ScheduleSyncRuleListMatch, ctrl?: Control): Promise<ScheduleSyncRule[]> {
+  async list(this: any, reqmatch?: ScheduleSyncRuleListMatch, ctrl?: Control): Promise<ScheduleSyncRuleEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -242,9 +251,15 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -253,7 +268,7 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<ScheduleSyncRule[]> return stays clean under strict null checks.
+        // Promise<ScheduleSyncRuleEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -261,13 +276,14 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
 
 
 
-  async create(this: any, reqdata?: ScheduleSyncRuleCreateData, ctrl?: Control): Promise<ScheduleSyncRule> {
+  async create(this: any, reqdata?: ScheduleSyncRuleCreateData, ctrl?: Control): Promise<ScheduleSyncRuleEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -347,12 +363,20 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -361,7 +385,7 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<ScheduleSyncRule> return stays clean under strict null checks.
+        // Promise<ScheduleSyncRuleEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -369,14 +393,15 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
 
 
 
-  async update(this: any, reqdata?: ScheduleSyncRuleUpdateData, ctrl?: Control): Promise<ScheduleSyncRule> {
+  async update(this: any, reqdata?: ScheduleSyncRuleUpdateData, ctrl?: Control): Promise<ScheduleSyncRuleEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -461,12 +486,20 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -475,11 +508,12 @@ class ScheduleSyncRuleEntity extends IncidentIoEntityBase<ScheduleSyncRule> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<ScheduleSyncRule> return stays clean under strict null checks.
+        // Promise<ScheduleSyncRuleEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

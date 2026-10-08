@@ -4,7 +4,6 @@
 main: {
   kit: {
     info: {
-      auth: false
       description: `This is the API reference for incident.io.
 
 It documents available API endpoints, provides examples of how to use it, and
@@ -223,6 +222,13 @@ For example:
 
 For any questions, email support@incident.io.
 `
+      security: {
+        in: "header"
+        name: "Authorization"
+        prefix: "Bearer"
+        scheme: "BearerAuth"
+        type: "http"
+      }
       servers: [
         {
           url: "https://api.incident.io"

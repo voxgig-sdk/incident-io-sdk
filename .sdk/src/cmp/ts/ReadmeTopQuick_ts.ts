@@ -1,5 +1,5 @@
 
-import { cmp, Content, isAuthActive, packageName, envName, entityIdField, entityOps, opRequestShape, safeVarName, exampleVarName, jsKey } from '@voxgig/sdkgen'
+import { cmp, Content, isAuthActive, isHttpBasicAuth, packageName, envName, entityIdField, entityOps, opRequestShape, safeVarName, exampleVarName, jsKey, serverVariables, listMatchArg } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -17,9 +17,24 @@ const ReadmeTopQuick = cmp(function ReadmeTopQuick(props: any) {
   const exampleEntity = Object.values(entity).find((e: any) => e.active !== false) as any
 
   const authActive = isAuthActive(model)
-  const ctor = authActive
-    ? `new ${model.const.Name}SDK({\n  apikey: process.env.${envName(model)}_APIKEY,\n})`
-    : `new ${model.const.Name}SDK()`
+
+  // Server variables (a templated server URL) are REQUIRED at construction
+  // - makeOptions refuses rather than request a URL with a literal
+  // {account_id} in it - so a quickstart that omits them is a quickstart
+  // that throws on its first line.
+  const svarLines = serverVariables(model)
+    .map((v: any) => `\n    ${v.name}: '<${v.name}>',`).join('')
+  const serverField = '' === svarLines ? '' :
+    `\n  // Required: this API's server URL is templated on these.\n  server: {${svarLines}\n  },`
+
+  const ctorFields = (authActive
+    ? `\n  apikey: process.env.${envName(model)}_APIKEY,${
+      isHttpBasicAuth(model) ? `\n  secret: process.env.${envName(model)}_SECRET,` : ''}`
+    : '') + serverField
+
+  const ctor = '' === ctorFields
+    ? `new ${model.const.Name}SDK()`
+    : `new ${model.const.Name}SDK({${ctorFields}\n})`
 
   Content(`\`\`\`ts
 import { ${model.const.Name}SDK } from '${packageName(model, target.name)}'
@@ -36,10 +51,10 @@ const client = ${ctor}
     let hasCall = false
 
     if (opnames.includes('list')) {
-      Content(`// List all ${eName.toLowerCase()}s (returns ${eName}[])
-const ${eVar}s = await client.${eName}().list()
+      Content(`// List all ${eName.toLowerCase()}s (returns ${eName}Entity[], one entity per record)
+const ${eVar}s = await client.${eName}().list(${listMatchArg('ts', exampleEntity)})
 for (const ${eVar} of ${eVar}s) {
-  console.log(${eVar})
+  console.log(${eVar}.data())
 }
 `)
       hasCall = true
@@ -61,9 +76,6 @@ for (const ${eVar} of ${eVar}s) {
       const neVar = exampleVarName(neName.toLowerCase(), 'ts')
       const loadOp = nestedEntity.op && nestedEntity.op.load
 
-      // Every REQUIRED load-match key (parent keys first, own id last) — the
-      // same shape that generates <Name>LoadMatch, so the example
-      // type-checks.
       const neIdF = entityIdField(nestedEntity)
       const neMatchLines = opRequestShape(nestedEntity, 'load').items
         .filter((it: any) => !it.optional || it.name === neIdF)
@@ -74,22 +86,19 @@ for (const ${eVar} of ${eVar}s) {
             it.name === neIdF ? 'example_id' : 'example_' + it.name)},`)
 
       Content(`
-// Load a specific ${neName.toLowerCase()} (returns a ${neName})
+// Load a specific ${neName.toLowerCase()} (returns the entity, ${/^[aeiou]/i.test(neName) ? 'an' : 'a'} ${neName}Entity)
 const ${neVar} = await client.${neName}().load({
 ${neMatchLines.join('\n')}
 })
-console.log(${neVar})
+console.log(${neVar}.data())
 `)
       hasCall = true
     }
 
-    // Fallback: APIs with only `load` (no list, no nested) — most public
-    // read-only services. Still show one concrete call. `load()` with no
-    // match is always valid (the match arg is optional).
     if (!hasCall && opnames.includes('load')) {
-      Content(`// Load ${eName.toLowerCase()} data (returns a ${eName})
+      Content(`// Load a specific ${eName.toLowerCase()} (returns the entity, ${/^[aeiou]/i.test(eName) ? 'an' : 'a'} ${eName}Entity)
 const ${eVar} = await client.${eName}().load()
-console.log(${eVar})
+console.log(${eVar}.data())
 `)
       hasCall = true
     }

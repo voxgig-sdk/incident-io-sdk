@@ -1,0 +1,22 @@
+# BasicFollowUpsConnectExternalIssueResultV3Flow
+
+main: kit: flow: BasicFollowUpsConnectExternalIssueResultV3Flow:
+{
+  entity: "follow_ups_connect_external_issue_result_v3",
+  kind: "basic",
+  name: "BasicFollowUpsConnectExternalIssueResultV3Flow",
+  step: [
+    {
+      i: {
+        ref: "follow_ups_connect_external_issue_result_v3_ref01"
+      }
+
+      m: {
+        follow_up_id: "follow_up01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicFollowUpsConnectExternalIssueResultV3Flow"
+}

@@ -1,0 +1,22 @@
+# BasicIpRangeFlow
+
+main: kit: flow: BasicIpRangeFlow:
+{
+  entity: "ip_range",
+  kind: "basic",
+  name: "BasicIpRangeFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "ip_range_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIpRangeFlow"
+}

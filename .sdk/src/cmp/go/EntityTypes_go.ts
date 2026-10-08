@@ -1,34 +1,9 @@
 
 
-// Typed-model generator (Go target).
-//
-// Reads main.<KIT>.entity.<e>.fields[] and per-op params
-// (op.<name>.points[].args.params[]) and emits one file, entity/types.go, in
-// the `entity` package, with a Go `type <Name> struct { ... }` per entity plus
-// a request/match struct per active op. Field/param sentinels ($STRING,
-// $INTEGER, ...) are turned into real Go types by the shared sdkgen helper
-// `canonToType` (source of truth: @voxgig/apidef VALID_CANON).
-//
-// PORT NOTES (Go specifics vs the TS reference):
-//   * Types live in the SAME package as the entity methods (`entity`), so the
-//     generated typed accessors reference them without an import (task step B).
-//   * Go has no method overloading and go-cli / go-mcp dispatch entities
-//     dynamically through the untyped `core.ProjectNameEntity` interface
-//     (Load/List/... (map[string]any) (any, error)). That interface — and the
-//     untyped concrete methods that satisfy it — are therefore KEPT unchanged.
-//     Typed access is delivered ADDITIVELY: the op fragments emit `LoadTyped`
-//     / `ListTyped` / ... alongside the untyped methods, and Entity.fragment.go
-//     emits `DataTyped` / `MatchTyped`. All are thin typed wrappers over the
-//     untyped runtime (identical behaviour), converting at the typed boundary
-//     via the JSON-round-trip helpers emitted at the bottom of this file.
-//   * `list` typed op returns []<Name>; other typed ops return <Name>.
-//   * op WITH params -> a struct of those params (reqd:false -> pointer +
-//     ,omitempty). op WITHOUT params -> a struct mirroring the entity fields
-//     with every field optional (Go's analog of TS `Partial<Name>`).
 
 import {
   cmp, each,
-  File, Content, Folder,
+  File, Content, Folder, goModule
 } from '@voxgig/sdkgen'
 
 import { canonToType, opTypeName, opRequestShape, warnEntityTypeCollisions , deriveEntityNames } from '@voxgig/sdkgen'
@@ -47,8 +22,6 @@ function cap(s: string): string {
 }
 
 
-// A model field/param name -> an exported Go field identifier:
-//   advice -> Advice, some_field -> SomeField, id -> Id.
 function goField(name: string): string {
   const out = String(name)
     .replace(/[^A-Za-z0-9]+/g, ' ')
@@ -57,30 +30,10 @@ function goField(name: string): string {
     .filter(Boolean)
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join('')
-  // Go identifiers can't start with a digit.
   return /^[A-Za-z_]/.test(out) ? out : 'F' + out
 }
 
 
-// The json struct tag is the WIRE CONTRACT: it decides the key requests
-// marshal under and the key responses populate from.
-//
-// Can this spec-derived name be carried in a Go json struct tag AT ALL?
-//
-// It cannot always be. `encoding/json`'s isValidTag accepts letters, digits and
-// a fixed punctuation set; a name containing a double quote, a backtick or a
-// backslash is REJECTED, and Go then silently falls back to the Go FIELD name.
-// Verified against go1.24 — for a field named `na"me`:
-//
-//   raw literal      `json:"na"me"`        -> marshals as {"na": ...}   (truncated)
-//   escaped literal  "json:\"na\\\"me\""   -> marshals as {"NaMe": ...} (tag ignored)
-//
-// So there is no encoding that preserves such a name. An earlier version here
-// stripped the offending characters, which is worse than either: it silently
-// changed the wire contract, marshalling under a key the API never uses and
-// never populating from the real response key. Names that cannot be
-// represented are skipped with a warning instead — the same treatment
-// csharp/java give names with no legal identifier form.
 const GO_TAG_PUNCT = '!#$%&()*+-./:;<=>?@[]^_{|}~ '
 
 function goTaggable(name: string): boolean {
@@ -113,15 +66,6 @@ function fieldLine(name: string, sentinel: any, optional: boolean, ident?: strin
 }
 
 
-// Collision-free Go field identifiers for one struct's members.
-//
-// goField() is lossy — it strips every non-alphanumeric character — so
-// `some_field`, `some-field` and `someField` all map to `SomeField`. Emitting
-// them into the same struct is a "field redeclared" compile error, and Go is
-// the only target exposed to it (ts/py/… keep the raw key). Later duplicates
-// get a numeric suffix; the FIRST occurrence keeps the natural name, and the
-// json tag always keeps the original wire name, so behaviour is unchanged.
-// Deterministic: members arrive in sorted-key order from opRequestShape/each.
 function uniqueGoFields(members: { name: string }[]): string[] {
   const taken: Record<string, boolean> = {}
   return members.map((m) => {
@@ -165,23 +109,17 @@ const EntityTypes = cmp(function EntityTypes(props: any) {
   const { target } = props
   const { model, log } = props.ctx$
 
+  // This file is GENERATED, not templated, so the GOMODULE placeholder is
+  // never substituted for it — the module path has to be interpolated.
+  const gomodule = goModule(model, target.name)
+
   // only_active:false — getModelPath DROPS active:false entries by default,
   // but the consumer scaffold (create-sdkgen Root.ts) iterates the RAW entity
   // collection, so inactive entities still get generated entity code that
   // references these typed names. The typed model must cover them too.
   const entity = getModelPath(model, `main.${KIT}.entity`, { only_active: false, required: false })
-  // Emit for every entity that gets an entity file. Main_go.ts / Entity_go.ts
-  // iterate entities WITHOUT an `active` filter and reference the typed data
-  // type `<Name>` in every *_entity.go, so a struct is required for each or the
-  // package won't compile. deriveEntityNames() selects on `name` (always
-  // present) and derives the lazily-set PascalCase `Name` up front, so the
-  // struct set is deterministic and matches the *_entity.go set regardless of
-  // which component runs first.
   const entityList = deriveEntityNames(entity)
 
-  // Surface duplicate generated type names (two entities with the same
-  // PascalCase Name) — they would redeclare a type in statically-typed
-  // targets. Detection only; renaming is a model-level decision.
   warnEntityTypeCollisions(entity, log, LANG)
 
   Folder({ name: 'entity' }, () => {
@@ -190,22 +128,25 @@ const EntityTypes = cmp(function EntityTypes(props: any) {
 
       Content(`// Typed models for the ${model.const.Name} SDK.
 //
-// GENERATED from the API model: main.${KIT}.entity.<e>.fields[] and per-op
-// params (op.<name>.points[].args.params[]). Field/param types come from the
+// GENERATED from the API model: main.${KIT}.entity.<e>.fields{} and per-op
+// params (op.<name>.points[].g.params[]). Field/param types come from the
 // canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 package entity
 
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"${gomodule}/core"
+)
 
 `)
 
       entityList.forEach((ent: any) => {
         const Name = ent.Name
         const fields = (ent.fields ? each(ent.fields) : [])
-          .filter((f: any) => f.active !== false)
+          .filter((f: any) => f.a !== false)
 
-        // Entity data model: one field per model field. req:false -> pointer.
         Content(`// ${Name} is the typed data model for the ${ent.name} entity.
 type ${Name} struct {
 `)
@@ -213,18 +154,14 @@ type ${Name} struct {
           (f: any) => skipUntaggable(f, Name, log))
         const fieldIdents = uniqueGoFields(taggable)
         taggable.forEach((f: any, i: number) => {
-          Content(fieldLine(f.name, f.type, false === f.req, fieldIdents[i]))
+          Content(fieldLine(f.n, f.t, false === f.r, fieldIdents[i]))
         })
         Content(`}
 
 `)
 
-        // Per active op: a request/match struct (same package as the entity
-        // methods, so no import is needed there). Members and their optionality
-        // come from the shared partiality policy (opRequestShape); this file
-        // only renders them as a Go struct (optional -> pointer + ,omitempty).
         const ops = ent.op || {}
-        ;['load', 'list', 'create', 'update', 'remove'].forEach((opname: string) => {
+        ;['load', 'list', 'create', 'update', 'patch', 'remove'].forEach((opname: string) => {
           if (null == ops[opname]) {
             return
           }
@@ -262,12 +199,26 @@ func asMap(v any) map[string]any {
 	return out
 }
 
-// typedFrom decodes a runtime value (a map[string]any produced by the op
-// pipeline) into a typed model T via a JSON round-trip. On any error it
-// returns the zero value of T; the op's own (value, error) tuple carries the
-// real error.
+// entityData unwraps an entity to its data map.
+//
+// Operations resolve to the ENTITY, not the raw data (see AGENTS.md), and an
+// entity's fields are UNEXPORTED — marshalling one directly yields \`{}\`, so
+// every typed accessor would silently hand back a zero-valued struct. The
+// typed boundary therefore takes the data hop first.
+func entityData(v any) any {
+	if ent, ok := v.(core.Entity); ok {
+		return ent.Data()
+	}
+	return v
+}
+
+// typedFrom decodes a runtime value (an entity, or the map[string]any the op
+// pipeline produced) into a typed model T via a JSON round-trip. On any error
+// it returns the zero value of T; the op's own (value, error) tuple carries
+// the real error.
 func typedFrom[T any](v any) T {
 	var out T
+	v = entityData(v)
 	if v == nil {
 		return out
 	}
@@ -279,12 +230,20 @@ func typedFrom[T any](v any) T {
 	return out
 }
 
-// typedSliceFrom decodes a runtime list value ([]any of maps) into a typed
-// slice []T via a JSON round-trip, for list ops.
+// typedSliceFrom decodes a runtime list value into a typed slice []T via a
+// JSON round-trip, for list ops. \`list\` resolves to a slice of ENTITY
+// instances, so each element takes the data hop.
 func typedSliceFrom[T any](v any) []T {
 	var out []T
 	if v == nil {
 		return out
+	}
+	if list, ok := v.([]any); ok {
+		unwrapped := make([]any, 0, len(list))
+		for _, item := range list {
+			unwrapped = append(unwrapped, entityData(item))
+		}
+		v = unwrapped
 	}
 	b, err := json.Marshal(v)
 	if err != nil {

@@ -6,51 +6,51 @@
         "creator": {},
         "description": "s98",
         "escalation_path_id": "ESCALATION_PATH01",
-        "event": [],
+        "events": [],
         "id": "ESCALATION00",
         "idempotency_key": "s9c",
         "incident_id": "INCIDENT01",
         "priority": {},
-        "related_alert": [],
-        "related_incident": [],
+        "related_alerts": [],
+        "related_incidents": [],
         "status": "sa1",
         "title": "sa2",
         "updated_at": "sa3",
-        "user_id": "USER01"
+        "user_ids": []
       },
       "ESCALATION01": {
         "created_at": "s12c",
         "creator": {},
         "description": "s12e",
         "escalation_path_id": "ESCALATION_PATH01",
-        "event": [],
+        "events": [],
         "id": "ESCALATION01",
         "idempotency_key": "s132",
         "incident_id": "INCIDENT01",
         "priority": {},
-        "related_alert": [],
-        "related_incident": [],
+        "related_alerts": [],
+        "related_incidents": [],
         "status": "s137",
         "title": "s138",
         "updated_at": "s139",
-        "user_id": "USER01"
+        "user_ids": []
       },
       "ESCALATION02": {
         "created_at": "s1c2",
         "creator": {},
         "description": "s1c4",
         "escalation_path_id": "ESCALATION_PATH01",
-        "event": [],
+        "events": [],
         "id": "ESCALATION02",
         "idempotency_key": "s1c8",
         "incident_id": "INCIDENT01",
         "priority": {},
-        "related_alert": [],
-        "related_incident": [],
+        "related_alerts": [],
+        "related_incidents": [],
         "status": "s1cd",
         "title": "s1ce",
         "updated_at": "s1cf",
-        "user_id": "USER01"
+        "user_ids": []
       }
     }
   },
@@ -61,17 +61,34 @@
         "creator": {},
         "description": "s25a",
         "escalation_path_id": "ESCALATION_PATH01",
-        "event": [],
+        "events": [],
         "idempotency_key": "s25e",
         "incident_id": "INCIDENT01",
         "priority": {},
-        "related_alert": [],
-        "related_incident": [],
+        "related_alerts": [],
+        "related_incidents": [],
         "status": "s263",
         "title": "s264",
         "updated_at": "s265",
-        "user_id": "USER01"
+        "user_ids": []
       }
+    }
+  },
+  "requests": {
+    "POST /v2/escalations": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/escalations": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/escalations/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

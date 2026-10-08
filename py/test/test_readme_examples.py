@@ -82,7 +82,27 @@ _ENTITIES = {
     "AlertNote": "alert_note",
     "AlertRoute": "alert_route",
     "AlertSource": "alert_source",
+    "AlertSourcesV2": "alert_sources_v2",
+    "AlertTag": "alert_tag",
+    "AlertsAddTagsResultV2": "alerts_add_tags_result_v2",
+    "AlertsRemoveTagsResultV2": "alerts_remove_tags_result_v2",
+    "AlertsSetTagsResultV2": "alerts_set_tags_result_v2",
+    "AlertsTransitionIncidentAlertResultV2": "alerts_transition_incident_alert_result_v2",
+    "AnnouncementRule": "announcement_rule",
+    "AnnouncementTemplate": "announcement_template",
     "ApiKey": "api_key",
+    "CallRoute": "call_route",
+    "CallRoutesCreateAllowedCallerResultV2": "call_routes_create_allowed_caller_result_v2",
+    "CallRoutesCreateOptionResultV2": "call_routes_create_option_result_v2",
+    "CallRoutesListAllowedCallersResultV2": "call_routes_list_allowed_callers_result_v2",
+    "CallRoutesListOptionsResultV2": "call_routes_list_options_result_v2",
+    "CallRoutesShowAllowedCallerResultV2": "call_routes_show_allowed_caller_result_v2",
+    "CallRoutesShowOptionResultV2": "call_routes_show_option_result_v2",
+    "CallRoutesUpdateAllowedCallerResultV2": "call_routes_update_allowed_caller_result_v2",
+    "CallRoutesUpdateOptionResultV2": "call_routes_update_option_result_v2",
+    "CallRoutesV2": "call_routes_v2",
+    "CallSession": "call_session",
+    "CallTranscriptEntry": "call_transcript_entry",
     "CatalogEntry": "catalog_entry",
     "CatalogResource": "catalog_resource",
     "CatalogType": "catalog_type",
@@ -90,37 +110,78 @@ _ENTITIES = {
     "CustomField": "custom_field",
     "CustomFieldOption": "custom_field_option",
     "Escalation": "escalation",
+    "EscalationPathTemplate": "escalation_path_template",
+    "EscalationsCheckEscalationPermissionsResultV2": "escalations_check_escalation_permissions_result_v2",
+    "EscalationsReassignEscalationResultV2": "escalations_reassign_escalation_result_v2",
     "FollowUp": "follow_up",
+    "FollowUpsConnectExternalIssueResultV3": "follow_ups_connect_external_issue_result_v3",
+    "FollowUpsCreateFromLinkResultV3": "follow_ups_create_from_link_result_v3",
+    "Identity": "identity",
     "Incident": "incident",
-    "IncidentAlert": "incident_alert",
+    "IncidentActivityLogEntry": "incident_activity_log_entry",
     "IncidentAttachment": "incident_attachment",
+    "IncidentForm": "incident_form",
     "IncidentMembership": "incident_membership",
     "IncidentParticipant": "incident_participant",
     "IncidentParticipantWorkload": "incident_participant_workload",
     "IncidentRelationship": "incident_relationship",
     "IncidentRole": "incident_role",
     "IncidentStatus": "incident_status",
+    "IncidentTeamMembership": "incident_team_membership",
+    "IncidentTeamMembershipsV1": "incident_team_memberships_v1",
+    "IncidentTemplate": "incident_template",
+    "IncidentTemplatesValidateResultV1": "incident_templates_validate_result_v1",
+    "IncidentTimelineItem": "incident_timeline_item",
     "IncidentTimestamp": "incident_timestamp",
     "IncidentType": "incident_type",
     "IncidentUpdate": "incident_update",
     "IpAllowlist": "ip_allowlist",
+    "IpRange": "ip_range",
     "MaintenanceWindow": "maintenance_window",
+    "OnCallNotificationMethodPublicV2": "on_call_notification_method_public_v2",
+    "OnCallNotificationRulePublicV2": "on_call_notification_rule_public_v2",
+    "PayConfig": "pay_config",
+    "PayConfigsCreateOneOffRuleResultV2": "pay_configs_create_one_off_rule_result_v2",
+    "PayConfigsCreateWeeklyRuleResultV2": "pay_configs_create_weekly_rule_result_v2",
+    "PayConfigsListOneOffRulesResultV2": "pay_configs_list_one_off_rules_result_v2",
+    "PayConfigsListWeeklyRulesResultV2": "pay_configs_list_weekly_rules_result_v2",
+    "PayConfigsShowOneOffRuleResultV2": "pay_configs_show_one_off_rule_result_v2",
+    "PayConfigsShowWeeklyRuleResultV2": "pay_configs_show_weekly_rule_result_v2",
+    "PayConfigsUpdateOneOffRuleResultV2": "pay_configs_update_one_off_rule_result_v2",
+    "PayConfigsUpdateWeeklyRuleResultV2": "pay_configs_update_weekly_rule_result_v2",
+    "PayConfigsV2": "pay_configs_v2",
+    "PayReport": "pay_report",
+    "PayReportsPublishResultV2": "pay_reports_publish_result_v2",
+    "PayReportsUnpublishResultV2": "pay_reports_unpublish_result_v2",
+    "PayReportsV2": "pay_reports_v2",
+    "PoliciesV2": "policies_v2",
+    "Policy": "policy",
+    "PolicyFinding": "policy_finding",
+    "PolicyFindingsDismissResultV2": "policy_findings_dismiss_result_v2",
+    "PolicyFindingsRestoreResultV2": "policy_findings_restore_result_v2",
     "PostmortemDocument": "postmortem_document",
     "Schedule": "schedule",
+    "ScheduleEntriesListPayloadV2": "schedule_entries_list_payload_v2",
     "ScheduleEntry": "schedule_entry",
     "ScheduleReplica": "schedule_replica",
     "ScheduleSyncRule": "schedule_sync_rule",
     "ScheduleSyncTarget": "schedule_sync_target",
+    "SchedulesShowOverrideResultV2": "schedules_show_override_result_v2",
+    "SchedulesUpdateOverrideResultV2": "schedules_update_override_result_v2",
     "Secret": "secret",
     "Severity": "severity",
     "StatusPage": "status_page",
+    "StatusPageComponent": "status_page_component",
+    "StatusPageComponentAvailabilityV2": "status_page_component_availability_v2",
     "StatusPageIncident": "status_page_incident",
     "StatusPageIncidentUpdate": "status_page_incident_update",
+    "StatusPageLinkedResponseIncidentV1": "status_page_linked_response_incident_v1",
     "StatusPageMaintenance": "status_page_maintenance",
     "StatusPageMaintenanceUpdate": "status_page_maintenance_update",
     "StatusPageStructure": "status_page_structure",
+    "StatusPagesV2": "status_pages_v2",
     "Team": "team",
-    "TelemetryDataSource": "telemetry_data_source",
+    "TelemetryDataSourceV2": "telemetry_data_source_v2",
     "User": "user",
     "Workflow": "workflow",
     "WorkflowRun": "workflow_run",
@@ -244,6 +305,8 @@ def test_readme_python_blocks_typecheck():
         env["PYTHONDONTWRITEBYTECODE"] = "1"
         # Resolve "from _SDK_MODULE import _SDK_CLASS" against the package root.
         env["MYPYPATH"] = _PY_ROOT + os.pathsep + env.get("MYPYPATH", "")
+        # The child writes UTF-8 and the capture reads it, whatever the locale.
+        env["PYTHONIOENCODING"] = "utf-8"
 
         proc = subprocess.run(
             [
@@ -258,6 +321,7 @@ def test_readme_python_blocks_typecheck():
             env=env,
             capture_output=True,
             text=True,
+            encoding="utf-8",
         )
 
         base = os.path.basename(snippet_path)
@@ -283,10 +347,9 @@ def test_readme_python_blocks_typecheck():
 # ----------------------------------------------------------------------------
 
 def _uses_var(block, var):
-    # True if the block reads an attribute off the whole-word variable "var"
-    # (i.e. contains "var." with a non-identifier char, or nothing, before it).
-    # This distinguishes a client-driving "sdk." from the "_sdk." tail of an
-    # import module name.
+    # True if the block reads an attribute off the variable "var", not off a
+    # name that ends in it: "_sdk." in a module name, "-client." in a package
+    # name or a host, ".client." on another object.
     needle = var + "."
     start = 0
     while True:
@@ -296,7 +359,7 @@ def _uses_var(block, var):
         ok_before = True
         if j > 0:
             ch = block[j - 1]
-            if ch.isalnum() or ch == "_":
+            if ch.isalnum() or ch in "_-./\"'":
                 ok_before = False
         if ok_before:
             return True
@@ -473,6 +536,92 @@ def _is_not_found_error(last):
     return ("404" in last) or ("not found" in low) or ("notfound" in low)
 
 
+def _run_batch(items, label):
+    # BATCHED. One interpreter for every runnable block in this document,
+    # instead of one process each. A 269-entity SDK documents hundreds of
+    # examples and the spawn cost dominated the suite.
+    #
+    # Each block is exec'd in a FRESH globals dict, so names do not leak
+    # between snippets, and is bracketed by markers so output is attributed
+    # back. The interpreter is shared, which is the cost: a snippet that
+    # mutates process-wide state or dies hard affects what follows.
+    #
+    # So the batch is not trusted blindly. Any snippet whose END marker is
+    # missing is re-run on its own by the caller, and that isolated verdict is
+    # the one that counts.
+    driver = (
+        "import sys, traceback" + _NL
+        + "_S = __VOX_SOURCES__" + _NL
+        + "for _i, _src in _S:" + _NL
+        + "    print('@@VOXBEGIN ' + str(_i), flush=True)" + _NL
+        + "    try:" + _NL
+        + "        _g = {'__name__': '__main__'}" + _NL
+        + "        exec(compile(_src, '<snippet>', 'exec'), _g)" + _NL
+        + "    except BaseException:" + _NL
+        + "        traceback.print_exc(file=sys.stdout)" + _NL
+        + "    print('@@VOXEND ' + str(_i), flush=True)" + _NL
+    )
+    driver = driver.replace("__VOX_SOURCES__", repr(items))
+
+    env = dict(os.environ)
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env["PYTHONPATH"] = _PY_ROOT + os.pathsep + env.get("PYTHONPATH", "")
+    # The child writes UTF-8 and the capture reads it, whatever the locale.
+    env["PYTHONIOENCODING"] = "utf-8"
+
+    # A FILE, not "python -c". The driver embeds every runnable snippet's
+    # source, and a large SDK documents hundreds of them: passing that on the
+    # command line exceeded ARG_MAX and the whole gate died with
+    # "OSError: [Errno 7] Argument list too long" — on gitlab and github, while
+    # every small repo passed. The batch has no size limit through a file.
+    with tempfile.TemporaryDirectory() as td:
+        driver_path = os.path.join(td, "readme_batch_driver.py")
+        with open(driver_path, "w", encoding="utf-8") as fh:
+            fh.write(driver)
+        proc = subprocess.run(
+            [sys.executable, driver_path],
+            cwd=_PY_ROOT, env=env, capture_output=True, text=True, encoding="utf-8",
+        )
+        return (proc.stdout or "") + (proc.stderr or "")
+
+
+def _batch_segment(text, index):
+    # The output between this snippet's markers, or None when the END marker
+    # never arrived — the batch died in or before it, so only an isolated
+    # re-run can say what happened.
+    begin = "@@VOXBEGIN " + str(index)
+    end = "@@VOXEND " + str(index)
+    b = text.find(begin)
+    if b < 0:
+        return None
+    b += len(begin)
+    e = text.find(end, b)
+    if e < 0:
+        return None
+    return text[b:e].strip()
+
+
+def _classify_batch_error(seg, source, label, index):
+    # Same verdict as _run_source, read off a traceback in the batch output.
+    if not seg:
+        return None
+    errlines = [ln for ln in seg.split(_NL) if ln.strip()]
+    if not errlines or "Traceback (most recent call last)" not in seg:
+        return None
+    last = errlines[-1]
+    exc_type = last.split(":", 1)[0].strip().split(".")[-1]
+    detail = (
+        label + " python block #" + str(index) + ": " + last + _NL + _NL
+        + "--- executed source ---" + _NL + source
+        + _NL + _NL + "--- batch output ---" + _NL + seg
+    )
+    if exc_type in _PROGRAMMING_ERROR_NAMES:
+        return "PROGRAMMING ERROR in " + detail
+    if _is_not_found_error(last):
+        return None
+    return "RUNTIME ERROR in " + detail
+
+
 def _run_source(source, label, index):
     # Run one rewritten block in a subprocess. Returns None when it exits 0 or
     # fails with the single tolerated not-found/404 domain error; otherwise
@@ -481,6 +630,7 @@ def _run_source(source, label, index):
     env = dict(os.environ)
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     env["PYTHONPATH"] = _PY_ROOT + os.pathsep + env.get("PYTHONPATH", "")
+    env["PYTHONIOENCODING"] = "utf-8"
 
     proc = subprocess.run(
         [sys.executable, "-c", source],
@@ -488,6 +638,7 @@ def _run_source(source, label, index):
         env=env,
         capture_output=True,
         text=True,
+        encoding="utf-8",
     )
     if proc.returncode == 0:
         return None
@@ -525,6 +676,7 @@ def _completeness_gate(label, blocks):
     illustration = 0
     compiled = 0
     failures = []
+    _pending = []
 
     for i, block in enumerate(blocks):
         kind = _classify(block)
@@ -542,13 +694,23 @@ def _completeness_gate(label, blocks):
                 )
                 continue
             executed += 1
-            msg = _run_source(source, label, i)
-            if msg is not None:
-                failures.append(msg)
+            _pending.append((i, source))
         elif kind == "illustration":
             illustration += 1
         else:
             compiled += 1
+
+    if _pending:
+        _text = _run_batch(_pending, label)
+        for _i, _src in _pending:
+            _seg = _batch_segment(_text, _i)
+            if _seg is None:
+                # Batch never finished this one — isolate it.
+                _msg = _run_source(_src, label, _i)
+            else:
+                _msg = _classify_batch_error(_seg, _src, label, _i)
+            if _msg is not None:
+                failures.append(_msg)
 
     print(
         _NL + "[readme-examples] " + label + " python blocks: total="

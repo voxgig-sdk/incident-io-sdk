@@ -7,16 +7,16 @@ main: kit: flow: BasicCatalogEntryFlow:
   name: "BasicCatalogEntryFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "catalog_entry_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
 
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -27,15 +27,15 @@ main: kit: flow: BasicCatalogEntryFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "catalog_entry_ref01",
         srcdatavar: "catalog_entry_ref01_data",
         suffix: "_up0",
         textfield: "archived_at"
       }
 
-      op: "update",
-      spec: [
+      o: "update",
+      s: [
         {
           apply: "TextFieldMark",
           def: {
@@ -46,18 +46,18 @@ main: kit: flow: BasicCatalogEntryFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "catalog_entry_ref01",
         srcdatavar: "catalog_entry_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "catalog_entry01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

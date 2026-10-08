@@ -1,0 +1,9 @@
+# BasicPoliciesV2Flow
+
+main: kit: flow: BasicPoliciesV2Flow:
+{
+  entity: "policies_v2",
+  kind: "basic",
+  name: "BasicPoliciesV2Flow",
+  "key$": "BasicPoliciesV2Flow"
+}

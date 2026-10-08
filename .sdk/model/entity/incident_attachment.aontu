@@ -4,23 +4,28 @@ main: kit: entity: incident_attachment: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier of this incident membership"
+      t: "`$STRING`"
     }
-    {
-      name: "incident_id"
-      req: true
-      type: "`$STRING`"
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "ID of the incident to add an attachment to"
+      t: "`$STRING`"
     }
-    {
-      name: "resource"
-      req: true
-      type: "`$OBJECT`"
+    resource: {
+      h: "Resource"
+      n: "resource"
+      r: true
+      t: "`$OBJECT`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -33,13 +38,30 @@ main: kit: entity: incident_attachment: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v1/incident_attachments"
-          parts: [
-            "v1"
-            "incident_attachments"
+          bf: [
+            "incident_id"
+            "resource"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/incident_attachments"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/incident_attachments"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_attachments"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_attachment`"
           }
@@ -50,48 +72,54 @@ main: kit: entity: incident_attachment: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/incident_attachments"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "123"
-                kind: "query"
-                name: "external_id"
-                orig: "external_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "123"
+                k: "query"
+                n: "external_id"
+                or: "external_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
-                kind: "query"
-                name: "incident_id"
-                orig: "incident_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "query"
+                n: "incident_id"
+                or: "incident_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "pager_duty_incident"
-                kind: "query"
-                name: "resource_type"
-                orig: "resource_type"
-                reqd: false
-                type: "`$STRING`"
+                ex: "pager_duty_incident"
+                k: "query"
+                n: "resource_type"
+                or: "resource_type"
+                r: false
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/incident_attachments"
-          parts: [
-            "v1"
-            "incident_attachments"
+          m: "GET"
+          o: "/v1/incident_attachments"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_attachments"
+            }
           ]
-          select: {
-            exist: [
-              "external_id"
-              "incident_id"
-              "resource_type"
-            ]
-          }
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.incident_attachments`"
           }
@@ -102,31 +130,42 @@ main: kit: entity: incident_attachment: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v1/incident_attachments/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYD5H"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYD5H"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v1/incident_attachments/{id}"
-          parts: [
-            "v1"
-            "incident_attachments"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v1/incident_attachments/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_attachments"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }

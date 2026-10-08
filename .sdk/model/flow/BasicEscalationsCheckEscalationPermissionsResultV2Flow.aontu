@@ -1,0 +1,22 @@
+# BasicEscalationsCheckEscalationPermissionsResultV2Flow
+
+main: kit: flow: BasicEscalationsCheckEscalationPermissionsResultV2Flow:
+{
+  entity: "escalations_check_escalation_permissions_result_v2",
+  kind: "basic",
+  name: "BasicEscalationsCheckEscalationPermissionsResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "escalations_check_escalation_permissions_result_v2_ref01"
+      }
+
+      m: {
+        escalation_id: "escalation01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicEscalationsCheckEscalationPermissionsResultV2Flow"
+}

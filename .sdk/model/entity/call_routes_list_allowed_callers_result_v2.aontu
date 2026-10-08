@@ -1,0 +1,98 @@
+# Entity: call_routes_list_allowed_callers_result_v2
+
+main: kit: entity: call_routes_list_allowed_callers_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this allowed caller"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: false
+      sh: "Label for whose number this is"
+      t: "`$STRING`"
+    }
+    phone_number: {
+      h: "Phone Number"
+      n: "phone_number"
+      r: true
+      sh: "The number allowed to call this route, in international format"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "call_routes_list_allowed_callers_result_v2"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/call_routes/{call_route_id}/allowed_callers"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "call_route_id"
+                or: "call_route_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/call_routes/{call_route_id}/allowed_callers"
+          q: {
+            exist: [
+              "call_route_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "call_routes"
+            }
+            {
+              var: "call_route_id"
+            }
+            {
+              lit: "allowed_callers"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.allowed_callers`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.call_route")]
+  ]
+
+}

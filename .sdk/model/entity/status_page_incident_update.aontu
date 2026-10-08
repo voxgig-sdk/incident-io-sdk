@@ -4,33 +4,43 @@ main: kit: entity: status_page_incident_update: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "component_status"
-      req: false
-      type: "`$ARRAY`"
+  fields: {
+    component_statuses: {
+      h: "Component Statuses"
+      n: "component_statuses"
+      r: false
+      sh: "An array of mappings from component ID to component status."
+      t: "`$ARRAY`"
     }
-    {
-      name: "incident_status"
-      req: false
-      type: "`$STRING`"
+    incident_status: {
+      h: "Incident Status"
+      n: "incident_status"
+      r: false
+      sh: "Optional new status for this status page incident."
+      t: "`$STRING`"
     }
-    {
-      name: "message"
-      req: true
-      type: "`$STRING`"
+    message: {
+      h: "Message"
+      n: "message"
+      r: true
+      sh: "Markdown update on what's changed about this status page incident"
+      t: "`$STRING`"
     }
-    {
-      name: "notify_subscriber"
-      req: true
-      type: "`$BOOLEAN`"
+    notify_subscribers: {
+      h: "Notify Subscribers"
+      n: "notify_subscribers"
+      r: true
+      sh: "Whether to notify subscribers about this incident update."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "status_page_incident_id"
-      req: true
-      type: "`$STRING`"
+    status_page_incident_id: {
+      h: "Status Page Incident Id"
+      n: "status_page_incident_id"
+      r: true
+      sh: "ID of the status page incident"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   name: "status_page_incident_update"
   op: {
@@ -38,13 +48,33 @@ main: kit: entity: status_page_incident_update: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/status_page_incident_updates"
-          parts: [
-            "v2"
-            "status_page_incident_updates"
+          bf: [
+            "component_statuses"
+            "incident_status"
+            "message"
+            "notify_subscribers"
+            "status_page_incident_id"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/status_page_incident_updates"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/status_page_incident_updates"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_incident_updates"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.status_page_incident_update`"
           }

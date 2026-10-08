@@ -15,6 +15,13 @@ import (
 	vs "github.com/voxgig-sdk/incident-io-sdk/go/utility/struct"
 )
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const incident_membershipEntityLiveStrict = true
+
+
 func TestIncidentMembershipEntity(t *testing.T) {
 	t.Run("instance", func(t *testing.T) {
 		testsdk := sdk.TestSDK(nil, nil)
@@ -24,7 +31,21 @@ func TestIncidentMembershipEntity(t *testing.T) {
 		}
 	})
 
-	t.Run("basic", func(t *testing.T) {
+	t.Run("validate", func(t *testing.T) {
+		if !fhHasFeature("validate") {
+			t.Skip("feature not present in this SDK: validate")
+		}
+		client := sdk.TestSDK(nil, map[string]any{
+			"feature": map[string]any{"validate": map[string]any{"active": true}},
+		})
+		_, err := client.IncidentMembership(nil).Create(map[string]any{"incident_id": 1, "user_id": "x"}, nil)
+		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
+			t.Fatalf("expected validate_failed, got %v", err)
+		}
+	})
+
+	t.Run("basic", func(tt *testing.T) {
+		var t testing.TB = tt
 		setup := incident_membershipBasicSetup(nil)
 		// Per-op sdk-test-control.json skip — basic test exercises a flow
 		// with multiple ops; skipping any op skips the whole flow.
@@ -41,24 +62,18 @@ func TestIncidentMembershipEntity(t *testing.T) {
 				return
 			}
 		}
-		// The basic flow consumes synthetic IDs from the fixture. In live mode
-		// without an *_ENTID env override, those IDs hit the live API and 4xx.
-		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_INCIDENT_MEMBERSHIP_ENTID JSON to run live")
-			return
-		}
 		client := setup.client
 
 		// CREATE
 		incidentMembershipRef01Ent := client.IncidentMembership(nil)
 		incidentMembershipRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath([]any{"new", "incident_membership"}, setup.data), "incident_membership_ref01"))
+			vs.GetPath(setup.data, []any{"new", "incident_membership"}), "incident_membership_ref01"))
 
 		incidentMembershipRef01DataResult, err := incidentMembershipRef01Ent.Create(incidentMembershipRef01Data, nil)
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		incidentMembershipRef01Data = core.ToMapAny(incidentMembershipRef01DataResult)
+		incidentMembershipRef01Data = core.ToMapAny(entityData(incidentMembershipRef01DataResult))
 		if incidentMembershipRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -90,7 +105,7 @@ func incident_membershipBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"incident_membership01", "incident_membership02", "incident_membership03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -100,39 +115,52 @@ func incident_membershipBasicSetup(extra map[string]any) *entityTestSetup {
 		},
 	)
 
-	// Detect ENTID env override before envOverride consumes it. When live
-	// mode is on without a real override, the basic test runs against synthetic
-	// IDs from the fixture and 4xx's. Surface this so the test can skip.
-	entidEnvRaw := os.Getenv("INCIDENTIO_TEST_INCIDENT_MEMBERSHIP_ENTID")
+	// Whether *_ENTID supplied the idmap, read before envOverride consumes it:
+	// without it, the ids a live flow binds are the fixture's synthetic ones.
+	entidEnvRaw := os.Getenv("INCIDENT_IO_TEST_INCIDENT_MEMBERSHIP_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 
 	env := envOverride(map[string]any{
-		"INCIDENTIO_TEST_INCIDENT_MEMBERSHIP_ENTID": idmap,
-		"INCIDENTIO_TEST_LIVE":      "FALSE",
-		"INCIDENTIO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_TEST_INCIDENT_MEMBERSHIP_ENTID": idmap,
+		"INCIDENT_IO_TEST_LIVE":      "FALSE",
+		"INCIDENT_IO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_APIKEY":         "",
 	})
 
-	idmapResolved := core.ToMapAny(env["INCIDENTIO_TEST_INCIDENT_MEMBERSHIP_ENTID"])
+	idmapResolved := core.ToMapAny(env["INCIDENT_IO_TEST_INCIDENT_MEMBERSHIP_ENTID"])
 	if idmapResolved == nil {
 		idmapResolved = core.ToMapAny(idmap)
 	}
 
-	if env["INCIDENTIO_TEST_LIVE"] == "TRUE" {
+	if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
+				"apikey": env["INCIDENT_IO_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewIncidentIoSDK(core.ToMapAny(mergedOpts))
 	}
 
-	live := env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+	live := env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
 	return &entityTestSetup{
 		client:        client,
 		data:          entityData,
 		idmap:         idmapResolved,
 		env:           env,
-		explain:       env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+		explain:       env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
 		live:          live,
 		syntheticOnly: live && !idmapOverridden,
 		now:           time.Now().UnixMilli(),

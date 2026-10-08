@@ -1,0 +1,32 @@
+{
+  "existing": {
+    "alert_tag": {
+      "ALERT_TAG00": {
+        "id": "ALERT_TAG00",
+        "name": "s15"
+      },
+      "ALERT_TAG01": {
+        "id": "ALERT_TAG01",
+        "name": "s29"
+      },
+      "ALERT_TAG02": {
+        "id": "ALERT_TAG02",
+        "name": "s3d"
+      }
+    }
+  },
+  "new": {
+    "alert_tag": {
+      "alert_tag_ref01": {
+        "name": "s51"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/alert_tags": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

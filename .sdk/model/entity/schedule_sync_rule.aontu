@@ -4,69 +4,88 @@ main: kit: entity: schedule_sync_rule: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "annotation"
-      req: false
-      type: "`$OBJECT`"
+  fields: {
+    annotations: {
+      h: "Annotations"
+      n: "annotations"
+      r: false
+      sh: "Annotations that track metadata about this resource"
+      t: "`$OBJECT`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier of the sync rule"
+      t: "`$STRING`"
     }
-    {
-      name: "permanent_member_user_id"
+    permanent_member_user_ids: {
+      h: "Permanent Member User Ids"
+      n: "permanent_member_user_ids"
       op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
         update: {
           req: false
           type: "`$ARRAY`"
         }
       }
-      req: true
-      type: "`$ARRAY`"
+      r: true
+      sh: "IDs of users always kept in the Slack user group, regardless of who is on call."
+      t: "`$ARRAY`"
     }
-    {
-      name: "rotation_id"
-      req: false
-      type: "`$STRING`"
+    rotation_id: {
+      h: "Rotation Id"
+      n: "rotation_id"
+      r: false
+      sh: "If set, only members of this rotation sync to the user group."
+      t: "`$STRING`"
     }
-    {
-      name: "schedule_id"
-      req: true
-      type: "`$STRING`"
+    schedule_id: {
+      h: "Schedule Id"
+      n: "schedule_id"
+      r: true
+      sh: "The schedule this rule belongs to"
+      t: "`$STRING`"
     }
-    {
-      name: "schedule_sync_rule"
-      req: true
-      type: "`$OBJECT`"
+    schedule_sync_target: {
+      h: "Schedule Sync Target"
+      n: "schedule_sync_target"
+      r: true
+      sh: "A sync target is the link between incident.io and a single Slack user group, used to keep that group's membership in step with who is currently on call."
+      t: "`$OBJECT`"
     }
-    {
-      name: "schedule_sync_target"
-      req: true
-      type: "`$OBJECT`"
+    schedule_sync_target_id: {
+      h: "Schedule Sync Target Id"
+      n: "schedule_sync_target_id"
+      r: true
+      sh: "The sync target ID this rule links to"
+      t: "`$STRING`"
     }
-    {
-      name: "schedule_sync_target_id"
-      req: true
-      type: "`$STRING`"
+    sync_type: {
+      h: "Sync Type"
+      n: "sync_type"
+      r: true
+      sh: "Which schedule members sync to the user group"
+      t: "`$STRING`"
     }
-    {
-      name: "sync_type"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
-    }
-  ]
+  }
 
   id: {
     field: "id"
@@ -79,37 +98,61 @@ main: kit: entity: schedule_sync_rule: {
       name: "create"
       points: [
         {
-          args: {
+          bf: [
+            "annotations"
+            "permanent_member_user_ids"
+            "rotation_id"
+            "schedule_sync_target_id"
+            "sync_type"
+          ]
+          co: {
+            id: "POST /v2/schedules/{schedule_id}/sync_rules"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "schedule_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "schedule_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "POST"
-          orig: "/v2/schedules/{schedule_id}/sync_rules"
-          parts: [
-            "v2"
-            "schedules"
-            "{id}"
-            "sync_rules"
-          ]
-          rename: {
-            param: {
-              schedule_id: "id"
-            }
-          }
-          select: {
+          m: "POST"
+          o: "/v2/schedules/{schedule_id}/sync_rules"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              schedule_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "sync_rules"
+            }
+          ]
+          t: {
             req: {
               schedule_sync_rule: "`reqdata`"
             }
@@ -122,59 +165,74 @@ main: kit: entity: schedule_sync_rule: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedules/{schedule_id}/sync_rules"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "schedule_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "schedule_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
             query: [
               {
-                example: "01JXYZ000000000000000000CD"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01JXYZ000000000000000000CD"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedules/{schedule_id}/sync_rules"
-          parts: [
-            "v2"
-            "schedules"
-            "{id}"
-            "sync_rules"
-          ]
-          rename: {
+          m: "GET"
+          o: "/v2/schedules/{schedule_id}/sync_rules"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
             param: {
               schedule_id: "id"
             }
           }
-          select: {
-            exist: [
-              "after"
-              "id"
-              "page_size"
-            ]
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "sync_rules"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.schedule_sync_rules`"
           }
         }
       ]
@@ -183,42 +241,61 @@ main: kit: entity: schedule_sync_rule: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedules/{schedule_id}/sync_rules/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01JXYZ000000000000000000CD"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01JXYZ000000000000000000CD"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "schedule_id"
-                orig: "schedule_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "schedule_id"
+                or: "schedule_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedules/{schedule_id}/sync_rules/{id}"
-          parts: [
-            "v2"
-            "schedules"
-            "{schedule_id}"
-            "sync_rules"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/schedules/{schedule_id}/sync_rules/{id}"
+          q: {
             exist: [
               "id"
               "schedule_id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "schedule_id"
+            }
+            {
+              lit: "sync_rules"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.schedule_sync_rule`"
           }
@@ -229,42 +306,66 @@ main: kit: entity: schedule_sync_rule: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "annotations"
+            "permanent_member_user_ids"
+            "sync_type"
+          ]
+          co: {
+            id: "PUT /v2/schedules/{schedule_id}/sync_rules/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01JXYZ000000000000000000CD"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01JXYZ000000000000000000CD"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "schedule_id"
-                orig: "schedule_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "schedule_id"
+                or: "schedule_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/schedules/{schedule_id}/sync_rules/{id}"
-          parts: [
-            "v2"
-            "schedules"
-            "{schedule_id}"
-            "sync_rules"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/schedules/{schedule_id}/sync_rules/{id}"
+          q: {
             exist: [
               "id"
               "schedule_id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "schedule_id"
+            }
+            {
+              lit: "sync_rules"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.schedule_sync_rule`"
           }
@@ -273,14 +374,9 @@ main: kit: entity: schedule_sync_rule: {
     }
   }
 
-  relations: {
-    ancestors: [
-      [
-        "schedule"
-      ]
-    ]
-  }
 
-
+  relations: ancestors: [
+    [path("$.main.kit.entity.schedule")]
+  ]
 
 }

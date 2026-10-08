@@ -4,18 +4,21 @@ main: kit: entity: incident_membership: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "incident_id"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "The incident to make the user a member of"
+      t: "`$STRING`"
     }
-    {
-      name: "user_id"
-      req: true
-      type: "`$STRING`"
+    user_id: {
+      h: "User Id"
+      n: "user_id"
+      r: true
+      t: "`$STRING`"
     }
-  ]
+  }
 
   name: "incident_membership"
   op: {
@@ -23,13 +26,30 @@ main: kit: entity: incident_membership: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v1/incident_memberships"
-          parts: [
-            "v1"
-            "incident_memberships"
+          bf: [
+            "incident_id"
+            "user_id"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/incident_memberships"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/incident_memberships"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_memberships"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_membership`"
           }

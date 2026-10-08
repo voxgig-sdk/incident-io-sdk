@@ -7,11 +7,11 @@ main: kit: flow: BasicStatusPageIncidentUpdateFlow:
   name: "BasicStatusPageIncidentUpdateFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "status_page_incident_update_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
   ],
   "key$": "BasicStatusPageIncidentUpdateFlow"

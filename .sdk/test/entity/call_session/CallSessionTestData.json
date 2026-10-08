@@ -1,0 +1,40 @@
+{
+  "existing": {
+    "call_session": {
+      "CALL_SESSION00": {
+        "ended_at": "s28",
+        "id": "CALL_SESSION00",
+        "incident_id": "INCIDENT01",
+        "started_at": "s2b"
+      },
+      "CALL_SESSION01": {
+        "ended_at": "s50",
+        "id": "CALL_SESSION01",
+        "incident_id": "INCIDENT01",
+        "started_at": "s53"
+      },
+      "CALL_SESSION02": {
+        "ended_at": "s78",
+        "id": "CALL_SESSION02",
+        "incident_id": "INCIDENT01",
+        "started_at": "s7b"
+      }
+    }
+  },
+  "new": {
+    "call_session": {
+      "call_session_ref01": {
+        "ended_at": "sa0",
+        "incident_id": "INCIDENT01",
+        "started_at": "sa3"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/call_sessions": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

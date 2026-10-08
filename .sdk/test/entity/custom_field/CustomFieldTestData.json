@@ -12,7 +12,7 @@
         "helptext_catalog_attribute_id": "HELPTEXT_CATALOG_ATTRIBUTE01",
         "id": "CUSTOM_FIELD00",
         "name": "sbd",
-        "option": [],
+        "options": [],
         "required": "sbf",
         "required_v2": "sc0",
         "show_before_closure": false,
@@ -32,7 +32,7 @@
         "helptext_catalog_attribute_id": "HELPTEXT_CATALOG_ATTRIBUTE01",
         "id": "CUSTOM_FIELD01",
         "name": "s171",
-        "option": [],
+        "options": [],
         "required": "s173",
         "required_v2": "s174",
         "show_before_closure": false,
@@ -52,7 +52,7 @@
         "helptext_catalog_attribute_id": "HELPTEXT_CATALOG_ATTRIBUTE01",
         "id": "CUSTOM_FIELD02",
         "name": "s225",
-        "option": [],
+        "options": [],
         "required": "s227",
         "required_v2": "s228",
         "show_before_closure": false,
@@ -75,7 +75,7 @@
         "group_by_catalog_attribute_id": "GROUP_BY_CATALOG_ATTRIBUTE01",
         "helptext_catalog_attribute_id": "HELPTEXT_CATALOG_ATTRIBUTE01",
         "name": "s2d9",
-        "option": [],
+        "options": [],
         "required": "s2db",
         "required_v2": "s2dc",
         "show_before_closure": false,
@@ -84,6 +84,58 @@
         "show_in_announcement_post": true,
         "updated_at": "s2e1"
       }
+    }
+  },
+  "requests": {
+    "POST /v1/custom_fields": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v2/custom_fields": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/custom_fields": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/custom_fields": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/custom_fields/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/custom_fields/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v1/custom_fields/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/custom_fields/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v1/custom_fields/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/custom_fields/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

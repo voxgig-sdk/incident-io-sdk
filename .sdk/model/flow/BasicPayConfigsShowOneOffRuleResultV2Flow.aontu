@@ -1,0 +1,33 @@
+# BasicPayConfigsShowOneOffRuleResultV2Flow
+
+main: kit: flow: BasicPayConfigsShowOneOffRuleResultV2Flow:
+{
+  entity: "pay_configs_show_one_off_rule_result_v2",
+  kind: "basic",
+  name: "BasicPayConfigsShowOneOffRuleResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "pay_configs_show_one_off_rule_result_v2_ref01",
+        srcdatavar: "pay_configs_show_one_off_rule_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "pay_configs_show_one_off_rule_result_v201",
+        pay_config_id: "pay_config01"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-pay_configs_show_one_off_rule_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPayConfigsShowOneOffRuleResultV2Flow"
+}

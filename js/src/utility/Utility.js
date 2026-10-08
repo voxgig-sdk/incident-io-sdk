@@ -1,7 +1,7 @@
 
 
-const { clean } = require('./CleanUtility')
-const { done } = require('./DoneUtility')
+const { clean, cleanAdd } = require('./CleanUtility')
+const { cleanExplain, done } = require('./DoneUtility')
 const { makeError } = require('./MakeErrorUtility')
 const { featureAdd } = require('./FeatureAddUtility')
 const { featureHook } = require('./FeatureHookUtility')
@@ -15,6 +15,7 @@ const { makeResponse } = require('./MakeResponseUtility')
 const { makeResult } = require('./MakeResultUtility')
 const { makePoint } = require('./MakePointUtility')
 const { makeSpec } = require('./MakeSpecUtility')
+const { graphqlBody, graphqlErrors, GRAPHQL_CONTENT_TYPE } = require('./GraphqlUtility')
 const { makeUrl } = require('./MakeUrlUtility')
 const { param } = require('./ParamUtility')
 const { prepareAuth } = require('./PrepareAuthUtility')
@@ -36,6 +37,8 @@ const { StructUtility } = require('./StructUtility')
 class Utility {
 
   clean = clean
+  cleanAdd = cleanAdd
+  cleanExplain = cleanExplain
   done = done
   makeError = makeError
   featureAdd = featureAdd
@@ -50,6 +53,9 @@ class Utility {
   makeResult = makeResult
   makePoint = makePoint
   makeSpec = makeSpec
+  graphqlBody = graphqlBody
+  graphqlErrors = graphqlErrors
+  GRAPHQL_CONTENT_TYPE = GRAPHQL_CONTENT_TYPE
   makeUrl = makeUrl
   param = param
   prepareAuth = prepareAuth

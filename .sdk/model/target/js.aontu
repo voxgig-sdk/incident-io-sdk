@@ -1,16 +1,29 @@
 
 main: kit: target: js: {
-  
+
   title: JavaScript
   ext: js
   comment: line: "//"
   module: name: 'incident-io'
+  base: 'node_modules/@voxgig/sdkgen/project/.sdk'
+  package: '@voxgig/sdkgen'
+
+  # Applicability (docs/design/feature-tags.md). A vendored sekreto port
+  # lives in this target's feature container, so a feature that resolves
+  # secrets through sekreto can apply here.
+  provides: { sekreto: true, schema: true }
+
+  # Files earlier toolchains generated that this target has RETIRED
+  # (vendor-tag rollout): the single fused runner. `doctor` reports
+  # leftovers; `doctor prune` deletes them.
+  superseded: [
+    'test/runner.js'
+  ]
 
   deps: &: {
-    # TODO: fix aontu disjunctions!
     kind: *'prod' | string # 'peer' |'dev'
   }
-  
+
   deps: {
     'dotenv': { active: true, version: '^17.4.2', kind: dev }
   }
@@ -18,17 +31,12 @@ main: kit: target: js: {
 
 
 main: kit: feature: &: target: js: deps: &: {
-  # TODO: fix aontu disjunctions!
   kind: *'prod' | string # 'peer' |'dev'
 }
 
 
-# Publication: npm registry (declared, publish pending — git-tag only).
 main: kit: target: js: publish: {
-  tag: { active: true }
   registry: {
-    state: 'pending'
-    active: false
     name: 'npm'
     url: 'https://registry.npmjs.org'
     vault: { recipe: 'npm', alias: 'npm' }

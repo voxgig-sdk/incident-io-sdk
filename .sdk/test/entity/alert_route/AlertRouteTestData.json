@@ -2,13 +2,13 @@
   "existing": {
     "alert_route": {
       "ALERT_ROUTE00": {
-        "alert_source": [],
+        "alert_sources": [],
         "channel_config": [],
-        "condition_group": [],
+        "condition_groups": [],
         "created_at": "sb7",
         "enabled": true,
         "escalation_config": {},
-        "expression": [],
+        "expressions": [],
         "grouping_config": {},
         "id": "ALERT_ROUTE00",
         "incident_config": {},
@@ -17,18 +17,18 @@
         "message_config": {},
         "message_template": {},
         "name": "sc2",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "updated_at": "sc4",
-        "version": "sc5"
+        "version": 197
       },
       "ALERT_ROUTE01": {
-        "alert_source": [],
+        "alert_sources": [],
         "channel_config": [],
-        "condition_group": [],
+        "condition_groups": [],
         "created_at": "s16b",
         "enabled": true,
         "escalation_config": {},
-        "expression": [],
+        "expressions": [],
         "grouping_config": {},
         "id": "ALERT_ROUTE01",
         "incident_config": {},
@@ -37,18 +37,18 @@
         "message_config": {},
         "message_template": {},
         "name": "s176",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "updated_at": "s178",
-        "version": "s179"
+        "version": 377
       },
       "ALERT_ROUTE02": {
-        "alert_source": [],
+        "alert_sources": [],
         "channel_config": [],
-        "condition_group": [],
+        "condition_groups": [],
         "created_at": "s21f",
         "enabled": true,
         "escalation_config": {},
-        "expression": [],
+        "expressions": [],
         "grouping_config": {},
         "id": "ALERT_ROUTE02",
         "incident_config": {},
@@ -57,22 +57,22 @@
         "message_config": {},
         "message_template": {},
         "name": "s22a",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "updated_at": "s22c",
-        "version": "s22d"
+        "version": 557
       }
     }
   },
   "new": {
     "alert_route": {
       "alert_route_ref01": {
-        "alert_source": [],
+        "alert_sources": [],
         "channel_config": [],
-        "condition_group": [],
+        "condition_groups": [],
         "created_at": "s2d3",
         "enabled": true,
         "escalation_config": {},
-        "expression": [],
+        "expressions": [],
         "grouping_config": {},
         "incident_config": {},
         "incident_template": {},
@@ -80,10 +80,62 @@
         "message_config": {},
         "message_template": {},
         "name": "s2de",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "updated_at": "s2e0",
-        "version": "s2e1"
+        "version": 737
       }
+    }
+  },
+  "requests": {
+    "POST /v2/alert_routes": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v3/alert_routes": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/alert_routes": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/alert_routes": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/alert_routes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/alert_routes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/alert_routes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v3/alert_routes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/alert_routes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v3/alert_routes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

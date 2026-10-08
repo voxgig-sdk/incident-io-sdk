@@ -4,38 +4,50 @@ main: kit: entity: catalog_resource: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "category"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    category: {
+      h: "Category"
+      n: "category"
+      r: true
+      sh: "Which category of resource"
+      t: "`$STRING`"
     }
-    {
-      name: "description"
-      req: true
-      type: "`$STRING`"
+    description: {
+      h: "Description"
+      n: "description"
+      r: true
+      sh: "Human readable description for this resource"
+      t: "`$STRING`"
     }
-    {
-      name: "engine_resource_type"
-      req: true
-      type: "`$STRING`"
+    engine_resource_type: {
+      h: "Engine Resource Type"
+      n: "engine_resource_type"
+      r: true
+      sh: "The way this resource type is referenced in the engine, as used when setting the type of an alert attribute"
+      t: "`$STRING`"
     }
-    {
-      name: "label"
-      req: true
-      type: "`$STRING`"
+    label: {
+      h: "Label"
+      n: "label"
+      r: true
+      sh: "Label for this catalog resource type"
+      t: "`$STRING`"
     }
-    {
-      name: "type"
-      req: true
-      type: "`$STRING`"
+    type: {
+      h: "Type"
+      n: "type"
+      r: true
+      sh: "Catalog type name for this resource, as used when setting the type of a catalog type attribute"
+      t: "`$STRING`"
     }
-    {
-      name: "value_docstring"
-      req: true
-      type: "`$STRING`"
+    value_docstring: {
+      h: "Value Docstring"
+      n: "value_docstring"
+      r: true
+      sh: "Documentation for the literal string value of this resource"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   name: "catalog_resource"
   op: {
@@ -43,25 +55,51 @@ main: kit: entity: catalog_resource: {
       name: "list"
       points: [
         {
-          method: "GET"
-          orig: "/v2/catalog_resources"
-          parts: [
-            "v2"
-            "catalog_resources"
+          co: {
+            id: "GET /v2/catalog_resources"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v2/catalog_resources"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "catalog_resources"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.resources`"
           }
         }
         {
-          method: "GET"
-          orig: "/v3/catalog_resources"
-          parts: [
-            "v3"
-            "catalog_resources"
+          co: {
+            id: "GET /v3/catalog_resources"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v3/catalog_resources"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "catalog_resources"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.resources`"
           }

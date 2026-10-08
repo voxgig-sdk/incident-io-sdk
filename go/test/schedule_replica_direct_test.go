@@ -10,6 +10,12 @@ import (
 	"github.com/voxgig-sdk/incident-io-sdk/go/core"
 )
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const schedule_replicaDirectLiveStrict = true
+
 func TestScheduleReplicaDirect(t *testing.T) {
 	t.Run("direct-list-schedule_replica", func(t *testing.T) {
 		setup := schedule_replicaDirectSetup([]any{
@@ -30,7 +36,7 @@ func TestScheduleReplicaDirect(t *testing.T) {
 		if setup.live {
 			for _, _liveKey := range []string{"schedule_replica01"} {
 				if v := setup.idmap[_liveKey]; v == nil {
-					t.Skipf("live test needs %s via *_ENTID env var (synthetic IDs only)", _liveKey)
+					liveMiss(t, schedule_replicaDirectLiveStrict, "Live test blocked: needs %s via INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID", _liveKey)
 					return
 				}
 			}
@@ -50,18 +56,14 @@ func TestScheduleReplicaDirect(t *testing.T) {
 			"params": params,
 		})
 		if setup.live {
-			// Live mode is lenient: synthetic IDs frequently 4xx and the
-			// list-response shape varies wildly across public APIs. Skip
-			// rather than fail when the call doesn't return a usable list.
 			if err != nil {
-				t.Skipf("list call failed (likely synthetic IDs against live API): %v", err)
+				liveMiss(t, schedule_replicaDirectLiveStrict, "Live list failed: %v", err)
 			}
-			if result["ok"] != true {
-				t.Skipf("list call not ok (likely synthetic IDs against live API): %v", result)
+			if status := core.ToInt(result["status"]); result["ok"] != true || status < 200 || status >= 300 {
+				liveMiss(t, schedule_replicaDirectLiveStrict, "Live list failed: %s", liveDescribe(result))
 			}
-			status := core.ToInt(result["status"])
-			if status < 200 || status >= 300 {
-				t.Skipf("expected 2xx status, got %v", result["status"])
+			if _, ok := liveList(result["data"]); !ok {
+				liveMiss(t, schedule_replicaDirectLiveStrict, "Live list returned no list: %s", liveDescribe(result))
 			}
 		} else {
 			if err != nil {
@@ -133,18 +135,14 @@ func TestScheduleReplicaDirect(t *testing.T) {
 			"query":  query,
 		})
 		if setup.live {
-			// Live mode is lenient: synthetic IDs frequently 4xx. Skip
-			// rather than fail when the load endpoint isn't reachable with
-			// the IDs we can construct from setup.idmap.
 			if err != nil {
-				t.Skipf("load call failed (likely synthetic IDs against live API): %v", err)
+				liveMiss(t, schedule_replicaDirectLiveStrict, "Live load failed: %v", err)
 			}
-			if result["ok"] != true {
-				t.Skipf("load call not ok (likely synthetic IDs against live API): %v", result)
+			if status := core.ToInt(result["status"]); result["ok"] != true || status < 200 || status >= 300 {
+				liveMiss(t, schedule_replicaDirectLiveStrict, "Live load failed: %s", liveDescribe(result))
 			}
-			status := core.ToInt(result["status"])
-			if status < 200 || status >= 300 {
-				t.Skipf("expected 2xx status, got %v", result["status"])
+			if result["data"] == nil {
+				liveMiss(t, schedule_replicaDirectLiveStrict, "Live load returned no data: %s", liveDescribe(result))
 			}
 		} else {
 			if err != nil {
@@ -203,19 +201,29 @@ func schedule_replicaDirectSetup(mockres any) *schedule_replicaDirectSetupResult
 	calls := &[]map[string]any{}
 
 	env := envOverride(map[string]any{
-		"INCIDENTIO_TEST_SCHEDULE_REPLICA_ENTID": map[string]any{},
-		"INCIDENTIO_TEST_LIVE":    "FALSE",
+		"INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID": map[string]any{},
+		"INCIDENT_IO_TEST_LIVE":    "FALSE",
+		"INCIDENT_IO_APIKEY":       "",
 	})
 
-	live := env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+	live := env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
 
 	if live {
-		mergedOpts := map[string]any{
+		// sdk-test-control.json's test.client.options seeds the live
+		// client; the generated fields below overwrite anything they name.
+		mergedOpts := map[string]any{}
+		for k, v := range liveClientOptions() {
+			mergedOpts[k] = v
+		}
+		for k, v := range map[string]any{
+			"apikey": env["INCIDENT_IO_APIKEY"],
+		} {
+			mergedOpts[k] = v
 		}
 		client := sdk.NewIncidentIoSDK(mergedOpts)
 
 		idmap := map[string]any{}
-		if entidRaw, ok := env["INCIDENTIO_TEST_SCHEDULE_REPLICA_ENTID"]; ok {
+		if entidRaw, ok := env["INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID"]; ok {
 			if entidStr, ok := entidRaw.(string); ok && strings.HasPrefix(entidStr, "{") {
 				json.Unmarshal([]byte(entidStr), &idmap)
 			} else if entidMap, ok := entidRaw.(map[string]any); ok {

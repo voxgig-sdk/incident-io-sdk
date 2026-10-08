@@ -1,7 +1,7 @@
 
 
-import { clean } from './CleanUtility'
-import { done } from './DoneUtility'
+import { clean, cleanAdd } from './CleanUtility'
+import { cleanExplain, done } from './DoneUtility'
 import { makeError } from './MakeErrorUtility'
 import { featureAdd } from './FeatureAddUtility'
 import { featureHook } from './FeatureHookUtility'
@@ -15,6 +15,7 @@ import { makeResponse } from './MakeResponseUtility'
 import { makeResult } from './MakeResultUtility'
 import { makePoint } from './MakePointUtility'
 import { makeSpec } from './MakeSpecUtility'
+import { graphqlBody, graphqlErrors, GRAPHQL_CONTENT_TYPE } from './GraphqlUtility'
 import { makeUrl } from './MakeUrlUtility'
 import { param } from './ParamUtility'
 import { prepareAuth } from './PrepareAuthUtility'
@@ -36,6 +37,8 @@ import { StructUtility } from './StructUtility'
 class Utility {
 
   clean = clean
+  cleanAdd = cleanAdd
+  cleanExplain = cleanExplain
   done = done
   makeError = makeError
   featureAdd = featureAdd
@@ -50,6 +53,9 @@ class Utility {
   makeResult = makeResult
   makePoint = makePoint
   makeSpec = makeSpec
+  graphqlBody = graphqlBody
+  graphqlErrors = graphqlErrors
+  GRAPHQL_CONTENT_TYPE = GRAPHQL_CONTENT_TYPE
   makeUrl = makeUrl
   param = param
   prepareAuth = prepareAuth

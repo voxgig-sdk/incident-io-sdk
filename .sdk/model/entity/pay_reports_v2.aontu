@@ -1,0 +1,78 @@
+# Entity: pay_reports_v2
+
+main: kit: entity: pay_reports_v2: {
+
+  alias: field: {}
+
+  name: "pay_reports_v2"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/pay_reports/{id}/download"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "pay_report_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/pay_reports/{id}/download"
+          q: {
+            exist: [
+              "pay_report_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "pay_report_id"
+            }
+          }
+          rs: {
+            binary: true
+            kind: "raw"
+            media: "text/csv"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_reports"
+            }
+            {
+              var: "pay_report_id"
+            }
+            {
+              lit: "download"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.pay_report")]
+  ]
+
+}

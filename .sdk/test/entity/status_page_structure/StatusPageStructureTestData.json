@@ -2,24 +2,39 @@
   "existing": {
     "status_page_structure": {
       "STATUS_PAGE_STRUCTURE00": {
-        "item": [],
-        "id": "STATUS_PAGE_STRUCTURE00"
+        "current_structure": {},
+        "display_uptime_mode": "s29",
+        "id": "STATUS_PAGE_STRUCTURE00",
+        "management_meta": {}
       },
       "STATUS_PAGE_STRUCTURE01": {
-        "item": [],
-        "id": "STATUS_PAGE_STRUCTURE01"
+        "current_structure": {},
+        "display_uptime_mode": "s51",
+        "id": "STATUS_PAGE_STRUCTURE01",
+        "management_meta": {}
       },
       "STATUS_PAGE_STRUCTURE02": {
-        "item": [],
-        "id": "STATUS_PAGE_STRUCTURE02"
+        "current_structure": {},
+        "display_uptime_mode": "s79",
+        "id": "STATUS_PAGE_STRUCTURE02",
+        "management_meta": {}
       }
     }
   },
   "new": {
     "status_page_structure": {
       "status_page_structure_ref01": {
-        "item": []
+        "current_structure": {},
+        "display_uptime_mode": "sa1",
+        "management_meta": {}
       }
+    }
+  },
+  "requests": {
+    "GET /v2/status_page_structures/{status_page_id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

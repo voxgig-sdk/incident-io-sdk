@@ -7,8 +7,8 @@ main: kit: flow: BasicCatalogResourceFlow:
   name: "BasicCatalogResourceFlow",
   step: [
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {

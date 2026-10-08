@@ -10,13 +10,14 @@ class EntityOperation {
 
   // EJECT-START
 
-  async create(this: any, reqdata?: EntityNameCreateData, ctrl?: Control): Promise<EntityName> {
+  async create(this: any, reqdata?: EntityNameCreateData, ctrl?: Control): Promise<EntyClass> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -84,10 +85,18 @@ class EntityOperation {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
-      // #PreUnexpected-Hook
+      // What a hook throws here must not escape the cleaning below.
+      try {
+        // #PreUnexpected-Hook
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -96,7 +105,7 @@ class EntityOperation {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<EntityName> return stays clean under strict null checks.
+        // Promise<EntyClass> return stays clean under strict null checks.
         return undefined as any
       }
     }

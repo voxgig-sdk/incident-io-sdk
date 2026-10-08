@@ -4,98 +4,134 @@ main: kit: entity: custom_field: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "catalog_type_id"
-      req: false
-      type: "`$STRING`"
+  fields: {
+    catalog_type_id: {
+      h: "Catalog Type Id"
+      n: "catalog_type_id"
+      r: false
+      sh: "For catalog fields, the ID of the associated catalog type"
+      t: "`$STRING`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When the action was created"
+      t: "`$STRING`"
     }
-    {
-      name: "description"
-      req: true
-      type: "`$STRING`"
+    description: {
+      h: "Description"
+      n: "description"
+      r: true
+      sh: "Description of the custom field"
+      t: "`$STRING`"
     }
-    {
-      name: "field_type"
-      req: true
-      type: "`$STRING`"
+    field_type: {
+      h: "Field Type"
+      n: "field_type"
+      r: true
+      sh: "Type of custom field"
+      t: "`$STRING`"
     }
-    {
-      name: "filter_by"
-      req: true
-      type: "`$OBJECT`"
+    filter_by: {
+      h: "Filter By"
+      n: "filter_by"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "fixed_filter"
-      req: true
-      type: "`$OBJECT`"
+    fixed_filter: {
+      h: "Fixed Filter"
+      n: "fixed_filter"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "group_by_catalog_attribute_id"
-      req: false
-      type: "`$STRING`"
+    group_by_catalog_attribute_id: {
+      h: "Group By Catalog Attribute Id"
+      n: "group_by_catalog_attribute_id"
+      r: false
+      sh: "For catalog fields, the ID of the attribute used to group catalog entries (if applicable)"
+      t: "`$STRING`"
     }
-    {
-      name: "helptext_catalog_attribute_id"
-      req: false
-      type: "`$STRING`"
+    helptext_catalog_attribute_id: {
+      h: "Helptext Catalog Attribute Id"
+      n: "helptext_catalog_attribute_id"
+      r: false
+      sh: "Which catalog attribute provides helptext for the options"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for the custom field"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name for the custom field"
+      t: "`$STRING`"
     }
-    {
-      name: "option"
-      req: true
-      type: "`$ARRAY`"
+    options: {
+      h: "Options"
+      n: "options"
+      r: true
+      sh: "What options are available for this custom field, if this field has options"
+      t: "`$ARRAY`"
     }
-    {
-      name: "required"
-      req: false
-      type: "`$STRING`"
+    required: {
+      h: "Required"
+      n: "required"
+      r: false
+      sh: "When this custom field must be set during the incident lifecycle."
+      t: "`$STRING`"
     }
-    {
-      name: "required_v2"
-      req: false
-      type: "`$STRING`"
+    required_v2: {
+      h: "Required V2"
+      n: "required_v2"
+      r: false
+      sh: "When this custom field must be set during the incident lifecycle."
+      t: "`$STRING`"
     }
-    {
-      name: "show_before_closure"
-      req: true
-      type: "`$BOOLEAN`"
+    show_before_closure: {
+      h: "Show Before Closure"
+      n: "show_before_closure"
+      r: true
+      sh: "Whether a custom field should be shown in the incident resolve modal."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "show_before_creation"
-      req: true
-      type: "`$BOOLEAN`"
+    show_before_creation: {
+      h: "Show Before Creation"
+      n: "show_before_creation"
+      r: true
+      sh: "Whether a custom field should be shown in the incident creation modal."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "show_before_update"
-      req: true
-      type: "`$BOOLEAN`"
+    show_before_update: {
+      h: "Show Before Update"
+      n: "show_before_update"
+      r: true
+      sh: "Whether a custom field should be shown in the incident update modal."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "show_in_announcement_post"
-      req: false
-      type: "`$BOOLEAN`"
+    show_in_announcement_post: {
+      h: "Show In Announcement Post"
+      n: "show_in_announcement_post"
+      r: false
+      sh: "Whether a custom field should be shown in the list of fields as part of the announcement post when set."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When the action was last updated"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -108,25 +144,72 @@ main: kit: entity: custom_field: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v1/custom_fields"
-          parts: [
-            "v1"
-            "custom_fields"
+          bf: [
+            "description"
+            "field_type"
+            "name"
+            "required"
+            "required_v2"
+            "show_before_closure"
+            "show_before_creation"
+            "show_before_update"
+            "show_in_announcement_post"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/custom_fields"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/custom_fields"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_fields"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field`"
           }
         }
         {
-          method: "POST"
-          orig: "/v2/custom_fields"
-          parts: [
-            "v2"
-            "custom_fields"
+          bf: [
+            "catalog_type_id"
+            "description"
+            "field_type"
+            "filter_by"
+            "fixed_filter"
+            "group_by_catalog_attribute_id"
+            "helptext_catalog_attribute_id"
+            "name"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/custom_fields"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/custom_fields"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "custom_fields"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field`"
           }
@@ -137,25 +220,51 @@ main: kit: entity: custom_field: {
       name: "list"
       points: [
         {
-          method: "GET"
-          orig: "/v1/custom_fields"
-          parts: [
-            "v1"
-            "custom_fields"
+          co: {
+            id: "GET /v1/custom_fields"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v1/custom_fields"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_fields"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.custom_fields`"
           }
         }
         {
-          method: "GET"
-          orig: "/v2/custom_fields"
-          parts: [
-            "v2"
-            "custom_fields"
+          co: {
+            id: "GET /v2/custom_fields"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v2/custom_fields"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "custom_fields"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.custom_fields`"
           }
@@ -166,61 +275,91 @@ main: kit: entity: custom_field: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/custom_fields/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/custom_fields/{id}"
-          parts: [
-            "v1"
-            "custom_fields"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/custom_fields/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_fields"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field`"
           }
         }
         {
-          args: {
+          co: {
+            id: "GET /v2/custom_fields/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/custom_fields/{id}"
-          parts: [
-            "v2"
-            "custom_fields"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/custom_fields/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "custom_fields"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field`"
           }
@@ -231,61 +370,83 @@ main: kit: entity: custom_field: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v1/custom_fields/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v1/custom_fields/{id}"
-          parts: [
-            "v1"
-            "custom_fields"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v1/custom_fields/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_fields"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
         }
         {
-          args: {
+          co: {
+            id: "DELETE /v2/custom_fields/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/custom_fields/{id}"
-          parts: [
-            "v2"
-            "custom_fields"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/custom_fields/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "custom_fields"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -296,61 +457,109 @@ main: kit: entity: custom_field: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "description"
+            "name"
+            "required"
+            "required_v2"
+            "show_before_closure"
+            "show_before_creation"
+            "show_before_update"
+            "show_in_announcement_post"
+          ]
+          co: {
+            id: "PUT /v1/custom_fields/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v1/custom_fields/{id}"
-          parts: [
-            "v1"
-            "custom_fields"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v1/custom_fields/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_fields"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field`"
           }
         }
         {
-          args: {
+          bf: [
+            "description"
+            "filter_by"
+            "fixed_filter"
+            "group_by_catalog_attribute_id"
+            "helptext_catalog_attribute_id"
+            "name"
+          ]
+          co: {
+            id: "PUT /v2/custom_fields/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/custom_fields/{id}"
-          parts: [
-            "v2"
-            "custom_fields"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/custom_fields/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "custom_fields"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field`"
           }

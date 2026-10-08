@@ -6,6 +6,8 @@ declare(strict_types=1);
 class IncidentIoUtility
 {
     public mixed $clean = null;
+    public mixed $clean_add = null;
+    public mixed $clean_explain = null;
     public mixed $done = null;
     public mixed $make_error = null;
     public mixed $feature_add = null;
@@ -29,6 +31,8 @@ class IncidentIoUtility
     public mixed $prepare_params = null;
     public mixed $prepare_path = null;
     public mixed $prepare_query = null;
+    public mixed $graphql_body = null;
+    public mixed $graphql_errors = null;
     public mixed $result_basic = null;
     public mixed $result_body = null;
     public mixed $result_headers = null;
@@ -55,6 +59,8 @@ class IncidentIoUtility
     {
         $u = new IncidentIoUtility();
         $u->clean = $src->clean;
+        $u->clean_add = $src->clean_add;
+        $u->clean_explain = $src->clean_explain;
         $u->done = $src->done;
         $u->make_error = $src->make_error;
         $u->feature_add = $src->feature_add;

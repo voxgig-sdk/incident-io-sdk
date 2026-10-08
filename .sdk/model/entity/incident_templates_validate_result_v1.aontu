@@ -1,0 +1,85 @@
+# Entity: incident_templates_validate_result_v1
+
+main: kit: entity: incident_templates_validate_result_v1: {
+
+  alias: field: {}
+
+  fields: {
+    expressions: {
+      h: "Expressions"
+      n: "expressions"
+      r: false
+      sh: "The expressions used by bindings in this template"
+      t: "`$ARRAY`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "The name of this incident template, for the user's reference"
+      t: "`$STRING`"
+    }
+    template: {
+      h: "Template"
+      n: "template"
+      r: true
+      sh: "The values an incident template applies to the incidents it creates."
+      t: "`$OBJECT`"
+    }
+    warnings: {
+      h: "Warnings"
+      n: "warnings"
+      r: true
+      sh: "Anything suspect about this config that isn't severe enough to reject it."
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "incident_templates_validate_result_v1"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "expressions"
+            "name"
+            "template"
+          ]
+          co: {
+            id: "POST /v1/incident_templates/actions/validate"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/incident_templates/actions/validate"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_templates"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "validate"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

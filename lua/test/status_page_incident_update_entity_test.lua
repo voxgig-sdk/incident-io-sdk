@@ -8,11 +8,29 @@ local runner = require("test.runner")
 
 local _test_dir = debug.getinfo(1, "S").source:match("^@(.+/)")  or "./"
 
+-- main.kit.test.live.strict is true (the default is true): a live
+-- request that fails, or a live test missing an input it needs,
+-- fails the test.
+-- An account with no record for a test to read skips it either way.
+local LIVE_STRICT = true
+
+
 describe("StatusPageIncidentUpdateEntity", function()
   it("should create instance", function()
     local testsdk = sdk.test(nil, nil)
     local ent = testsdk:StatusPageIncidentUpdate(nil)
     assert.is_not_nil(ent)
+  end)
+
+  it("should refuse an invalid request", function()
+    local config = require("config_shared")()
+    if type(config.feature) ~= "table" or config.feature.validate == nil then
+      pending("feature not present in this SDK: validate")
+      return
+    end
+    local client = sdk.test(nil, { feature = { validate = { active = true } } })
+    local _, err = client:StatusPageIncidentUpdate(nil):create({ ["incident_status"] = 1, ["message"] = "x", ["notify_subscribers"] = true, ["status_page_incident_id"] = "x" }, nil)
+    assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 
   it("should run basic flow", function()
@@ -26,12 +44,6 @@ describe("StatusPageIncidentUpdateEntity", function()
         return
       end
     end
-    -- The basic flow consumes synthetic IDs from the fixture. In live mode
-    -- without an *_ENTID env override, those IDs hit the live API and 4xx.
-    if setup.synthetic_only then
-      pending("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_STATUS_PAGE_INCIDENT_UPDATE_ENTID JSON to run live")
-      return
-    end
     local client = setup.client
 
     -- CREATE
@@ -41,7 +53,7 @@ describe("StatusPageIncidentUpdateEntity", function()
 
     local status_page_incident_update_ref01_data_result, err = status_page_incident_update_ref01_ent:create(status_page_incident_update_ref01_data, nil)
     assert.is_nil(err)
-    status_page_incident_update_ref01_data = helpers.to_map(status_page_incident_update_ref01_data_result)
+    status_page_incident_update_ref01_data = helpers.to_map(type(status_page_incident_update_ref01_data_result) == 'table' and status_page_incident_update_ref01_data_result.data_get and status_page_incident_update_ref01_data_result:data_get() or status_page_incident_update_ref01_data_result)
     assert.is_not_nil(status_page_incident_update_ref01_data)
 
   end)
@@ -76,40 +88,44 @@ function status_page_incident_update_basic_setup(extra)
     }
   )
 
-  -- Detect ENTID env override before envOverride consumes it. When live
-  -- mode is on without a real override, the basic test runs against synthetic
-  -- IDs from the fixture and 4xx's. Surface this so the test can skip.
-  local entid_env_raw = os.getenv("INCIDENTIO_TEST_STATUS_PAGE_INCIDENT_UPDATE_ENTID")
+  -- Whether *_ENTID supplied the idmap, read before env_override consumes
+  -- it: without it, the ids a live flow binds are the fixture's synthetic ones.
+  local entid_env_raw = os.getenv("INCIDENT_IO_TEST_STATUS_PAGE_INCIDENT_UPDATE_ENTID")
   local idmap_overridden = entid_env_raw ~= nil and entid_env_raw:match("^%s*{") ~= nil
 
   local env = runner.env_override({
-    ["INCIDENTIO_TEST_STATUS_PAGE_INCIDENT_UPDATE_ENTID"] = idmap,
-    ["INCIDENTIO_TEST_LIVE"] = "FALSE",
-    ["INCIDENTIO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_TEST_STATUS_PAGE_INCIDENT_UPDATE_ENTID"] = idmap,
+    ["INCIDENT_IO_TEST_LIVE"] = "FALSE",
+    ["INCIDENT_IO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_APIKEY"] = "",
   })
 
   local idmap_resolved = helpers.to_map(
-    env["INCIDENTIO_TEST_STATUS_PAGE_INCIDENT_UPDATE_ENTID"])
+    env["INCIDENT_IO_TEST_STATUS_PAGE_INCIDENT_UPDATE_ENTID"])
   if idmap_resolved == nil then
     idmap_resolved = helpers.to_map(idmap)
   end
 
-  if env["INCIDENTIO_TEST_LIVE"] == "TRUE" then
+  if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
+      -- FIRST, so the generated fields below win: sdk-test-control.json's
+      -- test.client.options adds to the live client, it does not redirect it.
+      runner.live_client_options(),
       {
+        apikey = env["INCIDENT_IO_APIKEY"],
       },
       extra or {},
     })
     client = sdk.new(helpers.to_map(merged_opts))
   end
 
-  local live = env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+  local live = env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
   return {
     client = client,
     data = entity_data,
     idmap = idmap_resolved,
     env = env,
-    explain = env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+    explain = env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
     live = live,
     synthetic_only = live and not idmap_overridden,
     now = os.time() * 1000,

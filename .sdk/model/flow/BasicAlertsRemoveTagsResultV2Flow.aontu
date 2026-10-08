@@ -1,0 +1,22 @@
+# BasicAlertsRemoveTagsResultV2Flow
+
+main: kit: flow: BasicAlertsRemoveTagsResultV2Flow:
+{
+  entity: "alerts_remove_tags_result_v2",
+  kind: "basic",
+  name: "BasicAlertsRemoveTagsResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "alerts_remove_tags_result_v2_ref01"
+      }
+
+      m: {
+        alert_id: "alert01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicAlertsRemoveTagsResultV2Flow"
+}

@@ -11,11 +11,33 @@ use Voxgig\Struct\Struct as Vs;
 
 class StatusPageStructureEntityTest extends TestCase
 {
+    // main.kit.test.live.strict is true (the default is true): a live
+    // request that fails, or a live test missing an input it needs,
+    // fails the test.
+    // An account with no record for a test to read skips it either way.
+    private const LIVE_STRICT = true;
+
     public function test_create_instance(): void
     {
         $testsdk = IncidentIoSDK::test(null, null);
         $ent = $testsdk->StatusPageStructure(null);
         $this->assertNotNull($ent);
+    }
+
+    public function test_validate(): void
+    {
+        $cfg = IncidentIoConfig::shared_config();
+        if (!isset($cfg["feature"]["validate"])) {
+            $this->markTestSkipped('feature not present in this SDK: validate');
+        }
+        $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
+        $err = null;
+        try {
+            $client->StatusPageStructure(null)->load(["id" => 1], null);
+        } catch (\Throwable $e) {
+            $err = $e;
+        }
+        $this->assertSame('validate_failed', $err->sdk_code ?? null);
     }
 
     public function test_basic_flow(): void
@@ -30,11 +52,8 @@ class StatusPageStructureEntityTest extends TestCase
                 return;
             }
         }
-        // The basic flow consumes synthetic IDs from the fixture. In live mode
-        // without an *_ENTID env override, those IDs hit the live API and 4xx.
-        if (!empty($setup["synthetic_only"])) {
-            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_STATUS_PAGE_STRUCTURE_ENTID JSON to run live");
-            return;
+        if (!empty($setup["live"])) {
+            Runner::live_miss(self::LIVE_STRICT, "Live entity test blocked: " . "the flow loads a status_page_structure record it has no list to find");
         }
         $client = $setup["client"];
 
@@ -48,9 +67,13 @@ class StatusPageStructureEntityTest extends TestCase
 
         // LOAD
         $status_page_structure_ref01_ent = $client->StatusPageStructure(null);
-        $status_page_structure_ref01_match_dt0 = [];
+        $status_page_structure_ref01_match_dt0 = [
+            "id" => $status_page_structure_ref01_data["id"],
+        ];
         $status_page_structure_ref01_data_dt0_loaded = $status_page_structure_ref01_ent->load($status_page_structure_ref01_match_dt0, null);
-        $this->assertNotNull($status_page_structure_ref01_data_dt0_loaded);
+        $status_page_structure_ref01_data_dt0_load_result = Helpers::to_map(is_object($status_page_structure_ref01_data_dt0_loaded) && method_exists($status_page_structure_ref01_data_dt0_loaded, 'data_get') ? $status_page_structure_ref01_data_dt0_loaded->data_get() : $status_page_structure_ref01_data_dt0_loaded);
+        $this->assertNotNull($status_page_structure_ref01_data_dt0_load_result);
+        $this->assertEquals($status_page_structure_ref01_data_dt0_load_result["id"], $status_page_structure_ref01_data["id"]);
 
     }
 }
@@ -74,40 +97,56 @@ function status_page_structure_basic_setup($extra)
         $idmap[$k] = strtoupper($k);
     }
 
-    // Detect ENTID env override before envOverride consumes it. When live
-    // mode is on without a real override, the basic test runs against synthetic
-    // IDs from the fixture and 4xx's. Surface this so the test can skip.
-    $entid_env_raw = getenv("INCIDENTIO_TEST_STATUS_PAGE_STRUCTURE_ENTID");
+    // Whether *_ENTID supplied the idmap, read before env_override consumes
+    // it: without it, the ids a live flow binds are the fixture's synthetic ones.
+    $entid_env_raw = getenv("INCIDENT_IO_TEST_STATUS_PAGE_STRUCTURE_ENTID");
     $idmap_overridden = $entid_env_raw !== false && str_starts_with(trim($entid_env_raw), "{");
 
     $env = Runner::env_override([
-        "INCIDENTIO_TEST_STATUS_PAGE_STRUCTURE_ENTID" => $idmap,
-        "INCIDENTIO_TEST_LIVE" => "FALSE",
-        "INCIDENTIO_TEST_EXPLAIN" => "FALSE",
+        "INCIDENT_IO_TEST_STATUS_PAGE_STRUCTURE_ENTID" => $idmap,
+        "INCIDENT_IO_TEST_LIVE" => "FALSE",
+        "INCIDENT_IO_TEST_EXPLAIN" => "FALSE",
+        "INCIDENT_IO_APIKEY" => "",
     ]);
 
     $idmap_resolved = Helpers::to_map(
-        $env["INCIDENTIO_TEST_STATUS_PAGE_STRUCTURE_ENTID"]);
+        $env["INCIDENT_IO_TEST_STATUS_PAGE_STRUCTURE_ENTID"]);
     if ($idmap_resolved === null) {
         $idmap_resolved = Helpers::to_map($idmap);
     }
 
-    if ($env["INCIDENTIO_TEST_LIVE"] === "TRUE") {
+    if ($env["INCIDENT_IO_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
+            // FIRST, so the generated fields below win: sdk-test-control.json's
+            // test.client.options adds to the live client, it does not redirect it.
+            Runner::live_client_options(),
             [
+                "apikey" => $env["INCIDENT_IO_APIKEY"],
             ],
-            $extra ?? [],
+            // ismap, not a plain "?? []" default: an empty PHP array is a
+            // LIST, and a non-map later entry REPLACES the accumulated map in
+            // merge - so the no-extras call discarded live_client_options()
+            // and the apikey/server map above it.
+            Vs::ismap($extra) ? $extra : new \stdClass(),
         ]);
-        $client = new IncidentIoSDK(Helpers::to_map($merged_opts));
+        // "?? []" because merge legitimately answers with a stdClass when every
+        // contributing entry is an EMPTY map - an SDK with no apikey and no
+        // server variables generates an empty middle entry, so that is the
+        // common case, not the edge one. to_map returns null for a non-array by
+        // design, and the constructor takes a non-nullable array, so without the
+        // fallback every such SDK died on "must be of type array, null given"
+        // the moment live mode was switched on. Offline mode never reaches this
+        // branch, which is why the offline suite stayed green.
+        $client = new IncidentIoSDK(Helpers::to_map($merged_opts) ?? []);
     }
 
-    $live = $env["INCIDENTIO_TEST_LIVE"] === "TRUE";
+    $live = $env["INCIDENT_IO_TEST_LIVE"] === "TRUE";
     return [
         "client" => $client,
         "data" => $entity_data,
         "idmap" => $idmap_resolved,
         "env" => $env,
-        "explain" => $env["INCIDENTIO_TEST_EXPLAIN"] === "TRUE",
+        "explain" => $env["INCIDENT_IO_TEST_EXPLAIN"] === "TRUE",
         "live" => $live,
         "synthetic_only" => $live && !$idmap_overridden,
         "now" => (int)(microtime(true) * 1000),

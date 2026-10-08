@@ -43,7 +43,14 @@ the runtime under `.sdk/tm/lua/feature/` and regenerate.
 
 | Feature | Runtime file | Active hooks |
 | --- | --- | --- |
-| **test** — In-memory mock transport for testing without a live server | `feature/test_feature.lua` | `GetData`, `GetMatch`, `PostConstruct`, `PostConstructEntity`, `PrePoint`, `PreRequest`, `PreResponse`, `PreResult`, `PreSpec`, `SetData`, `SetMatch` |
+| **debug** — Debug capture | `feature/debug_feature.lua` | `PreDone`, `PreRequest`, `PreResponse`, `PreUnexpected` |
+| **idempotency** — Idempotency | `feature/idempotency_feature.lua` | `PreRequest` |
+| **metrics** — Metrics | `feature/metrics_feature.lua` | `PreDone`, `PrePoint`, `PreUnexpected` |
+| **paging** — Paging | `feature/paging_feature.lua` | `PreRequest`, `PreResult` |
+| **ratelimit** — Rate limiting | `feature/ratelimit_feature.lua` | — |
+| **retry** — Retry | `feature/retry_feature.lua` | — |
+| **test** — Test transport | `feature/test_feature.lua` | `GetData`, `GetMatch`, `PostConstruct`, `PostConstructEntity`, `PrePoint`, `PreRequest`, `PreResponse`, `PreResult`, `PreSpec`, `SetData`, `SetMatch` |
+| **timeout** — Timeout | `feature/timeout_feature.lua` | — |
 
 ---
 

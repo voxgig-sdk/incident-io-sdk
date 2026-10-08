@@ -1,0 +1,74 @@
+{
+  "existing": {
+    "incident_timeline_item": {
+      "INCIDENT_TIMELINE_ITEM00": {
+        "activity_log_id": "ACTIVITY_LOG01",
+        "created_at": "s65",
+        "creator": {},
+        "description": "s67",
+        "id": "INCIDENT_TIMELINE_ITEM00",
+        "idempotency_key": "s69",
+        "incident_id": "INCIDENT01",
+        "timestamp": "s6b",
+        "title": "s6c",
+        "updated_at": "s6d"
+      },
+      "INCIDENT_TIMELINE_ITEM01": {
+        "activity_log_id": "ACTIVITY_LOG01",
+        "created_at": "sc9",
+        "creator": {},
+        "description": "scb",
+        "id": "INCIDENT_TIMELINE_ITEM01",
+        "idempotency_key": "scd",
+        "incident_id": "INCIDENT01",
+        "timestamp": "scf",
+        "title": "sd0",
+        "updated_at": "sd1"
+      },
+      "INCIDENT_TIMELINE_ITEM02": {
+        "activity_log_id": "ACTIVITY_LOG01",
+        "created_at": "s12d",
+        "creator": {},
+        "description": "s12f",
+        "id": "INCIDENT_TIMELINE_ITEM02",
+        "idempotency_key": "s131",
+        "incident_id": "INCIDENT01",
+        "timestamp": "s133",
+        "title": "s134",
+        "updated_at": "s135"
+      }
+    }
+  },
+  "new": {
+    "incident_timeline_item": {
+      "incident_timeline_item_ref01": {
+        "activity_log_id": "ACTIVITY_LOG01",
+        "created_at": "s191",
+        "creator": {},
+        "description": "s193",
+        "idempotency_key": "s195",
+        "incident_id": "INCIDENT01",
+        "timestamp": "s197",
+        "title": "s198",
+        "updated_at": "s199"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/incident_timeline_items": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/incident_timeline_items": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PATCH /v2/incident_timeline_items/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

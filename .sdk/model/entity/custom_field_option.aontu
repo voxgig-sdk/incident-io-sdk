@@ -4,34 +4,43 @@ main: kit: entity: custom_field_option: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "custom_field_id"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    custom_field_id: {
+      h: "Custom Field Id"
+      n: "custom_field_id"
+      r: true
+      sh: "ID of the custom field this option belongs to"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for the custom field option"
+      t: "`$STRING`"
     }
-    {
-      name: "sort_key"
+    sort_key: {
+      fo: "int64"
+      h: "Sort Key"
+      n: "sort_key"
       op: {
         create: {
           req: false
           type: "`$INTEGER`"
         }
       }
-      req: true
-      type: "`$INTEGER`"
+      r: true
+      sh: "Sort key used to order the custom field options correctly"
+      t: "`$INTEGER`"
     }
-    {
-      name: "value"
-      req: true
-      type: "`$STRING`"
+    value: {
+      h: "Value"
+      n: "value"
+      r: true
+      sh: "Human readable name for the custom field option."
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -44,13 +53,31 @@ main: kit: entity: custom_field_option: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v1/custom_field_options"
-          parts: [
-            "v1"
-            "custom_field_options"
+          bf: [
+            "custom_field_id"
+            "sort_key"
+            "value"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/custom_field_options"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/custom_field_options"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_field_options"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field_option`"
           }
@@ -61,50 +88,61 @@ main: kit: entity: custom_field_option: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/custom_field_options"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYD5H"
-                kind: "query"
-                name: "custom_field_id"
-                orig: "custom_field_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYD5H"
+                k: "query"
+                n: "custom_field_id"
+                or: "custom_field_id"
+                r: true
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/custom_field_options"
-          parts: [
-            "v1"
-            "custom_field_options"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/custom_field_options"
+          q: {
             exist: [
-              "after"
               "custom_field_id"
-              "page_size"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_field_options"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.custom_field_options`"
           }
         }
       ]
@@ -113,31 +151,46 @@ main: kit: entity: custom_field_option: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/custom_field_options/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/custom_field_options/{id}"
-          parts: [
-            "v1"
-            "custom_field_options"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/custom_field_options/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_field_options"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field_option`"
           }
@@ -148,31 +201,42 @@ main: kit: entity: custom_field_option: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v1/custom_field_options/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v1/custom_field_options/{id}"
-          parts: [
-            "v1"
-            "custom_field_options"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v1/custom_field_options/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_field_options"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -183,31 +247,50 @@ main: kit: entity: custom_field_option: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "sort_key"
+            "value"
+          ]
+          co: {
+            id: "PUT /v1/custom_field_options/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v1/custom_field_options/{id}"
-          parts: [
-            "v1"
-            "custom_field_options"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v1/custom_field_options/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "custom_field_options"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.custom_field_option`"
           }

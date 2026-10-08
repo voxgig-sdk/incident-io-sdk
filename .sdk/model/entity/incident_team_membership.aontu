@@ -1,0 +1,62 @@
+# Entity: incident_team_membership
+
+main: kit: entity: incident_team_membership: {
+
+  alias: field: {}
+
+  fields: {
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      t: "`$STRING`"
+    }
+    team_id: {
+      h: "Team Id"
+      n: "team_id"
+      r: true
+      t: "`$STRING`"
+    }
+  }
+
+  name: "incident_team_membership"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "incident_id"
+            "team_id"
+          ]
+          co: {
+            id: "POST /v1/incident_team_memberships"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/incident_team_memberships"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_team_memberships"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_team_membership`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

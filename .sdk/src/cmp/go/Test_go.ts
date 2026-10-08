@@ -1,18 +1,15 @@
 
-import {
-  KIT,
-  getModelPath
-} from '@voxgig/apidef'
-
 import type {
   ModelEntity
 } from '@voxgig/apidef'
 
-import { cmp, each, Folder, File, Content } from '@voxgig/sdkgen'
+import { cmp, each, Folder, File, Content, goModule, entityCollection,
+  TestControl } from '@voxgig/sdkgen'
 
 
 import { TestEntity } from './TestEntity_go'
 import { TestDirect } from './TestDirect_go'
+import { TestClean } from './TestClean_go'
 import { ReadmeExamplesTest } from './ReadmeExamplesTest_go'
 
 
@@ -22,9 +19,12 @@ const Test = cmp(function Test(props: any) {
 
   // Module name: concatenated lowercase
   // Go module path == repo path on GitHub (org from model.origin).
-  const gomodule = `github.com/${model.origin || 'voxgig-sdk'}/${model.name}-sdk/go`
+  const gomodule = goModule(model, target.name)
 
   Folder({ name: 'test' }, () => {
+
+    // Write-once: a project's edited control file survives regeneration.
+    TestControl({ target, dir: 'test' })
 
     // Generate exists_test.go programmatically to avoid duplication
     // with any scaffolded test file (e.g. projectname_sdk_test.go).
@@ -48,7 +48,12 @@ func TestExists(t *testing.T) {
 `)
     })
 
-    each(model.main[KIT].entity, (entity: ModelEntity) => {
+    TestClean({ target, gomodule })
+
+    const entity = each(entityCollection(model))
+      .filter((e: any) => false !== e.active)
+
+    each(entity, (entity: ModelEntity) => {
       TestEntity({ target, entity, gomodule })
       TestDirect({ target, entity, gomodule })
     })

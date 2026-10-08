@@ -7,24 +7,24 @@ main: kit: flow: BasicScheduleReplicaFlow:
   name: "BasicScheduleReplicaFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "schedule_replica_ref01"
       }
 
-      match: {
+      m: {
         schedule_id: "schedule01"
       }
 
-      op: "create"
+      o: "create"
     }
 
     {
-      match: {
+      m: {
         schedule_id: "schedule01"
       }
 
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -35,19 +35,19 @@ main: kit: flow: BasicScheduleReplicaFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "schedule_replica_ref01",
         srcdatavar: "schedule_replica_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "schedule_replica01",
         schedule_id: "schedule01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

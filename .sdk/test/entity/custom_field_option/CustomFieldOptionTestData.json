@@ -4,19 +4,19 @@
       "CUSTOM_FIELD_OPTION00": {
         "custom_field_id": "CUSTOM_FIELD01",
         "id": "CUSTOM_FIELD_OPTION00",
-        "sort_key": "s2a",
+        "sort_key": 42,
         "value": "s2b"
       },
       "CUSTOM_FIELD_OPTION01": {
         "custom_field_id": "CUSTOM_FIELD01",
         "id": "CUSTOM_FIELD_OPTION01",
-        "sort_key": "s52",
+        "sort_key": 82,
         "value": "s53"
       },
       "CUSTOM_FIELD_OPTION02": {
         "custom_field_id": "CUSTOM_FIELD01",
         "id": "CUSTOM_FIELD_OPTION02",
-        "sort_key": "s7a",
+        "sort_key": 122,
         "value": "s7b"
       }
     }
@@ -25,9 +25,36 @@
     "custom_field_option": {
       "custom_field_option_ref01": {
         "custom_field_id": "CUSTOM_FIELD01",
-        "sort_key": "sa2",
+        "sort_key": 162,
         "value": "sa3"
       }
+    }
+  },
+  "requests": {
+    "POST /v1/custom_field_options": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/custom_field_options": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/custom_field_options/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v1/custom_field_options/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v1/custom_field_options/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

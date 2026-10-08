@@ -1,0 +1,109 @@
+# Entity: pay_configs_create_one_off_rule_result_v2
+
+main: kit: entity: pay_configs_create_one_off_rule_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    end_at: {
+      fo: "date-time"
+      h: "End At"
+      n: "end_at"
+      r: true
+      sh: "When this rule stops applying"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name for this rule"
+      t: "`$STRING`"
+    }
+    rate_cents: {
+      fo: "int64"
+      h: "Rate Cents"
+      n: "rate_cents"
+      r: true
+      sh: "Rate paid while this rule applies, in the lowest denomination of the config's currency"
+      t: "`$INTEGER`"
+    }
+    start_at: {
+      fo: "date-time"
+      h: "Start At"
+      n: "start_at"
+      r: true
+      sh: "When this rule starts applying"
+      t: "`$STRING`"
+    }
+  }
+
+  name: "pay_configs_create_one_off_rule_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "end_at"
+            "name"
+            "rate_cents"
+            "start_at"
+          ]
+          co: {
+            id: "POST /v2/pay_configs/{pay_config_id}/one_off_rules"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "pay_config_id"
+                or: "pay_config_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/pay_configs/{pay_config_id}/one_off_rules"
+          q: {
+            exist: [
+              "pay_config_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_configs"
+            }
+            {
+              var: "pay_config_id"
+            }
+            {
+              lit: "one_off_rules"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.one_off_rule`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.pay_config")]
+  ]
+
+}

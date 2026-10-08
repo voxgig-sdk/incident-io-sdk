@@ -4,79 +4,112 @@ main: kit: entity: follow_up: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "assignee"
-      req: true
-      type: "`$OBJECT`"
+  fields: {
+    assignee: {
+      h: "Assignee"
+      n: "assignee"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "assignee_id"
-      req: false
-      type: "`$STRING`"
+    assignee_id: {
+      h: "Assignee Id"
+      n: "assignee_id"
+      r: false
+      sh: "ID of the user this follow-up is assigned to"
+      t: "`$STRING`"
     }
-    {
-      name: "assignee_team"
-      req: true
-      type: "`$OBJECT`"
+    assignee_team: {
+      h: "Assignee Team"
+      n: "assignee_team"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "assignee_team_id"
-      req: false
-      type: "`$STRING`"
+    assignee_team_id: {
+      h: "Assignee Team Id"
+      n: "assignee_team_id"
+      r: false
+      sh: "ID of the team this follow-up is assigned to"
+      t: "`$STRING`"
     }
-    {
-      name: "completed_at"
-      req: false
-      type: "`$STRING`"
+    category: {
+      h: "Category"
+      n: "category"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    completed_at: {
+      fo: "date-time"
+      h: "Completed At"
+      n: "completed_at"
+      r: false
+      sh: "When the follow-up was completed"
+      t: "`$STRING`"
     }
-    {
-      name: "creator"
-      req: true
-      type: "`$OBJECT`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When the follow-up was created"
+      t: "`$STRING`"
     }
-    {
-      name: "description"
-      req: false
-      type: "`$STRING`"
+    creator: {
+      h: "Creator"
+      n: "creator"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "external_issue_reference"
-      req: true
-      type: "`$OBJECT`"
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "Description of the follow-up"
+      t: "`$STRING`"
     }
-    {
-      name: "external_issue_reference_id"
-      req: false
-      type: "`$STRING`"
+    external_issue_reference: {
+      h: "External Issue Reference"
+      n: "external_issue_reference"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "follow_up_category_id"
-      req: false
-      type: "`$STRING`"
+    external_issue_reference_id: {
+      h: "External Issue Reference Id"
+      n: "external_issue_reference_id"
+      r: false
+      sh: "If this follow-up is related to an external issue, the ID of that issue"
+      t: "`$STRING`"
     }
-    {
-      name: "follow_up_priority_option_id"
-      req: false
-      type: "`$STRING`"
+    follow_up_category_id: {
+      h: "Follow Up Category Id"
+      n: "follow_up_category_id"
+      r: false
+      sh: "ID of the category for this follow-up"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    follow_up_priority_option_id: {
+      h: "Follow Up Priority Option Id"
+      n: "follow_up_priority_option_id"
+      r: false
+      sh: "ID of the priority for this follow-up"
+      t: "`$STRING`"
     }
-    {
-      name: "incident_id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for the follow-up"
+      t: "`$STRING`"
     }
-    {
-      name: "label"
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "Unique identifier of the incident the follow-up belongs to"
+      t: "`$STRING`"
+    }
+    labels: {
+      h: "Labels"
+      n: "labels"
       op: {
         create: {
           req: false
@@ -87,30 +120,39 @@ main: kit: entity: follow_up: {
           type: "`$ARRAY`"
         }
       }
-      req: true
-      type: "`$ARRAY`"
+      r: true
+      sh: "Labels associated with this follow-up"
+      t: "`$ARRAY`"
     }
-    {
-      name: "priority"
-      req: true
-      type: "`$OBJECT`"
+    priority: {
+      h: "Priority"
+      n: "priority"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "status"
-      req: true
-      type: "`$STRING`"
+    status: {
+      h: "Status"
+      n: "status"
+      r: true
+      sh: "Status of the follow-up"
+      t: "`$STRING`"
     }
-    {
-      name: "title"
-      req: true
-      type: "`$STRING`"
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      sh: "Title of the follow-up"
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When the follow-up was last updated"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -123,13 +165,73 @@ main: kit: entity: follow_up: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/follow_ups"
-          parts: [
-            "v2"
-            "follow_ups"
+          bf: [
+            "assignee_id"
+            "assignee_team_id"
+            "description"
+            "external_issue_reference_id"
+            "follow_up_category_id"
+            "follow_up_priority_option_id"
+            "incident_id"
+            "labels"
+            "title"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/follow_ups"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/follow_ups"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "follow_ups"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.follow_up`"
+          }
+        }
+        {
+          bf: [
+            "assignee_id"
+            "assignee_team_id"
+            "description"
+            "external_issue_reference_id"
+            "follow_up_category_id"
+            "follow_up_priority_option_id"
+            "incident_id"
+            "labels"
+            "title"
+          ]
+          co: {
+            id: "POST /v3/follow_ups"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v3/follow_ups"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "follow_ups"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.follow_up`"
           }
@@ -140,48 +242,147 @@ main: kit: entity: follow_up: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/follow_ups"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "assignee_team_id"
-                orig: "assignee_team_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "assignee_team_id"
+                or: "assignee_team_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "incident_id"
-                orig: "incident_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "incident_id"
+                or: "incident_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "standard"
-                kind: "query"
-                name: "incident_mode"
-                orig: "incident_mode"
-                reqd: false
-                type: "`$STRING`"
+                ex: "standard"
+                k: "query"
+                n: "incident_mode"
+                or: "incident_mode"
+                r: false
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/follow_ups"
-          parts: [
-            "v2"
-            "follow_ups"
+          m: "GET"
+          o: "/v2/follow_ups"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "follow_ups"
+            }
           ]
-          select: {
-            exist: [
-              "assignee_team_id"
-              "incident_id"
-              "incident_mode"
+          t: {
+            req: "`reqdata`"
+            res: "`body.follow_ups`"
+          }
+        }
+        {
+          co: {
+            id: "GET /v3/follow_ups"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "assignee_team_id"
+                or: "assignee_team_id"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: {
+                  gte: [
+                    "2025-01-01"
+                  ]
+                }
+                k: "query"
+                n: "created_at"
+                or: "created_at"
+                r: false
+                t: "`$OBJECT`"
+              }
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "incident_id"
+                or: "incident_id"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "standard"
+                k: "query"
+                n: "incident_mode"
+                or: "incident_mode"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: {
+                  gte: [
+                    "2025-01-01"
+                  ]
+                }
+                k: "query"
+                n: "updated_at"
+                or: "updated_at"
+                r: false
+                t: "`$OBJECT`"
+              }
             ]
           }
-          transform: {
+          m: "GET"
+          o: "/v3/follow_ups"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "follow_ups"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.follow_ups`"
           }
@@ -192,31 +393,91 @@ main: kit: entity: follow_up: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/follow_ups/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/follow_ups/{id}"
-          parts: [
-            "v2"
-            "follow_ups"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/follow_ups/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "follow_ups"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.follow_up`"
+          }
+        }
+        {
+          co: {
+            id: "GET /v3/follow_ups/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v3/follow_ups/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "follow_ups"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.follow_up`"
           }
@@ -227,31 +488,83 @@ main: kit: entity: follow_up: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v2/follow_ups/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/follow_ups/{id}"
-          parts: [
-            "v2"
-            "follow_ups"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/follow_ups/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "follow_ups"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "DELETE /v3/follow_ups/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v3/follow_ups/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "follow_ups"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -262,31 +575,111 @@ main: kit: entity: follow_up: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "assignee_id"
+            "assignee_team_id"
+            "description"
+            "follow_up_category_id"
+            "follow_up_priority_option_id"
+            "labels"
+            "status"
+            "title"
+          ]
+          co: {
+            id: "PUT /v2/follow_ups/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/follow_ups/{id}"
-          parts: [
-            "v2"
-            "follow_ups"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/follow_ups/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "follow_ups"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.follow_up`"
+          }
+        }
+        {
+          bf: [
+            "assignee_id"
+            "assignee_team_id"
+            "description"
+            "follow_up_category_id"
+            "follow_up_priority_option_id"
+            "labels"
+            "status"
+            "title"
+          ]
+          co: {
+            id: "PUT /v3/follow_ups/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v3/follow_ups/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "follow_ups"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.follow_up`"
           }

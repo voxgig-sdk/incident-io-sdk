@@ -2,6 +2,8 @@ package core
 
 type Utility struct {
 	Clean             func(ctx *Context, val any) any
+	CleanAdd          func(ctx *Context, val any)
+	CleanExplain      func(ctx *Context)
 	Done              func(ctx *Context) (any, error)
 	MakeError         func(ctx *Context, err error) (any, error)
 	FeatureAdd        func(ctx *Context, f Feature)
@@ -25,6 +27,8 @@ type Utility struct {
 	PrepareParams     func(ctx *Context) map[string]any
 	PreparePath       func(ctx *Context) string
 	PrepareQuery      func(ctx *Context) map[string]any
+	GraphqlBody       func(ctx *Context) any
+	GraphqlErrors     func(ctx *Context) bool
 	ResultBasic       func(ctx *Context) *Result
 	ResultBody        func(ctx *Context) *Result
 	ResultHeaders     func(ctx *Context) *Result

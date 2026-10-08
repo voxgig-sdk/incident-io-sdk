@@ -4,68 +4,102 @@ main: kit: entity: alert: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "alert_group_id"
-      req: false
-      type: "`$ARRAY`"
+  fields: {
+    alert_group_ids: {
+      h: "Alert Group Ids"
+      n: "alert_group_ids"
+      r: false
+      sh: "The IDs of every alert group this alert belongs to."
+      t: "`$ARRAY`"
     }
-    {
-      name: "alert_source_id"
-      req: true
-      type: "`$STRING`"
+    alert_source_id: {
+      h: "Alert Source Id"
+      n: "alert_source_id"
+      r: true
+      sh: "The ID of the alert source this alert fired on"
+      t: "`$STRING`"
     }
-    {
-      name: "attribute"
-      req: true
-      type: "`$ARRAY`"
+    attributes: {
+      h: "Attributes"
+      n: "attributes"
+      r: true
+      sh: "Attribute values parsed from the alerts payload"
+      t: "`$ARRAY`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this entry was created"
+      t: "`$STRING`"
     }
-    {
-      name: "deduplication_key"
-      req: true
-      type: "`$STRING`"
+    deduplication_key: {
+      h: "Deduplication Key"
+      n: "deduplication_key"
+      r: true
+      sh: "A deduplication key which uniquely references this alert from your alert source."
+      t: "`$STRING`"
     }
-    {
-      name: "description"
-      req: false
-      type: "`$STRING`"
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "The description of the alert"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "The ID of this alert"
+      t: "`$STRING`"
     }
-    {
-      name: "resolved_at"
-      req: false
-      type: "`$STRING`"
+    resolved_at: {
+      fo: "date-time"
+      h: "Resolved At"
+      n: "resolved_at"
+      r: false
+      sh: "When this alert was resolved"
+      t: "`$STRING`"
     }
-    {
-      name: "source_url"
-      req: false
-      type: "`$STRING`"
+    source_url: {
+      h: "Source Url"
+      n: "source_url"
+      r: false
+      sh: "If applicable, a link to the alert in the upstream system"
+      t: "`$STRING`"
     }
-    {
-      name: "status"
-      req: true
-      type: "`$STRING`"
+    status: {
+      h: "Status"
+      n: "status"
+      r: true
+      sh: "Statuses of an alert"
+      t: "`$STRING`"
     }
-    {
-      name: "title"
-      req: true
-      type: "`$STRING`"
+    tags: {
+      h: "Tags"
+      n: "tags"
+      r: false
+      sh: "Tags someone has applied to this alert"
+      t: "`$ARRAY`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      sh: "The title of the alert, parsed from the alert payload according to the alert source configuration"
+      t: "`$STRING`"
     }
-  ]
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this alert was last updated"
+      t: "`$STRING`"
+    }
+  }
 
   id: {
     field: "id"
@@ -78,34 +112,53 @@ main: kit: entity: alert: {
       name: "create"
       points: [
         {
-          args: {
+          co: {
+            id: "POST /v2/alerts/{id}/actions/resolve"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "POST"
-          orig: "/v2/alerts/{id}/actions/resolve"
-          parts: [
-            "v2"
-            "alerts"
-            "{id}"
-            "actions"
-            "resolve"
-          ]
-          select: {
+          m: "POST"
+          o: "/v2/alerts/{id}/actions/resolve"
+          q: {
             "$action": "action_resolve"
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alerts"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "resolve"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert`"
           }
@@ -116,42 +169,47 @@ main: kit: entity: alert: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/alerts"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "01GBSQF3FHF7FWZQNWGHAVQ804"
                   ]
                 }
-                kind: "query"
-                name: "alert_group_id"
-                orig: "alert_group_id"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "alert_group_id"
+                or: "alert_group_id"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "01GBSQF3FHF7FWZQNWGHAVQ804"
                   ]
                 }
-                kind: "query"
-                name: "alert_source"
-                orig: "alert_source"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "alert_source"
+                or: "alert_source"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   "01GBSQF3FHF7FWZQNWGHAVQ804": {
                     one_of: [
                       "01GBSQF3FHF7FWZQNWGHAVQ804"
@@ -159,105 +217,128 @@ main: kit: entity: alert: {
                     ]
                   }
                 }
-                kind: "query"
-                name: "attribute"
-                orig: "attribute"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "attribute"
+                or: "attributes"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   gte: [
                     "2025-01-01"
                   ]
                 }
-                kind: "query"
-                name: "created_at"
-                orig: "created_at"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "created_at"
+                or: "created_at"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   is: [
                     "01GBSQF3FHF7FWZQNWGHAVQ804"
                   ]
                 }
-                kind: "query"
-                name: "deduplication_key"
-                orig: "deduplication_key"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "deduplication_key"
+                or: "deduplication_key"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   is: [
                     "true"
                   ]
                 }
-                kind: "query"
-                name: "has_note"
-                orig: "has_note"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "has_note"
+                or: "has_notes"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   is: [
                     "true"
                   ]
                 }
-                kind: "query"
-                name: "include_maintenance_window"
-                orig: "include_maintenance_window"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "include_maintenance_window"
+                or: "include_maintenance_window"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: true
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: true
+                t: "`$INTEGER`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "firing"
                   ]
                 }
-                kind: "query"
-                name: "status"
-                orig: "status"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "status"
+                or: "status"
+                r: false
+                t: "`$OBJECT`"
+              }
+              {
+                ex: {
+                  one_of: [
+                    "known issue"
+                  ]
+                }
+                k: "query"
+                n: "tag"
+                or: "tags"
+                r: false
+                t: "`$OBJECT`"
+              }
+              {
+                ex: {
+                  gte: [
+                    "2025-01-01"
+                  ]
+                }
+                k: "query"
+                n: "updated_at"
+                or: "updated_at"
+                r: false
+                t: "`$OBJECT`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/alerts"
-          parts: [
-            "v2"
-            "alerts"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/alerts"
+          q: {
             exist: [
-              "after"
-              "alert_group_id"
-              "alert_source"
-              "attribute"
-              "created_at"
-              "deduplication_key"
-              "has_note"
-              "include_maintenance_window"
               "page_size"
-              "status"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alerts"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.alerts`"
           }
         }
       ]
@@ -266,31 +347,46 @@ main: kit: entity: alert: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/alerts/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/alerts/{id}"
-          parts: [
-            "v2"
-            "alerts"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/alerts/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alerts"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert`"
           }

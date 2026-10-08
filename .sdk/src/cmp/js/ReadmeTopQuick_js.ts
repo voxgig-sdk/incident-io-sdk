@@ -1,5 +1,5 @@
 
-import { cmp, Content, isAuthActive, packageName, envName, entityIdField, entityOps, opRequestShape, safeVarName, exampleVarName, jsKey } from '@voxgig/sdkgen'
+import { cmp, Content, isAuthActive, packageName, envName, entityIdField, entityOps, opRequestShape, safeVarName, exampleVarName, jsKey, listMatchArg } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -30,17 +30,18 @@ const client = ${ctor}
   if (exampleEntity) {
     const eName = nom(exampleEntity, 'Name')
     const eVar = exampleVarName(eName.toLowerCase(), 'js')
-    // ACTIVE ops only — an inactive op generates no method, so an example
-    // calling it would be wrong.
     const opnames = entityOps(exampleEntity)
 
+    let hasCall = false
+
     if (opnames.includes('list')) {
-      Content(`// List all ${eName.toLowerCase()}s (returns an array)
-const ${eVar}s = await client.${eName}().list()
+      Content(`// List all ${eName.toLowerCase()}s (an array of entities, one per record)
+const ${eVar}s = await client.${eName}().list(${listMatchArg('js', exampleEntity)})
 for (const ${eVar} of ${eVar}s) {
-  console.log(${eVar})
+  console.log(${eVar}.data())
 }
 `)
+      hasCall = true
     }
 
     // Find a nested entity for a more interesting example: one with a parent
@@ -77,7 +78,15 @@ for (const ${eVar} of ${eVar}s) {
 const ${neVar} = await client.${neName}().load({
 ${neMatchLines.join('\n')}
 })
-console.log(${neVar})
+console.log(${neVar}.data())
+`)
+      hasCall = true
+    }
+
+    if (!hasCall && opnames.includes('load')) {
+      Content(`// Load a specific ${eName.toLowerCase()} (returns the entity)
+const ${eVar} = await client.${eName}().load()
+console.log(${eVar}.data())
 `)
     }
   }

@@ -1,5 +1,5 @@
 
-import { cmp, Content, isAuthActive, envName, canonKey, entityIdField, opRequestShape, safeVarName, exampleVarName } from '@voxgig/sdkgen'
+import { cmp, Content, isAuthActive, envName, canonKey, canonScalarKey, entityIdField, opRequestShape, safeVarName, exampleVarName, serverVariables, listMatchArg } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -13,7 +13,8 @@ import {
 // placeholder (the doc test EXECUTES this block, so a comment placeholder
 // would break it).
 function pyLit(type: any, placeholder: string = 'example'): string {
-  const k = canonKey(type)
+  const k = canonScalarKey(type)
+  if ('NULL' === k) return 'None'
   if ('INTEGER' === k || 'NUMBER' === k) return '1'
   if ('BOOLEAN' === k) return 'True'
   if ('ARRAY' === k) return '[]'
@@ -30,10 +31,19 @@ const ReadmeTopQuick = cmp(function ReadmeTopQuick(props: any) {
   const exampleEntity = Object.values(entity).find((e: any) => e.active !== false) as any
 
   const authActive = isAuthActive(model)
+
+  const svars = serverVariables(model)
+  const pyServerField = 0 === svars.length ? '' :
+    `\n    "server": {` +
+    svars.map((v: any) => `\n        "${v.name}": "<${v.name}>",`).join('') +
+    `\n    },`
+
   const apikeyImport = authActive ? `import os\n` : ''
   const ctor = authActive
-    ? `${model.const.Name}SDK({\n    "apikey": os.environ.get("${envName(model)}_APIKEY"),\n})`
-    : `${model.const.Name}SDK()`
+    ? `${model.const.Name}SDK({\n    "apikey": os.environ.get("${envName(model)}_APIKEY"),${pyServerField}\n})`
+    : ('' === pyServerField
+      ? `${model.const.Name}SDK()`
+      : `${model.const.Name}SDK({${pyServerField}\n})`)
 
   Content(`\`\`\`python
 ${apikeyImport}from ${model.const.Name.toLowerCase()}_sdk import ${model.const.Name}SDK
@@ -48,25 +58,20 @@ client = ${ctor}
     // Python keyword (e.g. `class`) would otherwise emit uncompilable code.
     const eVar = exampleVarName(eName.toLowerCase(), 'py')
     const opnames = Object.keys(exampleEntity.op || {})
-    // Model-driven id key: null when the entity has no id-like field, in which
-    // case the load example takes no match argument.
     const idF = entityIdField(exampleEntity)
 
     let hasCall = false
 
     if (opnames.includes('list')) {
-      Content(`# List all ${eName.toLowerCase()}s (returns a list, raises on error)
-${eVar}s = client.${eName}().list()
+      Content(`# List all ${eName.toLowerCase()}s (a list of entities, one per record; raises on error)
+${eVar}s = client.${eName}().list(${listMatchArg('py', exampleEntity)})
 for ${eVar} in ${eVar}s:
-    print(${eVar})
+    print(${eVar}.data_get())
 `)
       hasCall = true
     }
 
     if (opnames.includes('load')) {
-      // Every REQUIRED load-match key (id first, then parent path params like
-      // page_id) — the same shape the runtime resolves path params from, so
-      // the example always works.
       const loadItems = opRequestShape(exampleEntity, 'load').items
         .filter((it: any) => !it.optional || it.name === idF)
         .sort((a: any, b: any) =>
@@ -77,9 +82,9 @@ for ${eVar} in ${eVar}s:
             it.name === idF ? 'example_id' : 'example_' + it.name)}`).join(', ')}}`
         : ''
       Content(`
-# Load a specific ${eName.toLowerCase()} (returns the record, raises on error)
+# Load a specific ${eName.toLowerCase()} (returns the entity, raises on error)
 ${eVar} = client.${eName}().load(${loadArg})
-print(${eVar})
+print(${eVar}.data_get())
 `)
       hasCall = true
     }

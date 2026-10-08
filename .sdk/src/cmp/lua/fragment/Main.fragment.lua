@@ -1,9 +1,11 @@
 -- ProjectName SDK
 
+local json = require("dkjson")
 local vs = require("utility.struct.struct")
 local Utility = require("core.utility_type")
 local Spec = require("core.spec")
 local helpers = require("core.helpers")
+local unreadable_body = require("utility.unreadable_body")
 
 -- Load utility registration (populates Utility._registrar)
 require("utility.register")
@@ -16,7 +18,53 @@ local features_factory = require("features")
 
 
 local ProjectNameSDK = {}
-ProjectNameSDK.__index = ProjectNameSDK
+
+-- The options and the root context both hold the credential. They live in
+-- a side table rather than in the client, so a dump or an encoder walking
+-- the client's fields never reaches them; `sdk.options` still reads and
+-- writes through the metamethods, and options_map() is the documented way
+-- to read the credential back.
+local HIDDEN = { options = true, _rootctx = true }
+local SLOTS = setmetatable({}, { __mode = "k" })
+
+ProjectNameSDK.__index = function(self, key)
+  local member = rawget(ProjectNameSDK, key)
+  if member ~= nil then
+    return member
+  end
+  if HIDDEN[key] then
+    local slots = SLOTS[self]
+    return slots ~= nil and slots[key] or nil
+  end
+  return nil
+end
+
+ProjectNameSDK.__newindex = function(self, key, val)
+  if HIDDEN[key] then
+    local slots = SLOTS[self]
+    if slots == nil then
+      slots = {}
+      SLOTS[self] = slots
+    end
+    slots[key] = val
+  else
+    rawset(self, key, val)
+  end
+end
+
+-- The client's own record: what a serialiser or clean's snapshot sees in
+-- place of the client, so neither reaches the options through it.
+function ProjectNameSDK:to_record()
+  return { sdk = "ProjectName", mode = self.mode }
+end
+
+ProjectNameSDK.__tostring = function(self)
+  return "ProjectNameSDK mode=" .. tostring(self.mode)
+end
+
+ProjectNameSDK.__tojson = function(self)
+  return json.encode(self:to_record())
+end
 
 
 local function _make_feature(name)
@@ -39,7 +87,7 @@ function ProjectNameSDK.new(options)
   local utility = Utility.new()
   self._utility = utility
 
-  local config = require("config")()
+  local config = require("config_shared")()
 
   self._rootctx = utility.make_context({
     client = self,
@@ -84,6 +132,16 @@ function ProjectNameSDK.new(options)
       end
     end
   end
+
+  -- CONSUMED, not kept. `extend` holds feature INSTANCES, and every shipped
+  -- feature's init stores `self.client = ctx.client` - so leaving the list
+  -- in self.options makes the options map CYCLIC (client.options.extend[1]
+  -- .client == client), and options_map()'s vs.clone, which has no cycle
+  -- guard, blew the stack on the first prepare_auth of any client built with
+  -- an extend feature. The instances live on self.features from here on,
+  -- which is the only place anything reads them; the SAME table is
+  -- self._rootctx.options, so the root context loses the key too.
+  self.options["extend"] = nil
 
   -- Initialize features.
   for _, f in ipairs(self.features) do
@@ -135,7 +193,15 @@ function ProjectNameSDK:prepare(fetchargs)
   if type(path) ~= "string" then path = "" end
 
   local method = vs.getprop(fetchargs, "method") or "GET"
-  if type(method) ~= "string" then method = "GET" end
+  if type(method) ~= "string" or method == "" then method = "GET" end
+  method = string.upper(method)
+
+  local allow_method = vs.getpath(options, "allow.method")
+  if not helpers.allowed(allow_method, method) then
+    return nil, ctx:make_error("spec_method_allow",
+      'Method "' .. method ..
+      '" not allowed by SDK option allow.method value: "' .. tostring(allow_method or "") .. '"')
+  end
 
   local params = helpers.to_map(vs.getprop(fetchargs, "params")) or {}
   local query = helpers.to_map(vs.getprop(fetchargs, "query")) or {}
@@ -179,7 +245,40 @@ function ProjectNameSDK:prepare(fetchargs)
 end
 
 
+-- Raw endpoint access is operator-controllable, like every entity op.
+-- Blocking it means denying BOTH the 'direct' and 'graphql' tokens, since
+-- either one reaches the same endpoint.
 function ProjectNameSDK:direct(fetchargs)
+  if not self:_op_allowed("direct") then
+    return self:_op_denied("direct"), nil
+  end
+
+  return self:_raw_request(fetchargs)
+end
+
+
+-- Is this raw-access op permitted by the SDK's allow.op option?
+function ProjectNameSDK:_op_allowed(op)
+  return helpers.allowed(vs.getpath(self.options, "allow.op"), op)
+end
+
+
+function ProjectNameSDK:_op_denied(op)
+  local allow = vs.getpath(self.options, "allow.op")
+  if type(allow) ~= "string" then allow = "" end
+  return {
+    ok = false,
+    err = "ProjectNameSDK: " .. op .. ": operation not allowed by" ..
+      " SDK option allow.op value: \"" .. allow .. "\"",
+  }
+end
+
+
+-- Ungated request path shared by direct and graphql, each of which checks its
+-- own allow.op token first. Private, rather than a flag on fetchargs: a
+-- caller-supplied marker would let anyone opt straight back out of the gate
+-- by passing it.
+function ProjectNameSDK:_raw_request(fetchargs)
   local utility = self._utility
 
   local fetchdef, err = self:prepare(fetchargs)
@@ -199,7 +298,7 @@ function ProjectNameSDK:direct(fetchargs)
   local fetched, fetch_err = utility.fetcher(ctx, url, fetchdef)
 
   if fetch_err ~= nil then
-    return { ok = false, err = fetch_err }, nil
+    return { ok = false, err = utility.clean(ctx, fetch_err) }, nil
   end
 
   if fetched == nil then
@@ -222,6 +321,7 @@ function ProjectNameSDK:direct(fetchargs)
     local no_body = status == 204 or status == 304 or tostring(content_length) == "0"
 
     local json_data = nil
+    local body_err = nil
     if not no_body then
       local jf = vs.getprop(fetched, "json")
       if type(jf) == "function" then
@@ -231,20 +331,84 @@ function ProjectNameSDK:direct(fetchargs)
         end
         -- Non-JSON body: json_data stays nil, status/headers preserved.
       end
+      if vs.getprop(fetched, "unreadable") == true then
+        local failed = nil
+        if status < 200 or status >= 300 then
+          failed = ctx:make_error("request_status",
+            "request: " .. tostring(status) .. ": " .. tostring(vs.getprop(fetched, "statusText")))
+        end
+        body_err = unreadable_body(ctx, status, headers, vs.getprop(fetched, "body"),
+          fetchdef["headers"], failed)
+      end
     end
 
-    return {
-      ok = status >= 200 and status < 300,
+    local out = {
+      ok = body_err == nil and status >= 200 and status < 300,
       status = status,
       headers = headers,
       data = json_data,
-    }, nil
+    }
+    if body_err ~= nil then
+      out.err = utility.clean(ctx, body_err)
+    end
+    return out, nil
   end
 
   return {
     ok = false,
     err = ctx:make_error("direct_invalid", "invalid response type"),
   }, nil
+end
+
+
+-- Raw GraphQL access: the pressure valve that makes the generated surface's
+-- deliberate omissions (per-call selection sets, typed filter builders,
+-- batching, subscriptions) livable — the whole schema stays reachable.
+--
+-- Thin wrapper over the same prepare/fetch path direct uses, with the one
+-- thing raw direct cannot do for GraphQL: a GraphQL failure rides HTTP 200 as
+-- a top-level `errors` array, so status alone would report a failed query as
+-- ok.
+--
+-- NOTE: like direct, this bypasses the feature pipeline — no retry, ratelimit
+-- or paging features apply.
+function ProjectNameSDK:graphql(query, variables, ctrl)
+  if not self:_op_allowed("graphql") then
+    return self:_op_denied("graphql"), nil
+  end
+
+  local res, err = self:_raw_request({
+    method = "POST",
+    headers = { ["content-type"] = "application/json" },
+    body = {
+      query = query,
+      variables = type(variables) == "table" and variables or {},
+    },
+    ctrl = type(ctrl) == "table" and ctrl or {},
+  })
+
+  if err ~= nil or type(res) ~= "table" then
+    return res, err
+  end
+
+  -- Errors are read BEFORE any status check: a GraphQL parse or validation
+  -- failure comes back as HTTP 400 carrying the standard { errors = {...} }
+  -- body, and the raw path represents a non-2xx as ok=false with no err — so
+  -- returning early on status would discard the server's own diagnostics,
+  -- which are the only useful part of that response.
+  local errors = vs.getpath(res, "data.errors")
+
+  if type(errors) == "table" and 0 < #errors then
+    local msg = vs.getprop(errors[1], "message")
+    if type(msg) ~= "string" or msg == "" then
+      msg = "graphql error"
+    end
+    res.ok = false
+    res.err = "ProjectNameSDK: graphql: " .. msg
+    res.graphql = errors
+  end
+
+  return res, nil
 end
 
 

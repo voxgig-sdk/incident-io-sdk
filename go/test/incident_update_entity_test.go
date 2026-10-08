@@ -15,6 +15,26 @@ import (
 	vs "github.com/voxgig-sdk/incident-io-sdk/go/utility/struct"
 )
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const incident_updateEntityLiveStrict = true
+
+
+type incident_updateFailHook struct {
+	sdk.BaseFeature
+	unexpected int
+}
+
+func (f *incident_updateFailHook) PreSpec(ctx *sdk.Context) {
+	panic("incident_update hook failed")
+}
+
+func (f *incident_updateFailHook) PreUnexpected(ctx *sdk.Context) {
+	f.unexpected++
+}
+
 func TestIncidentUpdateEntity(t *testing.T) {
 	t.Run("instance", func(t *testing.T) {
 		testsdk := sdk.TestSDK(nil, nil)
@@ -42,8 +62,11 @@ func TestIncidentUpdateEntity(t *testing.T) {
 		// Fallback: streaming inactive -> yields the materialised list items.
 		base := sdk.TestSDK(seed, nil)
 		var seen []any
-		for item := range base.IncidentUpdate(nil).Stream("list", nil, nil) {
-			seen = append(seen, item)
+		for si := range base.IncidentUpdate(nil).Stream("list", nil, nil) {
+			if si.Err != nil {
+				t.Fatalf("stream failed: %v", si.Err)
+			}
+			seen = append(seen, si.Item)
 		}
 		if len(seen) != 3 {
 			t.Fatalf("expected 3 streamed items, got %d", len(seen))
@@ -51,7 +74,7 @@ func TestIncidentUpdateEntity(t *testing.T) {
 
 		// Inbound: streaming active -> yields each item from the feature iterator.
 		hasStreaming := false
-		if fm, ok := core.MakeConfig()["feature"].(map[string]any); ok {
+		if fm, ok := core.SharedConfig()["feature"].(map[string]any); ok {
 			_, hasStreaming = fm["streaming"]
 		}
 		if hasStreaming {
@@ -59,11 +82,14 @@ func TestIncidentUpdateEntity(t *testing.T) {
 				"feature": map[string]any{"streaming": map[string]any{"active": true}},
 			})
 			var got []any
-			for item := range streamSdk.IncidentUpdate(nil).Stream("list", nil, nil) {
-				if sub, ok := item.([]any); ok {
+			for si := range streamSdk.IncidentUpdate(nil).Stream("list", nil, nil) {
+				if si.Err != nil {
+					t.Fatalf("stream failed: %v", si.Err)
+				}
+				if sub, ok := si.Item.([]any); ok {
 					got = append(got, sub...)
 				} else {
-					got = append(got, item)
+					got = append(got, si.Item)
 				}
 			}
 			if len(got) != 3 {
@@ -72,7 +98,91 @@ func TestIncidentUpdateEntity(t *testing.T) {
 		}
 	})
 
-	t.Run("basic", func(t *testing.T) {
+	t.Run("stream-error", func(t *testing.T) {
+		offline := map[string]any{"net": map[string]any{"offline": true}}
+		var streamerr error
+		for si := range sdk.TestSDK(offline, nil).IncidentUpdate(nil).Stream("list", nil, nil) {
+			if si.Err != nil {
+				streamerr = si.Err
+			}
+		}
+		if nil == streamerr || !strings.Contains(streamerr.Error(), "offline") {
+			t.Fatalf("expected the transport failure as a stream value, got %v", streamerr)
+		}
+
+		quiet := map[string]any{"ctrl": map[string]any{"throw": false}}
+		for si := range sdk.TestSDK(offline, nil).IncidentUpdate(nil).Stream("list", nil, quiet) {
+			if si.Err != nil {
+				t.Fatalf("throw false: expected no error value, got %v", si.Err)
+			}
+		}
+
+		if fhHasFeature("rbac") {
+			denied := sdk.TestSDK(nil, map[string]any{
+				"feature": map[string]any{"rbac": map[string]any{"active": true, "deny": true}},
+			})
+			var denyerr error
+			for si := range denied.IncidentUpdate(nil).Stream("list", nil, nil) {
+				if si.Err != nil {
+					denyerr = si.Err
+				}
+			}
+			if sdkerr, ok := denyerr.(*core.IncidentIoError); !ok || "rbac_denied" != sdkerr.Code {
+				t.Fatalf("expected the rbac denial as a stream value, got %v", denyerr)
+			}
+		}
+	})
+
+	t.Run("stream-ctrl", func(t *testing.T) {
+		explain := map[string]any{}
+		ctrl := map[string]any{"explain": explain}
+		for range sdk.TestSDK(nil, nil).IncidentUpdate(nil).Stream("list", nil, map[string]any{"ctrl": ctrl}) {
+		}
+		if _, has := ctrl["stream"]; has || 1 != len(ctrl) {
+			t.Fatalf("the stream changed the caller's ctrl")
+		}
+		if 0 == len(explain) {
+			t.Fatalf("the caller's explain record was not filled")
+		}
+	})
+
+	t.Run("unexpected", func(t *testing.T) {
+		hook := &incident_updateFailHook{
+			BaseFeature: sdk.BaseFeature{Version: "0.0.1", Name: "failhook", Active: true}}
+		client := sdk.TestSDK(nil, map[string]any{"extend": []any{hook}})
+
+		_, err := client.IncidentUpdate(nil).List(nil, nil)
+		if nil == err || !strings.Contains(err.Error(), "hook failed") {
+			t.Fatalf("expected the hook's failure, got %v", err)
+		}
+		if 0 == hook.unexpected {
+			t.Fatalf("PreUnexpected did not fire")
+		}
+
+		fired := hook.unexpected
+		if _, err := client.IncidentUpdate(nil).List(nil, map[string]any{"throw": false}); nil != err {
+			t.Fatalf("throw false: expected no error, got %v", err)
+		}
+		if fired == hook.unexpected {
+			t.Fatalf("throw false: PreUnexpected did not fire")
+		}
+	})
+
+	t.Run("validate", func(t *testing.T) {
+		if !fhHasFeature("validate") {
+			t.Skip("feature not present in this SDK: validate")
+		}
+		client := sdk.TestSDK(nil, map[string]any{
+			"feature": map[string]any{"validate": map[string]any{"active": true}},
+		})
+		_, err := client.IncidentUpdate(nil).List(map[string]any{"after": 1}, nil)
+		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
+			t.Fatalf("expected validate_failed, got %v", err)
+		}
+	})
+
+	t.Run("basic", func(tt *testing.T) {
+		var t testing.TB = tt
 		setup := incident_updateBasicSetup(nil)
 		// Per-op sdk-test-control.json skip — basic test exercises a flow
 		// with multiple ops; skipping any op skips the whole flow.
@@ -80,7 +190,7 @@ func TestIncidentUpdateEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"list"} {
+		for _, _op := range []string{"create", "list"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "incident_update." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -89,35 +199,40 @@ func TestIncidentUpdateEntity(t *testing.T) {
 				return
 			}
 		}
-		// The basic flow consumes synthetic IDs from the fixture. In live mode
-		// without an *_ENTID env override, those IDs hit the live API and 4xx.
-		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_INCIDENT_UPDATE_ENTID JSON to run live")
-			return
-		}
 		client := setup.client
 
-		// Bootstrap entity data from existing test data (no create step in flow).
-		incidentUpdateRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath("existing.incident_update", setup.data)))
-		var incidentUpdateRef01Data map[string]any
-		if len(incidentUpdateRef01DataRaw) > 0 {
-			incidentUpdateRef01Data = core.ToMapAny(incidentUpdateRef01DataRaw[0][1])
+		// CREATE
+		incidentUpdateRef01Ent := client.IncidentUpdate(nil)
+		incidentUpdateRef01Data := core.ToMapAny(vs.GetProp(
+			vs.GetPath(setup.data, []any{"new", "incident_update"}), "incident_update_ref01"))
+
+		incidentUpdateRef01DataResult, err := incidentUpdateRef01Ent.Create(incidentUpdateRef01Data, nil)
+		if err != nil {
+			t.Fatalf("create failed: %v", err)
 		}
-		// Discard guards against Go's unused-var check when the flow's steps
-		// happen not to consume the bootstrap data (e.g. list-only flows).
-		_ = incidentUpdateRef01Data
+		incidentUpdateRef01Data = core.ToMapAny(entityData(incidentUpdateRef01DataResult))
+		if incidentUpdateRef01Data == nil {
+			t.Fatal("expected create result to be a map")
+		}
+		if incidentUpdateRef01Data["id"] == nil {
+			t.Fatal("expected created entity to have an id")
+		}
 
 		// LIST
-		incidentUpdateRef01Ent := client.IncidentUpdate(nil)
 		incidentUpdateRef01Match := map[string]any{}
 
 		incidentUpdateRef01ListResult, err := incidentUpdateRef01Ent.List(incidentUpdateRef01Match, nil)
 		if err != nil {
 			t.Fatalf("list failed: %v", err)
 		}
-		_, incidentUpdateRef01ListOk := incidentUpdateRef01ListResult.([]any)
+		incidentUpdateRef01List, incidentUpdateRef01ListOk := incidentUpdateRef01ListResult.([]any)
 		if !incidentUpdateRef01ListOk {
 			t.Fatalf("expected list result to be an array, got %T", incidentUpdateRef01ListResult)
+		}
+
+		foundItem := vs.Select(entityListToData(incidentUpdateRef01List), map[string]any{"id": incidentUpdateRef01Data["id"]})
+		if vs.IsEmpty(foundItem) {
+			t.Fatal("expected to find created entity in list")
 		}
 
 	})
@@ -147,7 +262,7 @@ func incident_updateBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"incident_update01", "incident_update02", "incident_update03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -157,39 +272,52 @@ func incident_updateBasicSetup(extra map[string]any) *entityTestSetup {
 		},
 	)
 
-	// Detect ENTID env override before envOverride consumes it. When live
-	// mode is on without a real override, the basic test runs against synthetic
-	// IDs from the fixture and 4xx's. Surface this so the test can skip.
-	entidEnvRaw := os.Getenv("INCIDENTIO_TEST_INCIDENT_UPDATE_ENTID")
+	// Whether *_ENTID supplied the idmap, read before envOverride consumes it:
+	// without it, the ids a live flow binds are the fixture's synthetic ones.
+	entidEnvRaw := os.Getenv("INCIDENT_IO_TEST_INCIDENT_UPDATE_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 
 	env := envOverride(map[string]any{
-		"INCIDENTIO_TEST_INCIDENT_UPDATE_ENTID": idmap,
-		"INCIDENTIO_TEST_LIVE":      "FALSE",
-		"INCIDENTIO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_TEST_INCIDENT_UPDATE_ENTID": idmap,
+		"INCIDENT_IO_TEST_LIVE":      "FALSE",
+		"INCIDENT_IO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_APIKEY":         "",
 	})
 
-	idmapResolved := core.ToMapAny(env["INCIDENTIO_TEST_INCIDENT_UPDATE_ENTID"])
+	idmapResolved := core.ToMapAny(env["INCIDENT_IO_TEST_INCIDENT_UPDATE_ENTID"])
 	if idmapResolved == nil {
 		idmapResolved = core.ToMapAny(idmap)
 	}
 
-	if env["INCIDENTIO_TEST_LIVE"] == "TRUE" {
+	if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
+				"apikey": env["INCIDENT_IO_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewIncidentIoSDK(core.ToMapAny(mergedOpts))
 	}
 
-	live := env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+	live := env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
 	return &entityTestSetup{
 		client:        client,
 		data:          entityData,
 		idmap:         idmapResolved,
 		env:           env,
-		explain:       env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+		explain:       env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
 		live:          live,
 		syntheticOnly: live && !idmapOverridden,
 		now:           time.Now().UnixMilli(),

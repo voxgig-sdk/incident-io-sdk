@@ -11,6 +11,12 @@ use Voxgig\Struct\Struct as Vs;
 
 class ScheduleSyncRuleEntityTest extends TestCase
 {
+    // main.kit.test.live.strict is true (the default is true): a live
+    // request that fails, or a live test missing an input it needs,
+    // fails the test.
+    // An account with no record for a test to read skips it either way.
+    private const LIVE_STRICT = true;
+
     public function test_create_instance(): void
     {
         $testsdk = IncidentIoSDK::test(null, null);
@@ -18,43 +24,20 @@ class ScheduleSyncRuleEntityTest extends TestCase
         $this->assertNotNull($ent);
     }
 
-    // Feature #4: the entity stream(action, ...) method runs the op pipeline
-    // and yields result items. With the streaming feature active it yields the
-    // feature's incremental output; otherwise it falls back to the materialised
-    // list so stream always yields.
-    public function test_stream(): void
+    public function test_validate(): void
     {
-        $seed = [
-            "entity" => [
-                "schedule_sync_rule" => [
-                    "s1" => ["id" => "s1"],
-                    "s2" => ["id" => "s2"],
-                    "s3" => ["id" => "s3"],
-                ],
-            ],
-        ];
-
-        // Fallback: streaming inactive -> yields the materialised list items.
-        $base = IncidentIoSDK::test($seed, null);
-        $seen = iterator_to_array($base->ScheduleSyncRule(null)->stream("list", null, null), false);
-        $this->assertCount(3, $seen);
-
-        // Inbound: streaming active -> yields each item from the feature.
-        $cfg = IncidentIoConfig::make_config();
-        if (isset($cfg["feature"]) && is_array($cfg["feature"]) && isset($cfg["feature"]["streaming"])) {
-            $sdk = IncidentIoSDK::test($seed, ["feature" => ["streaming" => ["active" => true]]]);
-            $got = [];
-            foreach ($sdk->ScheduleSyncRule(null)->stream("list", null, null) as $item) {
-                if (is_array($item) && array_is_list($item)) {
-                    foreach ($item as $sub) {
-                        $got[] = $sub;
-                    }
-                } else {
-                    $got[] = $item;
-                }
-            }
-            $this->assertCount(3, $got);
+        $cfg = IncidentIoConfig::shared_config();
+        if (!isset($cfg["feature"]["validate"])) {
+            $this->markTestSkipped('feature not present in this SDK: validate');
         }
+        $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
+        $err = null;
+        try {
+            $client->ScheduleSyncRule(null)->list(["id" => 1], null);
+        } catch (\Throwable $e) {
+            $err = $e;
+        }
+        $this->assertSame('validate_failed', $err->sdk_code ?? null);
     }
 
     public function test_basic_flow(): void
@@ -62,46 +45,35 @@ class ScheduleSyncRuleEntityTest extends TestCase
         $setup = schedule_sync_rule_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["create", "list", "update", "load"] as $_op) {
+        foreach (["update", "load"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "schedule_sync_rule." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
                 return;
             }
         }
-        // The basic flow consumes synthetic IDs from the fixture. In live mode
-        // without an *_ENTID env override, those IDs hit the live API and 4xx.
-        if (!empty($setup["synthetic_only"])) {
-            $this->markTestSkipped("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_SCHEDULE_SYNC_RULE_ENTID JSON to run live");
-            return;
+        if (!empty($setup["live"])) {
+            foreach (["schedule01"] as $_liveKey) {
+                if (!empty($setup["synthetic_only"]) || null === ($setup["idmap"][$_liveKey] ?? null)) {
+                    Runner::live_miss(self::LIVE_STRICT, "Live entity test blocked: needs " . $_liveKey . " via INCIDENT_IO_TEST_SCHEDULE_SYNC_RULE_ENTID");
+                }
+            }
+        }
+        if (!empty($setup["live"])) {
+            Runner::live_miss(self::LIVE_STRICT, "Live entity test blocked: " . "the flow updates a schedule_sync_rule record it did not create");
         }
         $client = $setup["client"];
 
-        // CREATE
-        $schedule_sync_rule_ref01_ent = $client->ScheduleSyncRule(null);
-        $schedule_sync_rule_ref01_data = Helpers::to_map(Vs::getprop(
-            Vs::getpath($setup["data"], "new.schedule_sync_rule"), "schedule_sync_rule_ref01"));
-        $schedule_sync_rule_ref01_data["schedule_id"] = $setup["idmap"]["schedule01"];
-
-        $schedule_sync_rule_ref01_data_result = $schedule_sync_rule_ref01_ent->create($schedule_sync_rule_ref01_data, null);
-        $schedule_sync_rule_ref01_data = Helpers::to_map($schedule_sync_rule_ref01_data_result);
-        $this->assertNotNull($schedule_sync_rule_ref01_data);
-        $this->assertNotNull($schedule_sync_rule_ref01_data["id"]);
-
-        // LIST
-        $schedule_sync_rule_ref01_match = [
-            "schedule_id" => $setup["idmap"]["schedule01"],
-        ];
-
-        $schedule_sync_rule_ref01_list_result = $schedule_sync_rule_ref01_ent->list($schedule_sync_rule_ref01_match, null);
-        $this->assertIsArray($schedule_sync_rule_ref01_list_result);
-
-        $found_item = sdk_select(
-            Runner::entity_list_to_data($schedule_sync_rule_ref01_list_result),
-            ["id" => $schedule_sync_rule_ref01_data["id"]]);
-        $this->assertNotEmpty($found_item);
+        // Bootstrap entity data from existing test data.
+        $schedule_sync_rule_ref01_data_raw = Vs::items(Helpers::to_map(
+            Vs::getpath($setup["data"], "existing.schedule_sync_rule")));
+        $schedule_sync_rule_ref01_data = null;
+        if (count($schedule_sync_rule_ref01_data_raw) > 0) {
+            $schedule_sync_rule_ref01_data = Helpers::to_map($schedule_sync_rule_ref01_data_raw[0][1]);
+        }
 
         // UPDATE
+        $schedule_sync_rule_ref01_ent = $client->ScheduleSyncRule(null);
         $schedule_sync_rule_ref01_data_up0_up = [
             "id" => $schedule_sync_rule_ref01_data["id"],
             "schedule_id" => $setup["idmap"]["schedule_id"],
@@ -112,7 +84,7 @@ class ScheduleSyncRuleEntityTest extends TestCase
         $schedule_sync_rule_ref01_data_up0_up[$schedule_sync_rule_ref01_markdef_up0_name] = $schedule_sync_rule_ref01_markdef_up0_value;
 
         $schedule_sync_rule_ref01_resdata_up0_result = $schedule_sync_rule_ref01_ent->update($schedule_sync_rule_ref01_data_up0_up, null);
-        $schedule_sync_rule_ref01_resdata_up0 = Helpers::to_map($schedule_sync_rule_ref01_resdata_up0_result);
+        $schedule_sync_rule_ref01_resdata_up0 = Helpers::to_map(is_object($schedule_sync_rule_ref01_resdata_up0_result) && method_exists($schedule_sync_rule_ref01_resdata_up0_result, 'data_get') ? $schedule_sync_rule_ref01_resdata_up0_result->data_get() : $schedule_sync_rule_ref01_resdata_up0_result);
         $this->assertNotNull($schedule_sync_rule_ref01_resdata_up0);
         $this->assertEquals($schedule_sync_rule_ref01_resdata_up0["id"], $schedule_sync_rule_ref01_data_up0_up["id"]);
         $this->assertEquals($schedule_sync_rule_ref01_resdata_up0[$schedule_sync_rule_ref01_markdef_up0_name], $schedule_sync_rule_ref01_markdef_up0_value);
@@ -122,7 +94,7 @@ class ScheduleSyncRuleEntityTest extends TestCase
             "id" => $schedule_sync_rule_ref01_data["id"],
         ];
         $schedule_sync_rule_ref01_data_dt0_loaded = $schedule_sync_rule_ref01_ent->load($schedule_sync_rule_ref01_match_dt0, null);
-        $schedule_sync_rule_ref01_data_dt0_load_result = Helpers::to_map($schedule_sync_rule_ref01_data_dt0_loaded);
+        $schedule_sync_rule_ref01_data_dt0_load_result = Helpers::to_map(is_object($schedule_sync_rule_ref01_data_dt0_loaded) && method_exists($schedule_sync_rule_ref01_data_dt0_loaded, 'data_get') ? $schedule_sync_rule_ref01_data_dt0_loaded->data_get() : $schedule_sync_rule_ref01_data_dt0_loaded);
         $this->assertNotNull($schedule_sync_rule_ref01_data_dt0_load_result);
         $this->assertEquals($schedule_sync_rule_ref01_data_dt0_load_result["id"], $schedule_sync_rule_ref01_data["id"]);
 
@@ -148,20 +120,20 @@ function schedule_sync_rule_basic_setup($extra)
         $idmap[$k] = strtoupper($k);
     }
 
-    // Detect ENTID env override before envOverride consumes it. When live
-    // mode is on without a real override, the basic test runs against synthetic
-    // IDs from the fixture and 4xx's. Surface this so the test can skip.
-    $entid_env_raw = getenv("INCIDENTIO_TEST_SCHEDULE_SYNC_RULE_ENTID");
+    // Whether *_ENTID supplied the idmap, read before env_override consumes
+    // it: without it, the ids a live flow binds are the fixture's synthetic ones.
+    $entid_env_raw = getenv("INCIDENT_IO_TEST_SCHEDULE_SYNC_RULE_ENTID");
     $idmap_overridden = $entid_env_raw !== false && str_starts_with(trim($entid_env_raw), "{");
 
     $env = Runner::env_override([
-        "INCIDENTIO_TEST_SCHEDULE_SYNC_RULE_ENTID" => $idmap,
-        "INCIDENTIO_TEST_LIVE" => "FALSE",
-        "INCIDENTIO_TEST_EXPLAIN" => "FALSE",
+        "INCIDENT_IO_TEST_SCHEDULE_SYNC_RULE_ENTID" => $idmap,
+        "INCIDENT_IO_TEST_LIVE" => "FALSE",
+        "INCIDENT_IO_TEST_EXPLAIN" => "FALSE",
+        "INCIDENT_IO_APIKEY" => "",
     ]);
 
     $idmap_resolved = Helpers::to_map(
-        $env["INCIDENTIO_TEST_SCHEDULE_SYNC_RULE_ENTID"]);
+        $env["INCIDENT_IO_TEST_SCHEDULE_SYNC_RULE_ENTID"]);
     if ($idmap_resolved === null) {
         $idmap_resolved = Helpers::to_map($idmap);
     }
@@ -169,22 +141,38 @@ function schedule_sync_rule_basic_setup($extra)
         $idmap_resolved["schedule_id"] = $idmap_resolved["schedule01"];
     }
 
-    if ($env["INCIDENTIO_TEST_LIVE"] === "TRUE") {
+    if ($env["INCIDENT_IO_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
+            // FIRST, so the generated fields below win: sdk-test-control.json's
+            // test.client.options adds to the live client, it does not redirect it.
+            Runner::live_client_options(),
             [
+                "apikey" => $env["INCIDENT_IO_APIKEY"],
             ],
-            $extra ?? [],
+            // ismap, not a plain "?? []" default: an empty PHP array is a
+            // LIST, and a non-map later entry REPLACES the accumulated map in
+            // merge - so the no-extras call discarded live_client_options()
+            // and the apikey/server map above it.
+            Vs::ismap($extra) ? $extra : new \stdClass(),
         ]);
-        $client = new IncidentIoSDK(Helpers::to_map($merged_opts));
+        // "?? []" because merge legitimately answers with a stdClass when every
+        // contributing entry is an EMPTY map - an SDK with no apikey and no
+        // server variables generates an empty middle entry, so that is the
+        // common case, not the edge one. to_map returns null for a non-array by
+        // design, and the constructor takes a non-nullable array, so without the
+        // fallback every such SDK died on "must be of type array, null given"
+        // the moment live mode was switched on. Offline mode never reaches this
+        // branch, which is why the offline suite stayed green.
+        $client = new IncidentIoSDK(Helpers::to_map($merged_opts) ?? []);
     }
 
-    $live = $env["INCIDENTIO_TEST_LIVE"] === "TRUE";
+    $live = $env["INCIDENT_IO_TEST_LIVE"] === "TRUE";
     return [
         "client" => $client,
         "data" => $entity_data,
         "idmap" => $idmap_resolved,
         "env" => $env,
-        "explain" => $env["INCIDENTIO_TEST_EXPLAIN"] === "TRUE",
+        "explain" => $env["INCIDENT_IO_TEST_EXPLAIN"] === "TRUE",
         "live" => $live,
         "synthetic_only" => $live && !$idmap_overridden,
         "now" => (int)(microtime(true) * 1000),

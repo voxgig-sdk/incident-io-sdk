@@ -1,0 +1,22 @@
+# BasicPayReportsUnpublishResultV2Flow
+
+main: kit: flow: BasicPayReportsUnpublishResultV2Flow:
+{
+  entity: "pay_reports_unpublish_result_v2",
+  kind: "basic",
+  name: "BasicPayReportsUnpublishResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "pay_reports_unpublish_result_v2_ref01"
+      }
+
+      m: {
+        pay_report_id: "pay_report01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicPayReportsUnpublishResultV2Flow"
+}

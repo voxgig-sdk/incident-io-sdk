@@ -5,21 +5,21 @@
         "allowlist": [],
         "enabled": false,
         "updated_at": "s2a",
-        "version": "s2b",
+        "version": 43,
         "id": "IP_ALLOWLIST00"
       },
       "IP_ALLOWLIST01": {
         "allowlist": [],
         "enabled": false,
         "updated_at": "s52",
-        "version": "s53",
+        "version": 83,
         "id": "IP_ALLOWLIST01"
       },
       "IP_ALLOWLIST02": {
         "allowlist": [],
         "enabled": false,
         "updated_at": "s7a",
-        "version": "s7b",
+        "version": 123,
         "id": "IP_ALLOWLIST02"
       }
     }
@@ -30,8 +30,20 @@
         "allowlist": [],
         "enabled": false,
         "updated_at": "sa2",
-        "version": "sa3"
+        "version": 163
       }
+    }
+  },
+  "requests": {
+    "GET /v1/ip_allowlists": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v1/ip_allowlists": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

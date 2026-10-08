@@ -1,0 +1,70 @@
+# Entity: follow_ups_create_from_link_result_v3
+
+main: kit: entity: follow_ups_create_from_link_result_v3: {
+
+  alias: field: {}
+
+  fields: {
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "Unique identifier of the incident the follow-up belongs to"
+      t: "`$STRING`"
+    }
+    url: {
+      h: "Url"
+      n: "url"
+      r: true
+      sh: "URL of the issue in the external provider"
+      t: "`$STRING`"
+    }
+  }
+
+  name: "follow_ups_create_from_link_result_v3"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "incident_id"
+            "url"
+          ]
+          co: {
+            id: "POST /v3/follow_ups/actions/create_from_link"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v3/follow_ups/actions/create_from_link"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "follow_ups"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "create_from_link"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.follow_up`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

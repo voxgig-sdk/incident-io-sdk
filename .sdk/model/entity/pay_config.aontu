@@ -1,0 +1,354 @@
+# Entity: pay_config
+
+main: kit: entity: pay_config: {
+
+  alias: field: {}
+
+  fields: {
+    base_rate_cents: {
+      fo: "int64"
+      h: "Base Rate Cents"
+      n: "base_rate_cents"
+      r: true
+      sh: "Rate paid for any time no rule covers, in the lowest denomination of the currency"
+      t: "`$INTEGER`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      t: "`$STRING`"
+    }
+    currency: {
+      h: "Currency"
+      n: "currency"
+      r: true
+      sh: "Currency this config pays in, in ISO 4217 format"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this pay config"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name for this pay config"
+      t: "`$STRING`"
+    }
+    one_off_rules: {
+      h: "One Off Rules"
+      n: "one_off_rules"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "Rules that apply over a single window of time, such as a public holiday"
+      t: "`$ARRAY`"
+    }
+    published_at: {
+      fo: "date-time"
+      h: "Published At"
+      n: "published_at"
+      r: false
+      sh: "When a published report first priced against this config."
+      t: "`$STRING`"
+    }
+    rate_time_unit: {
+      h: "Rate Time Unit"
+      n: "rate_time_unit"
+      r: true
+      sh: "The unit of time every rate on this config is quoted per."
+      t: "`$STRING`"
+    }
+    timezone: {
+      h: "Timezone"
+      n: "timezone"
+      r: true
+      sh: "IANA timezone this config's rules are interpreted in"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      t: "`$STRING`"
+    }
+    weekly_rules: {
+      h: "Weekly Rules"
+      n: "weekly_rules"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "Rules that apply every week, by day of week and time of day, in evaluation order"
+      t: "`$ARRAY`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "pay_config"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "base_rate_cents"
+            "currency"
+            "name"
+            "one_off_rules"
+            "rate_time_unit"
+            "timezone"
+            "weekly_rules"
+          ]
+          co: {
+            id: "POST /v2/pay_configs"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/pay_configs"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_configs"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.pay_config`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/pay_configs"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/pay_configs"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_configs"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.pay_configs`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/pay_configs/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/pay_configs/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_configs"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.pay_config`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v2/pay_configs/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v2/pay_configs/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_configs"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "base_rate_cents"
+            "currency"
+            "name"
+            "rate_time_unit"
+            "timezone"
+          ]
+          co: {
+            id: "PUT /v2/pay_configs/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/pay_configs/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_configs"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.pay_config`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

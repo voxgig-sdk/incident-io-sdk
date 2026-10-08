@@ -4,98 +4,131 @@ main: kit: entity: alert_route: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "alert_source"
-      req: true
-      type: "`$ARRAY`"
+  fields: {
+    alert_sources: {
+      h: "Alert Sources"
+      n: "alert_sources"
+      r: true
+      sh: "Which alert sources should this alert route match?"
+      t: "`$ARRAY`"
     }
-    {
-      name: "channel_config"
-      req: true
-      type: "`$ARRAY`"
+    channel_config: {
+      h: "Channel Config"
+      n: "channel_config"
+      r: true
+      sh: "The channel configuration for this alert route"
+      t: "`$ARRAY`"
     }
-    {
-      name: "condition_group"
-      req: true
-      type: "`$ARRAY`"
+    condition_groups: {
+      h: "Condition Groups"
+      n: "condition_groups"
+      r: true
+      sh: "What condition groups must be true for this alert route to fire?"
+      t: "`$ARRAY`"
     }
-    {
-      name: "created_at"
-      req: false
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: false
+      sh: "The time of creation of this alert route"
+      t: "`$STRING`"
     }
-    {
-      name: "enabled"
-      req: true
-      type: "`$BOOLEAN`"
+    enabled: {
+      h: "Enabled"
+      n: "enabled"
+      r: true
+      sh: "Whether this alert route is enabled or not"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "escalation_config"
-      req: true
-      type: "`$OBJECT`"
+    escalation_config: {
+      h: "Escalation Config"
+      n: "escalation_config"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "expression"
-      req: true
-      type: "`$ARRAY`"
+    expressions: {
+      h: "Expressions"
+      n: "expressions"
+      r: true
+      sh: "The expressions used in this template"
+      t: "`$ARRAY`"
     }
-    {
-      name: "grouping_config"
-      req: true
-      type: "`$OBJECT`"
+    grouping_config: {
+      h: "Grouping Config"
+      n: "grouping_config"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this alert route config"
+      t: "`$STRING`"
     }
-    {
-      name: "incident_config"
-      req: true
-      type: "`$OBJECT`"
+    incident_config: {
+      h: "Incident Config"
+      n: "incident_config"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "incident_template"
-      req: true
-      type: "`$OBJECT`"
+    incident_template: {
+      h: "Incident Template"
+      n: "incident_template"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "is_private"
-      req: true
-      type: "`$BOOLEAN`"
+    is_private: {
+      h: "Is Private"
+      n: "is_private"
+      r: true
+      sh: "Whether this alert route is private."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "message_config"
-      req: true
-      type: "`$OBJECT`"
+    message_config: {
+      h: "Message Config"
+      n: "message_config"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "message_template"
-      req: false
-      type: "`$OBJECT`"
+    message_template: {
+      h: "Message Template"
+      n: "message_template"
+      r: false
+      t: "`$OBJECT`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "The name of this alert route config, for the user's reference"
+      t: "`$STRING`"
     }
-    {
-      name: "owning_team_id"
-      req: false
-      type: "`$ARRAY`"
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      r: false
+      sh: "IDs of teams that own this alert route"
+      t: "`$ARRAY`"
     }
-    {
-      name: "updated_at"
-      req: false
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: false
+      sh: "The time of last update of this alert route"
+      t: "`$STRING`"
     }
-    {
-      name: "version"
-      req: true
-      type: "`$INTEGER`"
+    version: {
+      fo: "int64"
+      h: "Version"
+      n: "version"
+      r: true
+      sh: "The version of this alert route config"
+      t: "`$INTEGER`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -108,25 +141,80 @@ main: kit: entity: alert_route: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/alert_routes"
-          parts: [
-            "v2"
-            "alert_routes"
+          bf: [
+            "alert_sources"
+            "channel_config"
+            "condition_groups"
+            "created_at"
+            "enabled"
+            "escalation_config"
+            "expressions"
+            "incident_config"
+            "incident_template"
+            "is_private"
+            "message_template"
+            "name"
+            "owning_team_ids"
+            "updated_at"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/alert_routes"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/alert_routes"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_routes"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_route`"
           }
         }
         {
-          method: "POST"
-          orig: "/v3/alert_routes"
-          parts: [
-            "v3"
-            "alert_routes"
+          bf: [
+            "alert_sources"
+            "condition_groups"
+            "enabled"
+            "escalation_config"
+            "expressions"
+            "grouping_config"
+            "incident_config"
+            "is_private"
+            "message_config"
+            "name"
+            "owning_team_ids"
           ]
-          transform: {
+          co: {
+            id: "POST /v3/alert_routes"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v3/alert_routes"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "alert_routes"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_route`"
           }
@@ -137,79 +225,98 @@ main: kit: entity: alert_route: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/alert_routes"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: true
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: true
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/alert_routes"
-          parts: [
-            "v2"
-            "alert_routes"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/alert_routes"
+          q: {
             exist: [
-              "after"
               "page_size"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_routes"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.alert_routes`"
           }
         }
         {
-          args: {
+          co: {
+            id: "GET /v3/alert_routes"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 2
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 2
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v3/alert_routes"
-          parts: [
-            "v3"
-            "alert_routes"
-          ]
-          select: {
-            exist: [
-              "after"
-              "page_size"
-            ]
+          m: "GET"
+          o: "/v3/alert_routes"
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
-          transform: {
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "alert_routes"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.alert_routes`"
           }
         }
       ]
@@ -218,61 +325,91 @@ main: kit: entity: alert_route: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/alert_routes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/alert_routes/{id}"
-          parts: [
-            "v2"
-            "alert_routes"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/alert_routes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_routes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_route`"
           }
         }
         {
-          args: {
+          co: {
+            id: "GET /v3/alert_routes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v3/alert_routes/{id}"
-          parts: [
-            "v3"
-            "alert_routes"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v3/alert_routes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "alert_routes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_route`"
           }
@@ -283,61 +420,83 @@ main: kit: entity: alert_route: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v2/alert_routes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/alert_routes/{id}"
-          parts: [
-            "v2"
-            "alert_routes"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/alert_routes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_routes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
         }
         {
-          args: {
+          co: {
+            id: "DELETE /v3/alert_routes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v3/alert_routes/{id}"
-          parts: [
-            "v3"
-            "alert_routes"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v3/alert_routes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "alert_routes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -348,61 +507,122 @@ main: kit: entity: alert_route: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "alert_sources"
+            "channel_config"
+            "condition_groups"
+            "created_at"
+            "enabled"
+            "escalation_config"
+            "expressions"
+            "incident_config"
+            "incident_template"
+            "is_private"
+            "message_template"
+            "name"
+            "owning_team_ids"
+            "updated_at"
+            "version"
+          ]
+          co: {
+            id: "PUT /v2/alert_routes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/alert_routes/{id}"
-          parts: [
-            "v2"
-            "alert_routes"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/alert_routes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_routes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_route`"
           }
         }
         {
-          args: {
+          bf: [
+            "alert_sources"
+            "condition_groups"
+            "enabled"
+            "escalation_config"
+            "expressions"
+            "grouping_config"
+            "incident_config"
+            "is_private"
+            "message_config"
+            "name"
+            "owning_team_ids"
+            "version"
+          ]
+          co: {
+            id: "PUT /v3/alert_routes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v3/alert_routes/{id}"
-          parts: [
-            "v3"
-            "alert_routes"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v3/alert_routes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "alert_routes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_route`"
           }

@@ -1,0 +1,65 @@
+# Entity: status_pages_v2
+
+main: kit: entity: status_pages_v2: {
+
+  alias: field: {}
+
+  name: "status_pages_v2"
+  op: {
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v2/status_page_maintenances/{status_page_maintenance_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG1"
+                k: "param"
+                n: "status_page_maintenance_id"
+                or: "status_page_maintenance_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v2/status_page_maintenances/{status_page_maintenance_id}"
+          q: {
+            exist: [
+              "status_page_maintenance_id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_maintenances"
+            }
+            {
+              var: "status_page_maintenance_id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.status_page_maintenance")]
+  ]
+
+}

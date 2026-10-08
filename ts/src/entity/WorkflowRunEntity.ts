@@ -20,7 +20,6 @@ import type {
   WorkflowRunListMatch,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class WorkflowRunEntity extends IncidentIoEntityBase<WorkflowRun> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -37,14 +36,15 @@ class WorkflowRunEntity extends IncidentIoEntityBase<WorkflowRun> {
 
 
 
-  async load(this: any, reqmatch?: WorkflowRunLoadMatch, ctrl?: Control): Promise<WorkflowRun> {
+  async load(this: any, reqmatch?: WorkflowRunLoadMatch, ctrl?: Control): Promise<WorkflowRunEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -128,12 +128,20 @@ class WorkflowRunEntity extends IncidentIoEntityBase<WorkflowRun> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -142,7 +150,7 @@ class WorkflowRunEntity extends IncidentIoEntityBase<WorkflowRun> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<WorkflowRun> return stays clean under strict null checks.
+        // Promise<WorkflowRunEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -150,14 +158,15 @@ class WorkflowRunEntity extends IncidentIoEntityBase<WorkflowRun> {
 
 
 
-  async list(this: any, reqmatch?: WorkflowRunListMatch, ctrl?: Control): Promise<WorkflowRun[]> {
+  async list(this: any, reqmatch?: WorkflowRunListMatch, ctrl?: Control): Promise<WorkflowRunEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -240,9 +249,15 @@ class WorkflowRunEntity extends IncidentIoEntityBase<WorkflowRun> {
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -251,11 +266,12 @@ class WorkflowRunEntity extends IncidentIoEntityBase<WorkflowRun> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<WorkflowRun[]> return stays clean under strict null checks.
+        // Promise<WorkflowRunEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

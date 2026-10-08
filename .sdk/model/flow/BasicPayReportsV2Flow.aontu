@@ -1,0 +1,32 @@
+# BasicPayReportsV2Flow
+
+main: kit: flow: BasicPayReportsV2Flow:
+{
+  entity: "pay_reports_v2",
+  kind: "basic",
+  name: "BasicPayReportsV2Flow",
+  step: [
+    {
+      i: {
+        ref: "pay_reports_v2_ref01",
+        srcdatavar: "pay_reports_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "pay_reports_v201"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-pay_reports_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPayReportsV2Flow"
+}

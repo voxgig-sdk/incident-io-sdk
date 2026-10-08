@@ -1,0 +1,47 @@
+{
+  "existing": {
+    "on_call_notification_method_public_v2": {
+      "ON_CALL_NOTIFICATION_METHOD_PUBLIC_V200": {
+        "address": "s32",
+        "id": "ON_CALL_NOTIFICATION_METHOD_PUBLIC_V200",
+        "is_usable": true,
+        "method_type": "s35",
+        "phone_details": {},
+        "user_id": "USER01"
+      },
+      "ON_CALL_NOTIFICATION_METHOD_PUBLIC_V201": {
+        "address": "s64",
+        "id": "ON_CALL_NOTIFICATION_METHOD_PUBLIC_V201",
+        "is_usable": true,
+        "method_type": "s67",
+        "phone_details": {},
+        "user_id": "USER01"
+      },
+      "ON_CALL_NOTIFICATION_METHOD_PUBLIC_V202": {
+        "address": "s96",
+        "id": "ON_CALL_NOTIFICATION_METHOD_PUBLIC_V202",
+        "is_usable": true,
+        "method_type": "s99",
+        "phone_details": {},
+        "user_id": "USER01"
+      }
+    }
+  },
+  "new": {
+    "on_call_notification_method_public_v2": {
+      "on_call_notification_method_public_v2_ref01": {
+        "address": "sc8",
+        "is_usable": true,
+        "method_type": "scb",
+        "phone_details": {}
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/users/{user_id}/notification_methods": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

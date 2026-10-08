@@ -8,6 +8,37 @@ local runner = require("test.runner")
 
 local _test_dir = debug.getinfo(1, "S").source:match("^@(.+/)")  or "./"
 
+-- main.kit.test.live.strict is true (the default is true): a live
+-- request that fails, or a live test missing an input it needs,
+-- fails the test.
+-- An account with no record for a test to read skips it either way.
+local LIVE_STRICT = true
+
+
+local BaseFeature = require("feature.base_feature")
+
+local FailHook = {}
+FailHook.__index = FailHook
+setmetatable(FailHook, { __index = BaseFeature })
+
+function FailHook.new()
+  local self = setmetatable(BaseFeature.new(), FailHook)
+  self.name = "failhook"
+  self.unexpected = 0
+  return self
+end
+
+function FailHook:init(_ctx, _options) end
+function FailHook:PreSpec(_ctx) error("status_page hook failed") end
+function FailHook:PreUnexpected(_ctx) self.unexpected = self.unexpected + 1 end
+
+local function errtext(err)
+  if type(err) == "table" then
+    return tostring(err.msg or err.message or "")
+  end
+  return tostring(err)
+end
+
 describe("StatusPageEntity", function()
   it("should create instance", function()
     local testsdk = sdk.test(nil, nil)
@@ -39,7 +70,7 @@ describe("StatusPageEntity", function()
     assert.are.equal(3, #seen)
 
     -- Inbound: streaming active -> yields each item from the feature.
-    local config = require("config")()
+    local config = require("config_shared")()
     if type(config.feature) == "table" and config.feature.streaming ~= nil then
       local streamsdk = sdk.test(seed, { feature = { streaming = { active = true } } })
       local got = {}
@@ -56,24 +87,79 @@ describe("StatusPageEntity", function()
     end
   end)
 
+  it("should report a failed stream", function()
+    local offline = { net = { offline = true } }
+    local ok, err = pcall(function()
+      for _ in sdk.test(offline, nil):StatusPage(nil):stream("list", nil, nil) do end
+    end)
+    assert.is_false(ok)
+    assert.truthy(string.find(errtext(err), "offline", 1, true))
+
+    for _ in sdk.test(offline, nil):StatusPage(nil):stream("list", nil, { ctrl = { throw = false } }) do end
+
+    local config = require("config_shared")()
+    if type(config.feature) == "table" and config.feature.rbac ~= nil then
+      local denied = sdk.test(nil, { feature = { rbac = { active = true, deny = true } } })
+      local dok, derr = pcall(function()
+        for _ in denied:StatusPage(nil):stream("list", nil, nil) do end
+      end)
+      assert.is_false(dok)
+      assert.are.equal("rbac_denied", type(derr) == "table" and derr.code or nil)
+    end
+  end)
+
+  it("should leave the caller's ctrl", function()
+    local explain = {}
+    local ctrl = { explain = explain }
+    for _ in sdk.test(nil, nil):StatusPage(nil):stream("list", nil, { ctrl = ctrl }) do end
+    assert.is_nil(ctrl.stream)
+    assert.are.equal(explain, ctrl.explain)
+    assert.is_not_nil(next(explain))
+  end)
+
+  it("should fire PreUnexpected", function()
+    local hook = FailHook.new()
+    local client = sdk.new({ feature = { test = { active = true } }, extend = { hook } })
+
+    local out, err = client:StatusPage(nil):list(nil, nil)
+    assert.is_nil(out)
+    assert.truthy(string.find(errtext(err), "hook failed", 1, true))
+    assert.is_true(hook.unexpected > 0)
+
+    local fired = hook.unexpected
+    out, err = client:StatusPage(nil):list(nil, { throw = false })
+    assert.is_nil(err)
+    assert.is_true(hook.unexpected > fired)
+  end)
+
+  it("should refuse an invalid request", function()
+    local config = require("config_shared")()
+    if type(config.feature) ~= "table" or config.feature.validate == nil then
+      pending("feature not present in this SDK: validate")
+      return
+    end
+    local client = sdk.test(nil, { feature = { validate = { active = true } } })
+    local _, err = client:StatusPage(nil):list({ ["after"] = 1 }, nil)
+    assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
+  end)
+
   it("should run basic flow", function()
     local setup = status_page_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"list"}) do
+    for _, _op in ipairs({"list", "load"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "status_page." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
         return
       end
     end
-    -- The basic flow consumes synthetic IDs from the fixture. In live mode
-    -- without an *_ENTID env override, those IDs hit the live API and 4xx.
-    if setup.synthetic_only then
-      pending("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_STATUS_PAGE_ENTID JSON to run live")
-      return
-    end
     local client = setup.client
+    if setup.live then
+      runner.live_existing(pending, setup, LIVE_STRICT, "status_page", function()
+        return client:StatusPage(nil):list({}, nil)
+      end)
+    end
 
     -- Bootstrap entity data from existing test data.
     local status_page_ref01_data_raw = vs.items(helpers.to_map(
@@ -90,6 +176,16 @@ describe("StatusPageEntity", function()
     local status_page_ref01_list_result, err = status_page_ref01_ent:list(status_page_ref01_match, nil)
     assert.is_nil(err)
     assert.is_table(status_page_ref01_list_result)
+
+    -- LOAD
+    local status_page_ref01_match_dt0 = {
+      id = status_page_ref01_data["id"],
+    }
+    local status_page_ref01_data_dt0_loaded, err = status_page_ref01_ent:load(status_page_ref01_match_dt0, nil)
+    assert.is_nil(err)
+    local status_page_ref01_data_dt0_load_result = helpers.to_map(type(status_page_ref01_data_dt0_loaded) == 'table' and status_page_ref01_data_dt0_loaded.data_get and status_page_ref01_data_dt0_loaded:data_get() or status_page_ref01_data_dt0_loaded)
+    assert.is_not_nil(status_page_ref01_data_dt0_load_result)
+    assert.are.equal(status_page_ref01_data_dt0_load_result["id"], status_page_ref01_data["id"])
 
   end)
 end)
@@ -123,40 +219,44 @@ function status_page_basic_setup(extra)
     }
   )
 
-  -- Detect ENTID env override before envOverride consumes it. When live
-  -- mode is on without a real override, the basic test runs against synthetic
-  -- IDs from the fixture and 4xx's. Surface this so the test can skip.
-  local entid_env_raw = os.getenv("INCIDENTIO_TEST_STATUS_PAGE_ENTID")
+  -- Whether *_ENTID supplied the idmap, read before env_override consumes
+  -- it: without it, the ids a live flow binds are the fixture's synthetic ones.
+  local entid_env_raw = os.getenv("INCIDENT_IO_TEST_STATUS_PAGE_ENTID")
   local idmap_overridden = entid_env_raw ~= nil and entid_env_raw:match("^%s*{") ~= nil
 
   local env = runner.env_override({
-    ["INCIDENTIO_TEST_STATUS_PAGE_ENTID"] = idmap,
-    ["INCIDENTIO_TEST_LIVE"] = "FALSE",
-    ["INCIDENTIO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_TEST_STATUS_PAGE_ENTID"] = idmap,
+    ["INCIDENT_IO_TEST_LIVE"] = "FALSE",
+    ["INCIDENT_IO_TEST_EXPLAIN"] = "FALSE",
+    ["INCIDENT_IO_APIKEY"] = "",
   })
 
   local idmap_resolved = helpers.to_map(
-    env["INCIDENTIO_TEST_STATUS_PAGE_ENTID"])
+    env["INCIDENT_IO_TEST_STATUS_PAGE_ENTID"])
   if idmap_resolved == nil then
     idmap_resolved = helpers.to_map(idmap)
   end
 
-  if env["INCIDENTIO_TEST_LIVE"] == "TRUE" then
+  if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
+      -- FIRST, so the generated fields below win: sdk-test-control.json's
+      -- test.client.options adds to the live client, it does not redirect it.
+      runner.live_client_options(),
       {
+        apikey = env["INCIDENT_IO_APIKEY"],
       },
       extra or {},
     })
     client = sdk.new(helpers.to_map(merged_opts))
   end
 
-  local live = env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+  local live = env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
   return {
     client = client,
     data = entity_data,
     idmap = idmap_resolved,
     env = env,
-    explain = env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+    explain = env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
     live = live,
     synthetic_only = live and not idmap_overridden,
     now = os.time() * 1000,

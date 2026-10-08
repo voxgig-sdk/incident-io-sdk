@@ -1,0 +1,95 @@
+{
+  "existing": {
+    "follow_ups_connect_external_issue_result_v3": {
+      "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V300": {
+        "assignee": {},
+        "assignee_team": {},
+        "category": {},
+        "completed_at": "sad",
+        "created_at": "sae",
+        "creator": {},
+        "description": "sb0",
+        "external_issue_reference": {},
+        "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V300",
+        "incident_id": "INCIDENT01",
+        "labels": [],
+        "priority": {},
+        "provider": "sb6",
+        "status": "sb7",
+        "title": "sb8",
+        "updated_at": "sb9",
+        "url": "sba",
+        "follow_up_id": "FOLLOW_UP01"
+      },
+      "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V301": {
+        "assignee": {},
+        "assignee_team": {},
+        "category": {},
+        "completed_at": "s157",
+        "created_at": "s158",
+        "creator": {},
+        "description": "s15a",
+        "external_issue_reference": {},
+        "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V301",
+        "incident_id": "INCIDENT01",
+        "labels": [],
+        "priority": {},
+        "provider": "s160",
+        "status": "s161",
+        "title": "s162",
+        "updated_at": "s163",
+        "url": "s164",
+        "follow_up_id": "FOLLOW_UP01"
+      },
+      "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V302": {
+        "assignee": {},
+        "assignee_team": {},
+        "category": {},
+        "completed_at": "s201",
+        "created_at": "s202",
+        "creator": {},
+        "description": "s204",
+        "external_issue_reference": {},
+        "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V302",
+        "incident_id": "INCIDENT01",
+        "labels": [],
+        "priority": {},
+        "provider": "s20a",
+        "status": "s20b",
+        "title": "s20c",
+        "updated_at": "s20d",
+        "url": "s20e",
+        "follow_up_id": "FOLLOW_UP01"
+      }
+    }
+  },
+  "new": {
+    "follow_ups_connect_external_issue_result_v3": {
+      "follow_ups_connect_external_issue_result_v3_ref01": {
+        "assignee": {},
+        "assignee_team": {},
+        "category": {},
+        "completed_at": "s2ab",
+        "created_at": "s2ac",
+        "creator": {},
+        "description": "s2ae",
+        "external_issue_reference": {},
+        "incident_id": "INCIDENT01",
+        "labels": [],
+        "priority": {},
+        "provider": "s2b4",
+        "status": "s2b5",
+        "title": "s2b6",
+        "updated_at": "s2b7",
+        "url": "s2b8"
+      }
+    }
+  },
+  "requests": {
+    "POST /v3/follow_ups/{id}/actions/connect_external_issue": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

@@ -1,0 +1,218 @@
+# Entity: pay_reports_publish_result_v2
+
+main: kit: entity: pay_reports_publish_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    cc_emails: {
+      h: "Cc Emails"
+      n: "cc_emails"
+      r: true
+      sh: "Email addresses to send a copy of the report to"
+      t: "`$ARRAY`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this report was created"
+      t: "`$STRING`"
+    }
+    creator: {
+      h: "Creator"
+      n: "creator"
+      r: false
+      t: "`$OBJECT`"
+    }
+    end_date: {
+      h: "End Date"
+      n: "end_date"
+      r: true
+      sh: "Last date (YYYY-MM-DD) this report includes shifts from, inclusive"
+      t: "`$STRING`"
+    }
+    error_code: {
+      h: "Error Code"
+      n: "error_code"
+      r: false
+      sh: "Why a report could not be generated"
+      t: "`$STRING`"
+    }
+    error_message: {
+      h: "Error Message"
+      n: "error_message"
+      r: false
+      sh: "What went wrong, written for whoever asked for the report."
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this pay report"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name for this report"
+      t: "`$STRING`"
+    }
+    overlapping_shifts: {
+      h: "Overlapping Shifts"
+      n: "overlapping_shifts"
+      r: true
+      sh: "How time spent on more than one schedule at once was paid"
+      t: "`$STRING`"
+    }
+    published_at: {
+      fo: "date-time"
+      h: "Published At"
+      n: "published_at"
+      r: false
+      sh: "When this report was published."
+      t: "`$STRING`"
+    }
+    schedule_ids: {
+      h: "Schedule Ids"
+      n: "schedule_ids"
+      r: true
+      sh: "The schedules this report covers"
+      t: "`$ARRAY`"
+    }
+    send_user_breakdowns: {
+      h: "Send User Breakdowns"
+      n: "send_user_breakdowns"
+      r: true
+      sh: "Whether each user in the report is emailed their own pay breakdown"
+      t: "`$STRING`"
+    }
+    start_date: {
+      h: "Start Date"
+      n: "start_date"
+      r: true
+      sh: "First date (YYYY-MM-DD) this report includes shifts from, inclusive"
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: true
+      sh: "How far a report has got through being generated"
+      t: "`$STRING`"
+    }
+    total_duration_seconds: {
+      fo: "int64"
+      h: "Total Duration Seconds"
+      n: "total_duration_seconds"
+      r: false
+      sh: "Total time spent on-call across every shift in this report, in seconds."
+      t: "`$INTEGER`"
+    }
+    total_pay_by_currency: {
+      h: "Total Pay By Currency"
+      n: "total_pay_by_currency"
+      r: false
+      sh: "Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency."
+      t: "`$OBJECT`"
+    }
+    unpaid_shifts: {
+      h: "Unpaid Shifts"
+      n: "unpaid_shifts"
+      r: true
+      sh: "Whether shifts that priced to zero are part of the report"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this report was last updated"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "pay_reports_publish_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "cc_emails"
+            "send_user_breakdowns"
+          ]
+          co: {
+            id: "POST /v2/pay_reports/{id}/actions/publish"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "pay_report_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/pay_reports/{id}/actions/publish"
+          q: {
+            exist: [
+              "pay_report_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "pay_report_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "pay_reports"
+            }
+            {
+              var: "pay_report_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "publish"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.pay_report`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.pay_report")]
+  ]
+
+}

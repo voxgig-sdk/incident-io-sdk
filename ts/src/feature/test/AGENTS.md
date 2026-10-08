@@ -1,9 +1,9 @@
 # TestFeature — Agent Guide
 
-In-memory mock transport for testing without a live server (v0.0.1).
+Test transport (v0.0.1).
 
 A **feature** is a pipeline extension: an object of hooks that fire at named
-stages of every entity operation (load, list, create, update, remove) and of
+stages of every entity operation (load, list, create, update, patch, remove) and of
 the SDK/entity lifecycle. Features are how you inspect or modify the request
 pipeline without forking the SDK. This directory holds the **generated**
 runtime for the `test` feature in the TypeScript target — do

@@ -1,0 +1,35 @@
+{
+  "existing": {
+    "pay_configs_v2": {
+      "PAY_CONFIGS_V200": {
+        "id": "PAY_CONFIGS_V200",
+        "pay_config_id": "PAY_CONFIG01"
+      },
+      "PAY_CONFIGS_V201": {
+        "id": "PAY_CONFIGS_V201",
+        "pay_config_id": "PAY_CONFIG01"
+      },
+      "PAY_CONFIGS_V202": {
+        "id": "PAY_CONFIGS_V202",
+        "pay_config_id": "PAY_CONFIG01"
+      }
+    }
+  },
+  "new": {
+    "pay_configs_v2": {
+      "pay_configs_v2_ref01": {}
+    }
+  },
+  "requests": {
+    "DELETE /v2/pay_configs/{pay_config_id}/one_off_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/pay_configs/{pay_config_id}/weekly_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+# BasicFollowUpsCreateFromLinkResultV3Flow
+
+main: kit: flow: BasicFollowUpsCreateFromLinkResultV3Flow:
+{
+  entity: "follow_ups_create_from_link_result_v3",
+  kind: "basic",
+  name: "BasicFollowUpsCreateFromLinkResultV3Flow",
+  step: [
+    {
+      i: {
+        ref: "follow_ups_create_from_link_result_v3_ref01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicFollowUpsCreateFromLinkResultV3Flow"
+}

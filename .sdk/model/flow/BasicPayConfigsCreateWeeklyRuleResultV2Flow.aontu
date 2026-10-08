@@ -1,0 +1,22 @@
+# BasicPayConfigsCreateWeeklyRuleResultV2Flow
+
+main: kit: flow: BasicPayConfigsCreateWeeklyRuleResultV2Flow:
+{
+  entity: "pay_configs_create_weekly_rule_result_v2",
+  kind: "basic",
+  name: "BasicPayConfigsCreateWeeklyRuleResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "pay_configs_create_weekly_rule_result_v2_ref01"
+      }
+
+      m: {
+        pay_config_id: "pay_config01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicPayConfigsCreateWeeklyRuleResultV2Flow"
+}

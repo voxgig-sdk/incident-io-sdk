@@ -21,7 +21,6 @@ import type {
   IncidentAttachmentRemoveMatch,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -39,14 +38,15 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
 
 
 
-  async list(this: any, reqmatch?: IncidentAttachmentListMatch, ctrl?: Control): Promise<IncidentAttachment[]> {
+  async list(this: any, reqmatch?: IncidentAttachmentListMatch, ctrl?: Control): Promise<IncidentAttachmentEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -129,9 +129,15 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -140,7 +146,7 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IncidentAttachment[]> return stays clean under strict null checks.
+        // Promise<IncidentAttachmentEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -148,13 +154,14 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
 
 
 
-  async create(this: any, reqdata?: IncidentAttachmentCreateData, ctrl?: Control): Promise<IncidentAttachment> {
+  async create(this: any, reqdata?: IncidentAttachmentCreateData, ctrl?: Control): Promise<IncidentAttachmentEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -234,12 +241,20 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -248,7 +263,7 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IncidentAttachment> return stays clean under strict null checks.
+        // Promise<IncidentAttachmentEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -257,14 +272,18 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
 
 
 
-  async remove(this: any, reqmatch?: IncidentAttachmentRemoveMatch, ctrl?: Control): Promise<IncidentAttachment> {
+
+  async remove(
+    this: any, reqmatch?: IncidentAttachmentRemoveMatch, ctrl?: Control,
+  ): Promise<IncidentAttachmentEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -349,12 +368,25 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      if (ctx.result && ctx.result.ok) {
+        this.markDeleted()
+        return this
+      }
+
+      return out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -363,7 +395,7 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase<IncidentAttachment> 
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IncidentAttachment> return stays clean under strict null checks.
+        // Promise<IncidentAttachmentEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }

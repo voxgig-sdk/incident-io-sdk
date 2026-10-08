@@ -1,6 +1,6 @@
 # IncidentIo Lua SDK
 
-incident.io API clients in TypeScript, JavaScript, Go, Python, PHP and Lua, plus an MCP server for AI agents — all generated from incident.io's public OpenAPI spec, so every surface stays in sync with the API.
+
 
 The Lua SDK for the IncidentIo API — an entity-oriented client using Lua conventions.
 
@@ -12,7 +12,7 @@ It exposes the API as capitalised, semantic **Entities** — e.g. `client:Action
 
 ## Install
 This package is not yet published to LuaRocks. Install it from the
-GitHub release tag (`lua/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/incident-io-sdk/releases)),
+GitHub release tag (`lua/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/incident-io-sdk/tags)),
 or add the source directory to your `LUA_PATH`:
 
 ```bash
@@ -30,31 +30,38 @@ loading a specific record.
 ```lua
 local sdk = require("incident-io_sdk")
 
-local client = sdk.new()
+local client = sdk.new({
+  apikey = os.getenv("INCIDENT_IO_APIKEY"),
+})
 ```
 
 ### 2. List action records
 
-Entity operations return `(value, err)`. For `list`, `value` is the
-array of records itself — iterate it directly (there is no wrapper).
+Entity operations return `(value, err)`. For `list`, `value` is an
+array of entities, one per record — iterate it directly (there is no
+wrapper), and read each record with `data_get()`.
 
 ```lua
 local actions, err = client:Action():list()
 if err then error(err) end
 
 for _, item in ipairs(actions) do
-  print(item["id"], item["assignee_id"])
+  local rec = item:data_get()
+  print(rec["id"])
 end
 ```
 
-### 3. Load a schedulereplica
+### 3. Load a callroutesshowallowedcallerresultv2
 
-ScheduleReplica is nested under schedule, so provide the `schedule_id`.
+CallRoutesShowAllowedCallerResultV2 is nested under call_route, so provide the `call_route_id`.
+
+`load` returns the entity; `data_get()` reads its record.
 
 ```lua
-local schedulereplica, err = client:ScheduleReplica():load({ schedule_id = "example_schedule_id", id = "example_id" })
+local callroutesshowallowedcallerresultv2, err = client:CallRoutesShowAllowedCallerResultV2():load({ call_route_id = "example_call_route_id", id = "example_id" })
 if err then error(err) end
-print(schedulereplica)
+local rec = callroutesshowallowedcallerresultv2:data_get()
+print(rec["id"])
 ```
 
 ### 4. Create, update, and remove
@@ -65,10 +72,10 @@ local created, err = client:Action():create({ assignee = {}, created_at = "examp
 if err then error(err) end
 
 -- Update
-client:Action():update({ id = created["id"], assignee = {}, assignee_id = "example_assignee_id" })
+client:Action():update({ id = created:data_get()["id"], assignee = {}, assignee_id = "example_assignee_id" })
 
 -- Remove
-client:Action():remove({ id = created["id"] })
+client:Action():remove({ id = created:data_get()["id"] })
 ```
 
 
@@ -78,7 +85,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local incidentroles, err = client:IncidentRole():list()
+local incidentstatuss, err = client:IncidentStatus():list()
 if err then error(err) end
 ```
 
@@ -136,8 +143,8 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:IncidentRole():list()
--- result is the returned data; err is set on failure
+local result, err = client:IncidentStatus():list()
+-- result is an array of entities, one per mock record; err is set on failure
 ```
 
 ### Use a custom fetch function
@@ -170,6 +177,7 @@ Create a `.env.local` file at the project root:
 
 ```
 INCIDENT_IO_TEST_LIVE=TRUE
+INCIDENT_IO_APIKEY=<your-key>
 ```
 
 Then run:
@@ -192,6 +200,7 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
+| `apikey` | `string` | API key for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -221,7 +230,27 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `AlertNote` | `(data) -> AlertNoteEntity` | Create an AlertNote entity instance. |
 | `AlertRoute` | `(data) -> AlertRouteEntity` | Create an AlertRoute entity instance. |
 | `AlertSource` | `(data) -> AlertSourceEntity` | Create an AlertSource entity instance. |
+| `AlertSourcesV2` | `(data) -> AlertSourcesV2Entity` | Create an AlertSourcesV2 entity instance. |
+| `AlertTag` | `(data) -> AlertTagEntity` | Create an AlertTag entity instance. |
+| `AlertsAddTagsResultV2` | `(data) -> AlertsAddTagsResultV2Entity` | Create an AlertsAddTagsResultV2 entity instance. |
+| `AlertsRemoveTagsResultV2` | `(data) -> AlertsRemoveTagsResultV2Entity` | Create an AlertsRemoveTagsResultV2 entity instance. |
+| `AlertsSetTagsResultV2` | `(data) -> AlertsSetTagsResultV2Entity` | Create an AlertsSetTagsResultV2 entity instance. |
+| `AlertsTransitionIncidentAlertResultV2` | `(data) -> AlertsTransitionIncidentAlertResultV2Entity` | Create an AlertsTransitionIncidentAlertResultV2 entity instance. |
+| `AnnouncementRule` | `(data) -> AnnouncementRuleEntity` | Create an AnnouncementRule entity instance. |
+| `AnnouncementTemplate` | `(data) -> AnnouncementTemplateEntity` | Create an AnnouncementTemplate entity instance. |
 | `ApiKey` | `(data) -> ApiKeyEntity` | Create an ApiKey entity instance. |
+| `CallRoute` | `(data) -> CallRouteEntity` | Create a CallRoute entity instance. |
+| `CallRoutesCreateAllowedCallerResultV2` | `(data) -> CallRoutesCreateAllowedCallerResultV2Entity` | Create a CallRoutesCreateAllowedCallerResultV2 entity instance. |
+| `CallRoutesCreateOptionResultV2` | `(data) -> CallRoutesCreateOptionResultV2Entity` | Create a CallRoutesCreateOptionResultV2 entity instance. |
+| `CallRoutesListAllowedCallersResultV2` | `(data) -> CallRoutesListAllowedCallersResultV2Entity` | Create a CallRoutesListAllowedCallersResultV2 entity instance. |
+| `CallRoutesListOptionsResultV2` | `(data) -> CallRoutesListOptionsResultV2Entity` | Create a CallRoutesListOptionsResultV2 entity instance. |
+| `CallRoutesShowAllowedCallerResultV2` | `(data) -> CallRoutesShowAllowedCallerResultV2Entity` | Create a CallRoutesShowAllowedCallerResultV2 entity instance. |
+| `CallRoutesShowOptionResultV2` | `(data) -> CallRoutesShowOptionResultV2Entity` | Create a CallRoutesShowOptionResultV2 entity instance. |
+| `CallRoutesUpdateAllowedCallerResultV2` | `(data) -> CallRoutesUpdateAllowedCallerResultV2Entity` | Create a CallRoutesUpdateAllowedCallerResultV2 entity instance. |
+| `CallRoutesUpdateOptionResultV2` | `(data) -> CallRoutesUpdateOptionResultV2Entity` | Create a CallRoutesUpdateOptionResultV2 entity instance. |
+| `CallRoutesV2` | `(data) -> CallRoutesV2Entity` | Create a CallRoutesV2 entity instance. |
+| `CallSession` | `(data) -> CallSessionEntity` | Create a CallSession entity instance. |
+| `CallTranscriptEntry` | `(data) -> CallTranscriptEntryEntity` | Create a CallTranscriptEntry entity instance. |
 | `CatalogEntry` | `(data) -> CatalogEntryEntity` | Create a CatalogEntry entity instance. |
 | `CatalogResource` | `(data) -> CatalogResourceEntity` | Create a CatalogResource entity instance. |
 | `CatalogType` | `(data) -> CatalogTypeEntity` | Create a CatalogType entity instance. |
@@ -229,37 +258,78 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `CustomField` | `(data) -> CustomFieldEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `(data) -> CustomFieldOptionEntity` | Create a CustomFieldOption entity instance. |
 | `Escalation` | `(data) -> EscalationEntity` | Create an Escalation entity instance. |
+| `EscalationPathTemplate` | `(data) -> EscalationPathTemplateEntity` | Create an EscalationPathTemplate entity instance. |
+| `EscalationsCheckEscalationPermissionsResultV2` | `(data) -> EscalationsCheckEscalationPermissionsResultV2Entity` | Create an EscalationsCheckEscalationPermissionsResultV2 entity instance. |
+| `EscalationsReassignEscalationResultV2` | `(data) -> EscalationsReassignEscalationResultV2Entity` | Create an EscalationsReassignEscalationResultV2 entity instance. |
 | `FollowUp` | `(data) -> FollowUpEntity` | Create a FollowUp entity instance. |
+| `FollowUpsConnectExternalIssueResultV3` | `(data) -> FollowUpsConnectExternalIssueResultV3Entity` | Create a FollowUpsConnectExternalIssueResultV3 entity instance. |
+| `FollowUpsCreateFromLinkResultV3` | `(data) -> FollowUpsCreateFromLinkResultV3Entity` | Create a FollowUpsCreateFromLinkResultV3 entity instance. |
+| `Identity` | `(data) -> IdentityEntity` | Create an Identity entity instance. |
 | `Incident` | `(data) -> IncidentEntity` | Create an Incident entity instance. |
-| `IncidentAlert` | `(data) -> IncidentAlertEntity` | Create an IncidentAlert entity instance. |
+| `IncidentActivityLogEntry` | `(data) -> IncidentActivityLogEntryEntity` | Create an IncidentActivityLogEntry entity instance. |
 | `IncidentAttachment` | `(data) -> IncidentAttachmentEntity` | Create an IncidentAttachment entity instance. |
+| `IncidentForm` | `(data) -> IncidentFormEntity` | Create an IncidentForm entity instance. |
 | `IncidentMembership` | `(data) -> IncidentMembershipEntity` | Create an IncidentMembership entity instance. |
 | `IncidentParticipant` | `(data) -> IncidentParticipantEntity` | Create an IncidentParticipant entity instance. |
 | `IncidentParticipantWorkload` | `(data) -> IncidentParticipantWorkloadEntity` | Create an IncidentParticipantWorkload entity instance. |
 | `IncidentRelationship` | `(data) -> IncidentRelationshipEntity` | Create an IncidentRelationship entity instance. |
 | `IncidentRole` | `(data) -> IncidentRoleEntity` | Create an IncidentRole entity instance. |
 | `IncidentStatus` | `(data) -> IncidentStatusEntity` | Create an IncidentStatus entity instance. |
+| `IncidentTeamMembership` | `(data) -> IncidentTeamMembershipEntity` | Create an IncidentTeamMembership entity instance. |
+| `IncidentTeamMembershipsV1` | `(data) -> IncidentTeamMembershipsV1Entity` | Create an IncidentTeamMembershipsV1 entity instance. |
+| `IncidentTemplate` | `(data) -> IncidentTemplateEntity` | Create an IncidentTemplate entity instance. |
+| `IncidentTemplatesValidateResultV1` | `(data) -> IncidentTemplatesValidateResultV1Entity` | Create an IncidentTemplatesValidateResultV1 entity instance. |
+| `IncidentTimelineItem` | `(data) -> IncidentTimelineItemEntity` | Create an IncidentTimelineItem entity instance. |
 | `IncidentTimestamp` | `(data) -> IncidentTimestampEntity` | Create an IncidentTimestamp entity instance. |
 | `IncidentType` | `(data) -> IncidentTypeEntity` | Create an IncidentType entity instance. |
 | `IncidentUpdate` | `(data) -> IncidentUpdateEntity` | Create an IncidentUpdate entity instance. |
 | `IpAllowlist` | `(data) -> IpAllowlistEntity` | Create an IpAllowlist entity instance. |
+| `IpRange` | `(data) -> IpRangeEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow` | `(data) -> MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
+| `OnCallNotificationMethodPublicV2` | `(data) -> OnCallNotificationMethodPublicV2Entity` | Create an OnCallNotificationMethodPublicV2 entity instance. |
+| `OnCallNotificationRulePublicV2` | `(data) -> OnCallNotificationRulePublicV2Entity` | Create an OnCallNotificationRulePublicV2 entity instance. |
+| `PayConfig` | `(data) -> PayConfigEntity` | Create a PayConfig entity instance. |
+| `PayConfigsCreateOneOffRuleResultV2` | `(data) -> PayConfigsCreateOneOffRuleResultV2Entity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
+| `PayConfigsCreateWeeklyRuleResultV2` | `(data) -> PayConfigsCreateWeeklyRuleResultV2Entity` | Create a PayConfigsCreateWeeklyRuleResultV2 entity instance. |
+| `PayConfigsListOneOffRulesResultV2` | `(data) -> PayConfigsListOneOffRulesResultV2Entity` | Create a PayConfigsListOneOffRulesResultV2 entity instance. |
+| `PayConfigsListWeeklyRulesResultV2` | `(data) -> PayConfigsListWeeklyRulesResultV2Entity` | Create a PayConfigsListWeeklyRulesResultV2 entity instance. |
+| `PayConfigsShowOneOffRuleResultV2` | `(data) -> PayConfigsShowOneOffRuleResultV2Entity` | Create a PayConfigsShowOneOffRuleResultV2 entity instance. |
+| `PayConfigsShowWeeklyRuleResultV2` | `(data) -> PayConfigsShowWeeklyRuleResultV2Entity` | Create a PayConfigsShowWeeklyRuleResultV2 entity instance. |
+| `PayConfigsUpdateOneOffRuleResultV2` | `(data) -> PayConfigsUpdateOneOffRuleResultV2Entity` | Create a PayConfigsUpdateOneOffRuleResultV2 entity instance. |
+| `PayConfigsUpdateWeeklyRuleResultV2` | `(data) -> PayConfigsUpdateWeeklyRuleResultV2Entity` | Create a PayConfigsUpdateWeeklyRuleResultV2 entity instance. |
+| `PayConfigsV2` | `(data) -> PayConfigsV2Entity` | Create a PayConfigsV2 entity instance. |
+| `PayReport` | `(data) -> PayReportEntity` | Create a PayReport entity instance. |
+| `PayReportsPublishResultV2` | `(data) -> PayReportsPublishResultV2Entity` | Create a PayReportsPublishResultV2 entity instance. |
+| `PayReportsUnpublishResultV2` | `(data) -> PayReportsUnpublishResultV2Entity` | Create a PayReportsUnpublishResultV2 entity instance. |
+| `PayReportsV2` | `(data) -> PayReportsV2Entity` | Create a PayReportsV2 entity instance. |
+| `PoliciesV2` | `(data) -> PoliciesV2Entity` | Create a PoliciesV2 entity instance. |
+| `Policy` | `(data) -> PolicyEntity` | Create a Policy entity instance. |
+| `PolicyFinding` | `(data) -> PolicyFindingEntity` | Create a PolicyFinding entity instance. |
+| `PolicyFindingsDismissResultV2` | `(data) -> PolicyFindingsDismissResultV2Entity` | Create a PolicyFindingsDismissResultV2 entity instance. |
+| `PolicyFindingsRestoreResultV2` | `(data) -> PolicyFindingsRestoreResultV2Entity` | Create a PolicyFindingsRestoreResultV2 entity instance. |
 | `PostmortemDocument` | `(data) -> PostmortemDocumentEntity` | Create a PostmortemDocument entity instance. |
 | `Schedule` | `(data) -> ScheduleEntity` | Create a Schedule entity instance. |
+| `ScheduleEntriesListPayloadV2` | `(data) -> ScheduleEntriesListPayloadV2Entity` | Create a ScheduleEntriesListPayloadV2 entity instance. |
 | `ScheduleEntry` | `(data) -> ScheduleEntryEntity` | Create a ScheduleEntry entity instance. |
 | `ScheduleReplica` | `(data) -> ScheduleReplicaEntity` | Create a ScheduleReplica entity instance. |
 | `ScheduleSyncRule` | `(data) -> ScheduleSyncRuleEntity` | Create a ScheduleSyncRule entity instance. |
 | `ScheduleSyncTarget` | `(data) -> ScheduleSyncTargetEntity` | Create a ScheduleSyncTarget entity instance. |
+| `SchedulesShowOverrideResultV2` | `(data) -> SchedulesShowOverrideResultV2Entity` | Create a SchedulesShowOverrideResultV2 entity instance. |
+| `SchedulesUpdateOverrideResultV2` | `(data) -> SchedulesUpdateOverrideResultV2Entity` | Create a SchedulesUpdateOverrideResultV2 entity instance. |
 | `Secret` | `(data) -> SecretEntity` | Create a Secret entity instance. |
 | `Severity` | `(data) -> SeverityEntity` | Create a Severity entity instance. |
 | `StatusPage` | `(data) -> StatusPageEntity` | Create a StatusPage entity instance. |
+| `StatusPageComponent` | `(data) -> StatusPageComponentEntity` | Create a StatusPageComponent entity instance. |
+| `StatusPageComponentAvailabilityV2` | `(data) -> StatusPageComponentAvailabilityV2Entity` | Create a StatusPageComponentAvailabilityV2 entity instance. |
 | `StatusPageIncident` | `(data) -> StatusPageIncidentEntity` | Create a StatusPageIncident entity instance. |
 | `StatusPageIncidentUpdate` | `(data) -> StatusPageIncidentUpdateEntity` | Create a StatusPageIncidentUpdate entity instance. |
+| `StatusPageLinkedResponseIncidentV1` | `(data) -> StatusPageLinkedResponseIncidentV1Entity` | Create a StatusPageLinkedResponseIncidentV1 entity instance. |
 | `StatusPageMaintenance` | `(data) -> StatusPageMaintenanceEntity` | Create a StatusPageMaintenance entity instance. |
 | `StatusPageMaintenanceUpdate` | `(data) -> StatusPageMaintenanceUpdateEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
 | `StatusPageStructure` | `(data) -> StatusPageStructureEntity` | Create a StatusPageStructure entity instance. |
+| `StatusPagesV2` | `(data) -> StatusPagesV2Entity` | Create a StatusPagesV2 entity instance. |
 | `Team` | `(data) -> TeamEntity` | Create a Team entity instance. |
-| `TelemetryDataSource` | `(data) -> TelemetryDataSourceEntity` | Create a TelemetryDataSource entity instance. |
+| `TelemetryDataSourceV2` | `(data) -> TelemetryDataSourceV2Entity` | Create a TelemetryDataSourceV2 entity instance. |
 | `User` | `(data) -> UserEntity` | Create an User entity instance. |
 | `Workflow` | `(data) -> WorkflowEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `(data) -> WorkflowRunEntity` | Create a WorkflowRun entity instance. |
@@ -270,11 +340,11 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> any, err` | Load a single entity by match criteria. |
-| `list` | `(reqmatch, ctrl) -> any, err` | List entities matching the criteria. |
-| `create` | `(reqdata, ctrl) -> any, err` | Create a new entity. |
-| `update` | `(reqdata, ctrl) -> any, err` | Update an existing entity. |
-| `remove` | `(reqmatch, ctrl) -> any, err` | Remove an entity. |
+| `load` | `(reqmatch, ctrl) -> any, err` | Load a single entity by match criteria, and return it. |
+| `list` | `(reqmatch, ctrl) -> any, err` | List entities matching the criteria, one per record. |
+| `create` | `(reqdata, ctrl) -> any, err` | Create a new entity, and return it. |
+| `update` | `(reqdata, ctrl) -> any, err` | Update an existing entity, and return it. |
+| `remove` | `(reqmatch, ctrl) -> any, err` | Remove an entity, and return it marked as deleted. |
 | `data_get` | `() -> table` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> table` | Get entity match criteria. |
@@ -284,19 +354,19 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `(value, err)`. The `value` is the operation's
-data **directly** — there is no wrapper:
+Entity operations return `(value, err)`. The `value` is the entity
+itself — there is no wrapper:
 
 | Operation | `value` |
 | --- | --- |
-| `load` / `create` / `update` / `remove` | the entity record (a `table`) |
-| `list` | an array (`table`) of entity records |
+| `load` / `create` / `update` / `remove` | the entity, whose `data_get()` reads its record (a `table`) |
+| `list` | an array (`table`) of entities, one per record |
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
     local action, err = client:Action():load({ id = "example_id" })
     if err then error(err) end
-    -- action is the loaded record
+    -- action is the loaded entity
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -308,17 +378,17 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | Field | Description |
 | --- | --- |
 | `assignee` |  |
-| `assignee_id` |  |
-| `completed_at` |  |
-| `created_at` |  |
+| `assignee_id` | ID of the user this action is assigned to |
+| `completed_at` | When the action was completed |
+| `created_at` | When the action was created |
 | `creator` |  |
-| `description` |  |
+| `description` | Description of the action |
 | `external_issue_reference` |  |
-| `follow_up` |  |
-| `id` |  |
-| `incident_id` |  |
-| `status` |  |
-| `updated_at` |  |
+| `follow_up` | Whether an action is marked as follow-up |
+| `id` | Unique identifier for the action |
+| `incident_id` | Unique identifier of the incident the action belongs to |
+| `status` | Status of the action |
+| `updated_at` | When the action was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -328,18 +398,19 @@ API path: `/v2/actions`
 
 | Field | Description |
 | --- | --- |
-| `alert_group_id` |  |
-| `alert_source_id` |  |
-| `attribute` |  |
-| `created_at` |  |
-| `deduplication_key` |  |
-| `description` |  |
-| `id` |  |
-| `resolved_at` |  |
-| `source_url` |  |
-| `status` |  |
-| `title` |  |
-| `updated_at` |  |
+| `alert_group_ids` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | The ID of the alert source this alert fired on |
+| `attributes` | Attribute values parsed from the alerts payload |
+| `created_at` | When this entry was created |
+| `deduplication_key` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | The description of the alert |
+| `id` | The ID of this alert |
+| `resolved_at` | When this alert was resolved |
+| `source_url` | If applicable, a link to the alert in the upstream system |
+| `status` | Statuses of an alert |
+| `tags` | Tags someone has applied to this alert |
+| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | When this alert was last updated |
 
 Operations: Create, List, Load.
 
@@ -349,12 +420,12 @@ API path: `/v2/alerts/{id}/actions/resolve`
 
 | Field | Description |
 | --- | --- |
-| `array` |  |
-| `emoji` |  |
-| `id` |  |
-| `name` |  |
-| `required` |  |
-| `type` |  |
+| `array` | Whether this attribute is an array |
+| `emoji` | The emoji to display alongside this attribute in chat messages, stored without colons |
+| `id` | The ID of this attribute |
+| `name` | Unique name of this attribute |
+| `required` | Whether this attribute is required. |
+| `type` | Engine resource name for this attribute |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -364,15 +435,15 @@ API path: `/v2/alert_attributes`
 
 | Field | Description |
 | --- | --- |
-| `alert_group_id` |  |
-| `alert_id` |  |
-| `content` |  |
-| `created_at` |  |
+| `alert_group_id` | ID of the alert group this note is attached to. |
+| `alert_id` | ID of the alert this note is attached to. |
+| `content` | Markdown body of the note |
+| `created_at` | When this note was first created |
 | `creator` |  |
-| `id` |  |
-| `image` |  |
-| `last_edited_at` |  |
-| `updated_at` |  |
+| `id` | Unique identifier for the alert note |
+| `images` | Images attached to the current version of the note, with signed URLs valid for 10 minutes |
+| `last_edited_at` | When this note was last edited, only set if it has been edited at least once since creation |
+| `updated_at` | When this note was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -382,24 +453,24 @@ API path: `/v1/alert_notes`
 
 | Field | Description |
 | --- | --- |
-| `alert_source` |  |
-| `channel_config` |  |
-| `condition_group` |  |
-| `created_at` |  |
-| `enabled` |  |
+| `alert_sources` | Which alert sources should this alert route match? |
+| `channel_config` | The channel configuration for this alert route |
+| `condition_groups` | What condition groups must be true for this alert route to fire? |
+| `created_at` | The time of creation of this alert route |
+| `enabled` | Whether this alert route is enabled or not |
 | `escalation_config` |  |
-| `expression` |  |
+| `expressions` | The expressions used in this template |
 | `grouping_config` |  |
-| `id` |  |
+| `id` | Unique identifier for this alert route config |
 | `incident_config` |  |
 | `incident_template` |  |
-| `is_private` |  |
+| `is_private` | Whether this alert route is private. |
 | `message_config` |  |
 | `message_template` |  |
-| `name` |  |
-| `owning_team_id` |  |
-| `updated_at` |  |
-| `version` |  |
+| `name` | The name of this alert route config, for the user's reference |
+| `owning_team_ids` | IDs of teams that own this alert route |
+| `updated_at` | The time of last update of this alert route |
+| `version` | The version of this alert route config |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -409,64 +480,368 @@ API path: `/v2/alert_routes`
 
 | Field | Description |
 | --- | --- |
-| `alert_events_url` |  |
-| `auto_resolve_incident_alert` |  |
-| `auto_resolve_timeout_minute` |  |
-| `disabled` |  |
-| `email_option` |  |
-| `heartbeat_option` |  |
-| `http_custom_option` |  |
-| `id` |  |
-| `jira_option` |  |
-| `name` |  |
-| `owning_team_id` |  |
-| `secret_token` |  |
-| `source_type` |  |
+| `alert_events_url` | URL that can be used to send alert events to this source. |
+| `auto_resolve_incident_alerts` | Whether alerts from this source keep counting down to auto-resolve while attached to an incident. |
+| `auto_resolve_timeout_minutes` | When set, alerts from this source will automatically resolve after this many minutes. |
+| `azure_devops_options` |  |
+| `disabled` | For heartbeat sources, set to true to disable monitoring |
+| `email_options` |  |
+| `filter_condition_groups` | Conditions an incoming event must match to be ingested from this source, evaluated against the event's payload and this source's expressions. |
+| `fixed_team_id` | When set, the team every alert from this source is attributed to. |
+| `heartbeat_options` |  |
+| `http_custom_options` |  |
+| `id` | The ID of this alert source |
+| `jira_options` |  |
+| `name` | Unique name of the alert source |
+| `owning_team_ids` | IDs of teams that own this alert source |
+| `rate_limit_sharding` | Controls how this source's ingest rate limit is split into buckets. |
+| `secret_token` | Secret token used to authenticate this source, if applicable. |
+| `source_type` | Type of alert source |
 | `template` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/alert_sources`
 
+#### AlertSourcesV2
+
+| Field | Description |
+| --- | --- |
+| `owning_team_ids` | IDs of teams that own this alert source |
+| `source_type` | Type of alert source |
+| `template` |  |
+
+Operations: Create.
+
+API path: `/v2/alert_sources/actions/validate`
+
+#### AlertTag
+
+| Field | Description |
+| --- | --- |
+| `id` | Unique identifier for the tag |
+| `name` | The tag name |
+
+Operations: List.
+
+API path: `/v2/alert_tags`
+
+#### AlertsAddTagsResultV2
+
+| Field | Description |
+| --- | --- |
+| `alert_group_ids` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | The ID of the alert source this alert fired on |
+| `attributes` | Attribute values parsed from the alerts payload |
+| `created_at` | When this entry was created |
+| `deduplication_key` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | The description of the alert |
+| `id` | The ID of this alert |
+| `resolved_at` | When this alert was resolved |
+| `source_url` | If applicable, a link to the alert in the upstream system |
+| `status` | Statuses of an alert |
+| `tags` | Tags someone has applied to this alert |
+| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | When this alert was last updated |
+
+Operations: Create.
+
+API path: `/v2/alerts/{id}/actions/add_tags`
+
+#### AlertsRemoveTagsResultV2
+
+| Field | Description |
+| --- | --- |
+| `alert_group_ids` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | The ID of the alert source this alert fired on |
+| `attributes` | Attribute values parsed from the alerts payload |
+| `created_at` | When this entry was created |
+| `deduplication_key` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | The description of the alert |
+| `id` | The ID of this alert |
+| `resolved_at` | When this alert was resolved |
+| `source_url` | If applicable, a link to the alert in the upstream system |
+| `status` | Statuses of an alert |
+| `tags` | Tags someone has applied to this alert |
+| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | When this alert was last updated |
+
+Operations: Create.
+
+API path: `/v2/alerts/{id}/actions/remove_tags`
+
+#### AlertsSetTagsResultV2
+
+| Field | Description |
+| --- | --- |
+| `alert_group_ids` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | The ID of the alert source this alert fired on |
+| `attributes` | Attribute values parsed from the alerts payload |
+| `created_at` | When this entry was created |
+| `deduplication_key` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | The description of the alert |
+| `id` | The ID of this alert |
+| `resolved_at` | When this alert was resolved |
+| `source_url` | If applicable, a link to the alert in the upstream system |
+| `status` | Statuses of an alert |
+| `tags` | Tags someone has applied to this alert |
+| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | When this alert was last updated |
+
+Operations: Create.
+
+API path: `/v2/alerts/{id}/actions/set_tags`
+
+#### AlertsTransitionIncidentAlertResultV2
+
+| Field | Description |
+| --- | --- |
+| `alert` |  |
+| `alert_id` | Alert to attach to the incident |
+| `alert_route_id` | The ID of the alert route that created this incident alert |
+| `id` | The ID of this alert |
+| `incident` | Incident slim is a subset of the full incident object, listing key fields. |
+| `incident_id` | Incident to attach the alert to |
+| `re_relate` | Relate the alert again even though someone previously marked it unrelated to this incident. |
+| `state` | What state to move the connection to |
+
+Operations: Create, List.
+
+API path: `/v2/incident_alerts/{id}/actions/transition`
+
+#### AnnouncementRule
+
+| Field | Description |
+| --- | --- |
+| `condition_groups` | Incidents are announced when they match any of these condition groups |
+| `conditions_no_longer_apply_behaviour` | Whether to remove announcement posts when the incident no longer matches this rule's conditions |
+| `created_at` | When the rule was created |
+| `id` | Unique identifier for this announcement rule |
+| `microsoft_teams_channel_ids` | Microsoft Teams channels to post announcements into, as team_id/channel_id, when the organisation uses Microsoft Teams |
+| `mode` | Which incidents are announced: live incidents only, or triage incidents too |
+| `name` | Human readable name for the rule |
+| `owning_team_ids` | IDs of the teams that own this rule |
+| `private_incident_scope` | Which private incidents this rule announces: every private incident (all), those an owning team can see (owning_teams), or none |
+| `slack_channel_ids` | IDs of the Slack channels to post announcements into, when the organisation uses Slack |
+| `template_id` | ID of the announcement template used to render this rule's posts |
+| `update_sharing_mode` | Where incident updates are shared once the incident is announced |
+| `updated_at` | When the rule was last updated |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/announcement_rules`
+
+#### AnnouncementTemplate
+
+| Field | Description |
+| --- | --- |
+| `actions` | Actions shown on the announcement post, in rank order |
+| `fields` | Fields shown on the announcement post, in rank order |
+| `id` | Unique identifier for this announcement template |
+| `is_default` | Whether this is the organisation's default template, used by rules that don't choose one |
+| `name` | Name of this announcement template |
+| `owning_team_ids` | IDs of the teams that own this template |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/announcement_templates`
+
 #### ApiKey
 
 | Field | Description |
 | --- | --- |
-| `comment` |  |
-| `created_at` |  |
+| `comments` | Freeform notes about this API key |
+| `created_at` | When the API key was created |
 | `creator` |  |
-| `grace_period_minute` |  |
-| `id` |  |
-| `last_used_at` |  |
-| `name` |  |
-| `role` |  |
-| `role_name` |  |
-| `team_id` |  |
-| `team_role` |  |
-| `team_role_name` |  |
-| `token_last_issued_at` |  |
+| `id` | Unique identifier for this API key |
+| `last_used_at` | When the key was last used to authenticate a request |
+| `name` | The name of the API key, for the user's reference |
+| `role_names` | Account-level roles to assign to the API key. |
+| `roles` | The account-level roles assigned to this API key |
+| `team_ids` | IDs of teams that this API key is scoped to |
+| `team_role_names` | Roles to grant for the teams specified in `team_ids`. |
+| `team_roles` | The team-level roles assigned to this API key |
+| `token_last_issued_at` | When the current token for this API was last issued. |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/api_keys/{id}/actions/rotate`
 
+#### CallRoute
+
+| Field | Description |
+| --- | --- |
+| `allowed_callers` | The numbers allowed to call this route. |
+| `country_code` | The country this route's number belongs to |
+| `created_at` |  |
+| `current_state` | Where this route is in provisioning. |
+| `custom_language` | The language we speak voice prompts in, via text-to-speech |
+| `id` | Unique identifier for this call route |
+| `name` | Name for this call route |
+| `options` | The phone-tree menu this route presents. |
+| `path` | Who we page when a call comes in. |
+| `phone_number` | The number your customers call to reach this route, once one has been provisioned |
+| `phone_number_type` | The type of phone number, which determines the regulatory requirements for provisioning it |
+| `responder_caller_id` | Which number responders see when we call them: * route_number: this route's own number * oncall_number: an incident.io on-call number |
+| `updated_at` |  |
+| `use_caller_allowlist` | Whether this route only answers calls from its allowed callers |
+
+Operations: List, Load, Update.
+
+API path: `/v2/call_routes`
+
+#### CallRoutesCreateAllowedCallerResultV2
+
+| Field | Description |
+| --- | --- |
+| `name` | Label for whose number this is |
+| `phone_number` | The number to allow, in international format |
+
+Operations: Create.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers`
+
+#### CallRoutesCreateOptionResultV2
+
+| Field | Description |
+| --- | --- |
+| `digit` | The keypad digit a caller presses to choose this option |
+| `path` | Who to page when a caller chooses this option |
+| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+Operations: Create.
+
+API path: `/v2/call_routes/{call_route_id}/options`
+
+#### CallRoutesListAllowedCallersResultV2
+
+| Field | Description |
+| --- | --- |
+| `id` | Unique identifier for this allowed caller |
+| `name` | Label for whose number this is |
+| `phone_number` | The number allowed to call this route, in international format |
+
+Operations: List.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers`
+
+#### CallRoutesListOptionsResultV2
+
+| Field | Description |
+| --- | --- |
+| `digit` | The keypad digit a caller presses to choose this option |
+| `id` | Unique identifier for this option |
+| `path` | Who we page when a caller chooses this option |
+| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+Operations: List.
+
+API path: `/v2/call_routes/{call_route_id}/options`
+
+#### CallRoutesShowAllowedCallerResultV2
+
+| Field | Description |
+| --- | --- |
+| `id` | Unique identifier for this allowed caller |
+| `name` | Label for whose number this is |
+| `phone_number` | The number allowed to call this route, in international format |
+
+Operations: Load.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
+
+#### CallRoutesShowOptionResultV2
+
+| Field | Description |
+| --- | --- |
+| `digit` | The keypad digit a caller presses to choose this option |
+| `id` | Unique identifier for this option |
+| `path` | Who we page when a caller chooses this option |
+| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+Operations: Load.
+
+API path: `/v2/call_routes/{call_route_id}/options/{id}`
+
+#### CallRoutesUpdateAllowedCallerResultV2
+
+| Field | Description |
+| --- | --- |
+| `id` | Unique identifier for this allowed caller |
+| `name` | Label for whose number this is |
+| `phone_number` | The number allowed to call this route, in international format |
+
+Operations: Update.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
+
+#### CallRoutesUpdateOptionResultV2
+
+| Field | Description |
+| --- | --- |
+| `digit` | The keypad digit a caller presses to choose this option |
+| `id` | Unique identifier for this option |
+| `path` | Who we page when a caller chooses this option |
+| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+Operations: Update.
+
+API path: `/v2/call_routes/{call_route_id}/options/{id}`
+
+#### CallRoutesV2
+
+| Field | Description |
+| --- | --- |
+| `id` |  |
+
+Operations: Remove.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
+
+#### CallSession
+
+| Field | Description |
+| --- | --- |
+| `ended_at` | When the call session ended. |
+| `id` | Unique identifier for this call session |
+| `incident_id` | The incident this call session belongs to |
+| `started_at` | When the call session started |
+
+Operations: List.
+
+API path: `/v2/call_sessions`
+
+#### CallTranscriptEntry
+
+| Field | Description |
+| --- | --- |
+| `content` | What was said |
+| `id` | Unique identifier for this transcript entry |
+| `medium` | Whether this entry was spoken aloud or sent as an in-call chat message |
+| `participant_name` | Name of the participant who spoke or sent the message, as reported by the call provider |
+| `timestamp` | When the participant started speaking |
+
+Operations: List.
+
+API path: `/v2/call_transcript_entries`
+
 #### CatalogEntry
 
 | Field | Description |
 | --- | --- |
-| `alias` |  |
-| `archived_at` |  |
-| `attribute_value` |  |
+| `aliases` | Optional aliases that can be used to reference this entry |
+| `archived_at` | When this entry was archived |
+| `attribute_values` | Values of this entry |
 | `catalog_entry` |  |
 | `catalog_type` |  |
-| `catalog_type_id` |  |
-| `created_at` |  |
-| `external_id` |  |
-| `id` |  |
-| `name` |  |
-| `rank` |  |
-| `update_attribute` |  |
-| `updated_at` |  |
+| `catalog_type_id` | ID of this catalog type |
+| `created_at` | When this entry was created |
+| `external_id` | An optional alternative ID for this entry, which is ensured to be unique for the type |
+| `id` | ID of this catalog entry |
+| `name` | Name is the human readable name of this entry |
+| `rank` | When catalog type is ranked, this is used to help order things |
+| `update_attributes` | If provided, only update these attribute_values keys. |
+| `updated_at` | When this entry was last updated |
 
 Operations: Create, List, Load, Update.
 
@@ -476,12 +851,12 @@ API path: `/v2/catalog_entries`
 
 | Field | Description |
 | --- | --- |
-| `category` |  |
-| `description` |  |
-| `engine_resource_type` |  |
-| `label` |  |
-| `type` |  |
-| `value_docstring` |  |
+| `category` | Which category of resource |
+| `description` | Human readable description for this resource |
+| `engine_resource_type` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `label` | Label for this catalog resource type |
+| `type` | Catalog type name for this resource, as used when setting the type of a catalog type attribute |
+| `value_docstring` | Documentation for the literal string value of this resource |
 
 Operations: List.
 
@@ -491,30 +866,30 @@ API path: `/v2/catalog_resources`
 
 | Field | Description |
 | --- | --- |
-| `annotation` |  |
-| `category` |  |
-| `color` |  |
-| `created_at` |  |
-| `description` |  |
-| `dynamic_resource_parameter` |  |
-| `engine_resource_type` |  |
-| `estimated_count` |  |
-| `icon` |  |
-| `id` |  |
-| `is_editable` |  |
-| `is_team_type` |  |
-| `last_synced_at` |  |
-| `name` |  |
-| `owning_team_id` |  |
-| `ranked` |  |
-| `registry_type` |  |
-| `required_integration` |  |
+| `annotations` | Annotations that can track metadata about this type |
+| `categories` | What categories is this type considered part of |
+| `color` | Sets the display color of this type in the dashboard |
+| `created_at` | When this type was created |
+| `description` | Human readble description of this type |
+| `dynamic_resource_parameter` | If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally. |
+| `engine_resource_type` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `estimated_count` | If populated, gives an estimated count of entries for this type |
+| `icon` | Sets the display icon of this type in the dashboard |
+| `id` | ID of this catalog type |
+| `is_editable` | Catalog types that are synced with external resources can't be edited |
+| `is_team_type` | Whether this catalog type is the designated team type in team settings |
+| `last_synced_at` | When this type was last synced (if it's ever been sync'd) |
+| `name` | Name is the human readable name of this type |
+| `owning_team_ids` | IDs of the teams that own this catalog type |
+| `ranked` | If this type should be ranked |
+| `registry_type` | The registry resource this type is synced from, if any |
+| `required_integrations` | If populated, the integrations required for this type |
 | `schema` |  |
-| `semantic_type` |  |
-| `source_repo_url` |  |
-| `type_name` |  |
-| `updated_at` |  |
-| `use_name_as_identifier` |  |
+| `semantic_type` | This type has been deprecated, and will always be empty. |
+| `source_repo_url` | The url of the external repository where this type is managed |
+| `type_name` | The type name of this catalog type, to be used when defining attributes. |
+| `updated_at` | When this type was last updated |
+| `use_name_as_identifier` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 
 Operations: Create, List, Load, Update.
 
@@ -524,31 +899,31 @@ API path: `/v2/catalog_types`
 
 | Field | Description |
 | --- | --- |
-| `annotation` |  |
-| `attribute` |  |
-| `category` |  |
-| `color` |  |
-| `created_at` |  |
-| `description` |  |
-| `dynamic_resource_parameter` |  |
-| `engine_resource_type` |  |
-| `estimated_count` |  |
-| `icon` |  |
-| `id` |  |
-| `is_editable` |  |
-| `is_team_type` |  |
-| `last_synced_at` |  |
-| `name` |  |
-| `owning_team_id` |  |
-| `ranked` |  |
-| `registry_type` |  |
-| `required_integration` |  |
+| `annotations` | Annotations that can track metadata about this type |
+| `attributes` |  |
+| `categories` | What categories is this type considered part of |
+| `color` | Sets the display color of this type in the dashboard |
+| `created_at` | When this type was created |
+| `description` | Human readble description of this type |
+| `dynamic_resource_parameter` | If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally. |
+| `engine_resource_type` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `estimated_count` | If populated, gives an estimated count of entries for this type |
+| `icon` | Sets the display icon of this type in the dashboard |
+| `id` | ID of this catalog type |
+| `is_editable` | Catalog types that are synced with external resources can't be edited |
+| `is_team_type` | Whether this catalog type is the designated team type in team settings |
+| `last_synced_at` | When this type was last synced (if it's ever been sync'd) |
+| `name` | Name is the human readable name of this type |
+| `owning_team_ids` | IDs of the teams that own this catalog type |
+| `ranked` | If this type should be ranked |
+| `registry_type` | The registry resource this type is synced from, if any |
+| `required_integrations` | If populated, the integrations required for this type |
 | `schema` |  |
-| `semantic_type` |  |
-| `source_repo_url` |  |
-| `type_name` |  |
-| `updated_at` |  |
-| `use_name_as_identifier` |  |
+| `semantic_type` | This type has been deprecated, and will always be empty. |
+| `source_repo_url` | The url of the external repository where this type is managed |
+| `type_name` | The type name of this catalog type, to be used when defining attributes. |
+| `updated_at` | When this type was last updated |
+| `use_name_as_identifier` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 | `version` |  |
 
 Operations: Create.
@@ -559,24 +934,24 @@ API path: `/v2/catalog_types/{id}/actions/update_schema`
 
 | Field | Description |
 | --- | --- |
-| `catalog_type_id` |  |
-| `created_at` |  |
-| `description` |  |
-| `field_type` |  |
+| `catalog_type_id` | For catalog fields, the ID of the associated catalog type |
+| `created_at` | When the action was created |
+| `description` | Description of the custom field |
+| `field_type` | Type of custom field |
 | `filter_by` |  |
 | `fixed_filter` |  |
-| `group_by_catalog_attribute_id` |  |
-| `helptext_catalog_attribute_id` |  |
-| `id` |  |
-| `name` |  |
-| `option` |  |
-| `required` |  |
-| `required_v2` |  |
-| `show_before_closure` |  |
-| `show_before_creation` |  |
-| `show_before_update` |  |
-| `show_in_announcement_post` |  |
-| `updated_at` |  |
+| `group_by_catalog_attribute_id` | For catalog fields, the ID of the attribute used to group catalog entries (if applicable) |
+| `helptext_catalog_attribute_id` | Which catalog attribute provides helptext for the options |
+| `id` | Unique identifier for the custom field |
+| `name` | Human readable name for the custom field |
+| `options` | What options are available for this custom field, if this field has options |
+| `required` | When this custom field must be set during the incident lifecycle. |
+| `required_v2` | When this custom field must be set during the incident lifecycle. |
+| `show_before_closure` | Whether a custom field should be shown in the incident resolve modal. |
+| `show_before_creation` | Whether a custom field should be shown in the incident creation modal. |
+| `show_before_update` | Whether a custom field should be shown in the incident update modal. |
+| `show_in_announcement_post` | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
+| `updated_at` | When the action was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -586,10 +961,10 @@ API path: `/v1/custom_fields`
 
 | Field | Description |
 | --- | --- |
-| `custom_field_id` |  |
-| `id` |  |
-| `sort_key` |  |
-| `value` |  |
+| `custom_field_id` | ID of the custom field this option belongs to |
+| `id` | Unique identifier for the custom field option |
+| `sort_key` | Sort key used to order the custom field options correctly |
+| `value` | Human readable name for the custom field option. |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -599,134 +974,251 @@ API path: `/v1/custom_field_options`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
-| `creator` |  |
-| `description` |  |
-| `escalation_path_id` |  |
-| `event` |  |
-| `id` |  |
-| `idempotency_key` |  |
-| `incident_id` |  |
-| `priority` |  |
-| `related_alert` |  |
-| `related_incident` |  |
-| `status` |  |
-| `title` |  |
-| `updated_at` |  |
-| `user_id` |  |
+| `created_at` | When this escalation was created |
+| `creator` | The creator of this escalation. |
+| `description` | Additional detail provided with this escalation. |
+| `escalation_path_id` | Unique identifier of the escalation path that the escalation was created from |
+| `events` | Events which describe the history of this escalation. |
+| `id` | Unique ID of the escalation |
+| `idempotency_key` | Unique key to prevent duplicate escalations. |
+| `incident_id` | ID of an incident to associate with this escalation. |
+| `priority` | The priority associated with this escalation. |
+| `related_alerts` | Alerts related to this escalation |
+| `related_incidents` | Incidents related to this escalation |
+| `status` | Status of the escalation |
+| `title` | The title of this escalation |
+| `updated_at` | When this escalation was last updated |
+| `user_ids` | IDs of users to escalate directly to |
 
 Operations: Create, List, Load.
 
 API path: `/v2/escalations`
+
+#### EscalationPathTemplate
+
+| Field | Description |
+| --- | --- |
+| `description` | A description of what this template is for. |
+| `expressions` | Expressions backing the template's binding targets. |
+| `has_historical_escalation_path_versions` | Whether a previous escalation path version uses this template. |
+| `id` | Unique identifier for this template. |
+| `name` | The name of this template. |
+| `params` | The parameters declared by this template. |
+| `path` | The nodes that form the levels and branches of this template. |
+| `repeat_config` |  |
+| `working_hours` | The working hours for this template. |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/escalation_path_templates`
+
+#### EscalationsCheckEscalationPermissionsResultV2
+
+| Field | Description |
+| --- | --- |
+| `response_options` | The response options available to each requested user, in the same order as the request. |
+| `user_ids` | The IDs of the users to check response options for |
+
+Operations: Create.
+
+API path: `/v2/escalations/{escalation_id}/actions/check_permissions`
+
+#### EscalationsReassignEscalationResultV2
+
+| Field | Description |
+| --- | --- |
+| `description` | Additional details about the new escalation. |
+| `escalation_path_id` | ID of the escalation path to reassign to |
+| `resolve_original` | Whether to resolve the original escalation, stopping it paging its targets. |
+| `title` | The title of the new escalation. |
+| `user_ids` | IDs of users to reassign directly to |
+
+Operations: Create.
+
+API path: `/v2/escalations/{escalation_id}/actions/reassign`
 
 #### FollowUp
 
 | Field | Description |
 | --- | --- |
 | `assignee` |  |
-| `assignee_id` |  |
+| `assignee_id` | ID of the user this follow-up is assigned to |
 | `assignee_team` |  |
-| `assignee_team_id` |  |
-| `completed_at` |  |
-| `created_at` |  |
+| `assignee_team_id` | ID of the team this follow-up is assigned to |
+| `category` |  |
+| `completed_at` | When the follow-up was completed |
+| `created_at` | When the follow-up was created |
 | `creator` |  |
-| `description` |  |
+| `description` | Description of the follow-up |
 | `external_issue_reference` |  |
-| `external_issue_reference_id` |  |
-| `follow_up_category_id` |  |
-| `follow_up_priority_option_id` |  |
-| `id` |  |
-| `incident_id` |  |
-| `label` |  |
+| `external_issue_reference_id` | If this follow-up is related to an external issue, the ID of that issue |
+| `follow_up_category_id` | ID of the category for this follow-up |
+| `follow_up_priority_option_id` | ID of the priority for this follow-up |
+| `id` | Unique identifier for the follow-up |
+| `incident_id` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | Labels associated with this follow-up |
 | `priority` |  |
-| `status` |  |
-| `title` |  |
-| `updated_at` |  |
+| `status` | Status of the follow-up |
+| `title` | Title of the follow-up |
+| `updated_at` | When the follow-up was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/follow_ups`
 
+#### FollowUpsConnectExternalIssueResultV3
+
+| Field | Description |
+| --- | --- |
+| `assignee` |  |
+| `assignee_team` |  |
+| `category` |  |
+| `completed_at` | When the follow-up was completed |
+| `created_at` | When the follow-up was created |
+| `creator` |  |
+| `description` | Description of the follow-up |
+| `external_issue_reference` |  |
+| `id` | Unique identifier for the follow-up |
+| `incident_id` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | Labels associated with this follow-up |
+| `priority` |  |
+| `provider` | The issue tracker provider the issue belongs to |
+| `status` | Status of the follow-up |
+| `title` | Title of the follow-up |
+| `updated_at` | When the follow-up was last updated |
+| `url` | URL of the issue in the external provider |
+
+Operations: Create.
+
+API path: `/v3/follow_ups/{id}/actions/connect_external_issue`
+
+#### FollowUpsCreateFromLinkResultV3
+
+| Field | Description |
+| --- | --- |
+| `incident_id` | Unique identifier of the incident the follow-up belongs to |
+| `url` | URL of the issue in the external provider |
+
+Operations: Create.
+
+API path: `/v3/follow_ups/actions/create_from_link`
+
+#### Identity
+
+| Field | Description |
+| --- | --- |
+| `dashboard_url` | The dashboard URL for this organisation |
+| `name` | The name assigned to the current API Key |
+| `roles` | Which roles have been enabled for this key |
+| `team_roles` | If set, these roles apply to requests that operate on resources owned by any of the teams in the 'teams' array. |
+| `teams` | Teams that this API key is scoped to. |
+
+Operations: Load.
+
+API path: `/v1/identity`
+
 #### Incident
 
 | Field | Description |
 | --- | --- |
-| `call_url` |  |
-| `created_at` |  |
+| `call_url` | The call URL attached to this incident |
+| `created_at` | When the incident was created |
 | `creator` |  |
-| `custom_field_entry` |  |
-| `duration_metric` |  |
+| `custom_field_entries` | Custom field entries for this incident |
+| `debriefs` | Debriefs scheduled for this incident, ordered by start time. |
+| `duration_metrics` | Incident duration metrics and their measurements for this incident |
 | `external_issue_reference` |  |
-| `has_debrief` |  |
-| `id` |  |
-| `idempotency_key` |  |
-| `incident` |  |
-| `incident_role_assignment` |  |
+| `has_debrief` | If this incident has a debrief attached |
+| `id` | Unique identifier for the incident |
+| `idempotency_key` | Unique string used to de-duplicate incident create requests |
+| `incident_role_assignments` | A list of who is assigned to each role for this incident |
 | `incident_status` |  |
-| `incident_status_id` |  |
-| `incident_timestamp_value` |  |
+| `incident_status_id` | Incident status to assign to the incident |
+| `incident_timestamp_values` | Incident lifecycle events and when they occurred |
 | `incident_type` |  |
-| `incident_type_id` |  |
-| `mode` |  |
-| `name` |  |
-| `notify_incident_channel` |  |
-| `permalink` |  |
-| `postmortem_document_id` |  |
-| `postmortem_document_url` |  |
-| `reference` |  |
-| `retrospective_incident_option` |  |
+| `incident_type_id` | Incident type to create this incident as |
+| `last_activity_at` | When the incident last recorded 'activity' |
+| `mode` | Whether the incident is real, a test, a tutorial, or importing as a retrospective incident |
+| `ms_teams_channel_url` | URL to link to the Microsoft Teams channel |
+| `name` | Explanation of the incident |
+| `permalink` | A permanent link to the homepage for this incident |
+| `postmortem_document_ids` | An array of IDs of postmortem documents for this incident |
+| `postmortem_document_url` | The URL of the incident post-mortem document |
+| `reference` | Reference to this incident, as displayed across the product |
+| `retrospective_incident_options` |  |
 | `severity` |  |
-| `severity_id` |  |
-| `slack_channel_id` |  |
-| `slack_channel_name` |  |
-| `slack_channel_name_override` |  |
-| `slack_team_id` |  |
-| `source_message_channel_id` |  |
-| `source_message_timestamp` |  |
-| `status` |  |
-| `summary` |  |
-| `timestamp` |  |
-| `updated_at` |  |
-| `visibility` |  |
-| `workload_minutes_late` |  |
-| `workload_minutes_sleeping` |  |
-| `workload_minutes_total` |  |
-| `workload_minutes_working` |  |
+| `severity_id` | Severity to create incident as |
+| `slack_channel_id` | ID of the Slack channel in the organisation Slack workspace. |
+| `slack_channel_name` | Name of the slack channel |
+| `slack_channel_name_override` | Name of the Slack channel to create for this incident |
+| `slack_channel_url` | URL to link to the slack channel |
+| `slack_team_id` | ID of the Slack team / workspace. |
+| `source_message_channel_id` | Channel ID of the source message, if this incident was created from one |
+| `source_message_timestamp` | Timestamp of the source message, if this incident was created from one |
+| `status` | Current status of the incident |
+| `summary` | Detailed description of the incident |
+| `team_ids` | IDs of the teams that own this incident, resolved from your team settings. |
+| `timestamps` | Incident lifecycle events and when they last occurred |
+| `updated_at` | When the incident was last updated |
+| `visibility` | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
+| `workload_minutes_late` | Amount of time spent on the incident in late hours |
+| `workload_minutes_sleeping` | Amount of time spent on the incident in sleeping hours |
+| `workload_minutes_total` | Amount of time spent on the incident in total |
+| `workload_minutes_working` | Amount of time spent on the incident in working hours |
 
 Operations: Create, List, Load.
 
 API path: `/v2/incidents/{id}/actions/edit`
 
-#### IncidentAlert
+#### IncidentActivityLogEntry
 
 | Field | Description |
 | --- | --- |
-| `alert` |  |
-| `alert_route_id` |  |
-| `id` |  |
-| `incident` |  |
+| `content` | Details of an activity log entry. |
+| `created_at` | When we recorded the activity |
+| `id` | Unique identifier of the activity log entry |
+| `incident_id` | ID of the incident this happened on. |
+| `occurred_at` | When the activity happened. |
+| `title` | Human-readable summary of what happened |
+| `type` | What kind of activity this is. |
 
 Operations: List.
 
-API path: `/v2/incident_alerts`
+API path: `/v2/incident_activity_log_entries`
 
 #### IncidentAttachment
 
 | Field | Description |
 | --- | --- |
-| `id` |  |
-| `incident_id` |  |
+| `id` | Unique identifier of this incident membership |
+| `incident_id` | ID of the incident to add an attachment to |
 | `resource` |  |
 
 Operations: Create, List, Remove.
 
 API path: `/v1/incident_attachments`
 
+#### IncidentForm
+
+| Field | Description |
+| --- | --- |
+| `created_at` | When this incident form was created |
+| `expressions` | Expressions available to every element's conditions and defaults. |
+| `form_type` | Which form this is. |
+| `id` | Unique identifier for this incident form |
+| `incident_type_id` | The incident type this form belongs to. |
+| `lifecycle_elements` | Elements on this form, in display order. |
+| `updated_at` | When this incident form was last updated |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v3/incident_forms`
+
 #### IncidentMembership
 
 | Field | Description |
 | --- | --- |
-| `incident_id` |  |
+| `incident_id` | The incident to make the user a member of |
 | `user_id` |  |
 
 Operations: Create.
@@ -737,8 +1229,8 @@ API path: `/v1/incident_memberships`
 
 | Field | Description |
 | --- | --- |
-| `active` |  |
-| `passive` |  |
+| `active` | Participants who are actively helping with the incident |
+| `passive` | Participants who are just observing the incident |
 
 Operations: Load.
 
@@ -748,8 +1240,8 @@ API path: `/v2/incident_participants`
 
 | Field | Description |
 | --- | --- |
-| `archived_at` |  |
-| `participant_type` |  |
+| `archived_at` | When the user left the incident, if they are no longer an active participant |
+| `participant_type` | The role they had in the incident |
 | `user` |  |
 | `workload` |  |
 
@@ -761,7 +1253,7 @@ API path: `/v2/incident_participant_workloads`
 
 | Field | Description |
 | --- | --- |
-| `id` |  |
+| `id` | Unique identifier of this incident relationship |
 | `incident` |  |
 
 Operations: List.
@@ -772,15 +1264,15 @@ API path: `/v1/incident_relationships`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
-| `description` |  |
-| `id` |  |
-| `instruction` |  |
-| `name` |  |
-| `required` |  |
-| `role_type` |  |
-| `shortform` |  |
-| `updated_at` |  |
+| `created_at` | When the role was created |
+| `description` | Describes the purpose of the role |
+| `id` | Unique identifier for the role |
+| `instructions` | Provided to whoever is nominated for the role. |
+| `name` | Human readable name of the incident role |
+| `required` | DEPRECATED: this will always be false. |
+| `role_type` | Type of incident role |
+| `shortform` | Short human readable name for Slack. |
+| `updated_at` | When the role was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -790,25 +1282,94 @@ API path: `/v1/incident_roles`
 
 | Field | Description |
 | --- | --- |
-| `category` |  |
+| `category` | What category of status it is. |
 | `created_at` |  |
-| `description` |  |
-| `id` |  |
-| `name` |  |
-| `rank` |  |
+| `description` | Rich text description of the incident status |
+| `id` | Unique ID of this incident status |
+| `name` | Unique name of this status |
+| `rank` | Order of this incident status |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/incident_statuses`
 
+#### IncidentTeamMembership
+
+| Field | Description |
+| --- | --- |
+| `incident_id` |  |
+| `team_id` |  |
+
+Operations: Create.
+
+API path: `/v1/incident_team_memberships`
+
+#### IncidentTeamMembershipsV1
+
+| Field | Description |
+| --- | --- |
+| `incident_id` | Revoke team access to this incident |
+| `team_id` |  |
+
+Operations: Create.
+
+API path: `/v1/incident_team_memberships/actions/revoke`
+
+#### IncidentTemplate
+
+| Field | Description |
+| --- | --- |
+| `created_at` | When this incident template was created |
+| `expressions` | The expressions used by bindings in this template |
+| `id` | Unique identifier for this incident template |
+| `name` | The name of this incident template, for the user's reference |
+| `template` | The values an incident template applies to the incidents it creates. |
+| `updated_at` | When this incident template was last updated |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v1/incident_templates`
+
+#### IncidentTemplatesValidateResultV1
+
+| Field | Description |
+| --- | --- |
+| `expressions` | The expressions used by bindings in this template |
+| `name` | The name of this incident template, for the user's reference |
+| `template` | The values an incident template applies to the incidents it creates. |
+| `warnings` | Anything suspect about this config that isn't severe enough to reject it. |
+
+Operations: Create.
+
+API path: `/v1/incident_templates/actions/validate`
+
+#### IncidentTimelineItem
+
+| Field | Description |
+| --- | --- |
+| `activity_log_id` | ID of the activity log entry this item was promoted from. |
+| `created_at` | When this item was added to the timeline |
+| `creator` |  |
+| `description` | Description of the timeline item, in markdown |
+| `id` | Unique identifier of the timeline item |
+| `idempotency_key` | Unique string used to de-duplicate timeline item requests. |
+| `incident_id` | Incident to add this item to |
+| `timestamp` | When the thing this item describes happened. |
+| `title` | Title of the timeline item |
+| `updated_at` | When this item was last edited |
+
+Operations: Create, List, Update.
+
+API path: `/v2/incident_timeline_items`
+
 #### IncidentTimestamp
 
 | Field | Description |
 | --- | --- |
-| `id` |  |
-| `name` |  |
-| `rank` |  |
+| `id` | Unique ID of this incident timestamp |
+| `name` | Unique name of this timestamp |
+| `rank` | Order in which this timestamp should be shown |
 
 Operations: List, Load.
 
@@ -818,15 +1379,15 @@ API path: `/v2/incident_timestamps`
 
 | Field | Description |
 | --- | --- |
-| `create_in_triage` |  |
-| `created_at` |  |
-| `description` |  |
-| `id` |  |
-| `is_default` |  |
-| `name` |  |
-| `owning_team_id` |  |
-| `private_incidents_only` |  |
-| `updated_at` |  |
+| `create_in_triage` | Whether incidents of this must always, or can optionally, be created in triage |
+| `created_at` | When this resource was created |
+| `description` | What is this incident type for? |
+| `id` | Unique identifier for this Incident Type |
+| `is_default` | The default Incident Type is used when no other type is explicitly specified |
+| `name` | The name of this Incident Type |
+| `owning_team_ids` | IDs of the teams that own this incident type |
+| `private_incidents_only` | Should all incidents created with this Incident Type be private? |
+| `updated_at` | When this resource was last updated |
 
 Operations: List, Load.
 
@@ -836,16 +1397,19 @@ API path: `/v1/incident_types`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
-| `id` |  |
-| `incident_id` |  |
-| `merged_into_incident_id` |  |
-| `message` |  |
+| `created_at` | When the update was created |
+| `id` | Unique identifier for this incident update |
+| `idempotency_key` | Unique string used to de-duplicate incident update requests. |
+| `incident_id` | The incident you want to update |
+| `merged_into_incident_id` | The ID of the incident this incident was merged into, if the to state of this update is 'merged'. |
+| `message` | Message that explains the context behind the update, in markdown |
 | `new_incident_status` |  |
 | `new_severity` |  |
+| `to_incident_status_id` | Move the incident to this status |
+| `to_severity_id` | Move the incident to this severity |
 | `updater` |  |
 
-Operations: List.
+Operations: Create, List.
 
 API path: `/v2/incident_updates`
 
@@ -853,56 +1417,444 @@ API path: `/v2/incident_updates`
 
 | Field | Description |
 | --- | --- |
-| `allowlist` |  |
-| `enabled` |  |
-| `updated_at` |  |
-| `version` |  |
+| `allowlist` | A list of IP addresses or CIDR prefixes to allow |
+| `enabled` | Whether this IP allowlist is enabled or not |
+| `updated_at` | The time this allowlist was last updated |
+| `version` | The version of this IP allowlist |
 
 Operations: Load, Update.
 
 API path: `/v1/ip_allowlists`
 
+#### IpRange
+
+| Field | Description |
+| --- | --- |
+| `cidr` | The address in CIDR notation. |
+| `description` | Which of our traffic reaches you from this address |
+
+Operations: List.
+
+API path: `/v1/ip_ranges`
+
 #### MaintenanceWindow
 
 | Field | Description |
 | --- | --- |
-| `alert_condition_group` |  |
-| `archived_at` |  |
-| `created_at` |  |
-| `end_at` |  |
-| `escalation_target` |  |
-| `id` |  |
-| `incident_id` |  |
+| `alert_condition_groups` | Condition groups that determine which alerts this maintenance window applies to |
+| `archived_at` | When this maintenance window was archived, if it has been |
+| `created_at` | When this maintenance window was created |
+| `end_at` | When the maintenance window ends |
+| `escalation_targets` | If set, alerts matching this window will be escalated to these targets |
+| `id` | Unique identifier for this maintenance window |
+| `incident_id` | If set, alerts matching this window will be automatically attached to this incident |
 | `lead` |  |
-| `name` |  |
-| `notification_message` |  |
-| `notify_channel` |  |
-| `notify_end_minutes_before` |  |
-| `notify_start_minutes_before` |  |
-| `reroute_on_end` |  |
-| `resolve_on_end` |  |
-| `show_in_sidebar` |  |
-| `start_at` |  |
-| `updated_at` |  |
+| `name` | Human readable name for the maintenance window |
+| `notification_message` | Custom message included in notifications about this maintenance window |
+| `notify_channels` | Channels to notify about the maintenance window starting and ending |
+| `notify_end_minutes_before` | Minutes before the end to send a notification to the configured channels |
+| `notify_start_minutes_before` | Minutes before the start to send a notification to the configured channels |
+| `owning_team_ids` | IDs of teams that own this maintenance window. |
+| `reroute_on_end` | Whether to retrigger firing alerts through alert routing when the window ends |
+| `resolve_on_end` | Whether to automatically resolve all firing alerts that matched this window when it ends |
+| `show_in_sidebar` | Whether to show this maintenance window in the dashboard sidebar when active |
+| `start_at` | When the maintenance window starts |
+| `updated_at` | When this maintenance window was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/maintenance_windows`
 
-#### PostmortemDocument
+#### OnCallNotificationMethodPublicV2
+
+| Field | Description |
+| --- | --- |
+| `address` | The address of this method (e.g. |
+| `id` | Unique identifier for this notification method |
+| `is_usable` | Whether this method is ready to receive notifications. |
+| `method_type` | The high-level type of notification method. |
+| `phone_details` |  |
+
+Operations: List.
+
+API path: `/v2/users/{user_id}/notification_methods`
+
+#### OnCallNotificationRulePublicV2
+
+| Field | Description |
+| --- | --- |
+| `app` |  |
+| `delay_seconds` | Delay in seconds before this rule activates. |
+| `id` | Unique identifier for this notification rule |
+| `method_target` |  |
+| `method_type` | The high-level type of notification method. |
+| `phone` |  |
+| `rule_type` | The urgency level this rule applies to |
+
+Operations: List.
+
+API path: `/v2/users/{user_id}/notification_rules`
+
+#### PayConfig
+
+| Field | Description |
+| --- | --- |
+| `base_rate_cents` | Rate paid for any time no rule covers, in the lowest denomination of the currency |
+| `created_at` |  |
+| `currency` | Currency this config pays in, in ISO 4217 format |
+| `id` | Unique identifier for this pay config |
+| `name` | Human readable name for this pay config |
+| `one_off_rules` | Rules that apply over a single window of time, such as a public holiday |
+| `published_at` | When a published report first priced against this config. |
+| `rate_time_unit` | The unit of time every rate on this config is quoted per. |
+| `timezone` | IANA timezone this config's rules are interpreted in |
+| `updated_at` |  |
+| `weekly_rules` | Rules that apply every week, by day of week and time of day, in evaluation order |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/pay_configs`
+
+#### PayConfigsCreateOneOffRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `end_at` | When this rule stops applying |
+| `name` | Human readable name for this rule |
+| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | When this rule starts applying |
+
+Operations: Create.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules`
+
+#### PayConfigsCreateWeeklyRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `end_time` | Time of day this rule ends, in 24 hour format. |
+| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | Days of the week this rule applies on |
+
+Operations: Create.
+
+API path: `/v2/pay_configs/{pay_config_id}/weekly_rules`
+
+#### PayConfigsListOneOffRulesResultV2
+
+| Field | Description |
+| --- | --- |
+| `end_at` | When this rule stops applying |
+| `id` | Unique identifier for this rule, stable across edits to the config |
+| `name` | Human readable name for this rule |
+| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | When this rule starts applying |
+
+Operations: List.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules`
+
+#### PayConfigsListWeeklyRulesResultV2
+
+| Field | Description |
+| --- | --- |
+| `end_time` | Time of day this rule ends, in 24 hour format. |
+| `id` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | Days of the week this rule applies on |
+
+Operations: List.
+
+API path: `/v2/pay_configs/{pay_config_id}/weekly_rules`
+
+#### PayConfigsShowOneOffRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `end_at` | When this rule stops applying |
+| `id` | Unique identifier for this rule, stable across edits to the config |
+| `name` | Human readable name for this rule |
+| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | When this rule starts applying |
+
+Operations: Load.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
+
+#### PayConfigsShowWeeklyRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `end_time` | Time of day this rule ends, in 24 hour format. |
+| `id` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | Days of the week this rule applies on |
+
+Operations: Load.
+
+API path: `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}`
+
+#### PayConfigsUpdateOneOffRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `end_at` | When this rule stops applying |
+| `id` | Unique identifier for this rule, stable across edits to the config |
+| `name` | Human readable name for this rule |
+| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | When this rule starts applying |
+
+Operations: Update.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
+
+#### PayConfigsUpdateWeeklyRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `end_time` | Time of day this rule ends, in 24 hour format. |
+| `id` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | Days of the week this rule applies on |
+
+Operations: Update.
+
+API path: `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}`
+
+#### PayConfigsV2
+
+| Field | Description |
+| --- | --- |
+| `id` |  |
+
+Operations: Remove.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
+
+#### PayReport
+
+| Field | Description |
+| --- | --- |
+| `created_at` | When this report was created |
+| `creator` |  |
+| `end_date` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | Why a report could not be generated |
+| `error_message` | What went wrong, written for whoever asked for the report. |
+| `id` | Unique identifier for this pay report |
+| `name` | Human readable name for this report |
+| `overlapping_shifts` | How time spent on more than one schedule at once was paid |
+| `pay_config_expression` |  |
+| `pay_config_id` | The pay config to price every shift with. |
+| `published_at` | When this report was published. |
+| `rotation_filters` | Narrows some of these schedules to a subset of their rotations. |
+| `schedule_ids` | The schedules this report covers |
+| `start_date` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | How far a report has got through being generated |
+| `total_duration_seconds` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | Whether shifts that priced to zero are part of the report |
+| `updated_at` | When this report was last updated |
+
+Operations: Create, List, Load, Remove.
+
+API path: `/v2/pay_reports`
+
+#### PayReportsPublishResultV2
+
+| Field | Description |
+| --- | --- |
+| `cc_emails` | Email addresses to send a copy of the report to |
+| `created_at` | When this report was created |
+| `creator` |  |
+| `end_date` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | Why a report could not be generated |
+| `error_message` | What went wrong, written for whoever asked for the report. |
+| `id` | Unique identifier for this pay report |
+| `name` | Human readable name for this report |
+| `overlapping_shifts` | How time spent on more than one schedule at once was paid |
+| `published_at` | When this report was published. |
+| `schedule_ids` | The schedules this report covers |
+| `send_user_breakdowns` | Whether each user in the report is emailed their own pay breakdown |
+| `start_date` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | How far a report has got through being generated |
+| `total_duration_seconds` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | Whether shifts that priced to zero are part of the report |
+| `updated_at` | When this report was last updated |
+
+Operations: Create.
+
+API path: `/v2/pay_reports/{id}/actions/publish`
+
+#### PayReportsUnpublishResultV2
+
+| Field | Description |
+| --- | --- |
+| `created_at` | When this report was created |
+| `creator` |  |
+| `end_date` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | Why a report could not be generated |
+| `error_message` | What went wrong, written for whoever asked for the report. |
+| `id` | Unique identifier for this pay report |
+| `name` | Human readable name for this report |
+| `overlapping_shifts` | How time spent on more than one schedule at once was paid |
+| `published_at` | When this report was published. |
+| `schedule_ids` | The schedules this report covers |
+| `start_date` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | How far a report has got through being generated |
+| `total_duration_seconds` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | Whether shifts that priced to zero are part of the report |
+| `unpublish_reason` | Why this report is being unpublished |
+| `updated_at` | When this report was last updated |
+
+Operations: Create.
+
+API path: `/v2/pay_reports/{id}/actions/unpublish`
+
+#### PayReportsV2
+
+| Field | Description |
+| --- | --- |
+
+Operations: Load.
+
+API path: `/v2/pay_reports/{id}/download`
+
+#### PoliciesV2
+
+| Field | Description |
+| --- | --- |
+| `id` |  |
+
+Operations: Remove.
+
+API path: `/v2/policies/{id}`
+
+#### Policy
+
+| Field | Description |
+| --- | --- |
+| `assignment_rules` |  |
+| `conditions` | Conditions which determine which resources are in scope for this policy |
+| `created_at` |  |
+| `debrief` | Set when policy_type is debrief. |
+| `description` | Human readable description of the policy |
+| `expressions` | The expressions relating to this policy |
+| `follow_up` | Set when policy_type is follow_up. |
+| `id` | Unique ID of the policy |
+| `name` | Human readable name of the policy |
+| `on_call_readiness` | Set when policy_type is on_call_readiness. |
+| `policy_type` | Type of the policy, specifying what this applies to |
+| `post_mortem` | Set when policy_type is post_mortem. |
+| `schedule` | Detects gaps in on-call coverage. |
+| `status` | Disabled policies stop evaluating but keep their config |
+| `updated_at` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/policies`
+
+#### PolicyFinding
 
 | Field | Description |
 | --- | --- |
 | `created_at` |  |
-| `document_url` |  |
-| `editor` |  |
-| `exported_url` |  |
-| `id` |  |
-| `incident_id` |  |
-| `status` |  |
-| `title` |  |
-| `type` |  |
+| `days` | Days outside the policy's due date |
+| `debrief` | Set when policy_type is debrief. |
+| `dismissal` |  |
+| `due_at` | When this finding becomes overdue |
+| `follow_up` | Set when policy_type is follow_up. |
+| `id` | Unique ID of the finding |
+| `last_checked_at` | When this finding was last re-evaluated |
+| `on_call_readiness` | Set when policy_type is on_call_readiness. |
+| `policy_id` | The policy this finding was raised against |
+| `policy_type` | Type of the policy this finding was raised against |
+| `post_mortem` | Set when policy_type is post_mortem. |
+| `responsible_users` | Who is expected to resolve this finding |
+| `schedule` | Set when policy_type is schedule. |
+| `shift_conflict` | Set when policy_type is shift_conflict. |
+| `state` | Where this finding is in its lifecycle |
 | `updated_at` |  |
+| `vacation_conflict` | Set when policy_type is vacation_conflict. |
+
+Operations: List, Load.
+
+API path: `/v2/policy_findings`
+
+#### PolicyFindingsDismissResultV2
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `days` | Days outside the policy's due date |
+| `debrief` | Set when policy_type is debrief. |
+| `dismissal` |  |
+| `due_at` | When this finding becomes overdue |
+| `follow_up` | Set when policy_type is follow_up. |
+| `id` | Unique ID of the finding |
+| `last_checked_at` | When this finding was last re-evaluated |
+| `on_call_readiness` | Set when policy_type is on_call_readiness. |
+| `policy_id` | The policy this finding was raised against |
+| `policy_type` | Type of the policy this finding was raised against |
+| `post_mortem` | Set when policy_type is post_mortem. |
+| `reason` | Why this finding is being dismissed |
+| `responsible_users` | Who is expected to resolve this finding |
+| `schedule` | Set when policy_type is schedule. |
+| `shift_conflict` | Set when policy_type is shift_conflict. |
+| `state` | Where this finding is in its lifecycle |
+| `updated_at` |  |
+| `vacation_conflict` | Set when policy_type is vacation_conflict. |
+
+Operations: Create.
+
+API path: `/v2/policy_findings/{id}/actions/dismiss`
+
+#### PolicyFindingsRestoreResultV2
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `days` | Days outside the policy's due date |
+| `debrief` | Set when policy_type is debrief. |
+| `dismissal` |  |
+| `due_at` | When this finding becomes overdue |
+| `follow_up` | Set when policy_type is follow_up. |
+| `id` | Unique ID of the finding |
+| `last_checked_at` | When this finding was last re-evaluated |
+| `on_call_readiness` | Set when policy_type is on_call_readiness. |
+| `policy_id` | The policy this finding was raised against |
+| `policy_type` | Type of the policy this finding was raised against |
+| `post_mortem` | Set when policy_type is post_mortem. |
+| `responsible_users` | Who is expected to resolve this finding |
+| `schedule` | Set when policy_type is schedule. |
+| `shift_conflict` | Set when policy_type is shift_conflict. |
+| `state` | Where this finding is in its lifecycle |
+| `updated_at` |  |
+| `vacation_conflict` | Set when policy_type is vacation_conflict. |
+
+Operations: Create.
+
+API path: `/v2/policy_findings/{id}/actions/restore`
+
+#### PostmortemDocument
+
+| Field | Description |
+| --- | --- |
+| `created_at` | Timestamp for when the document was created |
+| `document_url` | A URL to view the post-mortem document in the incident.io dashboard |
+| `editors` | The list of users who have edited this post-mortem document |
+| `exported_urls` | URLs of any external locations this document has been exported to |
+| `id` | Unique identifier for the post-mortem document |
+| `incident_id` | The unique identifier of the incident that this post-mortem document belongs to |
+| `status` | The current status of this post-mortem document |
+| `title` | The display title of the post-mortem document |
+| `type` | Whether this is a native incident.io post-mortem or one hosted in an external provider |
+| `updated_at` | Timestamp for when the document was last updated |
 
 Operations: List, Load, Update.
 
@@ -912,30 +1864,44 @@ API path: `/v1/postmortem_documents`
 
 | Field | Description |
 | --- | --- |
-| `annotation` |  |
+| `annotations` | Annotations that track metadata about this resource |
 | `config` |  |
 | `created_at` |  |
-| `current_shift` |  |
+| `current_shifts` | Shifts that are ongoing for this schedule |
 | `holidays_public_config` |  |
-| `id` |  |
-| `name` |  |
-| `next_shift` |  |
-| `permalink` |  |
-| `schedule` |  |
-| `team_id` |  |
-| `timezone` |  |
+| `id` | Unique internal ID of the schedule |
+| `name` | Human readable name synced from external provider |
+| `next_shifts` | The shifts after the next changeover. |
+| `permalink` | A permanent link to this schedule in the incident.io dashboard |
+| `team_ids` | IDs of teams that own this schedule |
+| `timezone` | Timezone of the schedule, as interpreted at the point of generating the report |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/schedules`
 
+#### ScheduleEntriesListPayloadV2
+
+| Field | Description |
+| --- | --- |
+| `entry_window_end` | The end of the window to preview entries for. |
+| `entry_window_start` | The start of the window to preview entries for. |
+| `final` | The effective schedule after overrides have been merged in |
+| `overrides` | Overrides that apply within the requested window |
+| `schedule` |  |
+| `scheduled` | Entries from the schedule's rotation rules, before overrides are applied |
+
+Operations: Create.
+
+API path: `/v2/schedules/{id}/actions/preview_entries`
+
 #### ScheduleEntry
 
 | Field | Description |
 | --- | --- |
 | `pagination_meta` |  |
-| `schedule_entry` |  |
+| `schedule_entries` | The schedule entries for a window of time, grouped by where they come from. |
 
 Operations: Load.
 
@@ -945,19 +1911,18 @@ API path: `/v2/schedule_entries`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
-| `id` |  |
-| `last_sync_error` |  |
-| `last_synced_at` |  |
-| `mirror_window_day` |  |
-| `replica_fallback_user_id` |  |
-| `replica_provider` |  |
-| `replica_provider_id` |  |
-| `schedule_id` |  |
-| `schedule_replica` |  |
-| `source` |  |
-| `updated_at` |  |
-| `user_status` |  |
+| `created_at` | When this schedule replica was first created |
+| `id` | Unique identifier of the schedule replica |
+| `last_sync_error` | The most recent error encountered while syncing this replica to the external provider, if any. |
+| `last_synced_at` | When the replica was last successfully synced to the external provider. |
+| `mirror_window_days` | How many days ahead to mirror this schedule into the external provider. |
+| `replica_fallback_user_id` | The ID of a user in the external provider that will be assigned whenever nobody is on-call in the incident.io schedule. |
+| `replica_provider` | The external provider where this schedule is replicated to |
+| `replica_provider_id` | The ID of the schedule in the external provider that this replica syncs to. |
+| `schedule_id` | The ID of the incident.io schedule that this replica is syncing from |
+| `sources` | The specific rotation and layer combinations from the schedule that are being replicated. |
+| `updated_at` | When this schedule replica was last updated |
+| `user_statuses` | The mapping status of each incident.io user in the schedule to their corresponding user in the external provider. |
 
 Operations: Create, List, Load.
 
@@ -967,16 +1932,15 @@ API path: `/v2/schedules/{schedule_id}/replicas`
 
 | Field | Description |
 | --- | --- |
-| `annotation` |  |
+| `annotations` | Annotations that track metadata about this resource |
 | `created_at` |  |
-| `id` |  |
-| `permanent_member_user_id` |  |
-| `rotation_id` |  |
-| `schedule_id` |  |
-| `schedule_sync_rule` |  |
-| `schedule_sync_target` |  |
-| `schedule_sync_target_id` |  |
-| `sync_type` |  |
+| `id` | Unique identifier of the sync rule |
+| `permanent_member_user_ids` | IDs of users always kept in the Slack user group, regardless of who is on call. |
+| `rotation_id` | If set, only members of this rotation sync to the user group. |
+| `schedule_id` | The schedule this rule belongs to |
+| `schedule_sync_target` | A sync target is the link between incident.io and a single Slack user group, used to keep that group's membership in step with who is currently on call. |
+| `schedule_sync_target_id` | The sync target ID this rule links to |
+| `sync_type` | Which schedule members sync to the user group |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Update.
@@ -987,34 +1951,71 @@ API path: `/v2/schedules/{schedule_id}/sync_rules`
 
 | Field | Description |
 | --- | --- |
-| `add_bot_to_group` |  |
-| `annotation` |  |
+| `add_bot_to_group` | Whether the incident.io bot should be added to the group as a member. |
+| `annotations` | Annotations that track metadata about this resource |
 | `created_at` |  |
-| `id` |  |
-| `linked_schedule` |  |
-| `schedule_sync_target` |  |
-| `slack_team_id` |  |
-| `slack_user_group_id` |  |
+| `id` | Unique identifier of the sync target |
+| `linked_schedules` | Schedules with an active sync rule pointing at this target |
+| `new_slack_user_group` |  |
+| `slack_team_id` | Slack team (workspace) ID the user group lives in. |
+| `slack_user_group_id` | Slack ID of the user group whose membership is kept in sync. |
 | `updated_at` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/schedule_sync_targets`
 
+#### SchedulesShowOverrideResultV2
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `end_at` | End of the override |
+| `id` | Unique internal ID of the schedule override |
+| `layer_id` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | The rotation on the schedule that this override applies to |
+| `schedule_id` | The schedule that this override applies to |
+| `start_at` | Start of the override |
+| `updated_at` |  |
+| `user` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/schedule_overrides`
+
+#### SchedulesUpdateOverrideResultV2
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `end_at` | End of the override |
+| `id` | Unique internal ID of the schedule override |
+| `layer_id` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | The rotation on the schedule that this override applies to |
+| `schedule_id` | The schedule that this override applies to |
+| `start_at` | Start of the override |
+| `updated_at` |  |
+| `user` |  |
+
+Operations: Update.
+
+API path: `/v2/schedule_overrides/{id}`
+
 #### Secret
 
 | Field | Description |
 | --- | --- |
 | `created_at` |  |
-| `description` |  |
-| `id` |  |
-| `last_four_char` |  |
-| `name` |  |
-| `owning_team_id` |  |
-| `secret` |  |
+| `description` | Optional description of what this secret is for |
+| `id` | Unique identifier for this secret |
+| `last_four_chars` | The last four characters of the current value, for masked display. |
+| `name` | Human-readable name, unique within the organisation amongst unarchived secrets |
+| `owning_team_ids` | IDs of the teams that own this secret. |
+| `secret` | A secret is a named credential that workflows can reference, for example an auth token for an outgoing webhook. |
 | `updated_at` |  |
-| `value` |  |
-| `version` |  |
+| `value` | The secret's plaintext value. |
+| `version` | The current version number, incremented on each rotation |
+| `versions` | The secret's versions, newest first |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -1024,12 +2025,12 @@ API path: `/v2/secrets/{id}/actions/rotate`
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
-| `description` |  |
-| `id` |  |
-| `name` |  |
-| `rank` |  |
-| `updated_at` |  |
+| `created_at` | When the action was created |
+| `description` | Description of the severity |
+| `id` | Unique identifier of the severity |
+| `name` | Human readable name of the severity |
+| `rank` | Rank to help sort severities (lower numbers are less severe) |
+| `updated_at` | When the action was last updated |
 
 Operations: Create, List, Load, Update.
 
@@ -1039,30 +2040,58 @@ API path: `/v1/severities`
 
 | Field | Description |
 | --- | --- |
-| `description` |  |
-| `id` |  |
-| `name` |  |
-| `public_url` |  |
+| `description` | The description of this status page |
+| `id` | Unique ID of this status page |
+| `name` | The title of this status page |
+| `public_url` | The public URL of this status page |
 
-Operations: List.
+Operations: List, Load.
 
 API path: `/v2/status_pages`
+
+#### StatusPageComponent
+
+| Field | Description |
+| --- | --- |
+| `description` | Optional short description of this component |
+| `id` | Unique identifier for this component |
+| `management_meta` |  |
+| `name` | Human-readable name for the component |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/status_page_components`
+
+#### StatusPageComponentAvailabilityV2
+
+| Field | Description |
+| --- | --- |
+| `availability_percent` | Availability over the window as a percentage, floored (for example "99.94"). |
+| `component_id` | ID of the component. |
+| `data_available_since` | Earliest time we have status data for this component. |
+| `end_at` | End of the requested availability window |
+| `start_at` | Start of the requested availability window |
+| `status_page_id` | ID of the status page |
+
+Operations: Load.
+
+API path: `/v2/status_pages/{status_page_id}/components/{component_id}/availability`
 
 #### StatusPageIncident
 
 | Field | Description |
 | --- | --- |
-| `component_impact` |  |
-| `component_status` |  |
-| `id` |  |
-| `idempotency_key` |  |
-| `incident_status` |  |
-| `message` |  |
-| `name` |  |
-| `notify_subscriber` |  |
-| `published_at` |  |
-| `status_page_id` |  |
-| `update` |  |
+| `component_impacts` | A list of time periods that this status page incident had an impact on a component |
+| `component_statuses` | An array of mappings from component ID to current component status |
+| `id` | A unique ID for this status page incident |
+| `idempotency_key` | A unique key to de-duplicate requests. |
+| `incident_status` | Current status for this incident |
+| `message` | Markdown initial update on this status page incident |
+| `name` | A title for the incident |
+| `notify_subscribers` | Whether to notify subscribers about this status page incident. |
+| `published_at` | When this status page incident was published to the status page |
+| `status_page_id` | The ID of the corresponding status page |
+| `updates` | A list of updates posted to this status page incident |
 
 Operations: Create, List, Load, Update.
 
@@ -1072,35 +2101,47 @@ API path: `/v2/status_page_incidents`
 
 | Field | Description |
 | --- | --- |
-| `component_status` |  |
-| `incident_status` |  |
-| `message` |  |
-| `notify_subscriber` |  |
-| `status_page_incident_id` |  |
+| `component_statuses` | An array of mappings from component ID to component status. |
+| `incident_status` | Optional new status for this status page incident. |
+| `message` | Markdown update on what's changed about this status page incident |
+| `notify_subscribers` | Whether to notify subscribers about this incident update. |
+| `status_page_incident_id` | ID of the status page incident |
 
 Operations: Create.
 
 API path: `/v2/status_page_incident_updates`
 
+#### StatusPageLinkedResponseIncidentV1
+
+| Field | Description |
+| --- | --- |
+| `id` | ID of the Response incident |
+| `linked_at` | When the Response incident was linked to the status page incident |
+
+Operations: List.
+
+API path: `/v1/status-pages/{id}/incidents/{incident_id}/response-incidents`
+
 #### StatusPageMaintenance
 
 | Field | Description |
 | --- | --- |
-| `affected_component_id` |  |
-| `component_maintenance_period` |  |
-| `end_at` |  |
-| `id` |  |
-| `idempotency_key` |  |
-| `maintenance_status` |  |
-| `message` |  |
-| `name` |  |
-| `notify_subscriber` |  |
-| `published_at` |  |
-| `start_at` |  |
-| `status_page_id` |  |
-| `update` |  |
+| `affected_component_ids` | An array of IDs of component affected by the maintenance window |
+| `automate_maintenance_status` | Whether updates are published automatically, moving this maintenance window to in progress at its start time and to complete at its end time |
+| `component_maintenance_periods` | A list of time periods where components were under maintenance during this status page maintenance window |
+| `end_at` | The time the maintenance window ends |
+| `id` | A unique ID for this status page maintenance window |
+| `idempotency_key` | A unique key to de-duplicate requests. |
+| `maintenance_status` | Current status for this maintenance window |
+| `message` | Markdown initial update on this status page maintenance window |
+| `name` | A title for the maintenance window |
+| `notify_subscribers` | Whether to notify subscribers about this status page maintenance. |
+| `published_at` | When this status page maintenance window was published to the status page |
+| `start_at` | The time the maintenance window starts |
+| `status_page_id` | The ID of the corresponding status page |
+| `updates` | A list of updates posted to this status page maintenance window |
 
-Operations: Create, List, Load.
+Operations: Create, List, Load, Update.
 
 API path: `/v2/status_page_maintenances`
 
@@ -1108,11 +2149,11 @@ API path: `/v2/status_page_maintenances`
 
 | Field | Description |
 | --- | --- |
-| `component_status` |  |
-| `maintenance_status` |  |
-| `message` |  |
-| `notify_subscriber` |  |
-| `status_page_maintenance_id` |  |
+| `component_statuses` | An array of mappings from component ID to component status. |
+| `maintenance_status` | Optional new status for this status page maintenance window. |
+| `message` | Markdown update on what's changed about this status page maintenance window |
+| `notify_subscribers` | Whether to notify subscribers about this status page maintenance update. |
+| `status_page_maintenance_id` | ID of the status page maintenance window |
 
 Operations: Create.
 
@@ -1122,39 +2163,51 @@ API path: `/v2/status_page_maintenance_updates`
 
 | Field | Description |
 | --- | --- |
-| `item` |  |
+| `current_structure` |  |
+| `display_uptime_mode` | How the page shows uptime against its components |
+| `id` |  |
+| `management_meta` |  |
 
 Operations: Load.
 
 API path: `/v2/status_page_structures/{status_page_id}`
+
+#### StatusPagesV2
+
+| Field | Description |
+| --- | --- |
+
+Operations: Remove.
+
+API path: `/v2/status_page_maintenances/{status_page_maintenance_id}`
 
 #### Team
 
 | Field | Description |
 | --- | --- |
 | `catalog_entry` |  |
-| `id` |  |
-| `member` |  |
-| `name` |  |
+| `id` | Unique ID of the team |
+| `members` | Members of the team |
+| `name` | Name of the team |
 
 Operations: List, Load.
 
 API path: `/v3/teams`
 
-#### TelemetryDataSource
+#### TelemetryDataSourceV2
 
 | Field | Description |
 | --- | --- |
-| `created_at` |  |
-| `datadog_config` |  |
-| `enabled` |  |
-| `grafana_config` |  |
-| `id` |  |
-| `name` |  |
-| `provider` |  |
-| `source_type` |  |
-| `updated_at` |  |
-| `version` |  |
+| `created_at` | When this data source was created |
+| `datadog_config` | Datadog-specific credential updates |
+| `enabled` | Whether this data source is enabled |
+| `grafana_config` | Grafana-specific credential and endpoint updates |
+| `id` | Unique identifier for this data source |
+| `name` | Human-readable name of the data source |
+| `provider` | Provider that hosts this data source |
+| `source_type` | Type of data source (e.g., prometheus, loki, tempo) |
+| `updated_at` | When this data source was last updated |
+| `version` | Upstream tool version captured at probe time (e.g. |
 
 Operations: Update.
 
@@ -1165,47 +2218,48 @@ API path: `/v2/telemetry/data_sources/{id}`
 | Field | Description |
 | --- | --- |
 | `base_role` |  |
-| `custom_role` |  |
-| `email` |  |
-| `id` |  |
-| `is_active` |  |
-| `name` |  |
-| `role` |  |
-| `seat` |  |
-| `slack_user_id` |  |
+| `custom_roles` |  |
+| `email` | Email address of the user. |
+| `id` | Unique identifier of the user |
+| `is_active` | Whether the user is active. |
+| `name` | Name of the user |
+| `role` | DEPRECATED: Role of the user as of March 9th 2023, this value is no longer updated. |
+| `seats` |  |
+| `slack_user_id` | Slack ID of the user |
 
-Operations: List, Load.
+Operations: Create, List, Load.
 
-API path: `/v2/users`
+API path: `/v2/users/{user_id}/paging_provider`
 
 #### Workflow
 
 | Field | Description |
 | --- | --- |
-| `annotation` |  |
-| `condition_group` |  |
-| `continue_on_step_error` |  |
+| `annotations` | Annotations that track metadata about this resource |
+| `auto_run_mode` | Whether the workflow runs immediately, or asks for confirmation in the incident channel first. |
+| `condition_groups` | Conditions that apply to the workflow trigger |
+| `continue_on_step_error` | Whether to continue executing the workflow if a step fails |
 | `delay` |  |
-| `expression` |  |
-| `folder` |  |
-| `form_field` |  |
-| `id` |  |
-| `include_private_escalation` |  |
-| `include_private_incident` |  |
+| `expressions` | The expressions to use in the workflow |
+| `folder` | Folder to display the workflow in |
+| `form_fields` | User-configured form fields available in the workflow scope. |
+| `id` | Unique identifier for the workflow |
+| `include_private_escalations` | Whether to include private escalations |
+| `include_private_incidents` | DEPRECATED: use `private_incident_scope` instead. |
 | `management_meta` |  |
-| `name` |  |
-| `once_for` |  |
-| `owning_team_id` |  |
-| `private_incident_scope` |  |
-| `runs_from` |  |
-| `runs_on_incident` |  |
-| `runs_on_incident_mode` |  |
-| `shortform` |  |
-| `skip_step_upgrade` |  |
-| `state` |  |
-| `step` |  |
-| `trigger` |  |
-| `version` |  |
+| `name` | Name provided by the user when creating the workflow |
+| `once_for` | This workflow will run 'once for' a list of references |
+| `owning_team_ids` | IDs of the teams that own this workflow |
+| `private_incident_scope` | Which private incidents this workflow acts on: every private incident (all), those an owning team can see (owning_teams), or none |
+| `runs_from` | The time from which this workflow will run on incidents |
+| `runs_on_incident_modes` | Which incident modes should this workflow run on? |
+| `runs_on_incidents` | Which incidents should the workflow be applied to? |
+| `shortform` | The shortform used to trigger this workflow (only applicable for manual triggers) |
+| `skip_step_upgrades` | Skips workflow step upgrades, when the parameters for an existing workflow step change |
+| `state` | What state this workflow is in |
+| `steps` | Steps that are executed as part of the workflow |
+| `trigger` | Trigger to set on the workflow |
+| `version` | Revision of the workflow, uniquely identifying it's version |
 | `workflow` |  |
 
 Operations: Create, List, Load, Remove, Update.
@@ -1216,20 +2270,20 @@ API path: `/v2/workflows`
 
 | Field | Description |
 | --- | --- |
-| `cancelled_at` |  |
-| `created_at` |  |
-| `enqueued_at` |  |
-| `error` |  |
-| `id` |  |
-| `incident_id` |  |
-| `incident_reference` |  |
-| `progress` |  |
-| `scheduled_at` |  |
-| `updated_at` |  |
-| `workflow_id` |  |
-| `workflow_name` |  |
-| `workflow_version_id` |  |
-| `workflow_version_number` |  |
+| `cancelled_at` | If the run was cancelled, this is when |
+| `created_at` | When the resource was created |
+| `enqueued_at` | When the run was enqueued for execution |
+| `error` | Error produced by the workflow, if it failed |
+| `id` | Unique identifier for the workflow run |
+| `incident_id` | If this run was against a specific incident, this is the ID of that incident |
+| `incident_reference` | If this run was against a specific incident, this is the reference of that incident |
+| `progress` | Status of each step as it is worked |
+| `scheduled_at` | When the run was scheduled for |
+| `updated_at` | When the resource was last updated |
+| `workflow_id` | Unique identifier for the underlying workflow |
+| `workflow_name` | Name of the underlying workflow |
+| `workflow_version_id` | Unique identifier of the workflow version |
+| `workflow_version_number` | Monotonically incrementing version number for the version that ran |
 
 Operations: List, Load.
 
@@ -1259,17 +2313,17 @@ Create an instance: `local action = client:Action(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `assignee` | `table` |  |
-| `assignee_id` | `string` |  |
-| `completed_at` | `string` |  |
-| `created_at` | `string` |  |
+| `assignee_id` | `string` | ID of the user this action is assigned to |
+| `completed_at` | `string` | When the action was completed |
+| `created_at` | `string` | When the action was created |
 | `creator` | `table` |  |
-| `description` | `string` |  |
+| `description` | `string` | Description of the action |
 | `external_issue_reference` | `table` |  |
-| `follow_up` | `boolean` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `status` | `string` |  |
-| `updated_at` | `string` |  |
+| `follow_up` | `boolean` | Whether an action is marked as follow-up |
+| `id` | `string` | Unique identifier for the action |
+| `incident_id` | `string` | Unique identifier of the incident the action belongs to |
+| `status` | `string` | Status of the action |
+| `updated_at` | `string` | When the action was last updated |
 
 #### Example: Load
 
@@ -1315,18 +2369,19 @@ Create an instance: `local alert = client:Alert(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_group_id` | `table` |  |
-| `alert_source_id` | `string` |  |
-| `attribute` | `table` |  |
-| `created_at` | `string` |  |
-| `deduplication_key` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `resolved_at` | `string` |  |
-| `source_url` | `string` |  |
-| `status` | `string` |  |
-| `title` | `string` |  |
-| `updated_at` | `string` |  |
+| `alert_group_ids` | `table` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `table` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `table` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
 
 #### Example: Load
 
@@ -1337,7 +2392,7 @@ local alert, err = client:Alert():load({ id = "alert_id" })
 #### Example: List
 
 ```lua
-local alerts, err = client:Alert():list()
+local alerts, err = client:Alert():list({ page_size = 1 })
 ```
 
 #### Example: Create
@@ -1346,7 +2401,7 @@ local alerts, err = client:Alert():list()
 local alert, err = client:Alert():create({
   id = "example_id", -- string
   alert_source_id = "example_alert_source_id", -- string
-  attribute = {}, -- table
+  attributes = {}, -- table
   created_at = "example_created_at", -- string
   deduplication_key = "example_deduplication_key", -- string
   status = "example_status", -- string
@@ -1374,12 +2429,12 @@ Create an instance: `local alert_attribute = client:AlertAttribute(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `array` | `boolean` |  |
-| `emoji` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `required` | `boolean` |  |
-| `type` | `string` |  |
+| `array` | `boolean` | Whether this attribute is an array |
+| `emoji` | `string` | The emoji to display alongside this attribute in chat messages, stored without colons |
+| `id` | `string` | The ID of this attribute |
+| `name` | `string` | Unique name of this attribute |
+| `required` | `boolean` | Whether this attribute is required. |
+| `type` | `string` | Engine resource name for this attribute |
 
 #### Example: Load
 
@@ -1424,15 +2479,15 @@ Create an instance: `local alert_note = client:AlertNote(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_group_id` | `string` |  |
-| `alert_id` | `string` |  |
-| `content` | `string` |  |
-| `created_at` | `string` |  |
+| `alert_group_id` | `string` | ID of the alert group this note is attached to. |
+| `alert_id` | `string` | ID of the alert this note is attached to. |
+| `content` | `string` | Markdown body of the note |
+| `created_at` | `string` | When this note was first created |
 | `creator` | `table` |  |
-| `id` | `string` |  |
-| `image` | `table` |  |
-| `last_edited_at` | `string` |  |
-| `updated_at` | `string` |  |
+| `id` | `string` | Unique identifier for the alert note |
+| `images` | `table` | Images attached to the current version of the note, with signed URLs valid for 10 minutes |
+| `last_edited_at` | `string` | When this note was last edited, only set if it has been edited at least once since creation |
+| `updated_at` | `string` | When this note was last updated |
 
 #### Example: Load
 
@@ -1454,7 +2509,7 @@ local alert_note, err = client:AlertNote():create({
   created_at = "example_created_at", -- string
   creator = {}, -- table
   id = "example_id", -- string
-  image = {}, -- table
+  images = {}, -- table
   updated_at = "example_updated_at", -- string
 })
 ```
@@ -1478,24 +2533,24 @@ Create an instance: `local alert_route = client:AlertRoute(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_source` | `table` |  |
-| `channel_config` | `table` |  |
-| `condition_group` | `table` |  |
-| `created_at` | `string` |  |
-| `enabled` | `boolean` |  |
+| `alert_sources` | `table` | Which alert sources should this alert route match? |
+| `channel_config` | `table` | The channel configuration for this alert route |
+| `condition_groups` | `table` | What condition groups must be true for this alert route to fire? |
+| `created_at` | `string` | The time of creation of this alert route |
+| `enabled` | `boolean` | Whether this alert route is enabled or not |
 | `escalation_config` | `table` |  |
-| `expression` | `table` |  |
+| `expressions` | `table` | The expressions used in this template |
 | `grouping_config` | `table` |  |
-| `id` | `string` |  |
+| `id` | `string` | Unique identifier for this alert route config |
 | `incident_config` | `table` |  |
 | `incident_template` | `table` |  |
-| `is_private` | `boolean` |  |
+| `is_private` | `boolean` | Whether this alert route is private. |
 | `message_config` | `table` |  |
 | `message_template` | `table` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `table` |  |
-| `updated_at` | `string` |  |
-| `version` | `number` |  |
+| `name` | `string` | The name of this alert route config, for the user's reference |
+| `owning_team_ids` | `table` | IDs of teams that own this alert route |
+| `updated_at` | `string` | The time of last update of this alert route |
+| `version` | `number` | The version of this alert route config |
 
 #### Example: Load
 
@@ -1506,19 +2561,19 @@ local alert_route, err = client:AlertRoute():load({ id = "alert_route_id" })
 #### Example: List
 
 ```lua
-local alert_routes, err = client:AlertRoute():list()
+local alert_routes, err = client:AlertRoute():list({ page_size = 1 })
 ```
 
 #### Example: Create
 
 ```lua
 local alert_route, err = client:AlertRoute():create({
-  alert_source = {}, -- table
+  alert_sources = {}, -- table
   channel_config = {}, -- table
-  condition_group = {}, -- table
+  condition_groups = {}, -- table
   enabled = true, -- boolean
   escalation_config = {}, -- table
-  expression = {}, -- table
+  expressions = {}, -- table
   grouping_config = {}, -- table
   id = "example_id", -- string
   incident_config = {}, -- table
@@ -1549,19 +2604,23 @@ Create an instance: `local alert_source = client:AlertSource(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_events_url` | `string` |  |
-| `auto_resolve_incident_alert` | `boolean` |  |
-| `auto_resolve_timeout_minute` | `number` |  |
-| `disabled` | `boolean` |  |
-| `email_option` | `table` |  |
-| `heartbeat_option` | `table` |  |
-| `http_custom_option` | `table` |  |
-| `id` | `string` |  |
-| `jira_option` | `table` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `table` |  |
-| `secret_token` | `string` |  |
-| `source_type` | `string` |  |
+| `alert_events_url` | `string` | URL that can be used to send alert events to this source. |
+| `auto_resolve_incident_alerts` | `boolean` | Whether alerts from this source keep counting down to auto-resolve while attached to an incident. |
+| `auto_resolve_timeout_minutes` | `number` | When set, alerts from this source will automatically resolve after this many minutes. |
+| `azure_devops_options` | `table` |  |
+| `disabled` | `boolean` | For heartbeat sources, set to true to disable monitoring |
+| `email_options` | `table` |  |
+| `filter_condition_groups` | `table` | Conditions an incoming event must match to be ingested from this source, evaluated against the event's payload and this source's expressions. |
+| `fixed_team_id` | `string` | When set, the team every alert from this source is attributed to. |
+| `heartbeat_options` | `table` |  |
+| `http_custom_options` | `table` |  |
+| `id` | `string` | The ID of this alert source |
+| `jira_options` | `table` |  |
+| `name` | `string` | Unique name of the alert source |
+| `owning_team_ids` | `table` | IDs of teams that own this alert source |
+| `rate_limit_sharding` | `table` | Controls how this source's ingest rate limit is split into buckets. |
+| `secret_token` | `string` | Secret token used to authenticate this source, if applicable. |
+| `source_type` | `string` | Type of alert source |
 | `template` | `table` |  |
 
 #### Example: Load
@@ -1580,14 +2639,361 @@ local alert_sources, err = client:AlertSource():list()
 
 ```lua
 local alert_source, err = client:AlertSource():create({
-  email_option = {}, -- table
-  heartbeat_option = {}, -- table
-  http_custom_option = {}, -- table
+  azure_devops_options = {}, -- table
+  email_options = {}, -- table
+  heartbeat_options = {}, -- table
+  http_custom_options = {}, -- table
   id = "example_id", -- string
-  jira_option = {}, -- table
+  jira_options = {}, -- table
   name = "example_name", -- string
+  rate_limit_sharding = {}, -- table
   source_type = "example_source_type", -- string
   template = {}, -- table
+})
+```
+
+
+### AlertSourcesV2
+
+Create an instance: `local alert_sources_v2 = client:AlertSourcesV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `owning_team_ids` | `table` | IDs of teams that own this alert source |
+| `source_type` | `string` | Type of alert source |
+| `template` | `table` |  |
+
+#### Example: Create
+
+```lua
+local alert_sources_v2, err = client:AlertSourcesV2():create({
+  source_type = "example_source_type", -- string
+  template = {}, -- table
+})
+```
+
+
+### AlertTag
+
+Create an instance: `local alert_tag = client:AlertTag(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique identifier for the tag |
+| `name` | `string` | The tag name |
+
+#### Example: List
+
+```lua
+local alert_tags, err = client:AlertTag():list()
+```
+
+
+### AlertsAddTagsResultV2
+
+Create an instance: `local alerts_add_tags_result_v2 = client:AlertsAddTagsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert_group_ids` | `table` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `table` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `table` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
+
+#### Example: Create
+
+```lua
+local alerts_add_tags_result_v2, err = client:AlertsAddTagsResultV2():create({
+  alert_id = "example_alert_id", -- string
+  alert_source_id = "example_alert_source_id", -- string
+  attributes = {}, -- table
+  created_at = "example_created_at", -- string
+  deduplication_key = "example_deduplication_key", -- string
+  id = "example_id", -- string
+  status = "example_status", -- string
+  title = "example_title", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### AlertsRemoveTagsResultV2
+
+Create an instance: `local alerts_remove_tags_result_v2 = client:AlertsRemoveTagsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert_group_ids` | `table` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `table` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `table` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
+
+#### Example: Create
+
+```lua
+local alerts_remove_tags_result_v2, err = client:AlertsRemoveTagsResultV2():create({
+  alert_id = "example_alert_id", -- string
+  alert_source_id = "example_alert_source_id", -- string
+  attributes = {}, -- table
+  created_at = "example_created_at", -- string
+  deduplication_key = "example_deduplication_key", -- string
+  id = "example_id", -- string
+  status = "example_status", -- string
+  title = "example_title", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### AlertsSetTagsResultV2
+
+Create an instance: `local alerts_set_tags_result_v2 = client:AlertsSetTagsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert_group_ids` | `table` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `table` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `table` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
+
+#### Example: Create
+
+```lua
+local alerts_set_tags_result_v2, err = client:AlertsSetTagsResultV2():create({
+  alert_id = "example_alert_id", -- string
+  alert_source_id = "example_alert_source_id", -- string
+  attributes = {}, -- table
+  created_at = "example_created_at", -- string
+  deduplication_key = "example_deduplication_key", -- string
+  id = "example_id", -- string
+  status = "example_status", -- string
+  title = "example_title", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### AlertsTransitionIncidentAlertResultV2
+
+Create an instance: `local alerts_transition_incident_alert_result_v2 = client:AlertsTransitionIncidentAlertResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert` | `table` |  |
+| `alert_id` | `string` | Alert to attach to the incident |
+| `alert_route_id` | `string` | The ID of the alert route that created this incident alert |
+| `id` | `string` | The ID of this alert |
+| `incident` | `table` | Incident slim is a subset of the full incident object, listing key fields. |
+| `incident_id` | `string` | Incident to attach the alert to |
+| `re_relate` | `boolean` | Relate the alert again even though someone previously marked it unrelated to this incident. |
+| `state` | `string` | What state to move the connection to |
+
+#### Example: List
+
+```lua
+local alerts_transition_incident_alert_result_v2s, err = client:AlertsTransitionIncidentAlertResultV2():list({ page_size = 1 })
+```
+
+#### Example: Create
+
+```lua
+local alerts_transition_incident_alert_result_v2, err = client:AlertsTransitionIncidentAlertResultV2():create({
+  alert = {}, -- table
+  alert_id = "example_alert_id", -- string
+  id = "example_id", -- string
+  incident = {}, -- table
+  incident_id = "example_incident_id", -- string
+  state = "example_state", -- string
+})
+```
+
+
+### AnnouncementRule
+
+Create an instance: `local announcement_rule = client:AnnouncementRule(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `condition_groups` | `table` | Incidents are announced when they match any of these condition groups |
+| `conditions_no_longer_apply_behaviour` | `string` | Whether to remove announcement posts when the incident no longer matches this rule's conditions |
+| `created_at` | `string` | When the rule was created |
+| `id` | `string` | Unique identifier for this announcement rule |
+| `microsoft_teams_channel_ids` | `table` | Microsoft Teams channels to post announcements into, as team_id/channel_id, when the organisation uses Microsoft Teams |
+| `mode` | `string` | Which incidents are announced: live incidents only, or triage incidents too |
+| `name` | `string` | Human readable name for the rule |
+| `owning_team_ids` | `table` | IDs of the teams that own this rule |
+| `private_incident_scope` | `string` | Which private incidents this rule announces: every private incident (all), those an owning team can see (owning_teams), or none |
+| `slack_channel_ids` | `table` | IDs of the Slack channels to post announcements into, when the organisation uses Slack |
+| `template_id` | `string` | ID of the announcement template used to render this rule's posts |
+| `update_sharing_mode` | `string` | Where incident updates are shared once the incident is announced |
+| `updated_at` | `string` | When the rule was last updated |
+
+#### Example: Load
+
+```lua
+local announcement_rule, err = client:AnnouncementRule():load({ id = "announcement_rule_id" })
+```
+
+#### Example: List
+
+```lua
+local announcement_rules, err = client:AnnouncementRule():list()
+```
+
+#### Example: Create
+
+```lua
+local announcement_rule, err = client:AnnouncementRule():create({
+  condition_groups = {}, -- table
+  conditions_no_longer_apply_behaviour = "example_conditions_no_longer_apply_behaviour", -- string
+  created_at = "example_created_at", -- string
+  id = "example_id", -- string
+  microsoft_teams_channel_ids = {}, -- table
+  mode = "example_mode", -- string
+  name = "example_name", -- string
+  owning_team_ids = {}, -- table
+  slack_channel_ids = {}, -- table
+  update_sharing_mode = "example_update_sharing_mode", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### AnnouncementTemplate
+
+Create an instance: `local announcement_template = client:AnnouncementTemplate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `actions` | `table` | Actions shown on the announcement post, in rank order |
+| `fields` | `table` | Fields shown on the announcement post, in rank order |
+| `id` | `string` | Unique identifier for this announcement template |
+| `is_default` | `boolean` | Whether this is the organisation's default template, used by rules that don't choose one |
+| `name` | `string` | Name of this announcement template |
+| `owning_team_ids` | `table` | IDs of the teams that own this template |
+
+#### Example: Load
+
+```lua
+local announcement_template, err = client:AnnouncementTemplate():load({ id = "announcement_template_id" })
+```
+
+#### Example: List
+
+```lua
+local announcement_templates, err = client:AnnouncementTemplate():list()
+```
+
+#### Example: Create
+
+```lua
+local announcement_template, err = client:AnnouncementTemplate():create({
+  actions = {}, -- table
+  fields = {}, -- table
+  id = "example_id", -- string
+  is_default = true, -- boolean
+  name = "example_name", -- string
+  owning_team_ids = {}, -- table
 })
 ```
 
@@ -1610,19 +3016,18 @@ Create an instance: `local api_key = client:ApiKey(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `comment` | `string` |  |
-| `created_at` | `string` |  |
+| `comments` | `string` | Freeform notes about this API key |
+| `created_at` | `string` | When the API key was created |
 | `creator` | `table` |  |
-| `grace_period_minute` | `number` |  |
-| `id` | `string` |  |
-| `last_used_at` | `string` |  |
-| `name` | `string` |  |
-| `role` | `table` |  |
-| `role_name` | `table` |  |
-| `team_id` | `table` |  |
-| `team_role` | `table` |  |
-| `team_role_name` | `table` |  |
-| `token_last_issued_at` | `string` |  |
+| `id` | `string` | Unique identifier for this API key |
+| `last_used_at` | `string` | When the key was last used to authenticate a request |
+| `name` | `string` | The name of the API key, for the user's reference |
+| `role_names` | `table` | Account-level roles to assign to the API key. |
+| `roles` | `table` | The account-level roles assigned to this API key |
+| `team_ids` | `table` | IDs of teams that this API key is scoped to |
+| `team_role_names` | `table` | Roles to grant for the teams specified in `team_ids`. |
+| `team_roles` | `table` | The team-level roles assigned to this API key |
+| `token_last_issued_at` | `string` | When the current token for this API was last issued. |
 
 #### Example: Load
 
@@ -1642,16 +3047,327 @@ local api_keys, err = client:ApiKey():list()
 local api_key, err = client:ApiKey():create({
   created_at = "example_created_at", -- string
   creator = {}, -- table
-  grace_period_minute = 1, -- number
   id = "example_id", -- string
   name = "example_name", -- string
-  role = {}, -- table
-  role_name = {}, -- table
-  team_id = {}, -- table
-  team_role = {}, -- table
-  team_role_name = {}, -- table
+  role_names = {}, -- table
+  roles = {}, -- table
+  team_ids = {}, -- table
+  team_role_names = {}, -- table
+  team_roles = {}, -- table
   token_last_issued_at = "example_token_last_issued_at", -- string
 })
+```
+
+
+### CallRoute
+
+Create an instance: `local call_route = client:CallRoute(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `allowed_callers` | `table` | The numbers allowed to call this route. |
+| `country_code` | `string` | The country this route's number belongs to |
+| `created_at` | `string` |  |
+| `current_state` | `string` | Where this route is in provisioning. |
+| `custom_language` | `string` | The language we speak voice prompts in, via text-to-speech |
+| `id` | `string` | Unique identifier for this call route |
+| `name` | `string` | Name for this call route |
+| `options` | `table` | The phone-tree menu this route presents. |
+| `path` | `table` | Who we page when a call comes in. |
+| `phone_number` | `string` | The number your customers call to reach this route, once one has been provisioned |
+| `phone_number_type` | `string` | The type of phone number, which determines the regulatory requirements for provisioning it |
+| `responder_caller_id` | `string` | Which number responders see when we call them: * route_number: this route's own number * oncall_number: an incident.io on-call number |
+| `updated_at` | `string` |  |
+| `use_caller_allowlist` | `boolean` | Whether this route only answers calls from its allowed callers |
+
+#### Example: Load
+
+```lua
+local call_route, err = client:CallRoute():load({ id = "call_route_id" })
+```
+
+#### Example: List
+
+```lua
+local call_routes, err = client:CallRoute():list()
+```
+
+
+### CallRoutesCreateAllowedCallerResultV2
+
+Create an instance: `local call_routes_create_allowed_caller_result_v2 = client:CallRoutesCreateAllowedCallerResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `name` | `string` | Label for whose number this is |
+| `phone_number` | `string` | The number to allow, in international format |
+
+#### Example: Create
+
+```lua
+local call_routes_create_allowed_caller_result_v2, err = client:CallRoutesCreateAllowedCallerResultV2():create({
+  call_route_id = "example_call_route_id", -- string
+  phone_number = "example_phone_number", -- string
+})
+```
+
+
+### CallRoutesCreateOptionResultV2
+
+Create an instance: `local call_routes_create_option_result_v2 = client:CallRoutesCreateOptionResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `digit` | `string` | The keypad digit a caller presses to choose this option |
+| `path` | `table` | Who to page when a caller chooses this option |
+| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+#### Example: Create
+
+```lua
+local call_routes_create_option_result_v2, err = client:CallRoutesCreateOptionResultV2():create({
+  call_route_id = "example_call_route_id", -- string
+  digit = "example_digit", -- string
+  path = {}, -- table
+  prompt = "example_prompt", -- string
+})
+```
+
+
+### CallRoutesListAllowedCallersResultV2
+
+Create an instance: `local call_routes_list_allowed_callers_result_v2 = client:CallRoutesListAllowedCallersResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique identifier for this allowed caller |
+| `name` | `string` | Label for whose number this is |
+| `phone_number` | `string` | The number allowed to call this route, in international format |
+
+#### Example: List
+
+```lua
+local call_routes_list_allowed_callers_result_v2s, err = client:CallRoutesListAllowedCallersResultV2():list({ call_route_id = "example" })
+```
+
+
+### CallRoutesListOptionsResultV2
+
+Create an instance: `local call_routes_list_options_result_v2 = client:CallRoutesListOptionsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `digit` | `string` | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Unique identifier for this option |
+| `path` | `table` | Who we page when a caller chooses this option |
+| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+#### Example: List
+
+```lua
+local call_routes_list_options_result_v2s, err = client:CallRoutesListOptionsResultV2():list({ call_route_id = "example" })
+```
+
+
+### CallRoutesShowAllowedCallerResultV2
+
+Create an instance: `local call_routes_show_allowed_caller_result_v2 = client:CallRoutesShowAllowedCallerResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique identifier for this allowed caller |
+| `name` | `string` | Label for whose number this is |
+| `phone_number` | `string` | The number allowed to call this route, in international format |
+
+#### Example: Load
+
+```lua
+local call_routes_show_allowed_caller_result_v2, err = client:CallRoutesShowAllowedCallerResultV2():load({ id = "call_routes_show_allowed_caller_result_v2_id", call_route_id = "call_route_id" })
+```
+
+
+### CallRoutesShowOptionResultV2
+
+Create an instance: `local call_routes_show_option_result_v2 = client:CallRoutesShowOptionResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `digit` | `string` | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Unique identifier for this option |
+| `path` | `table` | Who we page when a caller chooses this option |
+| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+#### Example: Load
+
+```lua
+local call_routes_show_option_result_v2, err = client:CallRoutesShowOptionResultV2():load({ id = "call_routes_show_option_result_v2_id", call_route_id = "call_route_id" })
+```
+
+
+### CallRoutesUpdateAllowedCallerResultV2
+
+Create an instance: `local call_routes_update_allowed_caller_result_v2 = client:CallRoutesUpdateAllowedCallerResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique identifier for this allowed caller |
+| `name` | `string` | Label for whose number this is |
+| `phone_number` | `string` | The number allowed to call this route, in international format |
+
+
+### CallRoutesUpdateOptionResultV2
+
+Create an instance: `local call_routes_update_option_result_v2 = client:CallRoutesUpdateOptionResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `digit` | `string` | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Unique identifier for this option |
+| `path` | `table` | Who we page when a caller chooses this option |
+| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+
+### CallRoutesV2
+
+Create an instance: `local call_routes_v2 = client:CallRoutesV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `remove(match)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
+
+
+### CallSession
+
+Create an instance: `local call_session = client:CallSession(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `ended_at` | `string` | When the call session ended. |
+| `id` | `string` | Unique identifier for this call session |
+| `incident_id` | `string` | The incident this call session belongs to |
+| `started_at` | `string` | When the call session started |
+
+#### Example: List
+
+```lua
+local call_sessions, err = client:CallSession():list({ incident_id = "example" })
+```
+
+
+### CallTranscriptEntry
+
+Create an instance: `local call_transcript_entry = client:CallTranscriptEntry(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `content` | `string` | What was said |
+| `id` | `string` | Unique identifier for this transcript entry |
+| `medium` | `string` | Whether this entry was spoken aloud or sent as an in-call chat message |
+| `participant_name` | `string` | Name of the participant who spoke or sent the message, as reported by the call provider |
+| `timestamp` | `string` | When the participant started speaking |
+
+#### Example: List
+
+```lua
+local call_transcript_entrys, err = client:CallTranscriptEntry():list({ call_session_id = "example" })
 ```
 
 
@@ -1672,19 +3388,19 @@ Create an instance: `local catalog_entry = client:CatalogEntry(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alias` | `table` |  |
-| `archived_at` | `string` |  |
-| `attribute_value` | `table` |  |
+| `aliases` | `table` | Optional aliases that can be used to reference this entry |
+| `archived_at` | `string` | When this entry was archived |
+| `attribute_values` | `table` | Values of this entry |
 | `catalog_entry` | `table` |  |
 | `catalog_type` | `table` |  |
-| `catalog_type_id` | `string` |  |
-| `created_at` | `string` |  |
-| `external_id` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `rank` | `number` |  |
-| `update_attribute` | `table` |  |
-| `updated_at` | `string` |  |
+| `catalog_type_id` | `string` | ID of this catalog type |
+| `created_at` | `string` | When this entry was created |
+| `external_id` | `string` | An optional alternative ID for this entry, which is ensured to be unique for the type |
+| `id` | `string` | ID of this catalog entry |
+| `name` | `string` | Name is the human readable name of this entry |
+| `rank` | `number` | When catalog type is ranked, this is used to help order things |
+| `update_attributes` | `table` | If provided, only update these attribute_values keys. |
+| `updated_at` | `string` | When this entry was last updated |
 
 #### Example: Load
 
@@ -1695,14 +3411,14 @@ local catalog_entry, err = client:CatalogEntry():load({ id = "catalog_entry_id" 
 #### Example: List
 
 ```lua
-local catalog_entrys, err = client:CatalogEntry():list()
+local catalog_entrys, err = client:CatalogEntry():list({ catalog_type_id = "example" })
 ```
 
 #### Example: Create
 
 ```lua
 local catalog_entry, err = client:CatalogEntry():create({
-  attribute_value = {}, -- table
+  attribute_values = {}, -- table
   catalog_entry = {}, -- table
   catalog_type = {}, -- table
   catalog_type_id = "example_catalog_type_id", -- string
@@ -1728,12 +3444,12 @@ Create an instance: `local catalog_resource = client:CatalogResource(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `category` | `string` |  |
-| `description` | `string` |  |
-| `engine_resource_type` | `string` |  |
-| `label` | `string` |  |
-| `type` | `string` |  |
-| `value_docstring` | `string` |  |
+| `category` | `string` | Which category of resource |
+| `description` | `string` | Human readable description for this resource |
+| `engine_resource_type` | `string` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `label` | `string` | Label for this catalog resource type |
+| `type` | `string` | Catalog type name for this resource, as used when setting the type of a catalog type attribute |
+| `value_docstring` | `string` | Documentation for the literal string value of this resource |
 
 #### Example: List
 
@@ -1759,30 +3475,30 @@ Create an instance: `local catalog_type = client:CatalogType(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `table` |  |
-| `category` | `table` |  |
-| `color` | `string` |  |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `dynamic_resource_parameter` | `string` |  |
-| `engine_resource_type` | `string` |  |
-| `estimated_count` | `number` |  |
-| `icon` | `string` |  |
-| `id` | `string` |  |
-| `is_editable` | `boolean` |  |
-| `is_team_type` | `boolean` |  |
-| `last_synced_at` | `string` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `table` |  |
-| `ranked` | `boolean` |  |
-| `registry_type` | `string` |  |
-| `required_integration` | `table` |  |
+| `annotations` | `table` | Annotations that can track metadata about this type |
+| `categories` | `table` | What categories is this type considered part of |
+| `color` | `string` | Sets the display color of this type in the dashboard |
+| `created_at` | `string` | When this type was created |
+| `description` | `string` | Human readble description of this type |
+| `dynamic_resource_parameter` | `string` | If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally. |
+| `engine_resource_type` | `string` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `estimated_count` | `number` | If populated, gives an estimated count of entries for this type |
+| `icon` | `string` | Sets the display icon of this type in the dashboard |
+| `id` | `string` | ID of this catalog type |
+| `is_editable` | `boolean` | Catalog types that are synced with external resources can't be edited |
+| `is_team_type` | `boolean` | Whether this catalog type is the designated team type in team settings |
+| `last_synced_at` | `string` | When this type was last synced (if it's ever been sync'd) |
+| `name` | `string` | Name is the human readable name of this type |
+| `owning_team_ids` | `table` | IDs of the teams that own this catalog type |
+| `ranked` | `boolean` | If this type should be ranked |
+| `registry_type` | `string` | The registry resource this type is synced from, if any |
+| `required_integrations` | `table` | If populated, the integrations required for this type |
 | `schema` | `table` |  |
-| `semantic_type` | `string` |  |
-| `source_repo_url` | `string` |  |
-| `type_name` | `string` |  |
-| `updated_at` | `string` |  |
-| `use_name_as_identifier` | `boolean` |  |
+| `semantic_type` | `string` | This type has been deprecated, and will always be empty. |
+| `source_repo_url` | `string` | The url of the external repository where this type is managed |
+| `type_name` | `string` | The type name of this catalog type, to be used when defining attributes. |
+| `updated_at` | `string` | When this type was last updated |
+| `use_name_as_identifier` | `boolean` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 
 #### Example: Load
 
@@ -1800,8 +3516,8 @@ local catalog_types, err = client:CatalogType():list()
 
 ```lua
 local catalog_type, err = client:CatalogType():create({
-  annotation = {}, -- table
-  category = {}, -- table
+  annotations = {}, -- table
+  categories = {}, -- table
   color = "example_color", -- string
   created_at = "example_created_at", -- string
   description = "example_description", -- string
@@ -1834,31 +3550,31 @@ Create an instance: `local catalog_type_schema = client:CatalogTypeSchema(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `table` |  |
-| `attribute` | `table` |  |
-| `category` | `table` |  |
-| `color` | `string` |  |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `dynamic_resource_parameter` | `string` |  |
-| `engine_resource_type` | `string` |  |
-| `estimated_count` | `number` |  |
-| `icon` | `string` |  |
-| `id` | `string` |  |
-| `is_editable` | `boolean` |  |
-| `is_team_type` | `boolean` |  |
-| `last_synced_at` | `string` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `table` |  |
-| `ranked` | `boolean` |  |
-| `registry_type` | `string` |  |
-| `required_integration` | `table` |  |
+| `annotations` | `table` | Annotations that can track metadata about this type |
+| `attributes` | `table` |  |
+| `categories` | `table` | What categories is this type considered part of |
+| `color` | `string` | Sets the display color of this type in the dashboard |
+| `created_at` | `string` | When this type was created |
+| `description` | `string` | Human readble description of this type |
+| `dynamic_resource_parameter` | `string` | If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally. |
+| `engine_resource_type` | `string` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `estimated_count` | `number` | If populated, gives an estimated count of entries for this type |
+| `icon` | `string` | Sets the display icon of this type in the dashboard |
+| `id` | `string` | ID of this catalog type |
+| `is_editable` | `boolean` | Catalog types that are synced with external resources can't be edited |
+| `is_team_type` | `boolean` | Whether this catalog type is the designated team type in team settings |
+| `last_synced_at` | `string` | When this type was last synced (if it's ever been sync'd) |
+| `name` | `string` | Name is the human readable name of this type |
+| `owning_team_ids` | `table` | IDs of the teams that own this catalog type |
+| `ranked` | `boolean` | If this type should be ranked |
+| `registry_type` | `string` | The registry resource this type is synced from, if any |
+| `required_integrations` | `table` | If populated, the integrations required for this type |
 | `schema` | `table` |  |
-| `semantic_type` | `string` |  |
-| `source_repo_url` | `string` |  |
-| `type_name` | `string` |  |
-| `updated_at` | `string` |  |
-| `use_name_as_identifier` | `boolean` |  |
+| `semantic_type` | `string` | This type has been deprecated, and will always be empty. |
+| `source_repo_url` | `string` | The url of the external repository where this type is managed |
+| `type_name` | `string` | The type name of this catalog type, to be used when defining attributes. |
+| `updated_at` | `string` | When this type was last updated |
+| `use_name_as_identifier` | `boolean` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 | `version` | `number` |  |
 
 #### Example: Create
@@ -1866,9 +3582,9 @@ Create an instance: `local catalog_type_schema = client:CatalogTypeSchema(nil)`
 ```lua
 local catalog_type_schema, err = client:CatalogTypeSchema():create({
   catalog_type_id = "example_catalog_type_id", -- string
-  annotation = {}, -- table
-  attribute = {}, -- table
-  category = {}, -- table
+  annotations = {}, -- table
+  attributes = {}, -- table
+  categories = {}, -- table
   color = "example_color", -- string
   created_at = "example_created_at", -- string
   description = "example_description", -- string
@@ -1906,24 +3622,24 @@ Create an instance: `local custom_field = client:CustomField(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `catalog_type_id` | `string` |  |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `field_type` | `string` |  |
+| `catalog_type_id` | `string` | For catalog fields, the ID of the associated catalog type |
+| `created_at` | `string` | When the action was created |
+| `description` | `string` | Description of the custom field |
+| `field_type` | `string` | Type of custom field |
 | `filter_by` | `table` |  |
 | `fixed_filter` | `table` |  |
-| `group_by_catalog_attribute_id` | `string` |  |
-| `helptext_catalog_attribute_id` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `option` | `table` |  |
-| `required` | `string` |  |
-| `required_v2` | `string` |  |
-| `show_before_closure` | `boolean` |  |
-| `show_before_creation` | `boolean` |  |
-| `show_before_update` | `boolean` |  |
-| `show_in_announcement_post` | `boolean` |  |
-| `updated_at` | `string` |  |
+| `group_by_catalog_attribute_id` | `string` | For catalog fields, the ID of the attribute used to group catalog entries (if applicable) |
+| `helptext_catalog_attribute_id` | `string` | Which catalog attribute provides helptext for the options |
+| `id` | `string` | Unique identifier for the custom field |
+| `name` | `string` | Human readable name for the custom field |
+| `options` | `table` | What options are available for this custom field, if this field has options |
+| `required` | `string` | When this custom field must be set during the incident lifecycle. |
+| `required_v2` | `string` | When this custom field must be set during the incident lifecycle. |
+| `show_before_closure` | `boolean` | Whether a custom field should be shown in the incident resolve modal. |
+| `show_before_creation` | `boolean` | Whether a custom field should be shown in the incident creation modal. |
+| `show_before_update` | `boolean` | Whether a custom field should be shown in the incident update modal. |
+| `show_in_announcement_post` | `boolean` | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
+| `updated_at` | `string` | When the action was last updated |
 
 #### Example: Load
 
@@ -1948,7 +3664,7 @@ local custom_field, err = client:CustomField():create({
   fixed_filter = {}, -- table
   id = "example_id", -- string
   name = "example_name", -- string
-  option = {}, -- table
+  options = {}, -- table
   show_before_closure = true, -- boolean
   show_before_creation = true, -- boolean
   show_before_update = true, -- boolean
@@ -1975,10 +3691,10 @@ Create an instance: `local custom_field_option = client:CustomFieldOption(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `custom_field_id` | `string` |  |
-| `id` | `string` |  |
-| `sort_key` | `number` |  |
-| `value` | `string` |  |
+| `custom_field_id` | `string` | ID of the custom field this option belongs to |
+| `id` | `string` | Unique identifier for the custom field option |
+| `sort_key` | `number` | Sort key used to order the custom field options correctly |
+| `value` | `string` | Human readable name for the custom field option. |
 
 #### Example: Load
 
@@ -1989,7 +3705,7 @@ local custom_field_option, err = client:CustomFieldOption():load({ id = "custom_
 #### Example: List
 
 ```lua
-local custom_field_options, err = client:CustomFieldOption():list()
+local custom_field_options, err = client:CustomFieldOption():list({ custom_field_id = "example" })
 ```
 
 #### Example: Create
@@ -2020,21 +3736,21 @@ Create an instance: `local escalation = client:Escalation(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `creator` | `table` |  |
-| `description` | `string` |  |
-| `escalation_path_id` | `string` |  |
-| `event` | `table` |  |
-| `id` | `string` |  |
-| `idempotency_key` | `string` |  |
-| `incident_id` | `string` |  |
-| `priority` | `table` |  |
-| `related_alert` | `table` |  |
-| `related_incident` | `table` |  |
-| `status` | `string` |  |
-| `title` | `string` |  |
-| `updated_at` | `string` |  |
-| `user_id` | `table` |  |
+| `created_at` | `string` | When this escalation was created |
+| `creator` | `table` | The creator of this escalation. |
+| `description` | `string` | Additional detail provided with this escalation. |
+| `escalation_path_id` | `string` | Unique identifier of the escalation path that the escalation was created from |
+| `events` | `table` | Events which describe the history of this escalation. |
+| `id` | `string` | Unique ID of the escalation |
+| `idempotency_key` | `string` | Unique key to prevent duplicate escalations. |
+| `incident_id` | `string` | ID of an incident to associate with this escalation. |
+| `priority` | `table` | The priority associated with this escalation. |
+| `related_alerts` | `table` | Alerts related to this escalation |
+| `related_incidents` | `table` | Incidents related to this escalation |
+| `status` | `string` | Status of the escalation |
+| `title` | `string` | The title of this escalation |
+| `updated_at` | `string` | When this escalation was last updated |
+| `user_ids` | `table` | IDs of users to escalate directly to |
 
 #### Example: Load
 
@@ -2054,15 +3770,128 @@ local escalations, err = client:Escalation():list()
 local escalation, err = client:Escalation():create({
   created_at = "example_created_at", -- string
   creator = {}, -- table
-  event = {}, -- table
+  description = "example_description", -- string
+  events = {}, -- table
   id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
   priority = {}, -- table
-  related_alert = {}, -- table
-  related_incident = {}, -- table
+  related_alerts = {}, -- table
+  related_incidents = {}, -- table
   status = "example_status", -- string
   title = "example_title", -- string
   updated_at = "example_updated_at", -- string
+})
+```
+
+
+### EscalationPathTemplate
+
+Create an instance: `local escalation_path_template = client:EscalationPathTemplate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` | A description of what this template is for. |
+| `expressions` | `table` | Expressions backing the template's binding targets. |
+| `has_historical_escalation_path_versions` | `boolean` | Whether a previous escalation path version uses this template. |
+| `id` | `string` | Unique identifier for this template. |
+| `name` | `string` | The name of this template. |
+| `params` | `table` | The parameters declared by this template. |
+| `path` | `table` | The nodes that form the levels and branches of this template. |
+| `repeat_config` | `table` |  |
+| `working_hours` | `table` | The working hours for this template. |
+
+#### Example: Load
+
+```lua
+local escalation_path_template, err = client:EscalationPathTemplate():load({ id = "escalation_path_template_id" })
+```
+
+#### Example: List
+
+```lua
+local escalation_path_templates, err = client:EscalationPathTemplate():list()
+```
+
+#### Example: Create
+
+```lua
+local escalation_path_template, err = client:EscalationPathTemplate():create({
+  expressions = {}, -- table
+  has_historical_escalation_path_versions = true, -- boolean
+  id = "example_id", -- string
+  name = "example_name", -- string
+  params = {}, -- table
+  path = {}, -- table
+  repeat_config = {}, -- table
+})
+```
+
+
+### EscalationsCheckEscalationPermissionsResultV2
+
+Create an instance: `local escalations_check_escalation_permissions_result_v2 = client:EscalationsCheckEscalationPermissionsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `response_options` | `table` | The response options available to each requested user, in the same order as the request. |
+| `user_ids` | `table` | The IDs of the users to check response options for |
+
+#### Example: Create
+
+```lua
+local escalations_check_escalation_permissions_result_v2, err = client:EscalationsCheckEscalationPermissionsResultV2():create({
+  escalation_id = "example_escalation_id", -- string
+  response_options = {}, -- table
+  user_ids = {}, -- table
+})
+```
+
+
+### EscalationsReassignEscalationResultV2
+
+Create an instance: `local escalations_reassign_escalation_result_v2 = client:EscalationsReassignEscalationResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` | Additional details about the new escalation. |
+| `escalation_path_id` | `string` | ID of the escalation path to reassign to |
+| `resolve_original` | `boolean` | Whether to resolve the original escalation, stopping it paging its targets. |
+| `title` | `string` | The title of the new escalation. |
+| `user_ids` | `table` | IDs of users to reassign directly to |
+
+#### Example: Create
+
+```lua
+local escalations_reassign_escalation_result_v2, err = client:EscalationsReassignEscalationResultV2():create({
+  escalation_id = "example_escalation_id", -- string
 })
 ```
 
@@ -2086,24 +3915,25 @@ Create an instance: `local follow_up = client:FollowUp(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `assignee` | `table` |  |
-| `assignee_id` | `string` |  |
+| `assignee_id` | `string` | ID of the user this follow-up is assigned to |
 | `assignee_team` | `table` |  |
-| `assignee_team_id` | `string` |  |
-| `completed_at` | `string` |  |
-| `created_at` | `string` |  |
+| `assignee_team_id` | `string` | ID of the team this follow-up is assigned to |
+| `category` | `table` |  |
+| `completed_at` | `string` | When the follow-up was completed |
+| `created_at` | `string` | When the follow-up was created |
 | `creator` | `table` |  |
-| `description` | `string` |  |
+| `description` | `string` | Description of the follow-up |
 | `external_issue_reference` | `table` |  |
-| `external_issue_reference_id` | `string` |  |
-| `follow_up_category_id` | `string` |  |
-| `follow_up_priority_option_id` | `string` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `label` | `table` |  |
+| `external_issue_reference_id` | `string` | If this follow-up is related to an external issue, the ID of that issue |
+| `follow_up_category_id` | `string` | ID of the category for this follow-up |
+| `follow_up_priority_option_id` | `string` | ID of the priority for this follow-up |
+| `id` | `string` | Unique identifier for the follow-up |
+| `incident_id` | `string` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `table` | Labels associated with this follow-up |
 | `priority` | `table` |  |
-| `status` | `string` |  |
-| `title` | `string` |  |
-| `updated_at` | `string` |  |
+| `status` | `string` | Status of the follow-up |
+| `title` | `string` | Title of the follow-up |
+| `updated_at` | `string` | When the follow-up was last updated |
 
 #### Example: Load
 
@@ -2123,17 +3953,128 @@ local follow_ups, err = client:FollowUp():list()
 local follow_up, err = client:FollowUp():create({
   assignee = {}, -- table
   assignee_team = {}, -- table
+  category = {}, -- table
   created_at = "example_created_at", -- string
   creator = {}, -- table
   external_issue_reference = {}, -- table
   id = "example_id", -- string
   incident_id = "example_incident_id", -- string
-  label = {}, -- table
+  labels = {}, -- table
   priority = {}, -- table
   status = "example_status", -- string
   title = "example_title", -- string
   updated_at = "example_updated_at", -- string
 })
+```
+
+
+### FollowUpsConnectExternalIssueResultV3
+
+Create an instance: `local follow_ups_connect_external_issue_result_v3 = client:FollowUpsConnectExternalIssueResultV3(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `assignee` | `table` |  |
+| `assignee_team` | `table` |  |
+| `category` | `table` |  |
+| `completed_at` | `string` | When the follow-up was completed |
+| `created_at` | `string` | When the follow-up was created |
+| `creator` | `table` |  |
+| `description` | `string` | Description of the follow-up |
+| `external_issue_reference` | `table` |  |
+| `id` | `string` | Unique identifier for the follow-up |
+| `incident_id` | `string` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `table` | Labels associated with this follow-up |
+| `priority` | `table` |  |
+| `provider` | `string` | The issue tracker provider the issue belongs to |
+| `status` | `string` | Status of the follow-up |
+| `title` | `string` | Title of the follow-up |
+| `updated_at` | `string` | When the follow-up was last updated |
+| `url` | `string` | URL of the issue in the external provider |
+
+#### Example: Create
+
+```lua
+local follow_ups_connect_external_issue_result_v3, err = client:FollowUpsConnectExternalIssueResultV3():create({
+  follow_up_id = "example_follow_up_id", -- string
+  assignee = {}, -- table
+  assignee_team = {}, -- table
+  category = {}, -- table
+  created_at = "example_created_at", -- string
+  creator = {}, -- table
+  external_issue_reference = {}, -- table
+  id = "example_id", -- string
+  incident_id = "example_incident_id", -- string
+  labels = {}, -- table
+  priority = {}, -- table
+  provider = "example_provider", -- string
+  status = "example_status", -- string
+  title = "example_title", -- string
+  updated_at = "example_updated_at", -- string
+  url = "example_url", -- string
+})
+```
+
+
+### FollowUpsCreateFromLinkResultV3
+
+Create an instance: `local follow_ups_create_from_link_result_v3 = client:FollowUpsCreateFromLinkResultV3(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `incident_id` | `string` | Unique identifier of the incident the follow-up belongs to |
+| `url` | `string` | URL of the issue in the external provider |
+
+#### Example: Create
+
+```lua
+local follow_ups_create_from_link_result_v3, err = client:FollowUpsCreateFromLinkResultV3():create({
+  incident_id = "example_incident_id", -- string
+  url = "example_url", -- string
+})
+```
+
+
+### Identity
+
+Create an instance: `local identity = client:Identity(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `dashboard_url` | `string` | The dashboard URL for this organisation |
+| `name` | `string` | The name assigned to the current API Key |
+| `roles` | `table` | Which roles have been enabled for this key |
+| `team_roles` | `table` | If set, these roles apply to requests that operate on resources owned by any of the teams in the 'teams' array. |
+| `teams` | `table` | Teams that this API key is scoped to. |
+
+#### Example: Load
+
+```lua
+local identity, err = client:Identity():load()
 ```
 
 
@@ -2153,47 +4094,50 @@ Create an instance: `local incident = client:Incident(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `call_url` | `string` |  |
-| `created_at` | `string` |  |
+| `call_url` | `string` | The call URL attached to this incident |
+| `created_at` | `string` | When the incident was created |
 | `creator` | `table` |  |
-| `custom_field_entry` | `table` |  |
-| `duration_metric` | `table` |  |
+| `custom_field_entries` | `table` | Custom field entries for this incident |
+| `debriefs` | `table` | Debriefs scheduled for this incident, ordered by start time. |
+| `duration_metrics` | `table` | Incident duration metrics and their measurements for this incident |
 | `external_issue_reference` | `table` |  |
-| `has_debrief` | `boolean` |  |
-| `id` | `string` |  |
-| `idempotency_key` | `string` |  |
-| `incident` | `table` |  |
-| `incident_role_assignment` | `table` |  |
+| `has_debrief` | `boolean` | If this incident has a debrief attached |
+| `id` | `string` | Unique identifier for the incident |
+| `idempotency_key` | `string` | Unique string used to de-duplicate incident create requests |
+| `incident_role_assignments` | `table` | A list of who is assigned to each role for this incident |
 | `incident_status` | `table` |  |
-| `incident_status_id` | `string` |  |
-| `incident_timestamp_value` | `table` |  |
+| `incident_status_id` | `string` | Incident status to assign to the incident |
+| `incident_timestamp_values` | `table` | Incident lifecycle events and when they occurred |
 | `incident_type` | `table` |  |
-| `incident_type_id` | `string` |  |
-| `mode` | `string` |  |
-| `name` | `string` |  |
-| `notify_incident_channel` | `boolean` |  |
-| `permalink` | `string` |  |
-| `postmortem_document_id` | `table` |  |
-| `postmortem_document_url` | `string` |  |
-| `reference` | `string` |  |
-| `retrospective_incident_option` | `table` |  |
+| `incident_type_id` | `string` | Incident type to create this incident as |
+| `last_activity_at` | `string` | When the incident last recorded 'activity' |
+| `mode` | `string` | Whether the incident is real, a test, a tutorial, or importing as a retrospective incident |
+| `ms_teams_channel_url` | `string` | URL to link to the Microsoft Teams channel |
+| `name` | `string` | Explanation of the incident |
+| `permalink` | `string` | A permanent link to the homepage for this incident |
+| `postmortem_document_ids` | `table` | An array of IDs of postmortem documents for this incident |
+| `postmortem_document_url` | `string` | The URL of the incident post-mortem document |
+| `reference` | `string` | Reference to this incident, as displayed across the product |
+| `retrospective_incident_options` | `table` |  |
 | `severity` | `table` |  |
-| `severity_id` | `string` |  |
-| `slack_channel_id` | `string` |  |
-| `slack_channel_name` | `string` |  |
-| `slack_channel_name_override` | `string` |  |
-| `slack_team_id` | `string` |  |
-| `source_message_channel_id` | `string` |  |
-| `source_message_timestamp` | `string` |  |
-| `status` | `string` |  |
-| `summary` | `string` |  |
-| `timestamp` | `table` |  |
-| `updated_at` | `string` |  |
-| `visibility` | `string` |  |
-| `workload_minutes_late` | `number` |  |
-| `workload_minutes_sleeping` | `number` |  |
-| `workload_minutes_total` | `number` |  |
-| `workload_minutes_working` | `number` |  |
+| `severity_id` | `string` | Severity to create incident as |
+| `slack_channel_id` | `string` | ID of the Slack channel in the organisation Slack workspace. |
+| `slack_channel_name` | `string` | Name of the slack channel |
+| `slack_channel_name_override` | `string` | Name of the Slack channel to create for this incident |
+| `slack_channel_url` | `string` | URL to link to the slack channel |
+| `slack_team_id` | `string` | ID of the Slack team / workspace. |
+| `source_message_channel_id` | `string` | Channel ID of the source message, if this incident was created from one |
+| `source_message_timestamp` | `string` | Timestamp of the source message, if this incident was created from one |
+| `status` | `string` | Current status of the incident |
+| `summary` | `string` | Detailed description of the incident |
+| `team_ids` | `table` | IDs of the teams that own this incident, resolved from your team settings. |
+| `timestamps` | `table` | Incident lifecycle events and when they last occurred |
+| `updated_at` | `string` | When the incident was last updated |
+| `visibility` | `string` | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
+| `workload_minutes_late` | `number` | Amount of time spent on the incident in late hours |
+| `workload_minutes_sleeping` | `number` | Amount of time spent on the incident in sleeping hours |
+| `workload_minutes_total` | `number` | Amount of time spent on the incident in total |
+| `workload_minutes_working` | `number` | Amount of time spent on the incident in working hours |
 
 #### Example: Load
 
@@ -2213,31 +4157,31 @@ local incidents, err = client:Incident():list()
 local incident, err = client:Incident():create({
   created_at = "example_created_at", -- string
   creator = {}, -- table
-  custom_field_entry = {}, -- table
+  custom_field_entries = {}, -- table
   external_issue_reference = {}, -- table
   id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
-  incident = {}, -- table
-  incident_role_assignment = {}, -- table
+  incident_role_assignments = {}, -- table
   incident_status = {}, -- table
   incident_type = {}, -- table
+  last_activity_at = "example_last_activity_at", -- string
   mode = "example_mode", -- string
   name = "example_name", -- string
-  notify_incident_channel = true, -- boolean
   reference = "example_reference", -- string
   severity = {}, -- table
   slack_channel_id = "example_slack_channel_id", -- string
   slack_team_id = "example_slack_team_id", -- string
   status = "example_status", -- string
+  team_ids = {}, -- table
   updated_at = "example_updated_at", -- string
   visibility = "example_visibility", -- string
 })
 ```
 
 
-### IncidentAlert
+### IncidentActivityLogEntry
 
-Create an instance: `local incident_alert = client:IncidentAlert(nil)`
+Create an instance: `local incident_activity_log_entry = client:IncidentActivityLogEntry(nil)`
 
 #### Operations
 
@@ -2249,15 +4193,18 @@ Create an instance: `local incident_alert = client:IncidentAlert(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert` | `table` |  |
-| `alert_route_id` | `string` |  |
-| `id` | `string` |  |
-| `incident` | `table` |  |
+| `content` | `table` | Details of an activity log entry. |
+| `created_at` | `string` | When we recorded the activity |
+| `id` | `string` | Unique identifier of the activity log entry |
+| `incident_id` | `string` | ID of the incident this happened on. |
+| `occurred_at` | `string` | When the activity happened. |
+| `title` | `string` | Human-readable summary of what happened |
+| `type` | `string` | What kind of activity this is. |
 
 #### Example: List
 
 ```lua
-local incident_alerts, err = client:IncidentAlert():list()
+local incident_activity_log_entrys, err = client:IncidentActivityLogEntry():list({ incident_id = "example" })
 ```
 
 
@@ -2277,8 +4224,8 @@ Create an instance: `local incident_attachment = client:IncidentAttachment(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
+| `id` | `string` | Unique identifier of this incident membership |
+| `incident_id` | `string` | ID of the incident to add an attachment to |
 | `resource` | `table` |  |
 
 #### Example: List
@@ -2298,6 +4245,57 @@ local incident_attachment, err = client:IncidentAttachment():create({
 ```
 
 
+### IncidentForm
+
+Create an instance: `local incident_form = client:IncidentForm(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` | When this incident form was created |
+| `expressions` | `table` | Expressions available to every element's conditions and defaults. |
+| `form_type` | `string` | Which form this is. |
+| `id` | `string` | Unique identifier for this incident form |
+| `incident_type_id` | `string` | The incident type this form belongs to. |
+| `lifecycle_elements` | `table` | Elements on this form, in display order. |
+| `updated_at` | `string` | When this incident form was last updated |
+
+#### Example: Load
+
+```lua
+local incident_form, err = client:IncidentForm():load({ id = "incident_form_id" })
+```
+
+#### Example: List
+
+```lua
+local incident_forms, err = client:IncidentForm():list()
+```
+
+#### Example: Create
+
+```lua
+local incident_form, err = client:IncidentForm():create({
+  created_at = "example_created_at", -- string
+  expressions = {}, -- table
+  form_type = "example_form_type", -- string
+  id = "example_id", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
 ### IncidentMembership
 
 Create an instance: `local incident_membership = client:IncidentMembership(nil)`
@@ -2312,7 +4310,7 @@ Create an instance: `local incident_membership = client:IncidentMembership(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `incident_id` | `string` |  |
+| `incident_id` | `string` | The incident to make the user a member of |
 | `user_id` | `string` |  |
 
 #### Example: Create
@@ -2339,13 +4337,13 @@ Create an instance: `local incident_participant = client:IncidentParticipant(nil
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `active` | `table` |  |
-| `passive` | `table` |  |
+| `active` | `table` | Participants who are actively helping with the incident |
+| `passive` | `table` | Participants who are just observing the incident |
 
 #### Example: Load
 
 ```lua
-local incident_participant, err = client:IncidentParticipant():load()
+local incident_participant, err = client:IncidentParticipant():load({ incident_id = "incident_id" })
 ```
 
 
@@ -2363,15 +4361,15 @@ Create an instance: `local incident_participant_workload = client:IncidentPartic
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `archived_at` | `string` |  |
-| `participant_type` | `string` |  |
+| `archived_at` | `string` | When the user left the incident, if they are no longer an active participant |
+| `participant_type` | `string` | The role they had in the incident |
 | `user` | `table` |  |
 | `workload` | `table` |  |
 
 #### Example: List
 
 ```lua
-local incident_participant_workloads, err = client:IncidentParticipantWorkload():list()
+local incident_participant_workloads, err = client:IncidentParticipantWorkload():list({ incident_id = "example" })
 ```
 
 
@@ -2389,13 +4387,13 @@ Create an instance: `local incident_relationship = client:IncidentRelationship(n
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
+| `id` | `string` | Unique identifier of this incident relationship |
 | `incident` | `table` |  |
 
 #### Example: List
 
 ```lua
-local incident_relationships, err = client:IncidentRelationship():list()
+local incident_relationships, err = client:IncidentRelationship():list({ incident_id = "example" })
 ```
 
 
@@ -2417,15 +4415,15 @@ Create an instance: `local incident_role = client:IncidentRole(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `instruction` | `string` |  |
-| `name` | `string` |  |
-| `required` | `boolean` |  |
-| `role_type` | `string` |  |
-| `shortform` | `string` |  |
-| `updated_at` | `string` |  |
+| `created_at` | `string` | When the role was created |
+| `description` | `string` | Describes the purpose of the role |
+| `id` | `string` | Unique identifier for the role |
+| `instructions` | `string` | Provided to whoever is nominated for the role. |
+| `name` | `string` | Human readable name of the incident role |
+| `required` | `boolean` | DEPRECATED: this will always be false. |
+| `role_type` | `string` | Type of incident role |
+| `shortform` | `string` | Short human readable name for Slack. |
+| `updated_at` | `string` | When the role was last updated |
 
 #### Example: Load
 
@@ -2446,7 +4444,7 @@ local incident_role, err = client:IncidentRole():create({
   created_at = "example_created_at", -- string
   description = "example_description", -- string
   id = "example_id", -- string
-  instruction = "example_instruction", -- string
+  instructions = "example_instructions", -- string
   name = "example_name", -- string
   role_type = "example_role_type", -- string
   shortform = "example_shortform", -- string
@@ -2473,12 +4471,12 @@ Create an instance: `local incident_status = client:IncidentStatus(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `category` | `string` |  |
+| `category` | `string` | What category of status it is. |
 | `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `rank` | `number` |  |
+| `description` | `string` | Rich text description of the incident status |
+| `id` | `string` | Unique ID of this incident status |
+| `name` | `string` | Unique name of this status |
+| `rank` | `number` | Order of this incident status |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -2508,6 +4506,189 @@ local incident_status, err = client:IncidentStatus():create({
 ```
 
 
+### IncidentTeamMembership
+
+Create an instance: `local incident_team_membership = client:IncidentTeamMembership(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `incident_id` | `string` |  |
+| `team_id` | `string` |  |
+
+#### Example: Create
+
+```lua
+local incident_team_membership, err = client:IncidentTeamMembership():create({
+  incident_id = "example_incident_id", -- string
+  team_id = "example_team_id", -- string
+})
+```
+
+
+### IncidentTeamMembershipsV1
+
+Create an instance: `local incident_team_memberships_v1 = client:IncidentTeamMembershipsV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `incident_id` | `string` | Revoke team access to this incident |
+| `team_id` | `string` |  |
+
+#### Example: Create
+
+```lua
+local incident_team_memberships_v1, err = client:IncidentTeamMembershipsV1():create({
+  incident_id = "example_incident_id", -- string
+  team_id = "example_team_id", -- string
+})
+```
+
+
+### IncidentTemplate
+
+Create an instance: `local incident_template = client:IncidentTemplate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` | When this incident template was created |
+| `expressions` | `table` | The expressions used by bindings in this template |
+| `id` | `string` | Unique identifier for this incident template |
+| `name` | `string` | The name of this incident template, for the user's reference |
+| `template` | `table` | The values an incident template applies to the incidents it creates. |
+| `updated_at` | `string` | When this incident template was last updated |
+
+#### Example: Load
+
+```lua
+local incident_template, err = client:IncidentTemplate():load({ id = "incident_template_id" })
+```
+
+#### Example: List
+
+```lua
+local incident_templates, err = client:IncidentTemplate():list()
+```
+
+#### Example: Create
+
+```lua
+local incident_template, err = client:IncidentTemplate():create({
+  created_at = "example_created_at", -- string
+  id = "example_id", -- string
+  name = "example_name", -- string
+  template = {}, -- table
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### IncidentTemplatesValidateResultV1
+
+Create an instance: `local incident_templates_validate_result_v1 = client:IncidentTemplatesValidateResultV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `expressions` | `table` | The expressions used by bindings in this template |
+| `name` | `string` | The name of this incident template, for the user's reference |
+| `template` | `table` | The values an incident template applies to the incidents it creates. |
+| `warnings` | `table` | Anything suspect about this config that isn't severe enough to reject it. |
+
+#### Example: Create
+
+```lua
+local incident_templates_validate_result_v1, err = client:IncidentTemplatesValidateResultV1():create({
+  name = "example_name", -- string
+  template = {}, -- table
+  warnings = {}, -- table
+})
+```
+
+
+### IncidentTimelineItem
+
+Create an instance: `local incident_timeline_item = client:IncidentTimelineItem(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `activity_log_id` | `string` | ID of the activity log entry this item was promoted from. |
+| `created_at` | `string` | When this item was added to the timeline |
+| `creator` | `table` |  |
+| `description` | `string` | Description of the timeline item, in markdown |
+| `id` | `string` | Unique identifier of the timeline item |
+| `idempotency_key` | `string` | Unique string used to de-duplicate timeline item requests. |
+| `incident_id` | `string` | Incident to add this item to |
+| `timestamp` | `string` | When the thing this item describes happened. |
+| `title` | `string` | Title of the timeline item |
+| `updated_at` | `string` | When this item was last edited |
+
+#### Example: List
+
+```lua
+local incident_timeline_items, err = client:IncidentTimelineItem():list({ incident_id = "example" })
+```
+
+#### Example: Create
+
+```lua
+local incident_timeline_item, err = client:IncidentTimelineItem():create({
+  created_at = "example_created_at", -- string
+  creator = {}, -- table
+  id = "example_id", -- string
+  idempotency_key = "example_idempotency_key", -- string
+  incident_id = "example_incident_id", -- string
+  timestamp = "example_timestamp", -- string
+  title = "example_title", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
 ### IncidentTimestamp
 
 Create an instance: `local incident_timestamp = client:IncidentTimestamp(nil)`
@@ -2523,9 +4704,9 @@ Create an instance: `local incident_timestamp = client:IncidentTimestamp(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `rank` | `number` |  |
+| `id` | `string` | Unique ID of this incident timestamp |
+| `name` | `string` | Unique name of this timestamp |
+| `rank` | `number` | Order in which this timestamp should be shown |
 
 #### Example: Load
 
@@ -2555,15 +4736,15 @@ Create an instance: `local incident_type = client:IncidentType(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `create_in_triage` | `string` |  |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `is_default` | `boolean` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `table` |  |
-| `private_incidents_only` | `boolean` |  |
-| `updated_at` | `string` |  |
+| `create_in_triage` | `string` | Whether incidents of this must always, or can optionally, be created in triage |
+| `created_at` | `string` | When this resource was created |
+| `description` | `string` | What is this incident type for? |
+| `id` | `string` | Unique identifier for this Incident Type |
+| `is_default` | `boolean` | The default Incident Type is used when no other type is explicitly specified |
+| `name` | `string` | The name of this Incident Type |
+| `owning_team_ids` | `table` | IDs of the teams that own this incident type |
+| `private_incidents_only` | `boolean` | Should all incidents created with this Incident Type be private? |
+| `updated_at` | `string` | When this resource was last updated |
 
 #### Example: Load
 
@@ -2586,25 +4767,43 @@ Create an instance: `local incident_update = client:IncidentUpdate(nil)`
 
 | Method | Description |
 | --- | --- |
+| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `merged_into_incident_id` | `string` |  |
-| `message` | `string` |  |
+| `created_at` | `string` | When the update was created |
+| `id` | `string` | Unique identifier for this incident update |
+| `idempotency_key` | `string` | Unique string used to de-duplicate incident update requests. |
+| `incident_id` | `string` | The incident you want to update |
+| `merged_into_incident_id` | `string` | The ID of the incident this incident was merged into, if the to state of this update is 'merged'. |
+| `message` | `string` | Message that explains the context behind the update, in markdown |
 | `new_incident_status` | `table` |  |
 | `new_severity` | `table` |  |
+| `to_incident_status_id` | `string` | Move the incident to this status |
+| `to_severity_id` | `string` | Move the incident to this severity |
 | `updater` | `table` |  |
 
 #### Example: List
 
 ```lua
 local incident_updates, err = client:IncidentUpdate():list()
+```
+
+#### Example: Create
+
+```lua
+local incident_update, err = client:IncidentUpdate():create({
+  created_at = "example_created_at", -- string
+  id = "example_id", -- string
+  idempotency_key = "example_idempotency_key", -- string
+  incident_id = "example_incident_id", -- string
+  new_incident_status = {}, -- table
+  new_severity = {}, -- table
+  updater = {}, -- table
+})
 ```
 
 
@@ -2623,15 +4822,39 @@ Create an instance: `local ip_allowlist = client:IpAllowlist(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `allowlist` | `table` |  |
-| `enabled` | `boolean` |  |
-| `updated_at` | `string` |  |
-| `version` | `number` |  |
+| `allowlist` | `table` | A list of IP addresses or CIDR prefixes to allow |
+| `enabled` | `boolean` | Whether this IP allowlist is enabled or not |
+| `updated_at` | `string` | The time this allowlist was last updated |
+| `version` | `number` | The version of this IP allowlist |
 
 #### Example: Load
 
 ```lua
 local ip_allowlist, err = client:IpAllowlist():load()
+```
+
+
+### IpRange
+
+Create an instance: `local ip_range = client:IpRange(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `cidr` | `string` | The address in CIDR notation. |
+| `description` | `string` | Which of our traffic reaches you from this address |
+
+#### Example: List
+
+```lua
+local ip_ranges, err = client:IpRange():list()
 ```
 
 
@@ -2653,24 +4876,25 @@ Create an instance: `local maintenance_window = client:MaintenanceWindow(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_condition_group` | `table` |  |
-| `archived_at` | `string` |  |
-| `created_at` | `string` |  |
-| `end_at` | `string` |  |
-| `escalation_target` | `table` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
+| `alert_condition_groups` | `table` | Condition groups that determine which alerts this maintenance window applies to |
+| `archived_at` | `string` | When this maintenance window was archived, if it has been |
+| `created_at` | `string` | When this maintenance window was created |
+| `end_at` | `string` | When the maintenance window ends |
+| `escalation_targets` | `table` | If set, alerts matching this window will be escalated to these targets |
+| `id` | `string` | Unique identifier for this maintenance window |
+| `incident_id` | `string` | If set, alerts matching this window will be automatically attached to this incident |
 | `lead` | `table` |  |
-| `name` | `string` |  |
-| `notification_message` | `string` |  |
-| `notify_channel` | `table` |  |
-| `notify_end_minutes_before` | `number` |  |
-| `notify_start_minutes_before` | `number` |  |
-| `reroute_on_end` | `boolean` |  |
-| `resolve_on_end` | `boolean` |  |
-| `show_in_sidebar` | `boolean` |  |
-| `start_at` | `string` |  |
-| `updated_at` | `string` |  |
+| `name` | `string` | Human readable name for the maintenance window |
+| `notification_message` | `string` | Custom message included in notifications about this maintenance window |
+| `notify_channels` | `table` | Channels to notify about the maintenance window starting and ending |
+| `notify_end_minutes_before` | `number` | Minutes before the end to send a notification to the configured channels |
+| `notify_start_minutes_before` | `number` | Minutes before the start to send a notification to the configured channels |
+| `owning_team_ids` | `table` | IDs of teams that own this maintenance window. |
+| `reroute_on_end` | `boolean` | Whether to retrigger firing alerts through alert routing when the window ends |
+| `resolve_on_end` | `boolean` | Whether to automatically resolve all firing alerts that matched this window when it ends |
+| `show_in_sidebar` | `boolean` | Whether to show this maintenance window in the dashboard sidebar when active |
+| `start_at` | `string` | When the maintenance window starts |
+| `updated_at` | `string` | When this maintenance window was last updated |
 
 #### Example: Load
 
@@ -2688,7 +4912,7 @@ local maintenance_windows, err = client:MaintenanceWindow():list()
 
 ```lua
 local maintenance_window, err = client:MaintenanceWindow():create({
-  alert_condition_group = {}, -- table
+  alert_condition_groups = {}, -- table
   created_at = "example_created_at", -- string
   end_at = "example_end_at", -- string
   id = "example_id", -- string
@@ -2699,6 +4923,791 @@ local maintenance_window, err = client:MaintenanceWindow():create({
   show_in_sidebar = true, -- boolean
   start_at = "example_start_at", -- string
   updated_at = "example_updated_at", -- string
+})
+```
+
+
+### OnCallNotificationMethodPublicV2
+
+Create an instance: `local on_call_notification_method_public_v2 = client:OnCallNotificationMethodPublicV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `address` | `string` | The address of this method (e.g. |
+| `id` | `string` | Unique identifier for this notification method |
+| `is_usable` | `boolean` | Whether this method is ready to receive notifications. |
+| `method_type` | `string` | The high-level type of notification method. |
+| `phone_details` | `table` |  |
+
+#### Example: List
+
+```lua
+local on_call_notification_method_public_v2s, err = client:OnCallNotificationMethodPublicV2():list({ user_id = "example" })
+```
+
+
+### OnCallNotificationRulePublicV2
+
+Create an instance: `local on_call_notification_rule_public_v2 = client:OnCallNotificationRulePublicV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `app` | `table` |  |
+| `delay_seconds` | `number` | Delay in seconds before this rule activates. |
+| `id` | `string` | Unique identifier for this notification rule |
+| `method_target` | `table` |  |
+| `method_type` | `string` | The high-level type of notification method. |
+| `phone` | `table` |  |
+| `rule_type` | `string` | The urgency level this rule applies to |
+
+#### Example: List
+
+```lua
+local on_call_notification_rule_public_v2s, err = client:OnCallNotificationRulePublicV2():list({ user_id = "example" })
+```
+
+
+### PayConfig
+
+Create an instance: `local pay_config = client:PayConfig(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `base_rate_cents` | `number` | Rate paid for any time no rule covers, in the lowest denomination of the currency |
+| `created_at` | `string` |  |
+| `currency` | `string` | Currency this config pays in, in ISO 4217 format |
+| `id` | `string` | Unique identifier for this pay config |
+| `name` | `string` | Human readable name for this pay config |
+| `one_off_rules` | `table` | Rules that apply over a single window of time, such as a public holiday |
+| `published_at` | `string` | When a published report first priced against this config. |
+| `rate_time_unit` | `string` | The unit of time every rate on this config is quoted per. |
+| `timezone` | `string` | IANA timezone this config's rules are interpreted in |
+| `updated_at` | `string` |  |
+| `weekly_rules` | `table` | Rules that apply every week, by day of week and time of day, in evaluation order |
+
+#### Example: Load
+
+```lua
+local pay_config, err = client:PayConfig():load({ id = "pay_config_id" })
+```
+
+#### Example: List
+
+```lua
+local pay_configs, err = client:PayConfig():list()
+```
+
+#### Example: Create
+
+```lua
+local pay_config, err = client:PayConfig():create({
+  base_rate_cents = 1, -- number
+  created_at = "example_created_at", -- string
+  currency = "example_currency", -- string
+  id = "example_id", -- string
+  name = "example_name", -- string
+  one_off_rules = {}, -- table
+  rate_time_unit = "example_rate_time_unit", -- string
+  timezone = "example_timezone", -- string
+  updated_at = "example_updated_at", -- string
+  weekly_rules = {}, -- table
+})
+```
+
+
+### PayConfigsCreateOneOffRuleResultV2
+
+Create an instance: `local pay_configs_create_one_off_rule_result_v2 = client:PayConfigsCreateOneOffRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_at` | `string` | When this rule stops applying |
+| `name` | `string` | Human readable name for this rule |
+| `rate_cents` | `number` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | `string` | When this rule starts applying |
+
+#### Example: Create
+
+```lua
+local pay_configs_create_one_off_rule_result_v2, err = client:PayConfigsCreateOneOffRuleResultV2():create({
+  pay_config_id = "example_pay_config_id", -- string
+  end_at = "example_end_at", -- string
+  name = "example_name", -- string
+  rate_cents = 1, -- number
+  start_at = "example_start_at", -- string
+})
+```
+
+
+### PayConfigsCreateWeeklyRuleResultV2
+
+Create an instance: `local pay_configs_create_weekly_rule_result_v2 = client:PayConfigsCreateWeeklyRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `rate_cents` | `number` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | `table` | Days of the week this rule applies on |
+
+#### Example: Create
+
+```lua
+local pay_configs_create_weekly_rule_result_v2, err = client:PayConfigsCreateWeeklyRuleResultV2():create({
+  pay_config_id = "example_pay_config_id", -- string
+  end_time = "example_end_time", -- string
+  rate_cents = 1, -- number
+  start_time = "example_start_time", -- string
+  weekdays = {}, -- table
+})
+```
+
+
+### PayConfigsListOneOffRulesResultV2
+
+Create an instance: `local pay_configs_list_one_off_rules_result_v2 = client:PayConfigsListOneOffRulesResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_at` | `string` | When this rule stops applying |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `name` | `string` | Human readable name for this rule |
+| `rate_cents` | `number` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | `string` | When this rule starts applying |
+
+#### Example: List
+
+```lua
+local pay_configs_list_one_off_rules_result_v2s, err = client:PayConfigsListOneOffRulesResultV2():list({ pay_config_id = "example" })
+```
+
+
+### PayConfigsListWeeklyRulesResultV2
+
+Create an instance: `local pay_configs_list_weekly_rules_result_v2 = client:PayConfigsListWeeklyRulesResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | `number` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | `table` | Days of the week this rule applies on |
+
+#### Example: List
+
+```lua
+local pay_configs_list_weekly_rules_result_v2s, err = client:PayConfigsListWeeklyRulesResultV2():list({ pay_config_id = "example" })
+```
+
+
+### PayConfigsShowOneOffRuleResultV2
+
+Create an instance: `local pay_configs_show_one_off_rule_result_v2 = client:PayConfigsShowOneOffRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_at` | `string` | When this rule stops applying |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `name` | `string` | Human readable name for this rule |
+| `rate_cents` | `number` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | `string` | When this rule starts applying |
+
+#### Example: Load
+
+```lua
+local pay_configs_show_one_off_rule_result_v2, err = client:PayConfigsShowOneOffRuleResultV2():load({ id = "pay_configs_show_one_off_rule_result_v2_id", pay_config_id = "pay_config_id" })
+```
+
+
+### PayConfigsShowWeeklyRuleResultV2
+
+Create an instance: `local pay_configs_show_weekly_rule_result_v2 = client:PayConfigsShowWeeklyRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | `number` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | `table` | Days of the week this rule applies on |
+
+#### Example: Load
+
+```lua
+local pay_configs_show_weekly_rule_result_v2, err = client:PayConfigsShowWeeklyRuleResultV2():load({ id = "pay_configs_show_weekly_rule_result_v2_id", pay_config_id = "pay_config_id" })
+```
+
+
+### PayConfigsUpdateOneOffRuleResultV2
+
+Create an instance: `local pay_configs_update_one_off_rule_result_v2 = client:PayConfigsUpdateOneOffRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_at` | `string` | When this rule stops applying |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `name` | `string` | Human readable name for this rule |
+| `rate_cents` | `number` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | `string` | When this rule starts applying |
+
+
+### PayConfigsUpdateWeeklyRuleResultV2
+
+Create an instance: `local pay_configs_update_weekly_rule_result_v2 = client:PayConfigsUpdateWeeklyRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | `number` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | `table` | Days of the week this rule applies on |
+
+
+### PayConfigsV2
+
+Create an instance: `local pay_configs_v2 = client:PayConfigsV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `remove(match)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
+
+
+### PayReport
+
+Create an instance: `local pay_report = client:PayReport(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` | When this report was created |
+| `creator` | `table` |  |
+| `end_date` | `string` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | `string` | Why a report could not be generated |
+| `error_message` | `string` | What went wrong, written for whoever asked for the report. |
+| `id` | `string` | Unique identifier for this pay report |
+| `name` | `string` | Human readable name for this report |
+| `overlapping_shifts` | `string` | How time spent on more than one schedule at once was paid |
+| `pay_config_expression` | `table` |  |
+| `pay_config_id` | `string` | The pay config to price every shift with. |
+| `published_at` | `string` | When this report was published. |
+| `rotation_filters` | `table` | Narrows some of these schedules to a subset of their rotations. |
+| `schedule_ids` | `table` | The schedules this report covers |
+| `start_date` | `string` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | `string` | How far a report has got through being generated |
+| `total_duration_seconds` | `number` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | `table` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | `string` | Whether shifts that priced to zero are part of the report |
+| `updated_at` | `string` | When this report was last updated |
+
+#### Example: Load
+
+```lua
+local pay_report, err = client:PayReport():load({ id = "pay_report_id" })
+```
+
+#### Example: List
+
+```lua
+local pay_reports, err = client:PayReport():list()
+```
+
+#### Example: Create
+
+```lua
+local pay_report, err = client:PayReport():create({
+  created_at = "example_created_at", -- string
+  end_date = "example_end_date", -- string
+  id = "example_id", -- string
+  name = "example_name", -- string
+  overlapping_shifts = "example_overlapping_shifts", -- string
+  pay_config_expression = {}, -- table
+  schedule_ids = {}, -- table
+  start_date = "example_start_date", -- string
+  status = "example_status", -- string
+  unpaid_shifts = "example_unpaid_shifts", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### PayReportsPublishResultV2
+
+Create an instance: `local pay_reports_publish_result_v2 = client:PayReportsPublishResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `cc_emails` | `table` | Email addresses to send a copy of the report to |
+| `created_at` | `string` | When this report was created |
+| `creator` | `table` |  |
+| `end_date` | `string` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | `string` | Why a report could not be generated |
+| `error_message` | `string` | What went wrong, written for whoever asked for the report. |
+| `id` | `string` | Unique identifier for this pay report |
+| `name` | `string` | Human readable name for this report |
+| `overlapping_shifts` | `string` | How time spent on more than one schedule at once was paid |
+| `published_at` | `string` | When this report was published. |
+| `schedule_ids` | `table` | The schedules this report covers |
+| `send_user_breakdowns` | `string` | Whether each user in the report is emailed their own pay breakdown |
+| `start_date` | `string` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | `string` | How far a report has got through being generated |
+| `total_duration_seconds` | `number` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | `table` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | `string` | Whether shifts that priced to zero are part of the report |
+| `updated_at` | `string` | When this report was last updated |
+
+#### Example: Create
+
+```lua
+local pay_reports_publish_result_v2, err = client:PayReportsPublishResultV2():create({
+  pay_report_id = "example_pay_report_id", -- string
+  cc_emails = {}, -- table
+  created_at = "example_created_at", -- string
+  end_date = "example_end_date", -- string
+  id = "example_id", -- string
+  name = "example_name", -- string
+  overlapping_shifts = "example_overlapping_shifts", -- string
+  schedule_ids = {}, -- table
+  send_user_breakdowns = "example_send_user_breakdowns", -- string
+  start_date = "example_start_date", -- string
+  status = "example_status", -- string
+  unpaid_shifts = "example_unpaid_shifts", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### PayReportsUnpublishResultV2
+
+Create an instance: `local pay_reports_unpublish_result_v2 = client:PayReportsUnpublishResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` | When this report was created |
+| `creator` | `table` |  |
+| `end_date` | `string` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | `string` | Why a report could not be generated |
+| `error_message` | `string` | What went wrong, written for whoever asked for the report. |
+| `id` | `string` | Unique identifier for this pay report |
+| `name` | `string` | Human readable name for this report |
+| `overlapping_shifts` | `string` | How time spent on more than one schedule at once was paid |
+| `published_at` | `string` | When this report was published. |
+| `schedule_ids` | `table` | The schedules this report covers |
+| `start_date` | `string` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | `string` | How far a report has got through being generated |
+| `total_duration_seconds` | `number` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | `table` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | `string` | Whether shifts that priced to zero are part of the report |
+| `unpublish_reason` | `string` | Why this report is being unpublished |
+| `updated_at` | `string` | When this report was last updated |
+
+#### Example: Create
+
+```lua
+local pay_reports_unpublish_result_v2, err = client:PayReportsUnpublishResultV2():create({
+  pay_report_id = "example_pay_report_id", -- string
+  created_at = "example_created_at", -- string
+  end_date = "example_end_date", -- string
+  id = "example_id", -- string
+  name = "example_name", -- string
+  overlapping_shifts = "example_overlapping_shifts", -- string
+  schedule_ids = {}, -- table
+  start_date = "example_start_date", -- string
+  status = "example_status", -- string
+  unpaid_shifts = "example_unpaid_shifts", -- string
+  unpublish_reason = "example_unpublish_reason", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### PayReportsV2
+
+Create an instance: `local pay_reports_v2 = client:PayReportsV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Example: Load
+
+```lua
+local pay_reports_v2, err = client:PayReportsV2():load({ pay_report_id = "pay_report_id" })
+```
+
+
+### PoliciesV2
+
+Create an instance: `local policies_v2 = client:PoliciesV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `remove(match)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
+
+
+### Policy
+
+Create an instance: `local policy = client:Policy(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `assignment_rules` | `table` |  |
+| `conditions` | `table` | Conditions which determine which resources are in scope for this policy |
+| `created_at` | `string` |  |
+| `debrief` | `table` | Set when policy_type is debrief. |
+| `description` | `string` | Human readable description of the policy |
+| `expressions` | `table` | The expressions relating to this policy |
+| `follow_up` | `table` | Set when policy_type is follow_up. |
+| `id` | `string` | Unique ID of the policy |
+| `name` | `string` | Human readable name of the policy |
+| `on_call_readiness` | `table` | Set when policy_type is on_call_readiness. |
+| `policy_type` | `string` | Type of the policy, specifying what this applies to |
+| `post_mortem` | `table` | Set when policy_type is post_mortem. |
+| `schedule` | `table` | Detects gaps in on-call coverage. |
+| `status` | `string` | Disabled policies stop evaluating but keep their config |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```lua
+local policy, err = client:Policy():load({ id = "policy_id" })
+```
+
+#### Example: List
+
+```lua
+local policys, err = client:Policy():list()
+```
+
+#### Example: Create
+
+```lua
+local policy, err = client:Policy():create({
+  assignment_rules = {}, -- table
+  conditions = {}, -- table
+  created_at = "example_created_at", -- string
+  debrief = {}, -- table
+  follow_up = {}, -- table
+  id = "example_id", -- string
+  name = "example_name", -- string
+  policy_type = "example_policy_type", -- string
+  post_mortem = {}, -- table
+  schedule = {}, -- table
+  status = "example_status", -- string
+  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### PolicyFinding
+
+Create an instance: `local policy_finding = client:PolicyFinding(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `days` | `number` | Days outside the policy's due date |
+| `debrief` | `table` | Set when policy_type is debrief. |
+| `dismissal` | `table` |  |
+| `due_at` | `string` | When this finding becomes overdue |
+| `follow_up` | `table` | Set when policy_type is follow_up. |
+| `id` | `string` | Unique ID of the finding |
+| `last_checked_at` | `string` | When this finding was last re-evaluated |
+| `on_call_readiness` | `table` | Set when policy_type is on_call_readiness. |
+| `policy_id` | `string` | The policy this finding was raised against |
+| `policy_type` | `string` | Type of the policy this finding was raised against |
+| `post_mortem` | `table` | Set when policy_type is post_mortem. |
+| `responsible_users` | `table` | Who is expected to resolve this finding |
+| `schedule` | `table` | Set when policy_type is schedule. |
+| `shift_conflict` | `table` | Set when policy_type is shift_conflict. |
+| `state` | `string` | Where this finding is in its lifecycle |
+| `updated_at` | `string` |  |
+| `vacation_conflict` | `table` | Set when policy_type is vacation_conflict. |
+
+#### Example: Load
+
+```lua
+local policy_finding, err = client:PolicyFinding():load({ id = "policy_finding_id" })
+```
+
+#### Example: List
+
+```lua
+local policy_findings, err = client:PolicyFinding():list()
+```
+
+
+### PolicyFindingsDismissResultV2
+
+Create an instance: `local policy_findings_dismiss_result_v2 = client:PolicyFindingsDismissResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `days` | `number` | Days outside the policy's due date |
+| `debrief` | `table` | Set when policy_type is debrief. |
+| `dismissal` | `table` |  |
+| `due_at` | `string` | When this finding becomes overdue |
+| `follow_up` | `table` | Set when policy_type is follow_up. |
+| `id` | `string` | Unique ID of the finding |
+| `last_checked_at` | `string` | When this finding was last re-evaluated |
+| `on_call_readiness` | `table` | Set when policy_type is on_call_readiness. |
+| `policy_id` | `string` | The policy this finding was raised against |
+| `policy_type` | `string` | Type of the policy this finding was raised against |
+| `post_mortem` | `table` | Set when policy_type is post_mortem. |
+| `reason` | `string` | Why this finding is being dismissed |
+| `responsible_users` | `table` | Who is expected to resolve this finding |
+| `schedule` | `table` | Set when policy_type is schedule. |
+| `shift_conflict` | `table` | Set when policy_type is shift_conflict. |
+| `state` | `string` | Where this finding is in its lifecycle |
+| `updated_at` | `string` |  |
+| `vacation_conflict` | `table` | Set when policy_type is vacation_conflict. |
+
+#### Example: Create
+
+```lua
+local policy_findings_dismiss_result_v2, err = client:PolicyFindingsDismissResultV2():create({
+  policy_finding_id = "example_policy_finding_id", -- string
+  created_at = "example_created_at", -- string
+  debrief = {}, -- table
+  dismissal = {}, -- table
+  follow_up = {}, -- table
+  id = "example_id", -- string
+  last_checked_at = "example_last_checked_at", -- string
+  on_call_readiness = {}, -- table
+  policy_id = "example_policy_id", -- string
+  policy_type = "example_policy_type", -- string
+  post_mortem = {}, -- table
+  reason = "example_reason", -- string
+  responsible_users = {}, -- table
+  schedule = {}, -- table
+  shift_conflict = {}, -- table
+  state = "example_state", -- string
+  updated_at = "example_updated_at", -- string
+  vacation_conflict = {}, -- table
+})
+```
+
+
+### PolicyFindingsRestoreResultV2
+
+Create an instance: `local policy_findings_restore_result_v2 = client:PolicyFindingsRestoreResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `days` | `number` | Days outside the policy's due date |
+| `debrief` | `table` | Set when policy_type is debrief. |
+| `dismissal` | `table` |  |
+| `due_at` | `string` | When this finding becomes overdue |
+| `follow_up` | `table` | Set when policy_type is follow_up. |
+| `id` | `string` | Unique ID of the finding |
+| `last_checked_at` | `string` | When this finding was last re-evaluated |
+| `on_call_readiness` | `table` | Set when policy_type is on_call_readiness. |
+| `policy_id` | `string` | The policy this finding was raised against |
+| `policy_type` | `string` | Type of the policy this finding was raised against |
+| `post_mortem` | `table` | Set when policy_type is post_mortem. |
+| `responsible_users` | `table` | Who is expected to resolve this finding |
+| `schedule` | `table` | Set when policy_type is schedule. |
+| `shift_conflict` | `table` | Set when policy_type is shift_conflict. |
+| `state` | `string` | Where this finding is in its lifecycle |
+| `updated_at` | `string` |  |
+| `vacation_conflict` | `table` | Set when policy_type is vacation_conflict. |
+
+#### Example: Create
+
+```lua
+local policy_findings_restore_result_v2, err = client:PolicyFindingsRestoreResultV2():create({
+  policy_finding_id = "example_policy_finding_id", -- string
+  created_at = "example_created_at", -- string
+  debrief = {}, -- table
+  dismissal = {}, -- table
+  follow_up = {}, -- table
+  id = "example_id", -- string
+  last_checked_at = "example_last_checked_at", -- string
+  on_call_readiness = {}, -- table
+  policy_id = "example_policy_id", -- string
+  policy_type = "example_policy_type", -- string
+  post_mortem = {}, -- table
+  responsible_users = {}, -- table
+  schedule = {}, -- table
+  shift_conflict = {}, -- table
+  state = "example_state", -- string
+  updated_at = "example_updated_at", -- string
+  vacation_conflict = {}, -- table
 })
 ```
 
@@ -2719,16 +5728,16 @@ Create an instance: `local postmortem_document = client:PostmortemDocument(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `document_url` | `string` |  |
-| `editor` | `table` |  |
-| `exported_url` | `table` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `status` | `string` |  |
-| `title` | `string` |  |
-| `type` | `string` |  |
-| `updated_at` | `string` |  |
+| `created_at` | `string` | Timestamp for when the document was created |
+| `document_url` | `string` | A URL to view the post-mortem document in the incident.io dashboard |
+| `editors` | `table` | The list of users who have edited this post-mortem document |
+| `exported_urls` | `table` | URLs of any external locations this document has been exported to |
+| `id` | `string` | Unique identifier for the post-mortem document |
+| `incident_id` | `string` | The unique identifier of the incident that this post-mortem document belongs to |
+| `status` | `string` | The current status of this post-mortem document |
+| `title` | `string` | The display title of the post-mortem document |
+| `type` | `string` | Whether this is a native incident.io post-mortem or one hosted in an external provider |
+| `updated_at` | `string` | Timestamp for when the document was last updated |
 
 #### Example: Load
 
@@ -2761,18 +5770,17 @@ Create an instance: `local schedule = client:Schedule(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `table` |  |
+| `annotations` | `table` | Annotations that track metadata about this resource |
 | `config` | `table` |  |
 | `created_at` | `string` |  |
-| `current_shift` | `table` |  |
+| `current_shifts` | `table` | Shifts that are ongoing for this schedule |
 | `holidays_public_config` | `table` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `next_shift` | `table` |  |
-| `permalink` | `string` |  |
-| `schedule` | `table` |  |
-| `team_id` | `table` |  |
-| `timezone` | `string` |  |
+| `id` | `string` | Unique internal ID of the schedule |
+| `name` | `string` | Human readable name synced from external provider |
+| `next_shifts` | `table` | The shifts after the next changeover. |
+| `permalink` | `string` | A permanent link to this schedule in the incident.io dashboard |
+| `team_ids` | `table` | IDs of teams that own this schedule |
+| `timezone` | `string` | Timezone of the schedule, as interpreted at the point of generating the report |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -2791,17 +5799,50 @@ local schedules, err = client:Schedule():list()
 
 ```lua
 local schedule, err = client:Schedule():create({
-  annotation = {}, -- table
+  annotations = {}, -- table
   config = {}, -- table
   created_at = "example_created_at", -- string
   holidays_public_config = {}, -- table
   id = "example_id", -- string
   name = "example_name", -- string
   permalink = "example_permalink", -- string
-  schedule = {}, -- table
-  team_id = {}, -- table
+  team_ids = {}, -- table
   timezone = "example_timezone", -- string
   updated_at = "example_updated_at", -- string
+})
+```
+
+
+### ScheduleEntriesListPayloadV2
+
+Create an instance: `local schedule_entries_list_payload_v2 = client:ScheduleEntriesListPayloadV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `entry_window_end` | `string` | The end of the window to preview entries for. |
+| `entry_window_start` | `string` | The start of the window to preview entries for. |
+| `final` | `table` | The effective schedule after overrides have been merged in |
+| `overrides` | `table` | Overrides that apply within the requested window |
+| `schedule` | `table` |  |
+| `scheduled` | `table` | Entries from the schedule's rotation rules, before overrides are applied |
+
+#### Example: Create
+
+```lua
+local schedule_entries_list_payload_v2, err = client:ScheduleEntriesListPayloadV2():create({
+  schedule_id = "example_schedule_id", -- string
+  final = {}, -- table
+  overrides = {}, -- table
+  schedule = {}, -- table
+  scheduled = {}, -- table
 })
 ```
 
@@ -2821,12 +5862,12 @@ Create an instance: `local schedule_entry = client:ScheduleEntry(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `pagination_meta` | `table` |  |
-| `schedule_entry` | `table` |  |
+| `schedule_entries` | `table` | The schedule entries for a window of time, grouped by where they come from. |
 
 #### Example: Load
 
 ```lua
-local schedule_entry, err = client:ScheduleEntry():load()
+local schedule_entry, err = client:ScheduleEntry():load({ schedule_id = "schedule_id" })
 ```
 
 
@@ -2846,19 +5887,18 @@ Create an instance: `local schedule_replica = client:ScheduleReplica(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `id` | `string` |  |
-| `last_sync_error` | `string` |  |
-| `last_synced_at` | `string` |  |
-| `mirror_window_day` | `number` |  |
-| `replica_fallback_user_id` | `string` |  |
-| `replica_provider` | `string` |  |
-| `replica_provider_id` | `string` |  |
-| `schedule_id` | `string` |  |
-| `schedule_replica` | `table` |  |
-| `source` | `table` |  |
-| `updated_at` | `string` |  |
-| `user_status` | `table` |  |
+| `created_at` | `string` | When this schedule replica was first created |
+| `id` | `string` | Unique identifier of the schedule replica |
+| `last_sync_error` | `string` | The most recent error encountered while syncing this replica to the external provider, if any. |
+| `last_synced_at` | `string` | When the replica was last successfully synced to the external provider. |
+| `mirror_window_days` | `number` | How many days ahead to mirror this schedule into the external provider. |
+| `replica_fallback_user_id` | `string` | The ID of a user in the external provider that will be assigned whenever nobody is on-call in the incident.io schedule. |
+| `replica_provider` | `string` | The external provider where this schedule is replicated to |
+| `replica_provider_id` | `string` | The ID of the schedule in the external provider that this replica syncs to. |
+| `schedule_id` | `string` | The ID of the incident.io schedule that this replica is syncing from |
+| `sources` | `table` | The specific rotation and layer combinations from the schedule that are being replicated. |
+| `updated_at` | `string` | When this schedule replica was last updated |
+| `user_statuses` | `table` | The mapping status of each incident.io user in the schedule to their corresponding user in the external provider. |
 
 #### Example: Load
 
@@ -2869,7 +5909,7 @@ local schedule_replica, err = client:ScheduleReplica():load({ id = "schedule_rep
 #### Example: List
 
 ```lua
-local schedule_replicas, err = client:ScheduleReplica():list()
+local schedule_replicas, err = client:ScheduleReplica():list({ id = "example" })
 ```
 
 #### Example: Create
@@ -2882,10 +5922,9 @@ local schedule_replica, err = client:ScheduleReplica():create({
   replica_provider = "example_replica_provider", -- string
   replica_provider_id = "example_replica_provider_id", -- string
   schedule_id = "example_schedule_id", -- string
-  schedule_replica = {}, -- table
-  source = {}, -- table
+  sources = {}, -- table
   updated_at = "example_updated_at", -- string
-  user_status = {}, -- table
+  user_statuses = {}, -- table
 })
 ```
 
@@ -2907,16 +5946,15 @@ Create an instance: `local schedule_sync_rule = client:ScheduleSyncRule(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `table` |  |
+| `annotations` | `table` | Annotations that track metadata about this resource |
 | `created_at` | `string` |  |
-| `id` | `string` |  |
-| `permanent_member_user_id` | `table` |  |
-| `rotation_id` | `string` |  |
-| `schedule_id` | `string` |  |
-| `schedule_sync_rule` | `table` |  |
-| `schedule_sync_target` | `table` |  |
-| `schedule_sync_target_id` | `string` |  |
-| `sync_type` | `string` |  |
+| `id` | `string` | Unique identifier of the sync rule |
+| `permanent_member_user_ids` | `table` | IDs of users always kept in the Slack user group, regardless of who is on call. |
+| `rotation_id` | `string` | If set, only members of this rotation sync to the user group. |
+| `schedule_id` | `string` | The schedule this rule belongs to |
+| `schedule_sync_target` | `table` | A sync target is the link between incident.io and a single Slack user group, used to keep that group's membership in step with who is currently on call. |
+| `schedule_sync_target_id` | `string` | The sync target ID this rule links to |
+| `sync_type` | `string` | Which schedule members sync to the user group |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -2928,7 +5966,7 @@ local schedule_sync_rule, err = client:ScheduleSyncRule():load({ id = "schedule_
 #### Example: List
 
 ```lua
-local schedule_sync_rules, err = client:ScheduleSyncRule():list()
+local schedule_sync_rules, err = client:ScheduleSyncRule():list({ id = "example" })
 ```
 
 #### Example: Create
@@ -2937,9 +5975,8 @@ local schedule_sync_rules, err = client:ScheduleSyncRule():list()
 local schedule_sync_rule, err = client:ScheduleSyncRule():create({
   id = "example_id", -- string
   created_at = "example_created_at", -- string
-  permanent_member_user_id = {}, -- table
+  permanent_member_user_ids = {}, -- table
   schedule_id = "example_schedule_id", -- string
-  schedule_sync_rule = {}, -- table
   schedule_sync_target = {}, -- table
   schedule_sync_target_id = "example_schedule_sync_target_id", -- string
   sync_type = "example_sync_type", -- string
@@ -2966,14 +6003,14 @@ Create an instance: `local schedule_sync_target = client:ScheduleSyncTarget(nil)
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `add_bot_to_group` | `boolean` |  |
-| `annotation` | `table` |  |
+| `add_bot_to_group` | `boolean` | Whether the incident.io bot should be added to the group as a member. |
+| `annotations` | `table` | Annotations that track metadata about this resource |
 | `created_at` | `string` |  |
-| `id` | `string` |  |
-| `linked_schedule` | `table` |  |
-| `schedule_sync_target` | `table` |  |
-| `slack_team_id` | `string` |  |
-| `slack_user_group_id` | `string` |  |
+| `id` | `string` | Unique identifier of the sync target |
+| `linked_schedules` | `table` | Schedules with an active sync rule pointing at this target |
+| `new_slack_user_group` | `table` |  |
+| `slack_team_id` | `string` | Slack team (workspace) ID the user group lives in. |
+| `slack_user_group_id` | `string` | Slack ID of the user group whose membership is kept in sync. |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -2995,13 +6032,93 @@ local schedule_sync_target, err = client:ScheduleSyncTarget():create({
   add_bot_to_group = true, -- boolean
   created_at = "example_created_at", -- string
   id = "example_id", -- string
-  linked_schedule = {}, -- table
-  schedule_sync_target = {}, -- table
+  linked_schedules = {}, -- table
+  new_slack_user_group = {}, -- table
   slack_team_id = "example_slack_team_id", -- string
   slack_user_group_id = "example_slack_user_group_id", -- string
   updated_at = "example_updated_at", -- string
 })
 ```
+
+
+### SchedulesShowOverrideResultV2
+
+Create an instance: `local schedules_show_override_result_v2 = client:SchedulesShowOverrideResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `end_at` | `string` | End of the override |
+| `id` | `string` | Unique internal ID of the schedule override |
+| `layer_id` | `string` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | The schedule that this override applies to |
+| `start_at` | `string` | Start of the override |
+| `updated_at` | `string` |  |
+| `user` | `table` |  |
+
+#### Example: Load
+
+```lua
+local schedules_show_override_result_v2, err = client:SchedulesShowOverrideResultV2():load({ id = "schedules_show_override_result_v2_id" })
+```
+
+#### Example: List
+
+```lua
+local schedules_show_override_result_v2s, err = client:SchedulesShowOverrideResultV2():list({ schedule_id = "example" })
+```
+
+#### Example: Create
+
+```lua
+local schedules_show_override_result_v2, err = client:SchedulesShowOverrideResultV2():create({
+  created_at = "example_created_at", -- string
+  end_at = "example_end_at", -- string
+  id = "example_id", -- string
+  layer_id = "example_layer_id", -- string
+  rotation_id = "example_rotation_id", -- string
+  schedule_id = "example_schedule_id", -- string
+  start_at = "example_start_at", -- string
+  updated_at = "example_updated_at", -- string
+  user = {}, -- table
+})
+```
+
+
+### SchedulesUpdateOverrideResultV2
+
+Create an instance: `local schedules_update_override_result_v2 = client:SchedulesUpdateOverrideResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `end_at` | `string` | End of the override |
+| `id` | `string` | Unique internal ID of the schedule override |
+| `layer_id` | `string` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | The schedule that this override applies to |
+| `start_at` | `string` | Start of the override |
+| `updated_at` | `string` |  |
+| `user` | `table` |  |
 
 
 ### Secret
@@ -3023,15 +6140,16 @@ Create an instance: `local secret = client:Secret(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `last_four_char` | `string` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `table` |  |
-| `secret` | `table` |  |
+| `description` | `string` | Optional description of what this secret is for |
+| `id` | `string` | Unique identifier for this secret |
+| `last_four_chars` | `string` | The last four characters of the current value, for masked display. |
+| `name` | `string` | Human-readable name, unique within the organisation amongst unarchived secrets |
+| `owning_team_ids` | `table` | IDs of the teams that own this secret. |
+| `secret` | `table` | A secret is a named credential that workflows can reference, for example an auth token for an outgoing webhook. |
 | `updated_at` | `string` |  |
-| `value` | `string` |  |
-| `version` | `table` |  |
+| `value` | `string` | The secret's plaintext value. |
+| `version` | `number` | The current version number, incremented on each rotation |
+| `versions` | `table` | The secret's versions, newest first |
 
 #### Example: Load
 
@@ -3052,11 +6170,11 @@ local secret, err = client:Secret():create({
   created_at = "example_created_at", -- string
   id = "example_id", -- string
   name = "example_name", -- string
-  owning_team_id = {}, -- table
   secret = {}, -- table
   updated_at = "example_updated_at", -- string
   value = "example_value", -- string
-  version = {}, -- table
+  version = 1, -- number
+  versions = {}, -- table
 })
 ```
 
@@ -3078,12 +6196,12 @@ Create an instance: `local severity = client:Severity(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `rank` | `number` |  |
-| `updated_at` | `string` |  |
+| `created_at` | `string` | When the action was created |
+| `description` | `string` | Description of the severity |
+| `id` | `string` | Unique identifier of the severity |
+| `name` | `string` | Human readable name of the severity |
+| `rank` | `number` | Rank to help sort severities (lower numbers are less severe) |
+| `updated_at` | `string` | When the action was last updated |
 
 #### Example: Load
 
@@ -3120,20 +6238,101 @@ Create an instance: `local status_page = client:StatusPage(nil)`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `public_url` | `string` |  |
+| `description` | `string` | The description of this status page |
+| `id` | `string` | Unique ID of this status page |
+| `name` | `string` | The title of this status page |
+| `public_url` | `string` | The public URL of this status page |
+
+#### Example: Load
+
+```lua
+local status_page, err = client:StatusPage():load({ id = "status_page_id" })
+```
 
 #### Example: List
 
 ```lua
 local status_pages, err = client:StatusPage():list()
+```
+
+
+### StatusPageComponent
+
+Create an instance: `local status_page_component = client:StatusPageComponent(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` | Optional short description of this component |
+| `id` | `string` | Unique identifier for this component |
+| `management_meta` | `table` |  |
+| `name` | `string` | Human-readable name for the component |
+
+#### Example: Load
+
+```lua
+local status_page_component, err = client:StatusPageComponent():load({ id = "status_page_component_id" })
+```
+
+#### Example: List
+
+```lua
+local status_page_components, err = client:StatusPageComponent():list()
+```
+
+#### Example: Create
+
+```lua
+local status_page_component, err = client:StatusPageComponent():create({
+  id = "example_id", -- string
+  management_meta = {}, -- table
+  name = "example_name", -- string
+})
+```
+
+
+### StatusPageComponentAvailabilityV2
+
+Create an instance: `local status_page_component_availability_v2 = client:StatusPageComponentAvailabilityV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `availability_percent` | `string` | Availability over the window as a percentage, floored (for example "99.94"). |
+| `component_id` | `string` | ID of the component. |
+| `data_available_since` | `string` | Earliest time we have status data for this component. |
+| `end_at` | `string` | End of the requested availability window |
+| `start_at` | `string` | Start of the requested availability window |
+| `status_page_id` | `string` | ID of the status page |
+
+#### Example: Load
+
+```lua
+local status_page_component_availability_v2, err = client:StatusPageComponentAvailabilityV2():load({ component_id = "component_id", status_page_id = "status_page_id", end_at = "end_at", start_at = "start_at" })
 ```
 
 
@@ -3154,17 +6353,17 @@ Create an instance: `local status_page_incident = client:StatusPageIncident(nil)
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_impact` | `table` |  |
-| `component_status` | `table` |  |
-| `id` | `string` |  |
-| `idempotency_key` | `string` |  |
-| `incident_status` | `string` |  |
-| `message` | `string` |  |
-| `name` | `string` |  |
-| `notify_subscriber` | `boolean` |  |
-| `published_at` | `string` |  |
-| `status_page_id` | `string` |  |
-| `update` | `table` |  |
+| `component_impacts` | `table` | A list of time periods that this status page incident had an impact on a component |
+| `component_statuses` | `table` | An array of mappings from component ID to current component status |
+| `id` | `string` | A unique ID for this status page incident |
+| `idempotency_key` | `string` | A unique key to de-duplicate requests. |
+| `incident_status` | `string` | Current status for this incident |
+| `message` | `string` | Markdown initial update on this status page incident |
+| `name` | `string` | A title for the incident |
+| `notify_subscribers` | `boolean` | Whether to notify subscribers about this status page incident. |
+| `published_at` | `string` | When this status page incident was published to the status page |
+| `status_page_id` | `string` | The ID of the corresponding status page |
+| `updates` | `table` | A list of updates posted to this status page incident |
 
 #### Example: Load
 
@@ -3175,23 +6374,23 @@ local status_page_incident, err = client:StatusPageIncident():load({ id = "statu
 #### Example: List
 
 ```lua
-local status_page_incidents, err = client:StatusPageIncident():list()
+local status_page_incidents, err = client:StatusPageIncident():list({ status_page_id = "example" })
 ```
 
 #### Example: Create
 
 ```lua
 local status_page_incident, err = client:StatusPageIncident():create({
-  component_impact = {}, -- table
+  component_impacts = {}, -- table
   id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
   incident_status = "example_incident_status", -- string
   message = "example_message", -- string
   name = "example_name", -- string
-  notify_subscriber = true, -- boolean
+  notify_subscribers = true, -- boolean
   published_at = "example_published_at", -- string
   status_page_id = "example_status_page_id", -- string
-  update = {}, -- table
+  updates = {}, -- table
 })
 ```
 
@@ -3210,20 +6409,44 @@ Create an instance: `local status_page_incident_update = client:StatusPageIncide
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_status` | `table` |  |
-| `incident_status` | `string` |  |
-| `message` | `string` |  |
-| `notify_subscriber` | `boolean` |  |
-| `status_page_incident_id` | `string` |  |
+| `component_statuses` | `table` | An array of mappings from component ID to component status. |
+| `incident_status` | `string` | Optional new status for this status page incident. |
+| `message` | `string` | Markdown update on what's changed about this status page incident |
+| `notify_subscribers` | `boolean` | Whether to notify subscribers about this incident update. |
+| `status_page_incident_id` | `string` | ID of the status page incident |
 
 #### Example: Create
 
 ```lua
 local status_page_incident_update, err = client:StatusPageIncidentUpdate():create({
   message = "example_message", -- string
-  notify_subscriber = true, -- boolean
+  notify_subscribers = true, -- boolean
   status_page_incident_id = "example_status_page_incident_id", -- string
 })
+```
+
+
+### StatusPageLinkedResponseIncidentV1
+
+Create an instance: `local status_page_linked_response_incident_v1 = client:StatusPageLinkedResponseIncidentV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | ID of the Response incident |
+| `linked_at` | `string` | When the Response incident was linked to the status page incident |
+
+#### Example: List
+
+```lua
+local status_page_linked_response_incident_v1s, err = client:StatusPageLinkedResponseIncidentV1():list({ incident_id = "example", status_page_id = "example" })
 ```
 
 
@@ -3238,24 +6461,26 @@ Create an instance: `local status_page_maintenance = client:StatusPageMaintenanc
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `affected_component_id` | `table` |  |
-| `component_maintenance_period` | `table` |  |
-| `end_at` | `string` |  |
-| `id` | `string` |  |
-| `idempotency_key` | `string` |  |
-| `maintenance_status` | `string` |  |
-| `message` | `string` |  |
-| `name` | `string` |  |
-| `notify_subscriber` | `boolean` |  |
-| `published_at` | `string` |  |
-| `start_at` | `string` |  |
-| `status_page_id` | `string` |  |
-| `update` | `table` |  |
+| `affected_component_ids` | `table` | An array of IDs of component affected by the maintenance window |
+| `automate_maintenance_status` | `boolean` | Whether updates are published automatically, moving this maintenance window to in progress at its start time and to complete at its end time |
+| `component_maintenance_periods` | `table` | A list of time periods where components were under maintenance during this status page maintenance window |
+| `end_at` | `string` | The time the maintenance window ends |
+| `id` | `string` | A unique ID for this status page maintenance window |
+| `idempotency_key` | `string` | A unique key to de-duplicate requests. |
+| `maintenance_status` | `string` | Current status for this maintenance window |
+| `message` | `string` | Markdown initial update on this status page maintenance window |
+| `name` | `string` | A title for the maintenance window |
+| `notify_subscribers` | `boolean` | Whether to notify subscribers about this status page maintenance. |
+| `published_at` | `string` | When this status page maintenance window was published to the status page |
+| `start_at` | `string` | The time the maintenance window starts |
+| `status_page_id` | `string` | The ID of the corresponding status page |
+| `updates` | `table` | A list of updates posted to this status page maintenance window |
 
 #### Example: Load
 
@@ -3266,26 +6491,27 @@ local status_page_maintenance, err = client:StatusPageMaintenance():load({ id = 
 #### Example: List
 
 ```lua
-local status_page_maintenances, err = client:StatusPageMaintenance():list()
+local status_page_maintenances, err = client:StatusPageMaintenance():list({ status_page_id = "example" })
 ```
 
 #### Example: Create
 
 ```lua
 local status_page_maintenance, err = client:StatusPageMaintenance():create({
-  affected_component_id = {}, -- table
-  component_maintenance_period = {}, -- table
+  affected_component_ids = {}, -- table
+  automate_maintenance_status = true, -- boolean
+  component_maintenance_periods = {}, -- table
   end_at = "example_end_at", -- string
   id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
   maintenance_status = "example_maintenance_status", -- string
   message = "example_message", -- string
   name = "example_name", -- string
-  notify_subscriber = true, -- boolean
+  notify_subscribers = true, -- boolean
   published_at = "example_published_at", -- string
   start_at = "example_start_at", -- string
   status_page_id = "example_status_page_id", -- string
-  update = {}, -- table
+  updates = {}, -- table
 })
 ```
 
@@ -3304,18 +6530,18 @@ Create an instance: `local status_page_maintenance_update = client:StatusPageMai
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_status` | `table` |  |
-| `maintenance_status` | `string` |  |
-| `message` | `string` |  |
-| `notify_subscriber` | `boolean` |  |
-| `status_page_maintenance_id` | `string` |  |
+| `component_statuses` | `table` | An array of mappings from component ID to component status. |
+| `maintenance_status` | `string` | Optional new status for this status page maintenance window. |
+| `message` | `string` | Markdown update on what's changed about this status page maintenance window |
+| `notify_subscribers` | `boolean` | Whether to notify subscribers about this status page maintenance update. |
+| `status_page_maintenance_id` | `string` | ID of the status page maintenance window |
 
 #### Example: Create
 
 ```lua
 local status_page_maintenance_update, err = client:StatusPageMaintenanceUpdate():create({
   message = "example_message", -- string
-  notify_subscriber = true, -- boolean
+  notify_subscribers = true, -- boolean
   status_page_maintenance_id = "example_status_page_maintenance_id", -- string
 })
 ```
@@ -3335,13 +6561,27 @@ Create an instance: `local status_page_structure = client:StatusPageStructure(ni
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `item` | `table` |  |
+| `current_structure` | `table` |  |
+| `display_uptime_mode` | `string` | How the page shows uptime against its components |
+| `id` | `string` |  |
+| `management_meta` | `table` |  |
 
 #### Example: Load
 
 ```lua
 local status_page_structure, err = client:StatusPageStructure():load({ id = "status_page_structure_id" })
 ```
+
+
+### StatusPagesV2
+
+Create an instance: `local status_pages_v2 = client:StatusPagesV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `remove(match)` | Remove the matching entity. |
 
 
 ### Team
@@ -3360,9 +6600,9 @@ Create an instance: `local team = client:Team(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `catalog_entry` | `table` |  |
-| `id` | `string` |  |
-| `member` | `table` |  |
-| `name` | `string` |  |
+| `id` | `string` | Unique ID of the team |
+| `members` | `table` | Members of the team |
+| `name` | `string` | Name of the team |
 
 #### Example: Load
 
@@ -3377,9 +6617,9 @@ local teams, err = client:Team():list()
 ```
 
 
-### TelemetryDataSource
+### TelemetryDataSourceV2
 
-Create an instance: `local telemetry_data_source = client:TelemetryDataSource(nil)`
+Create an instance: `local telemetry_data_source_v2 = client:TelemetryDataSourceV2(nil)`
 
 #### Operations
 
@@ -3391,16 +6631,16 @@ Create an instance: `local telemetry_data_source = client:TelemetryDataSource(ni
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `datadog_config` | `table` |  |
-| `enabled` | `boolean` |  |
-| `grafana_config` | `table` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `provider` | `string` |  |
-| `source_type` | `string` |  |
-| `updated_at` | `string` |  |
-| `version` | `string` |  |
+| `created_at` | `string` | When this data source was created |
+| `datadog_config` | `table` | Datadog-specific credential updates |
+| `enabled` | `boolean` | Whether this data source is enabled |
+| `grafana_config` | `table` | Grafana-specific credential and endpoint updates |
+| `id` | `string` | Unique identifier for this data source |
+| `name` | `string` | Human-readable name of the data source |
+| `provider` | `string` | Provider that hosts this data source |
+| `source_type` | `string` | Type of data source (e.g., prometheus, loki, tempo) |
+| `updated_at` | `string` | When this data source was last updated |
+| `version` | `string` | Upstream tool version captured at probe time (e.g. |
 
 
 ### User
@@ -3411,6 +6651,7 @@ Create an instance: `local user = client:User(nil)`
 
 | Method | Description |
 | --- | --- |
+| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
@@ -3419,14 +6660,14 @@ Create an instance: `local user = client:User(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `base_role` | `table` |  |
-| `custom_role` | `table` |  |
-| `email` | `string` |  |
-| `id` | `string` |  |
-| `is_active` | `boolean` |  |
-| `name` | `string` |  |
-| `role` | `string` |  |
-| `seat` | `table` |  |
-| `slack_user_id` | `string` |  |
+| `custom_roles` | `table` |  |
+| `email` | `string` | Email address of the user. |
+| `id` | `string` | Unique identifier of the user |
+| `is_active` | `boolean` | Whether the user is active. |
+| `name` | `string` | Name of the user |
+| `role` | `string` | DEPRECATED: Role of the user as of March 9th 2023, this value is no longer updated. |
+| `seats` | `table` |  |
+| `slack_user_id` | `string` | Slack ID of the user |
 
 #### Example: Load
 
@@ -3438,6 +6679,20 @@ local user, err = client:User():load({ id = "user_id" })
 
 ```lua
 local users, err = client:User():list()
+```
+
+#### Example: Create
+
+```lua
+local user, err = client:User():create({
+  id = "example_id", -- string
+  base_role = {}, -- table
+  custom_roles = {}, -- table
+  is_active = true, -- boolean
+  name = "example_name", -- string
+  role = "example_role", -- string
+  seats = {}, -- table
+})
 ```
 
 
@@ -3459,30 +6714,31 @@ Create an instance: `local workflow = client:Workflow(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `table` |  |
-| `condition_group` | `table` |  |
-| `continue_on_step_error` | `boolean` |  |
+| `annotations` | `table` | Annotations that track metadata about this resource |
+| `auto_run_mode` | `string` | Whether the workflow runs immediately, or asks for confirmation in the incident channel first. |
+| `condition_groups` | `table` | Conditions that apply to the workflow trigger |
+| `continue_on_step_error` | `boolean` | Whether to continue executing the workflow if a step fails |
 | `delay` | `table` |  |
-| `expression` | `table` |  |
-| `folder` | `string` |  |
-| `form_field` | `table` |  |
-| `id` | `string` |  |
-| `include_private_escalation` | `boolean` |  |
-| `include_private_incident` | `boolean` |  |
+| `expressions` | `table` | The expressions to use in the workflow |
+| `folder` | `string` | Folder to display the workflow in |
+| `form_fields` | `table` | User-configured form fields available in the workflow scope. |
+| `id` | `string` | Unique identifier for the workflow |
+| `include_private_escalations` | `boolean` | Whether to include private escalations |
+| `include_private_incidents` | `boolean` | DEPRECATED: use `private_incident_scope` instead. |
 | `management_meta` | `table` |  |
-| `name` | `string` |  |
-| `once_for` | `table` |  |
-| `owning_team_id` | `table` |  |
-| `private_incident_scope` | `string` |  |
-| `runs_from` | `string` |  |
-| `runs_on_incident` | `string` |  |
-| `runs_on_incident_mode` | `table` |  |
-| `shortform` | `string` |  |
-| `skip_step_upgrade` | `boolean` |  |
-| `state` | `string` |  |
-| `step` | `table` |  |
-| `trigger` | `string` |  |
-| `version` | `number` |  |
+| `name` | `string` | Name provided by the user when creating the workflow |
+| `once_for` | `table` | This workflow will run 'once for' a list of references |
+| `owning_team_ids` | `table` | IDs of the teams that own this workflow |
+| `private_incident_scope` | `string` | Which private incidents this workflow acts on: every private incident (all), those an owning team can see (owning_teams), or none |
+| `runs_from` | `string` | The time from which this workflow will run on incidents |
+| `runs_on_incident_modes` | `table` | Which incident modes should this workflow run on? |
+| `runs_on_incidents` | `string` | Which incidents should the workflow be applied to? |
+| `shortform` | `string` | The shortform used to trigger this workflow (only applicable for manual triggers) |
+| `skip_step_upgrades` | `boolean` | Skips workflow step upgrades, when the parameters for an existing workflow step change |
+| `state` | `string` | What state this workflow is in |
+| `steps` | `table` | Steps that are executed as part of the workflow |
+| `trigger` | `string` | Trigger to set on the workflow |
+| `version` | `number` | Revision of the workflow, uniquely identifying it's version |
 | `workflow` | `table` |  |
 
 #### Example: Load
@@ -3501,17 +6757,17 @@ local workflows, err = client:Workflow():list()
 
 ```lua
 local workflow, err = client:Workflow():create({
-  condition_group = {}, -- table
+  condition_groups = {}, -- table
   continue_on_step_error = true, -- boolean
   delay = {}, -- table
-  expression = {}, -- table
+  expressions = {}, -- table
   id = "example_id", -- string
   management_meta = {}, -- table
   name = "example_name", -- string
   once_for = {}, -- table
-  runs_on_incident = "example_runs_on_incident", -- string
-  runs_on_incident_mode = {}, -- table
-  step = {}, -- table
+  runs_on_incident_modes = {}, -- table
+  runs_on_incidents = "example_runs_on_incidents", -- string
+  steps = {}, -- table
   trigger = "example_trigger", -- string
   version = 1, -- number
   workflow = {}, -- table
@@ -3534,20 +6790,20 @@ Create an instance: `local workflow_run = client:WorkflowRun(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `cancelled_at` | `string` |  |
-| `created_at` | `string` |  |
-| `enqueued_at` | `string` |  |
-| `error` | `string` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `incident_reference` | `string` |  |
-| `progress` | `table` |  |
-| `scheduled_at` | `string` |  |
-| `updated_at` | `string` |  |
-| `workflow_id` | `string` |  |
-| `workflow_name` | `string` |  |
-| `workflow_version_id` | `string` |  |
-| `workflow_version_number` | `number` |  |
+| `cancelled_at` | `string` | If the run was cancelled, this is when |
+| `created_at` | `string` | When the resource was created |
+| `enqueued_at` | `string` | When the run was enqueued for execution |
+| `error` | `string` | Error produced by the workflow, if it failed |
+| `id` | `string` | Unique identifier for the workflow run |
+| `incident_id` | `string` | If this run was against a specific incident, this is the ID of that incident |
+| `incident_reference` | `string` | If this run was against a specific incident, this is the reference of that incident |
+| `progress` | `table` | Status of each step as it is worked |
+| `scheduled_at` | `string` | When the run was scheduled for |
+| `updated_at` | `string` | When the resource was last updated |
+| `workflow_id` | `string` | Unique identifier for the underlying workflow |
+| `workflow_name` | `string` | Name of the underlying workflow |
+| `workflow_version_id` | `string` | Unique identifier of the workflow version |
+| `workflow_version_number` | `number` | Monotonically incrementing version number for the version that ran |
 
 #### Example: Load
 
@@ -3560,6 +6816,142 @@ local workflow_run, err = client:WorkflowRun():load({ id = "workflow_run_id" })
 ```lua
 local workflow_runs, err = client:WorkflowRun():list()
 ```
+
+## Features
+
+This SDK ships 8 optional features. Each is **inactive until you
+switch it on**, so an SDK you have not configured behaves exactly as if none of
+them existed — no retries, no cache, no logging, no measurable overhead.
+
+Activate a feature by name in the client options, alongside the options shown
+above:
+
+| Feature | What it does |
+|---|---|
+| [`debug`](#debug) | Debug capture |
+| [`idempotency`](#idempotency) | Idempotency |
+| [`metrics`](#metrics) | Metrics |
+| [`paging`](#paging) | Paging |
+| [`ratelimit`](#ratelimit) | Rate limiting |
+| [`retry`](#retry) | Retry |
+| [`test`](#test) | Test transport |
+| [`timeout`](#timeout) | Timeout |
+
+> **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
+> transport, so each one wraps whatever is already installed: the order you
+> activate them in IS the nesting order. Activating them as an ordered list
+> rather than a map is what fixes that order.
+
+### debug
+
+Debug capture.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `max` | `100` |
+| `redact` | `['authorization', 'cookie', 'set-cookie', 'api-key', 'apikey', 'x-api-key', 'idempotency-key']` |
+
+Set `feature.debug.active` to enable it, then override any of the options above.
+
+### idempotency
+
+Idempotency.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `header` | `'Idempotency-Key'` |
+| `methods` | `['POST', 'PUT', 'PATCH', 'DELETE']` |
+| `ops` | `['create', 'update', 'remove']` |
+
+Set `feature.idempotency.active` to enable it, then override any of the options above.
+
+### metrics
+
+Metrics.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+
+Set `feature.metrics.active` to enable it, then override any of the options above.
+
+### paging
+
+Paging.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `afterVar` | `'after'` |
+| `cursorParam` | `'cursor'` |
+| `firstVar` | `'first'` |
+| `limitParam` | `'limit'` |
+| `pageParam` | `'page'` |
+| `startPage` | `1` |
+
+Set `feature.paging.active` to enable it, then override any of the options above.
+
+### ratelimit
+
+Rate limiting.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `burst` | `5` |
+| `rate` | `5` |
+
+Set `feature.ratelimit.active` to enable it, then override any of the options above.
+
+`ratelimit` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
+### retry
+
+Retry.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `factor` | `2` |
+| `maxDelay` | `2000` |
+| `minDelay` | `50` |
+| `retries` | `2` |
+| `statuses` | `[408, 425, 429, 500, 502, 503, 504]` |
+
+Set `feature.retry.active` to enable it, then override any of the options above.
+
+`retry` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
+### test
+
+Test transport.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+
+Set `feature.test.active` to enable it, then override any of the options above.
+
+### timeout
+
+Timeout.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `ms` | `30000` |
+
+Set `feature.timeout.active` to enable it, then override any of the options above.
+
+`timeout` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
 
 
 ## Advanced
@@ -3600,7 +6992,14 @@ with hook methods named after pipeline stages (e.g. `PrePoint`,
 
 The SDK ships with built-in features:
 
-- **TestFeature**: In-memory mock transport for testing without a live server
+- **DebugFeature**: Debug capture
+- **IdempotencyFeature**: Idempotency
+- **MetricsFeature**: Metrics
+- **PagingFeature**: Paging
+- **RatelimitFeature**: Rate limiting
+- **RetryFeature**: Retry
+- **TestFeature**: Test transport
+- **TimeoutFeature**: Timeout
 
 Features are initialized in order. Hooks fire in the order features
 were added, so later features can override earlier ones.
@@ -3620,6 +7019,7 @@ Use `helpers.to_map()` to safely validate that a value is a table.
 lua/
 ├── incident-io_sdk.lua    -- Main SDK module
 ├── config.lua               -- Configuration
+├── schema.lua               -- Generated option + entity specs
 ├── features.lua             -- Feature factory
 ├── core/                    -- Core types and context
 ├── entity/                  -- Entity implementations
@@ -3638,11 +7038,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local incidentrole = client:IncidentRole()
-incidentrole:list()
+local incidentstatus = client:IncidentStatus()
+incidentstatus:list()
 
--- incidentrole:data_get() now returns the incidentrole data from the last list
--- incidentrole:match_get() returns the last match criteria
+-- incidentstatus:data_get() now returns the incidentstatus data from the last list
+-- incidentstatus:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

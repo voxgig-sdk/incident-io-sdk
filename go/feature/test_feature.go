@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"regexp"
+	"strings"
 
 	vs "github.com/voxgig-sdk/incident-io-sdk/go/utility/struct"
 
@@ -12,7 +13,24 @@ import (
 
 // The `body.<key>` form of an op's response transform: the mock wraps its
 // payload in <key> so the transform can unwrap it again.
-var envelopeResRe = regexp.MustCompile("^`body\\.([^`.]+)`$")
+var envelopeResRe = regexp.MustCompile("^`body\\.(.+)`$")
+
+// The key a list's response transform
+// ["`$EACH`", "body", {"`$MERGE`": "`.<key>`"}] reads each item's record under.
+var itemEnvelopeRe = regexp.MustCompile("^`\\.([^.`$]+)`$")
+
+func itemEnvelopeKey(restf any) string {
+	list, ok := restf.([]any)
+	if !ok || len(list) != 3 || list[0] != "`$EACH`" || list[1] != "body" {
+		return ""
+	}
+	child, _ := list[2].(map[string]any)
+	merge, _ := child["`$MERGE`"].(string)
+	if m := itemEnvelopeRe.FindStringSubmatch(merge); m != nil {
+		return m[1]
+	}
+	return ""
+}
 
 type TestFeature struct {
 	BaseFeature
@@ -54,13 +72,6 @@ func (f *TestFeature) Init(ctx *core.Context, options map[string]any) {
 	self := f
 
 	testFetcher := func(ctx *core.Context, _fullurl string, _fetchdef map[string]any) (any, error) {
-		// Shape the mock payload the way the real API would, so the op's
-		// response transform recovers the entity from it. A point carrying
-		// `transform.res: ` + "`body.item`" + ` describes an API that answers
-		// {"item": {...}}; handing back the bare entity means the transform
-		// unwraps a property that is not there and the caller gets nil. The
-		// mock has to agree with the model, or it only ever simulates APIs
-		// whose responses happen to be unwrapped. Mirrors the ts mock.
 		envelope := func(data any) any {
 			if data == nil || ctx.Point == nil {
 				return data
@@ -68,6 +79,15 @@ func (f *TestFeature) Init(ctx *core.Context, options map[string]any) {
 			tm, ok := ctx.Point["transform"].(map[string]any)
 			if !ok {
 				return data
+			}
+			if key := itemEnvelopeKey(tm["res"]); key != "" {
+				if items, isList := data.([]any); isList {
+					out := make([]any, len(items))
+					for i, item := range items {
+						out[i] = map[string]any{key: item}
+					}
+					return out
+				}
 			}
 			restf, ok := tm["res"].(string)
 			if !ok {
@@ -77,7 +97,12 @@ func (f *TestFeature) Init(ctx *core.Context, options map[string]any) {
 			if m == nil {
 				return data
 			}
-			return map[string]any{m[1]: data}
+			segs := strings.Split(m[1], ".")
+			out := data
+			for i := len(segs) - 1; 0 <= i; i-- {
+				out = map[string]any{segs[i]: out}
+			}
+			return out
 		}
 
 		respond := func(status int, data any, extra map[string]any) map[string]any {
@@ -143,14 +168,7 @@ func (f *TestFeature) Init(ctx *core.Context, options map[string]any) {
 			}
 			out := vs.Clone(found)
 			return respond(200, out, nil), nil
-		} else if op.Name == "update" {
-			// Match the existing entity by id only (or its alias). Reqdata
-			// also contains the new field values, which would otherwise
-			// cause Select to filter out the entity we want to update.
-			// When reqdata has no id, fall back to the id the entity
-			// client carries from a prior create/load (in ctx.Match /
-			// ctx.Data), mirroring the TS mock where param(ctx,'id')
-			// resolves from accumulated state.
+		} else if op.Name == "update" || op.Name == "patch" {
 			updateMatch := map[string]any{}
 			if ctx.Reqdata != nil {
 				if v, has := ctx.Reqdata["id"]; has {
@@ -172,24 +190,12 @@ func (f *TestFeature) Init(ctx *core.Context, options map[string]any) {
 			args := self.buildArgs(ctx, op, updateMatch)
 			found := vs.Select(entmap, args)
 			ent := vs.GetElem(found, 0)
-			if ent == nil && entmap != nil {
-				for _, e := range entmap {
-					if _, ok := e.(map[string]any); ok {
-						ent = e
-						break
-					}
-				}
-			}
 			if ent == nil {
+				// update miss: 404, never another record
 				return respond(404, nil, map[string]any{"statusText": "Not found"}), nil
 			}
-			if entm, ok := ent.(map[string]any); ok {
-				reqdata := ctx.Reqdata
-				if reqdata != nil {
-					for k, v := range reqdata {
-						entm[k] = v
-					}
-				}
+			if _, ok := ent.(map[string]any); ok && ctx.Reqdata != nil {
+				vs.Merge([]any{ent, testRecord(ctx.Reqdata)})
 			}
 			vs.DelProp(ent, "$KEY")
 			out := vs.Clone(ent)
@@ -214,7 +220,7 @@ func (f *TestFeature) Init(ctx *core.Context, options map[string]any) {
 					rand.Intn(0x10000), rand.Intn(0x10000))
 			}
 
-			ent := vs.Clone(ctx.Reqdata)
+			ent := vs.Clone(testRecord(ctx.Reqdata))
 			if entm, ok := ent.(map[string]any); ok {
 				entm["id"] = id
 				if idStr, ok := id.(string); ok {
@@ -307,17 +313,67 @@ func (f *TestFeature) makeNetsim(net map[string]any, inner core.FetcherFunc) cor
 	}
 }
 
+// The record the mock keeps: the request data without `$body`, which only the
+// wire carries.
+func testRecord(reqdata map[string]any) map[string]any {
+	if reqdata == nil {
+		return nil
+	}
+	out := make(map[string]any, len(reqdata))
+	for k, v := range reqdata {
+		if k != "$body" {
+			out[k] = v
+		}
+	}
+	return out
+}
+
 func (f *TestFeature) buildArgs(ctx *core.Context, op *core.Operation, args map[string]any) any {
 	opname := op.Name
 
-	// Get last point from config.
-	points := vs.GetPath([]any{"entity", ctx.Entity.GetName(), "op", opname, "points"}, ctx.Config)
-	point := vs.GetElem(points, -1)
+	// Pick the entity's own endpoint from config, not a cross-reference from
+	// another resource that also returns it — the same rule makePoint falls
+	// back to, so the seed-data query is built from the endpoint the request
+	// will actually be sent to: a terminal `{id}` marks a record route, and
+	// failing that the shallower path wins.
+	points := vs.GetPath(ctx.Config, []any{"entity", ctx.Entity.GetName(), "op", opname, "points"})
+	point := vs.GetElem(points, 0)
+	if plist, ok := points.([]any); ok {
+		partsLen := func(p any) int {
+			if parts, ok := vs.GetProp(p, "parts").([]any); ok {
+				return len(parts)
+			}
+			return 0
+		}
+		terminalParam := func(p any) bool {
+			parts, ok := vs.GetProp(p, "parts").([]any)
+			if !ok || 0 == len(parts) {
+				return false
+			}
+			last, _ := parts[len(parts)-1].(string)
+			return strings.HasPrefix(last, "{")
+		}
+		for _, cand := range plist {
+			candTerm := terminalParam(cand)
+			bestTerm := terminalParam(point)
+			if candTerm != bestTerm {
+				if candTerm {
+					point = cand
+				}
+			} else if partsLen(cand) < partsLen(point) {
+				point = cand
+			}
+		}
+	}
 
-	// Get required params.
-	paramsPath := vs.GetPath([]any{"args", "params"}, point)
+	// Path AND query: a path-only read misses a query-addressed record
+	// (e.g. GET /result?trace_id=), which has no path param at all.
+	paramsPath := vs.GetPath(point, []any{"args", "params"})
 	reqdParams := vs.Select(paramsPath, map[string]any{"reqd": true})
-	reqd := vs.Transform(reqdParams, []any{"`$EACH`", "", "`$KEY.name`"})
+	reqdFromParams, _ := vs.Transform(reqdParams, []any{"`$EACH`", "", "`$KEY.name`"})
+	queryPath := vs.GetPath(point, []any{"args", "query"})
+	reqdQuery := vs.Select(queryPath, map[string]any{"reqd": true})
+	reqdFromQuery, _ := vs.Transform(reqdQuery, []any{"`$EACH`", "", "`$KEY.name`"})
 
 	qand := []any{}
 	q := map[string]any{"`$AND`": &qand}
@@ -325,8 +381,8 @@ func (f *TestFeature) buildArgs(ctx *core.Context, op *core.Operation, args map[
 	if args != nil {
 		for _, key := range vs.KeysOf(args) {
 			isId := key == "id"
-			selected := vs.Select(reqd, key)
-			isReqd := !vs.IsEmpty(selected)
+			isReqd := !vs.IsEmpty(vs.Select(reqdFromParams, key)) ||
+				!vs.IsEmpty(vs.Select(reqdFromQuery, key))
 
 			if isId || isReqd {
 				v := ctx.Utility.Param(ctx, key)

@@ -8,9 +8,10 @@ import { IncidentIoSDK } from '..'
 
 describe('exists', async () => {
 
-  test('test-mode', async () => {
-    const testsdk = await IncidentIoSDK.test()
-    equal(null !== testsdk, true)
+  test('test-mode', () => {
+    const testsdk = IncidentIoSDK.test()
+    equal(testsdk instanceof IncidentIoSDK, true,
+      'IncidentIoSDK.test() must return a client synchronously')
   })
 
 })

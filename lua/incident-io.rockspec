@@ -1,4 +1,4 @@
-package = "voxgig-sdk-incident-io"
+package = "voxgig-sdk-incident-io-sdk"
 version = "0.0.1-1"
 source = {
   -- git+https (GitHub dropped git:// in 2022); pin the install to the release
@@ -23,6 +23,18 @@ build = {
   modules = {
     ["incident-io_sdk"] = "incident-io_sdk.lua",
     ["config"] = "config.lua",
+    ["config_shared"] = "config_shared.lua",
+    ["config_plugins"] = "config_plugins.lua",
+    ["schema"] = "schema.lua",
     ["features"] = "features.lua",
+    ["feature.base_feature"] = "feature/base_feature.lua",
+    ["feature.debug_feature"] = "feature/debug_feature.lua",
+    ["feature.idempotency_feature"] = "feature/idempotency_feature.lua",
+    ["feature.metrics_feature"] = "feature/metrics_feature.lua",
+    ["feature.paging_feature"] = "feature/paging_feature.lua",
+    ["feature.ratelimit_feature"] = "feature/ratelimit_feature.lua",
+    ["feature.retry_feature"] = "feature/retry_feature.lua",
+    ["feature.test_feature"] = "feature/test_feature.lua",
+    ["feature.timeout_feature"] = "feature/timeout_feature.lua",
   }
 }

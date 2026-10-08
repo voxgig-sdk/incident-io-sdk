@@ -1,0 +1,60 @@
+{
+  "existing": {
+    "status_page_component": {
+      "STATUS_PAGE_COMPONENT00": {
+        "description": "s28",
+        "id": "STATUS_PAGE_COMPONENT00",
+        "management_meta": {},
+        "name": "s2b"
+      },
+      "STATUS_PAGE_COMPONENT01": {
+        "description": "s50",
+        "id": "STATUS_PAGE_COMPONENT01",
+        "management_meta": {},
+        "name": "s53"
+      },
+      "STATUS_PAGE_COMPONENT02": {
+        "description": "s78",
+        "id": "STATUS_PAGE_COMPONENT02",
+        "management_meta": {},
+        "name": "s7b"
+      }
+    }
+  },
+  "new": {
+    "status_page_component": {
+      "status_page_component_ref01": {
+        "description": "sa0",
+        "management_meta": {},
+        "name": "sa3"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/status_page_components": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/status_page_components": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/status_page_components/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/status_page_components/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/status_page_components/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

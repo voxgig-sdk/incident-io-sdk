@@ -24,13 +24,13 @@ There are companion guides deeper in the tree: one per language
 | `py` | `py/` | [`py/AGENTS.md`](./py/AGENTS.md) |
 | `ts` | `ts/` | [`ts/AGENTS.md`](./ts/AGENTS.md) |
 
-**Features** (1): `test`.
+**Features** (8): `debug`, `idempotency`, `metrics`, `paging`, `ratelimit`, `retry`, `test`, `timeout`.
 
 Each feature is generated into every SDK target — as a directory
 `<lang>/src/feature/<name>/` (ts/js) or a flat file in the `<lang>/feature/`
 package (other languages). Each target's guide documents its features.
 
-**Entities** (48): `Action`, `Alert`, `AlertAttribute`, `AlertNote`, `AlertRoute`, `AlertSource`, `ApiKey`, `CatalogEntry`, `CatalogResource`, `CatalogType`, `CatalogTypeSchema`, `CustomField`, `CustomFieldOption`, `Escalation`, `FollowUp`, `Incident`, `IncidentAlert`, `IncidentAttachment`, `IncidentMembership`, `IncidentParticipant`, `IncidentParticipantWorkload`, `IncidentRelationship`, `IncidentRole`, `IncidentStatus`, `IncidentTimestamp`, `IncidentType`, `IncidentUpdate`, `IpAllowlist`, `MaintenanceWindow`, `PostmortemDocument`, `Schedule`, `ScheduleEntry`, `ScheduleReplica`, `ScheduleSyncRule`, `ScheduleSyncTarget`, `Secret`, `Severity`, `StatusPage`, `StatusPageIncident`, `StatusPageIncidentUpdate`, `StatusPageMaintenance`, `StatusPageMaintenanceUpdate`, `StatusPageStructure`, `Team`, `TelemetryDataSource`, `User`, `Workflow`, `WorkflowRun`.
+**Entities** (109): `Action`, `Alert`, `AlertAttribute`, `AlertNote`, `AlertRoute`, `AlertSource`, `AlertSourcesV2`, `AlertTag`, `AlertsAddTagsResultV2`, `AlertsRemoveTagsResultV2`, `AlertsSetTagsResultV2`, `AlertsTransitionIncidentAlertResultV2`, `AnnouncementRule`, `AnnouncementTemplate`, `ApiKey`, `CallRoute`, `CallRoutesCreateAllowedCallerResultV2`, `CallRoutesCreateOptionResultV2`, `CallRoutesListAllowedCallersResultV2`, `CallRoutesListOptionsResultV2`, `CallRoutesShowAllowedCallerResultV2`, `CallRoutesShowOptionResultV2`, `CallRoutesUpdateAllowedCallerResultV2`, `CallRoutesUpdateOptionResultV2`, `CallRoutesV2`, `CallSession`, `CallTranscriptEntry`, `CatalogEntry`, `CatalogResource`, `CatalogType`, `CatalogTypeSchema`, `CustomField`, `CustomFieldOption`, `Escalation`, `EscalationPathTemplate`, `EscalationsCheckEscalationPermissionsResultV2`, `EscalationsReassignEscalationResultV2`, `FollowUp`, `FollowUpsConnectExternalIssueResultV3`, `FollowUpsCreateFromLinkResultV3`, `Identity`, `Incident`, `IncidentActivityLogEntry`, `IncidentAttachment`, `IncidentForm`, `IncidentMembership`, `IncidentParticipant`, `IncidentParticipantWorkload`, `IncidentRelationship`, `IncidentRole`, `IncidentStatus`, `IncidentTeamMembership`, `IncidentTeamMembershipsV1`, `IncidentTemplate`, `IncidentTemplatesValidateResultV1`, `IncidentTimelineItem`, `IncidentTimestamp`, `IncidentType`, `IncidentUpdate`, `IpAllowlist`, `IpRange`, `MaintenanceWindow`, `OnCallNotificationMethodPublicV2`, `OnCallNotificationRulePublicV2`, `PayConfig`, `PayConfigsCreateOneOffRuleResultV2`, `PayConfigsCreateWeeklyRuleResultV2`, `PayConfigsListOneOffRulesResultV2`, `PayConfigsListWeeklyRulesResultV2`, `PayConfigsShowOneOffRuleResultV2`, `PayConfigsShowWeeklyRuleResultV2`, `PayConfigsUpdateOneOffRuleResultV2`, `PayConfigsUpdateWeeklyRuleResultV2`, `PayConfigsV2`, `PayReport`, `PayReportsPublishResultV2`, `PayReportsUnpublishResultV2`, `PayReportsV2`, `PoliciesV2`, `Policy`, `PolicyFinding`, `PolicyFindingsDismissResultV2`, `PolicyFindingsRestoreResultV2`, `PostmortemDocument`, `Schedule`, `ScheduleEntriesListPayloadV2`, `ScheduleEntry`, `ScheduleReplica`, `ScheduleSyncRule`, `ScheduleSyncTarget`, `SchedulesShowOverrideResultV2`, `SchedulesUpdateOverrideResultV2`, `Secret`, `Severity`, `StatusPage`, `StatusPageComponent`, `StatusPageComponentAvailabilityV2`, `StatusPageIncident`, `StatusPageIncidentUpdate`, `StatusPageLinkedResponseIncidentV1`, `StatusPageMaintenance`, `StatusPageMaintenanceUpdate`, `StatusPageStructure`, `StatusPagesV2`, `Team`, `TelemetryDataSourceV2`, `User`, `Workflow`, `WorkflowRun`.
 
 ## Generating and updating the SDK
 
@@ -59,6 +59,36 @@ npm run generate
 Note: the `voxgig-sdkgen` CLI only *scaffolds* (`target add` /
 `feature add`). Generation itself runs via `npm run generate` (backed by
 `@voxgig/model`) — there is no `generate` CLI subcommand.
+
+### Two silent failure modes
+
+Generation has two ways of going wrong that **nothing reports**. Neither
+breaks a build or a test, so the only symptom is a tree that disagrees with
+the model — which is easy to commit past.
+
+**`voxgig-model --no-config` writes a REDUCED model.** The
+`.model-config` build is what registers the generator actions, and an SDK
+project loads `apidef` and `sdkgen` through exactly that mechanism:
+
+```
+sys: model: action: { apidef: load: 'build/apidef.js', sdkgen: load: 'build/sdkgen.js' }
+sys: model: order: action: 'apidef,sdkgen'
+```
+
+`--no-config` skips it, so those actions never run — and the model build
+still *writes* the model file, now missing whatever they contribute (the
+name case variants, and whole subtrees). A reduced model is a valid model,
+so nothing downstream complains. To inspect the model layer **without side
+effects**, use `npm run dry-generate` (`-y`, writes nothing). Never
+`--no-config` in anything whose output might be committed.
+
+**Regeneration never DELETES.** A file the generator has stopped emitting
+stays in the tree, and `git status` is silent because it is committed and
+unchanged. Narrowing a feature's plugin selection, or dropping a target, can
+leave whole modules behind that nothing references and no test covers.
+
+To find either, the target trees must be deleted and regenerated — a
+regeneration in place cannot see stale output at all.
 ## Adding a feature
 
 A **feature** is a pipeline extension: an object of hooks that fire at named
@@ -118,7 +148,7 @@ syntax) with unification semantics:
 | `*default \| type` | A default value unified against a type (e.g. `*true \| boolean`). |
 | `name: key()` | Bind a field to its map key (so `feature: log: {}` gets `name: 'log'`). |
 | `$$path$$` | Interpolate a model value into a string — e.g. the SDK `name`. |
-| `@"file.aontu"` | Include another fragment (how the index files work). |
+| `@"./file.aontu"` | Include another fragment (how the index files work). The `./` is required on a local path. |
 | `x: .y` | Reference another path's value (e.g. `deps: ts: .js`). |
 
 For example, the schema for every feature entry:

@@ -4,53 +4,76 @@ main: kit: entity: schedule_sync_target: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "add_bot_to_group"
-      req: true
-      type: "`$BOOLEAN`"
+  fields: {
+    add_bot_to_group: {
+      h: "Add Bot To Group"
+      n: "add_bot_to_group"
+      r: true
+      sh: "Whether the incident.io bot should be added to the group as a member."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "annotation"
-      req: false
-      type: "`$OBJECT`"
+    annotations: {
+      h: "Annotations"
+      n: "annotations"
+      r: false
+      sh: "Annotations that track metadata about this resource"
+      t: "`$OBJECT`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier of the sync target"
+      t: "`$STRING`"
     }
-    {
-      name: "linked_schedule"
-      req: true
-      type: "`$ARRAY`"
+    linked_schedules: {
+      h: "Linked Schedules"
+      n: "linked_schedules"
+      r: true
+      sh: "Schedules with an active sync rule pointing at this target"
+      t: "`$ARRAY`"
     }
-    {
-      name: "schedule_sync_target"
-      req: true
-      type: "`$OBJECT`"
+    new_slack_user_group: {
+      h: "New Slack User Group"
+      n: "new_slack_user_group"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "slack_team_id"
-      req: true
-      type: "`$STRING`"
+    slack_team_id: {
+      h: "Slack Team Id"
+      n: "slack_team_id"
+      r: true
+      sh: "Slack team (workspace) ID the user group lives in."
+      t: "`$STRING`"
     }
-    {
-      name: "slack_user_group_id"
-      req: true
-      type: "`$STRING`"
+    slack_user_group_id: {
+      h: "Slack User Group Id"
+      n: "slack_user_group_id"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "Slack ID of the user group whose membership is kept in sync."
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -63,13 +86,32 @@ main: kit: entity: schedule_sync_target: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/schedule_sync_targets"
-          parts: [
-            "v2"
-            "schedule_sync_targets"
+          bf: [
+            "add_bot_to_group"
+            "annotations"
+            "new_slack_user_group"
+            "slack_user_group_id"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/schedule_sync_targets"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/schedule_sync_targets"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedule_sync_targets"
+            }
+          ]
+          t: {
             req: {
               schedule_sync_target: "`reqdata`"
             }
@@ -82,41 +124,48 @@ main: kit: entity: schedule_sync_target: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedule_sync_targets"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedule_sync_targets"
-          parts: [
-            "v2"
-            "schedule_sync_targets"
-          ]
-          select: {
-            exist: [
-              "after"
-              "page_size"
-            ]
+          m: "GET"
+          o: "/v2/schedule_sync_targets"
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedule_sync_targets"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.schedule_sync_targets`"
           }
         }
       ]
@@ -125,31 +174,46 @@ main: kit: entity: schedule_sync_target: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedule_sync_targets/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "abc123"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "abc123"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedule_sync_targets/{id}"
-          parts: [
-            "v2"
-            "schedule_sync_targets"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/schedule_sync_targets/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedule_sync_targets"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.schedule_sync_target`"
           }
@@ -160,31 +224,42 @@ main: kit: entity: schedule_sync_target: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v2/schedule_sync_targets/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "abc123"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "abc123"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/schedule_sync_targets/{id}"
-          parts: [
-            "v2"
-            "schedule_sync_targets"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/schedule_sync_targets/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedule_sync_targets"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -195,31 +270,50 @@ main: kit: entity: schedule_sync_target: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "add_bot_to_group"
+            "annotations"
+          ]
+          co: {
+            id: "PUT /v2/schedule_sync_targets/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "abc123"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "abc123"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/schedule_sync_targets/{id}"
-          parts: [
-            "v2"
-            "schedule_sync_targets"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/schedule_sync_targets/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedule_sync_targets"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.schedule_sync_target`"
           }

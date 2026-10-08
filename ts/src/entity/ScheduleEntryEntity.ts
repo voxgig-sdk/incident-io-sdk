@@ -19,7 +19,6 @@ import type {
   ScheduleEntryLoadMatch,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class ScheduleEntryEntity extends IncidentIoEntityBase<ScheduleEntry> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -36,14 +35,15 @@ class ScheduleEntryEntity extends IncidentIoEntityBase<ScheduleEntry> {
 
 
 
-  async load(this: any, reqmatch?: ScheduleEntryLoadMatch, ctrl?: Control): Promise<ScheduleEntry> {
+  async load(this: any, reqmatch?: ScheduleEntryLoadMatch, ctrl?: Control): Promise<ScheduleEntryEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -127,12 +127,20 @@ class ScheduleEntryEntity extends IncidentIoEntityBase<ScheduleEntry> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -141,11 +149,12 @@ class ScheduleEntryEntity extends IncidentIoEntityBase<ScheduleEntry> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<ScheduleEntry> return stays clean under strict null checks.
+        // Promise<ScheduleEntryEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

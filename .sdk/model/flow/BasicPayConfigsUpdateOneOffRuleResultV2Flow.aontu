@@ -1,0 +1,33 @@
+# BasicPayConfigsUpdateOneOffRuleResultV2Flow
+
+main: kit: flow: BasicPayConfigsUpdateOneOffRuleResultV2Flow:
+{
+  entity: "pay_configs_update_one_off_rule_result_v2",
+  kind: "basic",
+  name: "BasicPayConfigsUpdateOneOffRuleResultV2Flow",
+  step: [
+    {
+      d: {
+        pay_config_id: "pay_config01"
+      }
+
+      i: {
+        ref: "pay_configs_update_one_off_rule_result_v2_ref01",
+        srcdatavar: "pay_configs_update_one_off_rule_result_v2_ref01_data",
+        suffix: "_up0",
+        textfield: "end_at"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-pay_configs_update_one_off_rule_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPayConfigsUpdateOneOffRuleResultV2Flow"
+}

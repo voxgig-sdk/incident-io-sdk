@@ -1,0 +1,188 @@
+# Entity: alerts_add_tags_result_v2
+
+main: kit: entity: alerts_add_tags_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    alert_group_ids: {
+      h: "Alert Group Ids"
+      n: "alert_group_ids"
+      r: false
+      sh: "The IDs of every alert group this alert belongs to."
+      t: "`$ARRAY`"
+    }
+    alert_source_id: {
+      h: "Alert Source Id"
+      n: "alert_source_id"
+      r: true
+      sh: "The ID of the alert source this alert fired on"
+      t: "`$STRING`"
+    }
+    attributes: {
+      h: "Attributes"
+      n: "attributes"
+      r: true
+      sh: "Attribute values parsed from the alerts payload"
+      t: "`$ARRAY`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this entry was created"
+      t: "`$STRING`"
+    }
+    deduplication_key: {
+      h: "Deduplication Key"
+      n: "deduplication_key"
+      r: true
+      sh: "A deduplication key which uniquely references this alert from your alert source."
+      t: "`$STRING`"
+    }
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "The description of the alert"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "The ID of this alert"
+      t: "`$STRING`"
+    }
+    resolved_at: {
+      fo: "date-time"
+      h: "Resolved At"
+      n: "resolved_at"
+      r: false
+      sh: "When this alert was resolved"
+      t: "`$STRING`"
+    }
+    source_url: {
+      h: "Source Url"
+      n: "source_url"
+      r: false
+      sh: "If applicable, a link to the alert in the upstream system"
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: true
+      sh: "Statuses of an alert"
+      t: "`$STRING`"
+    }
+    tags: {
+      h: "Tags"
+      n: "tags"
+      op: {
+        create: {
+          req: true
+          type: "`$ARRAY`"
+        }
+      }
+      r: false
+      sh: "Tags someone has applied to this alert"
+      t: "`$ARRAY`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      sh: "The title of the alert, parsed from the alert payload according to the alert source configuration"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this alert was last updated"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "alerts_add_tags_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "tags"
+          ]
+          co: {
+            id: "POST /v2/alerts/{id}/actions/add_tags"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "alert_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/alerts/{id}/actions/add_tags"
+          q: {
+            exist: [
+              "alert_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "alert_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alerts"
+            }
+            {
+              var: "alert_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "add_tags"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.alert`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.alert")]
+  ]
+
+}

@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "voxgig-sdk-incident-io"
+name = "voxgig-sdk-incident-io-sdk"
 version = "0.0.1"
 description = "Unofficial generated Python SDK for the incident.io public API. Not affiliated with or endorsed by the upstream API provider."
 readme = "README.md"
@@ -19,16 +19,13 @@ Homepage = "https://github.com/voxgig-sdk/incident-io-sdk"
 Repository = "https://github.com/voxgig-sdk/incident-io-sdk"
 Issues = "https://github.com/voxgig-sdk/incident-io-sdk/issues"
 
-# Ship the top-level single-file modules (setuptools find only discovers
-# package dirs, never these) so the documented import actually installs.
-# incidentio_types holds the generated @dataclass models.
-[tool.setuptools]
-py-modules = ["incidentio_sdk", "incidentio_types", "config", "features"]
-
-# Explicit package list — setuptools auto-discovery refuses to pick when
-# multiple top-level dirs (core/entity/feature/utility) are present.
+# ONE package. core/entity/feature/utility were previously top-level packages;
+# those names are real PyPI distributions and common scratch filenames, and
+# Python searches the working directory first, so any of them beside the
+# caller silently shadowed the SDK's own. They now live inside
+# incidentio_sdk/ where nothing can reach them.
 [tool.setuptools.packages.find]
-include = ["core*", "entity*", "feature*", "utility*"]
+include = ["incidentio_sdk*"]
 
 # Ship the PEP 561 py.typed marker(s) so the inline type hints reach consumers.
 [tool.setuptools.package-data]

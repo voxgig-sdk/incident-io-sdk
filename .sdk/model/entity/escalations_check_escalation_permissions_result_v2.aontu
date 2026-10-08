@@ -1,0 +1,92 @@
+# Entity: escalations_check_escalation_permissions_result_v2
+
+main: kit: entity: escalations_check_escalation_permissions_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    response_options: {
+      h: "Response Options"
+      n: "response_options"
+      r: true
+      sh: "The response options available to each requested user, in the same order as the request."
+      t: "`$ARRAY`"
+    }
+    user_ids: {
+      h: "User Ids"
+      n: "user_ids"
+      r: true
+      sh: "The IDs of the users to check response options for"
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "escalations_check_escalation_permissions_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "user_ids"
+          ]
+          co: {
+            id: "POST /v2/escalations/{escalation_id}/actions/check_permissions"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "escalation_id"
+                or: "escalation_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/escalations/{escalation_id}/actions/check_permissions"
+          q: {
+            exist: [
+              "escalation_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalations"
+            }
+            {
+              var: "escalation_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "check_permissions"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.escalation")]
+  ]
+
+}

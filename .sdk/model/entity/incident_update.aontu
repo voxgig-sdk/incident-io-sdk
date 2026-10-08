@@ -4,48 +4,83 @@ main: kit: entity: incident_update: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When the update was created"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this incident update"
+      t: "`$STRING`"
     }
-    {
-      name: "incident_id"
-      req: true
-      type: "`$STRING`"
+    idempotency_key: {
+      h: "Idempotency Key"
+      n: "idempotency_key"
+      r: true
+      sh: "Unique string used to de-duplicate incident update requests."
+      t: "`$STRING`"
     }
-    {
-      name: "merged_into_incident_id"
-      req: false
-      type: "`$STRING`"
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "The incident you want to update"
+      t: "`$STRING`"
     }
-    {
-      name: "message"
-      req: false
-      type: "`$STRING`"
+    merged_into_incident_id: {
+      h: "Merged Into Incident Id"
+      n: "merged_into_incident_id"
+      r: false
+      sh: "The ID of the incident this incident was merged into, if the to state of this update is 'merged'."
+      t: "`$STRING`"
     }
-    {
-      name: "new_incident_status"
-      req: true
-      type: "`$OBJECT`"
+    message: {
+      h: "Message"
+      n: "message"
+      r: false
+      sh: "Message that explains the context behind the update, in markdown"
+      t: "`$STRING`"
     }
-    {
-      name: "new_severity"
-      req: true
-      type: "`$OBJECT`"
+    new_incident_status: {
+      h: "New Incident Status"
+      n: "new_incident_status"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "updater"
-      req: true
-      type: "`$OBJECT`"
+    new_severity: {
+      h: "New Severity"
+      n: "new_severity"
+      r: true
+      t: "`$OBJECT`"
     }
-  ]
+    to_incident_status_id: {
+      h: "To Incident Status Id"
+      n: "to_incident_status_id"
+      r: false
+      sh: "Move the incident to this status"
+      t: "`$STRING`"
+    }
+    to_severity_id: {
+      h: "To Severity Id"
+      n: "to_severity_id"
+      r: false
+      sh: "Move the incident to this severity"
+      t: "`$STRING`"
+    }
+    updater: {
+      h: "Updater"
+      n: "updater"
+      r: true
+      t: "`$OBJECT`"
+    }
+  }
 
   id: {
     field: "id"
@@ -54,54 +89,97 @@ main: kit: entity: incident_update: {
 
   name: "incident_update"
   op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "idempotency_key"
+            "incident_id"
+            "message"
+            "to_incident_status_id"
+            "to_severity_id"
+          ]
+          co: {
+            id: "POST /v2/incident_updates"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/incident_updates"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_updates"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_update`"
+          }
+        }
+      ]
+    }
     list: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/incident_updates"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
-                kind: "query"
-                name: "incident_id"
-                orig: "incident_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "query"
+                n: "incident_id"
+                or: "incident_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/incident_updates"
-          parts: [
-            "v2"
-            "incident_updates"
+          m: "GET"
+          o: "/v2/incident_updates"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_updates"
+            }
           ]
-          select: {
-            exist: [
-              "after"
-              "incident_id"
-              "page_size"
-            ]
-          }
-          transform: {
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.incident_updates`"
           }
         }
       ]

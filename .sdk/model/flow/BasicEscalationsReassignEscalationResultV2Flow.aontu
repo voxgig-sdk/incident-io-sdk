@@ -1,0 +1,22 @@
+# BasicEscalationsReassignEscalationResultV2Flow
+
+main: kit: flow: BasicEscalationsReassignEscalationResultV2Flow:
+{
+  entity: "escalations_reassign_escalation_result_v2",
+  kind: "basic",
+  name: "BasicEscalationsReassignEscalationResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "escalations_reassign_escalation_result_v2_ref01"
+      }
+
+      m: {
+        escalation_id: "escalation01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicEscalationsReassignEscalationResultV2Flow"
+}

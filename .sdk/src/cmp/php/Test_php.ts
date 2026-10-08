@@ -1,18 +1,15 @@
 
-import {
-  KIT,
-  getModelPath
-} from '@voxgig/apidef'
-
 import type {
   ModelEntity
 } from '@voxgig/apidef'
 
-import { cmp, each, Folder, File, Content } from '@voxgig/sdkgen'
+import { cmp, each, Folder, File, Content, entityCollection,
+  TestControl } from '@voxgig/sdkgen'
 
 
 import { TestEntity } from './TestEntity_php'
 import { TestDirect } from './TestDirect_php'
+import { TestClean } from './TestClean_php'
 import { ReadmeExamplesTest } from './ReadmeExamplesTest_php'
 
 
@@ -21,6 +18,10 @@ const Test = cmp(function Test(props: any) {
   const { target } = props
 
   Folder({ name: 'test' }, () => {
+
+    // Write-once: a project's edited control file survives regeneration.
+    TestControl({ target, dir: 'test' })
+    TestClean({ target })
 
     // Generate exists test
     File({ name: 'ExistsTest.' + target.ext }, () => {
@@ -44,7 +45,10 @@ class ExistsTest extends TestCase
 `)
     })
 
-    each(model.main[KIT].entity, (entity: ModelEntity) => {
+    const entity = each(entityCollection(model))
+      .filter((e: any) => false !== e.active)
+
+    each(entity, (entity: ModelEntity) => {
       TestEntity({ target, entity })
       TestDirect({ target, entity })
     })

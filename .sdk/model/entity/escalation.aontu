@@ -4,83 +4,121 @@ main: kit: entity: escalation: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this escalation was created"
+      t: "`$STRING`"
     }
-    {
-      name: "creator"
-      req: true
-      type: "`$OBJECT`"
+    creator: {
+      h: "Creator"
+      n: "creator"
+      r: true
+      sh: "The creator of this escalation."
+      t: "`$OBJECT`"
     }
-    {
-      name: "description"
-      req: false
-      type: "`$STRING`"
+    description: {
+      h: "Description"
+      n: "description"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "Additional detail provided with this escalation."
+      t: "`$STRING`"
     }
-    {
-      name: "escalation_path_id"
-      req: false
-      type: "`$STRING`"
+    escalation_path_id: {
+      h: "Escalation Path Id"
+      n: "escalation_path_id"
+      r: false
+      sh: "Unique identifier of the escalation path that the escalation was created from"
+      t: "`$STRING`"
     }
-    {
-      name: "event"
-      req: true
-      type: "`$ARRAY`"
+    events: {
+      h: "Events"
+      n: "events"
+      r: true
+      sh: "Events which describe the history of this escalation."
+      t: "`$ARRAY`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique ID of the escalation"
+      t: "`$STRING`"
     }
-    {
-      name: "idempotency_key"
-      req: true
-      type: "`$STRING`"
+    idempotency_key: {
+      h: "Idempotency Key"
+      n: "idempotency_key"
+      r: true
+      sh: "Unique key to prevent duplicate escalations."
+      t: "`$STRING`"
     }
-    {
-      name: "incident_id"
-      req: false
-      type: "`$STRING`"
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: false
+      sh: "ID of an incident to associate with this escalation."
+      t: "`$STRING`"
     }
-    {
-      name: "priority"
-      req: true
-      type: "`$OBJECT`"
+    priority: {
+      h: "Priority"
+      n: "priority"
+      r: true
+      sh: "The priority associated with this escalation."
+      t: "`$OBJECT`"
     }
-    {
-      name: "related_alert"
-      req: true
-      type: "`$ARRAY`"
+    related_alerts: {
+      h: "Related Alerts"
+      n: "related_alerts"
+      r: true
+      sh: "Alerts related to this escalation"
+      t: "`$ARRAY`"
     }
-    {
-      name: "related_incident"
-      req: true
-      type: "`$ARRAY`"
+    related_incidents: {
+      h: "Related Incidents"
+      n: "related_incidents"
+      r: true
+      sh: "Incidents related to this escalation"
+      t: "`$ARRAY`"
     }
-    {
-      name: "status"
-      req: true
-      type: "`$STRING`"
+    status: {
+      h: "Status"
+      n: "status"
+      r: true
+      sh: "Status of the escalation"
+      t: "`$STRING`"
     }
-    {
-      name: "title"
-      req: true
-      type: "`$STRING`"
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      sh: "The title of this escalation"
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this escalation was last updated"
+      t: "`$STRING`"
     }
-    {
-      name: "user_id"
-      req: false
-      type: "`$ARRAY`"
+    user_ids: {
+      h: "User Ids"
+      n: "user_ids"
+      r: false
+      sh: "IDs of users to escalate directly to"
+      t: "`$ARRAY`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -93,13 +131,34 @@ main: kit: entity: escalation: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/escalations"
-          parts: [
-            "v2"
-            "escalations"
+          bf: [
+            "description"
+            "escalation_path_id"
+            "idempotency_key"
+            "incident_id"
+            "title"
+            "user_ids"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/escalations"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/escalations"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalations"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.escalation`"
           }
@@ -110,119 +169,132 @@ main: kit: entity: escalation: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/escalations"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "01J479052SSQAA4531ASFPR3BF"
                   ]
                 }
-                kind: "query"
-                name: "alert"
-                orig: "alert"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "alert"
+                or: "alert"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   gte: [
                     "2021-08-17"
                   ]
                 }
-                kind: "query"
-                name: "created_at"
-                orig: "created_at"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "created_at"
+                or: "created_at"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "01J479052SSQAA4531ASFPR3BF"
                   ]
                 }
-                kind: "query"
-                name: "escalation_path"
-                orig: "escalation_path"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "escalation_path"
+                or: "escalation_path"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   starts_with: [
                     "team-a:"
                   ]
                 }
-                kind: "query"
-                name: "idempotency_key"
-                orig: "idempotency_key"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "idempotency_key"
+                or: "idempotency_key"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: {
+                  one_of: [
+                    "01J479052SSQAA4531ASFPR3BF"
+                  ]
+                }
+                k: "query"
+                n: "incident"
+                or: "incident"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: {
                   one_of: [
                     "triggered"
                   ]
                 }
-                kind: "query"
-                name: "status"
-                orig: "status"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "status"
+                or: "status"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   gte: [
                     "2021-08-17"
                   ]
                 }
-                kind: "query"
-                name: "updated_at"
-                orig: "updated_at"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "updated_at"
+                or: "updated_at"
+                r: false
+                t: "`$OBJECT`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/escalations"
-          parts: [
-            "v2"
-            "escalations"
-          ]
-          select: {
-            exist: [
-              "after"
-              "alert"
-              "created_at"
-              "escalation_path"
-              "idempotency_key"
-              "page_size"
-              "status"
-              "updated_at"
-            ]
+          m: "GET"
+          o: "/v2/escalations"
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalations"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.escalations`"
           }
         }
       ]
@@ -231,31 +303,46 @@ main: kit: entity: escalation: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/escalations/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/escalations/{id}"
-          parts: [
-            "v2"
-            "escalations"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/escalations/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalations"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.escalation`"
           }

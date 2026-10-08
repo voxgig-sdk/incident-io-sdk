@@ -1,0 +1,88 @@
+{
+  "existing": {
+    "pay_config": {
+      "PAY_CONFIG00": {
+        "base_rate_cents": 110,
+        "created_at": "s6f",
+        "currency": "s70",
+        "id": "PAY_CONFIG00",
+        "name": "s72",
+        "one_off_rules": [],
+        "published_at": "s74",
+        "rate_time_unit": "s75",
+        "timezone": "s76",
+        "updated_at": "s77",
+        "weekly_rules": []
+      },
+      "PAY_CONFIG01": {
+        "base_rate_cents": 220,
+        "created_at": "sdd",
+        "currency": "sde",
+        "id": "PAY_CONFIG01",
+        "name": "se0",
+        "one_off_rules": [],
+        "published_at": "se2",
+        "rate_time_unit": "se3",
+        "timezone": "se4",
+        "updated_at": "se5",
+        "weekly_rules": []
+      },
+      "PAY_CONFIG02": {
+        "base_rate_cents": 330,
+        "created_at": "s14b",
+        "currency": "s14c",
+        "id": "PAY_CONFIG02",
+        "name": "s14e",
+        "one_off_rules": [],
+        "published_at": "s150",
+        "rate_time_unit": "s151",
+        "timezone": "s152",
+        "updated_at": "s153",
+        "weekly_rules": []
+      }
+    }
+  },
+  "new": {
+    "pay_config": {
+      "pay_config_ref01": {
+        "base_rate_cents": 440,
+        "created_at": "s1b9",
+        "currency": "s1ba",
+        "name": "s1bc",
+        "one_off_rules": [],
+        "published_at": "s1be",
+        "rate_time_unit": "s1bf",
+        "timezone": "s1c0",
+        "updated_at": "s1c1",
+        "weekly_rules": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/pay_configs": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/pay_configs": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/pay_configs/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/pay_configs/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/pay_configs/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

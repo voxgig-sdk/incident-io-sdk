@@ -8,7 +8,7 @@
         "id": "INCIDENT_TYPE00",
         "is_default": true,
         "name": "s5f",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "private_incidents_only": false,
         "updated_at": "s62"
       },
@@ -19,7 +19,7 @@
         "id": "INCIDENT_TYPE01",
         "is_default": true,
         "name": "sb9",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "private_incidents_only": false,
         "updated_at": "sbc"
       },
@@ -30,7 +30,7 @@
         "id": "INCIDENT_TYPE02",
         "is_default": true,
         "name": "s113",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "private_incidents_only": false,
         "updated_at": "s116"
       }
@@ -44,10 +44,22 @@
         "description": "s16a",
         "is_default": true,
         "name": "s16d",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "private_incidents_only": false,
         "updated_at": "s170"
       }
+    }
+  },
+  "requests": {
+    "GET /v1/incident_types": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/incident_types/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

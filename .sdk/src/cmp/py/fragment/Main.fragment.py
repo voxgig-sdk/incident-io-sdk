@@ -1,30 +1,36 @@
 # ProjectName SDK
 
-from utility.voxgig_struct import voxgig_struct as vs
-from core.utility_type import ProjectNameUtility
-from core.spec import ProjectNameSpec
-from core import helpers
+from projectname_sdk.utility.voxgig_struct import voxgig_struct as vs
+from projectname_sdk.core.utility_type import ProjectNameUtility
+from projectname_sdk.core.spec import ProjectNameSpec
+from projectname_sdk.core import helpers
+from projectname_sdk.utility.prepare_method import allowed
+from projectname_sdk.utility.result_body import unreadable_body
 
 # Load utility registration (populates Utility._registrar)
-from utility import register
+from projectname_sdk.utility import register
 
 # Load features
-from feature.base_feature import ProjectNameBaseFeature
-from features import _make_feature
+from projectname_sdk.feature.base_feature import ProjectNameBaseFeature
+from projectname_sdk.features import _has_feature, _make_feature
 
 
 class ProjectNameSDK:
+    # The options hold the credential. A slot keeps them reachable as
+    # `client.options` and out of `vars(client)` and every attribute dump;
+    # the dict entry keeps the instance open for everything else.
+    __slots__ = ("_options", "__dict__")
 
     def __init__(self, options=None):
         self.mode = "live"
         self.features = []
-        self.options = None
+        self._options = None
 
         utility = ProjectNameUtility()
         self._utility = utility
 
-        from config import make_config
-        config = make_config()
+        from projectname_sdk.config import shared_config
+        config = shared_config()
 
         self._rootctx = utility.make_context({
             "client": self,
@@ -46,21 +52,38 @@ class ProjectNameSDK:
         # `test` feature installs the base mock transport and the transport
         # features (retry/cache/netsim/proxy/ratelimit) wrap whatever is
         # current, so `test` must be added before them to sit at the base.
+        # Extension feature INSTANCES come from the RAW construction
+        # options - extend is consumed exactly once, here. make_options
+        # strips the key before cloning (vs.clone flattens arbitrary
+        # objects), so self.options never carries the instances.
         feature_opts = helpers.to_map(vs.getprop(self.options, "feature"))
+        extend = options.get("extend") if isinstance(options, dict) else None
+        if not isinstance(extend, list):
+            extend = []
         if feature_opts is not None:
             featureorder = vs.getpath(self.options, "__derived__.featureorder")
             if isinstance(featureorder, list):
                 for fname in featureorder:
                     fopts = helpers.to_map(feature_opts.get(fname))
                     if fopts is not None and fopts.get("active") is True:
+                        # An active name with no generated feature class is
+                        # legal when an extend-supplied instance carries that
+                        # name (station's adopt path): the instance is added
+                        # below, positioned by its own __after__ entry, so
+                        # skip it here rather than add a BaseFeature stray
+                        # that would silently shift feature positions.
+                        if not _has_feature(fname) and any(
+                            fname == (f.get("name") if isinstance(f, dict)
+                                      else getattr(f, "name", None))
+                            for f in extend
+                        ):
+                            continue
                         utility.feature_add(self._rootctx, _make_feature(fname))
 
         # Add extension features.
-        extend = vs.getprop(self.options, "extend")
-        if isinstance(extend, list):
-            for f in extend:
-                if isinstance(f, dict) or (hasattr(f, "get_name") and callable(f.get_name)):
-                    utility.feature_add(self._rootctx, f)
+        for f in extend:
+            if isinstance(f, dict) or (hasattr(f, "get_name") and callable(f.get_name)):
+                utility.feature_add(self._rootctx, f)
 
         # Initialize features.
         for f in self.features:
@@ -69,6 +92,17 @@ class ProjectNameSDK:
         utility.feature_hook(self._rootctx, "PostConstruct")
 
         # #BuildFeatures
+
+    @property
+    def options(self):
+        return self._options
+
+    @options.setter
+    def options(self, value):
+        self._options = value
+
+    def __repr__(self):
+        return "ProjectNameSDK(mode=" + repr(self.mode) + ")"
 
     def options_map(self):
         out = vs.clone(self.options)
@@ -82,6 +116,7 @@ class ProjectNameSDK:
     def get_root_ctx(self):
         return self._rootctx
 
+    # #SecretsAccessor
     def prepare(self, fetchargs=None):
         utility = self._utility
 
@@ -97,6 +132,7 @@ class ProjectNameSDK:
             "ctrl": ctrl,
         }, self._rootctx)
 
+        # #SecretsResolve
         options = self.options
 
         path = vs.getprop(fetchargs, "path") or ""
@@ -106,6 +142,13 @@ class ProjectNameSDK:
         method = vs.getprop(fetchargs, "method") or "GET"
         if not isinstance(method, str):
             method = "GET"
+        method = method.upper()
+
+        allow_method = vs.getpath(options, "allow.method")
+        if not allowed(allow_method, method):
+            raise ctx.make_error("spec_method_allow",
+                'Method "' + method +
+                '" not allowed by SDK option allow.method value: "' + str(allow_method) + '"')
 
         params = helpers.to_map(vs.getprop(fetchargs, "params"))
         if params is None:
@@ -155,7 +198,33 @@ class ProjectNameSDK:
 
         return fetchdef
 
+    # Raw endpoint access is operator-controllable, like every entity op.
+    # Blocking it means denying BOTH the 'direct' and 'graphql' tokens, since
+    # either one reaches the same endpoint.
     def direct(self, fetchargs=None):
+        if not self._op_allowed("direct"):
+            return self._op_denied("direct")
+
+        return self._raw_request(fetchargs)
+
+    # Is this raw-access op permitted by the SDK's allow.op option?
+    def _op_allowed(self, op):
+        return allowed(vs.getpath(self.options, "allow.op"), op)
+
+    def _op_denied(self, op):
+        allow_op = vs.getpath(self.options, "allow.op")
+        return {
+            "ok": False,
+            "err": Exception(
+                "ProjectNameSDK: " + op + ": operation not allowed by"
+                ' SDK option allow.op value: "' + str(allow_op) + '"'),
+        }
+
+    # Ungated request path shared by direct and graphql, each of which checks
+    # its own allow.op token first. Private, rather than a flag on fetchargs:
+    # a caller-supplied marker would let anyone opt straight back out of the
+    # gate by passing it.
+    def _raw_request(self, fetchargs=None):
         utility = self._utility
 
         try:
@@ -163,7 +232,8 @@ class ProjectNameSDK:
         except Exception as err:
             # direct() is the raw-HTTP escape hatch: it never raises, it
             # returns a result object callers branch on via result["ok"].
-            return {"ok": False, "err": err}
+            # That error never passes through make_error, so it is cleaned.
+            return {"ok": False, "err": utility.clean(self._rootctx, err)}
 
         if fetchargs is None:
             fetchargs = {}
@@ -180,7 +250,7 @@ class ProjectNameSDK:
         fetched, fetch_err = utility.fetcher(ctx, url, fetchdef)
 
         if fetch_err is not None:
-            return {"ok": False, "err": fetch_err}
+            return {"ok": False, "err": utility.clean(ctx, fetch_err)}
 
         if fetched is None:
             return {
@@ -200,6 +270,7 @@ class ProjectNameSDK:
             no_body = status in (204, 304) or str(content_length) == "0"
 
             json_data = None
+            body_err = None
             if not no_body:
                 jf = vs.getprop(fetched, "json")
                 if callable(jf):
@@ -209,18 +280,67 @@ class ProjectNameSDK:
                         # Non-JSON body (e.g. text/plain, text/html). Surface
                         # status + headers but leave data as None.
                         json_data = None
+                if vs.getprop(fetched, "unreadable") is True:
+                    failed = None if 200 <= status < 300 else ctx.make_error(
+                        "request_status",
+                        "request: " + str(status) + ": " + str(vs.getprop(fetched, "statusText")))
+                    body_err = unreadable_body(ctx, status, headers, vs.getprop(fetched, "body"),
+                                               fetchdef.get("headers"), failed)
 
-            return {
-                "ok": status >= 200 and status < 300,
+            out = {
+                "ok": body_err is None and status >= 200 and status < 300,
                 "status": status,
                 "headers": headers,
                 "data": json_data,
             }
+            if body_err is not None:
+                out["err"] = utility.clean(ctx, body_err)
+            return out
 
         return {
             "ok": False,
             "err": ctx.make_error("direct_invalid", "invalid response type"),
         }
+
+    # Raw GraphQL access: the pressure valve that makes the generated
+    # surface's deliberate omissions (per-call selection sets, typed filter
+    # builders, batching, subscriptions) livable — the whole schema stays
+    # reachable.
+    #
+    # Thin wrapper over the same prepare/fetch path direct uses, with the one
+    # thing raw direct cannot do for GraphQL: a GraphQL failure rides HTTP 200
+    # as a top-level `errors` array, so status alone would report a failed
+    # query as ok.
+    #
+    # NOTE: like direct, this bypasses the feature pipeline — no retry,
+    # ratelimit or paging features apply.
+    def graphql(self, query, variables=None, ctrl=None):
+        if not self._op_allowed("graphql"):
+            return self._op_denied("graphql")
+
+        res = self._raw_request({
+            "method": "POST",
+            "headers": {"content-type": "application/json"},
+            "body": {"query": query, "variables": variables or {}},
+            "ctrl": ctrl or {},
+        })
+
+        # Errors are read BEFORE any status check: a GraphQL parse or
+        # validation failure comes back as HTTP 400 carrying the standard
+        # { errors: [...] } body, and the raw path represents a non-2xx as
+        # ok:False with no err — so returning early on status would discard
+        # the server's own diagnostics, which are the only useful part of
+        # that response.
+        errors = vs.getpath(res, "data.errors")
+
+        if isinstance(errors, list) and 0 < len(errors):
+            first = errors[0] if isinstance(errors[0], dict) else {}
+            msg = first.get("message") or "graphql error"
+            res["ok"] = False
+            res["err"] = Exception("ProjectNameSDK: graphql: " + str(msg))
+            res["graphql"] = errors
+
+        return res
 
     # <[SLOT]>
 

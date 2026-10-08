@@ -1,0 +1,90 @@
+{
+  "existing": {
+    "call_route": {
+      "CALL_ROUTE00": {
+        "allowed_callers": [],
+        "country_code": "s8d",
+        "created_at": "s8e",
+        "current_state": "s8f",
+        "custom_language": "s90",
+        "id": "CALL_ROUTE00",
+        "name": "s92",
+        "options": [],
+        "path": [],
+        "phone_number": "s95",
+        "phone_number_type": "s96",
+        "responder_caller_id": "RESPONDER_CALLER01",
+        "updated_at": "s98",
+        "use_caller_allowlist": false
+      },
+      "CALL_ROUTE01": {
+        "allowed_callers": [],
+        "country_code": "s119",
+        "created_at": "s11a",
+        "current_state": "s11b",
+        "custom_language": "s11c",
+        "id": "CALL_ROUTE01",
+        "name": "s11e",
+        "options": [],
+        "path": [],
+        "phone_number": "s121",
+        "phone_number_type": "s122",
+        "responder_caller_id": "RESPONDER_CALLER01",
+        "updated_at": "s124",
+        "use_caller_allowlist": false
+      },
+      "CALL_ROUTE02": {
+        "allowed_callers": [],
+        "country_code": "s1a5",
+        "created_at": "s1a6",
+        "current_state": "s1a7",
+        "custom_language": "s1a8",
+        "id": "CALL_ROUTE02",
+        "name": "s1aa",
+        "options": [],
+        "path": [],
+        "phone_number": "s1ad",
+        "phone_number_type": "s1ae",
+        "responder_caller_id": "RESPONDER_CALLER01",
+        "updated_at": "s1b0",
+        "use_caller_allowlist": false
+      }
+    }
+  },
+  "new": {
+    "call_route": {
+      "call_route_ref01": {
+        "allowed_callers": [],
+        "country_code": "s231",
+        "created_at": "s232",
+        "current_state": "s233",
+        "custom_language": "s234",
+        "name": "s236",
+        "options": [],
+        "path": [],
+        "phone_number": "s239",
+        "phone_number_type": "s23a",
+        "responder_caller_id": "RESPONDER_CALLER01",
+        "updated_at": "s23c",
+        "use_caller_allowlist": false
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/call_routes": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/call_routes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/call_routes/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

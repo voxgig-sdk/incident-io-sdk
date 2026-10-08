@@ -4,73 +4,140 @@ main: kit: entity: schedule: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "annotation"
-      req: true
-      type: "`$OBJECT`"
+  fields: {
+    annotations: {
+      h: "Annotations"
+      n: "annotations"
+      op: {
+        create: {
+          req: false
+          type: "`$OBJECT`"
+        }
+        update: {
+          req: false
+          type: "`$OBJECT`"
+        }
+      }
+      r: true
+      sh: "Annotations that track metadata about this resource"
+      t: "`$OBJECT`"
     }
-    {
-      name: "config"
-      req: true
-      type: "`$OBJECT`"
+    config: {
+      h: "Config"
+      n: "config"
+      op: {
+        create: {
+          req: false
+          type: "`$OBJECT`"
+        }
+        update: {
+          req: false
+          type: "`$OBJECT`"
+        }
+      }
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      t: "`$STRING`"
     }
-    {
-      name: "current_shift"
-      req: false
-      type: "`$ARRAY`"
+    current_shifts: {
+      h: "Current Shifts"
+      n: "current_shifts"
+      r: false
+      sh: "Shifts that are ongoing for this schedule"
+      t: "`$ARRAY`"
     }
-    {
-      name: "holidays_public_config"
-      req: true
-      type: "`$OBJECT`"
+    holidays_public_config: {
+      h: "Holidays Public Config"
+      n: "holidays_public_config"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique internal ID of the schedule"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+        update: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "Human readable name synced from external provider"
+      t: "`$STRING`"
     }
-    {
-      name: "next_shift"
-      req: false
-      type: "`$ARRAY`"
+    next_shifts: {
+      h: "Next Shifts"
+      n: "next_shifts"
+      r: false
+      sh: "The shifts after the next changeover."
+      t: "`$ARRAY`"
     }
-    {
-      name: "permalink"
-      req: true
-      type: "`$STRING`"
+    permalink: {
+      h: "Permalink"
+      n: "permalink"
+      r: true
+      sh: "A permanent link to this schedule in the incident.io dashboard"
+      t: "`$STRING`"
     }
-    {
-      name: "schedule"
-      req: true
-      type: "`$OBJECT`"
+    team_ids: {
+      h: "Team Ids"
+      n: "team_ids"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "IDs of teams that own this schedule"
+      t: "`$ARRAY`"
     }
-    {
-      name: "team_id"
-      req: true
-      type: "`$ARRAY`"
+    timezone: {
+      h: "Timezone"
+      n: "timezone"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+        update: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "Timezone of the schedule, as interpreted at the point of generating the report"
+      t: "`$STRING`"
     }
-    {
-      name: "timezone"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
-    }
-  ]
+  }
 
   id: {
     field: "id"
@@ -83,13 +150,34 @@ main: kit: entity: schedule: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/schedules"
-          parts: [
-            "v2"
-            "schedules"
+          bf: [
+            "annotations"
+            "config"
+            "holidays_public_config"
+            "name"
+            "team_ids"
+            "timezone"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/schedules"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/schedules"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+          ]
+          t: {
             req: {
               schedule: "`reqdata`"
             }
@@ -102,41 +190,48 @@ main: kit: entity: schedule: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedules"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedules"
-          parts: [
-            "v2"
-            "schedules"
-          ]
-          select: {
-            exist: [
-              "after"
-              "page_size"
-            ]
+          m: "GET"
+          o: "/v2/schedules"
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.schedules`"
           }
         }
       ]
@@ -145,31 +240,46 @@ main: kit: entity: schedule: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/schedules/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/schedules/{id}"
-          parts: [
-            "v2"
-            "schedules"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/schedules/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.schedule`"
           }
@@ -180,31 +290,42 @@ main: kit: entity: schedule: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v2/schedules/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/schedules/{id}"
-          parts: [
-            "v2"
-            "schedules"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/schedules/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -215,31 +336,54 @@ main: kit: entity: schedule: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "annotations"
+            "config"
+            "holidays_public_config"
+            "name"
+            "team_ids"
+            "timezone"
+          ]
+          co: {
+            id: "PUT /v2/schedules/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01G0J1EXE7AXZ2C93K61WBPYEH"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/schedules/{id}"
-          parts: [
-            "v2"
-            "schedules"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/schedules/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: {
               schedule: "`reqdata`"
             }

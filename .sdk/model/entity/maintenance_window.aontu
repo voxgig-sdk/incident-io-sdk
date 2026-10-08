@@ -4,74 +4,112 @@ main: kit: entity: maintenance_window: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "alert_condition_group"
-      req: true
-      type: "`$ARRAY`"
+  fields: {
+    alert_condition_groups: {
+      h: "Alert Condition Groups"
+      n: "alert_condition_groups"
+      r: true
+      sh: "Condition groups that determine which alerts this maintenance window applies to"
+      t: "`$ARRAY`"
     }
-    {
-      name: "archived_at"
-      req: false
-      type: "`$STRING`"
+    archived_at: {
+      fo: "date-time"
+      h: "Archived At"
+      n: "archived_at"
+      r: false
+      sh: "When this maintenance window was archived, if it has been"
+      t: "`$STRING`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this maintenance window was created"
+      t: "`$STRING`"
     }
-    {
-      name: "end_at"
-      req: true
-      type: "`$STRING`"
+    end_at: {
+      fo: "date-time"
+      h: "End At"
+      n: "end_at"
+      r: true
+      sh: "When the maintenance window ends"
+      t: "`$STRING`"
     }
-    {
-      name: "escalation_target"
-      req: false
-      type: "`$ARRAY`"
+    escalation_targets: {
+      h: "Escalation Targets"
+      n: "escalation_targets"
+      r: false
+      sh: "If set, alerts matching this window will be escalated to these targets"
+      t: "`$ARRAY`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this maintenance window"
+      t: "`$STRING`"
     }
-    {
-      name: "incident_id"
-      req: false
-      type: "`$STRING`"
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: false
+      sh: "If set, alerts matching this window will be automatically attached to this incident"
+      t: "`$STRING`"
     }
-    {
-      name: "lead"
-      req: true
-      type: "`$OBJECT`"
+    lead: {
+      h: "Lead"
+      n: "lead"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name for the maintenance window"
+      t: "`$STRING`"
     }
-    {
-      name: "notification_message"
-      req: false
-      type: "`$STRING`"
+    notification_message: {
+      h: "Notification Message"
+      n: "notification_message"
+      r: false
+      sh: "Custom message included in notifications about this maintenance window"
+      t: "`$STRING`"
     }
-    {
-      name: "notify_channel"
-      req: false
-      type: "`$ARRAY`"
+    notify_channels: {
+      h: "Notify Channels"
+      n: "notify_channels"
+      r: false
+      sh: "Channels to notify about the maintenance window starting and ending"
+      t: "`$ARRAY`"
     }
-    {
-      name: "notify_end_minutes_before"
-      req: false
-      type: "`$INTEGER`"
+    notify_end_minutes_before: {
+      fo: "int64"
+      h: "Notify End Minutes Before"
+      n: "notify_end_minutes_before"
+      r: false
+      sh: "Minutes before the end to send a notification to the configured channels"
+      t: "`$INTEGER`"
     }
-    {
-      name: "notify_start_minutes_before"
-      req: false
-      type: "`$INTEGER`"
+    notify_start_minutes_before: {
+      fo: "int64"
+      h: "Notify Start Minutes Before"
+      n: "notify_start_minutes_before"
+      r: false
+      sh: "Minutes before the start to send a notification to the configured channels"
+      t: "`$INTEGER`"
     }
-    {
-      name: "reroute_on_end"
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      r: false
+      sh: "IDs of teams that own this maintenance window."
+      t: "`$ARRAY`"
+    }
+    reroute_on_end: {
+      h: "Reroute On End"
+      n: "reroute_on_end"
       op: {
         create: {
           req: false
@@ -82,11 +120,13 @@ main: kit: entity: maintenance_window: {
           type: "`$BOOLEAN`"
         }
       }
-      req: true
-      type: "`$BOOLEAN`"
+      r: true
+      sh: "Whether to retrigger firing alerts through alert routing when the window ends"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "resolve_on_end"
+    resolve_on_end: {
+      h: "Resolve On End"
+      n: "resolve_on_end"
       op: {
         create: {
           req: false
@@ -97,25 +137,34 @@ main: kit: entity: maintenance_window: {
           type: "`$BOOLEAN`"
         }
       }
-      req: true
-      type: "`$BOOLEAN`"
+      r: true
+      sh: "Whether to automatically resolve all firing alerts that matched this window when it ends"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "show_in_sidebar"
-      req: true
-      type: "`$BOOLEAN`"
+    show_in_sidebar: {
+      h: "Show In Sidebar"
+      n: "show_in_sidebar"
+      r: true
+      sh: "Whether to show this maintenance window in the dashboard sidebar when active"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "start_at"
-      req: true
-      type: "`$STRING`"
+    start_at: {
+      fo: "date-time"
+      h: "Start At"
+      n: "start_at"
+      r: true
+      sh: "When the maintenance window starts"
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this maintenance window was last updated"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -128,13 +177,43 @@ main: kit: entity: maintenance_window: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v1/maintenance_windows"
-          parts: [
-            "v1"
-            "maintenance_windows"
+          bf: [
+            "alert_condition_groups"
+            "end_at"
+            "escalation_targets"
+            "incident_id"
+            "lead"
+            "name"
+            "notification_message"
+            "notify_channels"
+            "notify_end_minutes_before"
+            "notify_start_minutes_before"
+            "owning_team_ids"
+            "reroute_on_end"
+            "resolve_on_end"
+            "show_in_sidebar"
+            "start_at"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/maintenance_windows"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/maintenance_windows"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "maintenance_windows"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.maintenance_window`"
           }
@@ -145,50 +224,56 @@ main: kit: entity: maintenance_window: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/maintenance_windows"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
               {
-                example: "active"
-                kind: "query"
-                name: "status"
-                orig: "status"
-                reqd: false
-                type: "`$STRING`"
+                ex: "active"
+                k: "query"
+                n: "status"
+                or: "status"
+                r: false
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/maintenance_windows"
-          parts: [
-            "v1"
-            "maintenance_windows"
+          m: "GET"
+          o: "/v1/maintenance_windows"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "maintenance_windows"
+            }
           ]
-          select: {
-            exist: [
-              "after"
-              "page_size"
-              "status"
-            ]
-          }
-          transform: {
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.maintenance_windows`"
           }
         }
       ]
@@ -197,31 +282,46 @@ main: kit: entity: maintenance_window: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/maintenance_windows/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/maintenance_windows/{id}"
-          parts: [
-            "v1"
-            "maintenance_windows"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/maintenance_windows/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "maintenance_windows"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.maintenance_window`"
           }
@@ -232,31 +332,52 @@ main: kit: entity: maintenance_window: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v1/maintenance_windows/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: true
+                k: "query"
+                n: "force"
+                or: "force"
+                r: false
+                t: "`$BOOLEAN`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v1/maintenance_windows/{id}"
-          parts: [
-            "v1"
-            "maintenance_windows"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v1/maintenance_windows/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "maintenance_windows"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -267,31 +388,63 @@ main: kit: entity: maintenance_window: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "alert_condition_groups"
+            "end_at"
+            "escalation_targets"
+            "incident_id"
+            "lead"
+            "name"
+            "notification_message"
+            "notify_channels"
+            "notify_end_minutes_before"
+            "notify_start_minutes_before"
+            "owning_team_ids"
+            "reroute_on_end"
+            "resolve_on_end"
+            "show_in_sidebar"
+            "start_at"
+          ]
+          co: {
+            id: "PUT /v1/maintenance_windows/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v1/maintenance_windows/{id}"
-          parts: [
-            "v1"
-            "maintenance_windows"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v1/maintenance_windows/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "maintenance_windows"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.maintenance_window`"
           }

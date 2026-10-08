@@ -1,0 +1,361 @@
+# Entity: policy
+
+main: kit: entity: policy: {
+
+  alias: field: {}
+
+  fields: {
+    assignment_rules: {
+      h: "Assignment Rules"
+      n: "assignment_rules"
+      r: true
+      t: "`$OBJECT`"
+    }
+    conditions: {
+      h: "Conditions"
+      n: "conditions"
+      r: true
+      sh: "Conditions which determine which resources are in scope for this policy"
+      t: "`$ARRAY`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      t: "`$STRING`"
+    }
+    debrief: {
+      h: "Debrief"
+      n: "debrief"
+      r: true
+      sh: "Set when policy_type is debrief."
+      t: "`$OBJECT`"
+    }
+    description: {
+      h: "Description"
+      n: "description"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+        update: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      r: false
+      sh: "Human readable description of the policy"
+      t: "`$STRING`"
+    }
+    expressions: {
+      h: "Expressions"
+      n: "expressions"
+      r: false
+      sh: "The expressions relating to this policy"
+      t: "`$ARRAY`"
+    }
+    follow_up: {
+      h: "Follow Up"
+      n: "follow_up"
+      r: true
+      sh: "Set when policy_type is follow_up."
+      t: "`$OBJECT`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique ID of the policy"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name of the policy"
+      t: "`$STRING`"
+    }
+    on_call_readiness: {
+      h: "On Call Readiness"
+      n: "on_call_readiness"
+      r: false
+      sh: "Set when policy_type is on_call_readiness."
+      t: "`$OBJECT`"
+    }
+    policy_type: {
+      h: "Policy Type"
+      n: "policy_type"
+      r: true
+      sh: "Type of the policy, specifying what this applies to"
+      t: "`$STRING`"
+    }
+    post_mortem: {
+      h: "Post Mortem"
+      n: "post_mortem"
+      r: true
+      sh: "Set when policy_type is post_mortem."
+      t: "`$OBJECT`"
+    }
+    schedule: {
+      h: "Schedule"
+      n: "schedule"
+      r: true
+      sh: "Detects gaps in on-call coverage."
+      t: "`$OBJECT`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+        update: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "Disabled policies stop evaluating but keep their config"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "policy"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "assignment_rules"
+            "conditions"
+            "debrief"
+            "description"
+            "expressions"
+            "follow_up"
+            "name"
+            "on_call_readiness"
+            "policy_type"
+            "post_mortem"
+            "schedule"
+            "status"
+          ]
+          co: {
+            id: "POST /v2/policies"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/policies"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "policies"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.policy`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/policies"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: "follow_up"
+                k: "query"
+                n: "policy_type"
+                or: "policy_type"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/policies"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "policies"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.policies`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/policies/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/policies/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "policies"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.policy`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "assignment_rules"
+            "conditions"
+            "debrief"
+            "description"
+            "expressions"
+            "follow_up"
+            "name"
+            "on_call_readiness"
+            "policy_type"
+            "post_mortem"
+            "schedule"
+            "status"
+          ]
+          co: {
+            id: "PUT /v2/policies/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/policies/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "policies"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.policy`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

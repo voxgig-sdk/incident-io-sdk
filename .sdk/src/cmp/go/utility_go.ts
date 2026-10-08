@@ -5,7 +5,9 @@ import * as Path from 'node:path'
 import {
   camelify,
   canonKey,
+  canonScalarKey,
   each,
+  opParams,
   exampleVarName,
   names,
 } from '@voxgig/sdkgen'
@@ -21,31 +23,21 @@ function projectPath(suffix?: string): string {
 }
 
 
-// --- Model-driven example literals -----------------------------------------
-// Doc snippets must use example values whose TYPE matches the model's
-// declared param/field type — a number id shown as a quoted string documents
-// a call the API would reject. These helpers derive the example literal from
-// the SAME model source the request shapes are built from (opRequestShape),
-// so the docs and the model can never disagree. Go twin of the ts
-// exampleValue (cmp/ts/utility_ts.ts), rendering Go literals.
 
 // The declared canon-type sentinel of a named parameter of an op — looked up
-// in the op's `points[].args.params[]` exactly as the typed-model generator
+// in the op's `points[].g.params[]` exactly as the typed-model generator
 // does. Falls back to the entity field of the same name (used when the op
 // has no params and the request shape mirrors the entity fields). Returns
 // undefined when neither is present.
 function paramCanonType(entity: any, op: any, paramName: string): unknown {
-  const points = op && op.points ? each(op.points) : []
-  for (const pt of points as any[]) {
-    const params = pt && pt.args && pt.args.params ? each(pt.args.params) : []
-    const found = (params as any[]).find((p: any) => p && p.name === paramName)
-    if (found) {
-      return found.type
-    }
+  const params = op ? each(opParams(op)) : []
+  const found = (params as any[]).find((p: any) => p && p.n === paramName)
+  if (found) {
+    return found.t
   }
   const field = (entity && entity.fields ? each(entity.fields) : [])
-    .find((f: any) => f && f.name === paramName) as any
-  return field && field.type
+    .find((f: any) => f && f.n === paramName) as any
+  return field && field.t
 }
 
 
@@ -55,7 +47,12 @@ function paramCanonType(entity: any, op: any, paramName: string): unknown {
 // the empty `map[string]any{}`, everything else (STRING, unknown, missing)
 // as the quoted `placeholder`.
 function exampleValue(entity: any, op: any, paramName: string, placeholder: string): string {
-  const key = canonKey(paramCanonType(entity, op, paramName))
+  // canonScalarKey, not canonKey: a nullable field's sentinel is the union
+  // ['`$ONE`', ['`$NUMBER`','`$NULL`']], which canonKey stringifies into
+  // nothing recognizable — so a `number | null` id fell through to the
+  // quoted placeholder and the example failed to compile against the type
+  // generated from that very sentinel.
+  const key = canonScalarKey(paramCanonType(entity, op, paramName))
   if ('INTEGER' === key || 'NUMBER' === key) {
     return '1'
   }
@@ -68,17 +65,15 @@ function exampleValue(entity: any, op: any, paramName: string, placeholder: stri
   if ('OBJECT' === key) {
     return 'map[string]any{}'
   }
-  return `"${placeholder}"`
+  if ('NULL' === key) {
+    return 'nil'
+  }
+  return formatGoString(placeholder)
 }
 
 
-// A camelCase Go identifier for a snake_case model name
-// (`status_embed_config` -> `statusEmbedConfig`) — Go variables are
-// camelCase, never snake_case — with the reserved-word guard applied (a
-// `type`/`range` entity must not bind a Go keyword).
 function goVarName(name: string): string {
   const pascal = camelify(name)
-  // exampleVarName also guards `client`, the doc examples' SDK-instance var.
   return exampleVarName(pascal.charAt(0).toLowerCase() + pascal.slice(1), 'go')
 }
 
@@ -105,7 +100,7 @@ function formatGoMap(obj: any, indent: number = 0): string {
       return 'map[string]any{}'
     }
     const items = entries
-      .map(([k, v]) => `${padInner}"${k}": ${formatGoValue(v, indent + 1)}`)
+      .map(([k, v]) => `${padInner}${formatGoString(k)}: ${formatGoValue(v, indent + 1)}`)
       .join(',\n')
     return `map[string]any{\n${items},\n${pad}}`
   }
@@ -114,12 +109,17 @@ function formatGoMap(obj: any, indent: number = 0): string {
 }
 
 
+function formatGoString(value: string): string {
+  return JSON.stringify(value).replace(/\uFEFF/g, '\\ufeff')
+}
+
+
 function formatGoValue(val: any, indent: number = 0): string {
   if (val === null || val === undefined) {
     return 'nil'
   }
   if (typeof val === 'string') {
-    return `"${val.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`
+    return formatGoString(val)
   }
   if (typeof val === 'number') {
     if (Number.isInteger(val)) {
@@ -140,31 +140,41 @@ function formatGoValue(val: any, indent: number = 0): string {
 }
 
 
-function clean(o: any) {
-  return walk(clone(o), (k: any, v: any, p: any) => {
-    if (null != k && k.endsWith('$')) {
-      delete p[k]
+const MODEL_META = ['index$', 'key$', 'val$']
+
+const CONFIG_DEFAULT: Record<string, any> = {
+  active: true,
+  req: false,
+  reqd: false,
+}
+
+const PAYLOAD_KEYS = ['default', 'example', 'examples']
+
+function clean(o: any, dropDefaults?: boolean): any {
+  const prune = (node: any, defaults: boolean): any => {
+    if (Array.isArray(node)) {
+      return node.map((n: any) => prune(n, defaults))
     }
-    return v
-  })
+    if (null != node && 'object' === typeof node) {
+      const out: any = {}
+      for (const k of Object.keys(node)) {
+        if (MODEL_META.includes(k)) {
+          continue
+        }
+        if (defaults && k in CONFIG_DEFAULT && CONFIG_DEFAULT[k] === node[k]) {
+          continue
+        }
+        out[k] = prune(node[k], defaults && !PAYLOAD_KEYS.includes(k))
+      }
+      return out
+    }
+    return node
+  }
+  return prune(o, true === dropDefaults)
 }
 
 
 
-// The Go identifier fragment for a feature's generated constructor
-// (New<Fname>Feature / New<Fname>FeatureFunc).
-//
-// SHARED because the identifier is DECLARED in Main_go.ts (registry.go and the
-// root init()) and REFERENCED in Config_go.ts (makeFeature). Two copies of the
-// derivation is a latent undefined-identifier bug in the generated SDK: they
-// were both `name.charAt(0).toUpperCase() + name.slice(1)`, consistently wrong
-// for a name needing real normalisation but at least agreeing, until one side
-// was fixed alone and `rate_limit` became NewRateLimitFeatureFunc in the
-// registry and NewRate_limitFeatureFunc in config.
-//
-// Uses the jostraca-derived PascalCase `Name` (deriving it if absent), which is
-// what Main_ts.ts uses, so a hyphenated or underscored feature name yields a
-// legal Go identifier instead of `NewRate-limitFeatureFunc`.
 function goFeatureName(feat: any): string {
   if (null == feat.Name) {
     names(feat, feat.name)
@@ -178,6 +188,7 @@ export {
   clean,
   exampleValue,
   formatGoMap,
+  formatGoString,
   formatGoValue,
   goVarName,
   projectPath,

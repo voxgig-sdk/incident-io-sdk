@@ -1,0 +1,276 @@
+# Entity: call_route
+
+main: kit: entity: call_route: {
+
+  alias: field: {}
+
+  fields: {
+    allowed_callers: {
+      h: "Allowed Callers"
+      n: "allowed_callers"
+      r: true
+      sh: "The numbers allowed to call this route."
+      t: "`$ARRAY`"
+    }
+    country_code: {
+      h: "Country Code"
+      n: "country_code"
+      r: false
+      sh: "The country this route's number belongs to"
+      t: "`$STRING`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      t: "`$STRING`"
+    }
+    current_state: {
+      h: "Current State"
+      n: "current_state"
+      r: true
+      sh: "Where this route is in provisioning."
+      t: "`$STRING`"
+    }
+    custom_language: {
+      h: "Custom Language"
+      n: "custom_language"
+      r: true
+      sh: "The language we speak voice prompts in, via text-to-speech"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this call route"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Name for this call route"
+      t: "`$STRING`"
+    }
+    options: {
+      h: "Options"
+      n: "options"
+      r: true
+      sh: "The phone-tree menu this route presents."
+      t: "`$ARRAY`"
+    }
+    path: {
+      h: "Path"
+      n: "path"
+      r: true
+      sh: "Who we page when a call comes in."
+      t: "`$ARRAY`"
+    }
+    phone_number: {
+      h: "Phone Number"
+      n: "phone_number"
+      r: false
+      sh: "The number your customers call to reach this route, once one has been provisioned"
+      t: "`$STRING`"
+    }
+    phone_number_type: {
+      h: "Phone Number Type"
+      n: "phone_number_type"
+      r: false
+      sh: "The type of phone number, which determines the regulatory requirements for provisioning it"
+      t: "`$STRING`"
+    }
+    responder_caller_id: {
+      h: "Responder Caller Id"
+      n: "responder_caller_id"
+      r: true
+      sh: "Which number responders see when we call them: * route_number: this route's own number * oncall_number: an incident.io on-call number"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      t: "`$STRING`"
+    }
+    use_caller_allowlist: {
+      h: "Use Caller Allowlist"
+      n: "use_caller_allowlist"
+      r: true
+      sh: "Whether this route only answers calls from its allowed callers"
+      t: "`$BOOLEAN`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "call_route"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/call_routes"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/call_routes"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "call_routes"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.call_routes`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/call_routes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/call_routes/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "call_routes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.call_route`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "custom_language"
+            "name"
+            "path"
+            "responder_caller_id"
+            "use_caller_allowlist"
+          ]
+          co: {
+            id: "PUT /v2/call_routes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/call_routes/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "call_routes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.call_route`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

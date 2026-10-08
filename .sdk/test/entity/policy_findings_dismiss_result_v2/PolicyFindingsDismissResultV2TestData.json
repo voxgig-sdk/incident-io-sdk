@@ -1,0 +1,103 @@
+{
+  "existing": {
+    "policy_findings_dismiss_result_v2": {
+      "POLICY_FINDINGS_DISMISS_RESULT_V200": {
+        "created_at": "sbe",
+        "days": 191,
+        "debrief": {},
+        "dismissal": {},
+        "due_at": "sc2",
+        "follow_up": {},
+        "id": "POLICY_FINDINGS_DISMISS_RESULT_V200",
+        "last_checked_at": "sc5",
+        "on_call_readiness": {},
+        "policy_id": "POLICY01",
+        "policy_type": "sc8",
+        "post_mortem": {},
+        "reason": "sca",
+        "responsible_users": [],
+        "schedule": {},
+        "shift_conflict": {},
+        "state": "sce",
+        "updated_at": "scf",
+        "vacation_conflict": {},
+        "policy_finding_id": "POLICY_FINDING01"
+      },
+      "POLICY_FINDINGS_DISMISS_RESULT_V201": {
+        "created_at": "s17c",
+        "days": 381,
+        "debrief": {},
+        "dismissal": {},
+        "due_at": "s180",
+        "follow_up": {},
+        "id": "POLICY_FINDINGS_DISMISS_RESULT_V201",
+        "last_checked_at": "s183",
+        "on_call_readiness": {},
+        "policy_id": "POLICY01",
+        "policy_type": "s186",
+        "post_mortem": {},
+        "reason": "s188",
+        "responsible_users": [],
+        "schedule": {},
+        "shift_conflict": {},
+        "state": "s18c",
+        "updated_at": "s18d",
+        "vacation_conflict": {},
+        "policy_finding_id": "POLICY_FINDING01"
+      },
+      "POLICY_FINDINGS_DISMISS_RESULT_V202": {
+        "created_at": "s23a",
+        "days": 571,
+        "debrief": {},
+        "dismissal": {},
+        "due_at": "s23e",
+        "follow_up": {},
+        "id": "POLICY_FINDINGS_DISMISS_RESULT_V202",
+        "last_checked_at": "s241",
+        "on_call_readiness": {},
+        "policy_id": "POLICY01",
+        "policy_type": "s244",
+        "post_mortem": {},
+        "reason": "s246",
+        "responsible_users": [],
+        "schedule": {},
+        "shift_conflict": {},
+        "state": "s24a",
+        "updated_at": "s24b",
+        "vacation_conflict": {},
+        "policy_finding_id": "POLICY_FINDING01"
+      }
+    }
+  },
+  "new": {
+    "policy_findings_dismiss_result_v2": {
+      "policy_findings_dismiss_result_v2_ref01": {
+        "created_at": "s2f8",
+        "days": 761,
+        "debrief": {},
+        "dismissal": {},
+        "due_at": "s2fc",
+        "follow_up": {},
+        "last_checked_at": "s2ff",
+        "on_call_readiness": {},
+        "policy_id": "POLICY01",
+        "policy_type": "s302",
+        "post_mortem": {},
+        "reason": "s304",
+        "responsible_users": [],
+        "schedule": {},
+        "shift_conflict": {},
+        "state": "s308",
+        "updated_at": "s309",
+        "vacation_conflict": {}
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/policy_findings/{id}/actions/dismiss": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

@@ -36,8 +36,6 @@ LUAROCKS_ALIAS ?= luarocks
 PACKAGIST_ALIAS ?= packagist
 PYPI_ALIAS ?= pypi
 
-# Lockstep SDK version, read from the canonical ts manifest.
-VERSION := $(shell node -p "require('./ts/package.json').version" 2>/dev/null || echo 0.0.0)
 BORU_DRY_RUN_FILLER := BORU-DRY-RUN-FILLER-NOT-A-REAL-SECRET
 
 TARGETS := go go-mcp js lua php py ts
@@ -76,7 +74,7 @@ deploy-dry-go-mcp:
 	boru vault exec --dry-run --for=github=$(GITHUB_ALIAS) -- $(MAKE) tag-push-go-mcp
 
 tag-push-go-mcp:
-	@set -e; tag="go-mcp/v$(VERSION)"; \
+	@set -e; tag="go-mcp/v0.0.1"; \
 	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
 	if [ "$$token" = "$(BORU_DRY_RUN_FILLER)" ]; then \
 	  echo "[dry-run] boru filler token detected: would create (if missing) and push tag $$tag; nothing pushed."; exit 0; fi; \
@@ -97,7 +95,7 @@ deploy-dry-js:
 	boru vault exec --dry-run --for=github=$(GITHUB_ALIAS) -- $(MAKE) tag-push-js
 
 tag-push-js:
-	@set -e; tag="js/v$(VERSION)"; \
+	@set -e; tag="js/v0.0.1"; \
 	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
 	if [ "$$token" = "$(BORU_DRY_RUN_FILLER)" ]; then \
 	  echo "[dry-run] boru filler token detected: would create (if missing) and push tag $$tag; nothing pushed."; exit 0; fi; \
@@ -118,7 +116,7 @@ deploy-dry-lua:
 	boru vault exec --dry-run --for=github=$(GITHUB_ALIAS) -- $(MAKE) tag-push-lua
 
 tag-push-lua:
-	@set -e; tag="lua/v$(VERSION)"; \
+	@set -e; tag="lua/v0.0.1"; \
 	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
 	if [ "$$token" = "$(BORU_DRY_RUN_FILLER)" ]; then \
 	  echo "[dry-run] boru filler token detected: would create (if missing) and push tag $$tag; nothing pushed."; exit 0; fi; \
@@ -139,7 +137,7 @@ deploy-dry-php:
 	boru vault exec --dry-run --for=github=$(GITHUB_ALIAS) -- $(MAKE) tag-push-php
 
 tag-push-php:
-	@set -e; tag="php/v$(VERSION)"; \
+	@set -e; tag="php/v0.0.1"; \
 	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
 	if [ "$$token" = "$(BORU_DRY_RUN_FILLER)" ]; then \
 	  echo "[dry-run] boru filler token detected: would create (if missing) and push tag $$tag; nothing pushed."; exit 0; fi; \
@@ -160,7 +158,7 @@ deploy-dry-py:
 	boru vault exec --dry-run --for=github=$(GITHUB_ALIAS) -- $(MAKE) tag-push-py
 
 tag-push-py:
-	@set -e; tag="py/v$(VERSION)"; \
+	@set -e; tag="py/v0.0.1"; \
 	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
 	if [ "$$token" = "$(BORU_DRY_RUN_FILLER)" ]; then \
 	  echo "[dry-run] boru filler token detected: would create (if missing) and push tag $$tag; nothing pushed."; exit 0; fi; \
@@ -181,7 +179,7 @@ deploy-dry-ts:
 	boru vault exec --dry-run --for=github=$(GITHUB_ALIAS) -- $(MAKE) tag-push-ts
 
 tag-push-ts:
-	@set -e; tag="ts/v$(VERSION)"; \
+	@set -e; tag="ts/v0.0.1"; \
 	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
 	if [ "$$token" = "$(BORU_DRY_RUN_FILLER)" ]; then \
 	  echo "[dry-run] boru filler token detected: would create (if missing) and push tag $$tag; nothing pushed."; exit 0; fi; \

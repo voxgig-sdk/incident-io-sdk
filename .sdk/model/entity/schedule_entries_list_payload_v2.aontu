@@ -1,0 +1,128 @@
+# Entity: schedule_entries_list_payload_v2
+
+main: kit: entity: schedule_entries_list_payload_v2: {
+
+  alias: field: {}
+
+  fields: {
+    entry_window_end: {
+      fo: "date-time"
+      h: "Entry Window End"
+      n: "entry_window_end"
+      r: false
+      sh: "The end of the window to preview entries for."
+      t: "`$STRING`"
+    }
+    entry_window_start: {
+      fo: "date-time"
+      h: "Entry Window Start"
+      n: "entry_window_start"
+      r: false
+      sh: "The start of the window to preview entries for."
+      t: "`$STRING`"
+    }
+    final: {
+      h: "Final"
+      n: "final"
+      r: true
+      sh: "The effective schedule after overrides have been merged in"
+      t: "`$ARRAY`"
+    }
+    overrides: {
+      h: "Overrides"
+      n: "overrides"
+      r: true
+      sh: "Overrides that apply within the requested window"
+      t: "`$ARRAY`"
+    }
+    schedule: {
+      h: "Schedule"
+      n: "schedule"
+      r: true
+      t: "`$OBJECT`"
+    }
+    scheduled: {
+      h: "Scheduled"
+      n: "scheduled"
+      r: true
+      sh: "Entries from the schedule's rotation rules, before overrides are applied"
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "schedule_entries_list_payload_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "entry_window_end"
+            "entry_window_start"
+            "schedule"
+          ]
+          co: {
+            id: "POST /v2/schedules/{id}/actions/preview_entries"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "schedule_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/schedules/{id}/actions/preview_entries"
+          q: {
+            exist: [
+              "schedule_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "schedule_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "schedules"
+            }
+            {
+              var: "schedule_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "preview_entries"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.schedule_entries`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.schedule")]
+  ]
+
+}

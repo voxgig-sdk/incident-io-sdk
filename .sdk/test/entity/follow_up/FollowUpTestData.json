@@ -6,63 +6,66 @@
         "assignee_id": "ASSIGNEE01",
         "assignee_team": {},
         "assignee_team_id": "ASSIGNEE_TEAM01",
-        "completed_at": "sc2",
-        "created_at": "sc3",
+        "category": {},
+        "completed_at": "scd",
+        "created_at": "sce",
         "creator": {},
-        "description": "sc5",
+        "description": "sd0",
         "external_issue_reference": {},
         "external_issue_reference_id": "EXTERNAL_ISSUE_REFERENCE01",
         "follow_up_category_id": "FOLLOW_UP_CATEGORY01",
         "follow_up_priority_option_id": "FOLLOW_UP_PRIORITY_OPTION01",
         "id": "FOLLOW_UP00",
         "incident_id": "INCIDENT01",
-        "label": [],
+        "labels": [],
         "priority": {},
-        "status": "sce",
-        "title": "scf",
-        "updated_at": "sd0"
+        "status": "sd9",
+        "title": "sda",
+        "updated_at": "sdb"
       },
       "FOLLOW_UP01": {
         "assignee": {},
         "assignee_id": "ASSIGNEE01",
         "assignee_team": {},
         "assignee_team_id": "ASSIGNEE_TEAM01",
-        "completed_at": "s180",
-        "created_at": "s181",
+        "category": {},
+        "completed_at": "s195",
+        "created_at": "s196",
         "creator": {},
-        "description": "s183",
+        "description": "s198",
         "external_issue_reference": {},
         "external_issue_reference_id": "EXTERNAL_ISSUE_REFERENCE01",
         "follow_up_category_id": "FOLLOW_UP_CATEGORY01",
         "follow_up_priority_option_id": "FOLLOW_UP_PRIORITY_OPTION01",
         "id": "FOLLOW_UP01",
         "incident_id": "INCIDENT01",
-        "label": [],
+        "labels": [],
         "priority": {},
-        "status": "s18c",
-        "title": "s18d",
-        "updated_at": "s18e"
+        "status": "s1a1",
+        "title": "s1a2",
+        "updated_at": "s1a3"
       },
       "FOLLOW_UP02": {
         "assignee": {},
         "assignee_id": "ASSIGNEE01",
         "assignee_team": {},
         "assignee_team_id": "ASSIGNEE_TEAM01",
-        "completed_at": "s23e",
-        "created_at": "s23f",
+        "category": {},
+        "completed_at": "s25d",
+        "created_at": "s25e",
         "creator": {},
-        "description": "s241",
+        "description": "s260",
         "external_issue_reference": {},
         "external_issue_reference_id": "EXTERNAL_ISSUE_REFERENCE01",
         "follow_up_category_id": "FOLLOW_UP_CATEGORY01",
         "follow_up_priority_option_id": "FOLLOW_UP_PRIORITY_OPTION01",
         "id": "FOLLOW_UP02",
         "incident_id": "INCIDENT01",
-        "label": [],
+        "labels": [],
         "priority": {},
-        "status": "s24a",
-        "title": "s24b",
-        "updated_at": "s24c"
+        "status": "s269",
+        "title": "s26a",
+        "updated_at": "s26b"
       }
     }
   },
@@ -73,21 +76,74 @@
         "assignee_id": "ASSIGNEE01",
         "assignee_team": {},
         "assignee_team_id": "ASSIGNEE_TEAM01",
-        "completed_at": "s2fc",
-        "created_at": "s2fd",
+        "category": {},
+        "completed_at": "s325",
+        "created_at": "s326",
         "creator": {},
-        "description": "s2ff",
+        "description": "s328",
         "external_issue_reference": {},
         "external_issue_reference_id": "EXTERNAL_ISSUE_REFERENCE01",
         "follow_up_category_id": "FOLLOW_UP_CATEGORY01",
         "follow_up_priority_option_id": "FOLLOW_UP_PRIORITY_OPTION01",
         "incident_id": "INCIDENT01",
-        "label": [],
+        "labels": [],
         "priority": {},
-        "status": "s308",
-        "title": "s309",
-        "updated_at": "s30a"
+        "status": "s331",
+        "title": "s332",
+        "updated_at": "s333"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/follow_ups": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v3/follow_ups": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/follow_ups": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/follow_ups": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/follow_ups/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/follow_ups/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/follow_ups/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v3/follow_ups/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/follow_ups/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v3/follow_ups/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

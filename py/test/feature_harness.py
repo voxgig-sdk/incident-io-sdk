@@ -14,17 +14,18 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import IncidentIoControl
-from core.error import IncidentIoError
-from core.result import IncidentIoResult
-from core.spec import IncidentIoSpec
+from incidentio_sdk.config import shared_config
+from incidentio_sdk.features import _make_feature
+from incidentio_sdk.core.control import IncidentIoControl
+from incidentio_sdk.core.error import IncidentIoError
+from incidentio_sdk.core.result import IncidentIoResult
+from incidentio_sdk.core.spec import IncidentIoSpec
+from incidentio_sdk.utility.clean import clean_util, clean_add_util
 
 
 # True when this SDK was generated with the named feature.
 def has_feature(name):
-    feature = make_config().get("feature")
+    feature = shared_config().get("feature")
     return isinstance(feature, dict) and feature.get(name) is not None
 
 
@@ -96,7 +97,7 @@ def recording_server(reply=None):
 def default_method(op):
     if op == "create":
         return "POST"
-    if op == "update":
+    if op == "update" or op == "patch":
         return "PATCH"
     if op == "remove":
         return "DELETE"
@@ -115,6 +116,9 @@ def build_url(spec):
 class _Utility:
     def __init__(self, fetcher):
         self.fetcher = fetcher
+        # The real ones: every feature record leaves through clean.
+        self.clean = clean_util
+        self.clean_add = clean_add_util
 
         def param(ctx, name):
             params = ctx.spec.params if ctx.spec is not None else {}
@@ -165,6 +169,12 @@ class _Ctx:
         self.meta = {}
         self.op = op
         self.entity = entity
+        # The pipeline always resolves a point before a feature sees the ctx,
+        # so features read ctx.point freely — paging checks `point.kind` for
+        # graphql. This stub had no such attribute, so every paging test died
+        # with AttributeError before reaching the transport. Those tests were
+        # SKIPPED until an SDK activated paging, which is why it went unseen.
+        self.point = {}
         self.spec = None
         self.response = None
         self.result = None

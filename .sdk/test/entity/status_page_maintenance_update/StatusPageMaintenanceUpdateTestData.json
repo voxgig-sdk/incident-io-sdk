@@ -2,26 +2,26 @@
   "existing": {
     "status_page_maintenance_update": {
       "STATUS_PAGE_MAINTENANCE_UPDATE00": {
-        "component_status": [],
+        "component_statuses": [],
         "maintenance_status": "s33",
         "message": "s34",
-        "notify_subscriber": false,
+        "notify_subscribers": false,
         "status_page_maintenance_id": "STATUS_PAGE_MAINTENANCE01",
         "id": "STATUS_PAGE_MAINTENANCE_UPDATE00"
       },
       "STATUS_PAGE_MAINTENANCE_UPDATE01": {
-        "component_status": [],
+        "component_statuses": [],
         "maintenance_status": "s65",
         "message": "s66",
-        "notify_subscriber": false,
+        "notify_subscribers": false,
         "status_page_maintenance_id": "STATUS_PAGE_MAINTENANCE01",
         "id": "STATUS_PAGE_MAINTENANCE_UPDATE01"
       },
       "STATUS_PAGE_MAINTENANCE_UPDATE02": {
-        "component_status": [],
+        "component_statuses": [],
         "maintenance_status": "s97",
         "message": "s98",
-        "notify_subscriber": false,
+        "notify_subscribers": false,
         "status_page_maintenance_id": "STATUS_PAGE_MAINTENANCE01",
         "id": "STATUS_PAGE_MAINTENANCE_UPDATE02"
       }
@@ -30,12 +30,19 @@
   "new": {
     "status_page_maintenance_update": {
       "status_page_maintenance_update_ref01": {
-        "component_status": [],
+        "component_statuses": [],
         "maintenance_status": "sc9",
         "message": "sca",
-        "notify_subscriber": false,
+        "notify_subscribers": false,
         "status_page_maintenance_id": "STATUS_PAGE_MAINTENANCE01"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/status_page_maintenance_updates": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

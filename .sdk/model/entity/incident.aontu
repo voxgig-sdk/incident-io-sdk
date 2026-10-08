@@ -4,249 +4,353 @@ main: kit: entity: incident: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "call_url"
-      req: false
-      type: "`$STRING`"
+  fields: {
+    call_url: {
+      h: "Call Url"
+      n: "call_url"
+      r: false
+      sh: "The call URL attached to this incident"
+      t: "`$STRING`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When the incident was created"
+      t: "`$STRING`"
     }
-    {
-      name: "creator"
-      req: true
-      type: "`$OBJECT`"
+    creator: {
+      h: "Creator"
+      n: "creator"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "custom_field_entry"
+    custom_field_entries: {
+      h: "Custom Field Entries"
+      n: "custom_field_entries"
       op: {
         create: {
           req: false
           type: "`$ARRAY`"
         }
       }
-      req: true
-      type: "`$ARRAY`"
+      r: true
+      sh: "Custom field entries for this incident"
+      t: "`$ARRAY`"
     }
-    {
-      name: "duration_metric"
-      req: false
-      type: "`$ARRAY`"
+    debriefs: {
+      h: "Debriefs"
+      n: "debriefs"
+      r: false
+      sh: "Debriefs scheduled for this incident, ordered by start time."
+      t: "`$ARRAY`"
     }
-    {
-      name: "external_issue_reference"
-      req: true
-      type: "`$OBJECT`"
+    duration_metrics: {
+      h: "Duration Metrics"
+      n: "duration_metrics"
+      r: false
+      sh: "Incident duration metrics and their measurements for this incident"
+      t: "`$ARRAY`"
     }
-    {
-      name: "has_debrief"
-      req: false
-      type: "`$BOOLEAN`"
+    external_issue_reference: {
+      h: "External Issue Reference"
+      n: "external_issue_reference"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    has_debrief: {
+      h: "Has Debrief"
+      n: "has_debrief"
+      r: false
+      sh: "If this incident has a debrief attached"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "idempotency_key"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for the incident"
+      t: "`$STRING`"
     }
-    {
-      name: "incident"
-      req: true
-      type: "`$OBJECT`"
+    idempotency_key: {
+      h: "Idempotency Key"
+      n: "idempotency_key"
+      r: true
+      sh: "Unique string used to de-duplicate incident create requests"
+      t: "`$STRING`"
     }
-    {
-      name: "incident_role_assignment"
+    incident_role_assignments: {
+      h: "Incident Role Assignments"
+      n: "incident_role_assignments"
       op: {
         create: {
           req: false
           type: "`$ARRAY`"
         }
       }
-      req: true
-      type: "`$ARRAY`"
+      r: true
+      sh: "A list of who is assigned to each role for this incident"
+      t: "`$ARRAY`"
     }
-    {
-      name: "incident_status"
-      req: true
-      type: "`$OBJECT`"
+    incident_status: {
+      h: "Incident Status"
+      n: "incident_status"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "incident_status_id"
-      req: false
-      type: "`$STRING`"
+    incident_status_id: {
+      h: "Incident Status Id"
+      n: "incident_status_id"
+      r: false
+      sh: "Incident status to assign to the incident"
+      t: "`$STRING`"
     }
-    {
-      name: "incident_timestamp_value"
-      req: false
-      type: "`$ARRAY`"
+    incident_timestamp_values: {
+      h: "Incident Timestamp Values"
+      n: "incident_timestamp_values"
+      r: false
+      sh: "Incident lifecycle events and when they occurred"
+      t: "`$ARRAY`"
     }
-    {
-      name: "incident_type"
-      req: true
-      type: "`$OBJECT`"
+    incident_type: {
+      h: "Incident Type"
+      n: "incident_type"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "incident_type_id"
-      req: false
-      type: "`$STRING`"
+    incident_type_id: {
+      h: "Incident Type Id"
+      n: "incident_type_id"
+      r: false
+      sh: "Incident type to create this incident as"
+      t: "`$STRING`"
     }
-    {
-      name: "mode"
+    last_activity_at: {
+      fo: "date-time"
+      h: "Last Activity At"
+      n: "last_activity_at"
+      r: true
+      sh: "When the incident last recorded 'activity'"
+      t: "`$STRING`"
+    }
+    mode: {
+      h: "Mode"
+      n: "mode"
       op: {
         create: {
           req: false
           type: "`$STRING`"
         }
       }
-      req: true
-      type: "`$STRING`"
+      r: true
+      sh: "Whether the incident is real, a test, a tutorial, or importing as a retrospective incident"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
+    ms_teams_channel_url: {
+      h: "Ms Teams Channel Url"
+      n: "ms_teams_channel_url"
+      r: false
+      sh: "URL to link to the Microsoft Teams channel"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
       op: {
         create: {
           req: false
           type: "`$STRING`"
         }
       }
-      req: true
-      type: "`$STRING`"
+      r: true
+      sh: "Explanation of the incident"
+      t: "`$STRING`"
     }
-    {
-      name: "notify_incident_channel"
-      req: true
-      type: "`$BOOLEAN`"
+    permalink: {
+      h: "Permalink"
+      n: "permalink"
+      r: false
+      sh: "A permanent link to the homepage for this incident"
+      t: "`$STRING`"
     }
-    {
-      name: "permalink"
-      req: false
-      type: "`$STRING`"
+    postmortem_document_ids: {
+      h: "Postmortem Document Ids"
+      n: "postmortem_document_ids"
+      r: false
+      sh: "An array of IDs of postmortem documents for this incident"
+      t: "`$ARRAY`"
     }
-    {
-      name: "postmortem_document_id"
-      req: false
-      type: "`$ARRAY`"
+    postmortem_document_url: {
+      h: "Postmortem Document Url"
+      n: "postmortem_document_url"
+      r: false
+      sh: "The URL of the incident post-mortem document"
+      t: "`$STRING`"
     }
-    {
-      name: "postmortem_document_url"
-      req: false
-      type: "`$STRING`"
+    reference: {
+      h: "Reference"
+      n: "reference"
+      r: true
+      sh: "Reference to this incident, as displayed across the product"
+      t: "`$STRING`"
     }
-    {
-      name: "reference"
-      req: true
-      type: "`$STRING`"
+    retrospective_incident_options: {
+      h: "Retrospective Incident Options"
+      n: "retrospective_incident_options"
+      r: false
+      t: "`$OBJECT`"
     }
-    {
-      name: "retrospective_incident_option"
-      req: false
-      type: "`$OBJECT`"
+    severity: {
+      h: "Severity"
+      n: "severity"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "severity"
-      req: true
-      type: "`$OBJECT`"
+    severity_id: {
+      h: "Severity Id"
+      n: "severity_id"
+      r: false
+      sh: "Severity to create incident as"
+      t: "`$STRING`"
     }
-    {
-      name: "severity_id"
-      req: false
-      type: "`$STRING`"
+    slack_channel_id: {
+      h: "Slack Channel Id"
+      n: "slack_channel_id"
+      r: true
+      sh: "ID of the Slack channel in the organisation Slack workspace."
+      t: "`$STRING`"
     }
-    {
-      name: "slack_channel_id"
-      req: true
-      type: "`$STRING`"
+    slack_channel_name: {
+      h: "Slack Channel Name"
+      n: "slack_channel_name"
+      r: false
+      sh: "Name of the slack channel"
+      t: "`$STRING`"
     }
-    {
-      name: "slack_channel_name"
-      req: false
-      type: "`$STRING`"
+    slack_channel_name_override: {
+      h: "Slack Channel Name Override"
+      n: "slack_channel_name_override"
+      r: false
+      sh: "Name of the Slack channel to create for this incident"
+      t: "`$STRING`"
     }
-    {
-      name: "slack_channel_name_override"
-      req: false
-      type: "`$STRING`"
+    slack_channel_url: {
+      h: "Slack Channel Url"
+      n: "slack_channel_url"
+      r: false
+      sh: "URL to link to the slack channel"
+      t: "`$STRING`"
     }
-    {
-      name: "slack_team_id"
+    slack_team_id: {
+      h: "Slack Team Id"
+      n: "slack_team_id"
       op: {
         create: {
           req: false
           type: "`$STRING`"
         }
       }
-      req: true
-      type: "`$STRING`"
+      r: true
+      sh: "ID of the Slack team / workspace."
+      t: "`$STRING`"
     }
-    {
-      name: "source_message_channel_id"
-      req: false
-      type: "`$STRING`"
+    source_message_channel_id: {
+      h: "Source Message Channel Id"
+      n: "source_message_channel_id"
+      r: false
+      sh: "Channel ID of the source message, if this incident was created from one"
+      t: "`$STRING`"
     }
-    {
-      name: "source_message_timestamp"
-      req: false
-      type: "`$STRING`"
+    source_message_timestamp: {
+      h: "Source Message Timestamp"
+      n: "source_message_timestamp"
+      r: false
+      sh: "Timestamp of the source message, if this incident was created from one"
+      t: "`$STRING`"
     }
-    {
-      name: "status"
+    status: {
+      h: "Status"
+      n: "status"
       op: {
         create: {
           req: false
           type: "`$STRING`"
         }
       }
-      req: true
-      type: "`$STRING`"
+      r: true
+      sh: "Current status of the incident"
+      t: "`$STRING`"
     }
-    {
-      name: "summary"
-      req: false
-      type: "`$STRING`"
+    summary: {
+      h: "Summary"
+      n: "summary"
+      r: false
+      sh: "Detailed description of the incident"
+      t: "`$STRING`"
     }
-    {
-      name: "timestamp"
-      req: false
-      type: "`$ARRAY`"
+    team_ids: {
+      h: "Team Ids"
+      n: "team_ids"
+      r: true
+      sh: "IDs of the teams that own this incident, resolved from your team settings."
+      t: "`$ARRAY`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    timestamps: {
+      h: "Timestamps"
+      n: "timestamps"
+      r: false
+      sh: "Incident lifecycle events and when they last occurred"
+      t: "`$ARRAY`"
     }
-    {
-      name: "visibility"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When the incident was last updated"
+      t: "`$STRING`"
     }
-    {
-      name: "workload_minutes_late"
-      req: false
-      type: "`$NUMBER`"
+    visibility: {
+      h: "Visibility"
+      n: "visibility"
+      r: true
+      sh: "Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private)."
+      t: "`$STRING`"
     }
-    {
-      name: "workload_minutes_sleeping"
-      req: false
-      type: "`$NUMBER`"
+    workload_minutes_late: {
+      fo: "double"
+      h: "Workload Minutes Late"
+      n: "workload_minutes_late"
+      r: false
+      sh: "Amount of time spent on the incident in late hours"
+      t: "`$NUMBER`"
     }
-    {
-      name: "workload_minutes_total"
-      req: false
-      type: "`$NUMBER`"
+    workload_minutes_sleeping: {
+      fo: "double"
+      h: "Workload Minutes Sleeping"
+      n: "workload_minutes_sleeping"
+      r: false
+      sh: "Amount of time spent on the incident in sleeping hours"
+      t: "`$NUMBER`"
     }
-    {
-      name: "workload_minutes_working"
-      req: false
-      type: "`$NUMBER`"
+    workload_minutes_total: {
+      fo: "double"
+      h: "Workload Minutes Total"
+      n: "workload_minutes_total"
+      r: false
+      sh: "Amount of time spent on the incident in total"
+      t: "`$NUMBER`"
     }
-  ]
+    workload_minutes_working: {
+      fo: "double"
+      h: "Workload Minutes Working"
+      n: "workload_minutes_working"
+      r: false
+      sh: "Amount of time spent on the incident in working hours"
+      t: "`$NUMBER`"
+    }
+  }
 
   id: {
     field: "id"
@@ -259,60 +363,138 @@ main: kit: entity: incident: {
       name: "create"
       points: [
         {
-          args: {
+          bf: [
+            "incident"
+            "notify_incident_channel"
+          ]
+          co: {
+            id: "POST /v2/incidents/{id}/actions/edit"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01G18REBY9AYH6CMWCJ2CVCYCH"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01G18REBY9AYH6CMWCJ2CVCYCH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "POST"
-          orig: "/v2/incidents/{id}/actions/edit"
-          parts: [
-            "v2"
-            "incidents"
-            "{id}"
-            "actions"
-            "edit"
-          ]
-          select: {
+          m: "POST"
+          o: "/v2/incidents/{id}/actions/edit"
+          q: {
             "$action": "action_edit"
             exist: [
               "id"
             ]
           }
-          transform: {
-            req: {
-              incident: "`reqdata`"
-            }
-            res: "`body.incident`"
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
-        }
-        {
-          method: "POST"
-          orig: "/v1/incidents"
-          parts: [
-            "v1"
-            "incidents"
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "edit"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.incident`"
           }
         }
         {
-          method: "POST"
-          orig: "/v2/incidents"
-          parts: [
-            "v2"
-            "incidents"
+          bf: [
+            "custom_field_entries"
+            "idempotency_key"
+            "incident_role_assignments"
+            "incident_type_id"
+            "mode"
+            "name"
+            "severity_id"
+            "slack_team_id"
+            "source_message_channel_id"
+            "source_message_timestamp"
+            "status"
+            "summary"
+            "visibility"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/incidents"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/incidents"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incidents"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident`"
+          }
+        }
+        {
+          bf: [
+            "custom_field_entries"
+            "idempotency_key"
+            "incident_role_assignments"
+            "incident_status_id"
+            "incident_timestamp_values"
+            "incident_type_id"
+            "mode"
+            "name"
+            "retrospective_incident_options"
+            "severity_id"
+            "slack_channel_name_override"
+            "slack_team_id"
+            "summary"
+            "visibility"
+          ]
+          co: {
+            id: "POST /v2/incidents"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/incidents"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incidents"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident`"
           }
@@ -323,30 +505,90 @@ main: kit: entity: incident: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/incidents"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: {
-                  "created_at[gte]": [
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: [
+                  "declined"
+                ]
+                k: "query"
+                n: "status"
+                or: "status"
+                r: false
+                t: "`$ARRAY`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v1/incidents"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incidents"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incidents`"
+          }
+        }
+        {
+          co: {
+            id: "GET /v2/incidents"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: {
+                  gte: [
                     "2024-05-01"
                   ]
                 }
-                kind: "query"
-                name: "created_at"
-                orig: "created_at"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "created_at"
+                or: "created_at"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   "01GBSQF3FHF7FWZQNWGHAVQ804": {
                     one_of: [
                       "01GBSQF3FHF7FWZQNWGHAVQ804"
@@ -354,22 +596,22 @@ main: kit: entity: incident: {
                     ]
                   }
                 }
-                kind: "query"
-                name: "custom_field"
-                orig: "custom_field"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "custom_field"
+                or: "custom_field"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: "all"
-                kind: "query"
-                name: "filter_mode"
-                orig: "filter_mode"
-                reqd: false
-                type: "`$STRING`"
+                ex: "all"
+                k: "query"
+                n: "filter_mode"
+                or: "filter_mode"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: {
+                ex: {
                   "01GBSQF3FHF7FWZQNWGHAVQ804": {
                     one_of: [
                       "01GBSQF3FHF7FWZQNWGHAVQ804"
@@ -377,177 +619,119 @@ main: kit: entity: incident: {
                     ]
                   }
                 }
-                kind: "query"
-                name: "incident_role"
-                orig: "incident_role"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "incident_role"
+                or: "incident_role"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "01GBSQF3FHF7FWZQNWGHAVQ804"
                   ]
                 }
-                kind: "query"
-                name: "incident_type"
-                orig: "incident_type"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "incident_type"
+                or: "incident_type"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "retrospective"
                   ]
                 }
-                kind: "query"
-                name: "mode"
-                orig: "mode"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "mode"
+                or: "mode"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "01GBSQF3FHF7FWZQNWGHAVQ804"
                   ]
                 }
-                kind: "query"
-                name: "severity"
-                orig: "severity"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "severity"
+                or: "severity"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: "created_at_newest_first"
-                kind: "query"
-                name: "sort_by"
-                orig: "sort_by"
-                reqd: false
-                type: "`$STRING`"
+                ex: "created_at_newest_first"
+                k: "query"
+                n: "sort_by"
+                or: "sort_by"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "01GBSQF3FHF7FWZQNWGHAVQ804"
                   ]
                 }
-                kind: "query"
-                name: "status"
-                orig: "status"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "status"
+                or: "status"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
+                ex: {
                   one_of: [
                     "active"
                   ]
                 }
-                kind: "query"
-                name: "status_category"
-                orig: "status_category"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "status_category"
+                or: "status_category"
+                r: false
+                t: "`$OBJECT`"
               }
               {
-                example: {
-                  "updated_at[gte]": [
+                ex: {
+                  gte: [
                     "2024-05-01"
                   ]
                 }
-                kind: "query"
-                name: "updated_at"
-                orig: "updated_at"
-                reqd: false
-                type: "`$OBJECT`"
+                k: "query"
+                n: "updated_at"
+                or: "updated_at"
+                r: false
+                t: "`$OBJECT`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/incidents"
-          parts: [
-            "v2"
-            "incidents"
+          m: "GET"
+          o: "/v2/incidents"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incidents"
+            }
           ]
-          select: {
-            exist: [
-              "after"
-              "created_at"
-              "custom_field"
-              "filter_mode"
-              "incident_role"
-              "incident_type"
-              "mode"
-              "page_size"
-              "severity"
-              "sort_by"
-              "status"
-              "status_category"
-              "updated_at"
-            ]
-          }
-          transform: {
+          t: {
             req: "`reqdata`"
-            res: "`body`"
-          }
-        }
-        {
-          args: {
-            query: [
-              {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
-              }
-              {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
-              }
-              {
-                example: [
-                  "declined"
-                ]
-                kind: "query"
-                name: "status"
-                orig: "status"
-                reqd: false
-                type: "`$ARRAY`"
-              }
-            ]
-          }
-          method: "GET"
-          orig: "/v1/incidents"
-          parts: [
-            "v1"
-            "incidents"
-          ]
-          select: {
-            exist: [
-              "after"
-              "page_size"
-              "status"
-            ]
-          }
-          transform: {
-            req: "`reqdata`"
-            res: "`body`"
+            res: "`body.incidents`"
           }
         }
       ]
@@ -556,61 +740,91 @@ main: kit: entity: incident: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/incidents/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/incidents/{id}"
-          parts: [
-            "v1"
-            "incidents"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/incidents/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident`"
           }
         }
         {
-          args: {
+          co: {
+            id: "GET /v2/incidents/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/incidents/{id}"
-          parts: [
-            "v2"
-            "incidents"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/incidents/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident`"
           }

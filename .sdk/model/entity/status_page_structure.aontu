@@ -4,13 +4,38 @@ main: kit: entity: status_page_structure: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "item"
-      req: true
-      type: "`$ARRAY`"
+  fields: {
+    current_structure: {
+      h: "Current Structure"
+      n: "current_structure"
+      r: true
+      t: "`$OBJECT`"
     }
-  ]
+    display_uptime_mode: {
+      h: "Display Uptime Mode"
+      n: "display_uptime_mode"
+      r: true
+      sh: "How the page shows uptime against its components"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+    management_meta: {
+      h: "Management Meta"
+      n: "management_meta"
+      r: true
+      t: "`$OBJECT`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
 
   name: "status_page_structure"
   op: {
@@ -18,38 +43,53 @@ main: kit: entity: status_page_structure: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/status_page_structures/{status_page_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "abc123"
-                kind: "param"
-                name: "id"
-                orig: "status_page_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "abc123"
+                k: "param"
+                n: "id"
+                or: "status_page_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/status_page_structures/{status_page_id}"
-          parts: [
-            "v2"
-            "status_page_structures"
-            "{id}"
-          ]
-          rename: {
-            param: {
-              status_page_id: "id"
-            }
-          }
-          select: {
+          m: "GET"
+          o: "/v2/status_page_structures/{status_page_id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              status_page_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_structures"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body.current_structure`"
+            res: "`body`"
           }
         }
       ]

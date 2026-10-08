@@ -2,33 +2,42 @@
   "existing": {
     "incident_update": {
       "INCIDENT_UPDATE00": {
-        "created_at": "s50",
+        "created_at": "s6e",
         "id": "INCIDENT_UPDATE00",
+        "idempotency_key": "s70",
         "incident_id": "INCIDENT01",
         "merged_into_incident_id": "MERGED_INTO_INCIDENT01",
-        "message": "s54",
+        "message": "s73",
         "new_incident_status": {},
         "new_severity": {},
+        "to_incident_status_id": "TO_INCIDENT_STATUS01",
+        "to_severity_id": "TO_SEVERITY01",
         "updater": {}
       },
       "INCIDENT_UPDATE01": {
-        "created_at": "sa0",
+        "created_at": "sdc",
         "id": "INCIDENT_UPDATE01",
+        "idempotency_key": "sde",
         "incident_id": "INCIDENT01",
         "merged_into_incident_id": "MERGED_INTO_INCIDENT01",
-        "message": "sa4",
+        "message": "se1",
         "new_incident_status": {},
         "new_severity": {},
+        "to_incident_status_id": "TO_INCIDENT_STATUS01",
+        "to_severity_id": "TO_SEVERITY01",
         "updater": {}
       },
       "INCIDENT_UPDATE02": {
-        "created_at": "sf0",
+        "created_at": "s14a",
         "id": "INCIDENT_UPDATE02",
+        "idempotency_key": "s14c",
         "incident_id": "INCIDENT01",
         "merged_into_incident_id": "MERGED_INTO_INCIDENT01",
-        "message": "sf4",
+        "message": "s14f",
         "new_incident_status": {},
         "new_severity": {},
+        "to_incident_status_id": "TO_INCIDENT_STATUS01",
+        "to_severity_id": "TO_SEVERITY01",
         "updater": {}
       }
     }
@@ -36,14 +45,29 @@
   "new": {
     "incident_update": {
       "incident_update_ref01": {
-        "created_at": "s140",
+        "created_at": "s1b8",
+        "idempotency_key": "s1ba",
         "incident_id": "INCIDENT01",
         "merged_into_incident_id": "MERGED_INTO_INCIDENT01",
-        "message": "s144",
+        "message": "s1bd",
         "new_incident_status": {},
         "new_severity": {},
+        "to_incident_status_id": "TO_INCIDENT_STATUS01",
+        "to_severity_id": "TO_SEVERITY01",
         "updater": {}
       }
+    }
+  },
+  "requests": {
+    "POST /v2/incident_updates": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/incident_updates": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

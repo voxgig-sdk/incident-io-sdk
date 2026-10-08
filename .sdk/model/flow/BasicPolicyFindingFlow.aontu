@@ -1,0 +1,44 @@
+# BasicPolicyFindingFlow
+
+main: kit: flow: BasicPolicyFindingFlow:
+{
+  entity: "policy_finding",
+  kind: "basic",
+  name: "BasicPolicyFindingFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "policy_finding_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "policy_finding_ref01",
+        srcdatavar: "policy_finding_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "policy_finding01"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-policy_finding_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPolicyFindingFlow"
+}

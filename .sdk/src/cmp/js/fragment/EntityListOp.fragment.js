@@ -7,7 +7,7 @@ class EntityOperation {
   /**
    * @param {EntityNameListMatch} [reqmatch]
    * @param {Object} [ctrl]
-   * @returns {Promise<EntityName[]>}
+   * @returns {Promise<EntyClass[]>}
    */
   async list(reqmatch, ctrl) {
 
@@ -16,7 +16,8 @@ class EntityOperation {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -87,7 +88,13 @@ class EntityOperation {
       return done(ctx)
     }
     catch (err) {
-      // #PreUnexpected-Hook
+      // What a hook throws here must not escape the cleaning below.
+      try {
+        // #PreUnexpected-Hook
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 

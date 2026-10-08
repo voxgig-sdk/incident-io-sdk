@@ -1,0 +1,36 @@
+{
+  "existing": {
+    "incident_team_membership": {
+      "INCIDENT_TEAM_MEMBERSHIP00": {
+        "incident_id": "INCIDENT01",
+        "team_id": "TEAM01",
+        "id": "INCIDENT_TEAM_MEMBERSHIP00"
+      },
+      "INCIDENT_TEAM_MEMBERSHIP01": {
+        "incident_id": "INCIDENT01",
+        "team_id": "TEAM01",
+        "id": "INCIDENT_TEAM_MEMBERSHIP01"
+      },
+      "INCIDENT_TEAM_MEMBERSHIP02": {
+        "incident_id": "INCIDENT01",
+        "team_id": "TEAM01",
+        "id": "INCIDENT_TEAM_MEMBERSHIP02"
+      }
+    }
+  },
+  "new": {
+    "incident_team_membership": {
+      "incident_team_membership_ref01": {
+        "incident_id": "INCIDENT01",
+        "team_id": "TEAM01"
+      }
+    }
+  },
+  "requests": {
+    "POST /v1/incident_team_memberships": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

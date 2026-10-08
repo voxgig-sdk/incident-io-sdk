@@ -37,7 +37,14 @@ component.* After editing a component run `npm run build` before
 
 ## Features in this target
 
-- [`test`](./src/feature/test/AGENTS.md) — In-memory mock transport for testing without a live server
+- [`debug`](./src/feature/debug/AGENTS.md) — Debug capture
+- [`idempotency`](./src/feature/idempotency/AGENTS.md) — Idempotency
+- [`metrics`](./src/feature/metrics/AGENTS.md) — Metrics
+- [`paging`](./src/feature/paging/AGENTS.md) — Paging
+- [`ratelimit`](./src/feature/ratelimit/AGENTS.md) — Rate limiting
+- [`retry`](./src/feature/retry/AGENTS.md) — Retry
+- [`test`](./src/feature/test/AGENTS.md) — Test transport
+- [`timeout`](./src/feature/timeout/AGENTS.md) — Timeout
 
 Each feature's runtime and its own guide live in `src/feature/<name>/`.
 

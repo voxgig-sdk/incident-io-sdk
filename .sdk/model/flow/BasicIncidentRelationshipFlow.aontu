@@ -7,8 +7,8 @@ main: kit: flow: BasicIncidentRelationshipFlow:
   name: "BasicIncidentRelationshipFlow",
   step: [
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {

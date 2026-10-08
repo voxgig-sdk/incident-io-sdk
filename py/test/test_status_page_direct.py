@@ -3,10 +3,22 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from incidentio_sdk.utility.voxgig_struct import voxgig_struct as vs
 from incidentio_sdk import IncidentIoSDK
-from core import helpers
+from incidentio_sdk.core import helpers
 from test import runner
+
+
+# main.kit.test.live.strict is true (the default is true): a live
+# request that fails, or a live test missing an input it needs,
+# fails the test.
+# An account with no record for a test to read skips it either way.
+LIVE_STRICT = True
+
+
+def _live_ok(result):
+    status = helpers.to_int(result.get("status"))
+    return result.get("err") is None and bool(result.get("ok")) and 200 <= status < 300
 
 
 class TestStatusPageDirect:
@@ -18,36 +30,63 @@ class TestStatusPageDirect:
         ])
         _skip, _reason = runner.is_control_skipped("direct", "direct-list-status_page", "live" if setup["live"] else "unit")
         if _skip:
-            # pytest already imported at module scope
             pytest.skip(_reason or "skipped via sdk-test-control.json")
             return
         client = setup["client"]
 
+        params = {}
 
         result = client.direct({
             "path": "v2/status_pages",
             "method": "GET",
-            "params": {},
+            "params": params,
         })
         if setup["live"]:
-            # Live mode is lenient: synthetic IDs frequently 4xx and the
-            # list-response shape varies wildly across public APIs. Skip
-            # rather than fail when the call doesn't return a usable list.
-            if result.get("err") is not None:
-                pytest.skip(f"list call failed (likely synthetic IDs against live API): {result.get('err')}")
-                return
-            if not result.get("ok"):
-                pytest.skip("list call not ok (likely synthetic IDs against live API)")
-                return
-            status = helpers.to_int(result["status"])
-            if status < 200 or status >= 300:
-                pytest.skip(f"expected 2xx status, got {status}")
-                return
+            if not _live_ok(result):
+                runner.live_miss(LIVE_STRICT, "Live list failed: " + runner.live_describe(result))
+            if runner.live_list(result.get("data")) is None:
+                runner.live_miss(LIVE_STRICT, "Live list returned no list: " + runner.live_describe(result))
         else:
             assert result["ok"] is True
             assert helpers.to_int(result["status"]) == 200
             assert isinstance(result["data"], list)
             assert len(result["data"]) == 2
+            assert len(setup["calls"]) == 1
+
+    def test_should_direct_load_status_page(self):
+        setup = _status_page_direct_setup({"id": "direct01"})
+        _skip, _reason = runner.is_control_skipped("direct", "direct-load-status_page", "live" if setup["live"] else "unit")
+        if _skip:
+            pytest.skip(_reason or "skipped via sdk-test-control.json")
+            return
+        client = setup["client"]
+
+        params = {}
+        query = {}
+        if setup["live"]:
+            params["id"] = "01FCNDV6P870EA6S7TK1DSYDG0"
+            pass
+        else:
+            params["id"] = "direct01"
+            pass
+
+        result = client.direct({
+            "path": "v2/status_pages/{id}",
+            "method": "GET",
+            "params": params,
+            "query": query,
+        })
+        if setup["live"]:
+            if not _live_ok(result):
+                runner.live_miss(LIVE_STRICT, "Live load failed: " + runner.live_describe(result))
+            if result.get("data") is None:
+                runner.live_miss(LIVE_STRICT, "Live load returned no data: " + runner.live_describe(result))
+        else:
+            assert result["ok"] is True
+            assert helpers.to_int(result["status"]) == 200
+            assert result["data"] is not None
+            if isinstance(result["data"], dict):
+                assert result["data"]["id"] == "direct01"
             assert len(setup["calls"]) == 1
 
 
@@ -58,21 +97,27 @@ def _status_page_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "INCIDENTIO_TEST_STATUS_PAGE_ENTID": {},
-        "INCIDENTIO_TEST_LIVE": "FALSE",
+        "INCIDENT_IO_TEST_STATUS_PAGE_ENTID": {},
+        "INCIDENT_IO_TEST_LIVE": "FALSE",
+        "INCIDENT_IO_APIKEY": "",
     })
 
-    live = env.get("INCIDENTIO_TEST_LIVE") == "TRUE"
+    live = env.get("INCIDENT_IO_TEST_LIVE") == "TRUE"
 
     if live:
-        merged_opts = {
-        }
+        # sdk-test-control.json's test.client.options seeds the live
+        # client; the generated fields below overwrite anything they name.
+        merged_opts = dict(runner.live_client_options())
+        merged_opts.update({
+            "apikey": env.get("INCIDENT_IO_APIKEY"),
+        })
         client = IncidentIoSDK(merged_opts)
+        idmap = env.get("INCIDENT_IO_TEST_STATUS_PAGE_ENTID")
         return {
             "client": client,
             "calls": calls,
             "live": True,
-            "idmap": {},
+            "idmap": idmap if isinstance(idmap, dict) else {},
         }
 
     def mock_fetch(url, init):

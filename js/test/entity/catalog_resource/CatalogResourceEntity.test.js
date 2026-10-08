@@ -1,18 +1,22 @@
 
 const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
+require('../../utility').loadEnvLocal(envlocal)
 
 const Path = require('node:path')
 const Fs = require('node:fs')
 
-const { test, describe } = require('node:test')
+const { test, describe, afterEach } = require('node:test')
 const assert = require('node:assert')
+const { createLiveTransport } = require('../../live-runner')
+const { runLiveEntity } = require('../../live-entity')
 
 
 const { IncidentIoSDK, BaseFeature, stdutil, config } = require('../../..')
 
 const {
   envOverride,
+  liveClientOptions,
+  liveDelay,
   makeCtrl,
   makeMatch,
   makeReqdata,
@@ -23,6 +27,10 @@ const {
 
 describe('CatalogResourceEntity', async () => {
 
+  // Per-test live pacing. Delay is read from sdk-test-control.json's
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
+
   test('instance', async () => {
     const testsdk = IncidentIoSDK.test()
     const ent = testsdk.CatalogResource()
@@ -30,9 +38,74 @@ describe('CatalogResourceEntity', async () => {
   })
 
 
-  test('basic', async () => {
+  class FailHook extends BaseFeature {
+    constructor() {
+      super()
+      this.name = 'failhook'
+      this.version = '0.0.1'
+      this.active = true
+      this.unexpected = 0
+    }
+    init() { }
+    PreSpec() { throw new Error('catalog_resource hook failed') }
+    PreUnexpected() { this.unexpected++ }
+  }
 
+  test('stream-error', async () => {
+    const offline = { net: { offline: true } }
+    await assert.rejects(async () => {
+      for await (const _item of IncidentIoSDK.test(offline).CatalogResource().stream('list')) { }
+    }, /offline/)
+
+    for await (const _item of IncidentIoSDK.test(offline).CatalogResource()
+      .stream('list', undefined, { ctrl: { throw: false } })) { }
+
+    if (null != config.feature?.rbac) {
+      const denied = IncidentIoSDK.test(undefined, { feature: { rbac: { active: true, deny: true } } })
+      await assert.rejects(async () => {
+        for await (const _item of denied.CatalogResource().stream('list')) { }
+      }, (err) => 'rbac_denied' === err.code)
+    }
+  })
+
+  test('stream-ctrl', async () => {
+    const explain = {}
+    const ctrl = { explain }
+    for await (const _item of IncidentIoSDK.test().CatalogResource().stream('list', undefined, { ctrl })) { }
+    assert.deepStrictEqual(Object.keys(ctrl), ['explain'])
+    assert(explain === ctrl.explain && 0 < Object.keys(explain).length)
+  })
+
+  test('unexpected', async () => {
+    const hook = new FailHook()
+    const client = new IncidentIoSDK({ feature: { test: { active: true } }, extend: [hook] })
+    await assert.rejects(client.CatalogResource().list(), /hook failed/)
+    assert(0 < hook.unexpected)
+
+    const fired = hook.unexpected
+    assert.strictEqual(await client.CatalogResource().list(undefined, { throw: false }), undefined)
+    assert(fired < hook.unexpected)
+  })
+
+  test('validate', async (t) => {
+    if (null == config.feature?.validate) {
+      t.skip('feature not present in this SDK: validate')
+      return
+    }
+    const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
+    await assert.rejects(client.CatalogResource().list({"category":1}),
+      (err) => 'validate_failed' === err.code)
+  })
+
+
+
+  test('basic', async (t) => {
+
+    
     const setup = basicSetup()
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"category":{"a":true,"h":"Category","n":"category","r":true,"sh":"Which category of resource","t":"`$STRING`","key$":"category","index$":0},"description":{"a":true,"h":"Description","n":"description","r":true,"sh":"Human readable description for this resource","t":"`$STRING`","key$":"description","index$":1},"engine_resource_type":{"a":true,"h":"Engine Resource Type","n":"engine_resource_type","r":true,"sh":"The way this resource type is referenced in the engine, as used when setting the type of an alert attribute","t":"`$STRING`","key$":"engine_resource_type","index$":2},"label":{"a":true,"h":"Label","n":"label","r":true,"sh":"Label for this catalog resource type","t":"`$STRING`","key$":"label","index$":3},"type":{"a":true,"h":"Type","n":"type","r":true,"sh":"Catalog type name for this resource, as used when setting the type of a catalog type attribute","t":"`$STRING`","key$":"type","index$":4},"value_docstring":{"a":true,"h":"Value Docstring","n":"value_docstring","r":true,"sh":"Documentation for the literal string value of this resource","t":"`$STRING`","key$":"value_docstring","index$":5}},"name":"catalog_resource","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /v2/catalog_resources","source":"openapi3","version":2},"g":{},"k":"http","m":"GET","o":"/v2/catalog_resources","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v2"},{"lit":"catalog_resources"}],"t":{"req":"`reqdata`","res":"`body.resources`"},"index$":0},{"a":true,"co":{"id":"GET /v3/catalog_resources","source":"openapi3","version":2},"g":{},"k":"http","m":"GET","o":"/v3/catalog_resources","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v3"},{"lit":"catalog_resources"}],"t":{"req":"`reqdata`","res":"`body.resources`"},"index$":1}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"catalog_resource","name__orig":"catalog_resource","Name":"CatalogResource","name_":"catalog_resource","name-":"catalog-resource","NAME":"CATALOG_RESOURCE","index$":28}, {"active":true,"entity":"catalog_resource","key$":"BasicCatalogResourceFlow","kind":"basic","name":"BasicCatalogResourceFlow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"catalog_resource_ref01"}}],"index$":0}]}, 'CatalogResource', {"GET /v2/catalog_resources":{"protocol":"http","parameters":[]},"GET /v3/catalog_resources":{"protocol":"http","parameters":[]}}, { strict: LIVE_STRICT, t })
+    }
     const client = setup.client
     const struct = setup.struct
 
@@ -45,13 +118,19 @@ describe('CatalogResourceEntity', async () => {
     const catalog_resource_ref01_ent = client.CatalogResource()
     const catalog_resource_ref01_match = {}
 
-    const catalog_resource_ref01_list = await catalog_resource_ref01_ent.list(catalog_resource_ref01_match)
+    const catalog_resource_ref01_list = (await catalog_resource_ref01_ent.list(catalog_resource_ref01_match)).map((e) => e.data())
 
 
   })
 })
 
 
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
 
 function basicSetup(extra) {
   // TODO: fix test def options
@@ -88,15 +167,32 @@ function basicSetup(extra) {
     'INCIDENT_IO_TEST_CATALOG_RESOURCE_ENTID': idmap,
     'INCIDENT_IO_TEST_LIVE': 'FALSE',
     'INCIDENT_IO_TEST_EXPLAIN': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
   idmap = env['INCIDENT_IO_TEST_CATALOG_RESOURCE_ENTID']
 
-  if ('TRUE' === env.INCIDENT_IO_TEST_LIVE) {
+  const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
+  const transport = createLiveTransport()
+  if (live) {
+    const rawIds = process.env['INCIDENT_IO_TEST_CATALOG_RESOURCE_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new IncidentIoSDK(merge([
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
       {
+        apikey: env.INCIDENT_IO_APIKEY,
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when
+      // the last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey and
+      // server values above and handed the SDK undefined.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -108,6 +204,8 @@ function basicSetup(extra) {
     struct,
     data: entityData,
     explain: 'TRUE' === env.INCIDENT_IO_TEST_EXPLAIN,
+    live,
+    transport,
     now: Date.now(),
   }
 

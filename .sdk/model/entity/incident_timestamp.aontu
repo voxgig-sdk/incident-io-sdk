@@ -4,23 +4,30 @@ main: kit: entity: incident_timestamp: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique ID of this incident timestamp"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Unique name of this timestamp"
+      t: "`$STRING`"
     }
-    {
-      name: "rank"
-      req: true
-      type: "`$INTEGER`"
+    rank: {
+      fo: "int64"
+      h: "Rank"
+      n: "rank"
+      r: true
+      sh: "Order in which this timestamp should be shown"
+      t: "`$INTEGER`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -33,13 +40,26 @@ main: kit: entity: incident_timestamp: {
       name: "list"
       points: [
         {
-          method: "GET"
-          orig: "/v2/incident_timestamps"
-          parts: [
-            "v2"
-            "incident_timestamps"
+          co: {
+            id: "GET /v2/incident_timestamps"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v2/incident_timestamps"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_timestamps"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.incident_timestamps`"
           }
@@ -50,31 +70,46 @@ main: kit: entity: incident_timestamp: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/incident_timestamps/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYD5H"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYD5H"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/incident_timestamps/{id}"
-          parts: [
-            "v2"
-            "incident_timestamps"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/incident_timestamps/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_timestamps"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.incident_timestamp`"
           }

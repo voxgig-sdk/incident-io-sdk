@@ -7,39 +7,6 @@ import {
 } from '@voxgig/apidef'
 
 
-// Emits test/ReadmeExamplesTest.php — a PHPUnit COMPLETENESS GATE that
-// guarantees every fenced php code example in the package docs is unit-tested.
-// It reads ALL THREE docs — the root (multi-language) ../../README.md, the
-// PHP-specific ../README.md, and ../REFERENCE.md — extracts every fenced php
-// block (tagged by source doc + index) and enforces four properties:
-//
-//   1. SYNTAX — `php -l` on every block (a leading <?php is prepended when the
-//      snippet omits one). Every documented example must parse.
-//   2. RUN — every RUNNABLE block (one that constructs the SDK, drives
-//      $client->, or performs an entity op) is EXECUTED offline in seeded test
-//      mode against the real SDK. The captured stdout+stderr is scanned for
-//      FATAL programming-error markers REGARDLESS of exit code, so a bug that a
-//      documented try/catch swallows and echoes via getMessage() is still
-//      caught. Only a not-found / domain error is tolerated.
-//   3. COMPLETENESS — every block is partitioned into exactly one of
-//      {executed, syntaxchecked-nonrunnable, illustration} and the counts must
-//      sum to the total. "illustration" is a NARROW explicit class (a
-//      signature / method-table block that names the SDK class or a documented
-//      method but never uses a live client) — never a catch-all. A
-//      runnable-looking block that was NOT executed lands in neither bucket and
-//      FAILS the gate: no runnable example can be silently skipped.
-//   4. A per-doc summary (total / executed / syntaxchecked / illustration) is
-//      printed to STDERR.
-//
-// A runnable block is rewritten so its client is a test-mode client
-// (<Sdk>SDK::test) seeded with an in-memory fixture for every entity it
-// references; any real constructor is rewritten and the doc's own require of
-// the SDK file is stripped (we require it by absolute path). A block that only
-// *uses* $client (constructed in an earlier fenced block) gets a test client
-// prepended.
-//
-// The emitted PHP builds the ``` fence via chr(96) so this generator string
-// contains no backticks of its own.
 const ReadmeExamplesTest = cmp(function ReadmeExamplesTest(props: any) {
   const { target } = props
   const { model } = props.ctx$
@@ -69,7 +36,7 @@ declare(strict_types=1);
 //   1. SYNTAX — 'php -l' on every block (a leading <?php is prepended when the
 //      snippet omits one). Every documented php example must parse.
 //   2. RUN — every RUNNABLE block (one that constructs the SDK, drives
-//      \\$client->, or performs an entity op load/list/create/update/remove) is
+//      \\$client->, or performs an entity op load/list/create/update/patch/remove) is
 //      EXECUTED offline in seeded test mode (${model.const.Name}SDK::test)
 //      against the real SDK. The captured output is scanned for a real
 //      PHP-level error (undefined method, wrong-arg-count, TypeError, ...)
@@ -110,7 +77,16 @@ ${entityLines}
 
     // PHP-level errors that indicate a real bug in a documented example (as
     // opposed to an expected not-found / domain error, which is tolerated).
-    private const FATAL = '/(Call to undefined method|Call to undefined function|Call to a member function|ArgumentCountError|Too few arguments|Undefined constant|Uncaught TypeError)/';
+    // A whitelist, so an expected domain error ("404: Not found") that an
+    // example deliberately catches stays tolerated.
+    //
+    // ParseError and "Parse error" are in it because runnable blocks are no
+    // longer linted: test_php_snippets_have_valid_syntax now skips anything the
+    // run pass executes, on the grounds that running a block proves it parses.
+    // That only holds if the run pass can SEE a parse failure — and without
+    // these two patterns it could not, so a syntax error in a runnable example
+    // would have passed both gates.
+    private const FATAL = '/(Call to undefined method|Call to undefined function|Call to a member function|ArgumentCountError|Too few arguments|Undefined constant|Uncaught TypeError|ParseError|Parse error|Allowed memory size|Cannot use object of type)/';
 
     // The three documentation sources this gate covers.
     private function docs(): array
@@ -153,7 +129,7 @@ ${entityLines}
         return preg_match('/new\\s+' . $cls . '\\b/', $b) === 1
             || preg_match('/' . $cls . '::test\\b/', $b) === 1
             || preg_match('/\\$client\\s*->/', $b) === 1
-            || preg_match('/->\\s*(?:load|list|create|update|remove)\\s*\\(/', $b) === 1;
+            || preg_match('/->\\s*(?:load|list|create|update|patch|remove)\\s*\\(/', $b) === 1;
     }
 
     /**
@@ -170,7 +146,7 @@ ${entityLines}
         if (preg_match('/\\b' . preg_quote(self::SDK_CLASS, '/') . '\\b/', $b) === 1) {
             return true;
         }
-        if (preg_match('/->\\s*(?:load|list|create|update|remove)\\b/', $b) === 1) {
+        if (preg_match('/->\\s*(?:load|list|create|update|patch|remove)\\b/', $b) === 1) {
             return true;
         }
         foreach (array_keys(self::ENTITIES) as $name) {
@@ -228,11 +204,25 @@ ${entityLines}
         $this->assertNotEmpty($this->phpBlocks(), 'docs should contain php examples');
     }
 
-    /** Every php block across all three docs must parse (php -l). */
+    /**
+     * Every php block that is NOT executed must parse (php -l).
+     *
+     * Runnable blocks are deliberately excluded: test_php_examples_run_offline
+     * executes them, and a syntax error there fails that gate with a better
+     * message than a lint pass gives. Linting them as well spawned a second php
+     * process per runnable block for a result the run already establishes.
+     *
+     * The non-runnable blocks — illustrations and signature snippets — are
+     * never executed, so this is the ONLY syntax check they get, and dropping
+     * it entirely would lose that coverage.
+     */
     public function test_php_snippets_have_valid_syntax(): void
     {
         $failures = [];
         foreach ($this->phpBlocks() as $blk) {
+            if ($this->isRunnable($blk['code'])) {
+                continue;
+            }
             $block = $blk['code'];
             $code = preg_match('/^\\s*<\\?php/', $block) ? $block : "<?php\\n" . $block;
             $tmp = tempnam(sys_get_temp_dir(), 'readme_php_') . '.php';
@@ -312,25 +302,155 @@ ${entityLines}
         $ran = 0;
         $failures = [];
         $sdk = __DIR__ . '/../${sdkfile}';
+
+        // BATCHED. One php process for every runnable snippet, not one each.
+        // A repo with 277 entities documents hundreds of examples, and a
+        // process spawn per snippet dominated the php suite's wall clock.
+        //
+        // Each snippet is included inside a closure, so it gets its own
+        // variable scope, and is bracketed by markers so output is attributed
+        // back to the snippet that produced it. The interpreter is SHARED,
+        // which is the cost of batching: a snippet that mutates process-wide
+        // state (the SDK config singleton) or calls exit() affects what
+        // follows it.
+        //
+        // That is why the batch is not trusted blindly. A snippet whose END
+        // marker never arrives — killed by a fatal, or by an exit() that took
+        // the rest of the batch with it — is RE-RUN on its own, in a fresh
+        // process, and that isolated result is the one that counts. So the
+        // fast path is a single spawn, and the moment isolation actually
+        // matters the harness falls back to the old one-process-per-snippet
+        // behaviour for the affected snippets only.
+        $runnable = [];
         foreach ($this->phpBlocks() as $blk) {
-            if (!$this->isRunnable($blk['code'])) {
-                continue;
+            if ($this->isRunnable($blk['code'])) {
+                $runnable[] = $blk;
             }
-            $ran++;
-            $runner = $this->toRunner($blk['code'], $sdk);
-            $tmp = tempnam(sys_get_temp_dir(), 'readme_run_') . '.php';
-            file_put_contents($tmp, $runner);
-            $out = [];
-            $rc = 0;
-            exec('php ' . escapeshellarg($tmp) . ' 2>&1', $out, $rc);
-            @unlink($tmp);
-            $text = implode("\\n", $out);
-            if (preg_match(self::FATAL, $text) === 1) {
-                $failures[] = $blk['doc'] . ' #' . $blk['n'] . ' (exit ' . $rc . "):\\n" . $text . "\\n" . $blk['code'];
+        }
+        $ran = count($runnable);
+
+        if ($ran > 0) {
+            $dir = sys_get_temp_dir() . '/readme_batch_' . getmypid() . '_' . bin2hex(random_bytes(4));
+            @mkdir($dir, 0700, true);
+            $paths = [];
+            foreach ($runnable as $i => $blk) {
+                $f = $dir . '/snip_' . $i . '.php';
+                file_put_contents($f, $this->toRunner($blk['code'], $sdk));
+                $paths[$i] = $f;
             }
+
+            $driver = $dir . '/_driver.php';
+            file_put_contents($driver, $this->batchDriver($paths));
+            [$text, $rc] = $this->runOutput('php ' . escapeshellarg($driver));
+
+            foreach ($runnable as $i => $blk) {
+                $seg = $this->batchSegment($text, $i);
+                if ($seg === null) {
+                    // No END marker: the batch died inside or before this
+                    // snippet. Re-run it alone so the verdict is isolated.
+                    [$seg, $src] = $this->runOutput('php ' . escapeshellarg($paths[$i]));
+                    $rc = $src;
+                }
+                if (preg_match(self::FATAL, $seg) === 1) {
+                    $failures[] = $blk['doc'] . ' #' . $blk['n'] . ' (exit ' . $rc . "):\\n" . $seg . "\\n" . $blk['code'];
+                }
+            }
+
+            foreach ($paths as $f) { @unlink($f); }
+            @unlink($driver);
+            @rmdir($dir);
         }
         $this->assertGreaterThan(0, $ran, 'expected at least one runnable example to execute');
         $this->assertSame([], $failures, "docs php examples raised a real error when run offline:\\n" . implode("\\n\\n", $failures));
+    }
+
+    /**
+     * The batch driver: include each snippet in its own closure scope, marked
+     * so output can be attributed back. The shutdown handler is what makes a
+     * fatal recoverable — it prints the END marker for whichever snippet was
+     * in flight, so the harness can tell "this one died" from "the batch
+     * stopped before reaching it", and re-run only what it must.
+     */
+    private function runOutput(string $command): array
+    {
+        // A printed entity can include the client graph. Scan the stream;
+        // retaining all output (and a second joined copy) exhausts PHP's heap.
+        $process = proc_open($command, [1 => ['pipe', 'w'], 2 => ['redirect', 1]], $pipes);
+        if (!is_resource($process)) throw new \RuntimeException('Could not run README example');
+        $summary = '';
+        $tail = '';
+        $reported = false;
+        while (($chunk = fgets($pipes[1], 8192)) !== false) {
+            if (preg_match('/@@VOX(BEGIN|END) [0-9]+/', $chunk, $marker)) {
+                $summary .= "\\n" . $marker[0] . "\\n";
+                if ($marker[1] === 'BEGIN') $reported = false;
+                $tail = '';
+            }
+            $window = $tail . $chunk;
+            if (!$reported && preg_match(self::FATAL, $window, $error, PREG_OFFSET_CAPTURE)) {
+                $summary .= "\\n" . substr($window, max(0, $error[0][1] - 100), 512) . "\\n";
+                $reported = true;
+            }
+            // Keep enough overlap to catch an error phrase split by fgets.
+            $tail = substr($window, -256);
+        }
+        fclose($pipes[1]);
+        return [$summary, proc_close($process)];
+    }
+
+    private function batchDriver(array $paths): string
+    {
+        // NOWDOC, not heredoc. The driver is PHP source that must survive
+        // being embedded verbatim: a heredoc interpolates it, and $e['message']
+        // with a quoted key is a parse error under interpolation. A nowdoc
+        // substitutes nothing, so the only thing injected is the file list.
+        $tpl = <<<'DRIVER'
+<?php
+$__files = __VOX_FILES__;
+$__current = null;
+register_shutdown_function(function () use (&$__current) {
+    if ($__current !== null) {
+        $e = error_get_last();
+        if ($e !== null) {
+            echo "\\nFATAL: " . $e['message'] . "\\n";
+        }
+        echo "\\n@@VOXEND " . $__current . "\\n";
+    }
+});
+foreach ($__files as $__i => $__f) {
+    $__current = $__i;
+    echo "\\n@@VOXBEGIN " . $__i . "\\n";
+    try {
+        (function ($__path) { include $__path; })($__f);
+    } catch (\\Throwable $__t) {
+        echo "\\nFATAL: " . get_class($__t) . ": " . $__t->getMessage() . "\\n";
+    }
+    echo "\\n@@VOXEND " . $__i . "\\n";
+    $__current = null;
+}
+DRIVER;
+        return str_replace('__VOX_FILES__', var_export($paths, true), $tpl);
+    }
+
+    /**
+     * The output between this snippet's BEGIN and END markers, or null when the
+     * END marker is absent — meaning the batch never got past it, and the
+     * caller must re-run it in isolation rather than guess.
+     */
+    private function batchSegment(string $text, int $i): ?string
+    {
+        $begin = '@@VOXBEGIN ' . $i;
+        $end = '@@VOXEND ' . $i;
+        $b = strpos($text, $begin);
+        if ($b === false) {
+            return null;
+        }
+        $b += strlen($begin);
+        $e = strpos($text, $end, $b);
+        if ($e === false) {
+            return null;
+        }
+        return trim(substr($text, $b, $e - $b));
     }
 
     /**

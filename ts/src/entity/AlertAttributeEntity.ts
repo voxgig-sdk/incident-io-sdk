@@ -23,7 +23,6 @@ import type {
   AlertAttributeRemoveMatch,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -40,14 +39,15 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
 
 
 
-  async load(this: any, reqmatch?: AlertAttributeLoadMatch, ctrl?: Control): Promise<AlertAttribute> {
+  async load(this: any, reqmatch?: AlertAttributeLoadMatch, ctrl?: Control): Promise<AlertAttributeEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -131,12 +131,20 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -145,7 +153,7 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<AlertAttribute> return stays clean under strict null checks.
+        // Promise<AlertAttributeEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -153,14 +161,15 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
 
 
 
-  async list(this: any, reqmatch?: AlertAttributeListMatch, ctrl?: Control): Promise<AlertAttribute[]> {
+  async list(this: any, reqmatch?: AlertAttributeListMatch, ctrl?: Control): Promise<AlertAttributeEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -243,9 +252,15 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -254,7 +269,7 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<AlertAttribute[]> return stays clean under strict null checks.
+        // Promise<AlertAttributeEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -262,13 +277,14 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
 
 
 
-  async create(this: any, reqdata?: AlertAttributeCreateData, ctrl?: Control): Promise<AlertAttribute> {
+  async create(this: any, reqdata?: AlertAttributeCreateData, ctrl?: Control): Promise<AlertAttributeEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -348,12 +364,20 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -362,7 +386,7 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<AlertAttribute> return stays clean under strict null checks.
+        // Promise<AlertAttributeEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -370,14 +394,15 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
 
 
 
-  async update(this: any, reqdata?: AlertAttributeUpdateData, ctrl?: Control): Promise<AlertAttribute> {
+  async update(this: any, reqdata?: AlertAttributeUpdateData, ctrl?: Control): Promise<AlertAttributeEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -462,12 +487,20 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -476,7 +509,7 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<AlertAttribute> return stays clean under strict null checks.
+        // Promise<AlertAttributeEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -484,14 +517,18 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
 
 
 
-  async remove(this: any, reqmatch?: AlertAttributeRemoveMatch, ctrl?: Control): Promise<AlertAttribute> {
+
+  async remove(
+    this: any, reqmatch?: AlertAttributeRemoveMatch, ctrl?: Control,
+  ): Promise<AlertAttributeEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -576,12 +613,25 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      if (ctx.result && ctx.result.ok) {
+        this.markDeleted()
+        return this
+      }
+
+      return out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -590,7 +640,7 @@ class AlertAttributeEntity extends IncidentIoEntityBase<AlertAttribute> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<AlertAttribute> return stays clean under strict null checks.
+        // Promise<AlertAttributeEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }

@@ -1,12 +1,12 @@
 # IncidentIo Golang SDK
 
-incident.io API clients in TypeScript, JavaScript, Go, Python, PHP and Lua, plus an MCP server for AI agents — all generated from incident.io's public OpenAPI spec, so every surface stays in sync with the API.
+
 
 The Golang SDK for the IncidentIo API — an entity-oriented client using standard Go conventions. No generics required; data flows as `map[string]any`.
 
 It exposes the API as capitalised, semantic **Entities** — e.g. `client.Action(nil)` — each with the same small set of operations (`List`, `Load`, `Create`, `Update`, `Remove`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
-> Other languages, the CLI, and MCP server live alongside this one — see
+> Also generated from this model: `go-mcp`, `js`, `lua`, `php`, `py`, `ts` — see
 > the [top-level README](../README.md).
 
 
@@ -16,7 +16,7 @@ go get github.com/voxgig-sdk/incident-io-sdk/go@latest
 ```
 
 The Go module proxy resolves the version from the `go/vX.Y.Z` GitHub
-release tag — see [Releases](https://github.com/voxgig-sdk/incident-io-sdk/releases) for the available versions.
+release tag — see [Tags](https://github.com/voxgig-sdk/incident-io-sdk/tags) for the available versions.
 
 To vendor from a local checkout instead, clone this repo alongside your
 project and add a `replace` directive pointing at the checked-out
@@ -35,57 +35,61 @@ loading a specific record.
 ### Quickstart
 
 A complete program: create a client, then call the entity operations.
-Each operation returns `(value, error)` — the value is the data itself
-(there is no `{ok, data}` wrapper), so check `err` and use the value
-directly.
+Each operation returns `(value, error)` — the value is the entity, and for
+`List` a `[]any` of entities, one per record (there is no `{ok, data}`
+wrapper), so check `err` and read a record through the entity's
+`Data()`.
 
 ```go
 package main
 
 import (
     "fmt"
+    "os"
     sdk "github.com/voxgig-sdk/incident-io-sdk/go"
 )
 
 func main() {
-    client := sdk.New()
+    client := sdk.NewIncidentIoSDK(map[string]any{
+        "apikey": os.Getenv("INCIDENT_IO_APIKEY"),
+    })
 
-    // List action records — the value is the array of records itself.
+    // List action records — the value is a []any of entities, one per record.
     actions, err := client.Action(nil).List(nil, nil)
     if err != nil {
         panic(err)
     }
     for _, item := range actions.([]any) {
-        fmt.Println(item)
+        fmt.Println(item.(sdk.Entity).Data())
     }
 
-    // Load a single action — the value is the loaded record.
+    // Load a single action — the value is the entity; Data() reads its record.
     action, err := client.Action(nil).Load(map[string]any{"id": "example_id"}, nil)
     if err != nil {
         panic(err)
     }
-    fmt.Println(action)
+    fmt.Println(action.(sdk.Entity).Data())
 
     // Create a action.
     created, err := client.Action(nil).Create(map[string]any{"assignee": map[string]any{}, "created_at": "example_created_at", "creator": map[string]any{}, "follow_up": true, "id": "example_id", "incident_id": "example_incident_id", "status": "example_status", "updated_at": "example_updated_at"}, nil)
     if err != nil {
         panic(err)
     }
-    fmt.Println(created)
+    fmt.Println(created.(sdk.Entity).Data())
 
     // Update a action.
     updated, err := client.Action(nil).Update(map[string]any{"id": "example_id", "assignee": map[string]any{}, "assignee_id": "example_assignee_id"}, nil)
     if err != nil {
         panic(err)
     }
-    fmt.Println(updated)
+    fmt.Println(updated.(sdk.Entity).Data())
 
     // Remove a action.
     removed, err := client.Action(nil).Remove(map[string]any{"id": "example_id"}, nil)
     if err != nil {
         panic(err)
     }
-    fmt.Println(removed)
+    fmt.Println(removed.(sdk.Entity).Data())
 }
 ```
 
@@ -96,12 +100,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-incidentroles, err := client.IncidentRole(nil).List(nil, nil)
+incidentstatuss, err := client.IncidentStatus(nil).List(nil, nil)
 if err != nil {
     // handle err
     return
 }
-_ = incidentroles
+_ = incidentstatuss
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -165,13 +169,16 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-incidentRole, err := client.IncidentRole(nil).List(
+incidentStatuss, err := client.IncidentStatus(nil).List(
     nil, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentRole) // the returned mock data
+// A []any of entities, one per mock record.
+for _, item := range incidentStatuss.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 ### Use a custom fetch function
@@ -204,6 +211,7 @@ Create a `.env.local` file at the project root:
 
 ```
 INCIDENT_IO_TEST_LIVE=TRUE
+INCIDENT_IO_APIKEY=<your-key>
 ```
 
 Then run:
@@ -225,6 +233,7 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
+| `"apikey"` | `string` | API key for authentication. |
 | `"base"` | `string` | Base URL of the API server. |
 | `"prefix"` | `string` | URL path prefix prepended to all requests. |
 | `"suffix"` | `string` | URL path suffix appended to all requests. |
@@ -254,7 +263,27 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `AlertNote` | `(data map[string]any) IncidentIoEntity` | Create an AlertNote entity instance. |
 | `AlertRoute` | `(data map[string]any) IncidentIoEntity` | Create an AlertRoute entity instance. |
 | `AlertSource` | `(data map[string]any) IncidentIoEntity` | Create an AlertSource entity instance. |
+| `AlertSourcesV2` | `(data map[string]any) IncidentIoEntity` | Create an AlertSourcesV2 entity instance. |
+| `AlertTag` | `(data map[string]any) IncidentIoEntity` | Create an AlertTag entity instance. |
+| `AlertsAddTagsResultV2` | `(data map[string]any) IncidentIoEntity` | Create an AlertsAddTagsResultV2 entity instance. |
+| `AlertsRemoveTagsResultV2` | `(data map[string]any) IncidentIoEntity` | Create an AlertsRemoveTagsResultV2 entity instance. |
+| `AlertsSetTagsResultV2` | `(data map[string]any) IncidentIoEntity` | Create an AlertsSetTagsResultV2 entity instance. |
+| `AlertsTransitionIncidentAlertResultV2` | `(data map[string]any) IncidentIoEntity` | Create an AlertsTransitionIncidentAlertResultV2 entity instance. |
+| `AnnouncementRule` | `(data map[string]any) IncidentIoEntity` | Create an AnnouncementRule entity instance. |
+| `AnnouncementTemplate` | `(data map[string]any) IncidentIoEntity` | Create an AnnouncementTemplate entity instance. |
 | `ApiKey` | `(data map[string]any) IncidentIoEntity` | Create an ApiKey entity instance. |
+| `CallRoute` | `(data map[string]any) IncidentIoEntity` | Create a CallRoute entity instance. |
+| `CallRoutesCreateAllowedCallerResultV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesCreateAllowedCallerResultV2 entity instance. |
+| `CallRoutesCreateOptionResultV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesCreateOptionResultV2 entity instance. |
+| `CallRoutesListAllowedCallersResultV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesListAllowedCallersResultV2 entity instance. |
+| `CallRoutesListOptionsResultV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesListOptionsResultV2 entity instance. |
+| `CallRoutesShowAllowedCallerResultV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesShowAllowedCallerResultV2 entity instance. |
+| `CallRoutesShowOptionResultV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesShowOptionResultV2 entity instance. |
+| `CallRoutesUpdateAllowedCallerResultV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesUpdateAllowedCallerResultV2 entity instance. |
+| `CallRoutesUpdateOptionResultV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesUpdateOptionResultV2 entity instance. |
+| `CallRoutesV2` | `(data map[string]any) IncidentIoEntity` | Create a CallRoutesV2 entity instance. |
+| `CallSession` | `(data map[string]any) IncidentIoEntity` | Create a CallSession entity instance. |
+| `CallTranscriptEntry` | `(data map[string]any) IncidentIoEntity` | Create a CallTranscriptEntry entity instance. |
 | `CatalogEntry` | `(data map[string]any) IncidentIoEntity` | Create a CatalogEntry entity instance. |
 | `CatalogResource` | `(data map[string]any) IncidentIoEntity` | Create a CatalogResource entity instance. |
 | `CatalogType` | `(data map[string]any) IncidentIoEntity` | Create a CatalogType entity instance. |
@@ -262,37 +291,78 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `CustomField` | `(data map[string]any) IncidentIoEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `(data map[string]any) IncidentIoEntity` | Create a CustomFieldOption entity instance. |
 | `Escalation` | `(data map[string]any) IncidentIoEntity` | Create an Escalation entity instance. |
+| `EscalationPathTemplate` | `(data map[string]any) IncidentIoEntity` | Create an EscalationPathTemplate entity instance. |
+| `EscalationsCheckEscalationPermissionsResultV2` | `(data map[string]any) IncidentIoEntity` | Create an EscalationsCheckEscalationPermissionsResultV2 entity instance. |
+| `EscalationsReassignEscalationResultV2` | `(data map[string]any) IncidentIoEntity` | Create an EscalationsReassignEscalationResultV2 entity instance. |
 | `FollowUp` | `(data map[string]any) IncidentIoEntity` | Create a FollowUp entity instance. |
+| `FollowUpsConnectExternalIssueResultV3` | `(data map[string]any) IncidentIoEntity` | Create a FollowUpsConnectExternalIssueResultV3 entity instance. |
+| `FollowUpsCreateFromLinkResultV3` | `(data map[string]any) IncidentIoEntity` | Create a FollowUpsCreateFromLinkResultV3 entity instance. |
+| `Identity` | `(data map[string]any) IncidentIoEntity` | Create an Identity entity instance. |
 | `Incident` | `(data map[string]any) IncidentIoEntity` | Create an Incident entity instance. |
-| `IncidentAlert` | `(data map[string]any) IncidentIoEntity` | Create an IncidentAlert entity instance. |
+| `IncidentActivityLogEntry` | `(data map[string]any) IncidentIoEntity` | Create an IncidentActivityLogEntry entity instance. |
 | `IncidentAttachment` | `(data map[string]any) IncidentIoEntity` | Create an IncidentAttachment entity instance. |
+| `IncidentForm` | `(data map[string]any) IncidentIoEntity` | Create an IncidentForm entity instance. |
 | `IncidentMembership` | `(data map[string]any) IncidentIoEntity` | Create an IncidentMembership entity instance. |
 | `IncidentParticipant` | `(data map[string]any) IncidentIoEntity` | Create an IncidentParticipant entity instance. |
 | `IncidentParticipantWorkload` | `(data map[string]any) IncidentIoEntity` | Create an IncidentParticipantWorkload entity instance. |
 | `IncidentRelationship` | `(data map[string]any) IncidentIoEntity` | Create an IncidentRelationship entity instance. |
 | `IncidentRole` | `(data map[string]any) IncidentIoEntity` | Create an IncidentRole entity instance. |
 | `IncidentStatus` | `(data map[string]any) IncidentIoEntity` | Create an IncidentStatus entity instance. |
+| `IncidentTeamMembership` | `(data map[string]any) IncidentIoEntity` | Create an IncidentTeamMembership entity instance. |
+| `IncidentTeamMembershipsV1` | `(data map[string]any) IncidentIoEntity` | Create an IncidentTeamMembershipsV1 entity instance. |
+| `IncidentTemplate` | `(data map[string]any) IncidentIoEntity` | Create an IncidentTemplate entity instance. |
+| `IncidentTemplatesValidateResultV1` | `(data map[string]any) IncidentIoEntity` | Create an IncidentTemplatesValidateResultV1 entity instance. |
+| `IncidentTimelineItem` | `(data map[string]any) IncidentIoEntity` | Create an IncidentTimelineItem entity instance. |
 | `IncidentTimestamp` | `(data map[string]any) IncidentIoEntity` | Create an IncidentTimestamp entity instance. |
 | `IncidentType` | `(data map[string]any) IncidentIoEntity` | Create an IncidentType entity instance. |
 | `IncidentUpdate` | `(data map[string]any) IncidentIoEntity` | Create an IncidentUpdate entity instance. |
 | `IpAllowlist` | `(data map[string]any) IncidentIoEntity` | Create an IpAllowlist entity instance. |
+| `IpRange` | `(data map[string]any) IncidentIoEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow` | `(data map[string]any) IncidentIoEntity` | Create a MaintenanceWindow entity instance. |
+| `OnCallNotificationMethodPublicV2` | `(data map[string]any) IncidentIoEntity` | Create an OnCallNotificationMethodPublicV2 entity instance. |
+| `OnCallNotificationRulePublicV2` | `(data map[string]any) IncidentIoEntity` | Create an OnCallNotificationRulePublicV2 entity instance. |
+| `PayConfig` | `(data map[string]any) IncidentIoEntity` | Create a PayConfig entity instance. |
+| `PayConfigsCreateOneOffRuleResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
+| `PayConfigsCreateWeeklyRuleResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsCreateWeeklyRuleResultV2 entity instance. |
+| `PayConfigsListOneOffRulesResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsListOneOffRulesResultV2 entity instance. |
+| `PayConfigsListWeeklyRulesResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsListWeeklyRulesResultV2 entity instance. |
+| `PayConfigsShowOneOffRuleResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsShowOneOffRuleResultV2 entity instance. |
+| `PayConfigsShowWeeklyRuleResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsShowWeeklyRuleResultV2 entity instance. |
+| `PayConfigsUpdateOneOffRuleResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsUpdateOneOffRuleResultV2 entity instance. |
+| `PayConfigsUpdateWeeklyRuleResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsUpdateWeeklyRuleResultV2 entity instance. |
+| `PayConfigsV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsV2 entity instance. |
+| `PayReport` | `(data map[string]any) IncidentIoEntity` | Create a PayReport entity instance. |
+| `PayReportsPublishResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayReportsPublishResultV2 entity instance. |
+| `PayReportsUnpublishResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayReportsUnpublishResultV2 entity instance. |
+| `PayReportsV2` | `(data map[string]any) IncidentIoEntity` | Create a PayReportsV2 entity instance. |
+| `PoliciesV2` | `(data map[string]any) IncidentIoEntity` | Create a PoliciesV2 entity instance. |
+| `Policy` | `(data map[string]any) IncidentIoEntity` | Create a Policy entity instance. |
+| `PolicyFinding` | `(data map[string]any) IncidentIoEntity` | Create a PolicyFinding entity instance. |
+| `PolicyFindingsDismissResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PolicyFindingsDismissResultV2 entity instance. |
+| `PolicyFindingsRestoreResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PolicyFindingsRestoreResultV2 entity instance. |
 | `PostmortemDocument` | `(data map[string]any) IncidentIoEntity` | Create a PostmortemDocument entity instance. |
 | `Schedule` | `(data map[string]any) IncidentIoEntity` | Create a Schedule entity instance. |
+| `ScheduleEntriesListPayloadV2` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleEntriesListPayloadV2 entity instance. |
 | `ScheduleEntry` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleEntry entity instance. |
 | `ScheduleReplica` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleReplica entity instance. |
 | `ScheduleSyncRule` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleSyncRule entity instance. |
 | `ScheduleSyncTarget` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleSyncTarget entity instance. |
+| `SchedulesShowOverrideResultV2` | `(data map[string]any) IncidentIoEntity` | Create a SchedulesShowOverrideResultV2 entity instance. |
+| `SchedulesUpdateOverrideResultV2` | `(data map[string]any) IncidentIoEntity` | Create a SchedulesUpdateOverrideResultV2 entity instance. |
 | `Secret` | `(data map[string]any) IncidentIoEntity` | Create a Secret entity instance. |
 | `Severity` | `(data map[string]any) IncidentIoEntity` | Create a Severity entity instance. |
 | `StatusPage` | `(data map[string]any) IncidentIoEntity` | Create a StatusPage entity instance. |
+| `StatusPageComponent` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageComponent entity instance. |
+| `StatusPageComponentAvailabilityV2` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageComponentAvailabilityV2 entity instance. |
 | `StatusPageIncident` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageIncident entity instance. |
 | `StatusPageIncidentUpdate` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageIncidentUpdate entity instance. |
+| `StatusPageLinkedResponseIncidentV1` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageLinkedResponseIncidentV1 entity instance. |
 | `StatusPageMaintenance` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageMaintenance entity instance. |
 | `StatusPageMaintenanceUpdate` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
 | `StatusPageStructure` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageStructure entity instance. |
+| `StatusPagesV2` | `(data map[string]any) IncidentIoEntity` | Create a StatusPagesV2 entity instance. |
 | `Team` | `(data map[string]any) IncidentIoEntity` | Create a Team entity instance. |
-| `TelemetryDataSource` | `(data map[string]any) IncidentIoEntity` | Create a TelemetryDataSource entity instance. |
+| `TelemetryDataSourceV2` | `(data map[string]any) IncidentIoEntity` | Create a TelemetryDataSourceV2 entity instance. |
 | `User` | `(data map[string]any) IncidentIoEntity` | Create an User entity instance. |
 | `Workflow` | `(data map[string]any) IncidentIoEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `(data map[string]any) IncidentIoEntity` | Create a WorkflowRun entity instance. |
@@ -303,11 +373,11 @@ All entities implement the `IncidentIoEntity` interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `Load` | `(reqmatch, ctrl map[string]any) (any, error)` | Load a single entity by match criteria. |
-| `List` | `(reqmatch, ctrl map[string]any) (any, error)` | List entities matching the criteria. |
-| `Create` | `(reqdata, ctrl map[string]any) (any, error)` | Create a new entity. |
-| `Update` | `(reqdata, ctrl map[string]any) (any, error)` | Update an existing entity. |
-| `Remove` | `(reqmatch, ctrl map[string]any) (any, error)` | Remove an entity. |
+| `Load` | `(reqmatch, ctrl map[string]any) (any, error)` | Load a single entity by match criteria, and return it. |
+| `List` | `(reqmatch, ctrl map[string]any) (any, error)` | List entities matching the criteria, one per record. |
+| `Create` | `(reqdata, ctrl map[string]any) (any, error)` | Create a new entity, and return it. |
+| `Update` | `(reqdata, ctrl map[string]any) (any, error)` | Update an existing entity, and return it. |
+| `Remove` | `(reqmatch, ctrl map[string]any) (any, error)` | Remove an entity, and return it marked as deleted. |
 | `Data` | `(args ...any) any` | Get or set entity data. |
 | `Match` | `(args ...any) any` | Get or set entity match criteria. |
 | `Make` | `() Entity` | Create a new instance with the same options. |
@@ -315,21 +385,21 @@ All entities implement the `IncidentIoEntity` interface.
 
 ### Result shape
 
-Entity operations return `(value, error)`. The `value` is the
-operation's data **directly** — there is no wrapper:
+Entity operations return `(value, error)`. The `value` is the entity
+itself — there is no wrapper:
 
 | Operation | `value` |
 | --- | --- |
-| `Load` / `Create` / `Update` / `Remove` | the entity record (`map[string]any`) |
-| `List` | a `[]any` of entity records |
+| `Load` / `Create` / `Update` / `Remove` | the entity, whose `Data()` reads its record (`map[string]any`) |
+| `List` | a `[]any` of entities, one per record |
 
 Check `err` first, then use the value directly (or the typed
 `...Typed` variants, which return the entity's model struct and a typed
 slice):
 
-    action, err := client.Action(nil).List(map[string]any{/* fields */}, nil)
+    action, err := client.Action(nil).List(nil, nil)
     if err != nil { /* handle */ }
-    // action is the returned record
+    // action is a []any of entities, one per record
 
 Only `Direct()` returns a response envelope — a `map[string]any` with
 `"ok"`, `"status"`, `"headers"`, and `"data"` keys.
@@ -341,17 +411,17 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 | Field | Description |
 | --- | --- |
 | `"assignee"` |  |
-| `"assignee_id"` |  |
-| `"completed_at"` |  |
-| `"created_at"` |  |
+| `"assignee_id"` | ID of the user this action is assigned to |
+| `"completed_at"` | When the action was completed |
+| `"created_at"` | When the action was created |
 | `"creator"` |  |
-| `"description"` |  |
+| `"description"` | Description of the action |
 | `"external_issue_reference"` |  |
-| `"follow_up"` |  |
-| `"id"` |  |
-| `"incident_id"` |  |
-| `"status"` |  |
-| `"updated_at"` |  |
+| `"follow_up"` | Whether an action is marked as follow-up |
+| `"id"` | Unique identifier for the action |
+| `"incident_id"` | Unique identifier of the incident the action belongs to |
+| `"status"` | Status of the action |
+| `"updated_at"` | When the action was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -361,18 +431,19 @@ API path: `/v2/actions`
 
 | Field | Description |
 | --- | --- |
-| `"alert_group_id"` |  |
-| `"alert_source_id"` |  |
-| `"attribute"` |  |
-| `"created_at"` |  |
-| `"deduplication_key"` |  |
-| `"description"` |  |
-| `"id"` |  |
-| `"resolved_at"` |  |
-| `"source_url"` |  |
-| `"status"` |  |
-| `"title"` |  |
-| `"updated_at"` |  |
+| `"alert_group_ids"` | The IDs of every alert group this alert belongs to. |
+| `"alert_source_id"` | The ID of the alert source this alert fired on |
+| `"attributes"` | Attribute values parsed from the alerts payload |
+| `"created_at"` | When this entry was created |
+| `"deduplication_key"` | A deduplication key which uniquely references this alert from your alert source. |
+| `"description"` | The description of the alert |
+| `"id"` | The ID of this alert |
+| `"resolved_at"` | When this alert was resolved |
+| `"source_url"` | If applicable, a link to the alert in the upstream system |
+| `"status"` | Statuses of an alert |
+| `"tags"` | Tags someone has applied to this alert |
+| `"title"` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `"updated_at"` | When this alert was last updated |
 
 Operations: Create, List, Load.
 
@@ -382,12 +453,12 @@ API path: `/v2/alerts/{id}/actions/resolve`
 
 | Field | Description |
 | --- | --- |
-| `"array"` |  |
-| `"emoji"` |  |
-| `"id"` |  |
-| `"name"` |  |
-| `"required"` |  |
-| `"type"` |  |
+| `"array"` | Whether this attribute is an array |
+| `"emoji"` | The emoji to display alongside this attribute in chat messages, stored without colons |
+| `"id"` | The ID of this attribute |
+| `"name"` | Unique name of this attribute |
+| `"required"` | Whether this attribute is required. |
+| `"type"` | Engine resource name for this attribute |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -397,15 +468,15 @@ API path: `/v2/alert_attributes`
 
 | Field | Description |
 | --- | --- |
-| `"alert_group_id"` |  |
-| `"alert_id"` |  |
-| `"content"` |  |
-| `"created_at"` |  |
+| `"alert_group_id"` | ID of the alert group this note is attached to. |
+| `"alert_id"` | ID of the alert this note is attached to. |
+| `"content"` | Markdown body of the note |
+| `"created_at"` | When this note was first created |
 | `"creator"` |  |
-| `"id"` |  |
-| `"image"` |  |
-| `"last_edited_at"` |  |
-| `"updated_at"` |  |
+| `"id"` | Unique identifier for the alert note |
+| `"images"` | Images attached to the current version of the note, with signed URLs valid for 10 minutes |
+| `"last_edited_at"` | When this note was last edited, only set if it has been edited at least once since creation |
+| `"updated_at"` | When this note was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -415,24 +486,24 @@ API path: `/v1/alert_notes`
 
 | Field | Description |
 | --- | --- |
-| `"alert_source"` |  |
-| `"channel_config"` |  |
-| `"condition_group"` |  |
-| `"created_at"` |  |
-| `"enabled"` |  |
+| `"alert_sources"` | Which alert sources should this alert route match? |
+| `"channel_config"` | The channel configuration for this alert route |
+| `"condition_groups"` | What condition groups must be true for this alert route to fire? |
+| `"created_at"` | The time of creation of this alert route |
+| `"enabled"` | Whether this alert route is enabled or not |
 | `"escalation_config"` |  |
-| `"expression"` |  |
+| `"expressions"` | The expressions used in this template |
 | `"grouping_config"` |  |
-| `"id"` |  |
+| `"id"` | Unique identifier for this alert route config |
 | `"incident_config"` |  |
 | `"incident_template"` |  |
-| `"is_private"` |  |
+| `"is_private"` | Whether this alert route is private. |
 | `"message_config"` |  |
 | `"message_template"` |  |
-| `"name"` |  |
-| `"owning_team_id"` |  |
-| `"updated_at"` |  |
-| `"version"` |  |
+| `"name"` | The name of this alert route config, for the user's reference |
+| `"owning_team_ids"` | IDs of teams that own this alert route |
+| `"updated_at"` | The time of last update of this alert route |
+| `"version"` | The version of this alert route config |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -442,64 +513,368 @@ API path: `/v2/alert_routes`
 
 | Field | Description |
 | --- | --- |
-| `"alert_events_url"` |  |
-| `"auto_resolve_incident_alert"` |  |
-| `"auto_resolve_timeout_minute"` |  |
-| `"disabled"` |  |
-| `"email_option"` |  |
-| `"heartbeat_option"` |  |
-| `"http_custom_option"` |  |
-| `"id"` |  |
-| `"jira_option"` |  |
-| `"name"` |  |
-| `"owning_team_id"` |  |
-| `"secret_token"` |  |
-| `"source_type"` |  |
+| `"alert_events_url"` | URL that can be used to send alert events to this source. |
+| `"auto_resolve_incident_alerts"` | Whether alerts from this source keep counting down to auto-resolve while attached to an incident. |
+| `"auto_resolve_timeout_minutes"` | When set, alerts from this source will automatically resolve after this many minutes. |
+| `"azure_devops_options"` |  |
+| `"disabled"` | For heartbeat sources, set to true to disable monitoring |
+| `"email_options"` |  |
+| `"filter_condition_groups"` | Conditions an incoming event must match to be ingested from this source, evaluated against the event's payload and this source's expressions. |
+| `"fixed_team_id"` | When set, the team every alert from this source is attributed to. |
+| `"heartbeat_options"` |  |
+| `"http_custom_options"` |  |
+| `"id"` | The ID of this alert source |
+| `"jira_options"` |  |
+| `"name"` | Unique name of the alert source |
+| `"owning_team_ids"` | IDs of teams that own this alert source |
+| `"rate_limit_sharding"` | Controls how this source's ingest rate limit is split into buckets. |
+| `"secret_token"` | Secret token used to authenticate this source, if applicable. |
+| `"source_type"` | Type of alert source |
 | `"template"` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/alert_sources`
 
+#### AlertSourcesV2
+
+| Field | Description |
+| --- | --- |
+| `"owning_team_ids"` | IDs of teams that own this alert source |
+| `"source_type"` | Type of alert source |
+| `"template"` |  |
+
+Operations: Create.
+
+API path: `/v2/alert_sources/actions/validate`
+
+#### AlertTag
+
+| Field | Description |
+| --- | --- |
+| `"id"` | Unique identifier for the tag |
+| `"name"` | The tag name |
+
+Operations: List.
+
+API path: `/v2/alert_tags`
+
+#### AlertsAddTagsResultV2
+
+| Field | Description |
+| --- | --- |
+| `"alert_group_ids"` | The IDs of every alert group this alert belongs to. |
+| `"alert_source_id"` | The ID of the alert source this alert fired on |
+| `"attributes"` | Attribute values parsed from the alerts payload |
+| `"created_at"` | When this entry was created |
+| `"deduplication_key"` | A deduplication key which uniquely references this alert from your alert source. |
+| `"description"` | The description of the alert |
+| `"id"` | The ID of this alert |
+| `"resolved_at"` | When this alert was resolved |
+| `"source_url"` | If applicable, a link to the alert in the upstream system |
+| `"status"` | Statuses of an alert |
+| `"tags"` | Tags someone has applied to this alert |
+| `"title"` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `"updated_at"` | When this alert was last updated |
+
+Operations: Create.
+
+API path: `/v2/alerts/{id}/actions/add_tags`
+
+#### AlertsRemoveTagsResultV2
+
+| Field | Description |
+| --- | --- |
+| `"alert_group_ids"` | The IDs of every alert group this alert belongs to. |
+| `"alert_source_id"` | The ID of the alert source this alert fired on |
+| `"attributes"` | Attribute values parsed from the alerts payload |
+| `"created_at"` | When this entry was created |
+| `"deduplication_key"` | A deduplication key which uniquely references this alert from your alert source. |
+| `"description"` | The description of the alert |
+| `"id"` | The ID of this alert |
+| `"resolved_at"` | When this alert was resolved |
+| `"source_url"` | If applicable, a link to the alert in the upstream system |
+| `"status"` | Statuses of an alert |
+| `"tags"` | Tags someone has applied to this alert |
+| `"title"` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `"updated_at"` | When this alert was last updated |
+
+Operations: Create.
+
+API path: `/v2/alerts/{id}/actions/remove_tags`
+
+#### AlertsSetTagsResultV2
+
+| Field | Description |
+| --- | --- |
+| `"alert_group_ids"` | The IDs of every alert group this alert belongs to. |
+| `"alert_source_id"` | The ID of the alert source this alert fired on |
+| `"attributes"` | Attribute values parsed from the alerts payload |
+| `"created_at"` | When this entry was created |
+| `"deduplication_key"` | A deduplication key which uniquely references this alert from your alert source. |
+| `"description"` | The description of the alert |
+| `"id"` | The ID of this alert |
+| `"resolved_at"` | When this alert was resolved |
+| `"source_url"` | If applicable, a link to the alert in the upstream system |
+| `"status"` | Statuses of an alert |
+| `"tags"` | Tags someone has applied to this alert |
+| `"title"` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `"updated_at"` | When this alert was last updated |
+
+Operations: Create.
+
+API path: `/v2/alerts/{id}/actions/set_tags`
+
+#### AlertsTransitionIncidentAlertResultV2
+
+| Field | Description |
+| --- | --- |
+| `"alert"` |  |
+| `"alert_id"` | Alert to attach to the incident |
+| `"alert_route_id"` | The ID of the alert route that created this incident alert |
+| `"id"` | The ID of this alert |
+| `"incident"` | Incident slim is a subset of the full incident object, listing key fields. |
+| `"incident_id"` | Incident to attach the alert to |
+| `"re_relate"` | Relate the alert again even though someone previously marked it unrelated to this incident. |
+| `"state"` | What state to move the connection to |
+
+Operations: Create, List.
+
+API path: `/v2/incident_alerts/{id}/actions/transition`
+
+#### AnnouncementRule
+
+| Field | Description |
+| --- | --- |
+| `"condition_groups"` | Incidents are announced when they match any of these condition groups |
+| `"conditions_no_longer_apply_behaviour"` | Whether to remove announcement posts when the incident no longer matches this rule's conditions |
+| `"created_at"` | When the rule was created |
+| `"id"` | Unique identifier for this announcement rule |
+| `"microsoft_teams_channel_ids"` | Microsoft Teams channels to post announcements into, as team_id/channel_id, when the organisation uses Microsoft Teams |
+| `"mode"` | Which incidents are announced: live incidents only, or triage incidents too |
+| `"name"` | Human readable name for the rule |
+| `"owning_team_ids"` | IDs of the teams that own this rule |
+| `"private_incident_scope"` | Which private incidents this rule announces: every private incident (all), those an owning team can see (owning_teams), or none |
+| `"slack_channel_ids"` | IDs of the Slack channels to post announcements into, when the organisation uses Slack |
+| `"template_id"` | ID of the announcement template used to render this rule's posts |
+| `"update_sharing_mode"` | Where incident updates are shared once the incident is announced |
+| `"updated_at"` | When the rule was last updated |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/announcement_rules`
+
+#### AnnouncementTemplate
+
+| Field | Description |
+| --- | --- |
+| `"actions"` | Actions shown on the announcement post, in rank order |
+| `"fields"` | Fields shown on the announcement post, in rank order |
+| `"id"` | Unique identifier for this announcement template |
+| `"is_default"` | Whether this is the organisation's default template, used by rules that don't choose one |
+| `"name"` | Name of this announcement template |
+| `"owning_team_ids"` | IDs of the teams that own this template |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/announcement_templates`
+
 #### ApiKey
 
 | Field | Description |
 | --- | --- |
-| `"comment"` |  |
-| `"created_at"` |  |
+| `"comments"` | Freeform notes about this API key |
+| `"created_at"` | When the API key was created |
 | `"creator"` |  |
-| `"grace_period_minute"` |  |
-| `"id"` |  |
-| `"last_used_at"` |  |
-| `"name"` |  |
-| `"role"` |  |
-| `"role_name"` |  |
-| `"team_id"` |  |
-| `"team_role"` |  |
-| `"team_role_name"` |  |
-| `"token_last_issued_at"` |  |
+| `"id"` | Unique identifier for this API key |
+| `"last_used_at"` | When the key was last used to authenticate a request |
+| `"name"` | The name of the API key, for the user's reference |
+| `"role_names"` | Account-level roles to assign to the API key. |
+| `"roles"` | The account-level roles assigned to this API key |
+| `"team_ids"` | IDs of teams that this API key is scoped to |
+| `"team_role_names"` | Roles to grant for the teams specified in `team_ids`. |
+| `"team_roles"` | The team-level roles assigned to this API key |
+| `"token_last_issued_at"` | When the current token for this API was last issued. |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/api_keys/{id}/actions/rotate`
 
+#### CallRoute
+
+| Field | Description |
+| --- | --- |
+| `"allowed_callers"` | The numbers allowed to call this route. |
+| `"country_code"` | The country this route's number belongs to |
+| `"created_at"` |  |
+| `"current_state"` | Where this route is in provisioning. |
+| `"custom_language"` | The language we speak voice prompts in, via text-to-speech |
+| `"id"` | Unique identifier for this call route |
+| `"name"` | Name for this call route |
+| `"options"` | The phone-tree menu this route presents. |
+| `"path"` | Who we page when a call comes in. |
+| `"phone_number"` | The number your customers call to reach this route, once one has been provisioned |
+| `"phone_number_type"` | The type of phone number, which determines the regulatory requirements for provisioning it |
+| `"responder_caller_id"` | Which number responders see when we call them: * route_number: this route's own number * oncall_number: an incident.io on-call number |
+| `"updated_at"` |  |
+| `"use_caller_allowlist"` | Whether this route only answers calls from its allowed callers |
+
+Operations: List, Load, Update.
+
+API path: `/v2/call_routes`
+
+#### CallRoutesCreateAllowedCallerResultV2
+
+| Field | Description |
+| --- | --- |
+| `"name"` | Label for whose number this is |
+| `"phone_number"` | The number to allow, in international format |
+
+Operations: Create.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers`
+
+#### CallRoutesCreateOptionResultV2
+
+| Field | Description |
+| --- | --- |
+| `"digit"` | The keypad digit a caller presses to choose this option |
+| `"path"` | Who to page when a caller chooses this option |
+| `"prompt"` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+Operations: Create.
+
+API path: `/v2/call_routes/{call_route_id}/options`
+
+#### CallRoutesListAllowedCallersResultV2
+
+| Field | Description |
+| --- | --- |
+| `"id"` | Unique identifier for this allowed caller |
+| `"name"` | Label for whose number this is |
+| `"phone_number"` | The number allowed to call this route, in international format |
+
+Operations: List.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers`
+
+#### CallRoutesListOptionsResultV2
+
+| Field | Description |
+| --- | --- |
+| `"digit"` | The keypad digit a caller presses to choose this option |
+| `"id"` | Unique identifier for this option |
+| `"path"` | Who we page when a caller chooses this option |
+| `"prompt"` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+Operations: List.
+
+API path: `/v2/call_routes/{call_route_id}/options`
+
+#### CallRoutesShowAllowedCallerResultV2
+
+| Field | Description |
+| --- | --- |
+| `"id"` | Unique identifier for this allowed caller |
+| `"name"` | Label for whose number this is |
+| `"phone_number"` | The number allowed to call this route, in international format |
+
+Operations: Load.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
+
+#### CallRoutesShowOptionResultV2
+
+| Field | Description |
+| --- | --- |
+| `"digit"` | The keypad digit a caller presses to choose this option |
+| `"id"` | Unique identifier for this option |
+| `"path"` | Who we page when a caller chooses this option |
+| `"prompt"` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+Operations: Load.
+
+API path: `/v2/call_routes/{call_route_id}/options/{id}`
+
+#### CallRoutesUpdateAllowedCallerResultV2
+
+| Field | Description |
+| --- | --- |
+| `"id"` | Unique identifier for this allowed caller |
+| `"name"` | Label for whose number this is |
+| `"phone_number"` | The number allowed to call this route, in international format |
+
+Operations: Update.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
+
+#### CallRoutesUpdateOptionResultV2
+
+| Field | Description |
+| --- | --- |
+| `"digit"` | The keypad digit a caller presses to choose this option |
+| `"id"` | Unique identifier for this option |
+| `"path"` | Who we page when a caller chooses this option |
+| `"prompt"` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+Operations: Update.
+
+API path: `/v2/call_routes/{call_route_id}/options/{id}`
+
+#### CallRoutesV2
+
+| Field | Description |
+| --- | --- |
+| `"id"` |  |
+
+Operations: Remove.
+
+API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
+
+#### CallSession
+
+| Field | Description |
+| --- | --- |
+| `"ended_at"` | When the call session ended. |
+| `"id"` | Unique identifier for this call session |
+| `"incident_id"` | The incident this call session belongs to |
+| `"started_at"` | When the call session started |
+
+Operations: List.
+
+API path: `/v2/call_sessions`
+
+#### CallTranscriptEntry
+
+| Field | Description |
+| --- | --- |
+| `"content"` | What was said |
+| `"id"` | Unique identifier for this transcript entry |
+| `"medium"` | Whether this entry was spoken aloud or sent as an in-call chat message |
+| `"participant_name"` | Name of the participant who spoke or sent the message, as reported by the call provider |
+| `"timestamp"` | When the participant started speaking |
+
+Operations: List.
+
+API path: `/v2/call_transcript_entries`
+
 #### CatalogEntry
 
 | Field | Description |
 | --- | --- |
-| `"alias"` |  |
-| `"archived_at"` |  |
-| `"attribute_value"` |  |
+| `"aliases"` | Optional aliases that can be used to reference this entry |
+| `"archived_at"` | When this entry was archived |
+| `"attribute_values"` | Values of this entry |
 | `"catalog_entry"` |  |
 | `"catalog_type"` |  |
-| `"catalog_type_id"` |  |
-| `"created_at"` |  |
-| `"external_id"` |  |
-| `"id"` |  |
-| `"name"` |  |
-| `"rank"` |  |
-| `"update_attribute"` |  |
-| `"updated_at"` |  |
+| `"catalog_type_id"` | ID of this catalog type |
+| `"created_at"` | When this entry was created |
+| `"external_id"` | An optional alternative ID for this entry, which is ensured to be unique for the type |
+| `"id"` | ID of this catalog entry |
+| `"name"` | Name is the human readable name of this entry |
+| `"rank"` | When catalog type is ranked, this is used to help order things |
+| `"update_attributes"` | If provided, only update these attribute_values keys. |
+| `"updated_at"` | When this entry was last updated |
 
 Operations: Create, List, Load, Update.
 
@@ -509,12 +884,12 @@ API path: `/v2/catalog_entries`
 
 | Field | Description |
 | --- | --- |
-| `"category"` |  |
-| `"description"` |  |
-| `"engine_resource_type"` |  |
-| `"label"` |  |
-| `"type"` |  |
-| `"value_docstring"` |  |
+| `"category"` | Which category of resource |
+| `"description"` | Human readable description for this resource |
+| `"engine_resource_type"` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `"label"` | Label for this catalog resource type |
+| `"type"` | Catalog type name for this resource, as used when setting the type of a catalog type attribute |
+| `"value_docstring"` | Documentation for the literal string value of this resource |
 
 Operations: List.
 
@@ -524,30 +899,30 @@ API path: `/v2/catalog_resources`
 
 | Field | Description |
 | --- | --- |
-| `"annotation"` |  |
-| `"category"` |  |
-| `"color"` |  |
-| `"created_at"` |  |
-| `"description"` |  |
-| `"dynamic_resource_parameter"` |  |
-| `"engine_resource_type"` |  |
-| `"estimated_count"` |  |
-| `"icon"` |  |
-| `"id"` |  |
-| `"is_editable"` |  |
-| `"is_team_type"` |  |
-| `"last_synced_at"` |  |
-| `"name"` |  |
-| `"owning_team_id"` |  |
-| `"ranked"` |  |
-| `"registry_type"` |  |
-| `"required_integration"` |  |
+| `"annotations"` | Annotations that can track metadata about this type |
+| `"categories"` | What categories is this type considered part of |
+| `"color"` | Sets the display color of this type in the dashboard |
+| `"created_at"` | When this type was created |
+| `"description"` | Human readble description of this type |
+| `"dynamic_resource_parameter"` | If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally. |
+| `"engine_resource_type"` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `"estimated_count"` | If populated, gives an estimated count of entries for this type |
+| `"icon"` | Sets the display icon of this type in the dashboard |
+| `"id"` | ID of this catalog type |
+| `"is_editable"` | Catalog types that are synced with external resources can't be edited |
+| `"is_team_type"` | Whether this catalog type is the designated team type in team settings |
+| `"last_synced_at"` | When this type was last synced (if it's ever been sync'd) |
+| `"name"` | Name is the human readable name of this type |
+| `"owning_team_ids"` | IDs of the teams that own this catalog type |
+| `"ranked"` | If this type should be ranked |
+| `"registry_type"` | The registry resource this type is synced from, if any |
+| `"required_integrations"` | If populated, the integrations required for this type |
 | `"schema"` |  |
-| `"semantic_type"` |  |
-| `"source_repo_url"` |  |
-| `"type_name"` |  |
-| `"updated_at"` |  |
-| `"use_name_as_identifier"` |  |
+| `"semantic_type"` | This type has been deprecated, and will always be empty. |
+| `"source_repo_url"` | The url of the external repository where this type is managed |
+| `"type_name"` | The type name of this catalog type, to be used when defining attributes. |
+| `"updated_at"` | When this type was last updated |
+| `"use_name_as_identifier"` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 
 Operations: Create, List, Load, Update.
 
@@ -557,31 +932,31 @@ API path: `/v2/catalog_types`
 
 | Field | Description |
 | --- | --- |
-| `"annotation"` |  |
-| `"attribute"` |  |
-| `"category"` |  |
-| `"color"` |  |
-| `"created_at"` |  |
-| `"description"` |  |
-| `"dynamic_resource_parameter"` |  |
-| `"engine_resource_type"` |  |
-| `"estimated_count"` |  |
-| `"icon"` |  |
-| `"id"` |  |
-| `"is_editable"` |  |
-| `"is_team_type"` |  |
-| `"last_synced_at"` |  |
-| `"name"` |  |
-| `"owning_team_id"` |  |
-| `"ranked"` |  |
-| `"registry_type"` |  |
-| `"required_integration"` |  |
+| `"annotations"` | Annotations that can track metadata about this type |
+| `"attributes"` |  |
+| `"categories"` | What categories is this type considered part of |
+| `"color"` | Sets the display color of this type in the dashboard |
+| `"created_at"` | When this type was created |
+| `"description"` | Human readble description of this type |
+| `"dynamic_resource_parameter"` | If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally. |
+| `"engine_resource_type"` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `"estimated_count"` | If populated, gives an estimated count of entries for this type |
+| `"icon"` | Sets the display icon of this type in the dashboard |
+| `"id"` | ID of this catalog type |
+| `"is_editable"` | Catalog types that are synced with external resources can't be edited |
+| `"is_team_type"` | Whether this catalog type is the designated team type in team settings |
+| `"last_synced_at"` | When this type was last synced (if it's ever been sync'd) |
+| `"name"` | Name is the human readable name of this type |
+| `"owning_team_ids"` | IDs of the teams that own this catalog type |
+| `"ranked"` | If this type should be ranked |
+| `"registry_type"` | The registry resource this type is synced from, if any |
+| `"required_integrations"` | If populated, the integrations required for this type |
 | `"schema"` |  |
-| `"semantic_type"` |  |
-| `"source_repo_url"` |  |
-| `"type_name"` |  |
-| `"updated_at"` |  |
-| `"use_name_as_identifier"` |  |
+| `"semantic_type"` | This type has been deprecated, and will always be empty. |
+| `"source_repo_url"` | The url of the external repository where this type is managed |
+| `"type_name"` | The type name of this catalog type, to be used when defining attributes. |
+| `"updated_at"` | When this type was last updated |
+| `"use_name_as_identifier"` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 | `"version"` |  |
 
 Operations: Create.
@@ -592,24 +967,24 @@ API path: `/v2/catalog_types/{id}/actions/update_schema`
 
 | Field | Description |
 | --- | --- |
-| `"catalog_type_id"` |  |
-| `"created_at"` |  |
-| `"description"` |  |
-| `"field_type"` |  |
+| `"catalog_type_id"` | For catalog fields, the ID of the associated catalog type |
+| `"created_at"` | When the action was created |
+| `"description"` | Description of the custom field |
+| `"field_type"` | Type of custom field |
 | `"filter_by"` |  |
 | `"fixed_filter"` |  |
-| `"group_by_catalog_attribute_id"` |  |
-| `"helptext_catalog_attribute_id"` |  |
-| `"id"` |  |
-| `"name"` |  |
-| `"option"` |  |
-| `"required"` |  |
-| `"required_v2"` |  |
-| `"show_before_closure"` |  |
-| `"show_before_creation"` |  |
-| `"show_before_update"` |  |
-| `"show_in_announcement_post"` |  |
-| `"updated_at"` |  |
+| `"group_by_catalog_attribute_id"` | For catalog fields, the ID of the attribute used to group catalog entries (if applicable) |
+| `"helptext_catalog_attribute_id"` | Which catalog attribute provides helptext for the options |
+| `"id"` | Unique identifier for the custom field |
+| `"name"` | Human readable name for the custom field |
+| `"options"` | What options are available for this custom field, if this field has options |
+| `"required"` | When this custom field must be set during the incident lifecycle. |
+| `"required_v2"` | When this custom field must be set during the incident lifecycle. |
+| `"show_before_closure"` | Whether a custom field should be shown in the incident resolve modal. |
+| `"show_before_creation"` | Whether a custom field should be shown in the incident creation modal. |
+| `"show_before_update"` | Whether a custom field should be shown in the incident update modal. |
+| `"show_in_announcement_post"` | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
+| `"updated_at"` | When the action was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -619,10 +994,10 @@ API path: `/v1/custom_fields`
 
 | Field | Description |
 | --- | --- |
-| `"custom_field_id"` |  |
-| `"id"` |  |
-| `"sort_key"` |  |
-| `"value"` |  |
+| `"custom_field_id"` | ID of the custom field this option belongs to |
+| `"id"` | Unique identifier for the custom field option |
+| `"sort_key"` | Sort key used to order the custom field options correctly |
+| `"value"` | Human readable name for the custom field option. |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -632,134 +1007,251 @@ API path: `/v1/custom_field_options`
 
 | Field | Description |
 | --- | --- |
-| `"created_at"` |  |
-| `"creator"` |  |
-| `"description"` |  |
-| `"escalation_path_id"` |  |
-| `"event"` |  |
-| `"id"` |  |
-| `"idempotency_key"` |  |
-| `"incident_id"` |  |
-| `"priority"` |  |
-| `"related_alert"` |  |
-| `"related_incident"` |  |
-| `"status"` |  |
-| `"title"` |  |
-| `"updated_at"` |  |
-| `"user_id"` |  |
+| `"created_at"` | When this escalation was created |
+| `"creator"` | The creator of this escalation. |
+| `"description"` | Additional detail provided with this escalation. |
+| `"escalation_path_id"` | Unique identifier of the escalation path that the escalation was created from |
+| `"events"` | Events which describe the history of this escalation. |
+| `"id"` | Unique ID of the escalation |
+| `"idempotency_key"` | Unique key to prevent duplicate escalations. |
+| `"incident_id"` | ID of an incident to associate with this escalation. |
+| `"priority"` | The priority associated with this escalation. |
+| `"related_alerts"` | Alerts related to this escalation |
+| `"related_incidents"` | Incidents related to this escalation |
+| `"status"` | Status of the escalation |
+| `"title"` | The title of this escalation |
+| `"updated_at"` | When this escalation was last updated |
+| `"user_ids"` | IDs of users to escalate directly to |
 
 Operations: Create, List, Load.
 
 API path: `/v2/escalations`
+
+#### EscalationPathTemplate
+
+| Field | Description |
+| --- | --- |
+| `"description"` | A description of what this template is for. |
+| `"expressions"` | Expressions backing the template's binding targets. |
+| `"has_historical_escalation_path_versions"` | Whether a previous escalation path version uses this template. |
+| `"id"` | Unique identifier for this template. |
+| `"name"` | The name of this template. |
+| `"params"` | The parameters declared by this template. |
+| `"path"` | The nodes that form the levels and branches of this template. |
+| `"repeat_config"` |  |
+| `"working_hours"` | The working hours for this template. |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/escalation_path_templates`
+
+#### EscalationsCheckEscalationPermissionsResultV2
+
+| Field | Description |
+| --- | --- |
+| `"response_options"` | The response options available to each requested user, in the same order as the request. |
+| `"user_ids"` | The IDs of the users to check response options for |
+
+Operations: Create.
+
+API path: `/v2/escalations/{escalation_id}/actions/check_permissions`
+
+#### EscalationsReassignEscalationResultV2
+
+| Field | Description |
+| --- | --- |
+| `"description"` | Additional details about the new escalation. |
+| `"escalation_path_id"` | ID of the escalation path to reassign to |
+| `"resolve_original"` | Whether to resolve the original escalation, stopping it paging its targets. |
+| `"title"` | The title of the new escalation. |
+| `"user_ids"` | IDs of users to reassign directly to |
+
+Operations: Create.
+
+API path: `/v2/escalations/{escalation_id}/actions/reassign`
 
 #### FollowUp
 
 | Field | Description |
 | --- | --- |
 | `"assignee"` |  |
-| `"assignee_id"` |  |
+| `"assignee_id"` | ID of the user this follow-up is assigned to |
 | `"assignee_team"` |  |
-| `"assignee_team_id"` |  |
-| `"completed_at"` |  |
-| `"created_at"` |  |
+| `"assignee_team_id"` | ID of the team this follow-up is assigned to |
+| `"category"` |  |
+| `"completed_at"` | When the follow-up was completed |
+| `"created_at"` | When the follow-up was created |
 | `"creator"` |  |
-| `"description"` |  |
+| `"description"` | Description of the follow-up |
 | `"external_issue_reference"` |  |
-| `"external_issue_reference_id"` |  |
-| `"follow_up_category_id"` |  |
-| `"follow_up_priority_option_id"` |  |
-| `"id"` |  |
-| `"incident_id"` |  |
-| `"label"` |  |
+| `"external_issue_reference_id"` | If this follow-up is related to an external issue, the ID of that issue |
+| `"follow_up_category_id"` | ID of the category for this follow-up |
+| `"follow_up_priority_option_id"` | ID of the priority for this follow-up |
+| `"id"` | Unique identifier for the follow-up |
+| `"incident_id"` | Unique identifier of the incident the follow-up belongs to |
+| `"labels"` | Labels associated with this follow-up |
 | `"priority"` |  |
-| `"status"` |  |
-| `"title"` |  |
-| `"updated_at"` |  |
+| `"status"` | Status of the follow-up |
+| `"title"` | Title of the follow-up |
+| `"updated_at"` | When the follow-up was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/follow_ups`
 
+#### FollowUpsConnectExternalIssueResultV3
+
+| Field | Description |
+| --- | --- |
+| `"assignee"` |  |
+| `"assignee_team"` |  |
+| `"category"` |  |
+| `"completed_at"` | When the follow-up was completed |
+| `"created_at"` | When the follow-up was created |
+| `"creator"` |  |
+| `"description"` | Description of the follow-up |
+| `"external_issue_reference"` |  |
+| `"id"` | Unique identifier for the follow-up |
+| `"incident_id"` | Unique identifier of the incident the follow-up belongs to |
+| `"labels"` | Labels associated with this follow-up |
+| `"priority"` |  |
+| `"provider"` | The issue tracker provider the issue belongs to |
+| `"status"` | Status of the follow-up |
+| `"title"` | Title of the follow-up |
+| `"updated_at"` | When the follow-up was last updated |
+| `"url"` | URL of the issue in the external provider |
+
+Operations: Create.
+
+API path: `/v3/follow_ups/{id}/actions/connect_external_issue`
+
+#### FollowUpsCreateFromLinkResultV3
+
+| Field | Description |
+| --- | --- |
+| `"incident_id"` | Unique identifier of the incident the follow-up belongs to |
+| `"url"` | URL of the issue in the external provider |
+
+Operations: Create.
+
+API path: `/v3/follow_ups/actions/create_from_link`
+
+#### Identity
+
+| Field | Description |
+| --- | --- |
+| `"dashboard_url"` | The dashboard URL for this organisation |
+| `"name"` | The name assigned to the current API Key |
+| `"roles"` | Which roles have been enabled for this key |
+| `"team_roles"` | If set, these roles apply to requests that operate on resources owned by any of the teams in the 'teams' array. |
+| `"teams"` | Teams that this API key is scoped to. |
+
+Operations: Load.
+
+API path: `/v1/identity`
+
 #### Incident
 
 | Field | Description |
 | --- | --- |
-| `"call_url"` |  |
-| `"created_at"` |  |
+| `"call_url"` | The call URL attached to this incident |
+| `"created_at"` | When the incident was created |
 | `"creator"` |  |
-| `"custom_field_entry"` |  |
-| `"duration_metric"` |  |
+| `"custom_field_entries"` | Custom field entries for this incident |
+| `"debriefs"` | Debriefs scheduled for this incident, ordered by start time. |
+| `"duration_metrics"` | Incident duration metrics and their measurements for this incident |
 | `"external_issue_reference"` |  |
-| `"has_debrief"` |  |
-| `"id"` |  |
-| `"idempotency_key"` |  |
-| `"incident"` |  |
-| `"incident_role_assignment"` |  |
+| `"has_debrief"` | If this incident has a debrief attached |
+| `"id"` | Unique identifier for the incident |
+| `"idempotency_key"` | Unique string used to de-duplicate incident create requests |
+| `"incident_role_assignments"` | A list of who is assigned to each role for this incident |
 | `"incident_status"` |  |
-| `"incident_status_id"` |  |
-| `"incident_timestamp_value"` |  |
+| `"incident_status_id"` | Incident status to assign to the incident |
+| `"incident_timestamp_values"` | Incident lifecycle events and when they occurred |
 | `"incident_type"` |  |
-| `"incident_type_id"` |  |
-| `"mode"` |  |
-| `"name"` |  |
-| `"notify_incident_channel"` |  |
-| `"permalink"` |  |
-| `"postmortem_document_id"` |  |
-| `"postmortem_document_url"` |  |
-| `"reference"` |  |
-| `"retrospective_incident_option"` |  |
+| `"incident_type_id"` | Incident type to create this incident as |
+| `"last_activity_at"` | When the incident last recorded 'activity' |
+| `"mode"` | Whether the incident is real, a test, a tutorial, or importing as a retrospective incident |
+| `"ms_teams_channel_url"` | URL to link to the Microsoft Teams channel |
+| `"name"` | Explanation of the incident |
+| `"permalink"` | A permanent link to the homepage for this incident |
+| `"postmortem_document_ids"` | An array of IDs of postmortem documents for this incident |
+| `"postmortem_document_url"` | The URL of the incident post-mortem document |
+| `"reference"` | Reference to this incident, as displayed across the product |
+| `"retrospective_incident_options"` |  |
 | `"severity"` |  |
-| `"severity_id"` |  |
-| `"slack_channel_id"` |  |
-| `"slack_channel_name"` |  |
-| `"slack_channel_name_override"` |  |
-| `"slack_team_id"` |  |
-| `"source_message_channel_id"` |  |
-| `"source_message_timestamp"` |  |
-| `"status"` |  |
-| `"summary"` |  |
-| `"timestamp"` |  |
-| `"updated_at"` |  |
-| `"visibility"` |  |
-| `"workload_minutes_late"` |  |
-| `"workload_minutes_sleeping"` |  |
-| `"workload_minutes_total"` |  |
-| `"workload_minutes_working"` |  |
+| `"severity_id"` | Severity to create incident as |
+| `"slack_channel_id"` | ID of the Slack channel in the organisation Slack workspace. |
+| `"slack_channel_name"` | Name of the slack channel |
+| `"slack_channel_name_override"` | Name of the Slack channel to create for this incident |
+| `"slack_channel_url"` | URL to link to the slack channel |
+| `"slack_team_id"` | ID of the Slack team / workspace. |
+| `"source_message_channel_id"` | Channel ID of the source message, if this incident was created from one |
+| `"source_message_timestamp"` | Timestamp of the source message, if this incident was created from one |
+| `"status"` | Current status of the incident |
+| `"summary"` | Detailed description of the incident |
+| `"team_ids"` | IDs of the teams that own this incident, resolved from your team settings. |
+| `"timestamps"` | Incident lifecycle events and when they last occurred |
+| `"updated_at"` | When the incident was last updated |
+| `"visibility"` | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
+| `"workload_minutes_late"` | Amount of time spent on the incident in late hours |
+| `"workload_minutes_sleeping"` | Amount of time spent on the incident in sleeping hours |
+| `"workload_minutes_total"` | Amount of time spent on the incident in total |
+| `"workload_minutes_working"` | Amount of time spent on the incident in working hours |
 
 Operations: Create, List, Load.
 
 API path: `/v2/incidents/{id}/actions/edit`
 
-#### IncidentAlert
+#### IncidentActivityLogEntry
 
 | Field | Description |
 | --- | --- |
-| `"alert"` |  |
-| `"alert_route_id"` |  |
-| `"id"` |  |
-| `"incident"` |  |
+| `"content"` | Details of an activity log entry. |
+| `"created_at"` | When we recorded the activity |
+| `"id"` | Unique identifier of the activity log entry |
+| `"incident_id"` | ID of the incident this happened on. |
+| `"occurred_at"` | When the activity happened. |
+| `"title"` | Human-readable summary of what happened |
+| `"type"` | What kind of activity this is. |
 
 Operations: List.
 
-API path: `/v2/incident_alerts`
+API path: `/v2/incident_activity_log_entries`
 
 #### IncidentAttachment
 
 | Field | Description |
 | --- | --- |
-| `"id"` |  |
-| `"incident_id"` |  |
+| `"id"` | Unique identifier of this incident membership |
+| `"incident_id"` | ID of the incident to add an attachment to |
 | `"resource"` |  |
 
 Operations: Create, List, Remove.
 
 API path: `/v1/incident_attachments`
 
+#### IncidentForm
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` | When this incident form was created |
+| `"expressions"` | Expressions available to every element's conditions and defaults. |
+| `"form_type"` | Which form this is. |
+| `"id"` | Unique identifier for this incident form |
+| `"incident_type_id"` | The incident type this form belongs to. |
+| `"lifecycle_elements"` | Elements on this form, in display order. |
+| `"updated_at"` | When this incident form was last updated |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v3/incident_forms`
+
 #### IncidentMembership
 
 | Field | Description |
 | --- | --- |
-| `"incident_id"` |  |
+| `"incident_id"` | The incident to make the user a member of |
 | `"user_id"` |  |
 
 Operations: Create.
@@ -770,8 +1262,8 @@ API path: `/v1/incident_memberships`
 
 | Field | Description |
 | --- | --- |
-| `"active"` |  |
-| `"passive"` |  |
+| `"active"` | Participants who are actively helping with the incident |
+| `"passive"` | Participants who are just observing the incident |
 
 Operations: Load.
 
@@ -781,8 +1273,8 @@ API path: `/v2/incident_participants`
 
 | Field | Description |
 | --- | --- |
-| `"archived_at"` |  |
-| `"participant_type"` |  |
+| `"archived_at"` | When the user left the incident, if they are no longer an active participant |
+| `"participant_type"` | The role they had in the incident |
 | `"user"` |  |
 | `"workload"` |  |
 
@@ -794,7 +1286,7 @@ API path: `/v2/incident_participant_workloads`
 
 | Field | Description |
 | --- | --- |
-| `"id"` |  |
+| `"id"` | Unique identifier of this incident relationship |
 | `"incident"` |  |
 
 Operations: List.
@@ -805,15 +1297,15 @@ API path: `/v1/incident_relationships`
 
 | Field | Description |
 | --- | --- |
-| `"created_at"` |  |
-| `"description"` |  |
-| `"id"` |  |
-| `"instruction"` |  |
-| `"name"` |  |
-| `"required"` |  |
-| `"role_type"` |  |
-| `"shortform"` |  |
-| `"updated_at"` |  |
+| `"created_at"` | When the role was created |
+| `"description"` | Describes the purpose of the role |
+| `"id"` | Unique identifier for the role |
+| `"instructions"` | Provided to whoever is nominated for the role. |
+| `"name"` | Human readable name of the incident role |
+| `"required"` | DEPRECATED: this will always be false. |
+| `"role_type"` | Type of incident role |
+| `"shortform"` | Short human readable name for Slack. |
+| `"updated_at"` | When the role was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -823,25 +1315,94 @@ API path: `/v1/incident_roles`
 
 | Field | Description |
 | --- | --- |
-| `"category"` |  |
+| `"category"` | What category of status it is. |
 | `"created_at"` |  |
-| `"description"` |  |
-| `"id"` |  |
-| `"name"` |  |
-| `"rank"` |  |
+| `"description"` | Rich text description of the incident status |
+| `"id"` | Unique ID of this incident status |
+| `"name"` | Unique name of this status |
+| `"rank"` | Order of this incident status |
 | `"updated_at"` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/incident_statuses`
 
+#### IncidentTeamMembership
+
+| Field | Description |
+| --- | --- |
+| `"incident_id"` |  |
+| `"team_id"` |  |
+
+Operations: Create.
+
+API path: `/v1/incident_team_memberships`
+
+#### IncidentTeamMembershipsV1
+
+| Field | Description |
+| --- | --- |
+| `"incident_id"` | Revoke team access to this incident |
+| `"team_id"` |  |
+
+Operations: Create.
+
+API path: `/v1/incident_team_memberships/actions/revoke`
+
+#### IncidentTemplate
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` | When this incident template was created |
+| `"expressions"` | The expressions used by bindings in this template |
+| `"id"` | Unique identifier for this incident template |
+| `"name"` | The name of this incident template, for the user's reference |
+| `"template"` | The values an incident template applies to the incidents it creates. |
+| `"updated_at"` | When this incident template was last updated |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v1/incident_templates`
+
+#### IncidentTemplatesValidateResultV1
+
+| Field | Description |
+| --- | --- |
+| `"expressions"` | The expressions used by bindings in this template |
+| `"name"` | The name of this incident template, for the user's reference |
+| `"template"` | The values an incident template applies to the incidents it creates. |
+| `"warnings"` | Anything suspect about this config that isn't severe enough to reject it. |
+
+Operations: Create.
+
+API path: `/v1/incident_templates/actions/validate`
+
+#### IncidentTimelineItem
+
+| Field | Description |
+| --- | --- |
+| `"activity_log_id"` | ID of the activity log entry this item was promoted from. |
+| `"created_at"` | When this item was added to the timeline |
+| `"creator"` |  |
+| `"description"` | Description of the timeline item, in markdown |
+| `"id"` | Unique identifier of the timeline item |
+| `"idempotency_key"` | Unique string used to de-duplicate timeline item requests. |
+| `"incident_id"` | Incident to add this item to |
+| `"timestamp"` | When the thing this item describes happened. |
+| `"title"` | Title of the timeline item |
+| `"updated_at"` | When this item was last edited |
+
+Operations: Create, List, Update.
+
+API path: `/v2/incident_timeline_items`
+
 #### IncidentTimestamp
 
 | Field | Description |
 | --- | --- |
-| `"id"` |  |
-| `"name"` |  |
-| `"rank"` |  |
+| `"id"` | Unique ID of this incident timestamp |
+| `"name"` | Unique name of this timestamp |
+| `"rank"` | Order in which this timestamp should be shown |
 
 Operations: List, Load.
 
@@ -851,15 +1412,15 @@ API path: `/v2/incident_timestamps`
 
 | Field | Description |
 | --- | --- |
-| `"create_in_triage"` |  |
-| `"created_at"` |  |
-| `"description"` |  |
-| `"id"` |  |
-| `"is_default"` |  |
-| `"name"` |  |
-| `"owning_team_id"` |  |
-| `"private_incidents_only"` |  |
-| `"updated_at"` |  |
+| `"create_in_triage"` | Whether incidents of this must always, or can optionally, be created in triage |
+| `"created_at"` | When this resource was created |
+| `"description"` | What is this incident type for? |
+| `"id"` | Unique identifier for this Incident Type |
+| `"is_default"` | The default Incident Type is used when no other type is explicitly specified |
+| `"name"` | The name of this Incident Type |
+| `"owning_team_ids"` | IDs of the teams that own this incident type |
+| `"private_incidents_only"` | Should all incidents created with this Incident Type be private? |
+| `"updated_at"` | When this resource was last updated |
 
 Operations: List, Load.
 
@@ -869,16 +1430,19 @@ API path: `/v1/incident_types`
 
 | Field | Description |
 | --- | --- |
-| `"created_at"` |  |
-| `"id"` |  |
-| `"incident_id"` |  |
-| `"merged_into_incident_id"` |  |
-| `"message"` |  |
+| `"created_at"` | When the update was created |
+| `"id"` | Unique identifier for this incident update |
+| `"idempotency_key"` | Unique string used to de-duplicate incident update requests. |
+| `"incident_id"` | The incident you want to update |
+| `"merged_into_incident_id"` | The ID of the incident this incident was merged into, if the to state of this update is 'merged'. |
+| `"message"` | Message that explains the context behind the update, in markdown |
 | `"new_incident_status"` |  |
 | `"new_severity"` |  |
+| `"to_incident_status_id"` | Move the incident to this status |
+| `"to_severity_id"` | Move the incident to this severity |
 | `"updater"` |  |
 
-Operations: List.
+Operations: Create, List.
 
 API path: `/v2/incident_updates`
 
@@ -886,56 +1450,444 @@ API path: `/v2/incident_updates`
 
 | Field | Description |
 | --- | --- |
-| `"allowlist"` |  |
-| `"enabled"` |  |
-| `"updated_at"` |  |
-| `"version"` |  |
+| `"allowlist"` | A list of IP addresses or CIDR prefixes to allow |
+| `"enabled"` | Whether this IP allowlist is enabled or not |
+| `"updated_at"` | The time this allowlist was last updated |
+| `"version"` | The version of this IP allowlist |
 
 Operations: Load, Update.
 
 API path: `/v1/ip_allowlists`
 
+#### IpRange
+
+| Field | Description |
+| --- | --- |
+| `"cidr"` | The address in CIDR notation. |
+| `"description"` | Which of our traffic reaches you from this address |
+
+Operations: List.
+
+API path: `/v1/ip_ranges`
+
 #### MaintenanceWindow
 
 | Field | Description |
 | --- | --- |
-| `"alert_condition_group"` |  |
-| `"archived_at"` |  |
-| `"created_at"` |  |
-| `"end_at"` |  |
-| `"escalation_target"` |  |
-| `"id"` |  |
-| `"incident_id"` |  |
+| `"alert_condition_groups"` | Condition groups that determine which alerts this maintenance window applies to |
+| `"archived_at"` | When this maintenance window was archived, if it has been |
+| `"created_at"` | When this maintenance window was created |
+| `"end_at"` | When the maintenance window ends |
+| `"escalation_targets"` | If set, alerts matching this window will be escalated to these targets |
+| `"id"` | Unique identifier for this maintenance window |
+| `"incident_id"` | If set, alerts matching this window will be automatically attached to this incident |
 | `"lead"` |  |
-| `"name"` |  |
-| `"notification_message"` |  |
-| `"notify_channel"` |  |
-| `"notify_end_minutes_before"` |  |
-| `"notify_start_minutes_before"` |  |
-| `"reroute_on_end"` |  |
-| `"resolve_on_end"` |  |
-| `"show_in_sidebar"` |  |
-| `"start_at"` |  |
-| `"updated_at"` |  |
+| `"name"` | Human readable name for the maintenance window |
+| `"notification_message"` | Custom message included in notifications about this maintenance window |
+| `"notify_channels"` | Channels to notify about the maintenance window starting and ending |
+| `"notify_end_minutes_before"` | Minutes before the end to send a notification to the configured channels |
+| `"notify_start_minutes_before"` | Minutes before the start to send a notification to the configured channels |
+| `"owning_team_ids"` | IDs of teams that own this maintenance window. |
+| `"reroute_on_end"` | Whether to retrigger firing alerts through alert routing when the window ends |
+| `"resolve_on_end"` | Whether to automatically resolve all firing alerts that matched this window when it ends |
+| `"show_in_sidebar"` | Whether to show this maintenance window in the dashboard sidebar when active |
+| `"start_at"` | When the maintenance window starts |
+| `"updated_at"` | When this maintenance window was last updated |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/maintenance_windows`
 
-#### PostmortemDocument
+#### OnCallNotificationMethodPublicV2
+
+| Field | Description |
+| --- | --- |
+| `"address"` | The address of this method (e.g. |
+| `"id"` | Unique identifier for this notification method |
+| `"is_usable"` | Whether this method is ready to receive notifications. |
+| `"method_type"` | The high-level type of notification method. |
+| `"phone_details"` |  |
+
+Operations: List.
+
+API path: `/v2/users/{user_id}/notification_methods`
+
+#### OnCallNotificationRulePublicV2
+
+| Field | Description |
+| --- | --- |
+| `"app"` |  |
+| `"delay_seconds"` | Delay in seconds before this rule activates. |
+| `"id"` | Unique identifier for this notification rule |
+| `"method_target"` |  |
+| `"method_type"` | The high-level type of notification method. |
+| `"phone"` |  |
+| `"rule_type"` | The urgency level this rule applies to |
+
+Operations: List.
+
+API path: `/v2/users/{user_id}/notification_rules`
+
+#### PayConfig
+
+| Field | Description |
+| --- | --- |
+| `"base_rate_cents"` | Rate paid for any time no rule covers, in the lowest denomination of the currency |
+| `"created_at"` |  |
+| `"currency"` | Currency this config pays in, in ISO 4217 format |
+| `"id"` | Unique identifier for this pay config |
+| `"name"` | Human readable name for this pay config |
+| `"one_off_rules"` | Rules that apply over a single window of time, such as a public holiday |
+| `"published_at"` | When a published report first priced against this config. |
+| `"rate_time_unit"` | The unit of time every rate on this config is quoted per. |
+| `"timezone"` | IANA timezone this config's rules are interpreted in |
+| `"updated_at"` |  |
+| `"weekly_rules"` | Rules that apply every week, by day of week and time of day, in evaluation order |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/pay_configs`
+
+#### PayConfigsCreateOneOffRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `"end_at"` | When this rule stops applying |
+| `"name"` | Human readable name for this rule |
+| `"rate_cents"` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `"start_at"` | When this rule starts applying |
+
+Operations: Create.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules`
+
+#### PayConfigsCreateWeeklyRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `"end_time"` | Time of day this rule ends, in 24 hour format. |
+| `"rate_cents"` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `"start_time"` | Time of day this rule starts, in 24 hour format |
+| `"weekdays"` | Days of the week this rule applies on |
+
+Operations: Create.
+
+API path: `/v2/pay_configs/{pay_config_id}/weekly_rules`
+
+#### PayConfigsListOneOffRulesResultV2
+
+| Field | Description |
+| --- | --- |
+| `"end_at"` | When this rule stops applying |
+| `"id"` | Unique identifier for this rule, stable across edits to the config |
+| `"name"` | Human readable name for this rule |
+| `"rate_cents"` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `"start_at"` | When this rule starts applying |
+
+Operations: List.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules`
+
+#### PayConfigsListWeeklyRulesResultV2
+
+| Field | Description |
+| --- | --- |
+| `"end_time"` | Time of day this rule ends, in 24 hour format. |
+| `"id"` | Unique identifier for this rule, stable across edits to the config |
+| `"rate_cents"` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `"start_time"` | Time of day this rule starts, in 24 hour format |
+| `"weekdays"` | Days of the week this rule applies on |
+
+Operations: List.
+
+API path: `/v2/pay_configs/{pay_config_id}/weekly_rules`
+
+#### PayConfigsShowOneOffRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `"end_at"` | When this rule stops applying |
+| `"id"` | Unique identifier for this rule, stable across edits to the config |
+| `"name"` | Human readable name for this rule |
+| `"rate_cents"` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `"start_at"` | When this rule starts applying |
+
+Operations: Load.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
+
+#### PayConfigsShowWeeklyRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `"end_time"` | Time of day this rule ends, in 24 hour format. |
+| `"id"` | Unique identifier for this rule, stable across edits to the config |
+| `"rate_cents"` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `"start_time"` | Time of day this rule starts, in 24 hour format |
+| `"weekdays"` | Days of the week this rule applies on |
+
+Operations: Load.
+
+API path: `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}`
+
+#### PayConfigsUpdateOneOffRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `"end_at"` | When this rule stops applying |
+| `"id"` | Unique identifier for this rule, stable across edits to the config |
+| `"name"` | Human readable name for this rule |
+| `"rate_cents"` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `"start_at"` | When this rule starts applying |
+
+Operations: Update.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
+
+#### PayConfigsUpdateWeeklyRuleResultV2
+
+| Field | Description |
+| --- | --- |
+| `"end_time"` | Time of day this rule ends, in 24 hour format. |
+| `"id"` | Unique identifier for this rule, stable across edits to the config |
+| `"rate_cents"` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `"start_time"` | Time of day this rule starts, in 24 hour format |
+| `"weekdays"` | Days of the week this rule applies on |
+
+Operations: Update.
+
+API path: `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}`
+
+#### PayConfigsV2
+
+| Field | Description |
+| --- | --- |
+| `"id"` |  |
+
+Operations: Remove.
+
+API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
+
+#### PayReport
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` | When this report was created |
+| `"creator"` |  |
+| `"end_date"` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `"error_code"` | Why a report could not be generated |
+| `"error_message"` | What went wrong, written for whoever asked for the report. |
+| `"id"` | Unique identifier for this pay report |
+| `"name"` | Human readable name for this report |
+| `"overlapping_shifts"` | How time spent on more than one schedule at once was paid |
+| `"pay_config_expression"` |  |
+| `"pay_config_id"` | The pay config to price every shift with. |
+| `"published_at"` | When this report was published. |
+| `"rotation_filters"` | Narrows some of these schedules to a subset of their rotations. |
+| `"schedule_ids"` | The schedules this report covers |
+| `"start_date"` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `"status"` | How far a report has got through being generated |
+| `"total_duration_seconds"` | Total time spent on-call across every shift in this report, in seconds. |
+| `"total_pay_by_currency"` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `"unpaid_shifts"` | Whether shifts that priced to zero are part of the report |
+| `"updated_at"` | When this report was last updated |
+
+Operations: Create, List, Load, Remove.
+
+API path: `/v2/pay_reports`
+
+#### PayReportsPublishResultV2
+
+| Field | Description |
+| --- | --- |
+| `"cc_emails"` | Email addresses to send a copy of the report to |
+| `"created_at"` | When this report was created |
+| `"creator"` |  |
+| `"end_date"` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `"error_code"` | Why a report could not be generated |
+| `"error_message"` | What went wrong, written for whoever asked for the report. |
+| `"id"` | Unique identifier for this pay report |
+| `"name"` | Human readable name for this report |
+| `"overlapping_shifts"` | How time spent on more than one schedule at once was paid |
+| `"published_at"` | When this report was published. |
+| `"schedule_ids"` | The schedules this report covers |
+| `"send_user_breakdowns"` | Whether each user in the report is emailed their own pay breakdown |
+| `"start_date"` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `"status"` | How far a report has got through being generated |
+| `"total_duration_seconds"` | Total time spent on-call across every shift in this report, in seconds. |
+| `"total_pay_by_currency"` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `"unpaid_shifts"` | Whether shifts that priced to zero are part of the report |
+| `"updated_at"` | When this report was last updated |
+
+Operations: Create.
+
+API path: `/v2/pay_reports/{id}/actions/publish`
+
+#### PayReportsUnpublishResultV2
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` | When this report was created |
+| `"creator"` |  |
+| `"end_date"` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `"error_code"` | Why a report could not be generated |
+| `"error_message"` | What went wrong, written for whoever asked for the report. |
+| `"id"` | Unique identifier for this pay report |
+| `"name"` | Human readable name for this report |
+| `"overlapping_shifts"` | How time spent on more than one schedule at once was paid |
+| `"published_at"` | When this report was published. |
+| `"schedule_ids"` | The schedules this report covers |
+| `"start_date"` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `"status"` | How far a report has got through being generated |
+| `"total_duration_seconds"` | Total time spent on-call across every shift in this report, in seconds. |
+| `"total_pay_by_currency"` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `"unpaid_shifts"` | Whether shifts that priced to zero are part of the report |
+| `"unpublish_reason"` | Why this report is being unpublished |
+| `"updated_at"` | When this report was last updated |
+
+Operations: Create.
+
+API path: `/v2/pay_reports/{id}/actions/unpublish`
+
+#### PayReportsV2
+
+| Field | Description |
+| --- | --- |
+
+Operations: Load.
+
+API path: `/v2/pay_reports/{id}/download`
+
+#### PoliciesV2
+
+| Field | Description |
+| --- | --- |
+| `"id"` |  |
+
+Operations: Remove.
+
+API path: `/v2/policies/{id}`
+
+#### Policy
+
+| Field | Description |
+| --- | --- |
+| `"assignment_rules"` |  |
+| `"conditions"` | Conditions which determine which resources are in scope for this policy |
+| `"created_at"` |  |
+| `"debrief"` | Set when policy_type is debrief. |
+| `"description"` | Human readable description of the policy |
+| `"expressions"` | The expressions relating to this policy |
+| `"follow_up"` | Set when policy_type is follow_up. |
+| `"id"` | Unique ID of the policy |
+| `"name"` | Human readable name of the policy |
+| `"on_call_readiness"` | Set when policy_type is on_call_readiness. |
+| `"policy_type"` | Type of the policy, specifying what this applies to |
+| `"post_mortem"` | Set when policy_type is post_mortem. |
+| `"schedule"` | Detects gaps in on-call coverage. |
+| `"status"` | Disabled policies stop evaluating but keep their config |
+| `"updated_at"` |  |
+
+Operations: Create, List, Load, Update.
+
+API path: `/v2/policies`
+
+#### PolicyFinding
 
 | Field | Description |
 | --- | --- |
 | `"created_at"` |  |
-| `"document_url"` |  |
-| `"editor"` |  |
-| `"exported_url"` |  |
-| `"id"` |  |
-| `"incident_id"` |  |
-| `"status"` |  |
-| `"title"` |  |
-| `"type"` |  |
+| `"days"` | Days outside the policy's due date |
+| `"debrief"` | Set when policy_type is debrief. |
+| `"dismissal"` |  |
+| `"due_at"` | When this finding becomes overdue |
+| `"follow_up"` | Set when policy_type is follow_up. |
+| `"id"` | Unique ID of the finding |
+| `"last_checked_at"` | When this finding was last re-evaluated |
+| `"on_call_readiness"` | Set when policy_type is on_call_readiness. |
+| `"policy_id"` | The policy this finding was raised against |
+| `"policy_type"` | Type of the policy this finding was raised against |
+| `"post_mortem"` | Set when policy_type is post_mortem. |
+| `"responsible_users"` | Who is expected to resolve this finding |
+| `"schedule"` | Set when policy_type is schedule. |
+| `"shift_conflict"` | Set when policy_type is shift_conflict. |
+| `"state"` | Where this finding is in its lifecycle |
 | `"updated_at"` |  |
+| `"vacation_conflict"` | Set when policy_type is vacation_conflict. |
+
+Operations: List, Load.
+
+API path: `/v2/policy_findings`
+
+#### PolicyFindingsDismissResultV2
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"days"` | Days outside the policy's due date |
+| `"debrief"` | Set when policy_type is debrief. |
+| `"dismissal"` |  |
+| `"due_at"` | When this finding becomes overdue |
+| `"follow_up"` | Set when policy_type is follow_up. |
+| `"id"` | Unique ID of the finding |
+| `"last_checked_at"` | When this finding was last re-evaluated |
+| `"on_call_readiness"` | Set when policy_type is on_call_readiness. |
+| `"policy_id"` | The policy this finding was raised against |
+| `"policy_type"` | Type of the policy this finding was raised against |
+| `"post_mortem"` | Set when policy_type is post_mortem. |
+| `"reason"` | Why this finding is being dismissed |
+| `"responsible_users"` | Who is expected to resolve this finding |
+| `"schedule"` | Set when policy_type is schedule. |
+| `"shift_conflict"` | Set when policy_type is shift_conflict. |
+| `"state"` | Where this finding is in its lifecycle |
+| `"updated_at"` |  |
+| `"vacation_conflict"` | Set when policy_type is vacation_conflict. |
+
+Operations: Create.
+
+API path: `/v2/policy_findings/{id}/actions/dismiss`
+
+#### PolicyFindingsRestoreResultV2
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"days"` | Days outside the policy's due date |
+| `"debrief"` | Set when policy_type is debrief. |
+| `"dismissal"` |  |
+| `"due_at"` | When this finding becomes overdue |
+| `"follow_up"` | Set when policy_type is follow_up. |
+| `"id"` | Unique ID of the finding |
+| `"last_checked_at"` | When this finding was last re-evaluated |
+| `"on_call_readiness"` | Set when policy_type is on_call_readiness. |
+| `"policy_id"` | The policy this finding was raised against |
+| `"policy_type"` | Type of the policy this finding was raised against |
+| `"post_mortem"` | Set when policy_type is post_mortem. |
+| `"responsible_users"` | Who is expected to resolve this finding |
+| `"schedule"` | Set when policy_type is schedule. |
+| `"shift_conflict"` | Set when policy_type is shift_conflict. |
+| `"state"` | Where this finding is in its lifecycle |
+| `"updated_at"` |  |
+| `"vacation_conflict"` | Set when policy_type is vacation_conflict. |
+
+Operations: Create.
+
+API path: `/v2/policy_findings/{id}/actions/restore`
+
+#### PostmortemDocument
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` | Timestamp for when the document was created |
+| `"document_url"` | A URL to view the post-mortem document in the incident.io dashboard |
+| `"editors"` | The list of users who have edited this post-mortem document |
+| `"exported_urls"` | URLs of any external locations this document has been exported to |
+| `"id"` | Unique identifier for the post-mortem document |
+| `"incident_id"` | The unique identifier of the incident that this post-mortem document belongs to |
+| `"status"` | The current status of this post-mortem document |
+| `"title"` | The display title of the post-mortem document |
+| `"type"` | Whether this is a native incident.io post-mortem or one hosted in an external provider |
+| `"updated_at"` | Timestamp for when the document was last updated |
 
 Operations: List, Load, Update.
 
@@ -945,30 +1897,44 @@ API path: `/v1/postmortem_documents`
 
 | Field | Description |
 | --- | --- |
-| `"annotation"` |  |
+| `"annotations"` | Annotations that track metadata about this resource |
 | `"config"` |  |
 | `"created_at"` |  |
-| `"current_shift"` |  |
+| `"current_shifts"` | Shifts that are ongoing for this schedule |
 | `"holidays_public_config"` |  |
-| `"id"` |  |
-| `"name"` |  |
-| `"next_shift"` |  |
-| `"permalink"` |  |
-| `"schedule"` |  |
-| `"team_id"` |  |
-| `"timezone"` |  |
+| `"id"` | Unique internal ID of the schedule |
+| `"name"` | Human readable name synced from external provider |
+| `"next_shifts"` | The shifts after the next changeover. |
+| `"permalink"` | A permanent link to this schedule in the incident.io dashboard |
+| `"team_ids"` | IDs of teams that own this schedule |
+| `"timezone"` | Timezone of the schedule, as interpreted at the point of generating the report |
 | `"updated_at"` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/schedules`
 
+#### ScheduleEntriesListPayloadV2
+
+| Field | Description |
+| --- | --- |
+| `"entry_window_end"` | The end of the window to preview entries for. |
+| `"entry_window_start"` | The start of the window to preview entries for. |
+| `"final"` | The effective schedule after overrides have been merged in |
+| `"overrides"` | Overrides that apply within the requested window |
+| `"schedule"` |  |
+| `"scheduled"` | Entries from the schedule's rotation rules, before overrides are applied |
+
+Operations: Create.
+
+API path: `/v2/schedules/{id}/actions/preview_entries`
+
 #### ScheduleEntry
 
 | Field | Description |
 | --- | --- |
 | `"pagination_meta"` |  |
-| `"schedule_entry"` |  |
+| `"schedule_entries"` | The schedule entries for a window of time, grouped by where they come from. |
 
 Operations: Load.
 
@@ -978,19 +1944,18 @@ API path: `/v2/schedule_entries`
 
 | Field | Description |
 | --- | --- |
-| `"created_at"` |  |
-| `"id"` |  |
-| `"last_sync_error"` |  |
-| `"last_synced_at"` |  |
-| `"mirror_window_day"` |  |
-| `"replica_fallback_user_id"` |  |
-| `"replica_provider"` |  |
-| `"replica_provider_id"` |  |
-| `"schedule_id"` |  |
-| `"schedule_replica"` |  |
-| `"source"` |  |
-| `"updated_at"` |  |
-| `"user_status"` |  |
+| `"created_at"` | When this schedule replica was first created |
+| `"id"` | Unique identifier of the schedule replica |
+| `"last_sync_error"` | The most recent error encountered while syncing this replica to the external provider, if any. |
+| `"last_synced_at"` | When the replica was last successfully synced to the external provider. |
+| `"mirror_window_days"` | How many days ahead to mirror this schedule into the external provider. |
+| `"replica_fallback_user_id"` | The ID of a user in the external provider that will be assigned whenever nobody is on-call in the incident.io schedule. |
+| `"replica_provider"` | The external provider where this schedule is replicated to |
+| `"replica_provider_id"` | The ID of the schedule in the external provider that this replica syncs to. |
+| `"schedule_id"` | The ID of the incident.io schedule that this replica is syncing from |
+| `"sources"` | The specific rotation and layer combinations from the schedule that are being replicated. |
+| `"updated_at"` | When this schedule replica was last updated |
+| `"user_statuses"` | The mapping status of each incident.io user in the schedule to their corresponding user in the external provider. |
 
 Operations: Create, List, Load.
 
@@ -1000,16 +1965,15 @@ API path: `/v2/schedules/{schedule_id}/replicas`
 
 | Field | Description |
 | --- | --- |
-| `"annotation"` |  |
+| `"annotations"` | Annotations that track metadata about this resource |
 | `"created_at"` |  |
-| `"id"` |  |
-| `"permanent_member_user_id"` |  |
-| `"rotation_id"` |  |
-| `"schedule_id"` |  |
-| `"schedule_sync_rule"` |  |
-| `"schedule_sync_target"` |  |
-| `"schedule_sync_target_id"` |  |
-| `"sync_type"` |  |
+| `"id"` | Unique identifier of the sync rule |
+| `"permanent_member_user_ids"` | IDs of users always kept in the Slack user group, regardless of who is on call. |
+| `"rotation_id"` | If set, only members of this rotation sync to the user group. |
+| `"schedule_id"` | The schedule this rule belongs to |
+| `"schedule_sync_target"` | A sync target is the link between incident.io and a single Slack user group, used to keep that group's membership in step with who is currently on call. |
+| `"schedule_sync_target_id"` | The sync target ID this rule links to |
+| `"sync_type"` | Which schedule members sync to the user group |
 | `"updated_at"` |  |
 
 Operations: Create, List, Load, Update.
@@ -1020,34 +1984,71 @@ API path: `/v2/schedules/{schedule_id}/sync_rules`
 
 | Field | Description |
 | --- | --- |
-| `"add_bot_to_group"` |  |
-| `"annotation"` |  |
+| `"add_bot_to_group"` | Whether the incident.io bot should be added to the group as a member. |
+| `"annotations"` | Annotations that track metadata about this resource |
 | `"created_at"` |  |
-| `"id"` |  |
-| `"linked_schedule"` |  |
-| `"schedule_sync_target"` |  |
-| `"slack_team_id"` |  |
-| `"slack_user_group_id"` |  |
+| `"id"` | Unique identifier of the sync target |
+| `"linked_schedules"` | Schedules with an active sync rule pointing at this target |
+| `"new_slack_user_group"` |  |
+| `"slack_team_id"` | Slack team (workspace) ID the user group lives in. |
+| `"slack_user_group_id"` | Slack ID of the user group whose membership is kept in sync. |
 | `"updated_at"` |  |
 
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/schedule_sync_targets`
 
+#### SchedulesShowOverrideResultV2
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"end_at"` | End of the override |
+| `"id"` | Unique internal ID of the schedule override |
+| `"layer_id"` | The layer on the rotation on the schedule that this override applies to |
+| `"rotation_id"` | The rotation on the schedule that this override applies to |
+| `"schedule_id"` | The schedule that this override applies to |
+| `"start_at"` | Start of the override |
+| `"updated_at"` |  |
+| `"user"` |  |
+
+Operations: Create, List, Load.
+
+API path: `/v2/schedule_overrides`
+
+#### SchedulesUpdateOverrideResultV2
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"end_at"` | End of the override |
+| `"id"` | Unique internal ID of the schedule override |
+| `"layer_id"` | The layer on the rotation on the schedule that this override applies to |
+| `"rotation_id"` | The rotation on the schedule that this override applies to |
+| `"schedule_id"` | The schedule that this override applies to |
+| `"start_at"` | Start of the override |
+| `"updated_at"` |  |
+| `"user"` |  |
+
+Operations: Update.
+
+API path: `/v2/schedule_overrides/{id}`
+
 #### Secret
 
 | Field | Description |
 | --- | --- |
 | `"created_at"` |  |
-| `"description"` |  |
-| `"id"` |  |
-| `"last_four_char"` |  |
-| `"name"` |  |
-| `"owning_team_id"` |  |
-| `"secret"` |  |
+| `"description"` | Optional description of what this secret is for |
+| `"id"` | Unique identifier for this secret |
+| `"last_four_chars"` | The last four characters of the current value, for masked display. |
+| `"name"` | Human-readable name, unique within the organisation amongst unarchived secrets |
+| `"owning_team_ids"` | IDs of the teams that own this secret. |
+| `"secret"` | A secret is a named credential that workflows can reference, for example an auth token for an outgoing webhook. |
 | `"updated_at"` |  |
-| `"value"` |  |
-| `"version"` |  |
+| `"value"` | The secret's plaintext value. |
+| `"version"` | The current version number, incremented on each rotation |
+| `"versions"` | The secret's versions, newest first |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -1057,12 +2058,12 @@ API path: `/v2/secrets/{id}/actions/rotate`
 
 | Field | Description |
 | --- | --- |
-| `"created_at"` |  |
-| `"description"` |  |
-| `"id"` |  |
-| `"name"` |  |
-| `"rank"` |  |
-| `"updated_at"` |  |
+| `"created_at"` | When the action was created |
+| `"description"` | Description of the severity |
+| `"id"` | Unique identifier of the severity |
+| `"name"` | Human readable name of the severity |
+| `"rank"` | Rank to help sort severities (lower numbers are less severe) |
+| `"updated_at"` | When the action was last updated |
 
 Operations: Create, List, Load, Update.
 
@@ -1072,30 +2073,58 @@ API path: `/v1/severities`
 
 | Field | Description |
 | --- | --- |
-| `"description"` |  |
-| `"id"` |  |
-| `"name"` |  |
-| `"public_url"` |  |
+| `"description"` | The description of this status page |
+| `"id"` | Unique ID of this status page |
+| `"name"` | The title of this status page |
+| `"public_url"` | The public URL of this status page |
 
-Operations: List.
+Operations: List, Load.
 
 API path: `/v2/status_pages`
+
+#### StatusPageComponent
+
+| Field | Description |
+| --- | --- |
+| `"description"` | Optional short description of this component |
+| `"id"` | Unique identifier for this component |
+| `"management_meta"` |  |
+| `"name"` | Human-readable name for the component |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/status_page_components`
+
+#### StatusPageComponentAvailabilityV2
+
+| Field | Description |
+| --- | --- |
+| `"availability_percent"` | Availability over the window as a percentage, floored (for example "99.94"). |
+| `"component_id"` | ID of the component. |
+| `"data_available_since"` | Earliest time we have status data for this component. |
+| `"end_at"` | End of the requested availability window |
+| `"start_at"` | Start of the requested availability window |
+| `"status_page_id"` | ID of the status page |
+
+Operations: Load.
+
+API path: `/v2/status_pages/{status_page_id}/components/{component_id}/availability`
 
 #### StatusPageIncident
 
 | Field | Description |
 | --- | --- |
-| `"component_impact"` |  |
-| `"component_status"` |  |
-| `"id"` |  |
-| `"idempotency_key"` |  |
-| `"incident_status"` |  |
-| `"message"` |  |
-| `"name"` |  |
-| `"notify_subscriber"` |  |
-| `"published_at"` |  |
-| `"status_page_id"` |  |
-| `"update"` |  |
+| `"component_impacts"` | A list of time periods that this status page incident had an impact on a component |
+| `"component_statuses"` | An array of mappings from component ID to current component status |
+| `"id"` | A unique ID for this status page incident |
+| `"idempotency_key"` | A unique key to de-duplicate requests. |
+| `"incident_status"` | Current status for this incident |
+| `"message"` | Markdown initial update on this status page incident |
+| `"name"` | A title for the incident |
+| `"notify_subscribers"` | Whether to notify subscribers about this status page incident. |
+| `"published_at"` | When this status page incident was published to the status page |
+| `"status_page_id"` | The ID of the corresponding status page |
+| `"updates"` | A list of updates posted to this status page incident |
 
 Operations: Create, List, Load, Update.
 
@@ -1105,35 +2134,47 @@ API path: `/v2/status_page_incidents`
 
 | Field | Description |
 | --- | --- |
-| `"component_status"` |  |
-| `"incident_status"` |  |
-| `"message"` |  |
-| `"notify_subscriber"` |  |
-| `"status_page_incident_id"` |  |
+| `"component_statuses"` | An array of mappings from component ID to component status. |
+| `"incident_status"` | Optional new status for this status page incident. |
+| `"message"` | Markdown update on what's changed about this status page incident |
+| `"notify_subscribers"` | Whether to notify subscribers about this incident update. |
+| `"status_page_incident_id"` | ID of the status page incident |
 
 Operations: Create.
 
 API path: `/v2/status_page_incident_updates`
 
+#### StatusPageLinkedResponseIncidentV1
+
+| Field | Description |
+| --- | --- |
+| `"id"` | ID of the Response incident |
+| `"linked_at"` | When the Response incident was linked to the status page incident |
+
+Operations: List.
+
+API path: `/v1/status-pages/{id}/incidents/{incident_id}/response-incidents`
+
 #### StatusPageMaintenance
 
 | Field | Description |
 | --- | --- |
-| `"affected_component_id"` |  |
-| `"component_maintenance_period"` |  |
-| `"end_at"` |  |
-| `"id"` |  |
-| `"idempotency_key"` |  |
-| `"maintenance_status"` |  |
-| `"message"` |  |
-| `"name"` |  |
-| `"notify_subscriber"` |  |
-| `"published_at"` |  |
-| `"start_at"` |  |
-| `"status_page_id"` |  |
-| `"update"` |  |
+| `"affected_component_ids"` | An array of IDs of component affected by the maintenance window |
+| `"automate_maintenance_status"` | Whether updates are published automatically, moving this maintenance window to in progress at its start time and to complete at its end time |
+| `"component_maintenance_periods"` | A list of time periods where components were under maintenance during this status page maintenance window |
+| `"end_at"` | The time the maintenance window ends |
+| `"id"` | A unique ID for this status page maintenance window |
+| `"idempotency_key"` | A unique key to de-duplicate requests. |
+| `"maintenance_status"` | Current status for this maintenance window |
+| `"message"` | Markdown initial update on this status page maintenance window |
+| `"name"` | A title for the maintenance window |
+| `"notify_subscribers"` | Whether to notify subscribers about this status page maintenance. |
+| `"published_at"` | When this status page maintenance window was published to the status page |
+| `"start_at"` | The time the maintenance window starts |
+| `"status_page_id"` | The ID of the corresponding status page |
+| `"updates"` | A list of updates posted to this status page maintenance window |
 
-Operations: Create, List, Load.
+Operations: Create, List, Load, Update.
 
 API path: `/v2/status_page_maintenances`
 
@@ -1141,11 +2182,11 @@ API path: `/v2/status_page_maintenances`
 
 | Field | Description |
 | --- | --- |
-| `"component_status"` |  |
-| `"maintenance_status"` |  |
-| `"message"` |  |
-| `"notify_subscriber"` |  |
-| `"status_page_maintenance_id"` |  |
+| `"component_statuses"` | An array of mappings from component ID to component status. |
+| `"maintenance_status"` | Optional new status for this status page maintenance window. |
+| `"message"` | Markdown update on what's changed about this status page maintenance window |
+| `"notify_subscribers"` | Whether to notify subscribers about this status page maintenance update. |
+| `"status_page_maintenance_id"` | ID of the status page maintenance window |
 
 Operations: Create.
 
@@ -1155,39 +2196,51 @@ API path: `/v2/status_page_maintenance_updates`
 
 | Field | Description |
 | --- | --- |
-| `"item"` |  |
+| `"current_structure"` |  |
+| `"display_uptime_mode"` | How the page shows uptime against its components |
+| `"id"` |  |
+| `"management_meta"` |  |
 
 Operations: Load.
 
 API path: `/v2/status_page_structures/{status_page_id}`
+
+#### StatusPagesV2
+
+| Field | Description |
+| --- | --- |
+
+Operations: Remove.
+
+API path: `/v2/status_page_maintenances/{status_page_maintenance_id}`
 
 #### Team
 
 | Field | Description |
 | --- | --- |
 | `"catalog_entry"` |  |
-| `"id"` |  |
-| `"member"` |  |
-| `"name"` |  |
+| `"id"` | Unique ID of the team |
+| `"members"` | Members of the team |
+| `"name"` | Name of the team |
 
 Operations: List, Load.
 
 API path: `/v3/teams`
 
-#### TelemetryDataSource
+#### TelemetryDataSourceV2
 
 | Field | Description |
 | --- | --- |
-| `"created_at"` |  |
-| `"datadog_config"` |  |
-| `"enabled"` |  |
-| `"grafana_config"` |  |
-| `"id"` |  |
-| `"name"` |  |
-| `"provider"` |  |
-| `"source_type"` |  |
-| `"updated_at"` |  |
-| `"version"` |  |
+| `"created_at"` | When this data source was created |
+| `"datadog_config"` | Datadog-specific credential updates |
+| `"enabled"` | Whether this data source is enabled |
+| `"grafana_config"` | Grafana-specific credential and endpoint updates |
+| `"id"` | Unique identifier for this data source |
+| `"name"` | Human-readable name of the data source |
+| `"provider"` | Provider that hosts this data source |
+| `"source_type"` | Type of data source (e.g., prometheus, loki, tempo) |
+| `"updated_at"` | When this data source was last updated |
+| `"version"` | Upstream tool version captured at probe time (e.g. |
 
 Operations: Update.
 
@@ -1198,47 +2251,48 @@ API path: `/v2/telemetry/data_sources/{id}`
 | Field | Description |
 | --- | --- |
 | `"base_role"` |  |
-| `"custom_role"` |  |
-| `"email"` |  |
-| `"id"` |  |
-| `"is_active"` |  |
-| `"name"` |  |
-| `"role"` |  |
-| `"seat"` |  |
-| `"slack_user_id"` |  |
+| `"custom_roles"` |  |
+| `"email"` | Email address of the user. |
+| `"id"` | Unique identifier of the user |
+| `"is_active"` | Whether the user is active. |
+| `"name"` | Name of the user |
+| `"role"` | DEPRECATED: Role of the user as of March 9th 2023, this value is no longer updated. |
+| `"seats"` |  |
+| `"slack_user_id"` | Slack ID of the user |
 
-Operations: List, Load.
+Operations: Create, List, Load.
 
-API path: `/v2/users`
+API path: `/v2/users/{user_id}/paging_provider`
 
 #### Workflow
 
 | Field | Description |
 | --- | --- |
-| `"annotation"` |  |
-| `"condition_group"` |  |
-| `"continue_on_step_error"` |  |
+| `"annotations"` | Annotations that track metadata about this resource |
+| `"auto_run_mode"` | Whether the workflow runs immediately, or asks for confirmation in the incident channel first. |
+| `"condition_groups"` | Conditions that apply to the workflow trigger |
+| `"continue_on_step_error"` | Whether to continue executing the workflow if a step fails |
 | `"delay"` |  |
-| `"expression"` |  |
-| `"folder"` |  |
-| `"form_field"` |  |
-| `"id"` |  |
-| `"include_private_escalation"` |  |
-| `"include_private_incident"` |  |
+| `"expressions"` | The expressions to use in the workflow |
+| `"folder"` | Folder to display the workflow in |
+| `"form_fields"` | User-configured form fields available in the workflow scope. |
+| `"id"` | Unique identifier for the workflow |
+| `"include_private_escalations"` | Whether to include private escalations |
+| `"include_private_incidents"` | DEPRECATED: use `private_incident_scope` instead. |
 | `"management_meta"` |  |
-| `"name"` |  |
-| `"once_for"` |  |
-| `"owning_team_id"` |  |
-| `"private_incident_scope"` |  |
-| `"runs_from"` |  |
-| `"runs_on_incident"` |  |
-| `"runs_on_incident_mode"` |  |
-| `"shortform"` |  |
-| `"skip_step_upgrade"` |  |
-| `"state"` |  |
-| `"step"` |  |
-| `"trigger"` |  |
-| `"version"` |  |
+| `"name"` | Name provided by the user when creating the workflow |
+| `"once_for"` | This workflow will run 'once for' a list of references |
+| `"owning_team_ids"` | IDs of the teams that own this workflow |
+| `"private_incident_scope"` | Which private incidents this workflow acts on: every private incident (all), those an owning team can see (owning_teams), or none |
+| `"runs_from"` | The time from which this workflow will run on incidents |
+| `"runs_on_incident_modes"` | Which incident modes should this workflow run on? |
+| `"runs_on_incidents"` | Which incidents should the workflow be applied to? |
+| `"shortform"` | The shortform used to trigger this workflow (only applicable for manual triggers) |
+| `"skip_step_upgrades"` | Skips workflow step upgrades, when the parameters for an existing workflow step change |
+| `"state"` | What state this workflow is in |
+| `"steps"` | Steps that are executed as part of the workflow |
+| `"trigger"` | Trigger to set on the workflow |
+| `"version"` | Revision of the workflow, uniquely identifying it's version |
 | `"workflow"` |  |
 
 Operations: Create, List, Load, Remove, Update.
@@ -1249,20 +2303,20 @@ API path: `/v2/workflows`
 
 | Field | Description |
 | --- | --- |
-| `"cancelled_at"` |  |
-| `"created_at"` |  |
-| `"enqueued_at"` |  |
-| `"error"` |  |
-| `"id"` |  |
-| `"incident_id"` |  |
-| `"incident_reference"` |  |
-| `"progress"` |  |
-| `"scheduled_at"` |  |
-| `"updated_at"` |  |
-| `"workflow_id"` |  |
-| `"workflow_name"` |  |
-| `"workflow_version_id"` |  |
-| `"workflow_version_number"` |  |
+| `"cancelled_at"` | If the run was cancelled, this is when |
+| `"created_at"` | When the resource was created |
+| `"enqueued_at"` | When the run was enqueued for execution |
+| `"error"` | Error produced by the workflow, if it failed |
+| `"id"` | Unique identifier for the workflow run |
+| `"incident_id"` | If this run was against a specific incident, this is the ID of that incident |
+| `"incident_reference"` | If this run was against a specific incident, this is the reference of that incident |
+| `"progress"` | Status of each step as it is worked |
+| `"scheduled_at"` | When the run was scheduled for |
+| `"updated_at"` | When the resource was last updated |
+| `"workflow_id"` | Unique identifier for the underlying workflow |
+| `"workflow_name"` | Name of the underlying workflow |
+| `"workflow_version_id"` | Unique identifier of the workflow version |
+| `"workflow_version_number"` | Monotonically incrementing version number for the version that ran |
 
 Operations: List, Load.
 
@@ -1292,17 +2346,17 @@ Create an instance: `action := client.Action(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `assignee` | `map[string]any` |  |
-| `assignee_id` | `string` |  |
-| `completed_at` | `string` |  |
-| `created_at` | `string` |  |
+| `assignee_id` | `string` | ID of the user this action is assigned to |
+| `completed_at` | `string` | When the action was completed |
+| `created_at` | `string` | When the action was created |
 | `creator` | `map[string]any` |  |
-| `description` | `string` |  |
+| `description` | `string` | Description of the action |
 | `external_issue_reference` | `map[string]any` |  |
-| `follow_up` | `bool` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `status` | `string` |  |
-| `updated_at` | `string` |  |
+| `follow_up` | `bool` | Whether an action is marked as follow-up |
+| `id` | `string` | Unique identifier for the action |
+| `incident_id` | `string` | Unique identifier of the incident the action belongs to |
+| `status` | `string` | Status of the action |
+| `updated_at` | `string` | When the action was last updated |
 
 #### Example: Load
 
@@ -1311,7 +2365,7 @@ action, err := client.Action(nil).Load(map[string]any{"id": "action_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(action) // the loaded record
+fmt.Println(action.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -1321,7 +2375,10 @@ actions, err := client.Action(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(actions) // the array of records
+// A []any of entities, one per record.
+for _, item := range actions.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -1340,7 +2397,7 @@ result, err := client.Action(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -1360,18 +2417,19 @@ Create an instance: `alert := client.Alert(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_group_id` | `[]any` |  |
-| `alert_source_id` | `string` |  |
-| `attribute` | `[]any` |  |
-| `created_at` | `string` |  |
-| `deduplication_key` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `resolved_at` | `string` |  |
-| `source_url` | `string` |  |
-| `status` | `string` |  |
-| `title` | `string` |  |
-| `updated_at` | `string` |  |
+| `alert_group_ids` | `[]any` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `[]any` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `[]any` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
 
 #### Example: Load
 
@@ -1380,17 +2438,20 @@ alert, err := client.Alert(nil).Load(map[string]any{"id": "alert_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(alert) // the loaded record
+fmt.Println(alert.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
 
 ```go
-alerts, err := client.Alert(nil).List(nil, nil)
+alerts, err := client.Alert(nil).List(map[string]any{"page_size": 1}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(alerts) // the array of records
+// A []any of entities, one per record.
+for _, item := range alerts.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -1399,7 +2460,7 @@ fmt.Println(alerts) // the array of records
 result, err := client.Alert(nil).Create(map[string]any{
     "id": "example_id",
     "alert_source_id": "example_alert_source_id",
-    "attribute": []any{},
+    "attributes": []any{},
     "created_at": "example_created_at",
     "deduplication_key": "example_deduplication_key",
     "status": "example_status",
@@ -1409,7 +2470,7 @@ result, err := client.Alert(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -1431,12 +2492,12 @@ Create an instance: `alertAttribute := client.AlertAttribute(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `array` | `bool` |  |
-| `emoji` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `required` | `bool` |  |
-| `type` | `string` |  |
+| `array` | `bool` | Whether this attribute is an array |
+| `emoji` | `string` | The emoji to display alongside this attribute in chat messages, stored without colons |
+| `id` | `string` | The ID of this attribute |
+| `name` | `string` | Unique name of this attribute |
+| `required` | `bool` | Whether this attribute is required. |
+| `type` | `string` | Engine resource name for this attribute |
 
 #### Example: Load
 
@@ -1445,7 +2506,7 @@ alertAttribute, err := client.AlertAttribute(nil).Load(map[string]any{"id": "ale
 if err != nil {
     panic(err)
 }
-fmt.Println(alertAttribute) // the loaded record
+fmt.Println(alertAttribute.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -1455,7 +2516,10 @@ alertAttributes, err := client.AlertAttribute(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(alertAttributes) // the array of records
+// A []any of entities, one per record.
+for _, item := range alertAttributes.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -1471,7 +2535,7 @@ result, err := client.AlertAttribute(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -1493,15 +2557,15 @@ Create an instance: `alertNote := client.AlertNote(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_group_id` | `string` |  |
-| `alert_id` | `string` |  |
-| `content` | `string` |  |
-| `created_at` | `string` |  |
+| `alert_group_id` | `string` | ID of the alert group this note is attached to. |
+| `alert_id` | `string` | ID of the alert this note is attached to. |
+| `content` | `string` | Markdown body of the note |
+| `created_at` | `string` | When this note was first created |
 | `creator` | `map[string]any` |  |
-| `id` | `string` |  |
-| `image` | `[]any` |  |
-| `last_edited_at` | `string` |  |
-| `updated_at` | `string` |  |
+| `id` | `string` | Unique identifier for the alert note |
+| `images` | `[]any` | Images attached to the current version of the note, with signed URLs valid for 10 minutes |
+| `last_edited_at` | `string` | When this note was last edited, only set if it has been edited at least once since creation |
+| `updated_at` | `string` | When this note was last updated |
 
 #### Example: Load
 
@@ -1510,7 +2574,7 @@ alertNote, err := client.AlertNote(nil).Load(map[string]any{"id": "alert_note_id
 if err != nil {
     panic(err)
 }
-fmt.Println(alertNote) // the loaded record
+fmt.Println(alertNote.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -1520,7 +2584,10 @@ alertNotes, err := client.AlertNote(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(alertNotes) // the array of records
+// A []any of entities, one per record.
+for _, item := range alertNotes.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -1531,13 +2598,13 @@ result, err := client.AlertNote(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "creator": map[string]any{},
     "id": "example_id",
-    "image": []any{},
+    "images": []any{},
     "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -1559,24 +2626,24 @@ Create an instance: `alertRoute := client.AlertRoute(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_source` | `[]any` |  |
-| `channel_config` | `[]any` |  |
-| `condition_group` | `[]any` |  |
-| `created_at` | `string` |  |
-| `enabled` | `bool` |  |
+| `alert_sources` | `[]any` | Which alert sources should this alert route match? |
+| `channel_config` | `[]any` | The channel configuration for this alert route |
+| `condition_groups` | `[]any` | What condition groups must be true for this alert route to fire? |
+| `created_at` | `string` | The time of creation of this alert route |
+| `enabled` | `bool` | Whether this alert route is enabled or not |
 | `escalation_config` | `map[string]any` |  |
-| `expression` | `[]any` |  |
+| `expressions` | `[]any` | The expressions used in this template |
 | `grouping_config` | `map[string]any` |  |
-| `id` | `string` |  |
+| `id` | `string` | Unique identifier for this alert route config |
 | `incident_config` | `map[string]any` |  |
 | `incident_template` | `map[string]any` |  |
-| `is_private` | `bool` |  |
+| `is_private` | `bool` | Whether this alert route is private. |
 | `message_config` | `map[string]any` |  |
 | `message_template` | `map[string]any` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `[]any` |  |
-| `updated_at` | `string` |  |
-| `version` | `int` |  |
+| `name` | `string` | The name of this alert route config, for the user's reference |
+| `owning_team_ids` | `[]any` | IDs of teams that own this alert route |
+| `updated_at` | `string` | The time of last update of this alert route |
+| `version` | `int` | The version of this alert route config |
 
 #### Example: Load
 
@@ -1585,29 +2652,32 @@ alertRoute, err := client.AlertRoute(nil).Load(map[string]any{"id": "alert_route
 if err != nil {
     panic(err)
 }
-fmt.Println(alertRoute) // the loaded record
+fmt.Println(alertRoute.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
 
 ```go
-alertRoutes, err := client.AlertRoute(nil).List(nil, nil)
+alertRoutes, err := client.AlertRoute(nil).List(map[string]any{"page_size": 1}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(alertRoutes) // the array of records
+// A []any of entities, one per record.
+for _, item := range alertRoutes.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.AlertRoute(nil).Create(map[string]any{
-    "alert_source": []any{},
+    "alert_sources": []any{},
     "channel_config": []any{},
-    "condition_group": []any{},
+    "condition_groups": []any{},
     "enabled": true,
     "escalation_config": map[string]any{},
-    "expression": []any{},
+    "expressions": []any{},
     "grouping_config": map[string]any{},
     "id": "example_id",
     "incident_config": map[string]any{},
@@ -1620,7 +2690,7 @@ result, err := client.AlertRoute(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -1642,19 +2712,23 @@ Create an instance: `alertSource := client.AlertSource(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_events_url` | `string` |  |
-| `auto_resolve_incident_alert` | `bool` |  |
-| `auto_resolve_timeout_minute` | `int` |  |
-| `disabled` | `bool` |  |
-| `email_option` | `map[string]any` |  |
-| `heartbeat_option` | `map[string]any` |  |
-| `http_custom_option` | `map[string]any` |  |
-| `id` | `string` |  |
-| `jira_option` | `map[string]any` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `[]any` |  |
-| `secret_token` | `string` |  |
-| `source_type` | `string` |  |
+| `alert_events_url` | `string` | URL that can be used to send alert events to this source. |
+| `auto_resolve_incident_alerts` | `bool` | Whether alerts from this source keep counting down to auto-resolve while attached to an incident. |
+| `auto_resolve_timeout_minutes` | `int` | When set, alerts from this source will automatically resolve after this many minutes. |
+| `azure_devops_options` | `map[string]any` |  |
+| `disabled` | `bool` | For heartbeat sources, set to true to disable monitoring |
+| `email_options` | `map[string]any` |  |
+| `filter_condition_groups` | `[]any` | Conditions an incoming event must match to be ingested from this source, evaluated against the event's payload and this source's expressions. |
+| `fixed_team_id` | `string` | When set, the team every alert from this source is attributed to. |
+| `heartbeat_options` | `map[string]any` |  |
+| `http_custom_options` | `map[string]any` |  |
+| `id` | `string` | The ID of this alert source |
+| `jira_options` | `map[string]any` |  |
+| `name` | `string` | Unique name of the alert source |
+| `owning_team_ids` | `[]any` | IDs of teams that own this alert source |
+| `rate_limit_sharding` | `map[string]any` | Controls how this source's ingest rate limit is split into buckets. |
+| `secret_token` | `string` | Secret token used to authenticate this source, if applicable. |
+| `source_type` | `string` | Type of alert source |
 | `template` | `map[string]any` |  |
 
 #### Example: Load
@@ -1664,7 +2738,7 @@ alertSource, err := client.AlertSource(nil).Load(map[string]any{"id": "alert_sou
 if err != nil {
     panic(err)
 }
-fmt.Println(alertSource) // the loaded record
+fmt.Println(alertSource.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -1674,26 +2748,440 @@ alertSources, err := client.AlertSource(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(alertSources) // the array of records
+// A []any of entities, one per record.
+for _, item := range alertSources.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.AlertSource(nil).Create(map[string]any{
-    "email_option": map[string]any{},
-    "heartbeat_option": map[string]any{},
-    "http_custom_option": map[string]any{},
+    "azure_devops_options": map[string]any{},
+    "email_options": map[string]any{},
+    "heartbeat_options": map[string]any{},
+    "http_custom_options": map[string]any{},
     "id": "example_id",
-    "jira_option": map[string]any{},
+    "jira_options": map[string]any{},
     "name": "example_name",
+    "rate_limit_sharding": map[string]any{},
     "source_type": "example_source_type",
     "template": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### AlertSourcesV2
+
+Create an instance: `alertSourcesV2 := client.AlertSourcesV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `owning_team_ids` | `[]any` | IDs of teams that own this alert source |
+| `source_type` | `string` | Type of alert source |
+| `template` | `map[string]any` |  |
+
+#### Example: Create
+
+```go
+result, err := client.AlertSourcesV2(nil).Create(map[string]any{
+    "source_type": "example_source_type",
+    "template": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### AlertTag
+
+Create an instance: `alertTag := client.AlertTag(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique identifier for the tag |
+| `name` | `string` | The tag name |
+
+#### Example: List
+
+```go
+alertTags, err := client.AlertTag(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range alertTags.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### AlertsAddTagsResultV2
+
+Create an instance: `alertsAddTagsResultV2 := client.AlertsAddTagsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert_group_ids` | `[]any` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `[]any` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `[]any` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
+
+#### Example: Create
+
+```go
+result, err := client.AlertsAddTagsResultV2(nil).Create(map[string]any{
+    "alert_id": "example_alert_id",
+    "alert_source_id": "example_alert_source_id",
+    "attributes": []any{},
+    "created_at": "example_created_at",
+    "deduplication_key": "example_deduplication_key",
+    "id": "example_id",
+    "status": "example_status",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### AlertsRemoveTagsResultV2
+
+Create an instance: `alertsRemoveTagsResultV2 := client.AlertsRemoveTagsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert_group_ids` | `[]any` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `[]any` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `[]any` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
+
+#### Example: Create
+
+```go
+result, err := client.AlertsRemoveTagsResultV2(nil).Create(map[string]any{
+    "alert_id": "example_alert_id",
+    "alert_source_id": "example_alert_source_id",
+    "attributes": []any{},
+    "created_at": "example_created_at",
+    "deduplication_key": "example_deduplication_key",
+    "id": "example_id",
+    "status": "example_status",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### AlertsSetTagsResultV2
+
+Create an instance: `alertsSetTagsResultV2 := client.AlertsSetTagsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert_group_ids` | `[]any` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `[]any` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `[]any` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
+
+#### Example: Create
+
+```go
+result, err := client.AlertsSetTagsResultV2(nil).Create(map[string]any{
+    "alert_id": "example_alert_id",
+    "alert_source_id": "example_alert_source_id",
+    "attributes": []any{},
+    "created_at": "example_created_at",
+    "deduplication_key": "example_deduplication_key",
+    "id": "example_id",
+    "status": "example_status",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### AlertsTransitionIncidentAlertResultV2
+
+Create an instance: `alertsTransitionIncidentAlertResultV2 := client.AlertsTransitionIncidentAlertResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `alert` | `map[string]any` |  |
+| `alert_id` | `string` | Alert to attach to the incident |
+| `alert_route_id` | `string` | The ID of the alert route that created this incident alert |
+| `id` | `string` | The ID of this alert |
+| `incident` | `map[string]any` | Incident slim is a subset of the full incident object, listing key fields. |
+| `incident_id` | `string` | Incident to attach the alert to |
+| `re_relate` | `bool` | Relate the alert again even though someone previously marked it unrelated to this incident. |
+| `state` | `string` | What state to move the connection to |
+
+#### Example: List
+
+```go
+alertsTransitionIncidentAlertResultV2s, err := client.AlertsTransitionIncidentAlertResultV2(nil).List(map[string]any{"page_size": 1}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range alertsTransitionIncidentAlertResultV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.AlertsTransitionIncidentAlertResultV2(nil).Create(map[string]any{
+    "alert": map[string]any{},
+    "alert_id": "example_alert_id",
+    "id": "example_id",
+    "incident": map[string]any{},
+    "incident_id": "example_incident_id",
+    "state": "example_state",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### AnnouncementRule
+
+Create an instance: `announcementRule := client.AnnouncementRule(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `condition_groups` | `[]any` | Incidents are announced when they match any of these condition groups |
+| `conditions_no_longer_apply_behaviour` | `string` | Whether to remove announcement posts when the incident no longer matches this rule's conditions |
+| `created_at` | `string` | When the rule was created |
+| `id` | `string` | Unique identifier for this announcement rule |
+| `microsoft_teams_channel_ids` | `[]any` | Microsoft Teams channels to post announcements into, as team_id/channel_id, when the organisation uses Microsoft Teams |
+| `mode` | `string` | Which incidents are announced: live incidents only, or triage incidents too |
+| `name` | `string` | Human readable name for the rule |
+| `owning_team_ids` | `[]any` | IDs of the teams that own this rule |
+| `private_incident_scope` | `string` | Which private incidents this rule announces: every private incident (all), those an owning team can see (owning_teams), or none |
+| `slack_channel_ids` | `[]any` | IDs of the Slack channels to post announcements into, when the organisation uses Slack |
+| `template_id` | `string` | ID of the announcement template used to render this rule's posts |
+| `update_sharing_mode` | `string` | Where incident updates are shared once the incident is announced |
+| `updated_at` | `string` | When the rule was last updated |
+
+#### Example: Load
+
+```go
+announcementRule, err := client.AnnouncementRule(nil).Load(map[string]any{"id": "announcement_rule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(announcementRule.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+announcementRules, err := client.AnnouncementRule(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range announcementRules.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.AnnouncementRule(nil).Create(map[string]any{
+    "condition_groups": []any{},
+    "conditions_no_longer_apply_behaviour": "example_conditions_no_longer_apply_behaviour",
+    "created_at": "example_created_at",
+    "id": "example_id",
+    "microsoft_teams_channel_ids": []any{},
+    "mode": "example_mode",
+    "name": "example_name",
+    "owning_team_ids": []any{},
+    "slack_channel_ids": []any{},
+    "update_sharing_mode": "example_update_sharing_mode",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### AnnouncementTemplate
+
+Create an instance: `announcementTemplate := client.AnnouncementTemplate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `actions` | `[]any` | Actions shown on the announcement post, in rank order |
+| `fields` | `[]any` | Fields shown on the announcement post, in rank order |
+| `id` | `string` | Unique identifier for this announcement template |
+| `is_default` | `bool` | Whether this is the organisation's default template, used by rules that don't choose one |
+| `name` | `string` | Name of this announcement template |
+| `owning_team_ids` | `[]any` | IDs of the teams that own this template |
+
+#### Example: Load
+
+```go
+announcementTemplate, err := client.AnnouncementTemplate(nil).Load(map[string]any{"id": "announcement_template_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(announcementTemplate.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+announcementTemplates, err := client.AnnouncementTemplate(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range announcementTemplates.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.AnnouncementTemplate(nil).Create(map[string]any{
+    "actions": []any{},
+    "fields": []any{},
+    "id": "example_id",
+    "is_default": true,
+    "name": "example_name",
+    "owning_team_ids": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -1715,19 +3203,18 @@ Create an instance: `apiKey := client.ApiKey(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `comment` | `string` |  |
-| `created_at` | `string` |  |
+| `comments` | `string` | Freeform notes about this API key |
+| `created_at` | `string` | When the API key was created |
 | `creator` | `map[string]any` |  |
-| `grace_period_minute` | `int` |  |
-| `id` | `string` |  |
-| `last_used_at` | `string` |  |
-| `name` | `string` |  |
-| `role` | `[]any` |  |
-| `role_name` | `[]any` |  |
-| `team_id` | `[]any` |  |
-| `team_role` | `[]any` |  |
-| `team_role_name` | `[]any` |  |
-| `token_last_issued_at` | `string` |  |
+| `id` | `string` | Unique identifier for this API key |
+| `last_used_at` | `string` | When the key was last used to authenticate a request |
+| `name` | `string` | The name of the API key, for the user's reference |
+| `role_names` | `[]any` | Account-level roles to assign to the API key. |
+| `roles` | `[]any` | The account-level roles assigned to this API key |
+| `team_ids` | `[]any` | IDs of teams that this API key is scoped to |
+| `team_role_names` | `[]any` | Roles to grant for the teams specified in `team_ids`. |
+| `team_roles` | `[]any` | The team-level roles assigned to this API key |
+| `token_last_issued_at` | `string` | When the current token for this API was last issued. |
 
 #### Example: Load
 
@@ -1736,7 +3223,7 @@ apiKey, err := client.ApiKey(nil).Load(map[string]any{"id": "api_key_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(apiKey) // the loaded record
+fmt.Println(apiKey.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -1746,7 +3233,10 @@ apiKeys, err := client.ApiKey(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(apiKeys) // the array of records
+// A []any of entities, one per record.
+for _, item := range apiKeys.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -1755,20 +3245,386 @@ fmt.Println(apiKeys) // the array of records
 result, err := client.ApiKey(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "creator": map[string]any{},
-    "grace_period_minute": 1,
     "id": "example_id",
     "name": "example_name",
-    "role": []any{},
-    "role_name": []any{},
-    "team_id": []any{},
-    "team_role": []any{},
-    "team_role_name": []any{},
+    "role_names": []any{},
+    "roles": []any{},
+    "team_ids": []any{},
+    "team_role_names": []any{},
+    "team_roles": []any{},
     "token_last_issued_at": "example_token_last_issued_at",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### CallRoute
+
+Create an instance: `callRoute := client.CallRoute(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `allowed_callers` | `[]any` | The numbers allowed to call this route. |
+| `country_code` | `string` | The country this route's number belongs to |
+| `created_at` | `string` |  |
+| `current_state` | `string` | Where this route is in provisioning. |
+| `custom_language` | `string` | The language we speak voice prompts in, via text-to-speech |
+| `id` | `string` | Unique identifier for this call route |
+| `name` | `string` | Name for this call route |
+| `options` | `[]any` | The phone-tree menu this route presents. |
+| `path` | `[]any` | Who we page when a call comes in. |
+| `phone_number` | `string` | The number your customers call to reach this route, once one has been provisioned |
+| `phone_number_type` | `string` | The type of phone number, which determines the regulatory requirements for provisioning it |
+| `responder_caller_id` | `string` | Which number responders see when we call them: * route_number: this route's own number * oncall_number: an incident.io on-call number |
+| `updated_at` | `string` |  |
+| `use_caller_allowlist` | `bool` | Whether this route only answers calls from its allowed callers |
+
+#### Example: Load
+
+```go
+callRoute, err := client.CallRoute(nil).Load(map[string]any{"id": "call_route_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(callRoute.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+callRoutes, err := client.CallRoute(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range callRoutes.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### CallRoutesCreateAllowedCallerResultV2
+
+Create an instance: `callRoutesCreateAllowedCallerResultV2 := client.CallRoutesCreateAllowedCallerResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `name` | `string` | Label for whose number this is |
+| `phone_number` | `string` | The number to allow, in international format |
+
+#### Example: Create
+
+```go
+result, err := client.CallRoutesCreateAllowedCallerResultV2(nil).Create(map[string]any{
+    "call_route_id": "example_call_route_id",
+    "phone_number": "example_phone_number",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### CallRoutesCreateOptionResultV2
+
+Create an instance: `callRoutesCreateOptionResultV2 := client.CallRoutesCreateOptionResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `digit` | `string` | The keypad digit a caller presses to choose this option |
+| `path` | `[]any` | Who to page when a caller chooses this option |
+| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+#### Example: Create
+
+```go
+result, err := client.CallRoutesCreateOptionResultV2(nil).Create(map[string]any{
+    "call_route_id": "example_call_route_id",
+    "digit": "example_digit",
+    "path": []any{},
+    "prompt": "example_prompt",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### CallRoutesListAllowedCallersResultV2
+
+Create an instance: `callRoutesListAllowedCallersResultV2 := client.CallRoutesListAllowedCallersResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique identifier for this allowed caller |
+| `name` | `string` | Label for whose number this is |
+| `phone_number` | `string` | The number allowed to call this route, in international format |
+
+#### Example: List
+
+```go
+callRoutesListAllowedCallersResultV2s, err := client.CallRoutesListAllowedCallersResultV2(nil).List(map[string]any{"call_route_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range callRoutesListAllowedCallersResultV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### CallRoutesListOptionsResultV2
+
+Create an instance: `callRoutesListOptionsResultV2 := client.CallRoutesListOptionsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `digit` | `string` | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Unique identifier for this option |
+| `path` | `[]any` | Who we page when a caller chooses this option |
+| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+#### Example: List
+
+```go
+callRoutesListOptionsResultV2s, err := client.CallRoutesListOptionsResultV2(nil).List(map[string]any{"call_route_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range callRoutesListOptionsResultV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### CallRoutesShowAllowedCallerResultV2
+
+Create an instance: `callRoutesShowAllowedCallerResultV2 := client.CallRoutesShowAllowedCallerResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique identifier for this allowed caller |
+| `name` | `string` | Label for whose number this is |
+| `phone_number` | `string` | The number allowed to call this route, in international format |
+
+#### Example: Load
+
+```go
+callRoutesShowAllowedCallerResultV2, err := client.CallRoutesShowAllowedCallerResultV2(nil).Load(map[string]any{"id": "call_routes_show_allowed_caller_result_v2_id", "call_route_id": "call_route_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(callRoutesShowAllowedCallerResultV2.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+
+### CallRoutesShowOptionResultV2
+
+Create an instance: `callRoutesShowOptionResultV2 := client.CallRoutesShowOptionResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `digit` | `string` | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Unique identifier for this option |
+| `path` | `[]any` | Who we page when a caller chooses this option |
+| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+#### Example: Load
+
+```go
+callRoutesShowOptionResultV2, err := client.CallRoutesShowOptionResultV2(nil).Load(map[string]any{"id": "call_routes_show_option_result_v2_id", "call_route_id": "call_route_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(callRoutesShowOptionResultV2.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+
+### CallRoutesUpdateAllowedCallerResultV2
+
+Create an instance: `callRoutesUpdateAllowedCallerResultV2 := client.CallRoutesUpdateAllowedCallerResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique identifier for this allowed caller |
+| `name` | `string` | Label for whose number this is |
+| `phone_number` | `string` | The number allowed to call this route, in international format |
+
+
+### CallRoutesUpdateOptionResultV2
+
+Create an instance: `callRoutesUpdateOptionResultV2 := client.CallRoutesUpdateOptionResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `digit` | `string` | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Unique identifier for this option |
+| `path` | `[]any` | Who we page when a caller chooses this option |
+| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+
+### CallRoutesV2
+
+Create an instance: `callRoutesV2 := client.CallRoutesV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
+
+
+### CallSession
+
+Create an instance: `callSession := client.CallSession(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `ended_at` | `string` | When the call session ended. |
+| `id` | `string` | Unique identifier for this call session |
+| `incident_id` | `string` | The incident this call session belongs to |
+| `started_at` | `string` | When the call session started |
+
+#### Example: List
+
+```go
+callSessions, err := client.CallSession(nil).List(map[string]any{"incident_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range callSessions.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### CallTranscriptEntry
+
+Create an instance: `callTranscriptEntry := client.CallTranscriptEntry(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `content` | `string` | What was said |
+| `id` | `string` | Unique identifier for this transcript entry |
+| `medium` | `string` | Whether this entry was spoken aloud or sent as an in-call chat message |
+| `participant_name` | `string` | Name of the participant who spoke or sent the message, as reported by the call provider |
+| `timestamp` | `string` | When the participant started speaking |
+
+#### Example: List
+
+```go
+callTranscriptEntrys, err := client.CallTranscriptEntry(nil).List(map[string]any{"call_session_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range callTranscriptEntrys.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -1789,19 +3645,19 @@ Create an instance: `catalogEntry := client.CatalogEntry(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alias` | `[]any` |  |
-| `archived_at` | `string` |  |
-| `attribute_value` | `map[string]any` |  |
+| `aliases` | `[]any` | Optional aliases that can be used to reference this entry |
+| `archived_at` | `string` | When this entry was archived |
+| `attribute_values` | `map[string]any` | Values of this entry |
 | `catalog_entry` | `map[string]any` |  |
 | `catalog_type` | `map[string]any` |  |
-| `catalog_type_id` | `string` |  |
-| `created_at` | `string` |  |
-| `external_id` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `rank` | `int` |  |
-| `update_attribute` | `[]any` |  |
-| `updated_at` | `string` |  |
+| `catalog_type_id` | `string` | ID of this catalog type |
+| `created_at` | `string` | When this entry was created |
+| `external_id` | `string` | An optional alternative ID for this entry, which is ensured to be unique for the type |
+| `id` | `string` | ID of this catalog entry |
+| `name` | `string` | Name is the human readable name of this entry |
+| `rank` | `int` | When catalog type is ranked, this is used to help order things |
+| `update_attributes` | `[]any` | If provided, only update these attribute_values keys. |
+| `updated_at` | `string` | When this entry was last updated |
 
 #### Example: Load
 
@@ -1810,24 +3666,27 @@ catalogEntry, err := client.CatalogEntry(nil).Load(map[string]any{"id": "catalog
 if err != nil {
     panic(err)
 }
-fmt.Println(catalogEntry) // the loaded record
+fmt.Println(catalogEntry.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
 
 ```go
-catalogEntrys, err := client.CatalogEntry(nil).List(nil, nil)
+catalogEntrys, err := client.CatalogEntry(nil).List(map[string]any{"catalog_type_id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(catalogEntrys) // the array of records
+// A []any of entities, one per record.
+for _, item := range catalogEntrys.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.CatalogEntry(nil).Create(map[string]any{
-    "attribute_value": map[string]any{},
+    "attribute_values": map[string]any{},
     "catalog_entry": map[string]any{},
     "catalog_type": map[string]any{},
     "catalog_type_id": "example_catalog_type_id",
@@ -1839,7 +3698,7 @@ result, err := client.CatalogEntry(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -1857,12 +3716,12 @@ Create an instance: `catalogResource := client.CatalogResource(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `category` | `string` |  |
-| `description` | `string` |  |
-| `engine_resource_type` | `string` |  |
-| `label` | `string` |  |
-| `type` | `string` |  |
-| `value_docstring` | `string` |  |
+| `category` | `string` | Which category of resource |
+| `description` | `string` | Human readable description for this resource |
+| `engine_resource_type` | `string` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `label` | `string` | Label for this catalog resource type |
+| `type` | `string` | Catalog type name for this resource, as used when setting the type of a catalog type attribute |
+| `value_docstring` | `string` | Documentation for the literal string value of this resource |
 
 #### Example: List
 
@@ -1871,7 +3730,10 @@ catalogResources, err := client.CatalogResource(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(catalogResources) // the array of records
+// A []any of entities, one per record.
+for _, item := range catalogResources.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -1892,30 +3754,30 @@ Create an instance: `catalogType := client.CatalogType(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `map[string]any` |  |
-| `category` | `[]any` |  |
-| `color` | `string` |  |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `dynamic_resource_parameter` | `string` |  |
-| `engine_resource_type` | `string` |  |
-| `estimated_count` | `int` |  |
-| `icon` | `string` |  |
-| `id` | `string` |  |
-| `is_editable` | `bool` |  |
-| `is_team_type` | `bool` |  |
-| `last_synced_at` | `string` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `[]any` |  |
-| `ranked` | `bool` |  |
-| `registry_type` | `string` |  |
-| `required_integration` | `[]any` |  |
+| `annotations` | `map[string]any` | Annotations that can track metadata about this type |
+| `categories` | `[]any` | What categories is this type considered part of |
+| `color` | `string` | Sets the display color of this type in the dashboard |
+| `created_at` | `string` | When this type was created |
+| `description` | `string` | Human readble description of this type |
+| `dynamic_resource_parameter` | `string` | If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally. |
+| `engine_resource_type` | `string` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `estimated_count` | `int` | If populated, gives an estimated count of entries for this type |
+| `icon` | `string` | Sets the display icon of this type in the dashboard |
+| `id` | `string` | ID of this catalog type |
+| `is_editable` | `bool` | Catalog types that are synced with external resources can't be edited |
+| `is_team_type` | `bool` | Whether this catalog type is the designated team type in team settings |
+| `last_synced_at` | `string` | When this type was last synced (if it's ever been sync'd) |
+| `name` | `string` | Name is the human readable name of this type |
+| `owning_team_ids` | `[]any` | IDs of the teams that own this catalog type |
+| `ranked` | `bool` | If this type should be ranked |
+| `registry_type` | `string` | The registry resource this type is synced from, if any |
+| `required_integrations` | `[]any` | If populated, the integrations required for this type |
 | `schema` | `map[string]any` |  |
-| `semantic_type` | `string` |  |
-| `source_repo_url` | `string` |  |
-| `type_name` | `string` |  |
-| `updated_at` | `string` |  |
-| `use_name_as_identifier` | `bool` |  |
+| `semantic_type` | `string` | This type has been deprecated, and will always be empty. |
+| `source_repo_url` | `string` | The url of the external repository where this type is managed |
+| `type_name` | `string` | The type name of this catalog type, to be used when defining attributes. |
+| `updated_at` | `string` | When this type was last updated |
+| `use_name_as_identifier` | `bool` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 
 #### Example: Load
 
@@ -1924,7 +3786,7 @@ catalogType, err := client.CatalogType(nil).Load(map[string]any{"id": "catalog_t
 if err != nil {
     panic(err)
 }
-fmt.Println(catalogType) // the loaded record
+fmt.Println(catalogType.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -1934,15 +3796,18 @@ catalogTypes, err := client.CatalogType(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(catalogTypes) // the array of records
+// A []any of entities, one per record.
+for _, item := range catalogTypes.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.CatalogType(nil).Create(map[string]any{
-    "annotation": map[string]any{},
-    "category": []any{},
+    "annotations": map[string]any{},
+    "categories": []any{},
     "color": "example_color",
     "created_at": "example_created_at",
     "description": "example_description",
@@ -1961,7 +3826,7 @@ result, err := client.CatalogType(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -1979,31 +3844,31 @@ Create an instance: `catalogTypeSchema := client.CatalogTypeSchema(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `map[string]any` |  |
-| `attribute` | `[]any` |  |
-| `category` | `[]any` |  |
-| `color` | `string` |  |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `dynamic_resource_parameter` | `string` |  |
-| `engine_resource_type` | `string` |  |
-| `estimated_count` | `int` |  |
-| `icon` | `string` |  |
-| `id` | `string` |  |
-| `is_editable` | `bool` |  |
-| `is_team_type` | `bool` |  |
-| `last_synced_at` | `string` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `[]any` |  |
-| `ranked` | `bool` |  |
-| `registry_type` | `string` |  |
-| `required_integration` | `[]any` |  |
+| `annotations` | `map[string]any` | Annotations that can track metadata about this type |
+| `attributes` | `[]any` |  |
+| `categories` | `[]any` | What categories is this type considered part of |
+| `color` | `string` | Sets the display color of this type in the dashboard |
+| `created_at` | `string` | When this type was created |
+| `description` | `string` | Human readble description of this type |
+| `dynamic_resource_parameter` | `string` | If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally. |
+| `engine_resource_type` | `string` | The way this resource type is referenced in the engine, as used when setting the type of an alert attribute |
+| `estimated_count` | `int` | If populated, gives an estimated count of entries for this type |
+| `icon` | `string` | Sets the display icon of this type in the dashboard |
+| `id` | `string` | ID of this catalog type |
+| `is_editable` | `bool` | Catalog types that are synced with external resources can't be edited |
+| `is_team_type` | `bool` | Whether this catalog type is the designated team type in team settings |
+| `last_synced_at` | `string` | When this type was last synced (if it's ever been sync'd) |
+| `name` | `string` | Name is the human readable name of this type |
+| `owning_team_ids` | `[]any` | IDs of the teams that own this catalog type |
+| `ranked` | `bool` | If this type should be ranked |
+| `registry_type` | `string` | The registry resource this type is synced from, if any |
+| `required_integrations` | `[]any` | If populated, the integrations required for this type |
 | `schema` | `map[string]any` |  |
-| `semantic_type` | `string` |  |
-| `source_repo_url` | `string` |  |
-| `type_name` | `string` |  |
-| `updated_at` | `string` |  |
-| `use_name_as_identifier` | `bool` |  |
+| `semantic_type` | `string` | This type has been deprecated, and will always be empty. |
+| `source_repo_url` | `string` | The url of the external repository where this type is managed |
+| `type_name` | `string` | The type name of this catalog type, to be used when defining attributes. |
+| `updated_at` | `string` | When this type was last updated |
+| `use_name_as_identifier` | `bool` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 | `version` | `int` |  |
 
 #### Example: Create
@@ -2011,9 +3876,9 @@ Create an instance: `catalogTypeSchema := client.CatalogTypeSchema(nil)`
 ```go
 result, err := client.CatalogTypeSchema(nil).Create(map[string]any{
     "catalog_type_id": "example_catalog_type_id",
-    "annotation": map[string]any{},
-    "attribute": []any{},
-    "category": []any{},
+    "annotations": map[string]any{},
+    "attributes": []any{},
+    "categories": []any{},
     "color": "example_color",
     "created_at": "example_created_at",
     "description": "example_description",
@@ -2033,7 +3898,7 @@ result, err := client.CatalogTypeSchema(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2055,24 +3920,24 @@ Create an instance: `customField := client.CustomField(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `catalog_type_id` | `string` |  |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `field_type` | `string` |  |
+| `catalog_type_id` | `string` | For catalog fields, the ID of the associated catalog type |
+| `created_at` | `string` | When the action was created |
+| `description` | `string` | Description of the custom field |
+| `field_type` | `string` | Type of custom field |
 | `filter_by` | `map[string]any` |  |
 | `fixed_filter` | `map[string]any` |  |
-| `group_by_catalog_attribute_id` | `string` |  |
-| `helptext_catalog_attribute_id` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `option` | `[]any` |  |
-| `required` | `string` |  |
-| `required_v2` | `string` |  |
-| `show_before_closure` | `bool` |  |
-| `show_before_creation` | `bool` |  |
-| `show_before_update` | `bool` |  |
-| `show_in_announcement_post` | `bool` |  |
-| `updated_at` | `string` |  |
+| `group_by_catalog_attribute_id` | `string` | For catalog fields, the ID of the attribute used to group catalog entries (if applicable) |
+| `helptext_catalog_attribute_id` | `string` | Which catalog attribute provides helptext for the options |
+| `id` | `string` | Unique identifier for the custom field |
+| `name` | `string` | Human readable name for the custom field |
+| `options` | `[]any` | What options are available for this custom field, if this field has options |
+| `required` | `string` | When this custom field must be set during the incident lifecycle. |
+| `required_v2` | `string` | When this custom field must be set during the incident lifecycle. |
+| `show_before_closure` | `bool` | Whether a custom field should be shown in the incident resolve modal. |
+| `show_before_creation` | `bool` | Whether a custom field should be shown in the incident creation modal. |
+| `show_before_update` | `bool` | Whether a custom field should be shown in the incident update modal. |
+| `show_in_announcement_post` | `bool` | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
+| `updated_at` | `string` | When the action was last updated |
 
 #### Example: Load
 
@@ -2081,7 +3946,7 @@ customField, err := client.CustomField(nil).Load(map[string]any{"id": "custom_fi
 if err != nil {
     panic(err)
 }
-fmt.Println(customField) // the loaded record
+fmt.Println(customField.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2091,7 +3956,10 @@ customFields, err := client.CustomField(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(customFields) // the array of records
+// A []any of entities, one per record.
+for _, item := range customFields.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -2105,7 +3973,7 @@ result, err := client.CustomField(nil).Create(map[string]any{
     "fixed_filter": map[string]any{},
     "id": "example_id",
     "name": "example_name",
-    "option": []any{},
+    "options": []any{},
     "show_before_closure": true,
     "show_before_creation": true,
     "show_before_update": true,
@@ -2114,7 +3982,7 @@ result, err := client.CustomField(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2136,10 +4004,10 @@ Create an instance: `customFieldOption := client.CustomFieldOption(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `custom_field_id` | `string` |  |
-| `id` | `string` |  |
-| `sort_key` | `int` |  |
-| `value` | `string` |  |
+| `custom_field_id` | `string` | ID of the custom field this option belongs to |
+| `id` | `string` | Unique identifier for the custom field option |
+| `sort_key` | `int` | Sort key used to order the custom field options correctly |
+| `value` | `string` | Human readable name for the custom field option. |
 
 #### Example: Load
 
@@ -2148,17 +4016,20 @@ customFieldOption, err := client.CustomFieldOption(nil).Load(map[string]any{"id"
 if err != nil {
     panic(err)
 }
-fmt.Println(customFieldOption) // the loaded record
+fmt.Println(customFieldOption.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
 
 ```go
-customFieldOptions, err := client.CustomFieldOption(nil).List(nil, nil)
+customFieldOptions, err := client.CustomFieldOption(nil).List(map[string]any{"custom_field_id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(customFieldOptions) // the array of records
+// A []any of entities, one per record.
+for _, item := range customFieldOptions.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -2173,7 +4044,7 @@ result, err := client.CustomFieldOption(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2193,21 +4064,21 @@ Create an instance: `escalation := client.Escalation(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `creator` | `map[string]any` |  |
-| `description` | `string` |  |
-| `escalation_path_id` | `string` |  |
-| `event` | `[]any` |  |
-| `id` | `string` |  |
-| `idempotency_key` | `string` |  |
-| `incident_id` | `string` |  |
-| `priority` | `map[string]any` |  |
-| `related_alert` | `[]any` |  |
-| `related_incident` | `[]any` |  |
-| `status` | `string` |  |
-| `title` | `string` |  |
-| `updated_at` | `string` |  |
-| `user_id` | `[]any` |  |
+| `created_at` | `string` | When this escalation was created |
+| `creator` | `map[string]any` | The creator of this escalation. |
+| `description` | `string` | Additional detail provided with this escalation. |
+| `escalation_path_id` | `string` | Unique identifier of the escalation path that the escalation was created from |
+| `events` | `[]any` | Events which describe the history of this escalation. |
+| `id` | `string` | Unique ID of the escalation |
+| `idempotency_key` | `string` | Unique key to prevent duplicate escalations. |
+| `incident_id` | `string` | ID of an incident to associate with this escalation. |
+| `priority` | `map[string]any` | The priority associated with this escalation. |
+| `related_alerts` | `[]any` | Alerts related to this escalation |
+| `related_incidents` | `[]any` | Incidents related to this escalation |
+| `status` | `string` | Status of the escalation |
+| `title` | `string` | The title of this escalation |
+| `updated_at` | `string` | When this escalation was last updated |
+| `user_ids` | `[]any` | IDs of users to escalate directly to |
 
 #### Example: Load
 
@@ -2216,7 +4087,7 @@ escalation, err := client.Escalation(nil).Load(map[string]any{"id": "escalation_
 if err != nil {
     panic(err)
 }
-fmt.Println(escalation) // the loaded record
+fmt.Println(escalation.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2226,7 +4097,10 @@ escalations, err := client.Escalation(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(escalations) // the array of records
+// A []any of entities, one per record.
+for _, item := range escalations.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -2235,12 +4109,13 @@ fmt.Println(escalations) // the array of records
 result, err := client.Escalation(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "creator": map[string]any{},
-    "event": []any{},
+    "description": "example_description",
+    "events": []any{},
     "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "priority": map[string]any{},
-    "related_alert": []any{},
-    "related_incident": []any{},
+    "related_alerts": []any{},
+    "related_incidents": []any{},
     "status": "example_status",
     "title": "example_title",
     "updated_at": "example_updated_at",
@@ -2248,7 +4123,142 @@ result, err := client.Escalation(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### EscalationPathTemplate
+
+Create an instance: `escalationPathTemplate := client.EscalationPathTemplate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` | A description of what this template is for. |
+| `expressions` | `[]any` | Expressions backing the template's binding targets. |
+| `has_historical_escalation_path_versions` | `bool` | Whether a previous escalation path version uses this template. |
+| `id` | `string` | Unique identifier for this template. |
+| `name` | `string` | The name of this template. |
+| `params` | `[]any` | The parameters declared by this template. |
+| `path` | `[]any` | The nodes that form the levels and branches of this template. |
+| `repeat_config` | `map[string]any` |  |
+| `working_hours` | `[]any` | The working hours for this template. |
+
+#### Example: Load
+
+```go
+escalationPathTemplate, err := client.EscalationPathTemplate(nil).Load(map[string]any{"id": "escalation_path_template_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(escalationPathTemplate.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+escalationPathTemplates, err := client.EscalationPathTemplate(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range escalationPathTemplates.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.EscalationPathTemplate(nil).Create(map[string]any{
+    "expressions": []any{},
+    "has_historical_escalation_path_versions": true,
+    "id": "example_id",
+    "name": "example_name",
+    "params": []any{},
+    "path": []any{},
+    "repeat_config": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### EscalationsCheckEscalationPermissionsResultV2
+
+Create an instance: `escalationsCheckEscalationPermissionsResultV2 := client.EscalationsCheckEscalationPermissionsResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `response_options` | `[]any` | The response options available to each requested user, in the same order as the request. |
+| `user_ids` | `[]any` | The IDs of the users to check response options for |
+
+#### Example: Create
+
+```go
+result, err := client.EscalationsCheckEscalationPermissionsResultV2(nil).Create(map[string]any{
+    "escalation_id": "example_escalation_id",
+    "response_options": []any{},
+    "user_ids": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### EscalationsReassignEscalationResultV2
+
+Create an instance: `escalationsReassignEscalationResultV2 := client.EscalationsReassignEscalationResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` | Additional details about the new escalation. |
+| `escalation_path_id` | `string` | ID of the escalation path to reassign to |
+| `resolve_original` | `bool` | Whether to resolve the original escalation, stopping it paging its targets. |
+| `title` | `string` | The title of the new escalation. |
+| `user_ids` | `[]any` | IDs of users to reassign directly to |
+
+#### Example: Create
+
+```go
+result, err := client.EscalationsReassignEscalationResultV2(nil).Create(map[string]any{
+    "escalation_id": "example_escalation_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2271,24 +4281,25 @@ Create an instance: `followUp := client.FollowUp(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `assignee` | `map[string]any` |  |
-| `assignee_id` | `string` |  |
+| `assignee_id` | `string` | ID of the user this follow-up is assigned to |
 | `assignee_team` | `map[string]any` |  |
-| `assignee_team_id` | `string` |  |
-| `completed_at` | `string` |  |
-| `created_at` | `string` |  |
+| `assignee_team_id` | `string` | ID of the team this follow-up is assigned to |
+| `category` | `map[string]any` |  |
+| `completed_at` | `string` | When the follow-up was completed |
+| `created_at` | `string` | When the follow-up was created |
 | `creator` | `map[string]any` |  |
-| `description` | `string` |  |
+| `description` | `string` | Description of the follow-up |
 | `external_issue_reference` | `map[string]any` |  |
-| `external_issue_reference_id` | `string` |  |
-| `follow_up_category_id` | `string` |  |
-| `follow_up_priority_option_id` | `string` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `label` | `[]any` |  |
+| `external_issue_reference_id` | `string` | If this follow-up is related to an external issue, the ID of that issue |
+| `follow_up_category_id` | `string` | ID of the category for this follow-up |
+| `follow_up_priority_option_id` | `string` | ID of the priority for this follow-up |
+| `id` | `string` | Unique identifier for the follow-up |
+| `incident_id` | `string` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `[]any` | Labels associated with this follow-up |
 | `priority` | `map[string]any` |  |
-| `status` | `string` |  |
-| `title` | `string` |  |
-| `updated_at` | `string` |  |
+| `status` | `string` | Status of the follow-up |
+| `title` | `string` | Title of the follow-up |
+| `updated_at` | `string` | When the follow-up was last updated |
 
 #### Example: Load
 
@@ -2297,7 +4308,7 @@ followUp, err := client.FollowUp(nil).Load(map[string]any{"id": "follow_up_id"},
 if err != nil {
     panic(err)
 }
-fmt.Println(followUp) // the loaded record
+fmt.Println(followUp.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2307,7 +4318,10 @@ followUps, err := client.FollowUp(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(followUps) // the array of records
+// A []any of entities, one per record.
+for _, item := range followUps.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -2316,12 +4330,13 @@ fmt.Println(followUps) // the array of records
 result, err := client.FollowUp(nil).Create(map[string]any{
     "assignee": map[string]any{},
     "assignee_team": map[string]any{},
+    "category": map[string]any{},
     "created_at": "example_created_at",
     "creator": map[string]any{},
     "external_issue_reference": map[string]any{},
     "id": "example_id",
     "incident_id": "example_incident_id",
-    "label": []any{},
+    "labels": []any{},
     "priority": map[string]any{},
     "status": "example_status",
     "title": "example_title",
@@ -2330,7 +4345,129 @@ result, err := client.FollowUp(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### FollowUpsConnectExternalIssueResultV3
+
+Create an instance: `followUpsConnectExternalIssueResultV3 := client.FollowUpsConnectExternalIssueResultV3(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `assignee` | `map[string]any` |  |
+| `assignee_team` | `map[string]any` |  |
+| `category` | `map[string]any` |  |
+| `completed_at` | `string` | When the follow-up was completed |
+| `created_at` | `string` | When the follow-up was created |
+| `creator` | `map[string]any` |  |
+| `description` | `string` | Description of the follow-up |
+| `external_issue_reference` | `map[string]any` |  |
+| `id` | `string` | Unique identifier for the follow-up |
+| `incident_id` | `string` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `[]any` | Labels associated with this follow-up |
+| `priority` | `map[string]any` |  |
+| `provider` | `string` | The issue tracker provider the issue belongs to |
+| `status` | `string` | Status of the follow-up |
+| `title` | `string` | Title of the follow-up |
+| `updated_at` | `string` | When the follow-up was last updated |
+| `url` | `string` | URL of the issue in the external provider |
+
+#### Example: Create
+
+```go
+result, err := client.FollowUpsConnectExternalIssueResultV3(nil).Create(map[string]any{
+    "follow_up_id": "example_follow_up_id",
+    "assignee": map[string]any{},
+    "assignee_team": map[string]any{},
+    "category": map[string]any{},
+    "created_at": "example_created_at",
+    "creator": map[string]any{},
+    "external_issue_reference": map[string]any{},
+    "id": "example_id",
+    "incident_id": "example_incident_id",
+    "labels": []any{},
+    "priority": map[string]any{},
+    "provider": "example_provider",
+    "status": "example_status",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
+    "url": "example_url",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### FollowUpsCreateFromLinkResultV3
+
+Create an instance: `followUpsCreateFromLinkResultV3 := client.FollowUpsCreateFromLinkResultV3(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `incident_id` | `string` | Unique identifier of the incident the follow-up belongs to |
+| `url` | `string` | URL of the issue in the external provider |
+
+#### Example: Create
+
+```go
+result, err := client.FollowUpsCreateFromLinkResultV3(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "url": "example_url",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### Identity
+
+Create an instance: `identity := client.Identity(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `dashboard_url` | `string` | The dashboard URL for this organisation |
+| `name` | `string` | The name assigned to the current API Key |
+| `roles` | `[]any` | Which roles have been enabled for this key |
+| `team_roles` | `[]any` | If set, these roles apply to requests that operate on resources owned by any of the teams in the 'teams' array. |
+| `teams` | `[]any` | Teams that this API key is scoped to. |
+
+#### Example: Load
+
+```go
+identity, err := client.Identity(nil).Load(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(identity.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 
@@ -2350,47 +4487,50 @@ Create an instance: `incident := client.Incident(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `call_url` | `string` |  |
-| `created_at` | `string` |  |
+| `call_url` | `string` | The call URL attached to this incident |
+| `created_at` | `string` | When the incident was created |
 | `creator` | `map[string]any` |  |
-| `custom_field_entry` | `[]any` |  |
-| `duration_metric` | `[]any` |  |
+| `custom_field_entries` | `[]any` | Custom field entries for this incident |
+| `debriefs` | `[]any` | Debriefs scheduled for this incident, ordered by start time. |
+| `duration_metrics` | `[]any` | Incident duration metrics and their measurements for this incident |
 | `external_issue_reference` | `map[string]any` |  |
-| `has_debrief` | `bool` |  |
-| `id` | `string` |  |
-| `idempotency_key` | `string` |  |
-| `incident` | `map[string]any` |  |
-| `incident_role_assignment` | `[]any` |  |
+| `has_debrief` | `bool` | If this incident has a debrief attached |
+| `id` | `string` | Unique identifier for the incident |
+| `idempotency_key` | `string` | Unique string used to de-duplicate incident create requests |
+| `incident_role_assignments` | `[]any` | A list of who is assigned to each role for this incident |
 | `incident_status` | `map[string]any` |  |
-| `incident_status_id` | `string` |  |
-| `incident_timestamp_value` | `[]any` |  |
+| `incident_status_id` | `string` | Incident status to assign to the incident |
+| `incident_timestamp_values` | `[]any` | Incident lifecycle events and when they occurred |
 | `incident_type` | `map[string]any` |  |
-| `incident_type_id` | `string` |  |
-| `mode` | `string` |  |
-| `name` | `string` |  |
-| `notify_incident_channel` | `bool` |  |
-| `permalink` | `string` |  |
-| `postmortem_document_id` | `[]any` |  |
-| `postmortem_document_url` | `string` |  |
-| `reference` | `string` |  |
-| `retrospective_incident_option` | `map[string]any` |  |
+| `incident_type_id` | `string` | Incident type to create this incident as |
+| `last_activity_at` | `string` | When the incident last recorded 'activity' |
+| `mode` | `string` | Whether the incident is real, a test, a tutorial, or importing as a retrospective incident |
+| `ms_teams_channel_url` | `string` | URL to link to the Microsoft Teams channel |
+| `name` | `string` | Explanation of the incident |
+| `permalink` | `string` | A permanent link to the homepage for this incident |
+| `postmortem_document_ids` | `[]any` | An array of IDs of postmortem documents for this incident |
+| `postmortem_document_url` | `string` | The URL of the incident post-mortem document |
+| `reference` | `string` | Reference to this incident, as displayed across the product |
+| `retrospective_incident_options` | `map[string]any` |  |
 | `severity` | `map[string]any` |  |
-| `severity_id` | `string` |  |
-| `slack_channel_id` | `string` |  |
-| `slack_channel_name` | `string` |  |
-| `slack_channel_name_override` | `string` |  |
-| `slack_team_id` | `string` |  |
-| `source_message_channel_id` | `string` |  |
-| `source_message_timestamp` | `string` |  |
-| `status` | `string` |  |
-| `summary` | `string` |  |
-| `timestamp` | `[]any` |  |
-| `updated_at` | `string` |  |
-| `visibility` | `string` |  |
-| `workload_minutes_late` | `float64` |  |
-| `workload_minutes_sleeping` | `float64` |  |
-| `workload_minutes_total` | `float64` |  |
-| `workload_minutes_working` | `float64` |  |
+| `severity_id` | `string` | Severity to create incident as |
+| `slack_channel_id` | `string` | ID of the Slack channel in the organisation Slack workspace. |
+| `slack_channel_name` | `string` | Name of the slack channel |
+| `slack_channel_name_override` | `string` | Name of the Slack channel to create for this incident |
+| `slack_channel_url` | `string` | URL to link to the slack channel |
+| `slack_team_id` | `string` | ID of the Slack team / workspace. |
+| `source_message_channel_id` | `string` | Channel ID of the source message, if this incident was created from one |
+| `source_message_timestamp` | `string` | Timestamp of the source message, if this incident was created from one |
+| `status` | `string` | Current status of the incident |
+| `summary` | `string` | Detailed description of the incident |
+| `team_ids` | `[]any` | IDs of the teams that own this incident, resolved from your team settings. |
+| `timestamps` | `[]any` | Incident lifecycle events and when they last occurred |
+| `updated_at` | `string` | When the incident was last updated |
+| `visibility` | `string` | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
+| `workload_minutes_late` | `float64` | Amount of time spent on the incident in late hours |
+| `workload_minutes_sleeping` | `float64` | Amount of time spent on the incident in sleeping hours |
+| `workload_minutes_total` | `float64` | Amount of time spent on the incident in total |
+| `workload_minutes_working` | `float64` | Amount of time spent on the incident in working hours |
 
 #### Example: Load
 
@@ -2399,7 +4539,7 @@ incident, err := client.Incident(nil).Load(map[string]any{"id": "incident_id"}, 
 if err != nil {
     panic(err)
 }
-fmt.Println(incident) // the loaded record
+fmt.Println(incident.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2409,7 +4549,10 @@ incidents, err := client.Incident(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidents) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidents.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -2418,35 +4561,35 @@ fmt.Println(incidents) // the array of records
 result, err := client.Incident(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "creator": map[string]any{},
-    "custom_field_entry": []any{},
+    "custom_field_entries": []any{},
     "external_issue_reference": map[string]any{},
     "id": "example_id",
     "idempotency_key": "example_idempotency_key",
-    "incident": map[string]any{},
-    "incident_role_assignment": []any{},
+    "incident_role_assignments": []any{},
     "incident_status": map[string]any{},
     "incident_type": map[string]any{},
+    "last_activity_at": "example_last_activity_at",
     "mode": "example_mode",
     "name": "example_name",
-    "notify_incident_channel": true,
     "reference": "example_reference",
     "severity": map[string]any{},
     "slack_channel_id": "example_slack_channel_id",
     "slack_team_id": "example_slack_team_id",
     "status": "example_status",
+    "team_ids": []any{},
     "updated_at": "example_updated_at",
     "visibility": "example_visibility",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
-### IncidentAlert
+### IncidentActivityLogEntry
 
-Create an instance: `incidentAlert := client.IncidentAlert(nil)`
+Create an instance: `incidentActivityLogEntry := client.IncidentActivityLogEntry(nil)`
 
 #### Operations
 
@@ -2458,19 +4601,25 @@ Create an instance: `incidentAlert := client.IncidentAlert(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert` | `map[string]any` |  |
-| `alert_route_id` | `string` |  |
-| `id` | `string` |  |
-| `incident` | `map[string]any` |  |
+| `content` | `map[string]any` | Details of an activity log entry. |
+| `created_at` | `string` | When we recorded the activity |
+| `id` | `string` | Unique identifier of the activity log entry |
+| `incident_id` | `string` | ID of the incident this happened on. |
+| `occurred_at` | `string` | When the activity happened. |
+| `title` | `string` | Human-readable summary of what happened |
+| `type` | `string` | What kind of activity this is. |
 
 #### Example: List
 
 ```go
-incidentAlerts, err := client.IncidentAlert(nil).List(nil, nil)
+incidentActivityLogEntrys, err := client.IncidentActivityLogEntry(nil).List(map[string]any{"incident_id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentAlerts) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentActivityLogEntrys.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -2490,8 +4639,8 @@ Create an instance: `incidentAttachment := client.IncidentAttachment(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
+| `id` | `string` | Unique identifier of this incident membership |
+| `incident_id` | `string` | ID of the incident to add an attachment to |
 | `resource` | `map[string]any` |  |
 
 #### Example: List
@@ -2501,7 +4650,10 @@ incidentAttachments, err := client.IncidentAttachment(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentAttachments) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentAttachments.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -2515,7 +4667,73 @@ result, err := client.IncidentAttachment(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### IncidentForm
+
+Create an instance: `incidentForm := client.IncidentForm(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` | When this incident form was created |
+| `expressions` | `[]any` | Expressions available to every element's conditions and defaults. |
+| `form_type` | `string` | Which form this is. |
+| `id` | `string` | Unique identifier for this incident form |
+| `incident_type_id` | `string` | The incident type this form belongs to. |
+| `lifecycle_elements` | `[]any` | Elements on this form, in display order. |
+| `updated_at` | `string` | When this incident form was last updated |
+
+#### Example: Load
+
+```go
+incidentForm, err := client.IncidentForm(nil).Load(map[string]any{"id": "incident_form_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(incidentForm.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+incidentForms, err := client.IncidentForm(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range incidentForms.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.IncidentForm(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "expressions": []any{},
+    "form_type": "example_form_type",
+    "id": "example_id",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2533,7 +4751,7 @@ Create an instance: `incidentMembership := client.IncidentMembership(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `incident_id` | `string` |  |
+| `incident_id` | `string` | The incident to make the user a member of |
 | `user_id` | `string` |  |
 
 #### Example: Create
@@ -2546,7 +4764,7 @@ result, err := client.IncidentMembership(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2564,17 +4782,17 @@ Create an instance: `incidentParticipant := client.IncidentParticipant(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `active` | `[]any` |  |
-| `passive` | `[]any` |  |
+| `active` | `[]any` | Participants who are actively helping with the incident |
+| `passive` | `[]any` | Participants who are just observing the incident |
 
 #### Example: Load
 
 ```go
-incidentParticipant, err := client.IncidentParticipant(nil).Load(nil, nil)
+incidentParticipant, err := client.IncidentParticipant(nil).Load(map[string]any{"incident_id": "incident_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentParticipant) // the loaded record
+fmt.Println(incidentParticipant.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 
@@ -2592,19 +4810,22 @@ Create an instance: `incidentParticipantWorkload := client.IncidentParticipantWo
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `archived_at` | `string` |  |
-| `participant_type` | `string` |  |
+| `archived_at` | `string` | When the user left the incident, if they are no longer an active participant |
+| `participant_type` | `string` | The role they had in the incident |
 | `user` | `map[string]any` |  |
 | `workload` | `map[string]any` |  |
 
 #### Example: List
 
 ```go
-incidentParticipantWorkloads, err := client.IncidentParticipantWorkload(nil).List(nil, nil)
+incidentParticipantWorkloads, err := client.IncidentParticipantWorkload(nil).List(map[string]any{"incident_id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentParticipantWorkloads) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentParticipantWorkloads.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -2622,17 +4843,20 @@ Create an instance: `incidentRelationship := client.IncidentRelationship(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
+| `id` | `string` | Unique identifier of this incident relationship |
 | `incident` | `map[string]any` |  |
 
 #### Example: List
 
 ```go
-incidentRelationships, err := client.IncidentRelationship(nil).List(nil, nil)
+incidentRelationships, err := client.IncidentRelationship(nil).List(map[string]any{"incident_id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentRelationships) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentRelationships.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -2654,15 +4878,15 @@ Create an instance: `incidentRole := client.IncidentRole(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `instruction` | `string` |  |
-| `name` | `string` |  |
-| `required` | `bool` |  |
-| `role_type` | `string` |  |
-| `shortform` | `string` |  |
-| `updated_at` | `string` |  |
+| `created_at` | `string` | When the role was created |
+| `description` | `string` | Describes the purpose of the role |
+| `id` | `string` | Unique identifier for the role |
+| `instructions` | `string` | Provided to whoever is nominated for the role. |
+| `name` | `string` | Human readable name of the incident role |
+| `required` | `bool` | DEPRECATED: this will always be false. |
+| `role_type` | `string` | Type of incident role |
+| `shortform` | `string` | Short human readable name for Slack. |
+| `updated_at` | `string` | When the role was last updated |
 
 #### Example: Load
 
@@ -2671,7 +4895,7 @@ incidentRole, err := client.IncidentRole(nil).Load(map[string]any{"id": "inciden
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentRole) // the loaded record
+fmt.Println(incidentRole.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2681,7 +4905,10 @@ incidentRoles, err := client.IncidentRole(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentRoles) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentRoles.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -2691,7 +4918,7 @@ result, err := client.IncidentRole(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "description": "example_description",
     "id": "example_id",
-    "instruction": "example_instruction",
+    "instructions": "example_instructions",
     "name": "example_name",
     "role_type": "example_role_type",
     "shortform": "example_shortform",
@@ -2700,7 +4927,7 @@ result, err := client.IncidentRole(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2722,12 +4949,12 @@ Create an instance: `incidentStatus := client.IncidentStatus(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `category` | `string` |  |
+| `category` | `string` | What category of status it is. |
 | `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `rank` | `int` |  |
+| `description` | `string` | Rich text description of the incident status |
+| `id` | `string` | Unique ID of this incident status |
+| `name` | `string` | Unique name of this status |
+| `rank` | `int` | Order of this incident status |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -2737,7 +4964,7 @@ incidentStatus, err := client.IncidentStatus(nil).Load(map[string]any{"id": "inc
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentStatus) // the loaded record
+fmt.Println(incidentStatus.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2747,7 +4974,10 @@ incidentStatuss, err := client.IncidentStatus(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentStatuss) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentStatuss.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -2765,7 +4995,228 @@ result, err := client.IncidentStatus(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### IncidentTeamMembership
+
+Create an instance: `incidentTeamMembership := client.IncidentTeamMembership(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `incident_id` | `string` |  |
+| `team_id` | `string` |  |
+
+#### Example: Create
+
+```go
+result, err := client.IncidentTeamMembership(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "team_id": "example_team_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### IncidentTeamMembershipsV1
+
+Create an instance: `incidentTeamMembershipsV1 := client.IncidentTeamMembershipsV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `incident_id` | `string` | Revoke team access to this incident |
+| `team_id` | `string` |  |
+
+#### Example: Create
+
+```go
+result, err := client.IncidentTeamMembershipsV1(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "team_id": "example_team_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### IncidentTemplate
+
+Create an instance: `incidentTemplate := client.IncidentTemplate(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` | When this incident template was created |
+| `expressions` | `[]any` | The expressions used by bindings in this template |
+| `id` | `string` | Unique identifier for this incident template |
+| `name` | `string` | The name of this incident template, for the user's reference |
+| `template` | `map[string]any` | The values an incident template applies to the incidents it creates. |
+| `updated_at` | `string` | When this incident template was last updated |
+
+#### Example: Load
+
+```go
+incidentTemplate, err := client.IncidentTemplate(nil).Load(map[string]any{"id": "incident_template_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(incidentTemplate.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+incidentTemplates, err := client.IncidentTemplate(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range incidentTemplates.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.IncidentTemplate(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "id": "example_id",
+    "name": "example_name",
+    "template": map[string]any{},
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### IncidentTemplatesValidateResultV1
+
+Create an instance: `incidentTemplatesValidateResultV1 := client.IncidentTemplatesValidateResultV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `expressions` | `[]any` | The expressions used by bindings in this template |
+| `name` | `string` | The name of this incident template, for the user's reference |
+| `template` | `map[string]any` | The values an incident template applies to the incidents it creates. |
+| `warnings` | `[]any` | Anything suspect about this config that isn't severe enough to reject it. |
+
+#### Example: Create
+
+```go
+result, err := client.IncidentTemplatesValidateResultV1(nil).Create(map[string]any{
+    "name": "example_name",
+    "template": map[string]any{},
+    "warnings": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### IncidentTimelineItem
+
+Create an instance: `incidentTimelineItem := client.IncidentTimelineItem(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `activity_log_id` | `string` | ID of the activity log entry this item was promoted from. |
+| `created_at` | `string` | When this item was added to the timeline |
+| `creator` | `map[string]any` |  |
+| `description` | `string` | Description of the timeline item, in markdown |
+| `id` | `string` | Unique identifier of the timeline item |
+| `idempotency_key` | `string` | Unique string used to de-duplicate timeline item requests. |
+| `incident_id` | `string` | Incident to add this item to |
+| `timestamp` | `string` | When the thing this item describes happened. |
+| `title` | `string` | Title of the timeline item |
+| `updated_at` | `string` | When this item was last edited |
+
+#### Example: List
+
+```go
+incidentTimelineItems, err := client.IncidentTimelineItem(nil).List(map[string]any{"incident_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range incidentTimelineItems.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.IncidentTimelineItem(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "creator": map[string]any{},
+    "id": "example_id",
+    "idempotency_key": "example_idempotency_key",
+    "incident_id": "example_incident_id",
+    "timestamp": "example_timestamp",
+    "title": "example_title",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2784,9 +5235,9 @@ Create an instance: `incidentTimestamp := client.IncidentTimestamp(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `rank` | `int` |  |
+| `id` | `string` | Unique ID of this incident timestamp |
+| `name` | `string` | Unique name of this timestamp |
+| `rank` | `int` | Order in which this timestamp should be shown |
 
 #### Example: Load
 
@@ -2795,7 +5246,7 @@ incidentTimestamp, err := client.IncidentTimestamp(nil).Load(map[string]any{"id"
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentTimestamp) // the loaded record
+fmt.Println(incidentTimestamp.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2805,7 +5256,10 @@ incidentTimestamps, err := client.IncidentTimestamp(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentTimestamps) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentTimestamps.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -2824,15 +5278,15 @@ Create an instance: `incidentType := client.IncidentType(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `create_in_triage` | `string` |  |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `is_default` | `bool` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `[]any` |  |
-| `private_incidents_only` | `bool` |  |
-| `updated_at` | `string` |  |
+| `create_in_triage` | `string` | Whether incidents of this must always, or can optionally, be created in triage |
+| `created_at` | `string` | When this resource was created |
+| `description` | `string` | What is this incident type for? |
+| `id` | `string` | Unique identifier for this Incident Type |
+| `is_default` | `bool` | The default Incident Type is used when no other type is explicitly specified |
+| `name` | `string` | The name of this Incident Type |
+| `owning_team_ids` | `[]any` | IDs of the teams that own this incident type |
+| `private_incidents_only` | `bool` | Should all incidents created with this Incident Type be private? |
+| `updated_at` | `string` | When this resource was last updated |
 
 #### Example: Load
 
@@ -2841,7 +5295,7 @@ incidentType, err := client.IncidentType(nil).Load(map[string]any{"id": "inciden
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentType) // the loaded record
+fmt.Println(incidentType.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2851,7 +5305,10 @@ incidentTypes, err := client.IncidentType(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentTypes) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentTypes.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -2864,18 +5321,22 @@ Create an instance: `incidentUpdate := client.IncidentUpdate(nil)`
 | Method | Description |
 | --- | --- |
 | `List(match, ctrl)` | List entities matching the criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `merged_into_incident_id` | `string` |  |
-| `message` | `string` |  |
+| `created_at` | `string` | When the update was created |
+| `id` | `string` | Unique identifier for this incident update |
+| `idempotency_key` | `string` | Unique string used to de-duplicate incident update requests. |
+| `incident_id` | `string` | The incident you want to update |
+| `merged_into_incident_id` | `string` | The ID of the incident this incident was merged into, if the to state of this update is 'merged'. |
+| `message` | `string` | Message that explains the context behind the update, in markdown |
 | `new_incident_status` | `map[string]any` |  |
 | `new_severity` | `map[string]any` |  |
+| `to_incident_status_id` | `string` | Move the incident to this status |
+| `to_severity_id` | `string` | Move the incident to this severity |
 | `updater` | `map[string]any` |  |
 
 #### Example: List
@@ -2885,7 +5346,28 @@ incidentUpdates, err := client.IncidentUpdate(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(incidentUpdates) // the array of records
+// A []any of entities, one per record.
+for _, item := range incidentUpdates.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.IncidentUpdate(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "id": "example_id",
+    "idempotency_key": "example_idempotency_key",
+    "incident_id": "example_incident_id",
+    "new_incident_status": map[string]any{},
+    "new_severity": map[string]any{},
+    "updater": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -2904,10 +5386,10 @@ Create an instance: `ipAllowlist := client.IpAllowlist(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `allowlist` | `[]any` |  |
-| `enabled` | `bool` |  |
-| `updated_at` | `string` |  |
-| `version` | `int` |  |
+| `allowlist` | `[]any` | A list of IP addresses or CIDR prefixes to allow |
+| `enabled` | `bool` | Whether this IP allowlist is enabled or not |
+| `updated_at` | `string` | The time this allowlist was last updated |
+| `version` | `int` | The version of this IP allowlist |
 
 #### Example: Load
 
@@ -2916,7 +5398,38 @@ ipAllowlist, err := client.IpAllowlist(nil).Load(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(ipAllowlist) // the loaded record
+fmt.Println(ipAllowlist.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+
+### IpRange
+
+Create an instance: `ipRange := client.IpRange(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `cidr` | `string` | The address in CIDR notation. |
+| `description` | `string` | Which of our traffic reaches you from this address |
+
+#### Example: List
+
+```go
+ipRanges, err := client.IpRange(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range ipRanges.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -2938,24 +5451,25 @@ Create an instance: `maintenanceWindow := client.MaintenanceWindow(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_condition_group` | `[]any` |  |
-| `archived_at` | `string` |  |
-| `created_at` | `string` |  |
-| `end_at` | `string` |  |
-| `escalation_target` | `[]any` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
+| `alert_condition_groups` | `[]any` | Condition groups that determine which alerts this maintenance window applies to |
+| `archived_at` | `string` | When this maintenance window was archived, if it has been |
+| `created_at` | `string` | When this maintenance window was created |
+| `end_at` | `string` | When the maintenance window ends |
+| `escalation_targets` | `[]any` | If set, alerts matching this window will be escalated to these targets |
+| `id` | `string` | Unique identifier for this maintenance window |
+| `incident_id` | `string` | If set, alerts matching this window will be automatically attached to this incident |
 | `lead` | `map[string]any` |  |
-| `name` | `string` |  |
-| `notification_message` | `string` |  |
-| `notify_channel` | `[]any` |  |
-| `notify_end_minutes_before` | `int` |  |
-| `notify_start_minutes_before` | `int` |  |
-| `reroute_on_end` | `bool` |  |
-| `resolve_on_end` | `bool` |  |
-| `show_in_sidebar` | `bool` |  |
-| `start_at` | `string` |  |
-| `updated_at` | `string` |  |
+| `name` | `string` | Human readable name for the maintenance window |
+| `notification_message` | `string` | Custom message included in notifications about this maintenance window |
+| `notify_channels` | `[]any` | Channels to notify about the maintenance window starting and ending |
+| `notify_end_minutes_before` | `int` | Minutes before the end to send a notification to the configured channels |
+| `notify_start_minutes_before` | `int` | Minutes before the start to send a notification to the configured channels |
+| `owning_team_ids` | `[]any` | IDs of teams that own this maintenance window. |
+| `reroute_on_end` | `bool` | Whether to retrigger firing alerts through alert routing when the window ends |
+| `resolve_on_end` | `bool` | Whether to automatically resolve all firing alerts that matched this window when it ends |
+| `show_in_sidebar` | `bool` | Whether to show this maintenance window in the dashboard sidebar when active |
+| `start_at` | `string` | When the maintenance window starts |
+| `updated_at` | `string` | When this maintenance window was last updated |
 
 #### Example: Load
 
@@ -2964,7 +5478,7 @@ maintenanceWindow, err := client.MaintenanceWindow(nil).Load(map[string]any{"id"
 if err != nil {
     panic(err)
 }
-fmt.Println(maintenanceWindow) // the loaded record
+fmt.Println(maintenanceWindow.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -2974,14 +5488,17 @@ maintenanceWindows, err := client.MaintenanceWindow(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(maintenanceWindows) // the array of records
+// A []any of entities, one per record.
+for _, item := range maintenanceWindows.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.MaintenanceWindow(nil).Create(map[string]any{
-    "alert_condition_group": []any{},
+    "alert_condition_groups": []any{},
     "created_at": "example_created_at",
     "end_at": "example_end_at",
     "id": "example_id",
@@ -2996,7 +5513,912 @@ result, err := client.MaintenanceWindow(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### OnCallNotificationMethodPublicV2
+
+Create an instance: `onCallNotificationMethodPublicV2 := client.OnCallNotificationMethodPublicV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `address` | `string` | The address of this method (e.g. |
+| `id` | `string` | Unique identifier for this notification method |
+| `is_usable` | `bool` | Whether this method is ready to receive notifications. |
+| `method_type` | `string` | The high-level type of notification method. |
+| `phone_details` | `map[string]any` |  |
+
+#### Example: List
+
+```go
+onCallNotificationMethodPublicV2s, err := client.OnCallNotificationMethodPublicV2(nil).List(map[string]any{"user_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range onCallNotificationMethodPublicV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### OnCallNotificationRulePublicV2
+
+Create an instance: `onCallNotificationRulePublicV2 := client.OnCallNotificationRulePublicV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `app` | `map[string]any` |  |
+| `delay_seconds` | `int` | Delay in seconds before this rule activates. |
+| `id` | `string` | Unique identifier for this notification rule |
+| `method_target` | `map[string]any` |  |
+| `method_type` | `string` | The high-level type of notification method. |
+| `phone` | `map[string]any` |  |
+| `rule_type` | `string` | The urgency level this rule applies to |
+
+#### Example: List
+
+```go
+onCallNotificationRulePublicV2s, err := client.OnCallNotificationRulePublicV2(nil).List(map[string]any{"user_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range onCallNotificationRulePublicV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### PayConfig
+
+Create an instance: `payConfig := client.PayConfig(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `base_rate_cents` | `int` | Rate paid for any time no rule covers, in the lowest denomination of the currency |
+| `created_at` | `string` |  |
+| `currency` | `string` | Currency this config pays in, in ISO 4217 format |
+| `id` | `string` | Unique identifier for this pay config |
+| `name` | `string` | Human readable name for this pay config |
+| `one_off_rules` | `[]any` | Rules that apply over a single window of time, such as a public holiday |
+| `published_at` | `string` | When a published report first priced against this config. |
+| `rate_time_unit` | `string` | The unit of time every rate on this config is quoted per. |
+| `timezone` | `string` | IANA timezone this config's rules are interpreted in |
+| `updated_at` | `string` |  |
+| `weekly_rules` | `[]any` | Rules that apply every week, by day of week and time of day, in evaluation order |
+
+#### Example: Load
+
+```go
+payConfig, err := client.PayConfig(nil).Load(map[string]any{"id": "pay_config_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(payConfig.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+payConfigs, err := client.PayConfig(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range payConfigs.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.PayConfig(nil).Create(map[string]any{
+    "base_rate_cents": 1,
+    "created_at": "example_created_at",
+    "currency": "example_currency",
+    "id": "example_id",
+    "name": "example_name",
+    "one_off_rules": []any{},
+    "rate_time_unit": "example_rate_time_unit",
+    "timezone": "example_timezone",
+    "updated_at": "example_updated_at",
+    "weekly_rules": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PayConfigsCreateOneOffRuleResultV2
+
+Create an instance: `payConfigsCreateOneOffRuleResultV2 := client.PayConfigsCreateOneOffRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_at` | `string` | When this rule stops applying |
+| `name` | `string` | Human readable name for this rule |
+| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | `string` | When this rule starts applying |
+
+#### Example: Create
+
+```go
+result, err := client.PayConfigsCreateOneOffRuleResultV2(nil).Create(map[string]any{
+    "pay_config_id": "example_pay_config_id",
+    "end_at": "example_end_at",
+    "name": "example_name",
+    "rate_cents": 1,
+    "start_at": "example_start_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PayConfigsCreateWeeklyRuleResultV2
+
+Create an instance: `payConfigsCreateWeeklyRuleResultV2 := client.PayConfigsCreateWeeklyRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | `[]any` | Days of the week this rule applies on |
+
+#### Example: Create
+
+```go
+result, err := client.PayConfigsCreateWeeklyRuleResultV2(nil).Create(map[string]any{
+    "pay_config_id": "example_pay_config_id",
+    "end_time": "example_end_time",
+    "rate_cents": 1,
+    "start_time": "example_start_time",
+    "weekdays": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PayConfigsListOneOffRulesResultV2
+
+Create an instance: `payConfigsListOneOffRulesResultV2 := client.PayConfigsListOneOffRulesResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_at` | `string` | When this rule stops applying |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `name` | `string` | Human readable name for this rule |
+| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | `string` | When this rule starts applying |
+
+#### Example: List
+
+```go
+payConfigsListOneOffRulesResultV2s, err := client.PayConfigsListOneOffRulesResultV2(nil).List(map[string]any{"pay_config_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range payConfigsListOneOffRulesResultV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### PayConfigsListWeeklyRulesResultV2
+
+Create an instance: `payConfigsListWeeklyRulesResultV2 := client.PayConfigsListWeeklyRulesResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | `[]any` | Days of the week this rule applies on |
+
+#### Example: List
+
+```go
+payConfigsListWeeklyRulesResultV2s, err := client.PayConfigsListWeeklyRulesResultV2(nil).List(map[string]any{"pay_config_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range payConfigsListWeeklyRulesResultV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### PayConfigsShowOneOffRuleResultV2
+
+Create an instance: `payConfigsShowOneOffRuleResultV2 := client.PayConfigsShowOneOffRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_at` | `string` | When this rule stops applying |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `name` | `string` | Human readable name for this rule |
+| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | `string` | When this rule starts applying |
+
+#### Example: Load
+
+```go
+payConfigsShowOneOffRuleResultV2, err := client.PayConfigsShowOneOffRuleResultV2(nil).Load(map[string]any{"id": "pay_configs_show_one_off_rule_result_v2_id", "pay_config_id": "pay_config_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(payConfigsShowOneOffRuleResultV2.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+
+### PayConfigsShowWeeklyRuleResultV2
+
+Create an instance: `payConfigsShowWeeklyRuleResultV2 := client.PayConfigsShowWeeklyRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | `[]any` | Days of the week this rule applies on |
+
+#### Example: Load
+
+```go
+payConfigsShowWeeklyRuleResultV2, err := client.PayConfigsShowWeeklyRuleResultV2(nil).Load(map[string]any{"id": "pay_configs_show_weekly_rule_result_v2_id", "pay_config_id": "pay_config_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(payConfigsShowWeeklyRuleResultV2.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+
+### PayConfigsUpdateOneOffRuleResultV2
+
+Create an instance: `payConfigsUpdateOneOffRuleResultV2 := client.PayConfigsUpdateOneOffRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_at` | `string` | When this rule stops applying |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `name` | `string` | Human readable name for this rule |
+| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_at` | `string` | When this rule starts applying |
+
+
+### PayConfigsUpdateWeeklyRuleResultV2
+
+Create an instance: `payConfigsUpdateWeeklyRuleResultV2 := client.PayConfigsUpdateWeeklyRuleResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
+| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
+| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
+| `weekdays` | `[]any` | Days of the week this rule applies on |
+
+
+### PayConfigsV2
+
+Create an instance: `payConfigsV2 := client.PayConfigsV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
+
+
+### PayReport
+
+Create an instance: `payReport := client.PayReport(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` | When this report was created |
+| `creator` | `map[string]any` |  |
+| `end_date` | `string` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | `string` | Why a report could not be generated |
+| `error_message` | `string` | What went wrong, written for whoever asked for the report. |
+| `id` | `string` | Unique identifier for this pay report |
+| `name` | `string` | Human readable name for this report |
+| `overlapping_shifts` | `string` | How time spent on more than one schedule at once was paid |
+| `pay_config_expression` | `map[string]any` |  |
+| `pay_config_id` | `string` | The pay config to price every shift with. |
+| `published_at` | `string` | When this report was published. |
+| `rotation_filters` | `[]any` | Narrows some of these schedules to a subset of their rotations. |
+| `schedule_ids` | `[]any` | The schedules this report covers |
+| `start_date` | `string` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | `string` | How far a report has got through being generated |
+| `total_duration_seconds` | `int` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | `map[string]any` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | `string` | Whether shifts that priced to zero are part of the report |
+| `updated_at` | `string` | When this report was last updated |
+
+#### Example: Load
+
+```go
+payReport, err := client.PayReport(nil).Load(map[string]any{"id": "pay_report_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(payReport.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+payReports, err := client.PayReport(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range payReports.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.PayReport(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "end_date": "example_end_date",
+    "id": "example_id",
+    "name": "example_name",
+    "overlapping_shifts": "example_overlapping_shifts",
+    "pay_config_expression": map[string]any{},
+    "schedule_ids": []any{},
+    "start_date": "example_start_date",
+    "status": "example_status",
+    "unpaid_shifts": "example_unpaid_shifts",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PayReportsPublishResultV2
+
+Create an instance: `payReportsPublishResultV2 := client.PayReportsPublishResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `cc_emails` | `[]any` | Email addresses to send a copy of the report to |
+| `created_at` | `string` | When this report was created |
+| `creator` | `map[string]any` |  |
+| `end_date` | `string` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | `string` | Why a report could not be generated |
+| `error_message` | `string` | What went wrong, written for whoever asked for the report. |
+| `id` | `string` | Unique identifier for this pay report |
+| `name` | `string` | Human readable name for this report |
+| `overlapping_shifts` | `string` | How time spent on more than one schedule at once was paid |
+| `published_at` | `string` | When this report was published. |
+| `schedule_ids` | `[]any` | The schedules this report covers |
+| `send_user_breakdowns` | `string` | Whether each user in the report is emailed their own pay breakdown |
+| `start_date` | `string` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | `string` | How far a report has got through being generated |
+| `total_duration_seconds` | `int` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | `map[string]any` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | `string` | Whether shifts that priced to zero are part of the report |
+| `updated_at` | `string` | When this report was last updated |
+
+#### Example: Create
+
+```go
+result, err := client.PayReportsPublishResultV2(nil).Create(map[string]any{
+    "pay_report_id": "example_pay_report_id",
+    "cc_emails": []any{},
+    "created_at": "example_created_at",
+    "end_date": "example_end_date",
+    "id": "example_id",
+    "name": "example_name",
+    "overlapping_shifts": "example_overlapping_shifts",
+    "schedule_ids": []any{},
+    "send_user_breakdowns": "example_send_user_breakdowns",
+    "start_date": "example_start_date",
+    "status": "example_status",
+    "unpaid_shifts": "example_unpaid_shifts",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PayReportsUnpublishResultV2
+
+Create an instance: `payReportsUnpublishResultV2 := client.PayReportsUnpublishResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` | When this report was created |
+| `creator` | `map[string]any` |  |
+| `end_date` | `string` | Last date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `error_code` | `string` | Why a report could not be generated |
+| `error_message` | `string` | What went wrong, written for whoever asked for the report. |
+| `id` | `string` | Unique identifier for this pay report |
+| `name` | `string` | Human readable name for this report |
+| `overlapping_shifts` | `string` | How time spent on more than one schedule at once was paid |
+| `published_at` | `string` | When this report was published. |
+| `schedule_ids` | `[]any` | The schedules this report covers |
+| `start_date` | `string` | First date (YYYY-MM-DD) this report includes shifts from, inclusive |
+| `status` | `string` | How far a report has got through being generated |
+| `total_duration_seconds` | `int` | Total time spent on-call across every shift in this report, in seconds. |
+| `total_pay_by_currency` | `map[string]any` | Total owed for this report, keyed by ISO 4217 currency code, in the lowest denomination of that currency. |
+| `unpaid_shifts` | `string` | Whether shifts that priced to zero are part of the report |
+| `unpublish_reason` | `string` | Why this report is being unpublished |
+| `updated_at` | `string` | When this report was last updated |
+
+#### Example: Create
+
+```go
+result, err := client.PayReportsUnpublishResultV2(nil).Create(map[string]any{
+    "pay_report_id": "example_pay_report_id",
+    "created_at": "example_created_at",
+    "end_date": "example_end_date",
+    "id": "example_id",
+    "name": "example_name",
+    "overlapping_shifts": "example_overlapping_shifts",
+    "schedule_ids": []any{},
+    "start_date": "example_start_date",
+    "status": "example_status",
+    "unpaid_shifts": "example_unpaid_shifts",
+    "unpublish_reason": "example_unpublish_reason",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PayReportsV2
+
+Create an instance: `payReportsV2 := client.PayReportsV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Example: Load
+
+```go
+payReportsV2, err := client.PayReportsV2(nil).Load(map[string]any{"pay_report_id": "pay_report_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(payReportsV2.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+
+### PoliciesV2
+
+Create an instance: `policiesV2 := client.PoliciesV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
+
+
+### Policy
+
+Create an instance: `policy := client.Policy(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `assignment_rules` | `map[string]any` |  |
+| `conditions` | `[]any` | Conditions which determine which resources are in scope for this policy |
+| `created_at` | `string` |  |
+| `debrief` | `map[string]any` | Set when policy_type is debrief. |
+| `description` | `string` | Human readable description of the policy |
+| `expressions` | `[]any` | The expressions relating to this policy |
+| `follow_up` | `map[string]any` | Set when policy_type is follow_up. |
+| `id` | `string` | Unique ID of the policy |
+| `name` | `string` | Human readable name of the policy |
+| `on_call_readiness` | `map[string]any` | Set when policy_type is on_call_readiness. |
+| `policy_type` | `string` | Type of the policy, specifying what this applies to |
+| `post_mortem` | `map[string]any` | Set when policy_type is post_mortem. |
+| `schedule` | `map[string]any` | Detects gaps in on-call coverage. |
+| `status` | `string` | Disabled policies stop evaluating but keep their config |
+| `updated_at` | `string` |  |
+
+#### Example: Load
+
+```go
+policy, err := client.Policy(nil).Load(map[string]any{"id": "policy_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(policy.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+policys, err := client.Policy(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range policys.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.Policy(nil).Create(map[string]any{
+    "assignment_rules": map[string]any{},
+    "conditions": []any{},
+    "created_at": "example_created_at",
+    "debrief": map[string]any{},
+    "follow_up": map[string]any{},
+    "id": "example_id",
+    "name": "example_name",
+    "policy_type": "example_policy_type",
+    "post_mortem": map[string]any{},
+    "schedule": map[string]any{},
+    "status": "example_status",
+    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PolicyFinding
+
+Create an instance: `policyFinding := client.PolicyFinding(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `days` | `int` | Days outside the policy's due date |
+| `debrief` | `map[string]any` | Set when policy_type is debrief. |
+| `dismissal` | `map[string]any` |  |
+| `due_at` | `string` | When this finding becomes overdue |
+| `follow_up` | `map[string]any` | Set when policy_type is follow_up. |
+| `id` | `string` | Unique ID of the finding |
+| `last_checked_at` | `string` | When this finding was last re-evaluated |
+| `on_call_readiness` | `map[string]any` | Set when policy_type is on_call_readiness. |
+| `policy_id` | `string` | The policy this finding was raised against |
+| `policy_type` | `string` | Type of the policy this finding was raised against |
+| `post_mortem` | `map[string]any` | Set when policy_type is post_mortem. |
+| `responsible_users` | `[]any` | Who is expected to resolve this finding |
+| `schedule` | `map[string]any` | Set when policy_type is schedule. |
+| `shift_conflict` | `map[string]any` | Set when policy_type is shift_conflict. |
+| `state` | `string` | Where this finding is in its lifecycle |
+| `updated_at` | `string` |  |
+| `vacation_conflict` | `map[string]any` | Set when policy_type is vacation_conflict. |
+
+#### Example: Load
+
+```go
+policyFinding, err := client.PolicyFinding(nil).Load(map[string]any{"id": "policy_finding_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(policyFinding.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+policyFindings, err := client.PolicyFinding(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range policyFindings.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### PolicyFindingsDismissResultV2
+
+Create an instance: `policyFindingsDismissResultV2 := client.PolicyFindingsDismissResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `days` | `int` | Days outside the policy's due date |
+| `debrief` | `map[string]any` | Set when policy_type is debrief. |
+| `dismissal` | `map[string]any` |  |
+| `due_at` | `string` | When this finding becomes overdue |
+| `follow_up` | `map[string]any` | Set when policy_type is follow_up. |
+| `id` | `string` | Unique ID of the finding |
+| `last_checked_at` | `string` | When this finding was last re-evaluated |
+| `on_call_readiness` | `map[string]any` | Set when policy_type is on_call_readiness. |
+| `policy_id` | `string` | The policy this finding was raised against |
+| `policy_type` | `string` | Type of the policy this finding was raised against |
+| `post_mortem` | `map[string]any` | Set when policy_type is post_mortem. |
+| `reason` | `string` | Why this finding is being dismissed |
+| `responsible_users` | `[]any` | Who is expected to resolve this finding |
+| `schedule` | `map[string]any` | Set when policy_type is schedule. |
+| `shift_conflict` | `map[string]any` | Set when policy_type is shift_conflict. |
+| `state` | `string` | Where this finding is in its lifecycle |
+| `updated_at` | `string` |  |
+| `vacation_conflict` | `map[string]any` | Set when policy_type is vacation_conflict. |
+
+#### Example: Create
+
+```go
+result, err := client.PolicyFindingsDismissResultV2(nil).Create(map[string]any{
+    "policy_finding_id": "example_policy_finding_id",
+    "created_at": "example_created_at",
+    "debrief": map[string]any{},
+    "dismissal": map[string]any{},
+    "follow_up": map[string]any{},
+    "id": "example_id",
+    "last_checked_at": "example_last_checked_at",
+    "on_call_readiness": map[string]any{},
+    "policy_id": "example_policy_id",
+    "policy_type": "example_policy_type",
+    "post_mortem": map[string]any{},
+    "reason": "example_reason",
+    "responsible_users": []any{},
+    "schedule": map[string]any{},
+    "shift_conflict": map[string]any{},
+    "state": "example_state",
+    "updated_at": "example_updated_at",
+    "vacation_conflict": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PolicyFindingsRestoreResultV2
+
+Create an instance: `policyFindingsRestoreResultV2 := client.PolicyFindingsRestoreResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `days` | `int` | Days outside the policy's due date |
+| `debrief` | `map[string]any` | Set when policy_type is debrief. |
+| `dismissal` | `map[string]any` |  |
+| `due_at` | `string` | When this finding becomes overdue |
+| `follow_up` | `map[string]any` | Set when policy_type is follow_up. |
+| `id` | `string` | Unique ID of the finding |
+| `last_checked_at` | `string` | When this finding was last re-evaluated |
+| `on_call_readiness` | `map[string]any` | Set when policy_type is on_call_readiness. |
+| `policy_id` | `string` | The policy this finding was raised against |
+| `policy_type` | `string` | Type of the policy this finding was raised against |
+| `post_mortem` | `map[string]any` | Set when policy_type is post_mortem. |
+| `responsible_users` | `[]any` | Who is expected to resolve this finding |
+| `schedule` | `map[string]any` | Set when policy_type is schedule. |
+| `shift_conflict` | `map[string]any` | Set when policy_type is shift_conflict. |
+| `state` | `string` | Where this finding is in its lifecycle |
+| `updated_at` | `string` |  |
+| `vacation_conflict` | `map[string]any` | Set when policy_type is vacation_conflict. |
+
+#### Example: Create
+
+```go
+result, err := client.PolicyFindingsRestoreResultV2(nil).Create(map[string]any{
+    "policy_finding_id": "example_policy_finding_id",
+    "created_at": "example_created_at",
+    "debrief": map[string]any{},
+    "dismissal": map[string]any{},
+    "follow_up": map[string]any{},
+    "id": "example_id",
+    "last_checked_at": "example_last_checked_at",
+    "on_call_readiness": map[string]any{},
+    "policy_id": "example_policy_id",
+    "policy_type": "example_policy_type",
+    "post_mortem": map[string]any{},
+    "responsible_users": []any{},
+    "schedule": map[string]any{},
+    "shift_conflict": map[string]any{},
+    "state": "example_state",
+    "updated_at": "example_updated_at",
+    "vacation_conflict": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3016,16 +6438,16 @@ Create an instance: `postmortemDocument := client.PostmortemDocument(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `document_url` | `string` |  |
-| `editor` | `[]any` |  |
-| `exported_url` | `[]any` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `status` | `string` |  |
-| `title` | `string` |  |
-| `type` | `string` |  |
-| `updated_at` | `string` |  |
+| `created_at` | `string` | Timestamp for when the document was created |
+| `document_url` | `string` | A URL to view the post-mortem document in the incident.io dashboard |
+| `editors` | `[]any` | The list of users who have edited this post-mortem document |
+| `exported_urls` | `[]any` | URLs of any external locations this document has been exported to |
+| `id` | `string` | Unique identifier for the post-mortem document |
+| `incident_id` | `string` | The unique identifier of the incident that this post-mortem document belongs to |
+| `status` | `string` | The current status of this post-mortem document |
+| `title` | `string` | The display title of the post-mortem document |
+| `type` | `string` | Whether this is a native incident.io post-mortem or one hosted in an external provider |
+| `updated_at` | `string` | Timestamp for when the document was last updated |
 
 #### Example: Load
 
@@ -3034,7 +6456,7 @@ postmortemDocument, err := client.PostmortemDocument(nil).Load(map[string]any{"i
 if err != nil {
     panic(err)
 }
-fmt.Println(postmortemDocument) // the loaded record
+fmt.Println(postmortemDocument.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -3044,7 +6466,10 @@ postmortemDocuments, err := client.PostmortemDocument(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(postmortemDocuments) // the array of records
+// A []any of entities, one per record.
+for _, item := range postmortemDocuments.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -3066,18 +6491,17 @@ Create an instance: `schedule := client.Schedule(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `map[string]any` |  |
+| `annotations` | `map[string]any` | Annotations that track metadata about this resource |
 | `config` | `map[string]any` |  |
 | `created_at` | `string` |  |
-| `current_shift` | `[]any` |  |
+| `current_shifts` | `[]any` | Shifts that are ongoing for this schedule |
 | `holidays_public_config` | `map[string]any` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `next_shift` | `[]any` |  |
-| `permalink` | `string` |  |
-| `schedule` | `map[string]any` |  |
-| `team_id` | `[]any` |  |
-| `timezone` | `string` |  |
+| `id` | `string` | Unique internal ID of the schedule |
+| `name` | `string` | Human readable name synced from external provider |
+| `next_shifts` | `[]any` | The shifts after the next changeover. |
+| `permalink` | `string` | A permanent link to this schedule in the incident.io dashboard |
+| `team_ids` | `[]any` | IDs of teams that own this schedule |
+| `timezone` | `string` | Timezone of the schedule, as interpreted at the point of generating the report |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -3087,7 +6511,7 @@ schedule, err := client.Schedule(nil).Load(map[string]any{"id": "schedule_id"}, 
 if err != nil {
     panic(err)
 }
-fmt.Println(schedule) // the loaded record
+fmt.Println(schedule.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -3097,29 +6521,69 @@ schedules, err := client.Schedule(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(schedules) // the array of records
+// A []any of entities, one per record.
+for _, item := range schedules.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.Schedule(nil).Create(map[string]any{
-    "annotation": map[string]any{},
+    "annotations": map[string]any{},
     "config": map[string]any{},
     "created_at": "example_created_at",
     "holidays_public_config": map[string]any{},
     "id": "example_id",
     "name": "example_name",
     "permalink": "example_permalink",
-    "schedule": map[string]any{},
-    "team_id": []any{},
+    "team_ids": []any{},
     "timezone": "example_timezone",
     "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### ScheduleEntriesListPayloadV2
+
+Create an instance: `scheduleEntriesListPayloadV2 := client.ScheduleEntriesListPayloadV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `entry_window_end` | `string` | The end of the window to preview entries for. |
+| `entry_window_start` | `string` | The start of the window to preview entries for. |
+| `final` | `[]any` | The effective schedule after overrides have been merged in |
+| `overrides` | `[]any` | Overrides that apply within the requested window |
+| `schedule` | `map[string]any` |  |
+| `scheduled` | `[]any` | Entries from the schedule's rotation rules, before overrides are applied |
+
+#### Example: Create
+
+```go
+result, err := client.ScheduleEntriesListPayloadV2(nil).Create(map[string]any{
+    "schedule_id": "example_schedule_id",
+    "final": []any{},
+    "overrides": []any{},
+    "schedule": map[string]any{},
+    "scheduled": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3138,16 +6602,16 @@ Create an instance: `scheduleEntry := client.ScheduleEntry(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `pagination_meta` | `map[string]any` |  |
-| `schedule_entry` | `map[string]any` |  |
+| `schedule_entries` | `map[string]any` | The schedule entries for a window of time, grouped by where they come from. |
 
 #### Example: Load
 
 ```go
-scheduleEntry, err := client.ScheduleEntry(nil).Load(nil, nil)
+scheduleEntry, err := client.ScheduleEntry(nil).Load(map[string]any{"schedule_id": "schedule_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(scheduleEntry) // the loaded record
+fmt.Println(scheduleEntry.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 
@@ -3167,19 +6631,18 @@ Create an instance: `scheduleReplica := client.ScheduleReplica(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `id` | `string` |  |
-| `last_sync_error` | `string` |  |
-| `last_synced_at` | `string` |  |
-| `mirror_window_day` | `int` |  |
-| `replica_fallback_user_id` | `string` |  |
-| `replica_provider` | `string` |  |
-| `replica_provider_id` | `string` |  |
-| `schedule_id` | `string` |  |
-| `schedule_replica` | `map[string]any` |  |
-| `source` | `[]any` |  |
-| `updated_at` | `string` |  |
-| `user_status` | `[]any` |  |
+| `created_at` | `string` | When this schedule replica was first created |
+| `id` | `string` | Unique identifier of the schedule replica |
+| `last_sync_error` | `string` | The most recent error encountered while syncing this replica to the external provider, if any. |
+| `last_synced_at` | `string` | When the replica was last successfully synced to the external provider. |
+| `mirror_window_days` | `int` | How many days ahead to mirror this schedule into the external provider. |
+| `replica_fallback_user_id` | `string` | The ID of a user in the external provider that will be assigned whenever nobody is on-call in the incident.io schedule. |
+| `replica_provider` | `string` | The external provider where this schedule is replicated to |
+| `replica_provider_id` | `string` | The ID of the schedule in the external provider that this replica syncs to. |
+| `schedule_id` | `string` | The ID of the incident.io schedule that this replica is syncing from |
+| `sources` | `[]any` | The specific rotation and layer combinations from the schedule that are being replicated. |
+| `updated_at` | `string` | When this schedule replica was last updated |
+| `user_statuses` | `[]any` | The mapping status of each incident.io user in the schedule to their corresponding user in the external provider. |
 
 #### Example: Load
 
@@ -3188,17 +6651,20 @@ scheduleReplica, err := client.ScheduleReplica(nil).Load(map[string]any{"id": "s
 if err != nil {
     panic(err)
 }
-fmt.Println(scheduleReplica) // the loaded record
+fmt.Println(scheduleReplica.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
 
 ```go
-scheduleReplicas, err := client.ScheduleReplica(nil).List(nil, nil)
+scheduleReplicas, err := client.ScheduleReplica(nil).List(map[string]any{"id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(scheduleReplicas) // the array of records
+// A []any of entities, one per record.
+for _, item := range scheduleReplicas.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -3211,15 +6677,14 @@ result, err := client.ScheduleReplica(nil).Create(map[string]any{
     "replica_provider": "example_replica_provider",
     "replica_provider_id": "example_replica_provider_id",
     "schedule_id": "example_schedule_id",
-    "schedule_replica": map[string]any{},
-    "source": []any{},
+    "sources": []any{},
     "updated_at": "example_updated_at",
-    "user_status": []any{},
+    "user_statuses": []any{},
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3240,16 +6705,15 @@ Create an instance: `scheduleSyncRule := client.ScheduleSyncRule(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `map[string]any` |  |
+| `annotations` | `map[string]any` | Annotations that track metadata about this resource |
 | `created_at` | `string` |  |
-| `id` | `string` |  |
-| `permanent_member_user_id` | `[]any` |  |
-| `rotation_id` | `string` |  |
-| `schedule_id` | `string` |  |
-| `schedule_sync_rule` | `map[string]any` |  |
-| `schedule_sync_target` | `map[string]any` |  |
-| `schedule_sync_target_id` | `string` |  |
-| `sync_type` | `string` |  |
+| `id` | `string` | Unique identifier of the sync rule |
+| `permanent_member_user_ids` | `[]any` | IDs of users always kept in the Slack user group, regardless of who is on call. |
+| `rotation_id` | `string` | If set, only members of this rotation sync to the user group. |
+| `schedule_id` | `string` | The schedule this rule belongs to |
+| `schedule_sync_target` | `map[string]any` | A sync target is the link between incident.io and a single Slack user group, used to keep that group's membership in step with who is currently on call. |
+| `schedule_sync_target_id` | `string` | The sync target ID this rule links to |
+| `sync_type` | `string` | Which schedule members sync to the user group |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -3259,17 +6723,20 @@ scheduleSyncRule, err := client.ScheduleSyncRule(nil).Load(map[string]any{"id": 
 if err != nil {
     panic(err)
 }
-fmt.Println(scheduleSyncRule) // the loaded record
+fmt.Println(scheduleSyncRule.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
 
 ```go
-scheduleSyncRules, err := client.ScheduleSyncRule(nil).List(nil, nil)
+scheduleSyncRules, err := client.ScheduleSyncRule(nil).List(map[string]any{"id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(scheduleSyncRules) // the array of records
+// A []any of entities, one per record.
+for _, item := range scheduleSyncRules.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -3278,9 +6745,8 @@ fmt.Println(scheduleSyncRules) // the array of records
 result, err := client.ScheduleSyncRule(nil).Create(map[string]any{
     "id": "example_id",
     "created_at": "example_created_at",
-    "permanent_member_user_id": []any{},
+    "permanent_member_user_ids": []any{},
     "schedule_id": "example_schedule_id",
-    "schedule_sync_rule": map[string]any{},
     "schedule_sync_target": map[string]any{},
     "schedule_sync_target_id": "example_schedule_sync_target_id",
     "sync_type": "example_sync_type",
@@ -3289,7 +6755,7 @@ result, err := client.ScheduleSyncRule(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3311,14 +6777,14 @@ Create an instance: `scheduleSyncTarget := client.ScheduleSyncTarget(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `add_bot_to_group` | `bool` |  |
-| `annotation` | `map[string]any` |  |
+| `add_bot_to_group` | `bool` | Whether the incident.io bot should be added to the group as a member. |
+| `annotations` | `map[string]any` | Annotations that track metadata about this resource |
 | `created_at` | `string` |  |
-| `id` | `string` |  |
-| `linked_schedule` | `[]any` |  |
-| `schedule_sync_target` | `map[string]any` |  |
-| `slack_team_id` | `string` |  |
-| `slack_user_group_id` | `string` |  |
+| `id` | `string` | Unique identifier of the sync target |
+| `linked_schedules` | `[]any` | Schedules with an active sync rule pointing at this target |
+| `new_slack_user_group` | `map[string]any` |  |
+| `slack_team_id` | `string` | Slack team (workspace) ID the user group lives in. |
+| `slack_user_group_id` | `string` | Slack ID of the user group whose membership is kept in sync. |
 | `updated_at` | `string` |  |
 
 #### Example: Load
@@ -3328,7 +6794,7 @@ scheduleSyncTarget, err := client.ScheduleSyncTarget(nil).Load(map[string]any{"i
 if err != nil {
     panic(err)
 }
-fmt.Println(scheduleSyncTarget) // the loaded record
+fmt.Println(scheduleSyncTarget.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -3338,7 +6804,10 @@ scheduleSyncTargets, err := client.ScheduleSyncTarget(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(scheduleSyncTargets) // the array of records
+// A []any of entities, one per record.
+for _, item := range scheduleSyncTargets.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -3348,8 +6817,8 @@ result, err := client.ScheduleSyncTarget(nil).Create(map[string]any{
     "add_bot_to_group": true,
     "created_at": "example_created_at",
     "id": "example_id",
-    "linked_schedule": []any{},
-    "schedule_sync_target": map[string]any{},
+    "linked_schedules": []any{},
+    "new_slack_user_group": map[string]any{},
     "slack_team_id": "example_slack_team_id",
     "slack_user_group_id": "example_slack_user_group_id",
     "updated_at": "example_updated_at",
@@ -3357,8 +6826,103 @@ result, err := client.ScheduleSyncTarget(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
+
+
+### SchedulesShowOverrideResultV2
+
+Create an instance: `schedulesShowOverrideResultV2 := client.SchedulesShowOverrideResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `end_at` | `string` | End of the override |
+| `id` | `string` | Unique internal ID of the schedule override |
+| `layer_id` | `string` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | The schedule that this override applies to |
+| `start_at` | `string` | Start of the override |
+| `updated_at` | `string` |  |
+| `user` | `map[string]any` |  |
+
+#### Example: Load
+
+```go
+schedulesShowOverrideResultV2, err := client.SchedulesShowOverrideResultV2(nil).Load(map[string]any{"id": "schedules_show_override_result_v2_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(schedulesShowOverrideResultV2.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+schedulesShowOverrideResultV2s, err := client.SchedulesShowOverrideResultV2(nil).List(map[string]any{"schedule_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range schedulesShowOverrideResultV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.SchedulesShowOverrideResultV2(nil).Create(map[string]any{
+    "created_at": "example_created_at",
+    "end_at": "example_end_at",
+    "id": "example_id",
+    "layer_id": "example_layer_id",
+    "rotation_id": "example_rotation_id",
+    "schedule_id": "example_schedule_id",
+    "start_at": "example_start_at",
+    "updated_at": "example_updated_at",
+    "user": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### SchedulesUpdateOverrideResultV2
+
+Create an instance: `schedulesUpdateOverrideResultV2 := client.SchedulesUpdateOverrideResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Update(data, ctrl)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `end_at` | `string` | End of the override |
+| `id` | `string` | Unique internal ID of the schedule override |
+| `layer_id` | `string` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | The schedule that this override applies to |
+| `start_at` | `string` | Start of the override |
+| `updated_at` | `string` |  |
+| `user` | `map[string]any` |  |
 
 
 ### Secret
@@ -3380,15 +6944,16 @@ Create an instance: `secret := client.Secret(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `last_four_char` | `string` |  |
-| `name` | `string` |  |
-| `owning_team_id` | `[]any` |  |
-| `secret` | `map[string]any` |  |
+| `description` | `string` | Optional description of what this secret is for |
+| `id` | `string` | Unique identifier for this secret |
+| `last_four_chars` | `string` | The last four characters of the current value, for masked display. |
+| `name` | `string` | Human-readable name, unique within the organisation amongst unarchived secrets |
+| `owning_team_ids` | `[]any` | IDs of the teams that own this secret. |
+| `secret` | `map[string]any` | A secret is a named credential that workflows can reference, for example an auth token for an outgoing webhook. |
 | `updated_at` | `string` |  |
-| `value` | `string` |  |
-| `version` | `[]any` |  |
+| `value` | `string` | The secret's plaintext value. |
+| `version` | `int` | The current version number, incremented on each rotation |
+| `versions` | `[]any` | The secret's versions, newest first |
 
 #### Example: Load
 
@@ -3397,7 +6962,7 @@ secret, err := client.Secret(nil).Load(map[string]any{"id": "secret_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(secret) // the loaded record
+fmt.Println(secret.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -3407,7 +6972,10 @@ secrets, err := client.Secret(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(secrets) // the array of records
+// A []any of entities, one per record.
+for _, item := range secrets.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -3417,16 +6985,16 @@ result, err := client.Secret(nil).Create(map[string]any{
     "created_at": "example_created_at",
     "id": "example_id",
     "name": "example_name",
-    "owning_team_id": []any{},
     "secret": map[string]any{},
     "updated_at": "example_updated_at",
     "value": "example_value",
-    "version": []any{},
+    "version": 1,
+    "versions": []any{},
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3447,12 +7015,12 @@ Create an instance: `severity := client.Severity(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `rank` | `int` |  |
-| `updated_at` | `string` |  |
+| `created_at` | `string` | When the action was created |
+| `description` | `string` | Description of the severity |
+| `id` | `string` | Unique identifier of the severity |
+| `name` | `string` | Human readable name of the severity |
+| `rank` | `int` | Rank to help sort severities (lower numbers are less severe) |
+| `updated_at` | `string` | When the action was last updated |
 
 #### Example: Load
 
@@ -3461,7 +7029,7 @@ severity, err := client.Severity(nil).Load(map[string]any{"id": "severity_id"}, 
 if err != nil {
     panic(err)
 }
-fmt.Println(severity) // the loaded record
+fmt.Println(severity.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -3471,7 +7039,10 @@ severitys, err := client.Severity(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(severitys) // the array of records
+// A []any of entities, one per record.
+for _, item := range severitys.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
@@ -3488,7 +7059,7 @@ result, err := client.Severity(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3501,15 +7072,26 @@ Create an instance: `statusPage := client.StatusPage(nil)`
 | Method | Description |
 | --- | --- |
 | `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `description` | `string` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `public_url` | `string` |  |
+| `description` | `string` | The description of this status page |
+| `id` | `string` | Unique ID of this status page |
+| `name` | `string` | The title of this status page |
+| `public_url` | `string` | The public URL of this status page |
+
+#### Example: Load
+
+```go
+statusPage, err := client.StatusPage(nil).Load(map[string]any{"id": "status_page_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPage.(sdk.Entity).Data()) // the loaded entity's record
+```
 
 #### Example: List
 
@@ -3518,7 +7100,103 @@ statusPages, err := client.StatusPage(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(statusPages) // the array of records
+// A []any of entities, one per record.
+for _, item := range statusPages.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### StatusPageComponent
+
+Create an instance: `statusPageComponent := client.StatusPageComponent(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
+| `Remove(match, ctrl)` | Remove the matching entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `description` | `string` | Optional short description of this component |
+| `id` | `string` | Unique identifier for this component |
+| `management_meta` | `map[string]any` |  |
+| `name` | `string` | Human-readable name for the component |
+
+#### Example: Load
+
+```go
+statusPageComponent, err := client.StatusPageComponent(nil).Load(map[string]any{"id": "status_page_component_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPageComponent.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+statusPageComponents, err := client.StatusPageComponent(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range statusPageComponents.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.StatusPageComponent(nil).Create(map[string]any{
+    "id": "example_id",
+    "management_meta": map[string]any{},
+    "name": "example_name",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### StatusPageComponentAvailabilityV2
+
+Create an instance: `statusPageComponentAvailabilityV2 := client.StatusPageComponentAvailabilityV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `availability_percent` | `string` | Availability over the window as a percentage, floored (for example "99.94"). |
+| `component_id` | `string` | ID of the component. |
+| `data_available_since` | `string` | Earliest time we have status data for this component. |
+| `end_at` | `string` | End of the requested availability window |
+| `start_at` | `string` | Start of the requested availability window |
+| `status_page_id` | `string` | ID of the status page |
+
+#### Example: Load
+
+```go
+statusPageComponentAvailabilityV2, err := client.StatusPageComponentAvailabilityV2(nil).Load(map[string]any{"component_id": "component_id", "status_page_id": "status_page_id", "end_at": "end_at", "start_at": "start_at"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(statusPageComponentAvailabilityV2.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 
@@ -3539,17 +7217,17 @@ Create an instance: `statusPageIncident := client.StatusPageIncident(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_impact` | `[]any` |  |
-| `component_status` | `[]any` |  |
-| `id` | `string` |  |
-| `idempotency_key` | `string` |  |
-| `incident_status` | `string` |  |
-| `message` | `string` |  |
-| `name` | `string` |  |
-| `notify_subscriber` | `bool` |  |
-| `published_at` | `string` |  |
-| `status_page_id` | `string` |  |
-| `update` | `[]any` |  |
+| `component_impacts` | `[]any` | A list of time periods that this status page incident had an impact on a component |
+| `component_statuses` | `[]any` | An array of mappings from component ID to current component status |
+| `id` | `string` | A unique ID for this status page incident |
+| `idempotency_key` | `string` | A unique key to de-duplicate requests. |
+| `incident_status` | `string` | Current status for this incident |
+| `message` | `string` | Markdown initial update on this status page incident |
+| `name` | `string` | A title for the incident |
+| `notify_subscribers` | `bool` | Whether to notify subscribers about this status page incident. |
+| `published_at` | `string` | When this status page incident was published to the status page |
+| `status_page_id` | `string` | The ID of the corresponding status page |
+| `updates` | `[]any` | A list of updates posted to this status page incident |
 
 #### Example: Load
 
@@ -3558,38 +7236,41 @@ statusPageIncident, err := client.StatusPageIncident(nil).Load(map[string]any{"i
 if err != nil {
     panic(err)
 }
-fmt.Println(statusPageIncident) // the loaded record
+fmt.Println(statusPageIncident.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
 
 ```go
-statusPageIncidents, err := client.StatusPageIncident(nil).List(nil, nil)
+statusPageIncidents, err := client.StatusPageIncident(nil).List(map[string]any{"status_page_id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(statusPageIncidents) // the array of records
+// A []any of entities, one per record.
+for _, item := range statusPageIncidents.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.StatusPageIncident(nil).Create(map[string]any{
-    "component_impact": []any{},
+    "component_impacts": []any{},
     "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "incident_status": "example_incident_status",
     "message": "example_message",
     "name": "example_name",
-    "notify_subscriber": true,
+    "notify_subscribers": true,
     "published_at": "example_published_at",
     "status_page_id": "example_status_page_id",
-    "update": []any{},
+    "updates": []any{},
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3607,24 +7288,55 @@ Create an instance: `statusPageIncidentUpdate := client.StatusPageIncidentUpdate
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_status` | `[]any` |  |
-| `incident_status` | `string` |  |
-| `message` | `string` |  |
-| `notify_subscriber` | `bool` |  |
-| `status_page_incident_id` | `string` |  |
+| `component_statuses` | `[]any` | An array of mappings from component ID to component status. |
+| `incident_status` | `string` | Optional new status for this status page incident. |
+| `message` | `string` | Markdown update on what's changed about this status page incident |
+| `notify_subscribers` | `bool` | Whether to notify subscribers about this incident update. |
+| `status_page_incident_id` | `string` | ID of the status page incident |
 
 #### Example: Create
 
 ```go
 result, err := client.StatusPageIncidentUpdate(nil).Create(map[string]any{
     "message": "example_message",
-    "notify_subscriber": true,
+    "notify_subscribers": true,
     "status_page_incident_id": "example_status_page_incident_id",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### StatusPageLinkedResponseIncidentV1
+
+Create an instance: `statusPageLinkedResponseIncidentV1 := client.StatusPageLinkedResponseIncidentV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | ID of the Response incident |
+| `linked_at` | `string` | When the Response incident was linked to the status page incident |
+
+#### Example: List
+
+```go
+statusPageLinkedResponseIncidentV1s, err := client.StatusPageLinkedResponseIncidentV1(nil).List(map[string]any{"incident_id": "example", "status_page_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range statusPageLinkedResponseIncidentV1s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
@@ -3639,24 +7351,26 @@ Create an instance: `statusPageMaintenance := client.StatusPageMaintenance(nil)`
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
 | `Create(data, ctrl)` | Create a new entity with the given data. |
+| `Update(data, ctrl)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `affected_component_id` | `[]any` |  |
-| `component_maintenance_period` | `[]any` |  |
-| `end_at` | `string` |  |
-| `id` | `string` |  |
-| `idempotency_key` | `string` |  |
-| `maintenance_status` | `string` |  |
-| `message` | `string` |  |
-| `name` | `string` |  |
-| `notify_subscriber` | `bool` |  |
-| `published_at` | `string` |  |
-| `start_at` | `string` |  |
-| `status_page_id` | `string` |  |
-| `update` | `[]any` |  |
+| `affected_component_ids` | `[]any` | An array of IDs of component affected by the maintenance window |
+| `automate_maintenance_status` | `bool` | Whether updates are published automatically, moving this maintenance window to in progress at its start time and to complete at its end time |
+| `component_maintenance_periods` | `[]any` | A list of time periods where components were under maintenance during this status page maintenance window |
+| `end_at` | `string` | The time the maintenance window ends |
+| `id` | `string` | A unique ID for this status page maintenance window |
+| `idempotency_key` | `string` | A unique key to de-duplicate requests. |
+| `maintenance_status` | `string` | Current status for this maintenance window |
+| `message` | `string` | Markdown initial update on this status page maintenance window |
+| `name` | `string` | A title for the maintenance window |
+| `notify_subscribers` | `bool` | Whether to notify subscribers about this status page maintenance. |
+| `published_at` | `string` | When this status page maintenance window was published to the status page |
+| `start_at` | `string` | The time the maintenance window starts |
+| `status_page_id` | `string` | The ID of the corresponding status page |
+| `updates` | `[]any` | A list of updates posted to this status page maintenance window |
 
 #### Example: Load
 
@@ -3665,41 +7379,45 @@ statusPageMaintenance, err := client.StatusPageMaintenance(nil).Load(map[string]
 if err != nil {
     panic(err)
 }
-fmt.Println(statusPageMaintenance) // the loaded record
+fmt.Println(statusPageMaintenance.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
 
 ```go
-statusPageMaintenances, err := client.StatusPageMaintenance(nil).List(nil, nil)
+statusPageMaintenances, err := client.StatusPageMaintenance(nil).List(map[string]any{"status_page_id": "example"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(statusPageMaintenances) // the array of records
+// A []any of entities, one per record.
+for _, item := range statusPageMaintenances.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.StatusPageMaintenance(nil).Create(map[string]any{
-    "affected_component_id": []any{},
-    "component_maintenance_period": []any{},
+    "affected_component_ids": []any{},
+    "automate_maintenance_status": true,
+    "component_maintenance_periods": []any{},
     "end_at": "example_end_at",
     "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "maintenance_status": "example_maintenance_status",
     "message": "example_message",
     "name": "example_name",
-    "notify_subscriber": true,
+    "notify_subscribers": true,
     "published_at": "example_published_at",
     "start_at": "example_start_at",
     "status_page_id": "example_status_page_id",
-    "update": []any{},
+    "updates": []any{},
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3717,24 +7435,24 @@ Create an instance: `statusPageMaintenanceUpdate := client.StatusPageMaintenance
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `component_status` | `[]any` |  |
-| `maintenance_status` | `string` |  |
-| `message` | `string` |  |
-| `notify_subscriber` | `bool` |  |
-| `status_page_maintenance_id` | `string` |  |
+| `component_statuses` | `[]any` | An array of mappings from component ID to component status. |
+| `maintenance_status` | `string` | Optional new status for this status page maintenance window. |
+| `message` | `string` | Markdown update on what's changed about this status page maintenance window |
+| `notify_subscribers` | `bool` | Whether to notify subscribers about this status page maintenance update. |
+| `status_page_maintenance_id` | `string` | ID of the status page maintenance window |
 
 #### Example: Create
 
 ```go
 result, err := client.StatusPageMaintenanceUpdate(nil).Create(map[string]any{
     "message": "example_message",
-    "notify_subscriber": true,
+    "notify_subscribers": true,
     "status_page_maintenance_id": "example_status_page_maintenance_id",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3752,7 +7470,10 @@ Create an instance: `statusPageStructure := client.StatusPageStructure(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `item` | `[]any` |  |
+| `current_structure` | `map[string]any` |  |
+| `display_uptime_mode` | `string` | How the page shows uptime against its components |
+| `id` | `string` |  |
+| `management_meta` | `map[string]any` |  |
 
 #### Example: Load
 
@@ -3761,8 +7482,19 @@ statusPageStructure, err := client.StatusPageStructure(nil).Load(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(statusPageStructure) // the loaded record
+fmt.Println(statusPageStructure.(sdk.Entity).Data()) // the loaded entity's record
 ```
+
+
+### StatusPagesV2
+
+Create an instance: `statusPagesV2 := client.StatusPagesV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Remove(match, ctrl)` | Remove the matching entity. |
 
 
 ### Team
@@ -3781,9 +7513,9 @@ Create an instance: `team := client.Team(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `catalog_entry` | `map[string]any` |  |
-| `id` | `string` |  |
-| `member` | `[]any` |  |
-| `name` | `string` |  |
+| `id` | `string` | Unique ID of the team |
+| `members` | `[]any` | Members of the team |
+| `name` | `string` | Name of the team |
 
 #### Example: Load
 
@@ -3792,7 +7524,7 @@ team, err := client.Team(nil).Load(map[string]any{"id": "team_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(team) // the loaded record
+fmt.Println(team.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -3802,13 +7534,16 @@ teams, err := client.Team(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(teams) // the array of records
+// A []any of entities, one per record.
+for _, item := range teams.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 
-### TelemetryDataSource
+### TelemetryDataSourceV2
 
-Create an instance: `telemetryDataSource := client.TelemetryDataSource(nil)`
+Create an instance: `telemetryDataSourceV2 := client.TelemetryDataSourceV2(nil)`
 
 #### Operations
 
@@ -3820,16 +7555,16 @@ Create an instance: `telemetryDataSource := client.TelemetryDataSource(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `created_at` | `string` |  |
-| `datadog_config` | `map[string]any` |  |
-| `enabled` | `bool` |  |
-| `grafana_config` | `map[string]any` |  |
-| `id` | `string` |  |
-| `name` | `string` |  |
-| `provider` | `string` |  |
-| `source_type` | `string` |  |
-| `updated_at` | `string` |  |
-| `version` | `string` |  |
+| `created_at` | `string` | When this data source was created |
+| `datadog_config` | `map[string]any` | Datadog-specific credential updates |
+| `enabled` | `bool` | Whether this data source is enabled |
+| `grafana_config` | `map[string]any` | Grafana-specific credential and endpoint updates |
+| `id` | `string` | Unique identifier for this data source |
+| `name` | `string` | Human-readable name of the data source |
+| `provider` | `string` | Provider that hosts this data source |
+| `source_type` | `string` | Type of data source (e.g., prometheus, loki, tempo) |
+| `updated_at` | `string` | When this data source was last updated |
+| `version` | `string` | Upstream tool version captured at probe time (e.g. |
 
 
 ### User
@@ -3842,20 +7577,21 @@ Create an instance: `user := client.User(nil)`
 | --- | --- |
 | `List(match, ctrl)` | List entities matching the criteria. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `base_role` | `map[string]any` |  |
-| `custom_role` | `[]any` |  |
-| `email` | `string` |  |
-| `id` | `string` |  |
-| `is_active` | `bool` |  |
-| `name` | `string` |  |
-| `role` | `string` |  |
-| `seat` | `map[string]any` |  |
-| `slack_user_id` | `string` |  |
+| `custom_roles` | `[]any` |  |
+| `email` | `string` | Email address of the user. |
+| `id` | `string` | Unique identifier of the user |
+| `is_active` | `bool` | Whether the user is active. |
+| `name` | `string` | Name of the user |
+| `role` | `string` | DEPRECATED: Role of the user as of March 9th 2023, this value is no longer updated. |
+| `seats` | `map[string]any` |  |
+| `slack_user_id` | `string` | Slack ID of the user |
 
 #### Example: Load
 
@@ -3864,7 +7600,7 @@ user, err := client.User(nil).Load(map[string]any{"id": "user_id"}, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(user) // the loaded record
+fmt.Println(user.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -3874,7 +7610,28 @@ users, err := client.User(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(users) // the array of records
+// A []any of entities, one per record.
+for _, item := range users.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### Example: Create
+
+```go
+result, err := client.User(nil).Create(map[string]any{
+    "id": "example_id",
+    "base_role": map[string]any{},
+    "custom_roles": []any{},
+    "is_active": true,
+    "name": "example_name",
+    "role": "example_role",
+    "seats": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3896,30 +7653,31 @@ Create an instance: `workflow := client.Workflow(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `annotation` | `map[string]any` |  |
-| `condition_group` | `[]any` |  |
-| `continue_on_step_error` | `bool` |  |
+| `annotations` | `map[string]any` | Annotations that track metadata about this resource |
+| `auto_run_mode` | `string` | Whether the workflow runs immediately, or asks for confirmation in the incident channel first. |
+| `condition_groups` | `[]any` | Conditions that apply to the workflow trigger |
+| `continue_on_step_error` | `bool` | Whether to continue executing the workflow if a step fails |
 | `delay` | `map[string]any` |  |
-| `expression` | `[]any` |  |
-| `folder` | `string` |  |
-| `form_field` | `[]any` |  |
-| `id` | `string` |  |
-| `include_private_escalation` | `bool` |  |
-| `include_private_incident` | `bool` |  |
+| `expressions` | `[]any` | The expressions to use in the workflow |
+| `folder` | `string` | Folder to display the workflow in |
+| `form_fields` | `[]any` | User-configured form fields available in the workflow scope. |
+| `id` | `string` | Unique identifier for the workflow |
+| `include_private_escalations` | `bool` | Whether to include private escalations |
+| `include_private_incidents` | `bool` | DEPRECATED: use `private_incident_scope` instead. |
 | `management_meta` | `map[string]any` |  |
-| `name` | `string` |  |
-| `once_for` | `[]any` |  |
-| `owning_team_id` | `[]any` |  |
-| `private_incident_scope` | `string` |  |
-| `runs_from` | `string` |  |
-| `runs_on_incident` | `string` |  |
-| `runs_on_incident_mode` | `[]any` |  |
-| `shortform` | `string` |  |
-| `skip_step_upgrade` | `bool` |  |
-| `state` | `string` |  |
-| `step` | `[]any` |  |
-| `trigger` | `string` |  |
-| `version` | `int` |  |
+| `name` | `string` | Name provided by the user when creating the workflow |
+| `once_for` | `[]any` | This workflow will run 'once for' a list of references |
+| `owning_team_ids` | `[]any` | IDs of the teams that own this workflow |
+| `private_incident_scope` | `string` | Which private incidents this workflow acts on: every private incident (all), those an owning team can see (owning_teams), or none |
+| `runs_from` | `string` | The time from which this workflow will run on incidents |
+| `runs_on_incident_modes` | `[]any` | Which incident modes should this workflow run on? |
+| `runs_on_incidents` | `string` | Which incidents should the workflow be applied to? |
+| `shortform` | `string` | The shortform used to trigger this workflow (only applicable for manual triggers) |
+| `skip_step_upgrades` | `bool` | Skips workflow step upgrades, when the parameters for an existing workflow step change |
+| `state` | `string` | What state this workflow is in |
+| `steps` | `[]any` | Steps that are executed as part of the workflow |
+| `trigger` | `string` | Trigger to set on the workflow |
+| `version` | `int` | Revision of the workflow, uniquely identifying it's version |
 | `workflow` | `map[string]any` |  |
 
 #### Example: Load
@@ -3929,7 +7687,7 @@ workflow, err := client.Workflow(nil).Load(map[string]any{"id": "workflow_id"}, 
 if err != nil {
     panic(err)
 }
-fmt.Println(workflow) // the loaded record
+fmt.Println(workflow.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -3939,24 +7697,27 @@ workflows, err := client.Workflow(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(workflows) // the array of records
+// A []any of entities, one per record.
+for _, item := range workflows.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.Workflow(nil).Create(map[string]any{
-    "condition_group": []any{},
+    "condition_groups": []any{},
     "continue_on_step_error": true,
     "delay": map[string]any{},
-    "expression": []any{},
+    "expressions": []any{},
     "id": "example_id",
     "management_meta": map[string]any{},
     "name": "example_name",
     "once_for": []any{},
-    "runs_on_incident": "example_runs_on_incident",
-    "runs_on_incident_mode": []any{},
-    "step": []any{},
+    "runs_on_incident_modes": []any{},
+    "runs_on_incidents": "example_runs_on_incidents",
+    "steps": []any{},
     "trigger": "example_trigger",
     "version": 1,
     "workflow": map[string]any{},
@@ -3964,7 +7725,7 @@ result, err := client.Workflow(nil).Create(map[string]any{
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -3983,20 +7744,20 @@ Create an instance: `workflowRun := client.WorkflowRun(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `cancelled_at` | `string` |  |
-| `created_at` | `string` |  |
-| `enqueued_at` | `string` |  |
-| `error` | `string` |  |
-| `id` | `string` |  |
-| `incident_id` | `string` |  |
-| `incident_reference` | `string` |  |
-| `progress` | `[]any` |  |
-| `scheduled_at` | `string` |  |
-| `updated_at` | `string` |  |
-| `workflow_id` | `string` |  |
-| `workflow_name` | `string` |  |
-| `workflow_version_id` | `string` |  |
-| `workflow_version_number` | `int` |  |
+| `cancelled_at` | `string` | If the run was cancelled, this is when |
+| `created_at` | `string` | When the resource was created |
+| `enqueued_at` | `string` | When the run was enqueued for execution |
+| `error` | `string` | Error produced by the workflow, if it failed |
+| `id` | `string` | Unique identifier for the workflow run |
+| `incident_id` | `string` | If this run was against a specific incident, this is the ID of that incident |
+| `incident_reference` | `string` | If this run was against a specific incident, this is the reference of that incident |
+| `progress` | `[]any` | Status of each step as it is worked |
+| `scheduled_at` | `string` | When the run was scheduled for |
+| `updated_at` | `string` | When the resource was last updated |
+| `workflow_id` | `string` | Unique identifier for the underlying workflow |
+| `workflow_name` | `string` | Name of the underlying workflow |
+| `workflow_version_id` | `string` | Unique identifier of the workflow version |
+| `workflow_version_number` | `int` | Monotonically incrementing version number for the version that ran |
 
 #### Example: Load
 
@@ -4005,7 +7766,7 @@ workflowRun, err := client.WorkflowRun(nil).Load(map[string]any{"id": "workflow_
 if err != nil {
     panic(err)
 }
-fmt.Println(workflowRun) // the loaded record
+fmt.Println(workflowRun.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: List
@@ -4015,8 +7776,147 @@ workflowRuns, err := client.WorkflowRun(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(workflowRuns) // the array of records
+// A []any of entities, one per record.
+for _, item := range workflowRuns.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
 ```
+
+## Features
+
+This SDK ships 8 optional features. Each is **inactive until you
+switch it on**, so an SDK you have not configured behaves exactly as if none of
+them existed — no retries, no cache, no logging, no measurable overhead.
+
+Activate a feature by name in the client options, alongside the options shown
+above:
+
+| Feature | What it does |
+|---|---|
+| [`debug`](#debug) | Debug capture |
+| [`idempotency`](#idempotency) | Idempotency |
+| [`metrics`](#metrics) | Metrics |
+| [`paging`](#paging) | Paging |
+| [`ratelimit`](#ratelimit) | Rate limiting |
+| [`retry`](#retry) | Retry |
+| [`test`](#test) | Test transport |
+| [`timeout`](#timeout) | Timeout |
+
+> **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
+> transport, so each one wraps whatever is already installed: the order you
+> activate them in IS the nesting order. Activating them as an ordered list
+> rather than a map is what fixes that order.
+
+### debug
+
+Debug capture.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `max` | `100` |
+| `redact` | `['authorization', 'cookie', 'set-cookie', 'api-key', 'apikey', 'x-api-key', 'idempotency-key']` |
+
+Set `feature.debug.active` to enable it, then override any of the options above.
+
+### idempotency
+
+Idempotency.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `header` | `'Idempotency-Key'` |
+| `methods` | `['POST', 'PUT', 'PATCH', 'DELETE']` |
+| `ops` | `['create', 'update', 'remove']` |
+
+Set `feature.idempotency.active` to enable it, then override any of the options above.
+
+### metrics
+
+Metrics.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+
+Set `feature.metrics.active` to enable it, then override any of the options above.
+
+### paging
+
+Paging.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `afterVar` | `'after'` |
+| `cursorParam` | `'cursor'` |
+| `firstVar` | `'first'` |
+| `limitParam` | `'limit'` |
+| `pageParam` | `'page'` |
+| `startPage` | `1` |
+
+Set `feature.paging.active` to enable it, then override any of the options above.
+
+### ratelimit
+
+Rate limiting.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `burst` | `5` |
+| `rate` | `5` |
+
+Set `feature.ratelimit.active` to enable it, then override any of the options above.
+
+`ratelimit` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
+### retry
+
+Retry.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `factor` | `2` |
+| `maxDelay` | `2000` |
+| `minDelay` | `50` |
+| `retries` | `2` |
+| `statuses` | `[408, 425, 429, 500, 502, 503, 504]` |
+
+Set `feature.retry.active` to enable it, then override any of the options above.
+
+`retry` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
+### test
+
+Test transport.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+
+Set `feature.test.active` to enable it, then override any of the options above.
+
+### timeout
+
+Timeout.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `ms` | `30000` |
+
+Set `feature.timeout.active` to enable it, then override any of the options above.
+
+`timeout` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
 
 
 ## Advanced
@@ -4057,7 +7957,14 @@ stage names.
 
 The SDK ships with built-in features:
 
-- **TestFeature**: In-memory mock transport for testing without a live server
+- **DebugFeature**: Debug capture
+- **IdempotencyFeature**: Idempotency
+- **MetricsFeature**: Metrics
+- **PagingFeature**: Paging
+- **RatelimitFeature**: Rate limiting
+- **RetryFeature**: Retry
+- **TestFeature**: Test transport
+- **TimeoutFeature**: Timeout
 
 Features are initialized in order. Hooks fire in the order features
 were added, so later features can override earlier ones.
@@ -4068,7 +7975,9 @@ The Go SDK uses `map[string]any` throughout rather than typed structs.
 This mirrors the dynamic nature of the API and keeps the SDK
 flexible — no code generation is needed when the API schema changes.
 
-Use `core.ToMapAny()` to safely cast results and nested data.
+An operation returns the entity, and its `Data()` returns the record. Use
+`core.ToMapAny()` to safely cast that record, or data nested in it, to
+`map[string]any`: it returns `nil` for anything else, an entity included.
 
 ### Package structure
 
@@ -4092,11 +8001,11 @@ Entity instances are stateful. After a successful `List`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-incidentrole := client.IncidentRole(nil)
-incidentrole.List(nil, nil)
+incidentstatus := client.IncidentStatus(nil)
+incidentstatus.List(nil, nil)
 
-// incidentrole.Data() now returns the incidentrole data from the last list
-// incidentrole.Match() returns the last match criteria
+// incidentstatus.Data() now returns the incidentstatus data from the last list
+// incidentstatus.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

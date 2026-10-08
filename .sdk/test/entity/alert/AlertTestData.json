@@ -2,64 +2,85 @@
   "existing": {
     "alert": {
       "ALERT00": {
-        "alert_group_id": "ALERT_GROUP01",
+        "alert_group_ids": [],
         "alert_source_id": "ALERT_SOURCE01",
-        "attribute": [],
-        "created_at": "s7b",
-        "deduplication_key": "s7c",
-        "description": "s7d",
+        "attributes": [],
+        "created_at": "s85",
+        "deduplication_key": "s86",
+        "description": "s87",
         "id": "ALERT00",
-        "resolved_at": "s7f",
-        "source_url": "s80",
-        "status": "s81",
-        "title": "s82",
-        "updated_at": "s83"
+        "resolved_at": "s89",
+        "source_url": "s8a",
+        "status": "s8b",
+        "tags": [],
+        "title": "s8d",
+        "updated_at": "s8e"
       },
       "ALERT01": {
-        "alert_group_id": "ALERT_GROUP01",
+        "alert_group_ids": [],
         "alert_source_id": "ALERT_SOURCE01",
-        "attribute": [],
-        "created_at": "sf3",
-        "deduplication_key": "sf4",
-        "description": "sf5",
+        "attributes": [],
+        "created_at": "s107",
+        "deduplication_key": "s108",
+        "description": "s109",
         "id": "ALERT01",
-        "resolved_at": "sf7",
-        "source_url": "sf8",
-        "status": "sf9",
-        "title": "sfa",
-        "updated_at": "sfb"
+        "resolved_at": "s10b",
+        "source_url": "s10c",
+        "status": "s10d",
+        "tags": [],
+        "title": "s10f",
+        "updated_at": "s110"
       },
       "ALERT02": {
-        "alert_group_id": "ALERT_GROUP01",
+        "alert_group_ids": [],
         "alert_source_id": "ALERT_SOURCE01",
-        "attribute": [],
-        "created_at": "s16b",
-        "deduplication_key": "s16c",
-        "description": "s16d",
+        "attributes": [],
+        "created_at": "s189",
+        "deduplication_key": "s18a",
+        "description": "s18b",
         "id": "ALERT02",
-        "resolved_at": "s16f",
-        "source_url": "s170",
-        "status": "s171",
-        "title": "s172",
-        "updated_at": "s173"
+        "resolved_at": "s18d",
+        "source_url": "s18e",
+        "status": "s18f",
+        "tags": [],
+        "title": "s191",
+        "updated_at": "s192"
       }
     }
   },
   "new": {
     "alert": {
       "alert_ref01": {
-        "alert_group_id": "ALERT_GROUP01",
+        "alert_group_ids": [],
         "alert_source_id": "ALERT_SOURCE01",
-        "attribute": [],
-        "created_at": "s1e3",
-        "deduplication_key": "s1e4",
-        "description": "s1e5",
-        "resolved_at": "s1e7",
-        "source_url": "s1e8",
-        "status": "s1e9",
-        "title": "s1ea",
-        "updated_at": "s1eb"
+        "attributes": [],
+        "created_at": "s20b",
+        "deduplication_key": "s20c",
+        "description": "s20d",
+        "resolved_at": "s20f",
+        "source_url": "s210",
+        "status": "s211",
+        "tags": [],
+        "title": "s213",
+        "updated_at": "s214"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/alerts/{id}/actions/resolve": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/alerts": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/alerts/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

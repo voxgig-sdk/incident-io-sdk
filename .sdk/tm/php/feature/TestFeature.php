@@ -12,6 +12,32 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
     private ?array $options;
     private int $_netcalls;
 
+    // The record the mock keeps: the request data without `$body`, which only the
+    // wire carries.
+    private static function record(mixed $reqdata): array
+    {
+        if (!is_array($reqdata)) {
+            return [];
+        }
+        unset($reqdata['$body']);
+        return $reqdata;
+    }
+
+    // The key a list's response transform
+    // ["`$EACH`", "body", ["`$MERGE`" => "`.<key>`"]] reads each item's record under.
+    private static function itemEnvelopeKey(mixed $restf): ?string
+    {
+        if (!is_array($restf) || !array_is_list($restf) || 3 !== count($restf) ||
+            '`$EACH`' !== $restf[0] || 'body' !== $restf[1] || !is_array($restf[2])) {
+            return null;
+        }
+        $merge = $restf[2]['`$MERGE`'] ?? null;
+        if (!is_string($merge) || !preg_match('/^`\.([^.`$]+)`$/', $merge, $m)) {
+            return null;
+        }
+        return $m[1];
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -35,8 +61,8 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
 
         $this->client->mode = 'test';
 
-        // Ensure entity ids are correct.
-        \Voxgig\Struct\Struct::walk($entity_data, function ($key, $val, $parent, $path) {
+        // Ensure entity ids are correct (walk is by value: keep its result).
+        $entity_data = \Voxgig\Struct\Struct::walk($entity_data, function ($key, $val, $parent, $path) {
             if (count($path) === 2 && is_array($val) && $key !== null) {
                 $val['id'] = $key;
             }
@@ -66,13 +92,23 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
                     return $data;
                 }
                 $restf = $transform['res'] ?? null;
+                $key = self::itemEnvelopeKey($restf);
+                if ($key !== null && is_array($data) && array_is_list($data)) {
+                    return array_map(fn($item) => [$key => $item], $data);
+                }
                 if (!is_string($restf)) {
                     return $data;
                 }
-                if (!preg_match('/^`body\.([^`.]+)`$/', $restf, $m)) {
+                if (!preg_match('/^`body\.(.+)`$/', $restf, $m)) {
                     return $data;
                 }
-                return [$m[1] => $data];
+                // Multi-segment on purpose: GraphQL ops unwrap body.data.<field>
+                // (and body.data.<field>.<entity> for mutations), not just one level.
+                $out = $data;
+                foreach (array_reverse(explode('.', $m[1])) as $seg) {
+                    $out = [$seg => $out];
+                }
+                return $out;
             };
 
             $respond = function (int $status, mixed $data, ?array $extra = null) use ($envelope): array {
@@ -97,9 +133,8 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
 
             // PHP-portable equivalent of TS buildArgs+select: a flat-key
             // filter that matches by exact-equality on each provided key,
-            // with alias fallback. Empty match matches all entries — load
-            // with empty match returns the first fixture entry (or last
-            // create), list returns all entries.
+            // with alias fallback. An empty match matches every entry, as an
+            // empty `$AND` does in select; a non-empty miss matches nothing.
             $find_first = function (array $entmap, $match, $alias) {
                 if (!is_array($match) || empty($match)) {
                     foreach ($entmap as $e) {
@@ -152,6 +187,23 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
 
             $alias = is_object($op) ? ($op->alias ?? null) : \Voxgig\Struct\Struct::getprop($op, 'alias');
 
+            // Every op filters through buildArgs, which keeps `id` and the
+            // point's required params and drops the rest. find_first/find_all
+            // take a flat map, so take the primary key of each $OR clause;
+            // they do their own alias fallback.
+            $query_match = function ($args) use ($fctx, $op) {
+                $flat = [];
+                foreach (($this->buildArgs($fctx, $op, $args)['$AND'] ?? []) as $clause) {
+                    $ors = $clause['$OR'] ?? [];
+                    if (is_array($ors) && count($ors) > 0 && is_array($ors[0])) {
+                        foreach ($ors[0] as $lk => $lv) {
+                            $flat[$lk] = $lv;
+                        }
+                    }
+                }
+                return $flat;
+            };
+
             // For single-entity ops (load, remove) with an empty explicit
             // match, fall back to the id the entity client already knows from a
             // prior create/load (carried in $fctx->match / $fctx->data). This
@@ -170,7 +222,7 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
             };
 
             if ($op->name === 'load') {
-                $ent = $find_first($entmap, $resolve_match($fctx->reqmatch), $alias);
+                $ent = $find_first($entmap, $query_match($resolve_match($fctx->reqmatch)), $alias);
                 if ($ent === null) {
                     return $respond(404, null, ['statusText' => 'Not found']);
                 }
@@ -179,7 +231,7 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
                 return $respond(200, $out);
 
             } elseif ($op->name === 'list') {
-                $found = $find_all($entmap, $fctx->reqmatch, $alias);
+                $found = $find_all($entmap, $query_match($fctx->reqmatch), $alias);
                 $cleaned = [];
                 foreach ($found as $e) {
                     if (is_array($e)) unset($e['$KEY']);
@@ -188,7 +240,7 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
                 $out = \Voxgig\Struct\Struct::clone($cleaned);
                 return $respond(200, $out);
 
-            } elseif ($op->name === 'update') {
+            } elseif ($op->name === 'update' || $op->name === 'patch') {
                 // Match the existing entity by id only (or its alias). reqdata
                 // also contains the new field values, which would otherwise
                 // cause find_first to filter out the entity we want to update.
@@ -209,14 +261,13 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
                 if (empty($update_match)) {
                     $update_match = $resolve_match([]);
                 }
-                $ent = $find_first($entmap, $update_match, $alias);
+                $ent = $find_first($entmap, $query_match($update_match), $alias);
                 if ($ent === null) {
+                    // update miss: 404, never another record
                     return $respond(404, null, ['statusText' => 'Not found']);
                 }
                 if (is_array($fctx->reqdata)) {
-                    foreach ($fctx->reqdata as $k => $v) {
-                        $ent[$k] = $v;
-                    }
+                    $ent = \Voxgig\Struct\Struct::merge([$ent, self::record($fctx->reqdata)]);
                 }
                 $id = is_array($ent) ? ($ent['id'] ?? null) : null;
                 if ($id !== null) {
@@ -228,7 +279,7 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
                 return $respond(200, $out);
 
             } elseif ($op->name === 'remove') {
-                $ent = $find_first($entmap, $resolve_match($fctx->reqmatch), $alias);
+                $ent = $find_first($entmap, $query_match($resolve_match($fctx->reqmatch)), $alias);
                 // Remove only the first matched entity. If nothing matches,
                 // succeed as a no-op rather than erroring.
                 $id = is_array($ent) ? ($ent['id'] ?? null) : null;
@@ -246,7 +297,7 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
                         random_int(0, 0xFFFF), random_int(0, 0xFFFF));
                 }
 
-                $ent = is_array($fctx->reqdata) ? $fctx->reqdata : [];
+                $ent = self::record($fctx->reqdata);
                 $ent['id'] = $id;
                 $entmap[$id] = $ent;
                 $entity->data[$entname] = $entmap;
@@ -341,7 +392,7 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
 
     /**
      * Build a structured `$AND` query from the request match/data dict,
-     * matching the TS test feature's buildArgs. Mirrors ts/src/feature/test/TestFeature.ts:158-204.
+     * matching the TS test feature's buildArgs in ts/src/feature/test/TestFeature.ts.
      *
      * For each key in $args that is 'id' OR a required-param key on the
      * current operation point, emit a `$OR` clause matching the key (and
@@ -358,29 +409,63 @@ class IncidentIoTestFeature extends IncidentIoBaseFeature
         }
 
         $opname = is_object($op) ? ($op->name ?? null) : (\Voxgig\Struct\Struct::getprop($op, 'name'));
-        $entityName = null;
-        if (isset($ctx->entity)) {
-            $entityName = is_object($ctx->entity)
-                ? ($ctx->entity->name ?? null)
-                : (is_array($ctx->entity) ? ($ctx->entity['name'] ?? null) : null);
-        }
+
+        // An entity keeps its name private, behind get_name(); a context
+        // with no entity has the name its operation was resolved for.
+        $entityName = (is_object($ctx->entity) && method_exists($ctx->entity, 'get_name'))
+            ? $ctx->entity->get_name()
+            : (is_object($op) ? ($op->entity ?? null) : \Voxgig\Struct\Struct::getprop($op, 'entity'));
 
         // Resolve required-param names from the op's last point. Defensive:
         // any missing piece falls back to "no required params".
         $reqd_names = [];
         if (is_string($opname) && is_string($entityName) && isset($ctx->config)) {
+            // Pick the entity's own endpoint, not a cross-reference from
+            // another resource that also returns it — the same rule
+            // MakePoint falls back to, so the seed-data query is built from
+            // the endpoint the request will actually be sent to: a terminal
+            // `{id}` marks a record route, and failing that the shallower
+            // path wins.
             $points = \Voxgig\Struct\Struct::getpath(
-                ['entity', $entityName, 'op', $opname, 'points'],
-                $ctx->config
+                $ctx->config,
+                ['entity', $entityName, 'op', $opname, 'points']
             );
-            $point = \Voxgig\Struct\Struct::getelem($points, -1);
+            $point = \Voxgig\Struct\Struct::getelem($points, 0);
+            if (is_array($points)) {
+                $point_parts_len = function ($p) {
+                    $parts = \Voxgig\Struct\Struct::getprop($p, 'parts');
+                    return is_array($parts) ? count($parts) : 0;
+                };
+                $point_terminal_param = function ($p) {
+                    $parts = \Voxgig\Struct\Struct::getprop($p, 'parts');
+                    if (!is_array($parts) || 0 === count($parts)) {
+                        return false;
+                    }
+                    $last = $parts[count($parts) - 1];
+                    return is_string($last) && 0 === strpos($last, '{');
+                };
+                foreach ($points as $cand) {
+                    if ($point_terminal_param($cand) !== $point_terminal_param($point)) {
+                        if ($point_terminal_param($cand)) {
+                            $point = $cand;
+                        }
+                    } elseif ($point_parts_len($cand) < $point_parts_len($point)) {
+                        $point = $cand;
+                    }
+                }
+            }
+            // Path AND query: a path-only read misses a query-addressed
+            // record (e.g. GET /result?trace_id=), which has no path param.
             $params = is_array($point) ? ($point['args']['params'] ?? null) : null;
-            if (is_array($params)) {
-                foreach ($params as $p) {
-                    if (is_array($p) && (($p['reqd'] ?? false) === true)) {
-                        $n = $p['name'] ?? null;
-                        if ($n !== null) {
-                            $reqd_names[] = $n;
+            $query = is_array($point) ? ($point['args']['query'] ?? null) : null;
+            foreach ([$params, $query] as $arglist) {
+                if (is_array($arglist)) {
+                    foreach ($arglist as $p) {
+                        if (is_array($p) && (($p['reqd'] ?? false) === true)) {
+                            $n = $p['name'] ?? null;
+                            if ($n !== null) {
+                                $reqd_names[] = $n;
+                            }
                         }
                     }
                 }

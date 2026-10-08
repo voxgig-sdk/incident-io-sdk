@@ -4,18 +4,21 @@ main: kit: entity: incident_relationship: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+  fields: {
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier of this incident relationship"
+      t: "`$STRING`"
     }
-    {
-      name: "incident"
-      req: true
-      type: "`$OBJECT`"
+    incident: {
+      h: "Incident"
+      n: "incident"
+      r: true
+      t: "`$OBJECT`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -28,50 +31,61 @@ main: kit: entity: incident_relationship: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/incident_relationships"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYD5H"
-                kind: "query"
-                name: "incident_id"
-                orig: "incident_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYD5H"
+                k: "query"
+                n: "incident_id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/incident_relationships"
-          parts: [
-            "v1"
-            "incident_relationships"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/incident_relationships"
+          q: {
             exist: [
-              "after"
               "incident_id"
-              "page_size"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_relationships"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.incident_relationships`"
           }
         }
       ]

@@ -15,7 +15,7 @@
         "workflow_id": "WORKFLOW01",
         "workflow_name": "s97",
         "workflow_version_id": "WORKFLOW_VERSION01",
-        "workflow_version_number": "s99"
+        "workflow_version_number": 153
       },
       "WORKFLOW_RUN01": {
         "cancelled_at": "s118",
@@ -31,7 +31,7 @@
         "workflow_id": "WORKFLOW01",
         "workflow_name": "s123",
         "workflow_version_id": "WORKFLOW_VERSION01",
-        "workflow_version_number": "s125"
+        "workflow_version_number": 293
       },
       "WORKFLOW_RUN02": {
         "cancelled_at": "s1a4",
@@ -47,7 +47,7 @@
         "workflow_id": "WORKFLOW01",
         "workflow_name": "s1af",
         "workflow_version_id": "WORKFLOW_VERSION01",
-        "workflow_version_number": "s1b1"
+        "workflow_version_number": 433
       }
     }
   },
@@ -66,8 +66,20 @@
         "workflow_id": "WORKFLOW01",
         "workflow_name": "s23b",
         "workflow_version_id": "WORKFLOW_VERSION01",
-        "workflow_version_number": "s23d"
+        "workflow_version_number": 573
       }
+    }
+  },
+  "requests": {
+    "GET /v2/workflow_runs": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/workflow_runs/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

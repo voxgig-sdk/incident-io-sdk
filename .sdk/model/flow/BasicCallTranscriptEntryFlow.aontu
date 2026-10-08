@@ -1,0 +1,22 @@
+# BasicCallTranscriptEntryFlow
+
+main: kit: flow: BasicCallTranscriptEntryFlow:
+{
+  entity: "call_transcript_entry",
+  kind: "basic",
+  name: "BasicCallTranscriptEntryFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "call_transcript_entry_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCallTranscriptEntryFlow"
+}

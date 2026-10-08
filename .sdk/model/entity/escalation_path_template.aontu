@@ -1,0 +1,355 @@
+# Entity: escalation_path_template
+
+main: kit: entity: escalation_path_template: {
+
+  alias: field: {}
+
+  fields: {
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "A description of what this template is for."
+      t: "`$STRING`"
+    }
+    expressions: {
+      h: "Expressions"
+      n: "expressions"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "Expressions backing the template's binding targets."
+      t: "`$ARRAY`"
+    }
+    has_historical_escalation_path_versions: {
+      h: "Has Historical Escalation Path Versions"
+      n: "has_historical_escalation_path_versions"
+      r: true
+      sh: "Whether a previous escalation path version uses this template."
+      t: "`$BOOLEAN`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this template."
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "The name of this template."
+      t: "`$STRING`"
+    }
+    params: {
+      h: "Params"
+      n: "params"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "The parameters declared by this template."
+      t: "`$ARRAY`"
+    }
+    path: {
+      h: "Path"
+      n: "path"
+      r: true
+      sh: "The nodes that form the levels and branches of this template."
+      t: "`$ARRAY`"
+    }
+    repeat_config: {
+      h: "Repeat Config"
+      n: "repeat_config"
+      r: true
+      t: "`$OBJECT`"
+    }
+    working_hours: {
+      h: "Working Hours"
+      n: "working_hours"
+      r: false
+      sh: "The working hours for this template."
+      t: "`$ARRAY`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "escalation_path_template"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "description"
+            "expressions"
+            "name"
+            "params"
+            "path"
+            "repeat_config"
+            "working_hours"
+          ]
+          co: {
+            id: "POST /v2/escalation_path_templates"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/escalation_path_templates"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalation_path_templates"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.escalation_path_template`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/escalation_path_templates"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: "Team on-call"
+                k: "query"
+                n: "search"
+                or: "search"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/escalation_path_templates"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalation_path_templates"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.escalation_path_templates`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/escalation_path_templates/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/escalation_path_templates/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalation_path_templates"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.escalation_path_template`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v2/escalation_path_templates/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v2/escalation_path_templates/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalation_path_templates"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "description"
+            "expressions"
+            "name"
+            "params"
+            "path"
+            "repeat_config"
+            "working_hours"
+          ]
+          co: {
+            id: "PUT /v2/escalation_path_templates/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/escalation_path_templates/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalation_path_templates"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.escalation_path_template`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

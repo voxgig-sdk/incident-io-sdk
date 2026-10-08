@@ -1,11 +1,11 @@
-from utility.voxgig_struct import voxgig_struct as vs
-from core import helpers
+from projectname_sdk.utility.voxgig_struct import voxgig_struct as vs
+from projectname_sdk.core import helpers
 
 entity_load_op = None
 
 # EJECT-START
 
-    def load(self, reqmatch=None, ctrl=None) -> EntityName:
+    def load(self, reqmatch=None, ctrl=None) -> EntyClass:
         utility = self._utility
         # reqmatch is optional: an entity with no id-like key loads with no
         # match. Treat None as an empty match so client.EntityName().load()

@@ -1,0 +1,68 @@
+{
+  "existing": {
+    "announcement_template": {
+      "ANNOUNCEMENT_TEMPLATE00": {
+        "actions": [],
+        "fields": [],
+        "id": "ANNOUNCEMENT_TEMPLATE00",
+        "is_default": false,
+        "name": "s40",
+        "owning_team_ids": []
+      },
+      "ANNOUNCEMENT_TEMPLATE01": {
+        "actions": [],
+        "fields": [],
+        "id": "ANNOUNCEMENT_TEMPLATE01",
+        "is_default": false,
+        "name": "s7c",
+        "owning_team_ids": []
+      },
+      "ANNOUNCEMENT_TEMPLATE02": {
+        "actions": [],
+        "fields": [],
+        "id": "ANNOUNCEMENT_TEMPLATE02",
+        "is_default": false,
+        "name": "sb8",
+        "owning_team_ids": []
+      }
+    }
+  },
+  "new": {
+    "announcement_template": {
+      "announcement_template_ref01": {
+        "actions": [],
+        "fields": [],
+        "is_default": false,
+        "name": "sf4",
+        "owning_team_ids": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/announcement_templates": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/announcement_templates": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/announcement_templates/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/announcement_templates/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/announcement_templates/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

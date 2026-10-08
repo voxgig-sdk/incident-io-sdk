@@ -1,0 +1,18 @@
+# BasicAlertSourcesV2Flow
+
+main: kit: flow: BasicAlertSourcesV2Flow:
+{
+  entity: "alert_sources_v2",
+  kind: "basic",
+  name: "BasicAlertSourcesV2Flow",
+  step: [
+    {
+      i: {
+        ref: "alert_sources_v2_ref01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicAlertSourcesV2Flow"
+}

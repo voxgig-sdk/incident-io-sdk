@@ -1,0 +1,22 @@
+# BasicAlertTagFlow
+
+main: kit: flow: BasicAlertTagFlow:
+{
+  entity: "alert_tag",
+  kind: "basic",
+  name: "BasicAlertTagFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "alert_tag_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAlertTagFlow"
+}

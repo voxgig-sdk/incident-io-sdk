@@ -1,0 +1,49 @@
+# BasicIncidentTimelineItemFlow
+
+main: kit: flow: BasicIncidentTimelineItemFlow:
+{
+  entity: "incident_timeline_item",
+  kind: "basic",
+  name: "BasicIncidentTimelineItemFlow",
+  step: [
+    {
+      i: {
+        ref: "incident_timeline_item_ref01"
+      }
+
+      o: "create"
+    }
+
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_timeline_item_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "incident_timeline_item_ref01",
+        srcdatavar: "incident_timeline_item_ref01_data",
+        suffix: "_up0",
+        textfield: "activity_log_id"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-incident_timeline_item_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentTimelineItemFlow"
+}

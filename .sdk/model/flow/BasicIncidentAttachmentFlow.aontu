@@ -7,16 +7,16 @@ main: kit: flow: BasicIncidentAttachmentFlow:
   name: "BasicIncidentAttachmentFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "incident_attachment_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
 
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -27,25 +27,25 @@ main: kit: flow: BasicIncidentAttachmentFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "incident_attachment_ref01",
         suffix: "_rm0"
       }
 
-      match: {
+      m: {
         id: "incident_attachment01"
       }
 
-      op: "remove"
+      o: "remove"
     }
 
     {
-      input: {
+      i: {
         suffix: "_rt0"
       }
 
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemNotExists",
           def: {

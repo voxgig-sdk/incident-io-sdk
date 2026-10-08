@@ -26,6 +26,7 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import * as Fs from 'node:fs'
+import * as Os from 'node:os'
 import * as Path from 'node:path'
 import { createRequire } from 'node:module'
 import { spawnSync } from 'node:child_process'
@@ -35,11 +36,19 @@ import { IncidentIoSDK } from '..'
 
 const SDK_NAME = 'IncidentIoSDK'
 
+// The package root, by absolute path: the snippets compile outside the SDK.
+const SDK_ROOT = Path.join(__dirname, '..').split(Path.sep).join('/')
+
 // A fixture for every entity, so list()/load() resolve offline with no
 // network. Snippet client construction is rewritten to seed this.
-const TEST_SEED = {"entity":{"action":{"test01":{"id":"test01"}},"alert":{"test01":{"id":"test01"}},"alert_attribute":{"test01":{"id":"test01"}},"alert_note":{"test01":{"id":"test01"}},"alert_route":{"test01":{"id":"test01"}},"alert_source":{"test01":{"id":"test01"}},"api_key":{"test01":{"id":"test01"}},"catalog_entry":{"test01":{"id":"test01"}},"catalog_resource":{"test01":{"id":"test01"}},"catalog_type":{"test01":{"id":"test01"}},"catalog_type_schema":{"test01":{"id":"test01"}},"custom_field":{"test01":{"id":"test01"}},"custom_field_option":{"test01":{"id":"test01"}},"escalation":{"test01":{"id":"test01"}},"follow_up":{"test01":{"id":"test01"}},"incident":{"test01":{"id":"test01"}},"incident_alert":{"test01":{"id":"test01"}},"incident_attachment":{"test01":{"id":"test01"}},"incident_membership":{"test01":{"id":"test01"}},"incident_participant":{"test01":{"id":"test01"}},"incident_participant_workload":{"test01":{"id":"test01"}},"incident_relationship":{"test01":{"id":"test01"}},"incident_role":{"test01":{"id":"test01"}},"incident_status":{"test01":{"id":"test01"}},"incident_timestamp":{"test01":{"id":"test01"}},"incident_type":{"test01":{"id":"test01"}},"incident_update":{"test01":{"id":"test01"}},"ip_allowlist":{"test01":{"id":"test01"}},"maintenance_window":{"test01":{"id":"test01"}},"postmortem_document":{"test01":{"id":"test01"}},"schedule":{"test01":{"id":"test01"}},"schedule_entry":{"test01":{"id":"test01"}},"schedule_replica":{"test01":{"id":"test01"}},"schedule_sync_rule":{"test01":{"id":"test01"}},"schedule_sync_target":{"test01":{"id":"test01"}},"secret":{"test01":{"id":"test01"}},"severity":{"test01":{"id":"test01"}},"status_page":{"test01":{"id":"test01"}},"status_page_incident":{"test01":{"id":"test01"}},"status_page_incident_update":{"test01":{"id":"test01"}},"status_page_maintenance":{"test01":{"id":"test01"}},"status_page_maintenance_update":{"test01":{"id":"test01"}},"status_page_structure":{"test01":{"id":"test01"}},"team":{"test01":{"id":"test01"}},"telemetry_data_source":{"test01":{"id":"test01"}},"user":{"test01":{"id":"test01"}},"workflow":{"test01":{"id":"test01"}},"workflow_run":{"test01":{"id":"test01"}}}}
+const TEST_SEED = {"entity":{"action":{"test01":{"id":"test01"}},"alert":{"test01":{"id":"test01"}},"alert_attribute":{"test01":{"id":"test01"}},"alert_note":{"test01":{"id":"test01"}},"alert_route":{"test01":{"id":"test01"}},"alert_source":{"test01":{"id":"test01"}},"alert_sources_v2":{"test01":{"id":"test01"}},"alert_tag":{"test01":{"id":"test01"}},"alerts_add_tags_result_v2":{"test01":{"id":"test01"}},"alerts_remove_tags_result_v2":{"test01":{"id":"test01"}},"alerts_set_tags_result_v2":{"test01":{"id":"test01"}},"alerts_transition_incident_alert_result_v2":{"test01":{"id":"test01"}},"announcement_rule":{"test01":{"id":"test01"}},"announcement_template":{"test01":{"id":"test01"}},"api_key":{"test01":{"id":"test01"}},"call_route":{"test01":{"id":"test01"}},"call_routes_create_allowed_caller_result_v2":{"test01":{"id":"test01"}},"call_routes_create_option_result_v2":{"test01":{"id":"test01"}},"call_routes_list_allowed_callers_result_v2":{"test01":{"id":"test01"}},"call_routes_list_options_result_v2":{"test01":{"id":"test01"}},"call_routes_show_allowed_caller_result_v2":{"test01":{"id":"test01"}},"call_routes_show_option_result_v2":{"test01":{"id":"test01"}},"call_routes_update_allowed_caller_result_v2":{"test01":{"id":"test01"}},"call_routes_update_option_result_v2":{"test01":{"id":"test01"}},"call_routes_v2":{"test01":{"id":"test01"}},"call_session":{"test01":{"id":"test01"}},"call_transcript_entry":{"test01":{"id":"test01"}},"catalog_entry":{"test01":{"id":"test01"}},"catalog_resource":{"test01":{"id":"test01"}},"catalog_type":{"test01":{"id":"test01"}},"catalog_type_schema":{"test01":{"id":"test01"}},"custom_field":{"test01":{"id":"test01"}},"custom_field_option":{"test01":{"id":"test01"}},"escalation":{"test01":{"id":"test01"}},"escalation_path_template":{"test01":{"id":"test01"}},"escalations_check_escalation_permissions_result_v2":{"test01":{"id":"test01"}},"escalations_reassign_escalation_result_v2":{"test01":{"id":"test01"}},"follow_up":{"test01":{"id":"test01"}},"follow_ups_connect_external_issue_result_v3":{"test01":{"id":"test01"}},"follow_ups_create_from_link_result_v3":{"test01":{"id":"test01"}},"identity":{"test01":{"id":"test01"}},"incident":{"test01":{"id":"test01"}},"incident_activity_log_entry":{"test01":{"id":"test01"}},"incident_attachment":{"test01":{"id":"test01"}},"incident_form":{"test01":{"id":"test01"}},"incident_membership":{"test01":{"id":"test01"}},"incident_participant":{"test01":{"id":"test01"}},"incident_participant_workload":{"test01":{"id":"test01"}},"incident_relationship":{"test01":{"id":"test01"}},"incident_role":{"test01":{"id":"test01"}},"incident_status":{"test01":{"id":"test01"}},"incident_team_membership":{"test01":{"id":"test01"}},"incident_team_memberships_v1":{"test01":{"id":"test01"}},"incident_template":{"test01":{"id":"test01"}},"incident_templates_validate_result_v1":{"test01":{"id":"test01"}},"incident_timeline_item":{"test01":{"id":"test01"}},"incident_timestamp":{"test01":{"id":"test01"}},"incident_type":{"test01":{"id":"test01"}},"incident_update":{"test01":{"id":"test01"}},"ip_allowlist":{"test01":{"id":"test01"}},"ip_range":{"test01":{"id":"test01"}},"maintenance_window":{"test01":{"id":"test01"}},"on_call_notification_method_public_v2":{"test01":{"id":"test01"}},"on_call_notification_rule_public_v2":{"test01":{"id":"test01"}},"pay_config":{"test01":{"id":"test01"}},"pay_configs_create_one_off_rule_result_v2":{"test01":{"id":"test01"}},"pay_configs_create_weekly_rule_result_v2":{"test01":{"id":"test01"}},"pay_configs_list_one_off_rules_result_v2":{"test01":{"id":"test01"}},"pay_configs_list_weekly_rules_result_v2":{"test01":{"id":"test01"}},"pay_configs_show_one_off_rule_result_v2":{"test01":{"id":"test01"}},"pay_configs_show_weekly_rule_result_v2":{"test01":{"id":"test01"}},"pay_configs_update_one_off_rule_result_v2":{"test01":{"id":"test01"}},"pay_configs_update_weekly_rule_result_v2":{"test01":{"id":"test01"}},"pay_configs_v2":{"test01":{"id":"test01"}},"pay_report":{"test01":{"id":"test01"}},"pay_reports_publish_result_v2":{"test01":{"id":"test01"}},"pay_reports_unpublish_result_v2":{"test01":{"id":"test01"}},"pay_reports_v2":{"test01":{"id":"test01"}},"policies_v2":{"test01":{"id":"test01"}},"policy":{"test01":{"id":"test01"}},"policy_finding":{"test01":{"id":"test01"}},"policy_findings_dismiss_result_v2":{"test01":{"id":"test01"}},"policy_findings_restore_result_v2":{"test01":{"id":"test01"}},"postmortem_document":{"test01":{"id":"test01"}},"schedule":{"test01":{"id":"test01"}},"schedule_entries_list_payload_v2":{"test01":{"id":"test01"}},"schedule_entry":{"test01":{"id":"test01"}},"schedule_replica":{"test01":{"id":"test01"}},"schedule_sync_rule":{"test01":{"id":"test01"}},"schedule_sync_target":{"test01":{"id":"test01"}},"schedules_show_override_result_v2":{"test01":{"id":"test01"}},"schedules_update_override_result_v2":{"test01":{"id":"test01"}},"secret":{"test01":{"id":"test01"}},"severity":{"test01":{"id":"test01"}},"status_page":{"test01":{"id":"test01"}},"status_page_component":{"test01":{"id":"test01"}},"status_page_component_availability_v2":{"test01":{"id":"test01"}},"status_page_incident":{"test01":{"id":"test01"}},"status_page_incident_update":{"test01":{"id":"test01"}},"status_page_linked_response_incident_v1":{"test01":{"id":"test01"}},"status_page_maintenance":{"test01":{"id":"test01"}},"status_page_maintenance_update":{"test01":{"id":"test01"}},"status_page_structure":{"test01":{"id":"test01"}},"status_pages_v2":{"test01":{"id":"test01"}},"team":{"test01":{"id":"test01"}},"telemetry_data_source_v2":{"test01":{"id":"test01"}},"user":{"test01":{"id":"test01"}},"workflow":{"test01":{"id":"test01"}},"workflow_run":{"test01":{"id":"test01"}}}}
 const SEED_ARG = JSON.stringify(TEST_SEED)
 const SEEDED_CTOR = SDK_NAME + '.test(' + SEED_ARG + ')'
+
+// The client VARIABLE, not the word: a package name carries the word between
+// hyphens (@voxgig-sdk/multifon-client-sdk).
+const CLIENT = /(?<![\w$.\-\/'"`])client(?![\w$\-\/'"`])/
+const CLIENT_CALL = new RegExp(CLIENT.source + '\\s*\\.')
 
 
 // The three docs this gate covers, resolved relative to dist-test/.
@@ -106,7 +115,7 @@ function isRunnable(code: string): boolean {
   return (
     /new\s+IncidentIoSDK\b/.test(code) ||
     /\bIncidentIoSDK\.test\b/.test(code) ||
-    /\bclient\s*\./.test(code)
+    CLIENT_CALL.test(code)
   )
 }
 
@@ -116,7 +125,7 @@ function isRunnable(code: string): boolean {
 function buildSnippetModule(block: string): string {
   const inner = stripImports(block).split('\n').map((l) => '    ' + l).join('\n')
   return [
-    "import { " + SDK_NAME + " } from '..'",
+    'import { ' + SDK_NAME + ' } from ' + JSON.stringify(SDK_ROOT),
     '',
     'async function __ex() {',
     // Shared client for snippets that reference `client` without constructing
@@ -143,20 +152,23 @@ function compileBatch(indices: number[], blocks: string[], key: string): {
   errored: Set<number>; raw: string; unattributed: boolean
 } {
   const tsDir = Path.join(__dirname, '..')
-  const testDir = Path.join(tsDir, 'test')
-  // Leading dot: TypeScript wildcard includes skip dot-files, so these temp
-  // files are never swept into the normal build.
+  // Outside the SDK's tree, so a run leaves nothing there even when it is
+  // interrupted. `.cts` keeps them CommonJS whatever package.json is above.
+  const dir = Fs.mkdtempSync(Path.join(Os.tmpdir(), 'readme-examples-'))
   const files: string[] = []
 
   try {
     for (const i of indices) {
-      const f = Path.join(testDir, '.examples_' + key + '_snippet' + i + '.gen.ts')
+      const f = Path.join(dir, 'examples_' + key + '_snippet' + i + '.gen.cts')
       Fs.writeFileSync(f, buildSnippetModule(blocks[i]), 'utf8')
       files.push(f)
     }
 
     const requireFrom = createRequire(__filename)
-    const tsc = requireFrom.resolve('typescript/bin/tsc')
+    // Every TypeScript exports its package.json; TypeScript 7 exports no
+    // ./bin/tsc, so the binary is found through the manifest's bin.
+    const tsPackage = requireFrom.resolve('typescript/package.json')
+    const tsc = Path.join(Path.dirname(tsPackage), requireFrom(tsPackage).bin.tsc)
 
     const res = spawnSync(process.execPath, [
       tsc,
@@ -179,7 +191,7 @@ function compileBatch(indices: number[], blocks: string[], key: string): {
 
     if (0 !== res.status) {
       for (const line of raw.split('\n')) {
-        const m = /_snippet(\d+)\.gen\.ts\(\d+,\d+\):\s*error/.exec(line)
+        const m = /_snippet(\d+)\.gen\.cts\(\d+,\d+\):\s*error/.exec(line)
         if (null == m) {
           // A genuine error diagnostic not attributable to a snippet file
           // (e.g. inside the SDK itself) is an anomaly.
@@ -194,9 +206,7 @@ function compileBatch(indices: number[], blocks: string[], key: string): {
 
     return { errored, raw, unattributed }
   } finally {
-    for (const f of files) {
-      Fs.rmSync(f, { force: true })
-    }
+    Fs.rmSync(dir, { recursive: true, force: true })
   }
 }
 
@@ -244,7 +254,7 @@ function rewriteForRun(code: string): string {
   let out = stripImports(code)
   out = out.replace(/new\s+IncidentIoSDK\s*\([^)]*\)/g, () => SEEDED_CTOR)
   out = out.replace(/IncidentIoSDK\.test\s*\([^)]*\)/g, () => SEEDED_CTOR)
-  if (/\bclient\b/.test(out) && !/\b(?:const|let|var)\s+client\b/.test(out)) {
+  if (CLIENT.test(out) && !/\b(?:const|let|var)\s+client\b/.test(out)) {
     out = 'const client = ' + SEEDED_CTOR + '\n' + out
   }
   return out
@@ -255,7 +265,13 @@ function rewriteForRun(code: string): string {
 // test mode. Returns a list of failure descriptions (empty === all passed).
 async function executeBlocks(blocks: string[]): Promise<string[]> {
   const requireFrom = createRequire(__filename)
-  const ts = requireFrom('typescript')
+  // Node strips a snippet's types itself from 22.13; before that TypeScript 5
+  // does, through an API TypeScript 7 no longer ships.
+  const strip = requireFrom('node:module').stripTypeScriptTypes
+  const ts = 'function' === typeof strip ? null : requireFrom('typescript')
+  if (null == strip && 'function' !== typeof ts.transpileModule) {
+    throw new Error('running the examples needs node 22.13 or TypeScript 5 to strip their types')
+  }
 
   const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
   const silentConsole = { log() {}, error() {}, warn() {}, info() {} }
@@ -273,14 +289,16 @@ async function executeBlocks(blocks: string[]): Promise<string[]> {
       continue
     }
 
-    // Compile the snippet to JS (strips type annotations) so it runs under
-    // node exactly as a real caller would.
-    const js = ts.transpileModule(src, {
-      compilerOptions: {
-        target: ts.ScriptTarget.ES2020,
-        module: ts.ModuleKind.ESNext,
-      },
-    }).outputText
+    // Strip the snippet's types so it runs under node exactly as a real
+    // caller would.
+    const js = null != strip
+      ? strip(src, { mode: 'transform' })
+      : ts.transpileModule(src, {
+        compilerOptions: {
+          target: ts.ScriptTarget.ES2020,
+          module: ts.ModuleKind.ESNext,
+        },
+      }).outputText
 
     let runner: any
     try {

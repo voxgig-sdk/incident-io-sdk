@@ -1,0 +1,111 @@
+# Entity: on_call_notification_method_public_v2
+
+main: kit: entity: on_call_notification_method_public_v2: {
+
+  alias: field: {}
+
+  fields: {
+    address: {
+      h: "Address"
+      n: "address"
+      r: true
+      sh: "The address of this method (e.g."
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this notification method"
+      t: "`$STRING`"
+    }
+    is_usable: {
+      h: "Is Usable"
+      n: "is_usable"
+      r: true
+      sh: "Whether this method is ready to receive notifications."
+      t: "`$BOOLEAN`"
+    }
+    method_type: {
+      h: "Method Type"
+      n: "method_type"
+      r: true
+      sh: "The high-level type of notification method."
+      t: "`$STRING`"
+    }
+    phone_details: {
+      h: "Phone Details"
+      n: "phone_details"
+      r: true
+      t: "`$OBJECT`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "on_call_notification_method_public_v2"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/users/{user_id}/notification_methods"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "user_id"
+                or: "user_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/users/{user_id}/notification_methods"
+          q: {
+            exist: [
+              "user_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "user_id"
+            }
+            {
+              lit: "notification_methods"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.notification_methods`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.user")]
+  ]
+
+}

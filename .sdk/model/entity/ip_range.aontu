@@ -1,0 +1,60 @@
+# Entity: ip_range
+
+main: kit: entity: ip_range: {
+
+  alias: field: {}
+
+  fields: {
+    cidr: {
+      h: "Cidr"
+      n: "cidr"
+      r: true
+      sh: "The address in CIDR notation."
+      t: "`$STRING`"
+    }
+    description: {
+      h: "Description"
+      n: "description"
+      r: true
+      sh: "Which of our traffic reaches you from this address"
+      t: "`$STRING`"
+    }
+  }
+
+  name: "ip_range"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v1/ip_ranges"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v1/ip_ranges"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "ip_ranges"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.ip_ranges`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

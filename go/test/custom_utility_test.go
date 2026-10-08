@@ -77,4 +77,93 @@ func TestCustomUtility(t *testing.T) {
 			}
 		}
 	})
+
+	t.Run("a real utility member is replaced, not shelved", func(t *testing.T) {
+		reached := 0
+		scripted := func(ctx *sdk.Context, fullurl string, fetchdef map[string]any) (any, error) {
+			reached++
+			return map[string]any{
+				"status":     200,
+				"statusText": "OK",
+				"headers":    map[string]any{},
+				"body":       map[string]any{"ok": true},
+			}, nil
+		}
+
+		client := sdk.NewIncidentIoSDK(map[string]any{
+			"test":    map[string]any{"active": true},
+			"utility": map[string]any{"fetcher": scripted},
+		})
+
+		u := client.GetUtility()
+
+		if u.Fetcher == nil {
+			t.Fatal("Fetcher is nil")
+		}
+		if _, shelved := u.Custom["fetcher"]; shelved {
+			t.Error("fetcher was shelved in Custom instead of replacing the member")
+		}
+
+		// Behaviour, not identity: a func value cannot be compared, so drive it.
+		ctx := u.MakeContext(map[string]any{}, client.GetRootCtx())
+		if _, err := u.Fetcher(ctx, "http://example.test/probe", map[string]any{}); err != nil {
+			t.Fatalf("scripted fetcher returned an error: %v", err)
+		}
+		if reached != 1 {
+			t.Errorf("the scripted fetcher was not installed: reached %d times, want 1", reached)
+		}
+	})
+
+	t.Run("a converted fetcher is accepted too", func(t *testing.T) {
+		reached := 0
+		// "test" is the OPTION, not the `test` FEATURE: it says "this client
+		// is not live", so a REQUIRED OpenAPI server variable resolves to a
+		// deterministic test-<name> instead of panicking at construction. It
+		// installs no transport, so the override under test still stands.
+		client := sdk.NewIncidentIoSDK(map[string]any{
+			"test": map[string]any{"active": true},
+			"utility": map[string]any{
+				"fetcher": sdk.FetcherFunc(func(
+					ctx *sdk.Context, fullurl string, fetchdef map[string]any,
+				) (any, error) {
+					reached++
+					return map[string]any{
+						"status":     200,
+						"statusText": "OK",
+						"headers":    map[string]any{},
+						"body":       map[string]any{"ok": true},
+					}, nil
+				}),
+			},
+		})
+
+		u := client.GetUtility()
+		if _, shelved := u.Custom["fetcher"]; shelved {
+			t.Error("a converted fetcher was shelved in Custom")
+		}
+
+		ctx := u.MakeContext(map[string]any{}, client.GetRootCtx())
+		if _, err := u.Fetcher(ctx, "http://example.test/probe", map[string]any{}); err != nil {
+			t.Fatalf("scripted fetcher returned an error: %v", err)
+		}
+		if reached != 1 {
+			t.Errorf("the converted fetcher was not installed: reached %d times, want 1", reached)
+		}
+	})
+
+	t.Run("an unknown key is still attached", func(t *testing.T) {
+		// "test" is the OPTION, not the `test` FEATURE: it says "this client
+		// is not live", so a REQUIRED OpenAPI server variable resolves to a
+		// deterministic test-<name> instead of panicking at construction. It
+		// installs no transport, so the override under test still stands.
+		client := sdk.NewIncidentIoSDK(map[string]any{
+			"test": map[string]any{"active": true},
+			"utility": map[string]any{
+				"notAUtilityMember": func() string { return "EXTRA" },
+			},
+		})
+		if _, ok := client.GetUtility().Custom["notAUtilityMember"]; !ok {
+			t.Error("an unknown utility key was dropped instead of kept in Custom")
+		}
+	})
 }

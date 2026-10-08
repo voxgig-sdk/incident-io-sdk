@@ -1,0 +1,29 @@
+# BasicSchedulesUpdateOverrideResultV2Flow
+
+main: kit: flow: BasicSchedulesUpdateOverrideResultV2Flow:
+{
+  entity: "schedules_update_override_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesUpdateOverrideResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "schedules_update_override_result_v2_ref01",
+        srcdatavar: "schedules_update_override_result_v2_ref01_data",
+        suffix: "_up0",
+        textfield: "created_at"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedules_update_override_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSchedulesUpdateOverrideResultV2Flow"
+}

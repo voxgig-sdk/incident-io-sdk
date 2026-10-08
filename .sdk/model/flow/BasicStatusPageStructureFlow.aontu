@@ -7,18 +7,18 @@ main: kit: flow: BasicStatusPageStructureFlow:
   name: "BasicStatusPageStructureFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "status_page_structure_ref01",
         srcdatavar: "status_page_structure_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "status_page_structure01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

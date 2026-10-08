@@ -21,7 +21,6 @@ import type {
   EscalationCreateData,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class EscalationEntity extends IncidentIoEntityBase<Escalation> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -38,14 +37,15 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
 
 
 
-  async load(this: any, reqmatch?: EscalationLoadMatch, ctrl?: Control): Promise<Escalation> {
+  async load(this: any, reqmatch?: EscalationLoadMatch, ctrl?: Control): Promise<EscalationEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -129,12 +129,20 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -143,7 +151,7 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Escalation> return stays clean under strict null checks.
+        // Promise<EscalationEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -151,14 +159,15 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
 
 
 
-  async list(this: any, reqmatch?: EscalationListMatch, ctrl?: Control): Promise<Escalation[]> {
+  async list(this: any, reqmatch?: EscalationListMatch, ctrl?: Control): Promise<EscalationEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -241,9 +250,15 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -252,7 +267,7 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Escalation[]> return stays clean under strict null checks.
+        // Promise<EscalationEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -260,13 +275,14 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
 
 
 
-  async create(this: any, reqdata?: EscalationCreateData, ctrl?: Control): Promise<Escalation> {
+  async create(this: any, reqdata?: EscalationCreateData, ctrl?: Control): Promise<EscalationEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -346,12 +362,20 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -360,11 +384,12 @@ class EscalationEntity extends IncidentIoEntityBase<Escalation> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<Escalation> return stays clean under strict null checks.
+        // Promise<EscalationEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

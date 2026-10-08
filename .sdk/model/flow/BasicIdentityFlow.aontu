@@ -1,0 +1,28 @@
+# BasicIdentityFlow
+
+main: kit: flow: BasicIdentityFlow:
+{
+  entity: "identity",
+  kind: "basic",
+  name: "BasicIdentityFlow",
+  step: [
+    {
+      i: {
+        ref: "identity_ref01",
+        srcdatavar: "identity_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-identity_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIdentityFlow"
+}

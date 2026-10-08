@@ -8,18 +8,30 @@ const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
 }
 
 
+const FEATURE_PLUGINS: Record<string, any[]> = {
+  // #FeaturePlugins
+}
+
+
 class Config {
 
   makeFeature(this: any, fn: string) {
     const fc = FEATURE_CLASS[fn]
     const fi = new fc()
-    // TODO: errors etc
     return fi
+  }
+
+  // False for a feature added at runtime via options.extend (station's
+  // adopt path) - the constructor uses this to skip makeFeature for names
+  // no generated class backs.
+  hasFeature(this: any, fn: string) {
+    return null != FEATURE_CLASS[fn]
   }
 
 
   main = {
     name: 'IncidentIo',
+    // #MainMeta
   }
 
 
@@ -29,7 +41,7 @@ class Config {
 
 
   options = {
-    base: '$$main.kit.info.servers.0.url$$',
+    base: 'BASEURL',
 
     'SERVERBLOCK''AUTHBLOCK'headers: 'HEADERS',
 
@@ -46,6 +58,7 @@ class Config {
 const config = new Config()
 
 export {
-  config
+  config,
+  FEATURE_PLUGINS,
 }
 

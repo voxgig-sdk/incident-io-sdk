@@ -2,24 +2,24 @@
   "existing": {
     "catalog_type": {
       "CATALOG_TYPE00": {
-        "annotation": {},
-        "category": [],
+        "annotations": {},
+        "categories": [],
         "color": "sf2",
         "created_at": "sf3",
         "description": "sf4",
         "dynamic_resource_parameter": "sf5",
         "engine_resource_type": "sf6",
-        "estimated_count": "sf7",
+        "estimated_count": 247,
         "icon": "sf8",
         "id": "CATALOG_TYPE00",
         "is_editable": true,
         "is_team_type": false,
         "last_synced_at": "sfc",
         "name": "sfd",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "ranked": false,
         "registry_type": "s100",
-        "required_integration": [],
+        "required_integrations": [],
         "schema": {},
         "semantic_type": "s103",
         "source_repo_url": "s104",
@@ -28,24 +28,24 @@
         "use_name_as_identifier": false
       },
       "CATALOG_TYPE01": {
-        "annotation": {},
-        "category": [],
+        "annotations": {},
+        "categories": [],
         "color": "s1e2",
         "created_at": "s1e3",
         "description": "s1e4",
         "dynamic_resource_parameter": "s1e5",
         "engine_resource_type": "s1e6",
-        "estimated_count": "s1e7",
+        "estimated_count": 487,
         "icon": "s1e8",
         "id": "CATALOG_TYPE01",
         "is_editable": true,
         "is_team_type": false,
         "last_synced_at": "s1ec",
         "name": "s1ed",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "ranked": false,
         "registry_type": "s1f0",
-        "required_integration": [],
+        "required_integrations": [],
         "schema": {},
         "semantic_type": "s1f3",
         "source_repo_url": "s1f4",
@@ -54,24 +54,24 @@
         "use_name_as_identifier": false
       },
       "CATALOG_TYPE02": {
-        "annotation": {},
-        "category": [],
+        "annotations": {},
+        "categories": [],
         "color": "s2d2",
         "created_at": "s2d3",
         "description": "s2d4",
         "dynamic_resource_parameter": "s2d5",
         "engine_resource_type": "s2d6",
-        "estimated_count": "s2d7",
+        "estimated_count": 727,
         "icon": "s2d8",
         "id": "CATALOG_TYPE02",
         "is_editable": true,
         "is_team_type": false,
         "last_synced_at": "s2dc",
         "name": "s2dd",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "ranked": false,
         "registry_type": "s2e0",
-        "required_integration": [],
+        "required_integrations": [],
         "schema": {},
         "semantic_type": "s2e3",
         "source_repo_url": "s2e4",
@@ -84,23 +84,23 @@
   "new": {
     "catalog_type": {
       "catalog_type_ref01": {
-        "annotation": {},
-        "category": [],
+        "annotations": {},
+        "categories": [],
         "color": "s3c2",
         "created_at": "s3c3",
         "description": "s3c4",
         "dynamic_resource_parameter": "s3c5",
         "engine_resource_type": "s3c6",
-        "estimated_count": "s3c7",
+        "estimated_count": 967,
         "icon": "s3c8",
         "is_editable": true,
         "is_team_type": false,
         "last_synced_at": "s3cc",
         "name": "s3cd",
-        "owning_team_id": "OWNING_TEAM01",
+        "owning_team_ids": [],
         "ranked": false,
         "registry_type": "s3d0",
-        "required_integration": [],
+        "required_integrations": [],
         "schema": {},
         "semantic_type": "s3d3",
         "source_repo_url": "s3d4",
@@ -108,6 +108,48 @@
         "updated_at": "s3d6",
         "use_name_as_identifier": false
       }
+    }
+  },
+  "requests": {
+    "POST /v2/catalog_types": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v3/catalog_types": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/catalog_types": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/catalog_types": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/catalog_types/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/catalog_types/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/catalog_types/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v3/catalog_types/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

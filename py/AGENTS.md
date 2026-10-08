@@ -43,7 +43,14 @@ the runtime under `.sdk/tm/py/feature/` and regenerate.
 
 | Feature | Runtime file | Active hooks |
 | --- | --- | --- |
-| **test** — In-memory mock transport for testing without a live server | `feature/test_feature.py` | `GetData`, `GetMatch`, `PostConstruct`, `PostConstructEntity`, `PrePoint`, `PreRequest`, `PreResponse`, `PreResult`, `PreSpec`, `SetData`, `SetMatch` |
+| **debug** — Debug capture | `feature/debug_feature.py` | `PreDone`, `PreRequest`, `PreResponse`, `PreUnexpected` |
+| **idempotency** — Idempotency | `feature/idempotency_feature.py` | `PreRequest` |
+| **metrics** — Metrics | `feature/metrics_feature.py` | `PreDone`, `PrePoint`, `PreUnexpected` |
+| **paging** — Paging | `feature/paging_feature.py` | `PreRequest`, `PreResult` |
+| **ratelimit** — Rate limiting | `feature/ratelimit_feature.py` | — |
+| **retry** — Retry | `feature/retry_feature.py` | — |
+| **test** — Test transport | `feature/test_feature.py` | `GetData`, `GetMatch`, `PostConstruct`, `PostConstructEntity`, `PrePoint`, `PreRequest`, `PreResponse`, `PreResult`, `PreSpec`, `SetData`, `SetMatch` |
+| **timeout** — Timeout | `feature/timeout_feature.py` | — |
 
 ---
 

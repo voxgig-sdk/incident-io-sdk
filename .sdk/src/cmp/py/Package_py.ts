@@ -6,7 +6,8 @@ import {
   collectDeps,
   pkgDescription,
   keywords,
-  repoInfo,
+  repoInfo, packageName,
+  packageVersion
 } from '@voxgig/sdkgen'
 
 
@@ -21,12 +22,7 @@ const Package = cmp(async function Package(props: any) {
 
   const model: Model = ctx$.model
 
-  // PyPI distribution name is namespaced to model.origin (e.g. "voxgig-sdk").
-  // PyPI names can't contain "/", so the parts are hyphen-joined. The import
-  // package (the `${model.name}_sdk/` dir) is unchanged.
-  const ns = model.origin || 'voxgig-sdk'
-  const pkgBase = ns.endsWith('-sdk') ? model.name : `${model.name}-sdk`
-  const distName = `${ns}-${pkgBase}`
+  const distName = packageName(model, target.name)
   const { repoUrl, issuesUrl } = repoInfo(model)
   const kw = keywords(model).map((k) => `"${k}"`).join(', ')
 
@@ -37,8 +33,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "${distName}"
-version = "0.0.1"
-description = "${pkgDescription(model, 'py')}"
+version = "${packageVersion(model, target.name)}"
+description = "${pkgDescription(model, target.name)}"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.8"
@@ -62,20 +58,24 @@ Homepage = "${repoUrl}"
 Repository = "${repoUrl}"
 Issues = "${issuesUrl}"
 
-# Ship the top-level single-file modules (setuptools find only discovers
-# package dirs, never these) so the documented import actually installs.
-# ${model.const.Name.toLowerCase()}_types holds the generated @dataclass models.
-[tool.setuptools]
-py-modules = ["${model.const.Name.toLowerCase()}_sdk", "${model.const.Name.toLowerCase()}_types", "config", "features"]
-
-# Explicit package list — setuptools auto-discovery refuses to pick when
-# multiple top-level dirs (core/entity/feature/utility) are present.
+# ONE package. core/entity/feature/utility were previously top-level packages;
+# those names are real PyPI distributions and common scratch filenames, and
+# Python searches the working directory first, so any of them beside the
+# caller silently shadowed the SDK's own. They now live inside
+# ${model.const.Name.toLowerCase()}_sdk/ where nothing can reach them.
 [tool.setuptools.packages.find]
-include = ["core*", "entity*", "feature*", "utility*"]
+include = ["${model.const.Name.toLowerCase()}_sdk*"]
 
 # Ship the PEP 561 py.typed marker(s) so the inline type hints reach consumers.
 [tool.setuptools.package-data]
 "*" = ["py.typed"]
+`)
+  })
+
+  // setuptools puts the readme in the sdist but not the reference it links.
+  // A wheel holds only the package, so the sdist is where the docs travel.
+  File({ name: 'MANIFEST.in' }, () => {
+    Content(`include README.md REFERENCE.md
 `)
   })
 })

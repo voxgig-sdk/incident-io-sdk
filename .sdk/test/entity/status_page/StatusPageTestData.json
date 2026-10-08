@@ -29,5 +29,17 @@
         "public_url": "sa3"
       }
     }
+  },
+  "requests": {
+    "GET /v2/status_pages": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/status_pages/{status_page_id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

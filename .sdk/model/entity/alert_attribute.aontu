@@ -4,29 +4,38 @@ main: kit: entity: alert_attribute: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "array"
-      req: true
-      type: "`$BOOLEAN`"
+  fields: {
+    array: {
+      h: "Array"
+      n: "array"
+      r: true
+      sh: "Whether this attribute is an array"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "emoji"
-      req: false
-      type: "`$STRING`"
+    emoji: {
+      h: "Emoji"
+      n: "emoji"
+      r: false
+      sh: "The emoji to display alongside this attribute in chat messages, stored without colons"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "The ID of this attribute"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Unique name of this attribute"
+      t: "`$STRING`"
     }
-    {
-      name: "required"
+    required: {
+      h: "Required"
+      n: "required"
       op: {
         create: {
           req: false
@@ -37,15 +46,18 @@ main: kit: entity: alert_attribute: {
           type: "`$BOOLEAN`"
         }
       }
-      req: true
-      type: "`$BOOLEAN`"
+      r: true
+      sh: "Whether this attribute is required."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "type"
-      req: true
-      type: "`$STRING`"
+    type: {
+      h: "Type"
+      n: "type"
+      r: true
+      sh: "Engine resource name for this attribute"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -58,13 +70,33 @@ main: kit: entity: alert_attribute: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/alert_attributes"
-          parts: [
-            "v2"
-            "alert_attributes"
+          bf: [
+            "array"
+            "emoji"
+            "name"
+            "required"
+            "type"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/alert_attributes"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/alert_attributes"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_attributes"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_attribute`"
           }
@@ -75,13 +107,26 @@ main: kit: entity: alert_attribute: {
       name: "list"
       points: [
         {
-          method: "GET"
-          orig: "/v2/alert_attributes"
-          parts: [
-            "v2"
-            "alert_attributes"
+          co: {
+            id: "GET /v2/alert_attributes"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v2/alert_attributes"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_attributes"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.alert_attributes`"
           }
@@ -92,31 +137,46 @@ main: kit: entity: alert_attribute: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/alert_attributes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01GW2G3V0S59R238FAHPDS1R66"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/alert_attributes/{id}"
-          parts: [
-            "v2"
-            "alert_attributes"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/alert_attributes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_attributes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_attribute`"
           }
@@ -127,31 +187,42 @@ main: kit: entity: alert_attribute: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v2/alert_attributes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01GW2G3V0S59R238FAHPDS1R66"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/alert_attributes/{id}"
-          parts: [
-            "v2"
-            "alert_attributes"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/alert_attributes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_attributes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -162,31 +233,53 @@ main: kit: entity: alert_attribute: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "array"
+            "emoji"
+            "name"
+            "required"
+            "type"
+          ]
+          co: {
+            id: "PUT /v2/alert_attributes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01GW2G3V0S59R238FAHPDS1R66"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/alert_attributes/{id}"
-          parts: [
-            "v2"
-            "alert_attributes"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/alert_attributes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_attributes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_attribute`"
           }

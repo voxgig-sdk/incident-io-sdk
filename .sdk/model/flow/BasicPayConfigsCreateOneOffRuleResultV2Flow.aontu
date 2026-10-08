@@ -1,0 +1,22 @@
+# BasicPayConfigsCreateOneOffRuleResultV2Flow
+
+main: kit: flow: BasicPayConfigsCreateOneOffRuleResultV2Flow:
+{
+  entity: "pay_configs_create_one_off_rule_result_v2",
+  kind: "basic",
+  name: "BasicPayConfigsCreateOneOffRuleResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "pay_configs_create_one_off_rule_result_v2_ref01"
+      }
+
+      m: {
+        pay_config_id: "pay_config01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicPayConfigsCreateOneOffRuleResultV2Flow"
+}

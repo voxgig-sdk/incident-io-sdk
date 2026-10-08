@@ -1,0 +1,39 @@
+{
+  "existing": {
+    "call_routes_show_allowed_caller_result_v2": {
+      "CALL_ROUTES_SHOW_ALLOWED_CALLER_RESULT_V200": {
+        "id": "CALL_ROUTES_SHOW_ALLOWED_CALLER_RESULT_V200",
+        "name": "s1f",
+        "phone_number": "s20",
+        "call_route_id": "CALL_ROUTE01"
+      },
+      "CALL_ROUTES_SHOW_ALLOWED_CALLER_RESULT_V201": {
+        "id": "CALL_ROUTES_SHOW_ALLOWED_CALLER_RESULT_V201",
+        "name": "s3d",
+        "phone_number": "s3e",
+        "call_route_id": "CALL_ROUTE01"
+      },
+      "CALL_ROUTES_SHOW_ALLOWED_CALLER_RESULT_V202": {
+        "id": "CALL_ROUTES_SHOW_ALLOWED_CALLER_RESULT_V202",
+        "name": "s5b",
+        "phone_number": "s5c",
+        "call_route_id": "CALL_ROUTE01"
+      }
+    }
+  },
+  "new": {
+    "call_routes_show_allowed_caller_result_v2": {
+      "call_routes_show_allowed_caller_result_v2_ref01": {
+        "name": "s79",
+        "phone_number": "s7a"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/call_routes/{call_route_id}/allowed_callers/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

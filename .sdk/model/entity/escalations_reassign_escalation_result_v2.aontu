@@ -1,0 +1,117 @@
+# Entity: escalations_reassign_escalation_result_v2
+
+main: kit: entity: escalations_reassign_escalation_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "Additional details about the new escalation."
+      t: "`$STRING`"
+    }
+    escalation_path_id: {
+      h: "Escalation Path Id"
+      n: "escalation_path_id"
+      r: false
+      sh: "ID of the escalation path to reassign to"
+      t: "`$STRING`"
+    }
+    resolve_original: {
+      h: "Resolve Original"
+      n: "resolve_original"
+      r: false
+      sh: "Whether to resolve the original escalation, stopping it paging its targets."
+      t: "`$BOOLEAN`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: false
+      sh: "The title of the new escalation."
+      t: "`$STRING`"
+    }
+    user_ids: {
+      h: "User Ids"
+      n: "user_ids"
+      r: false
+      sh: "IDs of users to reassign directly to"
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "escalations_reassign_escalation_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "description"
+            "escalation_path_id"
+            "resolve_original"
+            "title"
+            "user_ids"
+          ]
+          co: {
+            id: "POST /v2/escalations/{escalation_id}/actions/reassign"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "escalation_id"
+                or: "escalation_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/escalations/{escalation_id}/actions/reassign"
+          q: {
+            exist: [
+              "escalation_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalations"
+            }
+            {
+              var: "escalation_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "reassign"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.escalation`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.escalation")]
+  ]
+
+}

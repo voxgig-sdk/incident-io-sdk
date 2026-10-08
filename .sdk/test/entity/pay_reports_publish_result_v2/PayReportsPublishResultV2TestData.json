@@ -1,0 +1,99 @@
+{
+  "existing": {
+    "pay_reports_publish_result_v2": {
+      "PAY_REPORTS_PUBLISH_RESULT_V200": {
+        "cc_emails": [],
+        "created_at": "sb5",
+        "creator": {},
+        "end_date": "sb7",
+        "error_code": "sb8",
+        "error_message": "sb9",
+        "id": "PAY_REPORTS_PUBLISH_RESULT_V200",
+        "name": "sbb",
+        "overlapping_shifts": "sbc",
+        "published_at": "sbd",
+        "schedule_ids": [],
+        "send_user_breakdowns": "sbf",
+        "start_date": "sc0",
+        "status": "sc1",
+        "total_duration_seconds": 194,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "sc4",
+        "updated_at": "sc5",
+        "pay_report_id": "PAY_REPORT01"
+      },
+      "PAY_REPORTS_PUBLISH_RESULT_V201": {
+        "cc_emails": [],
+        "created_at": "s169",
+        "creator": {},
+        "end_date": "s16b",
+        "error_code": "s16c",
+        "error_message": "s16d",
+        "id": "PAY_REPORTS_PUBLISH_RESULT_V201",
+        "name": "s16f",
+        "overlapping_shifts": "s170",
+        "published_at": "s171",
+        "schedule_ids": [],
+        "send_user_breakdowns": "s173",
+        "start_date": "s174",
+        "status": "s175",
+        "total_duration_seconds": 374,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s178",
+        "updated_at": "s179",
+        "pay_report_id": "PAY_REPORT01"
+      },
+      "PAY_REPORTS_PUBLISH_RESULT_V202": {
+        "cc_emails": [],
+        "created_at": "s21d",
+        "creator": {},
+        "end_date": "s21f",
+        "error_code": "s220",
+        "error_message": "s221",
+        "id": "PAY_REPORTS_PUBLISH_RESULT_V202",
+        "name": "s223",
+        "overlapping_shifts": "s224",
+        "published_at": "s225",
+        "schedule_ids": [],
+        "send_user_breakdowns": "s227",
+        "start_date": "s228",
+        "status": "s229",
+        "total_duration_seconds": 554,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s22c",
+        "updated_at": "s22d",
+        "pay_report_id": "PAY_REPORT01"
+      }
+    }
+  },
+  "new": {
+    "pay_reports_publish_result_v2": {
+      "pay_reports_publish_result_v2_ref01": {
+        "cc_emails": [],
+        "created_at": "s2d1",
+        "creator": {},
+        "end_date": "s2d3",
+        "error_code": "s2d4",
+        "error_message": "s2d5",
+        "name": "s2d7",
+        "overlapping_shifts": "s2d8",
+        "published_at": "s2d9",
+        "schedule_ids": [],
+        "send_user_breakdowns": "s2db",
+        "start_date": "s2dc",
+        "status": "s2dd",
+        "total_duration_seconds": 734,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s2e0",
+        "updated_at": "s2e1"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/pay_reports/{id}/actions/publish": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

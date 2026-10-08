@@ -7,8 +7,8 @@ main: kit: flow: BasicIncidentTimestampFlow:
   name: "BasicIncidentTimestampFlow",
   step: [
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -19,18 +19,18 @@ main: kit: flow: BasicIncidentTimestampFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "incident_timestamp_ref01",
         srcdatavar: "incident_timestamp_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "incident_timestamp01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

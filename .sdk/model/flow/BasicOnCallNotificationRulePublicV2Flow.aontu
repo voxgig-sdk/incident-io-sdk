@@ -1,0 +1,26 @@
+# BasicOnCallNotificationRulePublicV2Flow
+
+main: kit: flow: BasicOnCallNotificationRulePublicV2Flow:
+{
+  entity: "on_call_notification_rule_public_v2",
+  kind: "basic",
+  name: "BasicOnCallNotificationRulePublicV2Flow",
+  step: [
+    {
+      m: {
+        user_id: "user01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "on_call_notification_rule_public_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicOnCallNotificationRulePublicV2Flow"
+}

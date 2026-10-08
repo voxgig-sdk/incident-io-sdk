@@ -1,0 +1,39 @@
+{
+  "existing": {
+    "escalations_check_escalation_permissions_result_v2": {
+      "ESCALATIONS_CHECK_ESCALATION_PERMISSIONS_RESULT_V200": {
+        "response_options": [],
+        "user_ids": [],
+        "escalation_id": "ESCALATION01",
+        "id": "ESCALATIONS_CHECK_ESCALATION_PERMISSIONS_RESULT_V200"
+      },
+      "ESCALATIONS_CHECK_ESCALATION_PERMISSIONS_RESULT_V201": {
+        "response_options": [],
+        "user_ids": [],
+        "escalation_id": "ESCALATION01",
+        "id": "ESCALATIONS_CHECK_ESCALATION_PERMISSIONS_RESULT_V201"
+      },
+      "ESCALATIONS_CHECK_ESCALATION_PERMISSIONS_RESULT_V202": {
+        "response_options": [],
+        "user_ids": [],
+        "escalation_id": "ESCALATION01",
+        "id": "ESCALATIONS_CHECK_ESCALATION_PERMISSIONS_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "escalations_check_escalation_permissions_result_v2": {
+      "escalations_check_escalation_permissions_result_v2_ref01": {
+        "response_options": [],
+        "user_ids": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/escalations/{escalation_id}/actions/check_permissions": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

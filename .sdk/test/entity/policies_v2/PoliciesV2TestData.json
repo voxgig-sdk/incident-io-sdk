@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "policies_v2": {
+      "POLICIES_V200": {
+        "id": "POLICIES_V200"
+      },
+      "POLICIES_V201": {
+        "id": "POLICIES_V201"
+      },
+      "POLICIES_V202": {
+        "id": "POLICIES_V202"
+      }
+    }
+  },
+  "new": {
+    "policies_v2": {
+      "policies_v2_ref01": {}
+    }
+  },
+  "requests": {
+    "DELETE /v2/policies/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 
-import { cmp, Content, canonKey, entityIdField, pickExampleEntity, opRequestShape } from '@voxgig/sdkgen'
+import { cmp, Content, canonKey, canonScalarKey, entityIdField, pickExampleEntity, opRequestShape, goModule, requiredItems, litPair } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -10,7 +10,8 @@ import {
 
 // A type-correct Go literal for a field's canonical type.
 function goLit(type: any): string {
-  const k = canonKey(type)
+  const k = canonScalarKey(type)
+  if ('NULL' === k) return 'nil'
   if ('INTEGER' === k || 'NUMBER' === k) return '1'
   if ('BOOLEAN' === k) return 'true'
   if ('ARRAY' === k) return '[]any{}'
@@ -28,7 +29,7 @@ const ReadmeTopTest = cmp(function ReadmeTopTest(props: any) {
 
   const entity = getModelPath(model, `main.${KIT}.entity`)
   // Go module path == repo path on GitHub (org from model.origin).
-  const gomodule = `github.com/${model.origin || 'voxgig-sdk'}/${model.name}-sdk/go`
+  const gomodule = goModule(model, target.name)
 
   // Pick an entity with a real op (prefer a read op) — never fabricate a
   // `load` on an op-less entity like Cloudsmith's `Abort`.
@@ -45,12 +46,15 @@ client := sdk.Test()
     let arg = 'nil'
     if (isMatchOp) {
       arg = idF ? `map[string]any{"${idF}": "test01"}` : 'nil'
-    } else if ('create' === primaryOp || 'update' === primaryOp) {
+    } else if ('list' === primaryOp && 0 < requiredItems(exampleEntity, 'list').length) {
+      const chosen = requiredItems(exampleEntity, 'list')
+      arg = `map[string]any{${chosen.map((it: any) => litPair('go', it.name, goLit(it.type))).join(', ')}}`
+    } else if ('create' === primaryOp || 'update' === primaryOp || 'patch' === primaryOp) {
       const items = opRequestShape(exampleEntity, primaryOp).items
         .filter((it: any) => it.name !== idF && it.name !== 'id')
       const required = items.filter((it: any) => !it.optional)
       const chosen = required.length ? required : items.slice(0, 3)
-      arg = `map[string]any{${chosen.map((it: any) => `"${it.name}": ${goLit(it.type)}`).join(', ')}}`
+      arg = `map[string]any{${chosen.map((it: any) => litPair('go', it.name, goLit(it.type))).join(', ')}}`
     }
     Content(`result, err := client.${eName}(nil).${cap(primaryOp)}(
     ${arg}, nil,

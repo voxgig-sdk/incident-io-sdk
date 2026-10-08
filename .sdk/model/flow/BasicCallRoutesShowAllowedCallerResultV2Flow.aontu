@@ -1,0 +1,33 @@
+# BasicCallRoutesShowAllowedCallerResultV2Flow
+
+main: kit: flow: BasicCallRoutesShowAllowedCallerResultV2Flow:
+{
+  entity: "call_routes_show_allowed_caller_result_v2",
+  kind: "basic",
+  name: "BasicCallRoutesShowAllowedCallerResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "call_routes_show_allowed_caller_result_v2_ref01",
+        srcdatavar: "call_routes_show_allowed_caller_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        call_route_id: "call_route01",
+        id: "call_routes_show_allowed_caller_result_v201"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-call_routes_show_allowed_caller_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCallRoutesShowAllowedCallerResultV2Flow"
+}

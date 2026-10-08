@@ -25,7 +25,7 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
   /**
    * @param {IncidentAttachmentListMatch} [reqmatch]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentAttachment[]>}
+   * @returns {Promise<IncidentAttachmentEntity[]>}
    */
   async list(reqmatch, ctrl) {
 
@@ -34,7 +34,8 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -117,9 +118,15 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
       return done(ctx)
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -137,7 +144,7 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
   /**
    * @param {IncidentAttachmentCreateData} [reqdata]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentAttachment>}
+   * @returns {Promise<IncidentAttachmentEntity>}
    */
   async create(reqdata, ctrl) {
 
@@ -145,7 +152,8 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -225,12 +233,26 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -246,10 +268,11 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
 
 
 
+
   /**
    * @param {IncidentAttachmentRemoveMatch} [reqmatch]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentAttachment>}
+   * @returns {Promise<IncidentAttachmentEntity>}
    */
   async remove(reqmatch, ctrl) {
 
@@ -258,7 +281,8 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -343,12 +367,32 @@ class IncidentAttachmentEntity extends IncidentIoEntityBase {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      if (ctx.result && ctx.result.ok) {
+        // A removed entity keeps its data but is no longer a live record.
+        this.markDeleted()
+        return this
+      }
+
+      return out
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 

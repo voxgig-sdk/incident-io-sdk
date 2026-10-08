@@ -2,68 +2,96 @@
   "existing": {
     "api_key": {
       "API_KEY00": {
-        "comment": "s82",
-        "created_at": "s83",
+        "comments": "s78",
+        "created_at": "s79",
         "creator": {},
-        "grace_period_minute": "s85",
         "id": "API_KEY00",
-        "last_used_at": "s87",
-        "name": "s88",
-        "role": [],
-        "role_name": [],
-        "team_id": "TEAM01",
-        "team_role": [],
-        "team_role_name": [],
-        "token_last_issued_at": "s8e"
+        "last_used_at": "s7c",
+        "name": "s7d",
+        "role_names": [],
+        "roles": [],
+        "team_ids": [],
+        "team_role_names": [],
+        "team_roles": [],
+        "token_last_issued_at": "s83"
       },
       "API_KEY01": {
-        "comment": "s104",
-        "created_at": "s105",
+        "comments": "sf0",
+        "created_at": "sf1",
         "creator": {},
-        "grace_period_minute": "s107",
         "id": "API_KEY01",
-        "last_used_at": "s109",
-        "name": "s10a",
-        "role": [],
-        "role_name": [],
-        "team_id": "TEAM01",
-        "team_role": [],
-        "team_role_name": [],
-        "token_last_issued_at": "s110"
+        "last_used_at": "sf4",
+        "name": "sf5",
+        "role_names": [],
+        "roles": [],
+        "team_ids": [],
+        "team_role_names": [],
+        "team_roles": [],
+        "token_last_issued_at": "sfb"
       },
       "API_KEY02": {
-        "comment": "s186",
-        "created_at": "s187",
+        "comments": "s168",
+        "created_at": "s169",
         "creator": {},
-        "grace_period_minute": "s189",
         "id": "API_KEY02",
-        "last_used_at": "s18b",
-        "name": "s18c",
-        "role": [],
-        "role_name": [],
-        "team_id": "TEAM01",
-        "team_role": [],
-        "team_role_name": [],
-        "token_last_issued_at": "s192"
+        "last_used_at": "s16c",
+        "name": "s16d",
+        "role_names": [],
+        "roles": [],
+        "team_ids": [],
+        "team_role_names": [],
+        "team_roles": [],
+        "token_last_issued_at": "s173"
       }
     }
   },
   "new": {
     "api_key": {
       "api_key_ref01": {
-        "comment": "s208",
-        "created_at": "s209",
+        "comments": "s1e0",
+        "created_at": "s1e1",
         "creator": {},
-        "grace_period_minute": "s20b",
-        "last_used_at": "s20d",
-        "name": "s20e",
-        "role": [],
-        "role_name": [],
-        "team_id": "TEAM01",
-        "team_role": [],
-        "team_role_name": [],
-        "token_last_issued_at": "s214"
+        "last_used_at": "s1e4",
+        "name": "s1e5",
+        "role_names": [],
+        "roles": [],
+        "team_ids": [],
+        "team_role_names": [],
+        "team_roles": [],
+        "token_last_issued_at": "s1eb"
       }
+    }
+  },
+  "requests": {
+    "POST /v1/api_keys/{id}/actions/rotate": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v1/api_keys": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/api_keys": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/api_keys/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v1/api_keys/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v1/api_keys/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

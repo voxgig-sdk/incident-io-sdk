@@ -8,37 +8,6 @@ import {
 } from '@voxgig/apidef'
 
 
-// Emits py/test/test_readme_examples.py — a pytest COMPLETENESS GATE over
-// every ```python fenced block in the repository ROOT README.md, in the
-// per-language py/README.md, AND in the per-language py/REFERENCE.md.
-//
-// The gate GUARANTEES every documented python example is unit-tested. For each
-// of the three docs it:
-//   1. extracts every ```python block (tagged by source doc + index);
-//   2. ast.parse + compile()s EVERY block                 -> SYNTAX gate;
-//   3. EXECUTEs every RUNNABLE block (one that constructs the SDK, or drives a
-//      `client`/`sdk` the narrative built earlier) in a seeded, offline
-//      TEST-mode subprocess. A PROGRAMMING error
-//      (Name/Attribute/Type/Key/Index/Import/Syntax) FAILS; ONLY a
-//      not-found/404 domain error is tolerated. Any other error also FAILS;
-//   4. asserts COMPLETENESS: it partitions every block into exactly one of
-//      {executed, compiled-nonrunnable, illustration} and asserts
-//      total == executed + compiled + illustration. "illustration" is a NARROW
-//      explicit class (a non-runnable block that is only imports / signature
-//      stubs / bare references / literal assignments — a pure signature/table
-//      snippet) and can NEVER absorb a runnable example. A block that looks
-//      runnable (references the SDK/client) but was not executed FAILS the
-//      test; a block that fails to compile FAILS the test. A per-doc summary
-//      (total/executed/compiled/illustration) is printed.
-//
-// If mypy is importable it also type-checks the concatenated ROOT README blocks
-// (the SDK ships py.typed + TypedDicts) — a bonus TYPE gate over the primary
-// EXECUTE gate.
-//
-// The emitted Python is written WITHOUT backticks or backslashes (chr(96) is
-// the fence marker, chr(10) is newline) so this TS template literal stays
-// clean — the only interpolations are the SDK module/class names and the
-// generated entity map.
 const ReadmeExamplesTest = cmp(function ReadmeExamplesTest(props: any) {
   const { target, ctx$: { model } } = props
 
@@ -255,6 +224,8 @@ def test_readme_python_blocks_typecheck():
         env["PYTHONDONTWRITEBYTECODE"] = "1"
         # Resolve "from _SDK_MODULE import _SDK_CLASS" against the package root.
         env["MYPYPATH"] = _PY_ROOT + os.pathsep + env.get("MYPYPATH", "")
+        # The child writes UTF-8 and the capture reads it, whatever the locale.
+        env["PYTHONIOENCODING"] = "utf-8"
 
         proc = subprocess.run(
             [
@@ -269,6 +240,7 @@ def test_readme_python_blocks_typecheck():
             env=env,
             capture_output=True,
             text=True,
+            encoding="utf-8",
         )
 
         base = os.path.basename(snippet_path)
@@ -294,10 +266,9 @@ def test_readme_python_blocks_typecheck():
 # ----------------------------------------------------------------------------
 
 def _uses_var(block, var):
-    # True if the block reads an attribute off the whole-word variable "var"
-    # (i.e. contains "var." with a non-identifier char, or nothing, before it).
-    # This distinguishes a client-driving "sdk." from the "_sdk." tail of an
-    # import module name.
+    # True if the block reads an attribute off the variable "var", not off a
+    # name that ends in it: "_sdk." in a module name, "-client." in a package
+    # name or a host, ".client." on another object.
     needle = var + "."
     start = 0
     while True:
@@ -307,7 +278,7 @@ def _uses_var(block, var):
         ok_before = True
         if j > 0:
             ch = block[j - 1]
-            if ch.isalnum() or ch == "_":
+            if ch.isalnum() or ch in "_-./\\"'":
                 ok_before = False
         if ok_before:
             return True
@@ -484,6 +455,92 @@ def _is_not_found_error(last):
     return ("404" in last) or ("not found" in low) or ("notfound" in low)
 
 
+def _run_batch(items, label):
+    # BATCHED. One interpreter for every runnable block in this document,
+    # instead of one process each. A 269-entity SDK documents hundreds of
+    # examples and the spawn cost dominated the suite.
+    #
+    # Each block is exec'd in a FRESH globals dict, so names do not leak
+    # between snippets, and is bracketed by markers so output is attributed
+    # back. The interpreter is shared, which is the cost: a snippet that
+    # mutates process-wide state or dies hard affects what follows.
+    #
+    # So the batch is not trusted blindly. Any snippet whose END marker is
+    # missing is re-run on its own by the caller, and that isolated verdict is
+    # the one that counts.
+    driver = (
+        "import sys, traceback" + _NL
+        + "_S = __VOX_SOURCES__" + _NL
+        + "for _i, _src in _S:" + _NL
+        + "    print('@@VOXBEGIN ' + str(_i), flush=True)" + _NL
+        + "    try:" + _NL
+        + "        _g = {'__name__': '__main__'}" + _NL
+        + "        exec(compile(_src, '<snippet>', 'exec'), _g)" + _NL
+        + "    except BaseException:" + _NL
+        + "        traceback.print_exc(file=sys.stdout)" + _NL
+        + "    print('@@VOXEND ' + str(_i), flush=True)" + _NL
+    )
+    driver = driver.replace("__VOX_SOURCES__", repr(items))
+
+    env = dict(os.environ)
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env["PYTHONPATH"] = _PY_ROOT + os.pathsep + env.get("PYTHONPATH", "")
+    # The child writes UTF-8 and the capture reads it, whatever the locale.
+    env["PYTHONIOENCODING"] = "utf-8"
+
+    # A FILE, not "python -c". The driver embeds every runnable snippet's
+    # source, and a large SDK documents hundreds of them: passing that on the
+    # command line exceeded ARG_MAX and the whole gate died with
+    # "OSError: [Errno 7] Argument list too long" — on gitlab and github, while
+    # every small repo passed. The batch has no size limit through a file.
+    with tempfile.TemporaryDirectory() as td:
+        driver_path = os.path.join(td, "readme_batch_driver.py")
+        with open(driver_path, "w", encoding="utf-8") as fh:
+            fh.write(driver)
+        proc = subprocess.run(
+            [sys.executable, driver_path],
+            cwd=_PY_ROOT, env=env, capture_output=True, text=True, encoding="utf-8",
+        )
+        return (proc.stdout or "") + (proc.stderr or "")
+
+
+def _batch_segment(text, index):
+    # The output between this snippet's markers, or None when the END marker
+    # never arrived — the batch died in or before it, so only an isolated
+    # re-run can say what happened.
+    begin = "@@VOXBEGIN " + str(index)
+    end = "@@VOXEND " + str(index)
+    b = text.find(begin)
+    if b < 0:
+        return None
+    b += len(begin)
+    e = text.find(end, b)
+    if e < 0:
+        return None
+    return text[b:e].strip()
+
+
+def _classify_batch_error(seg, source, label, index):
+    # Same verdict as _run_source, read off a traceback in the batch output.
+    if not seg:
+        return None
+    errlines = [ln for ln in seg.split(_NL) if ln.strip()]
+    if not errlines or "Traceback (most recent call last)" not in seg:
+        return None
+    last = errlines[-1]
+    exc_type = last.split(":", 1)[0].strip().split(".")[-1]
+    detail = (
+        label + " python block #" + str(index) + ": " + last + _NL + _NL
+        + "--- executed source ---" + _NL + source
+        + _NL + _NL + "--- batch output ---" + _NL + seg
+    )
+    if exc_type in _PROGRAMMING_ERROR_NAMES:
+        return "PROGRAMMING ERROR in " + detail
+    if _is_not_found_error(last):
+        return None
+    return "RUNTIME ERROR in " + detail
+
+
 def _run_source(source, label, index):
     # Run one rewritten block in a subprocess. Returns None when it exits 0 or
     # fails with the single tolerated not-found/404 domain error; otherwise
@@ -492,6 +549,7 @@ def _run_source(source, label, index):
     env = dict(os.environ)
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     env["PYTHONPATH"] = _PY_ROOT + os.pathsep + env.get("PYTHONPATH", "")
+    env["PYTHONIOENCODING"] = "utf-8"
 
     proc = subprocess.run(
         [sys.executable, "-c", source],
@@ -499,6 +557,7 @@ def _run_source(source, label, index):
         env=env,
         capture_output=True,
         text=True,
+        encoding="utf-8",
     )
     if proc.returncode == 0:
         return None
@@ -536,6 +595,7 @@ def _completeness_gate(label, blocks):
     illustration = 0
     compiled = 0
     failures = []
+    _pending = []
 
     for i, block in enumerate(blocks):
         kind = _classify(block)
@@ -553,13 +613,23 @@ def _completeness_gate(label, blocks):
                 )
                 continue
             executed += 1
-            msg = _run_source(source, label, i)
-            if msg is not None:
-                failures.append(msg)
+            _pending.append((i, source))
         elif kind == "illustration":
             illustration += 1
         else:
             compiled += 1
+
+    if _pending:
+        _text = _run_batch(_pending, label)
+        for _i, _src in _pending:
+            _seg = _batch_segment(_text, _i)
+            if _seg is None:
+                # Batch never finished this one — isolate it.
+                _msg = _run_source(_src, label, _i)
+            else:
+                _msg = _classify_batch_error(_seg, _src, label, _i)
+            if _msg is not None:
+                failures.append(_msg)
 
     print(
         _NL + "[readme-examples] " + label + " python blocks: total="

@@ -1,0 +1,55 @@
+{
+  "existing": {
+    "schedule_entries_list_payload_v2": {
+      "SCHEDULE_ENTRIES_LIST_PAYLOAD_V200": {
+        "entry_window_end": "s3c",
+        "entry_window_start": "s3d",
+        "final": [],
+        "overrides": [],
+        "schedule": {},
+        "scheduled": [],
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULE_ENTRIES_LIST_PAYLOAD_V200"
+      },
+      "SCHEDULE_ENTRIES_LIST_PAYLOAD_V201": {
+        "entry_window_end": "s78",
+        "entry_window_start": "s79",
+        "final": [],
+        "overrides": [],
+        "schedule": {},
+        "scheduled": [],
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULE_ENTRIES_LIST_PAYLOAD_V201"
+      },
+      "SCHEDULE_ENTRIES_LIST_PAYLOAD_V202": {
+        "entry_window_end": "sb4",
+        "entry_window_start": "sb5",
+        "final": [],
+        "overrides": [],
+        "schedule": {},
+        "scheduled": [],
+        "schedule_id": "SCHEDULE01",
+        "id": "SCHEDULE_ENTRIES_LIST_PAYLOAD_V202"
+      }
+    }
+  },
+  "new": {
+    "schedule_entries_list_payload_v2": {
+      "schedule_entries_list_payload_v2_ref01": {
+        "entry_window_end": "sf0",
+        "entry_window_start": "sf1",
+        "final": [],
+        "overrides": [],
+        "schedule": {},
+        "scheduled": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/schedules/{id}/actions/preview_entries": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

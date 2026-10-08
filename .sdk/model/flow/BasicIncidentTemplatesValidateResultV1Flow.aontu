@@ -1,0 +1,18 @@
+# BasicIncidentTemplatesValidateResultV1Flow
+
+main: kit: flow: BasicIncidentTemplatesValidateResultV1Flow:
+{
+  entity: "incident_templates_validate_result_v1",
+  kind: "basic",
+  name: "BasicIncidentTemplatesValidateResultV1Flow",
+  step: [
+    {
+      i: {
+        ref: "incident_templates_validate_result_v1_ref01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicIncidentTemplatesValidateResultV1Flow"
+}

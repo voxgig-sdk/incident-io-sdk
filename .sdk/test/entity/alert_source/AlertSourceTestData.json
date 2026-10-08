@@ -2,51 +2,63 @@
   "existing": {
     "alert_source": {
       "ALERT_SOURCE00": {
-        "alert_events_url": "s8c",
-        "auto_resolve_incident_alert": false,
-        "auto_resolve_timeout_minute": "s8e",
-        "disabled": false,
-        "email_option": {},
-        "heartbeat_option": {},
-        "http_custom_option": {},
+        "alert_events_url": "sb4",
+        "auto_resolve_incident_alerts": false,
+        "auto_resolve_timeout_minutes": 182,
+        "azure_devops_options": {},
+        "disabled": true,
+        "email_options": {},
+        "filter_condition_groups": [],
+        "fixed_team_id": "FIXED_TEAM01",
+        "heartbeat_options": {},
+        "http_custom_options": {},
         "id": "ALERT_SOURCE00",
-        "jira_option": {},
-        "name": "s95",
-        "owning_team_id": "OWNING_TEAM01",
-        "secret_token": "s97",
-        "source_type": "s98",
+        "jira_options": {},
+        "name": "sc0",
+        "owning_team_ids": [],
+        "rate_limit_sharding": {},
+        "secret_token": "sc3",
+        "source_type": "sc4",
         "template": {}
       },
       "ALERT_SOURCE01": {
-        "alert_events_url": "s118",
-        "auto_resolve_incident_alert": false,
-        "auto_resolve_timeout_minute": "s11a",
-        "disabled": false,
-        "email_option": {},
-        "heartbeat_option": {},
-        "http_custom_option": {},
+        "alert_events_url": "s168",
+        "auto_resolve_incident_alerts": false,
+        "auto_resolve_timeout_minutes": 362,
+        "azure_devops_options": {},
+        "disabled": true,
+        "email_options": {},
+        "filter_condition_groups": [],
+        "fixed_team_id": "FIXED_TEAM01",
+        "heartbeat_options": {},
+        "http_custom_options": {},
         "id": "ALERT_SOURCE01",
-        "jira_option": {},
-        "name": "s121",
-        "owning_team_id": "OWNING_TEAM01",
-        "secret_token": "s123",
-        "source_type": "s124",
+        "jira_options": {},
+        "name": "s174",
+        "owning_team_ids": [],
+        "rate_limit_sharding": {},
+        "secret_token": "s177",
+        "source_type": "s178",
         "template": {}
       },
       "ALERT_SOURCE02": {
-        "alert_events_url": "s1a4",
-        "auto_resolve_incident_alert": false,
-        "auto_resolve_timeout_minute": "s1a6",
-        "disabled": false,
-        "email_option": {},
-        "heartbeat_option": {},
-        "http_custom_option": {},
+        "alert_events_url": "s21c",
+        "auto_resolve_incident_alerts": false,
+        "auto_resolve_timeout_minutes": 542,
+        "azure_devops_options": {},
+        "disabled": true,
+        "email_options": {},
+        "filter_condition_groups": [],
+        "fixed_team_id": "FIXED_TEAM01",
+        "heartbeat_options": {},
+        "http_custom_options": {},
         "id": "ALERT_SOURCE02",
-        "jira_option": {},
-        "name": "s1ad",
-        "owning_team_id": "OWNING_TEAM01",
-        "secret_token": "s1af",
-        "source_type": "s1b0",
+        "jira_options": {},
+        "name": "s228",
+        "owning_team_ids": [],
+        "rate_limit_sharding": {},
+        "secret_token": "s22b",
+        "source_type": "s22c",
         "template": {}
       }
     }
@@ -54,20 +66,51 @@
   "new": {
     "alert_source": {
       "alert_source_ref01": {
-        "alert_events_url": "s230",
-        "auto_resolve_incident_alert": false,
-        "auto_resolve_timeout_minute": "s232",
-        "disabled": false,
-        "email_option": {},
-        "heartbeat_option": {},
-        "http_custom_option": {},
-        "jira_option": {},
-        "name": "s239",
-        "owning_team_id": "OWNING_TEAM01",
-        "secret_token": "s23b",
-        "source_type": "s23c",
+        "alert_events_url": "s2d0",
+        "auto_resolve_incident_alerts": false,
+        "auto_resolve_timeout_minutes": 722,
+        "azure_devops_options": {},
+        "disabled": true,
+        "email_options": {},
+        "filter_condition_groups": [],
+        "fixed_team_id": "FIXED_TEAM01",
+        "heartbeat_options": {},
+        "http_custom_options": {},
+        "jira_options": {},
+        "name": "s2dc",
+        "owning_team_ids": [],
+        "rate_limit_sharding": {},
+        "secret_token": "s2df",
+        "source_type": "s2e0",
         "template": {}
       }
+    }
+  },
+  "requests": {
+    "POST /v2/alert_sources": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/alert_sources": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/alert_sources/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/alert_sources/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/alert_sources/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

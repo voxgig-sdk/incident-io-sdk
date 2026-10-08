@@ -38,5 +38,17 @@
         "value_docstring": "sf5"
       }
     }
+  },
+  "requests": {
+    "GET /v2/catalog_resources": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/catalog_resources": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

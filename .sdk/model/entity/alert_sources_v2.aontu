@@ -1,0 +1,73 @@
+# Entity: alert_sources_v2
+
+main: kit: entity: alert_sources_v2: {
+
+  alias: field: {}
+
+  fields: {
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      r: false
+      sh: "IDs of teams that own this alert source"
+      t: "`$ARRAY`"
+    }
+    source_type: {
+      h: "Source Type"
+      n: "source_type"
+      r: true
+      sh: "Type of alert source"
+      t: "`$STRING`"
+    }
+    template: {
+      h: "Template"
+      n: "template"
+      r: true
+      t: "`$OBJECT`"
+    }
+  }
+
+  name: "alert_sources_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "owning_team_ids"
+            "source_type"
+            "template"
+          ]
+          co: {
+            id: "POST /v2/alert_sources/actions/validate"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/alert_sources/actions/validate"
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_sources"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "validate"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

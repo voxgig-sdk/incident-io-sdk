@@ -7,8 +7,8 @@ main: kit: flow: BasicPostmortemDocumentFlow:
   name: "BasicPostmortemDocumentFlow",
   step: [
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -19,15 +19,15 @@ main: kit: flow: BasicPostmortemDocumentFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "postmortem_document_ref01",
         srcdatavar: "postmortem_document_ref01_data",
         suffix: "_up0",
         textfield: "created_at"
       }
 
-      op: "update",
-      spec: [
+      o: "update",
+      s: [
         {
           apply: "TextFieldMark",
           def: {
@@ -38,18 +38,18 @@ main: kit: flow: BasicPostmortemDocumentFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "postmortem_document_ref01",
         srcdatavar: "postmortem_document_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "postmortem_document01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

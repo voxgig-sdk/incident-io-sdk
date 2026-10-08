@@ -1,16 +1,15 @@
 
-import {
-  KIT,
-  getModelPath
-} from '@voxgig/apidef'
-
 import type {
   ModelEntity
 } from '@voxgig/apidef'
 
-import { cmp, each, Folder } from '@voxgig/sdkgen'
+import { cmp, each, Folder, entityCollection,
+  TestControl } from '@voxgig/sdkgen'
 
 
+import { TestLive } from './TestLive_js'
+import { TestDefinition } from './TestDefinition_js'
+import { TestClean } from './TestClean_js'
 import { TestDirect } from './TestDirect_js'
 import { TestEntity } from './TestEntity_js'
 
@@ -21,8 +20,16 @@ const Test = cmp(function Test(props: any) {
 
   Folder({ name: 'test' }, () => {
 
+    // Write-once: a project's edited control file survives regeneration.
+    TestControl({ target, dir: 'test' })
+    TestLive({ target })
+    TestDefinition({ target })
+    TestClean({ target })
+
     Folder({ name: 'entity' }, () => {
-      each(model.main[KIT].entity, (entity: ModelEntity) => {
+      const entity = each(entityCollection(model))
+        .filter((e: any) => false !== e.active)
+      each(entity, (entity: ModelEntity) => {
         TestEntity({ target, entity })
         TestDirect({ target, entity })
       })

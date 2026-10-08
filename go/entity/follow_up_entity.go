@@ -1,6 +1,9 @@
 package entity
 
 import (
+	"encoding/json"
+	"fmt"
+
 	"github.com/voxgig-sdk/incident-io-sdk/go/core"
 
 	vs "github.com/voxgig-sdk/incident-io-sdk/go/utility/struct"
@@ -14,6 +17,7 @@ type FollowUpEntity struct {
 	data    map[string]any
 	match   map[string]any
 	entctx  *core.Context
+	deleted bool
 }
 
 func NewFollowUpEntity(client *core.IncidentIoSDK, entopts map[string]any) *FollowUpEntity {
@@ -48,6 +52,36 @@ func NewFollowUpEntity(client *core.IncidentIoSDK, entopts map[string]any) *Foll
 }
 
 func (e *FollowUpEntity) GetName() string { return e.name }
+
+// An entity prints and serialises as its data, as ts's toString and toJSON
+// do: the client it holds carries the options.
+func (e *FollowUpEntity) String() string {
+	return "FollowUp " + vs.Jsonify(e.data, map[string]any{"indent": 0})
+}
+
+func (e *FollowUpEntity) GoString() string {
+	return e.String()
+}
+
+func (e *FollowUpEntity) MarshalJSON() ([]byte, error) {
+	out := map[string]any{}
+	for k, v := range e.data {
+		out[k] = v
+	}
+	out["voxgig$entity"] = "FollowUp"
+	return json.Marshal(out)
+}
+
+func (e *FollowUpEntity) MarkDeleted() {
+	e.deleted = true
+}
+
+
+// Deleted reports whether a successful Remove has resolved on this instance.
+func (e *FollowUpEntity) Deleted() bool {
+	return e.deleted
+}
+
 
 func (e *FollowUpEntity) Make() core.Entity {
 	opts := map[string]any{}
@@ -106,17 +140,8 @@ func (e *FollowUpEntity) MatchTyped(match ...FollowUp) FollowUp {
 	return typedFrom[FollowUp](e.Match())
 }
 
-// Stream (feature #4). Runs `action` through the full pipeline and returns a
-// channel over result items, so the `streaming` feature's incremental output
-// is reachable from a generated entity (a normal op call materialises the
-// whole result). `callopts` parameterises the call:
-//   - inbound (download): the channel yields items/chunks (from the streaming
-//     feature when active, else the materialised items);
-//   - outbound (upload): a `body` in callopts is attached to the request so the
-//     transport can stream the payload;
-//   - `ctrl` (pipeline control) and `signal` (a done channel) are honoured.
-func (e *FollowUpEntity) Stream(action string, args map[string]any, callopts map[string]any) <-chan any {
-	out := make(chan any)
+func (e *FollowUpEntity) Stream(action string, args map[string]any, callopts map[string]any) <-chan core.StreamItem {
+	out := make(chan core.StreamItem)
 
 	if callopts == nil {
 		callopts = map[string]any{}
@@ -158,7 +183,7 @@ func (e *FollowUpEntity) Stream(action string, args map[string]any, callopts map
 		ctx.Meta["stream_out"] = body
 	}
 
-	send := func(item any) bool {
+	send := func(item core.StreamItem) bool {
 		select {
 		case <-signal:
 			return false
@@ -167,76 +192,105 @@ func (e *FollowUpEntity) Stream(action string, args map[string]any, callopts map
 		}
 	}
 
-	go func() {
-		defer close(out)
-
-		utility.FeatureHook(ctx, "PrePoint")
-		point, err := utility.MakePoint(ctx)
-		ctx.Out["point"] = point
+	// What MakeError or Done hands back: the error, as the last value, or
+	// under `throw: false` the data there is.
+	sendData := func(data any, err error) {
 		if err != nil {
-			return
-		}
-
-		utility.FeatureHook(ctx, "PreSpec")
-		spec, err := utility.MakeSpec(ctx)
-		ctx.Out["spec"] = spec
-		if err != nil {
-			return
-		}
-
-		utility.FeatureHook(ctx, "PreRequest")
-		req, err := utility.MakeRequest(ctx)
-		ctx.Out["request"] = req
-		if err != nil {
-			return
-		}
-
-		utility.FeatureHook(ctx, "PreResponse")
-		resp, err := utility.MakeResponse(ctx)
-		ctx.Out["response"] = resp
-		if err != nil {
-			return
-		}
-
-		utility.FeatureHook(ctx, "PreResult")
-		result, err := utility.MakeResult(ctx)
-		ctx.Out["result"] = result
-		if err != nil {
-			return
-		}
-
-		utility.FeatureHook(ctx, "PreDone")
-
-		// Inbound: prefer the streaming feature's incremental iterator; else
-		// fall back to the materialised items so Stream always yields.
-		if ctx.Result != nil && ctx.Result.Stream != nil {
-			for item := range ctx.Result.Stream() {
-				if !send(item) {
-					return
-				}
-			}
-			return
-		}
-
-		data, derr := utility.Done(ctx)
-		if derr != nil {
+			send(core.StreamItem{Err: err})
 			return
 		}
 		switch d := data.(type) {
 		case []any:
 			for _, item := range d {
-				if !send(item) {
+				if !send(core.StreamItem{Item: item}) {
 					return
 				}
 			}
 		case nil:
 			// nothing to yield
 		default:
-			send(d)
+			send(core.StreamItem{Item: d})
 		}
+	}
+
+	go func() {
+		defer close(out)
+
+		// A panicking hook or stream function leaves through MakeError, as
+		// runOp's does. A goroutine the stream function starts is out of reach.
+		defer func() {
+			if r := recover(); r != nil {
+				sendData(e.recovered(ctx, r))
+			}
+		}()
+
+		// A failed step leaves through MakeError, as an operation's does.
+		if err := e.streamSteps(ctx); err != nil {
+			sendData(utility.MakeError(ctx, err))
+			return
+		}
+
+		// Inbound: prefer the streaming feature's incremental iterator; else
+		// fall back to the materialised items so Stream always yields.
+		if ctx.Result != nil && ctx.Result.Stream != nil {
+			// Done does not run on this path, so its record is cleaned here.
+			utility.CleanExplain(ctx)
+			for item := range ctx.Result.Stream() {
+				if !send(core.StreamItem{Item: item}) {
+					return
+				}
+			}
+			return
+		}
+
+		sendData(utility.Done(ctx))
 	}()
 
 	return out
+}
+
+// The steps an operation runs, with their hooks; the first that fails hands
+// back its error.
+func (e *FollowUpEntity) streamSteps(ctx *core.Context) error {
+	utility := e.utility
+
+	utility.FeatureHook(ctx, "PrePoint")
+	point, err := utility.MakePoint(ctx)
+	ctx.Out["point"] = point
+	if err != nil {
+		return err
+	}
+
+	utility.FeatureHook(ctx, "PreSpec")
+	spec, err := utility.MakeSpec(ctx)
+	ctx.Out["spec"] = spec
+	if err != nil {
+		return err
+	}
+
+	utility.FeatureHook(ctx, "PreRequest")
+	req, err := utility.MakeRequest(ctx)
+	ctx.Out["request"] = req
+	if err != nil {
+		return err
+	}
+
+	utility.FeatureHook(ctx, "PreResponse")
+	resp, err := utility.MakeResponse(ctx)
+	ctx.Out["response"] = resp
+	if err != nil {
+		return err
+	}
+
+	utility.FeatureHook(ctx, "PreResult")
+	result, err := utility.MakeResult(ctx)
+	ctx.Out["result"] = result
+	if err != nil {
+		return err
+	}
+
+	utility.FeatureHook(ctx, "PreDone")
+	return nil
 }
 
 
@@ -386,6 +440,11 @@ func (e *FollowUpEntity) UpdateTyped(reqdata FollowUpUpdateData, ctrl map[string
 
 
 
+func (e *FollowUpEntity) Patch(_ map[string]any, _ map[string]any) (any, error) {
+	return core.UnsupportedOp("patch", e.name)
+}
+
+
 
 func (e *FollowUpEntity) Remove(reqmatch map[string]any, ctrl map[string]any) (any, error) {
 	utility := e.utility
@@ -425,8 +484,14 @@ func (e *FollowUpEntity) RemoveTyped(reqmatch FollowUpRemoveMatch, ctrl map[stri
 
 
 
-func (e *FollowUpEntity) runOp(ctx *core.Context, postDone func()) (any, error) {
+func (e *FollowUpEntity) runOp(ctx *core.Context, postDone func()) (out any, err error) {
 	utility := e.utility
+
+	defer func() {
+		if r := recover(); r != nil {
+			out, err = e.recovered(ctx, r)
+		}
+	}()
 
 	utility.FeatureHook(ctx, "PrePoint")
 	point, err := utility.MakePoint(ctx)
@@ -466,5 +531,32 @@ func (e *FollowUpEntity) runOp(ctx *core.Context, postDone func()) (any, error) 
 	utility.FeatureHook(ctx, "PreDone")
 	postDone()
 
-	return utility.Done(ctx)
+	out, err = utility.Done(ctx)
+	if err != nil {
+		return out, err
+	}
+
+	opname := ""
+	if ctx.Op != nil {
+		opname = ctx.Op.Name
+	}
+
+	if ctx.Result != nil && ctx.Result.Ok && opname != "list" {
+		if opname == "remove" {
+			e.MarkDeleted()
+		}
+		return e, nil
+	}
+
+	return out, nil
+}
+
+// A hook, fetcher or parser that panics never reached MakeError, and its
+// message can quote the request.
+func (e *FollowUpEntity) recovered(ctx *core.Context, r any) (any, error) {
+	perr, ok := r.(error)
+	if !ok {
+		perr = fmt.Errorf("%v", r)
+	}
+	return e.utility.MakeError(ctx, perr)
 }

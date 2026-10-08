@@ -1,0 +1,69 @@
+{
+  "existing": {
+    "alerts_transition_incident_alert_result_v2": {
+      "ALERTS_TRANSITION_INCIDENT_ALERT_RESULT_V200": {
+        "alert": {},
+        "alert_id": "ALERT01",
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "ALERTS_TRANSITION_INCIDENT_ALERT_RESULT_V200",
+        "incident": {},
+        "incident_id": "INCIDENT01",
+        "re_relate": true,
+        "state": "s57",
+        "incident_alert_id": "INCIDENT_ALERT01"
+      },
+      "ALERTS_TRANSITION_INCIDENT_ALERT_RESULT_V201": {
+        "alert": {},
+        "alert_id": "ALERT01",
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "ALERTS_TRANSITION_INCIDENT_ALERT_RESULT_V201",
+        "incident": {},
+        "incident_id": "INCIDENT01",
+        "re_relate": true,
+        "state": "sa7",
+        "incident_alert_id": "INCIDENT_ALERT01"
+      },
+      "ALERTS_TRANSITION_INCIDENT_ALERT_RESULT_V202": {
+        "alert": {},
+        "alert_id": "ALERT01",
+        "alert_route_id": "ALERT_ROUTE01",
+        "id": "ALERTS_TRANSITION_INCIDENT_ALERT_RESULT_V202",
+        "incident": {},
+        "incident_id": "INCIDENT01",
+        "re_relate": true,
+        "state": "sf7",
+        "incident_alert_id": "INCIDENT_ALERT01"
+      }
+    }
+  },
+  "new": {
+    "alerts_transition_incident_alert_result_v2": {
+      "alerts_transition_incident_alert_result_v2_ref01": {
+        "alert": {},
+        "alert_id": "ALERT01",
+        "alert_route_id": "ALERT_ROUTE01",
+        "incident": {},
+        "incident_id": "INCIDENT01",
+        "re_relate": true,
+        "state": "s147"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/incident_alerts/{id}/actions/transition": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v2/incident_alerts": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/incident_alerts": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

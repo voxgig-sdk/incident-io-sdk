@@ -11,7 +11,7 @@ require_once __DIR__ . '/Response.php';
 require_once __DIR__ . '/Error.php';
 require_once __DIR__ . '/Helpers.php';
 
-class IncidentIoContext
+class IncidentIoContext implements \JsonSerializable
 {
     public string $id;
     public array $out;
@@ -52,7 +52,14 @@ class IncidentIoContext
             if (isset($ctrl_raw['explain']) && is_array($ctrl_raw['explain'])) {
                 $this->ctrl->explain = $ctrl_raw['explain'];
             }
-        } elseif ($basectx !== null && $basectx->ctrl !== null) {
+            if (array_key_exists('actor', $ctrl_raw)) {
+                $this->ctrl->actor = $ctrl_raw['actor'];
+            }
+            if (isset($ctrl_raw['paging']) && is_array($ctrl_raw['paging'])) {
+                $this->ctrl->paging = $ctrl_raw['paging'];
+            }
+        } elseif ($basectx !== null && $basectx->ctrl !== null
+            && IncidentIoHelpers::get_ctx_prop($ctxmap, "opname") === null) {
             $this->ctrl = $basectx->ctrl;
         }
 
@@ -118,7 +125,7 @@ class IncidentIoContext
 
         $opcfg = \Voxgig\Struct\Struct::getpath($this->config, "entity.{$entname}.op.{$opname}");
 
-        $input = ($opname === 'update' || $opname === 'create') ? 'data' : 'match';
+        $input = ($opname === 'update' || $opname === 'create' || $opname === 'patch') ? 'data' : 'match';
 
         $points = [];
         if (is_array($opcfg)) {
@@ -141,5 +148,28 @@ class IncidentIoContext
     public function make_error(string $code, string $msg): IncidentIoError
     {
         return new IncidentIoError($code, $msg, $this);
+    }
+
+    // The serialised context leaves the pipeline (a logger, a dump), so it
+    // is cleaned; the live fields stay raw for the pipeline's own use.
+    public function jsonSerialize(): mixed
+    {
+        $record = [
+            'id' => $this->id,
+            'op' => $this->op,
+            'spec' => $this->spec,
+            'entity' => $this->entity,
+            'result' => $this->result,
+            'response' => $this->response,
+            'meta' => $this->meta,
+        ];
+        $clean = null === $this->utility ? null : $this->utility->clean;
+        return is_callable($clean) ? $clean($this, $record) : $record;
+    }
+
+    public function __debugInfo(): array
+    {
+        $record = $this->jsonSerialize();
+        return is_array($record) ? $record : ['record' => $record];
     }
 }

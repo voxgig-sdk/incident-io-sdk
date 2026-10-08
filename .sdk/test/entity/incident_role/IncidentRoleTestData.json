@@ -5,7 +5,7 @@
         "created_at": "s5a",
         "description": "s5b",
         "id": "INCIDENT_ROLE00",
-        "instruction": "s5d",
+        "instructions": "s5d",
         "name": "s5e",
         "required": false,
         "role_type": "s60",
@@ -16,7 +16,7 @@
         "created_at": "sb4",
         "description": "sb5",
         "id": "INCIDENT_ROLE01",
-        "instruction": "sb7",
+        "instructions": "sb7",
         "name": "sb8",
         "required": false,
         "role_type": "sba",
@@ -27,7 +27,7 @@
         "created_at": "s10e",
         "description": "s10f",
         "id": "INCIDENT_ROLE02",
-        "instruction": "s111",
+        "instructions": "s111",
         "name": "s112",
         "required": false,
         "role_type": "s114",
@@ -41,13 +41,65 @@
       "incident_role_ref01": {
         "created_at": "s168",
         "description": "s169",
-        "instruction": "s16b",
+        "instructions": "s16b",
         "name": "s16c",
         "required": false,
         "role_type": "s16e",
         "shortform": "s16f",
         "updated_at": "s170"
       }
+    }
+  },
+  "requests": {
+    "POST /v1/incident_roles": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v2/incident_roles": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/incident_roles": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/incident_roles": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/incident_roles/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/incident_roles/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v1/incident_roles/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/incident_roles/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v1/incident_roles/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/incident_roles/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

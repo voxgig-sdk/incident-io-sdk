@@ -1,0 +1,22 @@
+# BasicCallRoutesCreateOptionResultV2Flow
+
+main: kit: flow: BasicCallRoutesCreateOptionResultV2Flow:
+{
+  entity: "call_routes_create_option_result_v2",
+  kind: "basic",
+  name: "BasicCallRoutesCreateOptionResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "call_routes_create_option_result_v2_ref01"
+      }
+
+      m: {
+        call_route_id: "call_route01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicCallRoutesCreateOptionResultV2Flow"
+}

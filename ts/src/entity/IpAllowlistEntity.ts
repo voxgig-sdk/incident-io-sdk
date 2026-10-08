@@ -20,7 +20,6 @@ import type {
   IpAllowlistUpdateData,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class IpAllowlistEntity extends IncidentIoEntityBase<IpAllowlist> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -37,14 +36,15 @@ class IpAllowlistEntity extends IncidentIoEntityBase<IpAllowlist> {
 
 
 
-  async load(this: any, reqmatch?: IpAllowlistLoadMatch, ctrl?: Control): Promise<IpAllowlist> {
+  async load(this: any, reqmatch?: IpAllowlistLoadMatch, ctrl?: Control): Promise<IpAllowlistEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -128,12 +128,20 @@ class IpAllowlistEntity extends IncidentIoEntityBase<IpAllowlist> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -142,7 +150,7 @@ class IpAllowlistEntity extends IncidentIoEntityBase<IpAllowlist> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IpAllowlist> return stays clean under strict null checks.
+        // Promise<IpAllowlistEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -152,14 +160,15 @@ class IpAllowlistEntity extends IncidentIoEntityBase<IpAllowlist> {
 
 
 
-  async update(this: any, reqdata?: IpAllowlistUpdateData, ctrl?: Control): Promise<IpAllowlist> {
+  async update(this: any, reqdata?: IpAllowlistUpdateData, ctrl?: Control): Promise<IpAllowlistEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -244,12 +253,20 @@ class IpAllowlistEntity extends IncidentIoEntityBase<IpAllowlist> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -258,11 +275,12 @@ class IpAllowlistEntity extends IncidentIoEntityBase<IpAllowlist> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<IpAllowlist> return stays clean under strict null checks.
+        // Promise<IpAllowlistEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

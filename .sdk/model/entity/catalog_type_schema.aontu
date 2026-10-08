@@ -4,138 +4,192 @@ main: kit: entity: catalog_type_schema: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "annotation"
-      req: true
-      type: "`$OBJECT`"
+  fields: {
+    annotations: {
+      h: "Annotations"
+      n: "annotations"
+      r: true
+      sh: "Annotations that can track metadata about this type"
+      t: "`$OBJECT`"
     }
-    {
-      name: "attribute"
-      req: true
-      type: "`$ARRAY`"
+    attributes: {
+      h: "Attributes"
+      n: "attributes"
+      r: true
+      t: "`$ARRAY`"
     }
-    {
-      name: "category"
-      req: true
-      type: "`$ARRAY`"
+    categories: {
+      h: "Categories"
+      n: "categories"
+      r: true
+      sh: "What categories is this type considered part of"
+      t: "`$ARRAY`"
     }
-    {
-      name: "color"
-      req: true
-      type: "`$STRING`"
+    color: {
+      h: "Color"
+      n: "color"
+      r: true
+      sh: "Sets the display color of this type in the dashboard"
+      t: "`$STRING`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this type was created"
+      t: "`$STRING`"
     }
-    {
-      name: "description"
-      req: true
-      type: "`$STRING`"
+    description: {
+      h: "Description"
+      n: "description"
+      r: true
+      sh: "Human readble description of this type"
+      t: "`$STRING`"
     }
-    {
-      name: "dynamic_resource_parameter"
-      req: false
-      type: "`$STRING`"
+    dynamic_resource_parameter: {
+      h: "Dynamic Resource Parameter"
+      n: "dynamic_resource_parameter"
+      r: false
+      sh: "If this is a dynamic catalog type, this will be the unique parameter for identitfying this resource externally."
+      t: "`$STRING`"
     }
-    {
-      name: "engine_resource_type"
-      req: true
-      type: "`$STRING`"
+    engine_resource_type: {
+      h: "Engine Resource Type"
+      n: "engine_resource_type"
+      r: true
+      sh: "The way this resource type is referenced in the engine, as used when setting the type of an alert attribute"
+      t: "`$STRING`"
     }
-    {
-      name: "estimated_count"
-      req: false
-      type: "`$INTEGER`"
+    estimated_count: {
+      fo: "int64"
+      h: "Estimated Count"
+      n: "estimated_count"
+      r: false
+      sh: "If populated, gives an estimated count of entries for this type"
+      t: "`$INTEGER`"
     }
-    {
-      name: "icon"
-      req: true
-      type: "`$STRING`"
+    icon: {
+      h: "Icon"
+      n: "icon"
+      r: true
+      sh: "Sets the display icon of this type in the dashboard"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "ID of this catalog type"
+      t: "`$STRING`"
     }
-    {
-      name: "is_editable"
-      req: true
-      type: "`$BOOLEAN`"
+    is_editable: {
+      h: "Is Editable"
+      n: "is_editable"
+      r: true
+      sh: "Catalog types that are synced with external resources can't be edited"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "is_team_type"
-      req: false
-      type: "`$BOOLEAN`"
+    is_team_type: {
+      h: "Is Team Type"
+      n: "is_team_type"
+      r: false
+      sh: "Whether this catalog type is the designated team type in team settings"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "last_synced_at"
-      req: false
-      type: "`$STRING`"
+    last_synced_at: {
+      fo: "date-time"
+      h: "Last Synced At"
+      n: "last_synced_at"
+      r: false
+      sh: "When this type was last synced (if it's ever been sync'd)"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Name is the human readable name of this type"
+      t: "`$STRING`"
     }
-    {
-      name: "owning_team_id"
-      req: false
-      type: "`$ARRAY`"
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      r: false
+      sh: "IDs of the teams that own this catalog type"
+      t: "`$ARRAY`"
     }
-    {
-      name: "ranked"
-      req: true
-      type: "`$BOOLEAN`"
+    ranked: {
+      h: "Ranked"
+      n: "ranked"
+      r: true
+      sh: "If this type should be ranked"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "registry_type"
-      req: false
-      type: "`$STRING`"
+    registry_type: {
+      h: "Registry Type"
+      n: "registry_type"
+      r: false
+      sh: "The registry resource this type is synced from, if any"
+      t: "`$STRING`"
     }
-    {
-      name: "required_integration"
-      req: false
-      type: "`$ARRAY`"
+    required_integrations: {
+      h: "Required Integrations"
+      n: "required_integrations"
+      r: false
+      sh: "If populated, the integrations required for this type"
+      t: "`$ARRAY`"
     }
-    {
-      name: "schema"
-      req: true
-      type: "`$OBJECT`"
+    schema: {
+      h: "Schema"
+      n: "schema"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "semantic_type"
-      req: true
-      type: "`$STRING`"
+    semantic_type: {
+      h: "Semantic Type"
+      n: "semantic_type"
+      r: true
+      sh: "This type has been deprecated, and will always be empty."
+      t: "`$STRING`"
     }
-    {
-      name: "source_repo_url"
-      req: false
-      type: "`$STRING`"
+    source_repo_url: {
+      h: "Source Repo Url"
+      n: "source_repo_url"
+      r: false
+      sh: "The url of the external repository where this type is managed"
+      t: "`$STRING`"
     }
-    {
-      name: "type_name"
-      req: true
-      type: "`$STRING`"
+    type_name: {
+      h: "Type Name"
+      n: "type_name"
+      r: true
+      sh: "The type name of this catalog type, to be used when defining attributes."
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this type was last updated"
+      t: "`$STRING`"
     }
-    {
-      name: "use_name_as_identifier"
-      req: true
-      type: "`$BOOLEAN`"
+    use_name_as_identifier: {
+      h: "Use Name As Identifier"
+      n: "use_name_as_identifier"
+      r: true
+      sh: "If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "version"
-      req: true
-      type: "`$INTEGER`"
+    version: {
+      fo: "int64"
+      h: "Version"
+      n: "version"
+      r: true
+      t: "`$INTEGER`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -148,75 +202,121 @@ main: kit: entity: catalog_type_schema: {
       name: "create"
       points: [
         {
-          args: {
+          bf: [
+            "attributes"
+            "version"
+          ]
+          co: {
+            id: "POST /v2/catalog_types/{id}/actions/update_schema"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "catalog_type_id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "catalog_type_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "POST"
-          orig: "/v2/catalog_types/{id}/actions/update_schema"
-          parts: [
-            "v2"
-            "catalog_types"
-            "{catalog_type_id}"
-            "actions"
-            "update_schema"
-          ]
-          rename: {
-            param: {
-              id: "catalog_type_id"
-            }
-          }
-          select: {
+          m: "POST"
+          o: "/v2/catalog_types/{id}/actions/update_schema"
+          q: {
             exist: [
               "catalog_type_id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              id: "catalog_type_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "catalog_types"
+            }
+            {
+              var: "catalog_type_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "update_schema"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.catalog_type`"
           }
         }
         {
-          args: {
+          bf: [
+            "attributes"
+            "version"
+          ]
+          co: {
+            id: "POST /v3/catalog_types/{id}/actions/update_schema"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "catalog_type_id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "catalog_type_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "POST"
-          orig: "/v3/catalog_types/{id}/actions/update_schema"
-          parts: [
-            "v3"
-            "catalog_types"
-            "{catalog_type_id}"
-            "actions"
-            "update_schema"
-          ]
-          rename: {
-            param: {
-              id: "catalog_type_id"
-            }
-          }
-          select: {
+          m: "POST"
+          o: "/v3/catalog_types/{id}/actions/update_schema"
+          q: {
             exist: [
               "catalog_type_id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              id: "catalog_type_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "catalog_types"
+            }
+            {
+              var: "catalog_type_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "update_schema"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.catalog_type`"
           }
@@ -225,14 +325,9 @@ main: kit: entity: catalog_type_schema: {
     }
   }
 
-  relations: {
-    ancestors: [
-      [
-        "catalog_type"
-      ]
-    ]
-  }
 
-
+  relations: ancestors: [
+    [path("$.main.kit.entity.catalog_type")]
+  ]
 
 }

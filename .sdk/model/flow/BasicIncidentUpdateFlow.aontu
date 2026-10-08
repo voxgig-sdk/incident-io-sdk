@@ -7,8 +7,16 @@ main: kit: flow: BasicIncidentUpdateFlow:
   name: "BasicIncidentUpdateFlow",
   step: [
     {
-      op: "list",
-      valid: [
+      i: {
+        ref: "incident_update_ref01"
+      }
+
+      o: "create"
+    }
+
+    {
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {

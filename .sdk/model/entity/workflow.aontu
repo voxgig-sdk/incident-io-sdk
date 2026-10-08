@@ -4,157 +4,219 @@ main: kit: entity: workflow: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "annotation"
-      req: false
-      type: "`$OBJECT`"
+  fields: {
+    annotations: {
+      h: "Annotations"
+      n: "annotations"
+      r: false
+      sh: "Annotations that track metadata about this resource"
+      t: "`$OBJECT`"
     }
-    {
-      name: "condition_group"
-      req: true
-      type: "`$ARRAY`"
-    }
-    {
-      name: "continue_on_step_error"
-      req: true
-      type: "`$BOOLEAN`"
-    }
-    {
-      name: "delay"
-      req: true
-      type: "`$OBJECT`"
-    }
-    {
-      name: "expression"
-      req: true
-      type: "`$ARRAY`"
-    }
-    {
-      name: "folder"
-      req: false
-      type: "`$STRING`"
-    }
-    {
-      name: "form_field"
-      req: false
-      type: "`$ARRAY`"
-    }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
-    }
-    {
-      name: "include_private_escalation"
-      op: {
-        list: {
-          req: true
-          type: "`$BOOLEAN`"
-        }
-      }
-      req: false
-      type: "`$BOOLEAN`"
-    }
-    {
-      name: "include_private_incident"
-      op: {
-        list: {
-          req: true
-          type: "`$BOOLEAN`"
-        }
-      }
-      req: false
-      type: "`$BOOLEAN`"
-    }
-    {
-      name: "management_meta"
-      req: true
-      type: "`$OBJECT`"
-    }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
-    }
-    {
-      name: "once_for"
-      req: true
-      type: "`$ARRAY`"
-    }
-    {
-      name: "owning_team_id"
-      req: false
-      type: "`$ARRAY`"
-    }
-    {
-      name: "private_incident_scope"
+    auto_run_mode: {
+      h: "Auto Run Mode"
+      n: "auto_run_mode"
       op: {
         list: {
           req: true
           type: "`$STRING`"
         }
       }
-      req: false
-      type: "`$STRING`"
+      r: false
+      sh: "Whether the workflow runs immediately, or asks for confirmation in the incident channel first."
+      t: "`$STRING`"
     }
-    {
-      name: "runs_from"
-      req: false
-      type: "`$STRING`"
+    condition_groups: {
+      h: "Condition Groups"
+      n: "condition_groups"
+      r: true
+      sh: "Conditions that apply to the workflow trigger"
+      t: "`$ARRAY`"
     }
-    {
-      name: "runs_on_incident"
-      req: true
-      type: "`$STRING`"
+    continue_on_step_error: {
+      h: "Continue On Step Error"
+      n: "continue_on_step_error"
+      r: true
+      sh: "Whether to continue executing the workflow if a step fails"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "runs_on_incident_mode"
-      req: true
-      type: "`$ARRAY`"
+    delay: {
+      h: "Delay"
+      n: "delay"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "shortform"
-      req: false
-      type: "`$STRING`"
+    expressions: {
+      h: "Expressions"
+      n: "expressions"
+      r: true
+      sh: "The expressions to use in the workflow"
+      t: "`$ARRAY`"
     }
-    {
-      name: "skip_step_upgrade"
-      req: false
-      type: "`$BOOLEAN`"
+    folder: {
+      h: "Folder"
+      n: "folder"
+      r: false
+      sh: "Folder to display the workflow in"
+      t: "`$STRING`"
     }
-    {
-      name: "state"
+    form_fields: {
+      h: "Form Fields"
+      n: "form_fields"
+      r: false
+      sh: "User-configured form fields available in the workflow scope."
+      t: "`$ARRAY`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for the workflow"
+      t: "`$STRING`"
+    }
+    include_private_escalations: {
+      h: "Include Private Escalations"
+      n: "include_private_escalations"
+      op: {
+        list: {
+          req: true
+          type: "`$BOOLEAN`"
+        }
+      }
+      r: false
+      sh: "Whether to include private escalations"
+      t: "`$BOOLEAN`"
+    }
+    include_private_incidents: {
+      h: "Include Private Incidents"
+      n: "include_private_incidents"
+      op: {
+        list: {
+          req: true
+          type: "`$BOOLEAN`"
+        }
+      }
+      r: false
+      sh: "DEPRECATED: use `private_incident_scope` instead."
+      t: "`$BOOLEAN`"
+    }
+    management_meta: {
+      h: "Management Meta"
+      n: "management_meta"
+      r: true
+      t: "`$OBJECT`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Name provided by the user when creating the workflow"
+      t: "`$STRING`"
+    }
+    once_for: {
+      h: "Once For"
+      n: "once_for"
+      r: true
+      sh: "This workflow will run 'once for' a list of references"
+      t: "`$ARRAY`"
+    }
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      r: false
+      sh: "IDs of the teams that own this workflow"
+      t: "`$ARRAY`"
+    }
+    private_incident_scope: {
+      h: "Private Incident Scope"
+      n: "private_incident_scope"
       op: {
         list: {
           req: true
           type: "`$STRING`"
         }
       }
-      req: false
-      type: "`$STRING`"
+      r: false
+      sh: "Which private incidents this workflow acts on: every private incident (all), those an owning team can see (owning_teams), or none"
+      t: "`$STRING`"
     }
-    {
-      name: "step"
-      req: true
-      type: "`$ARRAY`"
+    runs_from: {
+      fo: "date-time"
+      h: "Runs From"
+      n: "runs_from"
+      r: false
+      sh: "The time from which this workflow will run on incidents"
+      t: "`$STRING`"
     }
-    {
-      name: "trigger"
-      req: true
-      type: "`$STRING`"
+    runs_on_incident_modes: {
+      h: "Runs On Incident Modes"
+      n: "runs_on_incident_modes"
+      r: true
+      sh: "Which incident modes should this workflow run on?"
+      t: "`$ARRAY`"
     }
-    {
-      name: "version"
-      req: true
-      type: "`$INTEGER`"
+    runs_on_incidents: {
+      h: "Runs On Incidents"
+      n: "runs_on_incidents"
+      r: true
+      sh: "Which incidents should the workflow be applied to?"
+      t: "`$STRING`"
     }
-    {
-      name: "workflow"
-      req: true
-      type: "`$OBJECT`"
+    shortform: {
+      h: "Shortform"
+      n: "shortform"
+      r: false
+      sh: "The shortform used to trigger this workflow (only applicable for manual triggers)"
+      t: "`$STRING`"
     }
-  ]
+    skip_step_upgrades: {
+      h: "Skip Step Upgrades"
+      n: "skip_step_upgrades"
+      r: false
+      sh: "Skips workflow step upgrades, when the parameters for an existing workflow step change"
+      t: "`$BOOLEAN`"
+    }
+    state: {
+      h: "State"
+      n: "state"
+      op: {
+        list: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      r: false
+      sh: "What state this workflow is in"
+      t: "`$STRING`"
+    }
+    steps: {
+      h: "Steps"
+      n: "steps"
+      r: true
+      sh: "Steps that are executed as part of the workflow"
+      t: "`$ARRAY`"
+    }
+    trigger: {
+      h: "Trigger"
+      n: "trigger"
+      r: true
+      sh: "Trigger to set on the workflow"
+      t: "`$STRING`"
+    }
+    version: {
+      fo: "int64"
+      h: "Version"
+      n: "version"
+      r: true
+      sh: "Revision of the workflow, uniquely identifying it's version"
+      t: "`$INTEGER`"
+    }
+    workflow: {
+      h: "Workflow"
+      n: "workflow"
+      r: true
+      t: "`$OBJECT`"
+    }
+  }
 
   id: {
     field: "id"
@@ -167,13 +229,48 @@ main: kit: entity: workflow: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/workflows"
-          parts: [
-            "v2"
-            "workflows"
+          bf: [
+            "annotations"
+            "auto_run_mode"
+            "condition_groups"
+            "continue_on_step_error"
+            "delay"
+            "expressions"
+            "folder"
+            "form_fields"
+            "include_private_escalations"
+            "include_private_incidents"
+            "name"
+            "once_for"
+            "owning_team_ids"
+            "private_incident_scope"
+            "runs_on_incident_modes"
+            "runs_on_incidents"
+            "shortform"
+            "state"
+            "steps"
+            "trigger"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/workflows"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/workflows"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "workflows"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.workflow`"
           }
@@ -184,13 +281,26 @@ main: kit: entity: workflow: {
       name: "list"
       points: [
         {
-          method: "GET"
-          orig: "/v2/workflows"
-          parts: [
-            "v2"
-            "workflows"
+          co: {
+            id: "GET /v2/workflows"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v2/workflows"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "workflows"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.workflows`"
           }
@@ -201,42 +311,56 @@ main: kit: entity: workflow: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/workflows/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
             query: [
               {
-                example: false
-                kind: "query"
-                name: "skip_step_upgrade"
-                orig: "skip_step_upgrade"
-                reqd: false
-                type: "`$BOOLEAN`"
+                ex: false
+                k: "query"
+                n: "skip_step_upgrade"
+                or: "skip_step_upgrades"
+                r: false
+                t: "`$BOOLEAN`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/workflows/{id}"
-          parts: [
-            "v2"
-            "workflows"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/workflows/{id}"
+          q: {
             exist: [
               "id"
-              "skip_step_upgrade"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "workflows"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.workflow`"
           }
@@ -247,31 +371,42 @@ main: kit: entity: workflow: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v2/workflows/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/workflows/{id}"
-          parts: [
-            "v2"
-            "workflows"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/workflows/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "workflows"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -282,31 +417,68 @@ main: kit: entity: workflow: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "annotations"
+            "auto_run_mode"
+            "condition_groups"
+            "continue_on_step_error"
+            "delay"
+            "expressions"
+            "folder"
+            "form_fields"
+            "include_private_escalations"
+            "include_private_incidents"
+            "name"
+            "once_for"
+            "owning_team_ids"
+            "private_incident_scope"
+            "runs_on_incident_modes"
+            "runs_on_incidents"
+            "shortform"
+            "skip_step_upgrades"
+            "state"
+            "steps"
+          ]
+          co: {
+            id: "PUT /v2/workflows/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/workflows/{id}"
-          parts: [
-            "v2"
-            "workflows"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/workflows/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "workflows"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.workflow`"
           }

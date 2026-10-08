@@ -1,0 +1,120 @@
+# Entity: call_transcript_entry
+
+main: kit: entity: call_transcript_entry: {
+
+  alias: field: {}
+
+  fields: {
+    content: {
+      h: "Content"
+      n: "content"
+      r: true
+      sh: "What was said"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this transcript entry"
+      t: "`$STRING`"
+    }
+    medium: {
+      h: "Medium"
+      n: "medium"
+      r: true
+      sh: "Whether this entry was spoken aloud or sent as an in-call chat message"
+      t: "`$STRING`"
+    }
+    participant_name: {
+      h: "Participant Name"
+      n: "participant_name"
+      r: true
+      sh: "Name of the participant who spoke or sent the message, as reported by the call provider"
+      t: "`$STRING`"
+    }
+    timestamp: {
+      fo: "date-time"
+      h: "Timestamp"
+      n: "timestamp"
+      r: true
+      sh: "When the participant started speaking"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "call_transcript_entry"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/call_transcript_entries"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "call_session_id"
+                or: "call_session_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/call_transcript_entries"
+          q: {
+            exist: [
+              "call_session_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "call_transcript_entries"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.call_transcript_entries`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

@@ -1,0 +1,112 @@
+# Entity: status_page_linked_response_incident_v1
+
+main: kit: entity: status_page_linked_response_incident_v1: {
+
+  alias: field: {}
+
+  fields: {
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "ID of the Response incident"
+      t: "`$STRING`"
+    }
+    linked_at: {
+      fo: "date-time"
+      h: "Linked At"
+      n: "linked_at"
+      r: true
+      sh: "When the Response incident was linked to the status page incident"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "status_page_linked_response_incident_v1"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v1/status-pages/{id}/incidents/{incident_id}/response-incidents"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "abc123"
+                k: "param"
+                n: "incident_id"
+                or: "incident_id"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                ex: "abc123"
+                k: "param"
+                n: "status_page_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v1/status-pages/{id}/incidents/{incident_id}/response-incidents"
+          q: {
+            exist: [
+              "incident_id"
+              "status_page_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "status_page_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "status-pages"
+            }
+            {
+              var: "status_page_id"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "incident_id"
+            }
+            {
+              lit: "response-incidents"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incidents`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.status_page") path("$.main.kit.entity.incident")]
+  ]
+
+}

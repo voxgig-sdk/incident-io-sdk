@@ -7,7 +7,7 @@ class EntityOperation {
   /**
    * @param {EntityNameUpdateData} [reqdata]
    * @param {Object} [ctrl]
-   * @returns {Promise<EntityName>}
+   * @returns {Promise<EntyClass>}
    */
   async update(reqdata, ctrl) {
 
@@ -16,7 +16,8 @@ class EntityOperation {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -89,10 +90,24 @@ class EntityOperation {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err) {
-      // #PreUnexpected-Hook
+      // What a hook throws here must not escape the cleaning below.
+      try {
+        // #PreUnexpected-Hook
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 

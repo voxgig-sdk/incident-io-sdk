@@ -1,0 +1,303 @@
+# Entity: announcement_template
+
+main: kit: entity: announcement_template: {
+
+  alias: field: {}
+
+  fields: {
+    actions: {
+      h: "Actions"
+      n: "actions"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "Actions shown on the announcement post, in rank order"
+      t: "`$ARRAY`"
+    }
+    fields: {
+      h: "Fields"
+      n: "fields"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "Fields shown on the announcement post, in rank order"
+      t: "`$ARRAY`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this announcement template"
+      t: "`$STRING`"
+    }
+    is_default: {
+      h: "Is Default"
+      n: "is_default"
+      r: true
+      sh: "Whether this is the organisation's default template, used by rules that don't choose one"
+      t: "`$BOOLEAN`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Name of this announcement template"
+      t: "`$STRING`"
+    }
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "IDs of the teams that own this template"
+      t: "`$ARRAY`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "announcement_template"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "actions"
+            "fields"
+            "name"
+            "owning_team_ids"
+          ]
+          co: {
+            id: "POST /v2/announcement_templates"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/announcement_templates"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_templates"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.announcement_template`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/announcement_templates"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v2/announcement_templates"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_templates"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.announcement_templates`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/announcement_templates/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/announcement_templates/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_templates"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.announcement_template`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v2/announcement_templates/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v2/announcement_templates/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_templates"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "actions"
+            "fields"
+            "name"
+            "owning_team_ids"
+          ]
+          co: {
+            id: "PUT /v2/announcement_templates/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/announcement_templates/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_templates"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.announcement_template`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

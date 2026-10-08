@@ -1,0 +1,40 @@
+{
+  "existing": {
+    "alert_sources_v2": {
+      "ALERT_SOURCES_V200": {
+        "owning_team_ids": [],
+        "source_type": "s1f",
+        "template": {},
+        "id": "ALERT_SOURCES_V200"
+      },
+      "ALERT_SOURCES_V201": {
+        "owning_team_ids": [],
+        "source_type": "s3d",
+        "template": {},
+        "id": "ALERT_SOURCES_V201"
+      },
+      "ALERT_SOURCES_V202": {
+        "owning_team_ids": [],
+        "source_type": "s5b",
+        "template": {},
+        "id": "ALERT_SOURCES_V202"
+      }
+    }
+  },
+  "new": {
+    "alert_sources_v2": {
+      "alert_sources_v2_ref01": {
+        "owning_team_ids": [],
+        "source_type": "s79",
+        "template": {}
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/alert_sources/actions/validate": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

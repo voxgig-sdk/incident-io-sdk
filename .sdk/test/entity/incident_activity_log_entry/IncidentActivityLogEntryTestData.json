@@ -1,0 +1,52 @@
+{
+  "existing": {
+    "incident_activity_log_entry": {
+      "INCIDENT_ACTIVITY_LOG_ENTRY00": {
+        "content": {},
+        "created_at": "s47",
+        "id": "INCIDENT_ACTIVITY_LOG_ENTRY00",
+        "incident_id": "INCIDENT01",
+        "occurred_at": "s4a",
+        "title": "s4b",
+        "type": "s4c"
+      },
+      "INCIDENT_ACTIVITY_LOG_ENTRY01": {
+        "content": {},
+        "created_at": "s8d",
+        "id": "INCIDENT_ACTIVITY_LOG_ENTRY01",
+        "incident_id": "INCIDENT01",
+        "occurred_at": "s90",
+        "title": "s91",
+        "type": "s92"
+      },
+      "INCIDENT_ACTIVITY_LOG_ENTRY02": {
+        "content": {},
+        "created_at": "sd3",
+        "id": "INCIDENT_ACTIVITY_LOG_ENTRY02",
+        "incident_id": "INCIDENT01",
+        "occurred_at": "sd6",
+        "title": "sd7",
+        "type": "sd8"
+      }
+    }
+  },
+  "new": {
+    "incident_activity_log_entry": {
+      "incident_activity_log_entry_ref01": {
+        "content": {},
+        "created_at": "s119",
+        "incident_id": "INCIDENT01",
+        "occurred_at": "s11c",
+        "title": "s11d",
+        "type": "s11e"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/incident_activity_log_entries": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

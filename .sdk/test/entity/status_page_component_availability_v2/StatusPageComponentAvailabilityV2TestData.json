@@ -1,0 +1,52 @@
+{
+  "existing": {
+    "status_page_component_availability_v2": {
+      "STATUS_PAGE_COMPONENT_AVAILABILITY_V200": {
+        "availability_percent": "s3c",
+        "component_id": "COMPONENT01",
+        "data_available_since": "s3e",
+        "end_at": "s3f",
+        "start_at": "s40",
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGE_COMPONENT_AVAILABILITY_V200"
+      },
+      "STATUS_PAGE_COMPONENT_AVAILABILITY_V201": {
+        "availability_percent": "s78",
+        "component_id": "COMPONENT01",
+        "data_available_since": "s7a",
+        "end_at": "s7b",
+        "start_at": "s7c",
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGE_COMPONENT_AVAILABILITY_V201"
+      },
+      "STATUS_PAGE_COMPONENT_AVAILABILITY_V202": {
+        "availability_percent": "sb4",
+        "component_id": "COMPONENT01",
+        "data_available_since": "sb6",
+        "end_at": "sb7",
+        "start_at": "sb8",
+        "status_page_id": "STATUS_PAGE01",
+        "id": "STATUS_PAGE_COMPONENT_AVAILABILITY_V202"
+      }
+    }
+  },
+  "new": {
+    "status_page_component_availability_v2": {
+      "status_page_component_availability_v2_ref01": {
+        "availability_percent": "sf0",
+        "component_id": "COMPONENT01",
+        "data_available_since": "sf2",
+        "end_at": "sf3",
+        "start_at": "sf4",
+        "status_page_id": "STATUS_PAGE01"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/status_pages/{status_page_id}/components/{component_id}/availability": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

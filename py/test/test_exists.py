@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# IncidentIo SDK exists test
 
 import pytest
 from incidentio_sdk import IncidentIoSDK

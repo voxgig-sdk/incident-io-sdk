@@ -1,0 +1,35 @@
+{
+  "existing": {
+    "call_routes_v2": {
+      "CALL_ROUTES_V200": {
+        "id": "CALL_ROUTES_V200",
+        "call_route_id": "CALL_ROUTE01"
+      },
+      "CALL_ROUTES_V201": {
+        "id": "CALL_ROUTES_V201",
+        "call_route_id": "CALL_ROUTE01"
+      },
+      "CALL_ROUTES_V202": {
+        "id": "CALL_ROUTES_V202",
+        "call_route_id": "CALL_ROUTE01"
+      }
+    }
+  },
+  "new": {
+    "call_routes_v2": {
+      "call_routes_v2_ref01": {}
+    }
+  },
+  "requests": {
+    "DELETE /v2/call_routes/{call_route_id}/allowed_callers/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/call_routes/{call_route_id}/options/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

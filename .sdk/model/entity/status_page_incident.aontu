@@ -4,63 +4,86 @@ main: kit: entity: status_page_incident: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "component_impact"
-      req: true
-      type: "`$ARRAY`"
+  fields: {
+    component_impacts: {
+      h: "Component Impacts"
+      n: "component_impacts"
+      r: true
+      sh: "A list of time periods that this status page incident had an impact on a component"
+      t: "`$ARRAY`"
     }
-    {
-      name: "component_status"
-      req: false
-      type: "`$ARRAY`"
+    component_statuses: {
+      h: "Component Statuses"
+      n: "component_statuses"
+      r: false
+      sh: "An array of mappings from component ID to current component status"
+      t: "`$ARRAY`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "A unique ID for this status page incident"
+      t: "`$STRING`"
     }
-    {
-      name: "idempotency_key"
-      req: true
-      type: "`$STRING`"
+    idempotency_key: {
+      h: "Idempotency Key"
+      n: "idempotency_key"
+      r: true
+      sh: "A unique key to de-duplicate requests."
+      t: "`$STRING`"
     }
-    {
-      name: "incident_status"
-      req: true
-      type: "`$STRING`"
+    incident_status: {
+      h: "Incident Status"
+      n: "incident_status"
+      r: true
+      sh: "Current status for this incident"
+      t: "`$STRING`"
     }
-    {
-      name: "message"
-      req: true
-      type: "`$STRING`"
+    message: {
+      h: "Message"
+      n: "message"
+      r: true
+      sh: "Markdown initial update on this status page incident"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "A title for the incident"
+      t: "`$STRING`"
     }
-    {
-      name: "notify_subscriber"
-      req: true
-      type: "`$BOOLEAN`"
+    notify_subscribers: {
+      h: "Notify Subscribers"
+      n: "notify_subscribers"
+      r: true
+      sh: "Whether to notify subscribers about this status page incident."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "published_at"
-      req: true
-      type: "`$STRING`"
+    published_at: {
+      fo: "date-time"
+      h: "Published At"
+      n: "published_at"
+      r: true
+      sh: "When this status page incident was published to the status page"
+      t: "`$STRING`"
     }
-    {
-      name: "status_page_id"
-      req: true
-      type: "`$STRING`"
+    status_page_id: {
+      h: "Status Page Id"
+      n: "status_page_id"
+      r: true
+      sh: "The ID of the corresponding status page"
+      t: "`$STRING`"
     }
-    {
-      name: "update"
-      req: true
-      type: "`$ARRAY`"
+    updates: {
+      h: "Updates"
+      n: "updates"
+      r: true
+      sh: "A list of updates posted to this status page incident"
+      t: "`$ARRAY`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -73,13 +96,35 @@ main: kit: entity: status_page_incident: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/status_page_incidents"
-          parts: [
-            "v2"
-            "status_page_incidents"
+          bf: [
+            "component_statuses"
+            "idempotency_key"
+            "incident_status"
+            "message"
+            "name"
+            "notify_subscribers"
+            "status_page_id"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/status_page_incidents"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/status_page_incidents"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_incidents"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.status_page_incident`"
           }
@@ -90,95 +135,101 @@ main: kit: entity: status_page_incident: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/status_page_incidents"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG1"
-                kind: "query"
-                name: "component_id"
-                orig: "component_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG1"
+                k: "query"
+                n: "component_id"
+                or: "component_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "2021-08-17T13:28:57.801578Z"
-                kind: "query"
-                name: "end_at"
-                orig: "end_at"
-                reqd: false
-                type: "`$STRING`"
+                ex: "2021-08-17T13:28:57.801578Z"
+                k: "query"
+                n: "end_at"
+                or: "end_at"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG2"
-                kind: "query"
-                name: "group_id"
-                orig: "group_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG2"
+                k: "query"
+                n: "group_id"
+                or: "group_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
               {
-                example: "2021-08-17T13:28:57.801578Z"
-                kind: "query"
-                name: "start_at"
-                orig: "start_at"
-                reqd: false
-                type: "`$STRING`"
+                ex: "2021-08-17T13:28:57.801578Z"
+                k: "query"
+                n: "start_at"
+                or: "start_at"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "status_page_id"
-                orig: "status_page_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "status_page_id"
+                or: "status_page_id"
+                r: true
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG3"
-                kind: "query"
-                name: "sub_page_id"
-                orig: "sub_page_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG3"
+                k: "query"
+                n: "sub_page_id"
+                or: "sub_page_id"
+                r: false
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/status_page_incidents"
-          parts: [
-            "v2"
-            "status_page_incidents"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/status_page_incidents"
+          q: {
             exist: [
-              "after"
-              "component_id"
-              "end_at"
-              "group_id"
-              "page_size"
-              "start_at"
               "status_page_id"
-              "sub_page_id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_incidents"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.status_page_incidents`"
           }
         }
       ]
@@ -187,36 +238,51 @@ main: kit: entity: status_page_incident: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/status_page_incidents/{status_page_incident_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG1"
-                kind: "param"
-                name: "id"
-                orig: "status_page_incident_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG1"
+                k: "param"
+                n: "id"
+                or: "status_page_incident_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/status_page_incidents/{status_page_incident_id}"
-          parts: [
-            "v2"
-            "status_page_incidents"
-            "{id}"
-          ]
-          rename: {
-            param: {
-              status_page_incident_id: "id"
-            }
-          }
-          select: {
+          m: "GET"
+          o: "/v2/status_page_incidents/{status_page_incident_id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              status_page_incident_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_incidents"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.status_page_incident`"
           }
@@ -227,36 +293,54 @@ main: kit: entity: status_page_incident: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "name"
+          ]
+          co: {
+            id: "PUT /v2/status_page_incidents/{status_page_incident_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG1"
-                kind: "param"
-                name: "id"
-                orig: "status_page_incident_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG1"
+                k: "param"
+                n: "id"
+                or: "status_page_incident_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/status_page_incidents/{status_page_incident_id}"
-          parts: [
-            "v2"
-            "status_page_incidents"
-            "{id}"
-          ]
-          rename: {
-            param: {
-              status_page_incident_id: "id"
-            }
-          }
-          select: {
+          m: "PUT"
+          o: "/v2/status_page_incidents/{status_page_incident_id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              status_page_incident_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_incidents"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.status_page_incident`"
           }

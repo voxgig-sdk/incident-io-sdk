@@ -7,15 +7,15 @@ main: kit: flow: BasicCatalogTypeSchemaFlow:
   name: "BasicCatalogTypeSchemaFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "catalog_type_schema_ref01"
       }
 
-      match: {
+      m: {
         catalog_type_id: "catalog_type01"
       }
 
-      op: "create"
+      o: "create"
     }
   ],
   "key$": "BasicCatalogTypeSchemaFlow"

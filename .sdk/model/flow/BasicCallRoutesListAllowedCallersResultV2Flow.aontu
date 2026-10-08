@@ -1,0 +1,26 @@
+# BasicCallRoutesListAllowedCallersResultV2Flow
+
+main: kit: flow: BasicCallRoutesListAllowedCallersResultV2Flow:
+{
+  entity: "call_routes_list_allowed_callers_result_v2",
+  kind: "basic",
+  name: "BasicCallRoutesListAllowedCallersResultV2Flow",
+  step: [
+    {
+      m: {
+        call_route_id: "call_route01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "call_routes_list_allowed_callers_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCallRoutesListAllowedCallersResultV2Flow"
+}

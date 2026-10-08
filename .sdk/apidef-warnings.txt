@@ -1,21 +1,494 @@
 {
   point: "warning"
-  when: 1786231451396
-  err: {
-    name: "TypeError"
-    message: "Cannot set properties of undefined (setting 'op')"
-    stack: `TypeError: Cannot set properties of undefined (setting 'op')
-    at /home/richard/Projects/voxgig/apidef/ts/dist/transform/operation.js:26:32
-    at /home/richard/Projects/voxgig/apidef/ts/node_modules/jostraca/dist/util/basic.js:91:43
-    at Array.map (<anonymous>)
-    at each (/home/richard/Projects/voxgig/apidef/ts/node_modules/jostraca/dist/util/basic.js:91:23)
-    at operationTransform (/home/richard/Projects/voxgig/apidef/ts/dist/transform/operation.js:10:25)
-    at Object.generate (/home/richard/Projects/voxgig/apidef/ts/dist/apidef.js:192:54)
-    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
-    at async Object.build [as action] (/home/richard/Projects/voxgig/apidef/ts/dist/apidef.js:346:16)
-    at async Object.local_producer [as build] (/home/richard/Projects/voxgig-sdk/incident-io-sdk/.sdk/node_modules/@voxgig/model/dist/producer/local.js:60:24)
-    at async BuildImpl.run (/home/richard/Projects/voxgig-sdk/incident-io-sdk/.sdk/node_modules/@voxgig/model/dist/build.js:60:30)`
-  }
+  note: "Points POST /v2/actions and POST /v3/actions on entity=action op=create have the same selector (exist: none), so only POST /v2/actions is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "action"
+  op: "create"
+  points: [
+    "POST /v2/actions"
+    "POST /v3/actions"
+  ]
 
-  note: "!! BUILD FAILED !! Cannot set properties of undefined (setting 'op')"
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v1/actions, GET /v2/actions and GET /v3/actions on entity=action op=list have the same selector (exist: none), so only GET /v1/actions is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "action"
+  op: "list"
+  points: [
+    "GET /v1/actions"
+    "GET /v2/actions"
+    "GET /v3/actions"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v1/actions/{id}, GET /v2/actions/{id} and GET /v3/actions/{id} on entity=action op=load have the same selector (exist: id), so only GET /v1/actions/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "action"
+  op: "load"
+  points: [
+    "GET /v1/actions/{id}"
+    "GET /v2/actions/{id}"
+    "GET /v3/actions/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points DELETE /v2/actions/{id} and DELETE /v3/actions/{id} on entity=action op=remove have the same selector (exist: id), so only DELETE /v2/actions/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "action"
+  op: "remove"
+  points: [
+    "DELETE /v2/actions/{id}"
+    "DELETE /v3/actions/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points PUT /v2/actions/{id} and PUT /v3/actions/{id} on entity=action op=update have the same selector (exist: id), so only PUT /v2/actions/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "action"
+  op: "update"
+  points: [
+    "PUT /v2/actions/{id}"
+    "PUT /v3/actions/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points POST /v2/alert_routes and POST /v3/alert_routes on entity=alert_route op=create have the same selector (exist: none), so only POST /v2/alert_routes is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "alert_route"
+  op: "create"
+  points: [
+    "POST /v2/alert_routes"
+    "POST /v3/alert_routes"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v2/alert_routes/{id} and GET /v3/alert_routes/{id} on entity=alert_route op=load have the same selector (exist: id), so only GET /v2/alert_routes/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "alert_route"
+  op: "load"
+  points: [
+    "GET /v2/alert_routes/{id}"
+    "GET /v3/alert_routes/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points DELETE /v2/alert_routes/{id} and DELETE /v3/alert_routes/{id} on entity=alert_route op=remove have the same selector (exist: id), so only DELETE /v2/alert_routes/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "alert_route"
+  op: "remove"
+  points: [
+    "DELETE /v2/alert_routes/{id}"
+    "DELETE /v3/alert_routes/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points PUT /v2/alert_routes/{id} and PUT /v3/alert_routes/{id} on entity=alert_route op=update have the same selector (exist: id), so only PUT /v2/alert_routes/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "alert_route"
+  op: "update"
+  points: [
+    "PUT /v2/alert_routes/{id}"
+    "PUT /v3/alert_routes/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points DELETE /v2/call_routes/{call_route_id}/allowed_callers/{id} and DELETE /v2/call_routes/{call_route_id}/options/{id} on entity=call_routes_v2 op=remove have the same selector (exist: call_route_id,id), so only DELETE /v2/call_routes/{call_route_id}/allowed_callers/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "call_routes_v2"
+  op: "remove"
+  points: [
+    "DELETE /v2/call_routes/{call_route_id}/allowed_callers/{id}"
+    "DELETE /v2/call_routes/{call_route_id}/options/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points POST /v2/catalog_entries and POST /v3/catalog_entries on entity=catalog_entry op=create have the same selector (exist: none), so only POST /v2/catalog_entries is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_entry"
+  op: "create"
+  points: [
+    "POST /v2/catalog_entries"
+    "POST /v3/catalog_entries"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v2/catalog_entries/{id} and GET /v3/catalog_entries/{id} on entity=catalog_entry op=load have the same selector (exist: id), so only GET /v2/catalog_entries/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_entry"
+  op: "load"
+  points: [
+    "GET /v2/catalog_entries/{id}"
+    "GET /v3/catalog_entries/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points PUT /v2/catalog_entries/{id} and PUT /v3/catalog_entries/{id} on entity=catalog_entry op=update have the same selector (exist: id), so only PUT /v2/catalog_entries/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_entry"
+  op: "update"
+  points: [
+    "PUT /v2/catalog_entries/{id}"
+    "PUT /v3/catalog_entries/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v2/catalog_resources and GET /v3/catalog_resources on entity=catalog_resource op=list have the same selector (exist: none), so only GET /v2/catalog_resources is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_resource"
+  op: "list"
+  points: [
+    "GET /v2/catalog_resources"
+    "GET /v3/catalog_resources"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points POST /v2/catalog_types and POST /v3/catalog_types on entity=catalog_type op=create have the same selector (exist: none), so only POST /v2/catalog_types is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_type"
+  op: "create"
+  points: [
+    "POST /v2/catalog_types"
+    "POST /v3/catalog_types"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v2/catalog_types and GET /v3/catalog_types on entity=catalog_type op=list have the same selector (exist: none), so only GET /v2/catalog_types is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_type"
+  op: "list"
+  points: [
+    "GET /v2/catalog_types"
+    "GET /v3/catalog_types"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v2/catalog_types/{id} and GET /v3/catalog_types/{id} on entity=catalog_type op=load have the same selector (exist: id), so only GET /v2/catalog_types/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_type"
+  op: "load"
+  points: [
+    "GET /v2/catalog_types/{id}"
+    "GET /v3/catalog_types/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points PUT /v2/catalog_types/{id} and PUT /v3/catalog_types/{id} on entity=catalog_type op=update have the same selector (exist: id), so only PUT /v2/catalog_types/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_type"
+  op: "update"
+  points: [
+    "PUT /v2/catalog_types/{id}"
+    "PUT /v3/catalog_types/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points POST /v2/catalog_types/{id}/actions/update_schema and POST /v3/catalog_types/{id}/actions/update_schema on entity=catalog_type_schema op=create have the same selector (exist: catalog_type_id), so only POST /v2/catalog_types/{id}/actions/update_schema is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "catalog_type_schema"
+  op: "create"
+  points: [
+    "POST /v2/catalog_types/{id}/actions/update_schema"
+    "POST /v3/catalog_types/{id}/actions/update_schema"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points POST /v1/custom_fields and POST /v2/custom_fields on entity=custom_field op=create have the same selector (exist: none), so only POST /v1/custom_fields is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "custom_field"
+  op: "create"
+  points: [
+    "POST /v1/custom_fields"
+    "POST /v2/custom_fields"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v1/custom_fields and GET /v2/custom_fields on entity=custom_field op=list have the same selector (exist: none), so only GET /v1/custom_fields is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "custom_field"
+  op: "list"
+  points: [
+    "GET /v1/custom_fields"
+    "GET /v2/custom_fields"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v1/custom_fields/{id} and GET /v2/custom_fields/{id} on entity=custom_field op=load have the same selector (exist: id), so only GET /v1/custom_fields/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "custom_field"
+  op: "load"
+  points: [
+    "GET /v1/custom_fields/{id}"
+    "GET /v2/custom_fields/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points DELETE /v1/custom_fields/{id} and DELETE /v2/custom_fields/{id} on entity=custom_field op=remove have the same selector (exist: id), so only DELETE /v1/custom_fields/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "custom_field"
+  op: "remove"
+  points: [
+    "DELETE /v1/custom_fields/{id}"
+    "DELETE /v2/custom_fields/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points PUT /v1/custom_fields/{id} and PUT /v2/custom_fields/{id} on entity=custom_field op=update have the same selector (exist: id), so only PUT /v1/custom_fields/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "custom_field"
+  op: "update"
+  points: [
+    "PUT /v1/custom_fields/{id}"
+    "PUT /v2/custom_fields/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points POST /v2/follow_ups and POST /v3/follow_ups on entity=follow_up op=create have the same selector (exist: none), so only POST /v2/follow_ups is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "follow_up"
+  op: "create"
+  points: [
+    "POST /v2/follow_ups"
+    "POST /v3/follow_ups"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v2/follow_ups and GET /v3/follow_ups on entity=follow_up op=list have the same selector (exist: none), so only GET /v2/follow_ups is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "follow_up"
+  op: "list"
+  points: [
+    "GET /v2/follow_ups"
+    "GET /v3/follow_ups"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v2/follow_ups/{id} and GET /v3/follow_ups/{id} on entity=follow_up op=load have the same selector (exist: id), so only GET /v2/follow_ups/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "follow_up"
+  op: "load"
+  points: [
+    "GET /v2/follow_ups/{id}"
+    "GET /v3/follow_ups/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points DELETE /v2/follow_ups/{id} and DELETE /v3/follow_ups/{id} on entity=follow_up op=remove have the same selector (exist: id), so only DELETE /v2/follow_ups/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "follow_up"
+  op: "remove"
+  points: [
+    "DELETE /v2/follow_ups/{id}"
+    "DELETE /v3/follow_ups/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points PUT /v2/follow_ups/{id} and PUT /v3/follow_ups/{id} on entity=follow_up op=update have the same selector (exist: id), so only PUT /v2/follow_ups/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "follow_up"
+  op: "update"
+  points: [
+    "PUT /v2/follow_ups/{id}"
+    "PUT /v3/follow_ups/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points POST /v1/incidents and POST /v2/incidents on entity=incident op=create have the same selector (exist: none), so only POST /v1/incidents is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "incident"
+  op: "create"
+  points: [
+    "POST /v1/incidents"
+    "POST /v2/incidents"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v1/incidents and GET /v2/incidents on entity=incident op=list have the same selector (exist: none), so only GET /v1/incidents is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "incident"
+  op: "list"
+  points: [
+    "GET /v1/incidents"
+    "GET /v2/incidents"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v1/incidents/{id} and GET /v2/incidents/{id} on entity=incident op=load have the same selector (exist: id), so only GET /v1/incidents/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "incident"
+  op: "load"
+  points: [
+    "GET /v1/incidents/{id}"
+    "GET /v2/incidents/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points POST /v1/incident_roles and POST /v2/incident_roles on entity=incident_role op=create have the same selector (exist: none), so only POST /v1/incident_roles is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "incident_role"
+  op: "create"
+  points: [
+    "POST /v1/incident_roles"
+    "POST /v2/incident_roles"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v1/incident_roles and GET /v2/incident_roles on entity=incident_role op=list have the same selector (exist: none), so only GET /v1/incident_roles is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "incident_role"
+  op: "list"
+  points: [
+    "GET /v1/incident_roles"
+    "GET /v2/incident_roles"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /v1/incident_roles/{id} and GET /v2/incident_roles/{id} on entity=incident_role op=load have the same selector (exist: id), so only GET /v1/incident_roles/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "incident_role"
+  op: "load"
+  points: [
+    "GET /v1/incident_roles/{id}"
+    "GET /v2/incident_roles/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points DELETE /v1/incident_roles/{id} and DELETE /v2/incident_roles/{id} on entity=incident_role op=remove have the same selector (exist: id), so only DELETE /v1/incident_roles/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "incident_role"
+  op: "remove"
+  points: [
+    "DELETE /v1/incident_roles/{id}"
+    "DELETE /v2/incident_roles/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points PUT /v1/incident_roles/{id} and PUT /v2/incident_roles/{id} on entity=incident_role op=update have the same selector (exist: id), so only PUT /v1/incident_roles/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "incident_role"
+  op: "update"
+  points: [
+    "PUT /v1/incident_roles/{id}"
+    "PUT /v2/incident_roles/{id}"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points DELETE /v2/pay_configs/{pay_config_id}/one_off_rules/{id} and DELETE /v2/pay_configs/{pay_config_id}/weekly_rules/{id} on entity=pay_configs_v2 op=remove have the same selector (exist: id,pay_config_id), so only DELETE /v2/pay_configs/{pay_config_id}/one_off_rules/{id} is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "pay_configs_v2"
+  op: "remove"
+  points: [
+    "DELETE /v2/pay_configs/{pay_config_id}/one_off_rules/{id}"
+    "DELETE /v2/pay_configs/{pay_config_id}/weekly_rules/{id}"
+  ]
+
 }

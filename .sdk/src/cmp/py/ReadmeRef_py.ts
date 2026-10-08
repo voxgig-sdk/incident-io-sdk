@@ -1,5 +1,6 @@
 
-import { cmp, each, Content, canonToType, canonKey, File, isAuthActive, entityIdField, opRequestShape, safeVarName, exampleVarName } from '@voxgig/sdkgen'
+import { cmp, each, Content, canonToType, canonKey, canonScalarKey, File, isAuthActive, entityIdField, opRequestShape, safeVarName, exampleVarName, targetFeatures, opNeedsAction, bodyNote, listMatchArg, entityClassName, entityCollection } from '@voxgig/sdkgen'
+import { ReadmeRefFeatures } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -11,7 +12,8 @@ import {
 // which is not JSON-serialisable when a create body is executed by the doc
 // test. Strings render the quoted placeholder.
 function pyLit(type: any, placeholder: string = 'example'): string {
-  const k = canonKey(type)
+  const k = canonScalarKey(type)
+  if ('NULL' === k) return 'None'
   if ('INTEGER' === k || 'NUMBER' === k) return '1'
   if ('BOOLEAN' === k) return 'True'
   if ('ARRAY' === k) return '[]'
@@ -22,29 +24,34 @@ function pyLit(type: any, placeholder: string = 'example'): string {
 
 const OP_SIGNATURES: Record<string, { sig: string, returns: string, desc: string }> = {
   load: {
-    sig: 'load(reqmatch, ctrl=None) -> dict',
-    returns: 'the entity data',
-    desc: 'Load a single entity matching the given criteria. Returns the entity data and raises on error.',
+    sig: 'load(reqmatch, ctrl=None) -> EntyClass',
+    returns: 'the entity',
+    desc: 'Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.',
   },
   list: {
-    sig: 'list(reqmatch=None, ctrl=None) -> list',
-    returns: 'a list of entities',
-    desc: 'List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.',
+    sig: 'list(reqmatch=None, ctrl=None) -> list[EntyClass]',
+    returns: 'a list of entities, one per record',
+    desc: 'List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.',
   },
   create: {
-    sig: 'create(reqdata, ctrl=None) -> dict',
-    returns: 'the created entity data',
-    desc: 'Create a new entity with the given data. Returns the created entity data and raises on error.',
+    sig: 'create(reqdata, ctrl=None) -> EntyClass',
+    returns: 'the created entity',
+    desc: 'Create a new entity with the given data. Returns the created entity and raises on error.',
   },
   update: {
-    sig: 'update(reqdata, ctrl=None) -> dict',
-    returns: 'the updated entity data',
-    desc: 'Update an existing entity. The data must include the entity `id`. Returns the updated entity data and raises on error.',
+    sig: 'update(reqdata, ctrl=None) -> EntyClass',
+    returns: 'the updated entity',
+    desc: 'Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.',
+  },
+  patch: {
+    sig: 'patch(reqdata, ctrl=None) -> EntyClass',
+    returns: 'the patched entity',
+    desc: 'Change part of an existing entity: only the fields given are sent. The data must include the entity `id`. Returns the patched entity and raises on error.',
   },
   remove: {
-    sig: 'remove(reqmatch, ctrl=None) -> dict',
-    returns: 'the removed entity data',
-    desc: 'Remove the entity matching the given criteria. Raises on error.',
+    sig: 'remove(reqmatch, ctrl=None) -> EntyClass',
+    returns: 'the removed entity',
+    desc: 'Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.',
   },
 }
 
@@ -54,7 +61,7 @@ const ReadmeRef = cmp(function ReadmeRef(props: any) {
   const { model } = props.ctx$
 
   const entity = getModelPath(model, `main.${KIT}.entity`)
-  const feature = getModelPath(model, `main.${KIT}.feature`)
+  const feature = targetFeatures(model, target)
 
   const publishedEntities = each(entity).filter((e: any) => e.active !== false)
 
@@ -117,7 +124,6 @@ client = ${model.const.Name}SDK.test()
 `)
 
 
-    // Entity factory methods
     publishedEntities.map((ent: any) => {
       Content(`#### \`${ent.Name}(data=None)\`
 
@@ -159,10 +165,9 @@ Prepare a fetch definition without sending. Returns the \`fetchdef\` and raises 
 `)
 
 
-    // Entity reference sections
     publishedEntities.map((ent: any) => {
       const opnames = Object.keys(ent.op || {})
-      const fields = ent.fields || []
+      const fields = Object.values(ent.fields || {})
       // Model-driven id key: null when this entity has no id-like field, in
       // which case load/remove match on no argument and update omits the id.
       const idF = entityIdField(ent)
@@ -190,7 +195,6 @@ ${eVar} = client.${ent.Name}()
 `)
 
 
-      // Field schema
       if (fields.length > 0) {
         Content(`### Fields
 
@@ -198,9 +202,9 @@ ${eVar} = client.${ent.Name}()
 | --- | --- | --- | --- |
 `)
         each(fields, (field: any) => {
-          const req = field.req ? 'Yes' : 'No'
-          const desc = field.short || ''
-          Content(`| \`${field.name}\` | \`${canonToType(field.type, target.name)}\` | ${req} | ${desc} |
+          const req = field.r ? 'Yes' : 'No'
+          const desc = field.sh || ''
+          Content(`| \`${field.n}\` | \`${canonToType(field.t, target.name)}\` | ${req} | ${desc} |
 `)
         })
 
@@ -212,7 +216,7 @@ ${eVar} = client.${ent.Name}()
         if (hasFieldOps) {
           // Only emit columns for operations this entity actually exposes —
           // never advertise a create/update/remove column the entity lacks.
-          const opcols = ['load', 'list', 'create', 'update', 'remove']
+          const opcols = ['load', 'list', 'create', 'update', 'patch', 'remove']
             .filter((op: string) => opnames.includes(op) && ent.op[op]?.active !== false)
           Content(`### Field Usage by Operation
 
@@ -227,7 +231,7 @@ ${eVar} = client.${ent.Name}()
               if (fop.active === false) return '-'
               return 'Yes'
             })
-            Content(`| \`${field.name}\` | ${cols.join(' | ')} |
+            Content(`| \`${field.n}\` | ${cols.join(' | ')} |
 `)
           })
 
@@ -237,7 +241,6 @@ ${eVar} = client.${ent.Name}()
       }
 
 
-      // Operation details
       if (opnames.length > 0) {
         Content(`### Operations
 
@@ -247,13 +250,17 @@ ${eVar} = client.${ent.Name}()
           const info = OP_SIGNATURES[opname]
           if (!info) return
 
-          Content(`#### \`${info.sig}\`
+          Content(`#### \`${info.sig.replace('EntyClass', entityClassName(ent, entityCollection(model)))}\`
 
 ${info.desc}
 
 `)
 
-          // Show example. Entity ops return the bare result and raise on
+          if (opNeedsAction(ent.op[opname])) {
+            return
+          }
+
+          // Show example. Entity ops return the ENTITY and raise on
           // error; direct() is the only method that returns a result dict.
           if ('load' === opname || 'remove' === opname) {
             // The id key plus every REQUIRED match key (parent path params
@@ -276,9 +283,9 @@ result = client.${ent.Name}().${opname}(${arg})
           }
           else if ('list' === opname) {
             Content(`\`\`\`python
-results = client.${ent.Name}().list()
+results = client.${ent.Name}().list(${listMatchArg('py', ent)})
 for ${eVar} in results:
-    print(${eVar})
+    print(${eVar}.data_get())
 \`\`\`
 
 `)
@@ -303,10 +310,10 @@ result = client.${ent.Name}().create({
 
 `)
           }
-          else if ('update' === opname) {
+          else if ('update' === opname || 'patch' === opname) {
             // The id key plus every REQUIRED data member — the same shape the
             // runtime validates — then the patch-fields note.
-            const updateItems = opRequestShape(ent, 'update').items
+            const updateItems = opRequestShape(ent, opname).items
               .filter((it: any) => !it.optional || it.name === idF)
               .sort((a: any, b: any) =>
                 (a.name === idF ? 0 : 1) - (b.name === idF ? 0 : 1))
@@ -314,18 +321,25 @@ result = client.${ent.Name}().create({
               `    "${it.name}": ${pyLit(it.type,
                 it.name === idF ? ent.name + '_id' : it.name)},\n`).join('')
             Content(`\`\`\`python
-result = client.${ent.Name}().update({
-${updateLines}    # Fields to update
+result = client.${ent.Name}().${opname}({
+${updateLines}    # ${'patch' === opname ? 'Only the fields to change' : 'Fields to update'}
 })
 \`\`\`
 
 `)
           }
+
+          if ('create' === opname || 'update' === opname || 'patch' === opname) {
+            const note = bodyNote(ent.op[opname], {
+              values: '`bytes`, `bytearray`, `memoryview`, a `str` or a file object',
+              once: 'a file object',
+            })
+            if ('' !== note) Content(note)
+          }
         })
       }
 
 
-      // Common methods
       Content(`### Common Methods
 
 #### \`data_get() -> dict\`
@@ -356,7 +370,6 @@ Return the entity name.
     })
 
 
-    // Features section
     const activeFeatures = each(feature).filter((f: any) => f.active)
     if (activeFeatures.length > 0) {
       Content(`
@@ -392,12 +405,11 @@ client = ${model.const.Name}SDK({
 \`\`\`
 
 `)
+      ReadmeRefFeatures({ target })
     }
 
   })
 })
-
-
 
 
 export {

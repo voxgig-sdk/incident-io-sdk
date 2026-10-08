@@ -25,7 +25,7 @@ class IncidentRelationshipEntity extends IncidentIoEntityBase {
   /**
    * @param {IncidentRelationshipListMatch} [reqmatch]
    * @param {Object} [ctrl]
-   * @returns {Promise<IncidentRelationship[]>}
+   * @returns {Promise<IncidentRelationshipEntity[]>}
    */
   async list(reqmatch, ctrl) {
 
@@ -34,7 +34,8 @@ class IncidentRelationshipEntity extends IncidentIoEntityBase {
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -117,9 +118,15 @@ class IncidentRelationshipEntity extends IncidentIoEntityBase {
       return done(ctx)
     }
     catch (err) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -131,6 +138,7 @@ class IncidentRelationshipEntity extends IncidentIoEntityBase {
       }
     }
   }
+
 
 
 

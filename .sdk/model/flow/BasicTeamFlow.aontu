@@ -7,8 +7,8 @@ main: kit: flow: BasicTeamFlow:
   name: "BasicTeamFlow",
   step: [
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -19,18 +19,18 @@ main: kit: flow: BasicTeamFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "team_ref01",
         srcdatavar: "team_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "team01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

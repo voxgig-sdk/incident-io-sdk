@@ -6,36 +6,6 @@ import {
 } from '@voxgig/apidef'
 
 
-// Emits go/test/readme_examples_test.go — a COMPLETENESS GATE over every
-// ```go block in ALL THREE docs that ship go examples:
-//   - the root README.md (top-level, multi-language quick start)
-//   - the per-language go/README.md
-//   - the per-language go/REFERENCE.md
-//
-// For every ```go block, tagged by (source doc, index), it exercises the
-// block against the real generated SDK:
-//
-//   - Fragments (statement snippets) are wrapped in a function with a SEEDED
-//     test-mode `client` in scope and `go build`-checked. Any stray `import`
-//     line inside the fragment is stripped and constructor calls are rewritten
-//     to the seeded test client (so undefined-variable placeholders like
-//     sdk.TestSDK(testopts, sdkopts) still type-check). A call to a method
-//     that does not exist, a wrong argument count/type, or `.data`/`.ok` field
-//     access on a bare entity-op result fails to compile — and so fails.
-//   - Complete programs (a block with `func main`) are built as-is (the
-//     documented, possibly live, form must compile) AND a test-mode variant —
-//     its constructor rewritten to a seeded `sdk.TestSDK(...)` — is RUN with
-//     `go run`. A genuine runtime panic (nil pointer, nil map, index,
-//     interface conversion) FAILS the test; a tolerated not-found domain
-//     error does not.
-//   - Illustrative blocks are the ONLY blocks skipped, and the class is
-//     NARROW: a bare signature (a `func` line with no body) or a comment-only
-//     / `/* ... */` placeholder. Everything else must compile or run.
-//
-// Completeness: per doc, total == compiled + illustration is asserted. A block
-// that is neither compiled nor a recognized illustration — e.g. real code
-// hidden behind a `/* ... */` comment that the old logic silently skipped —
-// FAILS the gate, so no compilable example can escape the check.
 const ReadmeExamplesTest = cmp(function ReadmeExamplesTest(props: any) {
   const { ctx$: { model } } = props
 
@@ -61,16 +31,36 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
 	"testing"
 )
 
-// testSeed is a test-mode fixture seeded for every entity. It is spliced as
-// literal Go source into fragment wrappers and into the test-mode variant of
-// complete programs, so the offline mock transport has data to return.
+// testSeed is a test-mode fixture seeded for every entity, as Go source, so
+// the offline mock transport has data to return. It is NOT spliced into each
+// snippet: it is written ONCE per generated package as seed.go, and snippets
+// reference it by name (seedRef).
+//
+// Splicing it inline was O(snippets x entities). Every fragment lands in ONE
+// package, so a large API multiplied one ~26 KB composite literal by every
+// \`\`\`go block in the docs: gitlab reached 1132 fragments / ~625k literal
+// entries in a single compilation unit, and \`compile\` grew ~15 MB per fragment
+// to ~16 GB — the same superlinear-composite-literal blowup the L1 config data
+// path fixed for core/config.go. One shared var is O(1) in the snippet count.
 const testSeed = \`${goSeed}\`
+
+// seedRef is how a snippet names the shared fixture; seedFile declares it.
+const seedRef = "readmeTestSeed"
+
+// The client variable, not the word: an import path carries the word between
+// hyphens (github.com/voxgig-sdk/multifon-client-sdk/go).
+var clientVar = regexp.MustCompile(\`(^|[^\\w.\\-/"])client([^\\w\\-/"]|$)\`)
+
+func seedFile(pkg string) []byte {
+	return []byte("package " + pkg + "\\n\\nvar " + seedRef + " = " + testSeed + "\\n")
+}
 
 // doc names one of the three docs that carry go examples, with its path
 // relative to this test file's directory (which is <repo>/go/test): the root
@@ -109,7 +99,18 @@ func TestReadmeGoSnippets(t *testing.T) {
 		{"go/REFERENCE", filepath.Join(testDir, "..", "REFERENCE.md")},
 	}
 
-	work, err := os.MkdirTemp(moduleRoot, "readmecheck-")
+	// The work dir has to live inside the module (the snippets import the SDK
+	// by module path), but it MUST stay invisible to \`go build ./...\`. The go
+	// tool skips directories whose name starts with "_" for wildcard matching
+	// while still building them by explicit path — exactly what is needed
+	// here, because \`defer os.RemoveAll\` does NOT run when the process is
+	// killed. A leftover frag package inside the module made the NEXT plain
+	// \`go build ./...\` compile every snippet and OOM, which is how a killed
+	// run poisoned later runs (and, once committed, every fresh clone).
+	// Sweeping first lets a repo that already carries one self-heal.
+	sweepStaleWorkDirs(moduleRoot)
+
+	work, err := os.MkdirTemp(moduleRoot, "_readmecheck-")
 	if err != nil {
 		t.Fatalf("mkdir temp: %v", err)
 	}
@@ -179,6 +180,10 @@ func TestReadmeGoSnippets(t *testing.T) {
 					if err := os.WriteFile(filepath.Join(runDir, "main.go"), []byte(variant), 0o644); err != nil {
 						t.Fatal(err)
 					}
+					// The rewritten ctors reference the shared fixture.
+					if err := os.WriteFile(filepath.Join(runDir, "seed.go"), seedFile("main"), 0o644); err != nil {
+						t.Fatal(err)
+					}
 					runDirs = append(runDirs, "./"+rel+"/run"+strconv.Itoa(progCount))
 				}
 
@@ -195,6 +200,10 @@ func TestReadmeGoSnippets(t *testing.T) {
 	fragPkg := ""
 	if len(fragFiles) > 0 {
 		if err := os.MkdirAll(fragDir, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		// One shared fixture for the whole fragment package (see testSeed).
+		if err := os.WriteFile(filepath.Join(fragDir, "seed.go"), seedFile("readmefrag"), 0o644); err != nil {
 			t.Fatal(err)
 		}
 		fragPkg = "./" + rel + "/frag"
@@ -305,7 +314,7 @@ func runProgs(moduleRoot string, dirs []string) string {
 // left-to-right pass with balanced-paren matching; returns the rewritten
 // source and whether any replacement was made.
 func rewriteCtorsToTest(src string) (string, bool) {
-	repl := "sdk.TestSDK(" + testSeed + ", nil)"
+	repl := "sdk.TestSDK(" + seedRef + ", nil)"
 	var b strings.Builder
 	changed := false
 	i := 0
@@ -520,7 +529,7 @@ func wrapFragment(name, block, modulePath string) string {
 	}
 
 	declaresClient := strings.Contains(block, "client :=")
-	injectClient := !declaresClient && strings.Contains(block, "client")
+	injectClient := !declaresClient && clientVar.MatchString(block)
 
 	needSdk := injectClient || strings.Contains(block, "sdk.")
 	usesFmt := strings.Contains(block, "fmt.")
@@ -555,7 +564,7 @@ func wrapFragment(name, block, modulePath string) string {
 	b.WriteString("func " + name + "() {\\n")
 	if injectClient {
 		// Seeded test client so the fragment's documented calls have data.
-		b.WriteString("\\tclient := sdk.TestSDK(" + testSeed + ", nil)\\n")
+		b.WriteString("\\tclient := sdk.TestSDK(" + seedRef + ", nil)\\n")
 	}
 	b.WriteString(block)
 	b.WriteString("\\n}\\n")
@@ -662,6 +671,25 @@ func addBlankAssign(content, name string) string {
 		return content
 	}
 	return content[:last] + "\\t_ = " + name + "\\n" + content[last:]
+}
+
+// sweepStaleWorkDirs removes work dirs abandoned by a killed run, under both
+// the current "_readmecheck-" name and the legacy "readmecheck-" one that
+// \`go build ./...\` still picks up.
+func sweepStaleWorkDirs(moduleRoot string) {
+	entries, err := os.ReadDir(moduleRoot)
+	if err != nil {
+		return
+	}
+	for _, e := range entries {
+		if !e.IsDir() {
+			continue
+		}
+		if n := e.Name(); strings.HasPrefix(n, "readmecheck-") ||
+			strings.HasPrefix(n, "_readmecheck-") {
+			os.RemoveAll(filepath.Join(moduleRoot, n))
+		}
+	}
 }
 
 func readModulePath(moduleRoot string) string {

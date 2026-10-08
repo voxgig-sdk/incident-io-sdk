@@ -1,6 +1,7 @@
 package utility
 
 import (
+	"encoding/json"
 	"regexp"
 	"sort"
 	"strings"
@@ -13,31 +14,89 @@ import (
 // {name} placeholders in a templated server URL (OpenAPI server variables).
 var serverVarRe = regexp.MustCompile(`\{[A-Za-z0-9_]+\}`)
 
+func canonNumbers(node any) {
+	switch n := node.(type) {
+	case map[string]any:
+		for k, v := range n {
+			if num, ok := v.(json.Number); ok {
+				n[k] = canonNumber(num)
+			} else {
+				canonNumbers(v)
+			}
+		}
+	case []any:
+		for i, v := range n {
+			if num, ok := v.(json.Number); ok {
+				n[i] = canonNumber(num)
+			} else {
+				canonNumbers(v)
+			}
+		}
+	}
+}
+
+func canonNumber(n json.Number) any {
+	if i, err := n.Int64(); err == nil {
+		return i
+	}
+	if f, err := n.Float64(); err == nil {
+		return f
+	}
+	return n
+}
+
 func makeOptionsUtil(ctx *core.Context) map[string]any {
 	options := ctx.Options
 	if options == nil {
 		options = map[string]any{}
 	}
 
-	// Merge custom utility overrides onto the utility object.
-	// Read from original options before clone, since vs.Clone strips functions.
 	if customUtils := core.ToMapAny(options["utility"]); customUtils != nil {
 		utility := ctx.Utility
 		if utility != nil {
 			for key, val := range customUtils {
-				utility.Custom[key] = val
+				if !overrideUtil(utility, key, val) {
+					utility.Custom[key] = val
+				}
 			}
 		}
 	}
 
+	authval, authgiven := options["auth"]
+	authsuppressed := authgiven && authval == nil
+
 	opts := vs.Clone(options).(map[string]any)
 
-	// Feature add-order (feature #2). options.feature may be given as an ordered
-	// ARRAY of {name, active, ...opts} entries (the array position IS the order
-	// in which features are added), or as a {name:{opts}} map. Normalize an
-	// array to a map (so merge/validate/init are unchanged) and remember the
-	// explicit order; a map defaults to test-first so the `test` mock transport
-	// is installed as the base of the transport wrapper chain.
+	config := ctx.Config
+	if config == nil {
+		config = map[string]any{}
+	}
+	cfgopts := map[string]any{}
+	if co, ok := config["options"]; ok && co != nil {
+		if cm, ok := co.(map[string]any); ok {
+			cfgopts = cm
+		}
+	}
+
+	// The secret registry exists BEFORE validation, fed from the raw input, so
+	// the constructor's own rejection of a mistyped credential is clean too.
+	cleanraw := map[string]any{}
+	for _, layer := range []any{core.OPTSPEC["clean"], cfgopts["clean"], opts["clean"]} {
+		for k, v := range core.ToMapAny(layer) {
+			cleanraw[k] = v
+		}
+	}
+	cleancfg := makeCleanConfig(cleanraw)
+	cleanctx := &core.Context{Options: map[string]any{
+		"__derived__": map[string]any{"clean": cleancfg},
+	}}
+	cleanAddOptions(cleanctx, cleanOmit(opts, "clean"))
+	for _, block := range []map[string]any{cfgopts, opts} {
+		for _, s := range cleanSplit(vs.GetPath(block, []any{"clean", "values"})) {
+			cleancfg.add(s)
+		}
+	}
+
 	var featureorder []any
 	if farr, ok := opts["feature"].([]any); ok {
 		fmap := map[string]any{}
@@ -62,94 +121,44 @@ func makeOptionsUtil(ctx *core.Context) map[string]any {
 		opts["feature"] = fmap
 	}
 
-	config := ctx.Config
-	if config == nil {
-		config = map[string]any{}
-	}
-	cfgopts := map[string]any{}
-	if co, ok := config["options"]; ok && co != nil {
-		if cm, ok := co.(map[string]any); ok {
-			cfgopts = cm
-		}
-	}
-
-	optspec := map[string]any{
-		"apikey": "",
-		"base":   "http://localhost:8000",
-		"prefix": "",
-		"suffix": "",
-		"auth": map[string]any{
-			"prefix": "",
-		},
-		"headers": map[string]any{
-			"`$CHILD`": "`$STRING`",
-		},
-		"allow": map[string]any{
-			"method": "GET,PUT,POST,PATCH,DELETE,OPTIONS",
-			"op":     "create,update,load,list,remove,command,direct",
-		},
-		"entity": map[string]any{
-			"`$CHILD`": map[string]any{
-				"`$OPEN`": true,
-				"active":  false,
-				"alias":   map[string]any{},
-			},
-		},
-		"feature": map[string]any{
-			"`$CHILD`": map[string]any{
-				"`$OPEN`": true,
-				"active":  false,
-			},
-		},
-		"utility": map[string]any{},
-		"system":  map[string]any{},
-		"test": map[string]any{
-			"active": false,
-			"entity": map[string]any{
-				"`$OPEN`": true,
-			},
-		},
-		"clean": map[string]any{
-			"keys": "key,token,id",
-		},
-		// Server-variable values for a templated base URL (OpenAPI server
-		// variables): {name} placeholders in "base" are substituted from this
-		// map at construction. Spec defaults arrive via the generated config;
-		// user values override them.
-		"server": map[string]any{
-			"`$CHILD`": "",
-		},
-	}
+	optspec := core.OPTSPEC
 
 	// Preserve system.fetch before merge/validate.
 	var sysFetch any
-	if sf := vs.GetPath([]any{"system", "fetch"}, opts); sf != nil {
+	if sf := vs.GetPath(opts, []any{"system", "fetch"}); sf != nil {
 		sysFetch = sf
 	}
 
-	merged := vs.Merge([]any{map[string]any{}, cfgopts, opts})
+	// Clone the config side before merging: `config` is a process-wide
+	// singleton (see core.SharedConfig), and Merge would otherwise use its
+	// nested maps as merge TARGETS — one instance's options (server, headers,
+	// ...) would contaminate every instance constructed after it.
+	merged := vs.Merge([]any{map[string]any{}, vs.Clone(cfgopts), opts})
+
+	// To reflect a json.Number is a string, so the validator refuses one where
+	// the feature readers accept it. Canonicalise first: options decoded with
+	// UseNumber() are otherwise judged by a rule nothing else applies.
+	canonNumbers(merged)
+
 	validated, _ := vs.Validate(merged, optspec)
 	opts = validated.(map[string]any)
 
-	// Resolve a templated base URL (e.g. https://{tenant_id}.hanko.io).
-	// Every placeholder must resolve to a non-empty value: from
-	// options["server"] (user), else the config default. A placeholder that
-	// resolves to "" is a construction error in live mode — the URL cannot
-	// work — but in test mode substitutes the deterministic value
-	// "test-<name>" so offline tests need no configuration. The SDK
-	// constructor has no error return, so a missing required variable
-	// PANICS (construction-time misconfiguration, as regexp.MustCompile).
+	// Restore the suppression the optspec default would otherwise erase.
+	if authsuppressed {
+		opts["auth"] = nil
+	}
+
 	if base, ok := opts["base"].(string); ok && strings.Contains(base, "{") {
 		testmode := false
-		if ta, ok := vs.GetPath([]any{"test", "active"}, opts).(bool); ok && ta {
+		if ta, ok := vs.GetPath(opts, []any{"test", "active"}).(bool); ok && ta {
 			testmode = true
 		}
-		if fa, ok := vs.GetPath([]any{"feature", "test", "active"}, opts).(bool); ok && fa {
+		if fa, ok := vs.GetPath(opts, []any{"feature", "test", "active"}).(bool); ok && fa {
 			testmode = true
 		}
 		server := core.ToMapAny(opts["server"])
 		sdkname := "SDK"
-		if mn, ok := vs.GetPath([]any{"main", "name"}, config).(string); ok && mn != "" {
+		if mn, ok := vs.GetPath(config, []any{"main", "name"}).(string); ok && mn != "" {
 			sdkname = mn
 		}
 		resolved := serverVarRe.ReplaceAllStringFunc(base, func(ph string) string {
@@ -179,24 +188,6 @@ func makeOptionsUtil(ctx *core.Context) map[string]any {
 		}
 	}
 
-	// Derived clean config.
-	cleanKeys := "key,token,id"
-	if ck := vs.GetPath([]any{"clean", "keys"}, opts); ck != nil {
-		if cks, ok := ck.(string); ok {
-			cleanKeys = cks
-		}
-	}
-
-	parts := strings.Split(cleanKeys, ",")
-	var filtered []string
-	for _, p := range parts {
-		p = strings.TrimSpace(p)
-		if p != "" {
-			filtered = append(filtered, vs.EscRe(p))
-		}
-	}
-	keyre := strings.Join(filtered, "|")
-
 	// Resolve the feature add-order: an explicit array order (above) wins;
 	// otherwise order the map test-first, then the remaining names sorted, so
 	// the outcome is deterministic and `test` is always the base transport.
@@ -213,28 +204,95 @@ func makeOptionsUtil(ctx *core.Context) map[string]any {
 				hasTest = true
 			}
 		}
+		ordered := make([]string, 0, len(names))
 		if hasTest {
-			featureorder = append(featureorder, "test")
+			ordered = append(ordered, "test")
 			for _, n := range names {
 				if n != "test" {
-					featureorder = append(featureorder, n)
+					ordered = append(ordered, n)
 				}
 			}
 		} else {
-			for _, n := range names {
-				featureorder = append(featureorder, n)
+			ordered = append(ordered, names...)
+		}
+		si := -1
+		for i, n := range ordered {
+			if n == "station" {
+				si = i
+				break
 			}
+		}
+		if si >= 0 {
+			ordered = append(ordered[:si], ordered[si+1:]...)
+			ti := 0
+			for i, n := range ordered {
+				if n == "test" {
+					ti = i + 1
+					break
+				}
+			}
+			ordered = append(ordered[:ti],
+				append([]string{"station"}, ordered[ti:]...)...)
+		}
+		for _, n := range ordered {
+			featureorder = append(featureorder, n)
 		}
 	}
 
-	derived := map[string]any{
-		"clean": map[string]any{},
+	opts["__derived__"] = map[string]any{
+		"clean":        cleancfg,
+		"featureorder": featureorder,
 	}
-	if keyre != "" {
-		derived["clean"] = map[string]any{"keyre": keyre}
-	}
-	derived["featureorder"] = featureorder
-	opts["__derived__"] = derived
+
+	// Again over the merged result: the config's own defaults can carry one.
+	cleanAddOptions(cleanctx, cleanOmit(opts, "clean", "__derived__"))
 
 	return opts
+}
+
+// A feature's name is not a field name: only the sensitive names inside its
+// settings count, so `secrets` does not make every setting a secret. Entity
+// blocks (per-entity settings, seeded records) hold no credential, and nor do
+// rbac's rules, keyed by entity and operation names.
+func cleanAddOptions(ctx *core.Context, opts map[string]any) {
+	top := cleanOmit(opts, "feature", "entity")
+	if test, ok := top["test"]; ok {
+		top["test"] = cleanPlain(test, "")
+	}
+	cleanAddSensitive(ctx, top)
+	switch feature := opts["feature"].(type) {
+	case map[string]any:
+		for name, fopts := range feature {
+			cleanAddSensitive(ctx, cleanPlain(fopts, name))
+		}
+	case []any:
+		for _, entry := range feature {
+			m, _ := entry.(map[string]any)
+			name, _ := m["name"].(string)
+			cleanAddSensitive(ctx, cleanPlain(entry, name))
+		}
+	default:
+		cleanAddSensitive(ctx, feature)
+	}
+}
+
+func cleanPlain(block any, name string) any {
+	if m, ok := block.(map[string]any); ok {
+		if "rbac" == name {
+			return cleanOmit(m, "entity", "rules")
+		}
+		return cleanOmit(m, "entity")
+	}
+	return block
+}
+
+func cleanOmit(m map[string]any, keys ...string) map[string]any {
+	out := make(map[string]any, len(m))
+	for k, v := range m {
+		out[k] = v
+	}
+	for _, k := range keys {
+		delete(out, k)
+	}
+	return out
 }

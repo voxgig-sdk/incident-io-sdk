@@ -1,0 +1,9 @@
+# BasicPayConfigsV2Flow
+
+main: kit: flow: BasicPayConfigsV2Flow:
+{
+  entity: "pay_configs_v2",
+  kind: "basic",
+  name: "BasicPayConfigsV2Flow",
+  "key$": "BasicPayConfigsV2Flow"
+}

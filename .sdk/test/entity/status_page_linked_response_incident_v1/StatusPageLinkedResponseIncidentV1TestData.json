@@ -1,0 +1,38 @@
+{
+  "existing": {
+    "status_page_linked_response_incident_v1": {
+      "STATUS_PAGE_LINKED_RESPONSE_INCIDENT_V100": {
+        "id": "STATUS_PAGE_LINKED_RESPONSE_INCIDENT_V100",
+        "linked_at": "s15",
+        "incident_id": "INCIDENT01",
+        "status_page_id": "STATUS_PAGE01"
+      },
+      "STATUS_PAGE_LINKED_RESPONSE_INCIDENT_V101": {
+        "id": "STATUS_PAGE_LINKED_RESPONSE_INCIDENT_V101",
+        "linked_at": "s29",
+        "incident_id": "INCIDENT01",
+        "status_page_id": "STATUS_PAGE01"
+      },
+      "STATUS_PAGE_LINKED_RESPONSE_INCIDENT_V102": {
+        "id": "STATUS_PAGE_LINKED_RESPONSE_INCIDENT_V102",
+        "linked_at": "s3d",
+        "incident_id": "INCIDENT01",
+        "status_page_id": "STATUS_PAGE01"
+      }
+    }
+  },
+  "new": {
+    "status_page_linked_response_incident_v1": {
+      "status_page_linked_response_incident_v1_ref01": {
+        "linked_at": "s51"
+      }
+    }
+  },
+  "requests": {
+    "GET /v1/status-pages/{id}/incidents/{incident_id}/response-incidents": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

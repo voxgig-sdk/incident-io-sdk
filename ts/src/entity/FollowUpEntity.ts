@@ -23,7 +23,6 @@ import type {
   FollowUpRemoveMatch,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -40,14 +39,15 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
 
 
 
-  async load(this: any, reqmatch?: FollowUpLoadMatch, ctrl?: Control): Promise<FollowUp> {
+  async load(this: any, reqmatch?: FollowUpLoadMatch, ctrl?: Control): Promise<FollowUpEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -131,12 +131,20 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -145,7 +153,7 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<FollowUp> return stays clean under strict null checks.
+        // Promise<FollowUpEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -153,14 +161,15 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
 
 
 
-  async list(this: any, reqmatch?: FollowUpListMatch, ctrl?: Control): Promise<FollowUp[]> {
+  async list(this: any, reqmatch?: FollowUpListMatch, ctrl?: Control): Promise<FollowUpEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -243,9 +252,15 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -254,7 +269,7 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<FollowUp[]> return stays clean under strict null checks.
+        // Promise<FollowUpEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -262,13 +277,14 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
 
 
 
-  async create(this: any, reqdata?: FollowUpCreateData, ctrl?: Control): Promise<FollowUp> {
+  async create(this: any, reqdata?: FollowUpCreateData, ctrl?: Control): Promise<FollowUpEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -348,12 +364,20 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -362,7 +386,7 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<FollowUp> return stays clean under strict null checks.
+        // Promise<FollowUpEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -370,14 +394,15 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
 
 
 
-  async update(this: any, reqdata?: FollowUpUpdateData, ctrl?: Control): Promise<FollowUp> {
+  async update(this: any, reqdata?: FollowUpUpdateData, ctrl?: Control): Promise<FollowUpEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -462,12 +487,20 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -476,7 +509,7 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<FollowUp> return stays clean under strict null checks.
+        // Promise<FollowUpEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -484,14 +517,18 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
 
 
 
-  async remove(this: any, reqmatch?: FollowUpRemoveMatch, ctrl?: Control): Promise<FollowUp> {
+
+  async remove(
+    this: any, reqmatch?: FollowUpRemoveMatch, ctrl?: Control,
+  ): Promise<FollowUpEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -576,12 +613,25 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      if (ctx.result && ctx.result.ok) {
+        this.markDeleted()
+        return this
+      }
+
+      return out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -590,7 +640,7 @@ class FollowUpEntity extends IncidentIoEntityBase<FollowUp> {
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<FollowUp> return stays clean under strict null checks.
+        // Promise<FollowUpEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }

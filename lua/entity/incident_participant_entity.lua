@@ -1,8 +1,10 @@
 -- IncidentIo SDK IncidentParticipant entity
 
+local json = require("dkjson")
 local vs = require("utility.struct.struct")
 local helpers = require("core.helpers")
 
+---@class IncidentParticipantEntity
 local IncidentParticipantEntity = {}
 IncidentParticipantEntity.__index = IncidentParticipantEntity
 
@@ -23,6 +25,7 @@ function IncidentParticipantEntity.new(client, entopts)
   self._utility = client:get_utility()
   self._entopts = entopts
   self._data = {}
+  self._deleted = false
   self._match = {}
 
   self._entctx = self._utility.make_context({
@@ -41,12 +44,44 @@ function IncidentParticipantEntity:get_name()
 end
 
 
+-- The entity serialises and prints as its data, as ts does: the instance
+-- also holds the client and the utility.
+function IncidentParticipantEntity:to_record()
+  local rec = self._utility.clean(self._entctx, vs.clone(self._data or {}))
+  rec["voxgig$entity"] = self._name
+  return rec
+end
+
+IncidentParticipantEntity.__tostring = function(self)
+  local rec = self:to_record()
+  rec["voxgig$entity"] = nil
+  return self._name .. " " .. json.encode(rec)
+end
+
+IncidentParticipantEntity.__tojson = function(self)
+  return json.encode(self:to_record())
+end
+
+
 function IncidentParticipantEntity:make()
   local opts = {}
   for k, v in pairs(self._entopts) do
     opts[k] = v
   end
   return IncidentParticipantEntity.new(self._client, opts)
+end
+
+
+-- Every operation resolves to the entity; `remove` additionally marks
+-- it. The instance KEEPS the data it held — a caller can still read what
+-- was deleted — but it is no longer a live record. See AGENTS.md.
+function IncidentParticipantEntity:mark_deleted()
+  self._deleted = true
+end
+
+
+function IncidentParticipantEntity:deleted()
+  return true == self._deleted
 end
 
 
@@ -137,57 +172,19 @@ function IncidentParticipantEntity:stream(action, args, callopts)
     return false
   end
 
-  return coroutine.wrap(function()
-    utility.feature_hook(ctx, "PrePoint")
-    local point, err = utility.make_point(ctx)
-    ctx.out["point"] = point
-    if err ~= nil then
-      return
-    end
-
-    utility.feature_hook(ctx, "PreSpec")
-    local spec
-    spec, err = utility.make_spec(ctx)
-    ctx.out["spec"] = spec
-    if err ~= nil then
-      return
-    end
-
-    utility.feature_hook(ctx, "PreRequest")
-    local resp
-    resp, err = utility.make_request(ctx)
-    ctx.out["request"] = resp
-    if err ~= nil then
-      return
-    end
-
-    utility.feature_hook(ctx, "PreResponse")
-    local resp2
-    resp2, err = utility.make_response(ctx)
-    ctx.out["response"] = resp2
-    if err ~= nil then
-      return
-    end
-
-    utility.feature_hook(ctx, "PreResult")
-    local result
-    result, err = utility.make_result(ctx)
-    ctx.out["result"] = result
-    if err ~= nil then
-      return
-    end
-
-    utility.feature_hook(ctx, "PreDone")
-
-    result = ctx.result
+  local co = coroutine.create(function()
+    local failed = self:_stream_steps(ctx)
+    local result = ctx.result
 
     -- Inbound: prefer the streaming feature's incremental iterator; else fall
     -- back to the materialised items so stream always yields.
     local stream_fn = nil
-    if result ~= nil then
+    if failed == nil and result ~= nil then
       stream_fn = result.stream
     end
     if type(stream_fn) == "function" then
+      -- done() does not run on this path, so its record is cleaned here.
+      utility.clean_explain(ctx)
       for item in stream_fn() do
         if aborted() then
           return
@@ -195,7 +192,17 @@ function IncidentParticipantEntity:stream(action, args, callopts)
         coroutine.yield(item)
       end
     else
-      local data = utility.done(ctx)
+      -- A failed step leaves through make_error, as an operation's does,
+      -- and its error is handed to the iterator to raise.
+      local data, err
+      if failed == nil then
+        data, err = utility.done(ctx)
+      else
+        data, err = utility.make_error(ctx, failed)
+      end
+      if err ~= nil then
+        return err
+      end
       local items
       if vs.islist(data) then
         items = data
@@ -212,13 +219,91 @@ function IncidentParticipantEntity:stream(action, args, callopts)
       end
     end
   end)
+
+  -- An error raised while the caller iterates leaves through the same catch
+  -- path as an operation's, and the record is cleaned whenever the stream ends.
+  return function()
+    if coroutine.status(co) == "dead" then
+      return nil
+    end
+    local ok, item = coroutine.resume(co)
+    if ok then
+      if coroutine.status(co) == "dead" then
+        utility.clean_explain(ctx)
+        if item ~= nil then
+          error(item, 0)
+        end
+      end
+      return item
+    end
+
+    -- What a hook raises here must not escape the cleaning below.
+    local hookok, hookerr = pcall(utility.feature_hook, ctx, "PreUnexpected")
+    if not hookok then
+      item = hookerr
+    end
+    local err = self:_unexpected(ctx, item)
+    if err ~= nil then
+      error(err, 0)
+    end
+    return nil
+  end
+end
+
+
+-- The steps an operation runs, with their hooks; the first that fails hands
+-- back its error.
+function IncidentParticipantEntity:_stream_steps(ctx)
+  local utility = self._utility
+
+  utility.feature_hook(ctx, "PrePoint")
+  local point, err = utility.make_point(ctx)
+  ctx.out["point"] = point
+  if err ~= nil then
+    return err
+  end
+
+  utility.feature_hook(ctx, "PreSpec")
+  local spec
+  spec, err = utility.make_spec(ctx)
+  ctx.out["spec"] = spec
+  if err ~= nil then
+    return err
+  end
+
+  utility.feature_hook(ctx, "PreRequest")
+  local resp
+  resp, err = utility.make_request(ctx)
+  ctx.out["request"] = resp
+  if err ~= nil then
+    return err
+  end
+
+  utility.feature_hook(ctx, "PreResponse")
+  local resp2
+  resp2, err = utility.make_response(ctx)
+  ctx.out["response"] = resp2
+  if err ~= nil then
+    return err
+  end
+
+  utility.feature_hook(ctx, "PreResult")
+  local result
+  result, err = utility.make_result(ctx)
+  ctx.out["result"] = result
+  if err ~= nil then
+    return err
+  end
+
+  utility.feature_hook(ctx, "PreDone")
+  return nil
 end
 
 
 
 ---@param reqmatch IncidentParticipantLoadMatch
 ---@param ctrl? table
----@return IncidentParticipant
+---@return IncidentParticipantEntity
 ---@return string? err
 function IncidentParticipantEntity:load(reqmatch, ctrl)
   local utility = self._utility
@@ -253,7 +338,50 @@ end
 
 
 
+
+
+-- A hook, fetcher or parser that raises never reaches make_error: its error
+-- leaves cleaned, and so does the explain record it interrupted.
 function IncidentParticipantEntity:_run_op(ctx, post_done)
+  local utility = self._utility
+  local ok, out, err = pcall(self._run_steps, self, ctx, post_done)
+  if ok then
+    return out, err
+  end
+
+  -- What a hook raises here must not escape the cleaning below.
+  local hookok, hookerr = pcall(function()
+    utility.feature_hook(ctx, "PreUnexpected")
+  end)
+  if not hookok then
+    out = hookerr
+  end
+  return nil, self:_unexpected(ctx, out)
+end
+
+
+-- The raised error, cleaned; nil when the caller switched throwing off.
+function IncidentParticipantEntity:_unexpected(ctx, raised)
+  local clean = self._utility.clean
+  local cleanerr = clean(ctx, raised)
+  ctx.ctrl.err = cleanerr
+
+  local explain = ctx.ctrl.explain
+  if type(explain) == "table" then
+    self._utility.clean_explain(ctx)
+    if explain.err == nil then
+      explain.err = { message = type(cleanerr) == "table" and cleanerr.msg or tostring(cleanerr) }
+    end
+  end
+
+  if ctx.ctrl.throw_err == false then
+    return nil
+  end
+  return cleanerr
+end
+
+
+function IncidentParticipantEntity:_run_steps(ctx, post_done)
   local utility = self._utility
 
   utility.feature_hook(ctx, "PrePoint")
@@ -304,7 +432,29 @@ function IncidentParticipantEntity:_run_op(ctx, post_done)
 
   post_done()
 
-  return utility.done(ctx)
+  local out, done_err = utility.done(ctx)
+  if done_err ~= nil then
+    return out, done_err
+  end
+
+  -- An operation resolves to the ENTITY, not the raw data. Entities are
+  -- stateful: post_done has just absorbed resdata/resmatch into this
+  -- instance, and the caller reaches the record through data(). Two
+  -- structural exceptions: `list` resolves to the ARRAY of entity
+  -- instances make_result built, and a failed op with throwing disabled
+  -- hands back the error payload unchanged. `remove` additionally marks
+  -- the entity deleted; it KEEPS its data, so a caller can still read
+  -- what was removed. See AGENTS.md "Entity operations return ENTITIES".
+  local opname = ctx.op ~= nil and ctx.op.name or nil
+
+  if ctx.result ~= nil and ctx.result.ok and opname ~= "list" then
+    if opname == "remove" then
+      self:mark_deleted()
+    end
+    return self, nil
+  end
+
+  return out, nil
 end
 
 

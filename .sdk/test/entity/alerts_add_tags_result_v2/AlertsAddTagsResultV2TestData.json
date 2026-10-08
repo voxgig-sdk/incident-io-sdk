@@ -1,0 +1,79 @@
+{
+  "existing": {
+    "alerts_add_tags_result_v2": {
+      "ALERTS_ADD_TAGS_RESULT_V200": {
+        "alert_group_ids": [],
+        "alert_source_id": "ALERT_SOURCE01",
+        "attributes": [],
+        "created_at": "s85",
+        "deduplication_key": "s86",
+        "description": "s87",
+        "id": "ALERTS_ADD_TAGS_RESULT_V200",
+        "resolved_at": "s89",
+        "source_url": "s8a",
+        "status": "s8b",
+        "tags": [],
+        "title": "s8d",
+        "updated_at": "s8e",
+        "alert_id": "ALERT01"
+      },
+      "ALERTS_ADD_TAGS_RESULT_V201": {
+        "alert_group_ids": [],
+        "alert_source_id": "ALERT_SOURCE01",
+        "attributes": [],
+        "created_at": "s107",
+        "deduplication_key": "s108",
+        "description": "s109",
+        "id": "ALERTS_ADD_TAGS_RESULT_V201",
+        "resolved_at": "s10b",
+        "source_url": "s10c",
+        "status": "s10d",
+        "tags": [],
+        "title": "s10f",
+        "updated_at": "s110",
+        "alert_id": "ALERT01"
+      },
+      "ALERTS_ADD_TAGS_RESULT_V202": {
+        "alert_group_ids": [],
+        "alert_source_id": "ALERT_SOURCE01",
+        "attributes": [],
+        "created_at": "s189",
+        "deduplication_key": "s18a",
+        "description": "s18b",
+        "id": "ALERTS_ADD_TAGS_RESULT_V202",
+        "resolved_at": "s18d",
+        "source_url": "s18e",
+        "status": "s18f",
+        "tags": [],
+        "title": "s191",
+        "updated_at": "s192",
+        "alert_id": "ALERT01"
+      }
+    }
+  },
+  "new": {
+    "alerts_add_tags_result_v2": {
+      "alerts_add_tags_result_v2_ref01": {
+        "alert_group_ids": [],
+        "alert_source_id": "ALERT_SOURCE01",
+        "attributes": [],
+        "created_at": "s20b",
+        "deduplication_key": "s20c",
+        "description": "s20d",
+        "resolved_at": "s20f",
+        "source_url": "s210",
+        "status": "s211",
+        "tags": [],
+        "title": "s213",
+        "updated_at": "s214"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/alerts/{id}/actions/add_tags": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

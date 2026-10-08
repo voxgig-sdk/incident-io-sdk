@@ -2,9 +2,9 @@
   "existing": {
     "catalog_entry": {
       "CATALOG_ENTRY00": {
-        "alias": [],
+        "aliases": [],
         "archived_at": "s83",
-        "attribute_value": {},
+        "attribute_values": {},
         "catalog_entry": {},
         "catalog_type": {},
         "catalog_type_id": "CATALOG_TYPE01",
@@ -12,14 +12,14 @@
         "external_id": "EXTERNAL01",
         "id": "CATALOG_ENTRY00",
         "name": "s8b",
-        "rank": "s8c",
-        "update_attribute": [],
+        "rank": 140,
+        "update_attributes": [],
         "updated_at": "s8e"
       },
       "CATALOG_ENTRY01": {
-        "alias": [],
+        "aliases": [],
         "archived_at": "s105",
-        "attribute_value": {},
+        "attribute_values": {},
         "catalog_entry": {},
         "catalog_type": {},
         "catalog_type_id": "CATALOG_TYPE01",
@@ -27,14 +27,14 @@
         "external_id": "EXTERNAL01",
         "id": "CATALOG_ENTRY01",
         "name": "s10d",
-        "rank": "s10e",
-        "update_attribute": [],
+        "rank": 270,
+        "update_attributes": [],
         "updated_at": "s110"
       },
       "CATALOG_ENTRY02": {
-        "alias": [],
+        "aliases": [],
         "archived_at": "s187",
-        "attribute_value": {},
+        "attribute_values": {},
         "catalog_entry": {},
         "catalog_type": {},
         "catalog_type_id": "CATALOG_TYPE01",
@@ -42,8 +42,8 @@
         "external_id": "EXTERNAL01",
         "id": "CATALOG_ENTRY02",
         "name": "s18f",
-        "rank": "s190",
-        "update_attribute": [],
+        "rank": 400,
+        "update_attributes": [],
         "updated_at": "s192"
       }
     }
@@ -51,19 +51,61 @@
   "new": {
     "catalog_entry": {
       "catalog_entry_ref01": {
-        "alias": [],
+        "aliases": [],
         "archived_at": "s209",
-        "attribute_value": {},
+        "attribute_values": {},
         "catalog_entry": {},
         "catalog_type": {},
         "catalog_type_id": "CATALOG_TYPE01",
         "created_at": "s20e",
         "external_id": "EXTERNAL01",
         "name": "s211",
-        "rank": "s212",
-        "update_attribute": [],
+        "rank": 530,
+        "update_attributes": [],
         "updated_at": "s214"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/catalog_entries": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v3/catalog_entries": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/catalog_entries": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/catalog_entries": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/catalog_entries/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v3/catalog_entries/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/catalog_entries/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v3/catalog_entries/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

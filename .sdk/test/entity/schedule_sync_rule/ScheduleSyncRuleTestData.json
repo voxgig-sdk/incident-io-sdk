@@ -2,60 +2,78 @@
   "existing": {
     "schedule_sync_rule": {
       "SCHEDULE_SYNC_RULE00": {
-        "annotation": {},
-        "created_at": "s6f",
+        "annotations": {},
+        "created_at": "s65",
         "id": "SCHEDULE_SYNC_RULE00",
-        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "permanent_member_user_ids": [],
         "rotation_id": "ROTATION01",
         "schedule_id": "SCHEDULE01",
-        "schedule_sync_rule": {},
         "schedule_sync_target": {},
         "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
-        "sync_type": "s77",
-        "updated_at": "s78"
+        "sync_type": "s6c",
+        "updated_at": "s6d"
       },
       "SCHEDULE_SYNC_RULE01": {
-        "annotation": {},
-        "created_at": "sdd",
+        "annotations": {},
+        "created_at": "sc9",
         "id": "SCHEDULE_SYNC_RULE01",
-        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "permanent_member_user_ids": [],
         "rotation_id": "ROTATION01",
         "schedule_id": "SCHEDULE01",
-        "schedule_sync_rule": {},
         "schedule_sync_target": {},
         "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
-        "sync_type": "se5",
-        "updated_at": "se6"
+        "sync_type": "sd0",
+        "updated_at": "sd1"
       },
       "SCHEDULE_SYNC_RULE02": {
-        "annotation": {},
-        "created_at": "s14b",
+        "annotations": {},
+        "created_at": "s12d",
         "id": "SCHEDULE_SYNC_RULE02",
-        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "permanent_member_user_ids": [],
         "rotation_id": "ROTATION01",
         "schedule_id": "SCHEDULE01",
-        "schedule_sync_rule": {},
         "schedule_sync_target": {},
         "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
-        "sync_type": "s153",
-        "updated_at": "s154"
+        "sync_type": "s134",
+        "updated_at": "s135"
       }
     }
   },
   "new": {
     "schedule_sync_rule": {
       "schedule_sync_rule_ref01": {
-        "annotation": {},
-        "created_at": "s1b9",
-        "permanent_member_user_id": "PERMANENT_MEMBER_USER01",
+        "annotations": {},
+        "created_at": "s191",
+        "permanent_member_user_ids": [],
         "rotation_id": "ROTATION01",
         "schedule_id": "SCHEDULE01",
-        "schedule_sync_rule": {},
         "schedule_sync_target": {},
         "schedule_sync_target_id": "SCHEDULE_SYNC_TARGET01",
-        "sync_type": "s1c1",
-        "updated_at": "s1c2"
+        "sync_type": "s198",
+        "updated_at": "s199"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/schedules/{schedule_id}/sync_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/schedules/{schedule_id}/sync_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/schedules/{schedule_id}/sync_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/schedules/{schedule_id}/sync_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

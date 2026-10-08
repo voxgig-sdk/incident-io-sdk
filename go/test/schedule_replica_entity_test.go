@@ -15,6 +15,13 @@ import (
 	vs "github.com/voxgig-sdk/incident-io-sdk/go/utility/struct"
 )
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const schedule_replicaEntityLiveStrict = true
+
+
 func TestScheduleReplicaEntity(t *testing.T) {
 	t.Run("instance", func(t *testing.T) {
 		testsdk := sdk.TestSDK(nil, nil)
@@ -24,55 +31,21 @@ func TestScheduleReplicaEntity(t *testing.T) {
 		}
 	})
 
-	// Feature #4: the entity Stream(action, ...) method runs the op pipeline and
-	// returns a channel over result items. With the streaming feature active it
-	// yields the feature's incremental output; otherwise it falls back to the
-	// materialised list so Stream always yields.
-	t.Run("stream", func(t *testing.T) {
-		seed := map[string]any{
-			"entity": map[string]any{
-				"schedule_replica": map[string]any{
-					"s1": map[string]any{"id": "s1"},
-					"s2": map[string]any{"id": "s2"},
-					"s3": map[string]any{"id": "s3"},
-				},
-			},
+	t.Run("validate", func(t *testing.T) {
+		if !fhHasFeature("validate") {
+			t.Skip("feature not present in this SDK: validate")
 		}
-
-		// Fallback: streaming inactive -> yields the materialised list items.
-		base := sdk.TestSDK(seed, nil)
-		var seen []any
-		for item := range base.ScheduleReplica(nil).Stream("list", nil, nil) {
-			seen = append(seen, item)
-		}
-		if len(seen) != 3 {
-			t.Fatalf("expected 3 streamed items, got %d", len(seen))
-		}
-
-		// Inbound: streaming active -> yields each item from the feature iterator.
-		hasStreaming := false
-		if fm, ok := core.MakeConfig()["feature"].(map[string]any); ok {
-			_, hasStreaming = fm["streaming"]
-		}
-		if hasStreaming {
-			streamSdk := sdk.TestSDK(seed, map[string]any{
-				"feature": map[string]any{"streaming": map[string]any{"active": true}},
-			})
-			var got []any
-			for item := range streamSdk.ScheduleReplica(nil).Stream("list", nil, nil) {
-				if sub, ok := item.([]any); ok {
-					got = append(got, sub...)
-				} else {
-					got = append(got, item)
-				}
-			}
-			if len(got) != 3 {
-				t.Fatalf("expected 3 items via streaming feature, got %d", len(got))
-			}
+		client := sdk.TestSDK(nil, map[string]any{
+			"feature": map[string]any{"validate": map[string]any{"active": true}},
+		})
+		_, err := client.ScheduleReplica(nil).List(map[string]any{"id": 1}, nil)
+		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
+			t.Fatalf("expected validate_failed, got %v", err)
 		}
 	})
 
-	t.Run("basic", func(t *testing.T) {
+	t.Run("basic", func(tt *testing.T) {
+		var t testing.TB = tt
 		setup := schedule_replicaBasicSetup(nil)
 		// Per-op sdk-test-control.json skip — basic test exercises a flow
 		// with multiple ops; skipping any op skips the whole flow.
@@ -80,7 +53,7 @@ func TestScheduleReplicaEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create", "list", "load"} {
+		for _, _op := range []string{"load"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "schedule_replica." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -89,52 +62,23 @@ func TestScheduleReplicaEntity(t *testing.T) {
 				return
 			}
 		}
-		// The basic flow consumes synthetic IDs from the fixture. In live mode
-		// without an *_ENTID env override, those IDs hit the live API and 4xx.
-		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_SCHEDULE_REPLICA_ENTID JSON to run live")
-			return
+		if setup.live {
+			liveMiss(t, schedule_replicaEntityLiveStrict, "Live entity test blocked: %s", "the flow loads a schedule_replica record it has no list to find")
 		}
 		client := setup.client
 
-		// CREATE
-		scheduleReplicaRef01Ent := client.ScheduleReplica(nil)
-		scheduleReplicaRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath([]any{"new", "schedule_replica"}, setup.data), "schedule_replica_ref01"))
-		scheduleReplicaRef01Data["schedule_id"] = setup.idmap["schedule01"]
-
-		scheduleReplicaRef01DataResult, err := scheduleReplicaRef01Ent.Create(scheduleReplicaRef01Data, nil)
-		if err != nil {
-			t.Fatalf("create failed: %v", err)
+		// Bootstrap entity data from existing test data (no create step in flow).
+		scheduleReplicaRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.schedule_replica")))
+		var scheduleReplicaRef01Data map[string]any
+		if len(scheduleReplicaRef01DataRaw) > 0 {
+			scheduleReplicaRef01Data = core.ToMapAny(scheduleReplicaRef01DataRaw[0][1])
 		}
-		scheduleReplicaRef01Data = core.ToMapAny(scheduleReplicaRef01DataResult)
-		if scheduleReplicaRef01Data == nil {
-			t.Fatal("expected create result to be a map")
-		}
-		if scheduleReplicaRef01Data["id"] == nil {
-			t.Fatal("expected created entity to have an id")
-		}
-
-		// LIST
-		scheduleReplicaRef01Match := map[string]any{
-			"schedule_id": setup.idmap["schedule01"],
-		}
-
-		scheduleReplicaRef01ListResult, err := scheduleReplicaRef01Ent.List(scheduleReplicaRef01Match, nil)
-		if err != nil {
-			t.Fatalf("list failed: %v", err)
-		}
-		scheduleReplicaRef01List, scheduleReplicaRef01ListOk := scheduleReplicaRef01ListResult.([]any)
-		if !scheduleReplicaRef01ListOk {
-			t.Fatalf("expected list result to be an array, got %T", scheduleReplicaRef01ListResult)
-		}
-
-		foundItem := vs.Select(entityListToData(scheduleReplicaRef01List), map[string]any{"id": scheduleReplicaRef01Data["id"]})
-		if vs.IsEmpty(foundItem) {
-			t.Fatal("expected to find created entity in list")
-		}
+		// Discard guards against Go's unused-var check when the flow's steps
+		// happen not to consume the bootstrap data (e.g. list-only flows).
+		_ = scheduleReplicaRef01Data
 
 		// LOAD
+		scheduleReplicaRef01Ent := client.ScheduleReplica(nil)
 		scheduleReplicaRef01MatchDt0 := map[string]any{
 			"id": scheduleReplicaRef01Data["id"],
 		}
@@ -142,7 +86,7 @@ func TestScheduleReplicaEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		scheduleReplicaRef01DataDt0LoadResult := core.ToMapAny(scheduleReplicaRef01DataDt0Loaded)
+		scheduleReplicaRef01DataDt0LoadResult := core.ToMapAny(entityData(scheduleReplicaRef01DataDt0Loaded))
 		if scheduleReplicaRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}
@@ -177,7 +121,7 @@ func schedule_replicaBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"schedule_replica01", "schedule_replica02", "schedule_replica03", "schedule01", "schedule02", "schedule03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -187,39 +131,52 @@ func schedule_replicaBasicSetup(extra map[string]any) *entityTestSetup {
 		},
 	)
 
-	// Detect ENTID env override before envOverride consumes it. When live
-	// mode is on without a real override, the basic test runs against synthetic
-	// IDs from the fixture and 4xx's. Surface this so the test can skip.
-	entidEnvRaw := os.Getenv("INCIDENTIO_TEST_SCHEDULE_REPLICA_ENTID")
+	// Whether *_ENTID supplied the idmap, read before envOverride consumes it:
+	// without it, the ids a live flow binds are the fixture's synthetic ones.
+	entidEnvRaw := os.Getenv("INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 
 	env := envOverride(map[string]any{
-		"INCIDENTIO_TEST_SCHEDULE_REPLICA_ENTID": idmap,
-		"INCIDENTIO_TEST_LIVE":      "FALSE",
-		"INCIDENTIO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID": idmap,
+		"INCIDENT_IO_TEST_LIVE":      "FALSE",
+		"INCIDENT_IO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_APIKEY":         "",
 	})
 
-	idmapResolved := core.ToMapAny(env["INCIDENTIO_TEST_SCHEDULE_REPLICA_ENTID"])
+	idmapResolved := core.ToMapAny(env["INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID"])
 	if idmapResolved == nil {
 		idmapResolved = core.ToMapAny(idmap)
 	}
 
-	if env["INCIDENTIO_TEST_LIVE"] == "TRUE" {
+	if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
+				"apikey": env["INCIDENT_IO_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewIncidentIoSDK(core.ToMapAny(mergedOpts))
 	}
 
-	live := env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+	live := env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
 	return &entityTestSetup{
 		client:        client,
 		data:          entityData,
 		idmap:         idmapResolved,
 		env:           env,
-		explain:       env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+		explain:       env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
 		live:          live,
 		syntheticOnly: live && !idmapOverridden,
 		now:           time.Now().UnixMilli(),

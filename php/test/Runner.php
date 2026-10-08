@@ -43,8 +43,8 @@ class IncidentIoTestRunner
 
     public static function env_override(array $m): array
     {
-        $live = self::getenv('INCIDENTIO_TEST_LIVE');
-        $override = self::getenv('INCIDENTIO_TEST_OVERRIDE');
+        $live = self::getenv('INCIDENT_IO_TEST_LIVE');
+        $override = self::getenv('INCIDENT_IO_TEST_OVERRIDE');
 
         if ($live === 'TRUE' || $override === 'TRUE') {
             foreach (array_keys($m) as $key) {
@@ -63,9 +63,9 @@ class IncidentIoTestRunner
             }
         }
 
-        $explain = self::getenv('INCIDENTIO_TEST_EXPLAIN');
+        $explain = self::getenv('INCIDENT_IO_TEST_EXPLAIN');
         if ($explain !== null && $explain !== '') {
-            $m['INCIDENTIO_TEST_EXPLAIN'] = $explain;
+            $m['INCIDENT_IO_TEST_EXPLAIN'] = $explain;
         }
 
         return $m;
@@ -138,6 +138,42 @@ class IncidentIoTestRunner
         return [false, null];
     }
 
+    /**
+     * Extra SDK options every LIVE client is constructed with, read from
+     * sdk-test-control.json `test.client.options`.
+     *
+     * The generated live client knows two things: the base URL (from the
+     * spec) and the credential (from the environment). Everything else
+     * about how a particular API wants to be talked to - which features to
+     * switch on, and with what settings - is a property of THAT API, known
+     * to the project and to nothing in the toolchain.
+     *
+     * Merged UNDER the generated fields, so the suite's own
+     * base/apikey/server values win: this ADDS to the live client, it does
+     * not redirect it.
+     *
+     * Reserved fields are stripped HERE rather than at each merge site: the
+     * generated array only names a field when the model calls for one, so a
+     * "base" in this block would face no competing value and would silently
+     * redirect the whole suite - credential included - to another host.
+     */
+    public static function live_client_options(): array
+    {
+        $ctrl = self::load_test_control();
+        $opts = $ctrl['test']['client']['options'] ?? null;
+        if (!is_array($opts)) {
+            return [];
+        }
+        $reserved = ['base', 'prefix', 'suffix', 'server', 'apikey', 'secret'];
+        $out = [];
+        foreach ($opts as $k => $v) {
+            if (!in_array($k, $reserved, true)) {
+                $out[$k] = $v;
+            }
+        }
+        return $out;
+    }
+
     /** Per-test live pacing delay (ms); default 500. */
     public static function live_delay_ms(): int
     {
@@ -147,6 +183,92 @@ class IncidentIoTestRunner
             return $v;
         }
         return 500;
+    }
+
+    /**
+     * A live check that did not pass, as main.kit.test.live.strict decides:
+     * strict fails the test, lenient skips it with the same reason.
+     */
+    public static function live_miss(bool $strict, string $reason): void
+    {
+        if ($strict) {
+            \PHPUnit\Framework\Assert::fail($reason);
+        }
+        \PHPUnit\Framework\Assert::markTestSkipped($reason);
+    }
+
+    /** An account holding no record for the test to read skips either way. */
+    public static function live_empty(string $reason): void
+    {
+        \PHPUnit\Framework\Assert::markTestSkipped($reason);
+    }
+
+    /** A live list response's records: the body, or the first list an envelope holds. */
+    public static function live_list($data): ?array
+    {
+        if (is_array($data) && array_is_list($data)) {
+            return $data;
+        }
+        if (is_array($data)) {
+            foreach ($data as $value) {
+                if (is_array($value) && array_is_list($value)) {
+                    return $value;
+                }
+            }
+        }
+        return null;
+    }
+
+    /** A live response for a message: the SDK's error, or its status and content type. */
+    public static function live_describe(array $result): string
+    {
+        $err = $result["err"] ?? null;
+        if ($err instanceof \Throwable) {
+            return $err->getMessage();
+        }
+        if (!empty($err)) {
+            return is_string($err) ? $err : json_encode($err);
+        }
+        $type = null;
+        foreach (($result["headers"] ?? []) as $k => $v) {
+            if (strtolower((string)$k) === "content-type") {
+                $type = trim(explode(";", (string)$v)[0]);
+            }
+        }
+        return "HTTP " . ($result["status"] ?? "none") . ($type ? " " . $type : "");
+    }
+
+    /**
+     * The record a create-less flow reads live: the first its list returns,
+     * put where the flow reads the fixture's existing records.
+     */
+    public static function live_existing(array &$setup, bool $strict, string $name, callable $list): void
+    {
+        $found = null;
+        try {
+            $found = $list();
+        } catch (\Throwable $e) {
+            self::live_miss($strict, "Live list discovery failed: " . $e->getMessage());
+        }
+        if (!is_array($found)) {
+            self::live_miss($strict, "Live list discovery returned no list");
+        }
+        if (0 === count($found)) {
+            self::live_empty("The account has no $name record to load");
+        }
+        $first = $found[0];
+        $setup["data"]["existing"][$name] = [
+            "live01" => (is_object($first) && method_exists($first, 'data_get')) ? $first->data_get() : $first,
+        ];
+    }
+
+    /** In a lenient live run a failing check skips, observing the live API. */
+    public static function live_observe(\Throwable $e, array $setup, bool $strict): void
+    {
+        if ($strict || empty($setup["live"]) || $e instanceof \PHPUnit\Framework\SkippedTest) {
+            throw $e;
+        }
+        \PHPUnit\Framework\Assert::markTestSkipped("live run, main.kit.test.live.strict is false: " . $e->getMessage());
     }
 }
 

@@ -1,0 +1,241 @@
+# Entity: alerts_transition_incident_alert_result_v2
+
+main: kit: entity: alerts_transition_incident_alert_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    alert: {
+      h: "Alert"
+      n: "alert"
+      r: true
+      t: "`$OBJECT`"
+    }
+    alert_id: {
+      h: "Alert Id"
+      n: "alert_id"
+      r: true
+      sh: "Alert to attach to the incident"
+      t: "`$STRING`"
+    }
+    alert_route_id: {
+      h: "Alert Route Id"
+      n: "alert_route_id"
+      r: false
+      sh: "The ID of the alert route that created this incident alert"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "The ID of this alert"
+      t: "`$STRING`"
+    }
+    incident: {
+      h: "Incident"
+      n: "incident"
+      r: true
+      sh: "Incident slim is a subset of the full incident object, listing key fields."
+      t: "`$OBJECT`"
+    }
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "Incident to attach the alert to"
+      t: "`$STRING`"
+    }
+    re_relate: {
+      h: "Re Relate"
+      n: "re_relate"
+      r: false
+      sh: "Relate the alert again even though someone previously marked it unrelated to this incident."
+      t: "`$BOOLEAN`"
+    }
+    state: {
+      h: "State"
+      n: "state"
+      r: true
+      sh: "What state to move the connection to"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "alerts_transition_incident_alert_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "state"
+          ]
+          co: {
+            id: "POST /v2/incident_alerts/{id}/actions/transition"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "param"
+                n: "incident_alert_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/incident_alerts/{id}/actions/transition"
+          q: {
+            exist: [
+              "incident_alert_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "incident_alert_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_alerts"
+            }
+            {
+              var: "incident_alert_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "transition"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_alert`"
+          }
+        }
+        {
+          bf: [
+            "alert_id"
+            "incident_id"
+            "re_relate"
+          ]
+          co: {
+            id: "POST /v2/incident_alerts"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/incident_alerts"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_alerts"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_alert`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/incident_alerts"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG1"
+                k: "query"
+                n: "alert_id"
+                or: "alert_id"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "incident_id"
+                or: "incident_id"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: true
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/incident_alerts"
+          q: {
+            exist: [
+              "page_size"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incident_alerts"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_alerts`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

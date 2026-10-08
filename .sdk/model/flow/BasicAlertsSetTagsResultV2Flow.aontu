@@ -1,0 +1,22 @@
+# BasicAlertsSetTagsResultV2Flow
+
+main: kit: flow: BasicAlertsSetTagsResultV2Flow:
+{
+  entity: "alerts_set_tags_result_v2",
+  kind: "basic",
+  name: "BasicAlertsSetTagsResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "alerts_set_tags_result_v2_ref01"
+      }
+
+      m: {
+        alert_id: "alert01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicAlertsSetTagsResultV2Flow"
+}

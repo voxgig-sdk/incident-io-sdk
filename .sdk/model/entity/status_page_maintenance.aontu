@@ -4,73 +4,115 @@ main: kit: entity: status_page_maintenance: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "affected_component_id"
-      req: true
-      type: "`$ARRAY`"
+  fields: {
+    affected_component_ids: {
+      h: "Affected Component Ids"
+      n: "affected_component_ids"
+      r: true
+      sh: "An array of IDs of component affected by the maintenance window"
+      t: "`$ARRAY`"
     }
-    {
-      name: "component_maintenance_period"
-      req: true
-      type: "`$ARRAY`"
+    automate_maintenance_status: {
+      h: "Automate Maintenance Status"
+      n: "automate_maintenance_status"
+      op: {
+        create: {
+          req: false
+          type: "`$BOOLEAN`"
+        }
+      }
+      r: true
+      sh: "Whether updates are published automatically, moving this maintenance window to in progress at its start time and to complete at its end time"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "end_at"
-      req: true
-      type: "`$STRING`"
+    component_maintenance_periods: {
+      h: "Component Maintenance Periods"
+      n: "component_maintenance_periods"
+      r: true
+      sh: "A list of time periods where components were under maintenance during this status page maintenance window"
+      t: "`$ARRAY`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    end_at: {
+      fo: "date-time"
+      h: "End At"
+      n: "end_at"
+      r: true
+      sh: "The time the maintenance window ends"
+      t: "`$STRING`"
     }
-    {
-      name: "idempotency_key"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "A unique ID for this status page maintenance window"
+      t: "`$STRING`"
     }
-    {
-      name: "maintenance_status"
-      req: true
-      type: "`$STRING`"
+    idempotency_key: {
+      h: "Idempotency Key"
+      n: "idempotency_key"
+      r: true
+      sh: "A unique key to de-duplicate requests."
+      t: "`$STRING`"
     }
-    {
-      name: "message"
-      req: true
-      type: "`$STRING`"
+    maintenance_status: {
+      h: "Maintenance Status"
+      n: "maintenance_status"
+      r: true
+      sh: "Current status for this maintenance window"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    message: {
+      h: "Message"
+      n: "message"
+      r: true
+      sh: "Markdown initial update on this status page maintenance window"
+      t: "`$STRING`"
     }
-    {
-      name: "notify_subscriber"
-      req: true
-      type: "`$BOOLEAN`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "A title for the maintenance window"
+      t: "`$STRING`"
     }
-    {
-      name: "published_at"
-      req: true
-      type: "`$STRING`"
+    notify_subscribers: {
+      h: "Notify Subscribers"
+      n: "notify_subscribers"
+      r: true
+      sh: "Whether to notify subscribers about this status page maintenance."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "start_at"
-      req: true
-      type: "`$STRING`"
+    published_at: {
+      fo: "date-time"
+      h: "Published At"
+      n: "published_at"
+      r: true
+      sh: "When this status page maintenance window was published to the status page"
+      t: "`$STRING`"
     }
-    {
-      name: "status_page_id"
-      req: true
-      type: "`$STRING`"
+    start_at: {
+      fo: "date-time"
+      h: "Start At"
+      n: "start_at"
+      r: true
+      sh: "The time the maintenance window starts"
+      t: "`$STRING`"
     }
-    {
-      name: "update"
-      req: true
-      type: "`$ARRAY`"
+    status_page_id: {
+      h: "Status Page Id"
+      n: "status_page_id"
+      r: true
+      sh: "The ID of the corresponding status page"
+      t: "`$STRING`"
     }
-  ]
+    updates: {
+      h: "Updates"
+      n: "updates"
+      r: true
+      sh: "A list of updates posted to this status page maintenance window"
+      t: "`$ARRAY`"
+    }
+  }
 
   id: {
     field: "id"
@@ -83,13 +125,38 @@ main: kit: entity: status_page_maintenance: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/status_page_maintenances"
-          parts: [
-            "v2"
-            "status_page_maintenances"
+          bf: [
+            "affected_component_ids"
+            "automate_maintenance_status"
+            "end_at"
+            "idempotency_key"
+            "maintenance_status"
+            "message"
+            "name"
+            "notify_subscribers"
+            "start_at"
+            "status_page_id"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/status_page_maintenances"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/status_page_maintenances"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_maintenances"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.status_page_maintenance`"
           }
@@ -100,95 +167,101 @@ main: kit: entity: status_page_maintenance: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/status_page_maintenances"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG1"
-                kind: "query"
-                name: "component_id"
-                orig: "component_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG1"
+                k: "query"
+                n: "component_id"
+                or: "component_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "2021-08-17T13:28:57.801578Z"
-                kind: "query"
-                name: "end_at"
-                orig: "end_at"
-                reqd: false
-                type: "`$STRING`"
+                ex: "2021-08-17T13:28:57.801578Z"
+                k: "query"
+                n: "end_at"
+                or: "end_at"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG2"
-                kind: "query"
-                name: "group_id"
-                orig: "group_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG2"
+                k: "query"
+                n: "group_id"
+                or: "group_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
               {
-                example: "2021-08-17T13:28:57.801578Z"
-                kind: "query"
-                name: "start_at"
-                orig: "start_at"
-                reqd: false
-                type: "`$STRING`"
+                ex: "2021-08-17T13:28:57.801578Z"
+                k: "query"
+                n: "start_at"
+                or: "start_at"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "status_page_id"
-                orig: "status_page_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "status_page_id"
+                or: "status_page_id"
+                r: true
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG3"
-                kind: "query"
-                name: "sub_page_id"
-                orig: "sub_page_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG3"
+                k: "query"
+                n: "sub_page_id"
+                or: "sub_page_id"
+                r: false
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/status_page_maintenances"
-          parts: [
-            "v2"
-            "status_page_maintenances"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/status_page_maintenances"
+          q: {
             exist: [
-              "after"
-              "component_id"
-              "end_at"
-              "group_id"
-              "page_size"
-              "start_at"
               "status_page_id"
-              "sub_page_id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_maintenances"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.status_page_maintenances`"
           }
         }
       ]
@@ -197,36 +270,111 @@ main: kit: entity: status_page_maintenance: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/status_page_maintenances/{status_page_maintenance_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG1"
-                kind: "param"
-                name: "id"
-                orig: "status_page_maintenance_id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG1"
+                k: "param"
+                n: "id"
+                or: "status_page_maintenance_id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/status_page_maintenances/{status_page_maintenance_id}"
-          parts: [
-            "v2"
-            "status_page_maintenances"
-            "{id}"
-          ]
-          rename: {
-            param: {
-              status_page_maintenance_id: "id"
-            }
-          }
-          select: {
+          m: "GET"
+          o: "/v2/status_page_maintenances/{status_page_maintenance_id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          r: {
+            param: {
+              status_page_maintenance_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_maintenances"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.status_page_maintenance`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "end_at"
+            "name"
+            "start_at"
+          ]
+          co: {
+            id: "PUT /v2/status_page_maintenances/{status_page_maintenance_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG1"
+                k: "param"
+                n: "id"
+                or: "status_page_maintenance_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/status_page_maintenances/{status_page_maintenance_id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              status_page_maintenance_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_maintenances"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.status_page_maintenance`"
           }

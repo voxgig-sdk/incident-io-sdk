@@ -1,0 +1,30 @@
+# BasicAlertsTransitionIncidentAlertResultV2Flow
+
+main: kit: flow: BasicAlertsTransitionIncidentAlertResultV2Flow:
+{
+  entity: "alerts_transition_incident_alert_result_v2",
+  kind: "basic",
+  name: "BasicAlertsTransitionIncidentAlertResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "alerts_transition_incident_alert_result_v2_ref01"
+      }
+
+      o: "create"
+    }
+
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "alerts_transition_incident_alert_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAlertsTransitionIncidentAlertResultV2Flow"
+}

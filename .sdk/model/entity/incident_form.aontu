@@ -1,0 +1,310 @@
+# Entity: incident_form
+
+main: kit: entity: incident_form: {
+
+  alias: field: {}
+
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this incident form was created"
+      t: "`$STRING`"
+    }
+    expressions: {
+      h: "Expressions"
+      n: "expressions"
+      r: true
+      sh: "Expressions available to every element's conditions and defaults."
+      t: "`$ARRAY`"
+    }
+    form_type: {
+      h: "Form Type"
+      n: "form_type"
+      r: true
+      sh: "Which form this is."
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this incident form"
+      t: "`$STRING`"
+    }
+    incident_type_id: {
+      h: "Incident Type Id"
+      n: "incident_type_id"
+      r: false
+      sh: "The incident type this form belongs to."
+      t: "`$STRING`"
+    }
+    lifecycle_elements: {
+      h: "Lifecycle Elements"
+      n: "lifecycle_elements"
+      r: false
+      sh: "Elements on this form, in display order."
+      t: "`$ARRAY`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this incident form was last updated"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "incident_form"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "expressions"
+            "form_type"
+            "incident_type_id"
+            "lifecycle_elements"
+          ]
+          co: {
+            id: "POST /v3/incident_forms"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v3/incident_forms"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "incident_forms"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_form`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v3/incident_forms"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v3/incident_forms"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "incident_forms"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_forms`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v3/incident_forms/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v3/incident_forms/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "incident_forms"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_form`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v3/incident_forms/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v3/incident_forms/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "incident_forms"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "expressions"
+            "form_type"
+            "incident_type_id"
+            "lifecycle_elements"
+          ]
+          co: {
+            id: "PUT /v3/incident_forms/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v3/incident_forms/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "incident_forms"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.incident_form`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

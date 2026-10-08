@@ -14,7 +14,7 @@ class IncidentIoPrepareMethod
         'patch' => 'PATCH',
     ];
 
-    public static function call(IncidentIoContext $ctx): string
+    public static function call(IncidentIoContext $ctx): ?string
     {
         // The API definition is authoritative: a POST-only or PATCH-based API
         // exposes `update` as POST or PATCH, not the PUT the op name implies.
@@ -27,6 +27,25 @@ class IncidentIoPrepareMethod
             }
         }
 
-        return self::METHOD_MAP[$ctx->op->name] ?? 'GET';
+        // No default: an op name outside the convention resolves to no method,
+        // exactly as the ts reference (`methodMap[key]` is undefined there).
+        // The silent-pass inline runner hid a stray 'GET' fallback here; the
+        // shared corpus (prepareMethod, opname "bad" -> null) pins it now.
+        return self::METHOD_MAP[$ctx->op->name] ?? null;
+    }
+
+    // Whether a comma-separated allow option names the item: whole names, any case.
+    public static function allowed(mixed $names, mixed $item): bool
+    {
+        $want = is_string($item) ? strtoupper($item) : '';
+        if ('' === $want || !is_string($names)) {
+            return false;
+        }
+        foreach (explode(',', $names) as $name) {
+            if (strtoupper(trim($name)) === $want) {
+                return true;
+            }
+        }
+        return false;
     }
 }

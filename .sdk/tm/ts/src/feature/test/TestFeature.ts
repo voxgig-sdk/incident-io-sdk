@@ -1,6 +1,6 @@
 
 import type { Context, FeatureOptions } from '../../types'
-import type { ProjectNameSDK } from '../../ProjectNameSDK'
+import type { IncidentIoSDK } from '../../IncidentIoSDK'
 
 import { BaseFeature } from '../base/BaseFeature'
 
@@ -8,12 +8,92 @@ import { BaseFeature } from '../base/BaseFeature'
 const S_NOT_FOUND = 'Not found'
 
 
+// The `%04x%04x%04x%04x` every other target mints, so the id's shape does not
+// depend on which language answered.
+function mintId(): string {
+  let out = ''
+  for (let i = 0; i < 4; i++) {
+    out += ((Math.random() * 0x10000) | 0).toString(16).padStart(4, '0')
+  }
+  return out
+}
+
+
+function ownIdField(config: any, getpath: any, entityName: string): string {
+  let fallback = ''
+
+  for (const opname of ['load', 'remove', 'update', 'patch']) {
+    const points = getpath(config, ['entity', entityName, 'op', opname, 'points']) || []
+    const canonical = points.filter((pt: any) =>
+      null == (pt && pt.select && pt.select['$action']))
+    const use = 0 < canonical.length ? canonical : points
+    let best = use[0]
+    for (const pt of use) {
+      if (null == pt || null == pt.parts || null == best || null == best.parts) continue
+      const ptterm = 0 < pt.parts.length && String(pt.parts[pt.parts.length - 1]).startsWith('{')
+      const bestterm = 0 < best.parts.length && String(best.parts[best.parts.length - 1]).startsWith('{')
+      if (ptterm !== bestterm ? ptterm : pt.parts.length < best.parts.length) best = pt
+    }
+    const parts: string[] = (best && best.parts) || []
+    const lastPart = 0 < parts.length ? String(parts[parts.length - 1]) : ''
+    if (lastPart.startsWith('{')) return lastPart.slice(1, -1)
+
+    // No path param at all (or the route ends in a literal, e.g.
+    // /orgs/{org}/private-registries/public-key): a single required QUERY
+    // param can still be the record's own key (e.g. GET /result?trace_id=).
+    const query = (best && best.args && best.args.query) || []
+    const reqdQuery = query.filter((q: any) => false !== q.reqd)
+    if (1 === reqdQuery.length) return String(reqdQuery[0].name)
+
+    // The last path parameter of a literal-terminal route is remembered as
+    // a LAST RESORT, but not returned yet — see below.
+    if ('' === fallback) {
+      for (let i = parts.length - 1; 0 <= i; i--) {
+        const part = String(parts[i])
+        if (part.startsWith('{')) {
+          fallback = part.slice(1, -1)
+          break
+        }
+      }
+    }
+  }
+
+  if ('' !== fallback) {
+    return fallback
+  }
+
+  return 'id'
+}
+
+
+// The record the mock keeps: the request data without `$body`, which only the
+// wire carries.
+function recordOf(reqdata: any): any {
+  const out = { ...(reqdata || {}) }
+  delete out.$body
+  return out
+}
+
+
+// The key a list response wraps each record under, where the response
+// transform is `["`$EACH`", "body", { "`$MERGE`": "`.<key>`" }]`.
+function itemEnvelopeKey(restf: any): string | null {
+  if (!Array.isArray(restf) || 3 !== restf.length ||
+    '`$EACH`' !== restf[0] || 'body' !== restf[1]) {
+    return null
+  }
+  const merge = restf[2]?.['`$MERGE`']
+  const m = 'string' === typeof merge ? merge.match(/^`\.([^.`$]+)`$/) : null
+  return null == m ? null : m[1]
+}
+
+
 class TestFeature extends BaseFeature {
   version = '0.0.1'
   name = 'test'
   active = true
 
-  _client?: ProjectNameSDK
+  _client?: IncidentIoSDK
   _options?: any
 
 
@@ -30,10 +110,16 @@ class TestFeature extends BaseFeature {
 
     this._client._mode = 'test'
 
+    const getpath = struct.getpath
+
     // Ensure entity ids are correct.
     walk(entity, (k: any, v: any, _parent: any, path: any) => {
       if (2 === size(path)) {
         setprop(v, 'id', k)
+        const idField = ownIdField(ctx.config, getpath, String(path[0]))
+        if ('id' !== idField) {
+          setprop(v, idField, k)
+        }
       }
       return v
     })
@@ -52,20 +138,25 @@ class TestFeature extends BaseFeature {
       const delprop = struct.delprop
       const getdef = struct.getdef
 
-      // Shape the mock payload the way the real API would, so the op's
-      // response transform recovers the entity from it. A point carrying
-      // `transform.res: \`body.item\`` describes an API that answers
-      // `{item: {...}}`; handing back the bare entity means the transform
-      // unwraps a property that is not there and the caller gets undefined.
-      // The mock has to agree with the model, or it only ever simulates APIs
-      // whose responses happen to be unwrapped.
       function envelope(data: any) {
         const restf = getprop(getprop(ctx.point, 'transform', {}), 'res')
+        const itemkey = itemEnvelopeKey(restf)
+        if (null != itemkey && Array.isArray(data)) {
+          return data.map((item: any) => ({ [itemkey]: item }))
+        }
         if (null == data || 'string' !== typeof restf) {
           return data
         }
-        const m = restf.match(/^`body\.([^`.]+)`$/)
-        return null == m ? data : { [m[1]]: data }
+        const m = restf.match(/^`body\.(.+)`$/)
+        if (null == m) {
+          return data
+        }
+        let out: any = data
+        const segs = m[1].split('.')
+        for (let i = segs.length - 1; 0 <= i; i--) {
+          out = { [segs[i]]: out }
+        }
+        return out
       }
 
       function respond(status: number, data?: any, res?: any) {
@@ -123,15 +214,16 @@ class TestFeature extends BaseFeature {
           return respond(200, out)
         }
       }
-      else if ('update' === op.name) {
-        const args = self.buildArgs(ctx, op, ctx.reqdata)
+      else if ('update' === op.name || 'patch' === op.name) {
+        const args = self.buildArgs(ctx, op, recordOf(ctx.reqdata))
         const found = select(entmap, args)
         const ent = getelem(found, 0)
         if (null == ent) {
+          // update miss: 404, never another record
           return respond(404, undefined, { statusText: S_NOT_FOUND })
         }
         else {
-          merge([ent, (ctx.reqdata || {})])
+          merge([ent, recordOf(ctx.reqdata)])
           delprop(ent, '$KEY')
           const out = clone(ent)
           return respond(200, out)
@@ -149,22 +241,31 @@ class TestFeature extends BaseFeature {
         return respond(200)
       }
       else if ('create' === op.name) {
-        const args = self.buildArgs(ctx, op, ctx.reqdata)
+        const args = self.buildArgs(ctx, op, recordOf(ctx.reqdata))
         let id = param(ctx, 'id')
         if (null == id) {
-          id = ((1e4 * Math.random() | 0).toString(16) +
-            (1e4 * Math.random() | 0).toString(16) +
-            (1e4 * Math.random() | 0).toString(16) +
-            (1e4 * Math.random() | 0).toString(16)).padEnd(16, '0')
+          id = mintId()
         }
 
-        const ent = clone(ctx.reqdata)
+        const ent = clone(recordOf(ctx.reqdata))
         setprop(ent, 'id', id)
+
+        // A record created during the run needs the same real-key seeding
+        // the initial walk gives seed data (see ownIdField above) — without
+        // it, only `id` is set, and a load by the entity's own key right
+        // after create (recordKey !== 'id') finds nothing.
+        const idField = ownIdField(ctx.config, struct.getpath, getprop(op, 'entity'))
+        if ('id' !== idField && null == getprop(ent, idField)) {
+          setprop(ent, idField, id)
+        }
+
         setprop(entmap, id, ent)
         delprop(ent, '$KEY')
         const out = clone(ent)
         return respond(200, out)
       }
+
+      return respond(404, undefined, { statusText: 'Unknown operation' })
     }
 
     // Optional network behaviour simulation over the mock transport. Enable
@@ -193,10 +294,12 @@ class TestFeature extends BaseFeature {
       return max <= min ? min : min + ((max - min) >> 1)
     }
 
-    function sleep(ms: number): Promise<void> {
+    function sleep(ms: number, signal?: any): Promise<void> {
       if (null == ms || 0 >= ms) { return Promise.resolve() }
-      if ('function' === typeof net.sleep) { return Promise.resolve(net.sleep(ms)) }
-      return new Promise((r) => setTimeout(r, ms))
+      if ('function' === typeof net.sleep) { return self._untilAbort(Promise.resolve(net.sleep(ms)), signal) }
+      let timer: any
+      return self._untilAbort(new Promise((r) => { timer = setTimeout(r, ms) }), signal,
+        () => clearTimeout(timer))
     }
 
     return async function netsimFetcher(ctx: any, url: string, fetchdef: any) {
@@ -204,15 +307,15 @@ class TestFeature extends BaseFeature {
       const call = self._netcalls
 
       if (true === net.offline) {
-        await sleep(pickLatency())
+        await sleep(pickLatency(), fetchdef?.signal)
         return ctx.error('netsim_offline', 'Simulated network offline (URL was: "' + url + '")')
       }
       if (call <= (net.errorTimes | 0)) {
-        await sleep(pickLatency())
+        await sleep(pickLatency(), fetchdef?.signal)
         return ctx.error('netsim_conn', 'Simulated connection error (call ' + call + ')')
       }
       if (call <= (net.failTimes | 0)) {
-        await sleep(pickLatency())
+        await sleep(pickLatency(), fetchdef?.signal)
         const status = null == net.failStatus ? 503 : net.failStatus
         return {
           status,
@@ -222,7 +325,7 @@ class TestFeature extends BaseFeature {
           headers: { forEach(_cb: any) { }, get(_k: string) { return undefined } },
         }
       }
-      await sleep(pickLatency())
+      await sleep(pickLatency(), fetchdef?.signal)
       return inner(ctx, url, fetchdef)
     }
   }
@@ -241,19 +344,70 @@ class TestFeature extends BaseFeature {
     const isempty = struct.isempty
 
     const opname = getprop(op, 'name')
-    const point =
-      getelem(getpath(ctx.config, [
-        'entity', getprop(ctx.entity, 'name'), 'op', opname, 'points']), -1)
+    const points = getpath(ctx.config, [
+      'entity', getprop(ctx.entity, 'name'), 'op', opname, 'points']) || []
 
-    const reqd = transform(
+    // Pick the entity's own endpoint, not a cross-reference from another
+    // resource that also returns it — the same rule makePoint falls back to,
+    // so the seed-data query is built from the endpoint the request will
+    // actually be sent to: a terminal `{id}` marks a record route, and
+    // failing that the shallower path wins.
+    const isterm = (pt: any) => {
+      const parts = pt.parts
+      const last = 0 < parts.length ? parts[parts.length - 1] : ''
+      return 'string' === typeof last && 0 === last.indexOf('{')
+    }
+
+    let point = getelem(points, 0)
+    for (let i = 1; i < points.length; i++) {
+      const cand = getelem(points, i)
+      if (isterm(cand) !== isterm(point) ? isterm(cand) :
+        cand.parts.length < point.parts.length) {
+        point = cand
+      }
+    }
+
+    // Path AND query: a path-only read misses a query-addressed record
+    // (e.g. GET /result?trace_id=), which has no path param at all.
+    const reqdParams = transform(
       select(getpath(point, ['args', 'params']), { reqd: true }),
       ['`$EACH`', '', '`$KEY.name`']
     )
+    const reqdQuery = transform(
+      select(getpath(point, ['args', 'query']), { reqd: true }),
+      ['`$EACH`', '', '`$KEY.name`']
+    )
+    const reqd = [...(reqdParams || []), ...(reqdQuery || [])]
 
     const qand: any[] = []
     const q = { '`$AND`': qand }
 
-    for (let k of keysof(args)) {
+    const idfrom = getpath(ctx.config, [
+      'entity', getprop(ctx.entity, 'name'), 'id', 'from']) || {}
+
+    const nest = (path: string, value: any) => {
+      const keys = String(path).split('.')
+      let out: any = value
+      for (let i = keys.length - 1; 0 <= i; i--) {
+        out = { [keys[i]]: out }
+      }
+      return out
+    }
+
+    const match = ctx.match || {}
+    const names: any[] = [...keysof(args)]
+
+    if (null == getprop(args, 'id')) {
+      for (const part of (getpath(ctx.config, [
+        'entity', getprop(ctx.entity, 'name'), 'id', 'parts']) || [])) {
+        const pname = String(part)
+        if (!names.includes(pname) && null != getprop(match, pname)) {
+          names.push(pname)
+        }
+      }
+    }
+
+    for (let k of names) {
       if ('id' === k || !isempty(select(reqd, k))) {
         const v = param(ctx, k)
         const ka = getprop(op.alias, k)
@@ -261,6 +415,14 @@ class TestFeature extends BaseFeature {
         let qor: any = [{ [k]: v }]
         if (null != ka) {
           qor.push({ [ka]: v })
+        }
+
+        // An ALTERNATIVE, never a replacement: the parameter name still
+        // matches a record that happens to carry it flat, so a seed written
+        // either way is found. `$OR` is what makes that safe.
+        const kf = getprop(idfrom, k)
+        if (null != kf && k !== kf) {
+          qor.push(nest(kf, v))
         }
 
         qor = { '`$OR`': qor }
@@ -279,7 +441,9 @@ class TestFeature extends BaseFeature {
 
 
 export {
-  TestFeature
+  TestFeature,
+  ownIdField,
+  mintId,
 }
 
 

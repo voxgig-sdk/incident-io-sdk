@@ -1,0 +1,22 @@
+# BasicIncidentActivityLogEntryFlow
+
+main: kit: flow: BasicIncidentActivityLogEntryFlow:
+{
+  entity: "incident_activity_log_entry",
+  kind: "basic",
+  name: "BasicIncidentActivityLogEntryFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "incident_activity_log_entry_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicIncidentActivityLogEntryFlow"
+}

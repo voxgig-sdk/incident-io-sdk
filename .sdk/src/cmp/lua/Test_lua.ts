@@ -1,18 +1,15 @@
 
-import {
-  KIT,
-  getModelPath
-} from '@voxgig/apidef'
-
 import type {
   ModelEntity
 } from '@voxgig/apidef'
 
-import { cmp, each, Folder, File, Content } from '@voxgig/sdkgen'
+import { cmp, each, Folder, File, Content, entityCollection,
+  TestControl } from '@voxgig/sdkgen'
 
 
 import { TestEntity } from './TestEntity_lua'
 import { TestDirect } from './TestDirect_lua'
+import { TestClean } from './TestClean_lua'
 import { ReadmeExamplesTest } from './ReadmeExamplesTest_lua'
 
 
@@ -21,6 +18,9 @@ const Test = cmp(function Test(props: any) {
   const { target } = props
 
   Folder({ name: 'test' }, () => {
+
+    // Write-once: a project's edited control file survives regeneration.
+    TestControl({ target, dir: 'test' })
 
     // Generate exists test
     File({ name: 'exists_test.' + target.ext }, () => {
@@ -37,10 +37,15 @@ end)
 `)
     })
 
-    each(model.main[KIT].entity, (entity: ModelEntity) => {
+    const entity = each(entityCollection(model))
+      .filter((e: any) => false !== e.active)
+
+    each(entity, (entity: ModelEntity) => {
       TestEntity({ target, entity })
       TestDirect({ target, entity })
     })
+
+    TestClean({ target })
 
     // README ```lua example snippets: syntax-check + offline run.
     ReadmeExamplesTest({ target })

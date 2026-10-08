@@ -2,6 +2,7 @@ package sdktest
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -14,6 +15,26 @@ import (
 
 	vs "github.com/voxgig-sdk/incident-io-sdk/go/utility/struct"
 )
+
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const status_page_maintenanceEntityLiveStrict = true
+
+
+type status_page_maintenanceFailHook struct {
+	sdk.BaseFeature
+	unexpected int
+}
+
+func (f *status_page_maintenanceFailHook) PreSpec(ctx *sdk.Context) {
+	panic("status_page_maintenance hook failed")
+}
+
+func (f *status_page_maintenanceFailHook) PreUnexpected(ctx *sdk.Context) {
+	f.unexpected++
+}
 
 func TestStatusPageMaintenanceEntity(t *testing.T) {
 	t.Run("instance", func(t *testing.T) {
@@ -42,8 +63,11 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 		// Fallback: streaming inactive -> yields the materialised list items.
 		base := sdk.TestSDK(seed, nil)
 		var seen []any
-		for item := range base.StatusPageMaintenance(nil).Stream("list", nil, nil) {
-			seen = append(seen, item)
+		for si := range base.StatusPageMaintenance(nil).Stream("list", nil, nil) {
+			if si.Err != nil {
+				t.Fatalf("stream failed: %v", si.Err)
+			}
+			seen = append(seen, si.Item)
 		}
 		if len(seen) != 3 {
 			t.Fatalf("expected 3 streamed items, got %d", len(seen))
@@ -51,7 +75,7 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 
 		// Inbound: streaming active -> yields each item from the feature iterator.
 		hasStreaming := false
-		if fm, ok := core.MakeConfig()["feature"].(map[string]any); ok {
+		if fm, ok := core.SharedConfig()["feature"].(map[string]any); ok {
 			_, hasStreaming = fm["streaming"]
 		}
 		if hasStreaming {
@@ -59,11 +83,14 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 				"feature": map[string]any{"streaming": map[string]any{"active": true}},
 			})
 			var got []any
-			for item := range streamSdk.StatusPageMaintenance(nil).Stream("list", nil, nil) {
-				if sub, ok := item.([]any); ok {
+			for si := range streamSdk.StatusPageMaintenance(nil).Stream("list", nil, nil) {
+				if si.Err != nil {
+					t.Fatalf("stream failed: %v", si.Err)
+				}
+				if sub, ok := si.Item.([]any); ok {
 					got = append(got, sub...)
 				} else {
-					got = append(got, item)
+					got = append(got, si.Item)
 				}
 			}
 			if len(got) != 3 {
@@ -72,7 +99,91 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 		}
 	})
 
-	t.Run("basic", func(t *testing.T) {
+	t.Run("stream-error", func(t *testing.T) {
+		offline := map[string]any{"net": map[string]any{"offline": true}}
+		var streamerr error
+		for si := range sdk.TestSDK(offline, nil).StatusPageMaintenance(nil).Stream("list", nil, nil) {
+			if si.Err != nil {
+				streamerr = si.Err
+			}
+		}
+		if nil == streamerr || !strings.Contains(streamerr.Error(), "offline") {
+			t.Fatalf("expected the transport failure as a stream value, got %v", streamerr)
+		}
+
+		quiet := map[string]any{"ctrl": map[string]any{"throw": false}}
+		for si := range sdk.TestSDK(offline, nil).StatusPageMaintenance(nil).Stream("list", nil, quiet) {
+			if si.Err != nil {
+				t.Fatalf("throw false: expected no error value, got %v", si.Err)
+			}
+		}
+
+		if fhHasFeature("rbac") {
+			denied := sdk.TestSDK(nil, map[string]any{
+				"feature": map[string]any{"rbac": map[string]any{"active": true, "deny": true}},
+			})
+			var denyerr error
+			for si := range denied.StatusPageMaintenance(nil).Stream("list", nil, nil) {
+				if si.Err != nil {
+					denyerr = si.Err
+				}
+			}
+			if sdkerr, ok := denyerr.(*core.IncidentIoError); !ok || "rbac_denied" != sdkerr.Code {
+				t.Fatalf("expected the rbac denial as a stream value, got %v", denyerr)
+			}
+		}
+	})
+
+	t.Run("stream-ctrl", func(t *testing.T) {
+		explain := map[string]any{}
+		ctrl := map[string]any{"explain": explain}
+		for range sdk.TestSDK(nil, nil).StatusPageMaintenance(nil).Stream("list", nil, map[string]any{"ctrl": ctrl}) {
+		}
+		if _, has := ctrl["stream"]; has || 1 != len(ctrl) {
+			t.Fatalf("the stream changed the caller's ctrl")
+		}
+		if 0 == len(explain) {
+			t.Fatalf("the caller's explain record was not filled")
+		}
+	})
+
+	t.Run("unexpected", func(t *testing.T) {
+		hook := &status_page_maintenanceFailHook{
+			BaseFeature: sdk.BaseFeature{Version: "0.0.1", Name: "failhook", Active: true}}
+		client := sdk.TestSDK(nil, map[string]any{"extend": []any{hook}})
+
+		_, err := client.StatusPageMaintenance(nil).List(nil, nil)
+		if nil == err || !strings.Contains(err.Error(), "hook failed") {
+			t.Fatalf("expected the hook's failure, got %v", err)
+		}
+		if 0 == hook.unexpected {
+			t.Fatalf("PreUnexpected did not fire")
+		}
+
+		fired := hook.unexpected
+		if _, err := client.StatusPageMaintenance(nil).List(nil, map[string]any{"throw": false}); nil != err {
+			t.Fatalf("throw false: expected no error, got %v", err)
+		}
+		if fired == hook.unexpected {
+			t.Fatalf("throw false: PreUnexpected did not fire")
+		}
+	})
+
+	t.Run("validate", func(t *testing.T) {
+		if !fhHasFeature("validate") {
+			t.Skip("feature not present in this SDK: validate")
+		}
+		client := sdk.TestSDK(nil, map[string]any{
+			"feature": map[string]any{"validate": map[string]any{"active": true}},
+		})
+		_, err := client.StatusPageMaintenance(nil).List(map[string]any{"after": 1, "status_page_id": "x"}, nil)
+		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
+			t.Fatalf("expected validate_failed, got %v", err)
+		}
+	})
+
+	t.Run("basic", func(tt *testing.T) {
+		var t testing.TB = tt
 		setup := status_page_maintenanceBasicSetup(nil)
 		// Per-op sdk-test-control.json skip — basic test exercises a flow
 		// with multiple ops; skipping any op skips the whole flow.
@@ -80,7 +191,7 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create", "list", "load"} {
+		for _, _op := range []string{"create", "list", "update", "load"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "status_page_maintenance." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -89,24 +200,18 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 				return
 			}
 		}
-		// The basic flow consumes synthetic IDs from the fixture. In live mode
-		// without an *_ENTID env override, those IDs hit the live API and 4xx.
-		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_STATUS_PAGE_MAINTENANCE_ENTID JSON to run live")
-			return
-		}
 		client := setup.client
 
 		// CREATE
 		statusPageMaintenanceRef01Ent := client.StatusPageMaintenance(nil)
 		statusPageMaintenanceRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath([]any{"new", "status_page_maintenance"}, setup.data), "status_page_maintenance_ref01"))
+			vs.GetPath(setup.data, []any{"new", "status_page_maintenance"}), "status_page_maintenance_ref01"))
 
 		statusPageMaintenanceRef01DataResult, err := statusPageMaintenanceRef01Ent.Create(statusPageMaintenanceRef01Data, nil)
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		statusPageMaintenanceRef01Data = core.ToMapAny(statusPageMaintenanceRef01DataResult)
+		statusPageMaintenanceRef01Data = core.ToMapAny(entityData(statusPageMaintenanceRef01DataResult))
 		if statusPageMaintenanceRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -131,6 +236,30 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 			t.Fatal("expected to find created entity in list")
 		}
 
+		// UPDATE
+		statusPageMaintenanceRef01DataUp0Up := map[string]any{
+			"id": statusPageMaintenanceRef01Data["id"],
+		}
+
+		statusPageMaintenanceRef01MarkdefUp0Name := "end_at"
+		statusPageMaintenanceRef01MarkdefUp0Value := fmt.Sprintf("Mark01-status_page_maintenance_ref01_%d", setup.now)
+		statusPageMaintenanceRef01DataUp0Up[statusPageMaintenanceRef01MarkdefUp0Name] = statusPageMaintenanceRef01MarkdefUp0Value
+
+		statusPageMaintenanceRef01ResdataUp0Result, err := statusPageMaintenanceRef01Ent.Update(statusPageMaintenanceRef01DataUp0Up, nil)
+		if err != nil {
+			t.Fatalf("update failed: %v", err)
+		}
+		statusPageMaintenanceRef01ResdataUp0 := core.ToMapAny(entityData(statusPageMaintenanceRef01ResdataUp0Result))
+		if statusPageMaintenanceRef01ResdataUp0 == nil {
+			t.Fatal("expected update result to be a map")
+		}
+		if statusPageMaintenanceRef01ResdataUp0["id"] != statusPageMaintenanceRef01DataUp0Up["id"] {
+			t.Fatal("expected update result id to match")
+		}
+		if statusPageMaintenanceRef01ResdataUp0[statusPageMaintenanceRef01MarkdefUp0Name] != statusPageMaintenanceRef01MarkdefUp0Value {
+			t.Fatalf("expected %s to be updated, got %v", statusPageMaintenanceRef01MarkdefUp0Name, statusPageMaintenanceRef01ResdataUp0[statusPageMaintenanceRef01MarkdefUp0Name])
+		}
+
 		// LOAD
 		statusPageMaintenanceRef01MatchDt0 := map[string]any{
 			"id": statusPageMaintenanceRef01Data["id"],
@@ -139,7 +268,7 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		statusPageMaintenanceRef01DataDt0LoadResult := core.ToMapAny(statusPageMaintenanceRef01DataDt0Loaded)
+		statusPageMaintenanceRef01DataDt0LoadResult := core.ToMapAny(entityData(statusPageMaintenanceRef01DataDt0Loaded))
 		if statusPageMaintenanceRef01DataDt0LoadResult == nil {
 			t.Fatal("expected load result to be a map")
 		}
@@ -174,7 +303,7 @@ func status_page_maintenanceBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"status_page_maintenance01", "status_page_maintenance02", "status_page_maintenance03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -184,39 +313,52 @@ func status_page_maintenanceBasicSetup(extra map[string]any) *entityTestSetup {
 		},
 	)
 
-	// Detect ENTID env override before envOverride consumes it. When live
-	// mode is on without a real override, the basic test runs against synthetic
-	// IDs from the fixture and 4xx's. Surface this so the test can skip.
-	entidEnvRaw := os.Getenv("INCIDENTIO_TEST_STATUS_PAGE_MAINTENANCE_ENTID")
+	// Whether *_ENTID supplied the idmap, read before envOverride consumes it:
+	// without it, the ids a live flow binds are the fixture's synthetic ones.
+	entidEnvRaw := os.Getenv("INCIDENT_IO_TEST_STATUS_PAGE_MAINTENANCE_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 
 	env := envOverride(map[string]any{
-		"INCIDENTIO_TEST_STATUS_PAGE_MAINTENANCE_ENTID": idmap,
-		"INCIDENTIO_TEST_LIVE":      "FALSE",
-		"INCIDENTIO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_TEST_STATUS_PAGE_MAINTENANCE_ENTID": idmap,
+		"INCIDENT_IO_TEST_LIVE":      "FALSE",
+		"INCIDENT_IO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_APIKEY":         "",
 	})
 
-	idmapResolved := core.ToMapAny(env["INCIDENTIO_TEST_STATUS_PAGE_MAINTENANCE_ENTID"])
+	idmapResolved := core.ToMapAny(env["INCIDENT_IO_TEST_STATUS_PAGE_MAINTENANCE_ENTID"])
 	if idmapResolved == nil {
 		idmapResolved = core.ToMapAny(idmap)
 	}
 
-	if env["INCIDENTIO_TEST_LIVE"] == "TRUE" {
+	if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
+				"apikey": env["INCIDENT_IO_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewIncidentIoSDK(core.ToMapAny(mergedOpts))
 	}
 
-	live := env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+	live := env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
 	return &entityTestSetup{
 		client:        client,
 		data:          entityData,
 		idmap:         idmapResolved,
 		env:           env,
-		explain:       env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+		explain:       env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
 		live:          live,
 		syntheticOnly: live && !idmapOverridden,
 		now:           time.Now().UnixMilli(),

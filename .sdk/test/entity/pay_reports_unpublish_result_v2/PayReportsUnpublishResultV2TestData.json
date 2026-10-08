@@ -1,0 +1,95 @@
+{
+  "existing": {
+    "pay_reports_unpublish_result_v2": {
+      "PAY_REPORTS_UNPUBLISH_RESULT_V200": {
+        "created_at": "saa",
+        "creator": {},
+        "end_date": "sac",
+        "error_code": "sad",
+        "error_message": "sae",
+        "id": "PAY_REPORTS_UNPUBLISH_RESULT_V200",
+        "name": "sb0",
+        "overlapping_shifts": "sb1",
+        "published_at": "sb2",
+        "schedule_ids": [],
+        "start_date": "sb4",
+        "status": "sb5",
+        "total_duration_seconds": 182,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "sb8",
+        "unpublish_reason": "sb9",
+        "updated_at": "sba",
+        "pay_report_id": "PAY_REPORT01"
+      },
+      "PAY_REPORTS_UNPUBLISH_RESULT_V201": {
+        "created_at": "s154",
+        "creator": {},
+        "end_date": "s156",
+        "error_code": "s157",
+        "error_message": "s158",
+        "id": "PAY_REPORTS_UNPUBLISH_RESULT_V201",
+        "name": "s15a",
+        "overlapping_shifts": "s15b",
+        "published_at": "s15c",
+        "schedule_ids": [],
+        "start_date": "s15e",
+        "status": "s15f",
+        "total_duration_seconds": 352,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s162",
+        "unpublish_reason": "s163",
+        "updated_at": "s164",
+        "pay_report_id": "PAY_REPORT01"
+      },
+      "PAY_REPORTS_UNPUBLISH_RESULT_V202": {
+        "created_at": "s1fe",
+        "creator": {},
+        "end_date": "s200",
+        "error_code": "s201",
+        "error_message": "s202",
+        "id": "PAY_REPORTS_UNPUBLISH_RESULT_V202",
+        "name": "s204",
+        "overlapping_shifts": "s205",
+        "published_at": "s206",
+        "schedule_ids": [],
+        "start_date": "s208",
+        "status": "s209",
+        "total_duration_seconds": 522,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s20c",
+        "unpublish_reason": "s20d",
+        "updated_at": "s20e",
+        "pay_report_id": "PAY_REPORT01"
+      }
+    }
+  },
+  "new": {
+    "pay_reports_unpublish_result_v2": {
+      "pay_reports_unpublish_result_v2_ref01": {
+        "created_at": "s2a8",
+        "creator": {},
+        "end_date": "s2aa",
+        "error_code": "s2ab",
+        "error_message": "s2ac",
+        "name": "s2ae",
+        "overlapping_shifts": "s2af",
+        "published_at": "s2b0",
+        "schedule_ids": [],
+        "start_date": "s2b2",
+        "status": "s2b3",
+        "total_duration_seconds": 692,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s2b6",
+        "unpublish_reason": "s2b7",
+        "updated_at": "s2b8"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/pay_reports/{id}/actions/unpublish": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

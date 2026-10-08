@@ -1,0 +1,52 @@
+# BasicSchedulesShowOverrideResultV2Flow
+
+main: kit: flow: BasicSchedulesShowOverrideResultV2Flow:
+{
+  entity: "schedules_show_override_result_v2",
+  kind: "basic",
+  name: "BasicSchedulesShowOverrideResultV2Flow",
+  step: [
+    {
+      i: {
+        ref: "schedules_show_override_result_v2_ref01"
+      }
+
+      o: "create"
+    }
+
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "schedules_show_override_result_v2_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "schedules_show_override_result_v2_ref01",
+        srcdatavar: "schedules_show_override_result_v2_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "schedules_show_override_result_v201"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-schedules_show_override_result_v2_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSchedulesShowOverrideResultV2Flow"
+}

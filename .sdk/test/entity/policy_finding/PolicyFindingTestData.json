@@ -1,0 +1,101 @@
+{
+  "existing": {
+    "policy_finding": {
+      "POLICY_FINDING00": {
+        "created_at": "sb4",
+        "days": 181,
+        "debrief": {},
+        "dismissal": {},
+        "due_at": "sb8",
+        "follow_up": {},
+        "id": "POLICY_FINDING00",
+        "last_checked_at": "sbb",
+        "on_call_readiness": {},
+        "policy_id": "POLICY01",
+        "policy_type": "sbe",
+        "post_mortem": {},
+        "responsible_users": [],
+        "schedule": {},
+        "shift_conflict": {},
+        "state": "sc3",
+        "updated_at": "sc4",
+        "vacation_conflict": {}
+      },
+      "POLICY_FINDING01": {
+        "created_at": "s168",
+        "days": 361,
+        "debrief": {},
+        "dismissal": {},
+        "due_at": "s16c",
+        "follow_up": {},
+        "id": "POLICY_FINDING01",
+        "last_checked_at": "s16f",
+        "on_call_readiness": {},
+        "policy_id": "POLICY01",
+        "policy_type": "s172",
+        "post_mortem": {},
+        "responsible_users": [],
+        "schedule": {},
+        "shift_conflict": {},
+        "state": "s177",
+        "updated_at": "s178",
+        "vacation_conflict": {}
+      },
+      "POLICY_FINDING02": {
+        "created_at": "s21c",
+        "days": 541,
+        "debrief": {},
+        "dismissal": {},
+        "due_at": "s220",
+        "follow_up": {},
+        "id": "POLICY_FINDING02",
+        "last_checked_at": "s223",
+        "on_call_readiness": {},
+        "policy_id": "POLICY01",
+        "policy_type": "s226",
+        "post_mortem": {},
+        "responsible_users": [],
+        "schedule": {},
+        "shift_conflict": {},
+        "state": "s22b",
+        "updated_at": "s22c",
+        "vacation_conflict": {}
+      }
+    }
+  },
+  "new": {
+    "policy_finding": {
+      "policy_finding_ref01": {
+        "created_at": "s2d0",
+        "days": 721,
+        "debrief": {},
+        "dismissal": {},
+        "due_at": "s2d4",
+        "follow_up": {},
+        "last_checked_at": "s2d7",
+        "on_call_readiness": {},
+        "policy_id": "POLICY01",
+        "policy_type": "s2da",
+        "post_mortem": {},
+        "responsible_users": [],
+        "schedule": {},
+        "shift_conflict": {},
+        "state": "s2df",
+        "updated_at": "s2e0",
+        "vacation_conflict": {}
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/policy_findings": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/policy_findings/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

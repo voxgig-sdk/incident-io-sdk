@@ -1,0 +1,96 @@
+{
+  "existing": {
+    "announcement_rule": {
+      "ANNOUNCEMENT_RULE00": {
+        "condition_groups": [],
+        "conditions_no_longer_apply_behaviour": "s83",
+        "created_at": "s84",
+        "id": "ANNOUNCEMENT_RULE00",
+        "microsoft_teams_channel_ids": [],
+        "mode": "s87",
+        "name": "s88",
+        "owning_team_ids": [],
+        "private_incident_scope": "s8a",
+        "slack_channel_ids": [],
+        "template_id": "TEMPLATE01",
+        "update_sharing_mode": "s8d",
+        "updated_at": "s8e"
+      },
+      "ANNOUNCEMENT_RULE01": {
+        "condition_groups": [],
+        "conditions_no_longer_apply_behaviour": "s105",
+        "created_at": "s106",
+        "id": "ANNOUNCEMENT_RULE01",
+        "microsoft_teams_channel_ids": [],
+        "mode": "s109",
+        "name": "s10a",
+        "owning_team_ids": [],
+        "private_incident_scope": "s10c",
+        "slack_channel_ids": [],
+        "template_id": "TEMPLATE01",
+        "update_sharing_mode": "s10f",
+        "updated_at": "s110"
+      },
+      "ANNOUNCEMENT_RULE02": {
+        "condition_groups": [],
+        "conditions_no_longer_apply_behaviour": "s187",
+        "created_at": "s188",
+        "id": "ANNOUNCEMENT_RULE02",
+        "microsoft_teams_channel_ids": [],
+        "mode": "s18b",
+        "name": "s18c",
+        "owning_team_ids": [],
+        "private_incident_scope": "s18e",
+        "slack_channel_ids": [],
+        "template_id": "TEMPLATE01",
+        "update_sharing_mode": "s191",
+        "updated_at": "s192"
+      }
+    }
+  },
+  "new": {
+    "announcement_rule": {
+      "announcement_rule_ref01": {
+        "condition_groups": [],
+        "conditions_no_longer_apply_behaviour": "s209",
+        "created_at": "s20a",
+        "microsoft_teams_channel_ids": [],
+        "mode": "s20d",
+        "name": "s20e",
+        "owning_team_ids": [],
+        "private_incident_scope": "s210",
+        "slack_channel_ids": [],
+        "template_id": "TEMPLATE01",
+        "update_sharing_mode": "s213",
+        "updated_at": "s214"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/announcement_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/announcement_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/announcement_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/announcement_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/announcement_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

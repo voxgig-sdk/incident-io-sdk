@@ -1,0 +1,68 @@
+{
+  "existing": {
+    "incident_template": {
+      "INCIDENT_TEMPLATE00": {
+        "created_at": "s3c",
+        "expressions": [],
+        "id": "INCIDENT_TEMPLATE00",
+        "name": "s3f",
+        "template": {},
+        "updated_at": "s41"
+      },
+      "INCIDENT_TEMPLATE01": {
+        "created_at": "s78",
+        "expressions": [],
+        "id": "INCIDENT_TEMPLATE01",
+        "name": "s7b",
+        "template": {},
+        "updated_at": "s7d"
+      },
+      "INCIDENT_TEMPLATE02": {
+        "created_at": "sb4",
+        "expressions": [],
+        "id": "INCIDENT_TEMPLATE02",
+        "name": "sb7",
+        "template": {},
+        "updated_at": "sb9"
+      }
+    }
+  },
+  "new": {
+    "incident_template": {
+      "incident_template_ref01": {
+        "created_at": "sf0",
+        "expressions": [],
+        "name": "sf3",
+        "template": {},
+        "updated_at": "sf5"
+      }
+    }
+  },
+  "requests": {
+    "POST /v1/incident_templates": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/incident_templates": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/incident_templates/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v1/incident_templates/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v1/incident_templates/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

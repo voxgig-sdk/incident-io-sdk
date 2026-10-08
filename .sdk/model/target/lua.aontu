@@ -5,7 +5,19 @@ main: kit: target: lua: {
   ext: lua
   comment: line: "--"
   module: name: 'incident-io'
+  base: 'node_modules/@voxgig/sdkgen/project/.sdk'
+  package: '@voxgig/sdkgen'
   srcfeature: false
+
+  provides: { sekreto: true, schema: true }
+
+  # Files earlier toolchains generated that this target has RETIRED
+  # (vendor-tag rollout): the struct-corpus runner (test/runner.lua is
+  # support-only and RETAINED). `doctor` reports leftovers; `doctor
+  # prune` deletes them.
+  superseded: [
+    'test/struct_runner.lua'
+  ]
 
   deps: &: {
     kind: *'prod' | string
@@ -23,12 +35,8 @@ main: kit: feature: &: target: lua: deps: &: {
 }
 
 
-# Publication: luarocks registry (declared, publish pending — git-tag only).
 main: kit: target: lua: publish: {
-  tag: { active: true }
   registry: {
-    state: 'pending'
-    active: false
     name: 'luarocks'
     url: 'https://luarocks.org'
     vault: { alias: 'luarocks', env: 'LUAROCKS_API_KEY' }

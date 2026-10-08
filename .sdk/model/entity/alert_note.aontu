@@ -4,53 +4,73 @@ main: kit: entity: alert_note: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "alert_group_id"
-      req: false
-      type: "`$STRING`"
+  fields: {
+    alert_group_id: {
+      h: "Alert Group Id"
+      n: "alert_group_id"
+      r: false
+      sh: "ID of the alert group this note is attached to."
+      t: "`$STRING`"
     }
-    {
-      name: "alert_id"
-      req: false
-      type: "`$STRING`"
+    alert_id: {
+      h: "Alert Id"
+      n: "alert_id"
+      r: false
+      sh: "ID of the alert this note is attached to."
+      t: "`$STRING`"
     }
-    {
-      name: "content"
-      req: true
-      type: "`$STRING`"
+    content: {
+      h: "Content"
+      n: "content"
+      r: true
+      sh: "Markdown body of the note"
+      t: "`$STRING`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this note was first created"
+      t: "`$STRING`"
     }
-    {
-      name: "creator"
-      req: true
-      type: "`$OBJECT`"
+    creator: {
+      h: "Creator"
+      n: "creator"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for the alert note"
+      t: "`$STRING`"
     }
-    {
-      name: "image"
-      req: true
-      type: "`$ARRAY`"
+    images: {
+      h: "Images"
+      n: "images"
+      r: true
+      sh: "Images attached to the current version of the note, with signed URLs valid for 10 minutes"
+      t: "`$ARRAY`"
     }
-    {
-      name: "last_edited_at"
-      req: false
-      type: "`$STRING`"
+    last_edited_at: {
+      fo: "date-time"
+      h: "Last Edited At"
+      n: "last_edited_at"
+      r: false
+      sh: "When this note was last edited, only set if it has been edited at least once since creation"
+      t: "`$STRING`"
     }
-    {
-      name: "updated_at"
-      req: true
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this note was last updated"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -63,13 +83,31 @@ main: kit: entity: alert_note: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v1/alert_notes"
-          parts: [
-            "v1"
-            "alert_notes"
+          bf: [
+            "alert_group_id"
+            "alert_id"
+            "content"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/alert_notes"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/alert_notes"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "alert_notes"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_note`"
           }
@@ -80,59 +118,64 @@ main: kit: entity: alert_note: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/alert_notes"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01HB9Z8WANK6P870EA6S7TK1DS"
-                kind: "query"
-                name: "alert_group_id"
-                orig: "alert_group_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01HB9Z8WANK6P870EA6S7TK1DS"
+                k: "query"
+                n: "alert_group_id"
+                or: "alert_group_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "query"
-                name: "alert_id"
-                orig: "alert_id"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "alert_id"
+                or: "alert_id"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/alert_notes"
-          parts: [
-            "v1"
-            "alert_notes"
+          m: "GET"
+          o: "/v1/alert_notes"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "alert_notes"
+            }
           ]
-          select: {
-            exist: [
-              "after"
-              "alert_group_id"
-              "alert_id"
-              "page_size"
-            ]
-          }
-          transform: {
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.alert_notes`"
           }
         }
       ]
@@ -141,31 +184,46 @@ main: kit: entity: alert_note: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/alert_notes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01J1X9J85C7Y12G8P8W8K55Q5Y"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01J1X9J85C7Y12G8P8W8K55Q5Y"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/alert_notes/{id}"
-          parts: [
-            "v1"
-            "alert_notes"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/alert_notes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "alert_notes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_note`"
           }
@@ -176,31 +234,42 @@ main: kit: entity: alert_note: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v1/alert_notes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01J1X9J85C7Y12G8P8W8K55Q5Y"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01J1X9J85C7Y12G8P8W8K55Q5Y"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v1/alert_notes/{id}"
-          parts: [
-            "v1"
-            "alert_notes"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v1/alert_notes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "alert_notes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -211,31 +280,49 @@ main: kit: entity: alert_note: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "content"
+          ]
+          co: {
+            id: "PUT /v1/alert_notes/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01J1X9J85C7Y12G8P8W8K55Q5Y"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01J1X9J85C7Y12G8P8W8K55Q5Y"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v1/alert_notes/{id}"
-          parts: [
-            "v1"
-            "alert_notes"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v1/alert_notes/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "alert_notes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_note`"
           }

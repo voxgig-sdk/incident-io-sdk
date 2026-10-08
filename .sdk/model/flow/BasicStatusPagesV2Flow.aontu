@@ -1,0 +1,9 @@
+# BasicStatusPagesV2Flow
+
+main: kit: flow: BasicStatusPagesV2Flow:
+{
+  entity: "status_pages_v2",
+  kind: "basic",
+  name: "BasicStatusPagesV2Flow",
+  "key$": "BasicStatusPagesV2Flow"
+}

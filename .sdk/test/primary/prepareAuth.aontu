@@ -1,6 +1,6 @@
 
 DEF: {
-  setup: a: { apikey: 'APIKEY01' }
+  setup: a: { apikey: 'APIKEY01', auth: { prefix: '', basic: false } }
 }
 
 

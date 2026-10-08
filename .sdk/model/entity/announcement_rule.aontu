@@ -1,0 +1,404 @@
+# Entity: announcement_rule
+
+main: kit: entity: announcement_rule: {
+
+  alias: field: {}
+
+  fields: {
+    condition_groups: {
+      h: "Condition Groups"
+      n: "condition_groups"
+      r: true
+      sh: "Incidents are announced when they match any of these condition groups"
+      t: "`$ARRAY`"
+    }
+    conditions_no_longer_apply_behaviour: {
+      h: "Conditions No Longer Apply Behaviour"
+      n: "conditions_no_longer_apply_behaviour"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+        update: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "Whether to remove announcement posts when the incident no longer matches this rule's conditions"
+      t: "`$STRING`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When the rule was created"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this announcement rule"
+      t: "`$STRING`"
+    }
+    microsoft_teams_channel_ids: {
+      h: "Microsoft Teams Channel Ids"
+      n: "microsoft_teams_channel_ids"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "Microsoft Teams channels to post announcements into, as team_id/channel_id, when the organisation uses Microsoft Teams"
+      t: "`$ARRAY`"
+    }
+    mode: {
+      h: "Mode"
+      n: "mode"
+      r: true
+      sh: "Which incidents are announced: live incidents only, or triage incidents too"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Human readable name for the rule"
+      t: "`$STRING`"
+    }
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "IDs of the teams that own this rule"
+      t: "`$ARRAY`"
+    }
+    private_incident_scope: {
+      h: "Private Incident Scope"
+      n: "private_incident_scope"
+      r: false
+      sh: "Which private incidents this rule announces: every private incident (all), those an owning team can see (owning_teams), or none"
+      t: "`$STRING`"
+    }
+    slack_channel_ids: {
+      h: "Slack Channel Ids"
+      n: "slack_channel_ids"
+      op: {
+        create: {
+          req: false
+          type: "`$ARRAY`"
+        }
+        update: {
+          req: false
+          type: "`$ARRAY`"
+        }
+      }
+      r: true
+      sh: "IDs of the Slack channels to post announcements into, when the organisation uses Slack"
+      t: "`$ARRAY`"
+    }
+    template_id: {
+      h: "Template Id"
+      n: "template_id"
+      r: false
+      sh: "ID of the announcement template used to render this rule's posts"
+      t: "`$STRING`"
+    }
+    update_sharing_mode: {
+      h: "Update Sharing Mode"
+      n: "update_sharing_mode"
+      r: true
+      sh: "Where incident updates are shared once the incident is announced"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When the rule was last updated"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "announcement_rule"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "condition_groups"
+            "conditions_no_longer_apply_behaviour"
+            "microsoft_teams_channel_ids"
+            "mode"
+            "name"
+            "owning_team_ids"
+            "private_incident_scope"
+            "slack_channel_ids"
+            "template_id"
+            "update_sharing_mode"
+          ]
+          co: {
+            id: "POST /v2/announcement_rules"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/announcement_rules"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_rules"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.announcement_rule`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v2/announcement_rules"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/announcement_rules"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_rules"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.announcement_rules`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/announcement_rules/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/announcement_rules/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_rules"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.announcement_rule`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v2/announcement_rules/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v2/announcement_rules/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_rules"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "condition_groups"
+            "conditions_no_longer_apply_behaviour"
+            "microsoft_teams_channel_ids"
+            "mode"
+            "name"
+            "owning_team_ids"
+            "private_incident_scope"
+            "slack_channel_ids"
+            "template_id"
+            "update_sharing_mode"
+          ]
+          co: {
+            id: "PUT /v2/announcement_rules/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/announcement_rules/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "announcement_rules"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.announcement_rule`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

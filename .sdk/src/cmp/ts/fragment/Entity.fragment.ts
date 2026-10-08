@@ -17,8 +17,7 @@ import type {
 // #TypeImports
 
 
-// TODO: needs Entity superclass
-class EntyClass extends ProjectNameEntityBase<EntityName> {
+class EntyClass extends ProjectNameEntityBase<EntityDataType> {
 
   constructor(client: ProjectNameSDK, entopts: any) {
     super(client, entopts)
@@ -40,6 +39,8 @@ class EntyClass extends ProjectNameEntityBase<EntityName> {
   // #CreateOp
 
   // #UpdateOp
+
+  // #PatchOp
 
   // #RemoveOp
 

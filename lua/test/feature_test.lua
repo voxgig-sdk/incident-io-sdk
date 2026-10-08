@@ -98,7 +98,7 @@ end
 
 local function default_method(opname)
   if opname == "create" then return "POST" end
-  if opname == "update" then return "PATCH" end
+  if opname == "update" or opname == "patch" then return "PATCH" end
   if opname == "remove" then return "DELETE" end
   return "GET"
 end
@@ -111,7 +111,14 @@ local function make_client(spec)
   local base = spec.base or "http://api.test"
   local server = spec.server or default_server
 
-  local utility = { fetcher = server }
+  -- Every feature cleans what it emits, so the fake utility carries the real
+  -- clean seam beside the transport.
+  local cleanmod = require("utility.clean")
+  local utility = {
+    fetcher = server,
+    clean = cleanmod.clean,
+    clean_add = cleanmod.clean_add,
+  }
 
   local client = {
     mode = "test",
@@ -441,7 +448,7 @@ describe("feature", function()
   -- retry ---------------------------------------------------------------
   if has_feature("retry") then describe("retry", function()
 
-    it("retries transient failures then succeeds", function()
+    if has_feature("netsim") then it("retries transient failures then succeeds", function()
       local clock = make_clock()
       local h = make_client({ features = {
         { name = "netsim", options = { failTimes = 2, failStatus = 503 } },
@@ -450,9 +457,9 @@ describe("feature", function()
       } })
       assert.is_true(h.op({ op = "load" }).ok)
       assert.are.equal(2, h.client._retry.attempts)
-    end)
+    end) end
 
-    it("gives up after the budget", function()
+    if has_feature("netsim") then it("gives up after the budget", function()
       local clock = make_clock()
       local h = make_client({ features = {
         { name = "netsim", options = { failTimes = 9, failStatus = 500 } },
@@ -460,7 +467,7 @@ describe("feature", function()
           retries = 2, minDelay = 1, jitter = false, sleep = clock.sleep } },
       } })
       assert.are.equal(500, h.op({ op = "load" }).result.status)
-    end)
+    end) end
 
     it("does not retry a non-retryable status", function()
       local rec = recording_server(function() return make_response(404) end)
@@ -487,7 +494,7 @@ describe("feature", function()
       assert.are.equal(3, n)
     end)
 
-    it("honours a server Retry-After", function()
+    if has_feature("netsim") then it("honours a server Retry-After", function()
       local clock = make_clock()
       local h = make_client({ features = {
         { name = "netsim", options = { rateLimitTimes = 1, retryAfter = 2 } },
@@ -497,15 +504,15 @@ describe("feature", function()
       } })
       assert.is_true(h.op({ op = "load" }).ok)
       assert.are.equal(2000, clock.time())
-    end)
+    end) end
 
-    it("default jitter path still succeeds", function()
+    if has_feature("netsim") then it("default jitter path still succeeds", function()
       local h = make_client({ features = {
         { name = "netsim", options = { failTimes = 1 } },
         { name = "retry", options = { retries = 2, minDelay = 0 } },
       } })
       assert.is_true(h.op({ op = "load" }).ok)
-    end)
+    end) end
 
     it("inactive retry does not wrap", function()
       local rec = recording_server(function() return make_response(503) end)
@@ -551,7 +558,7 @@ describe("feature", function()
   -- shared virtual clock stands in for elapsed transport time.
   if has_feature("timeout") then describe("timeout", function()
 
-    it("a slow request times out", function()
+    if has_feature("netsim") then it("a slow request times out", function()
       local clock = make_clock()
       local h = make_client({ features = {
         { name = "netsim", options = { latency = 80, sleep = clock.sleep } },
@@ -560,7 +567,7 @@ describe("feature", function()
       local res = h.op({ op = "load" })
       assert.are.equal("timeout", res.error.code)
       assert.are.equal(1, h.client._timeout.count)
-    end)
+    end) end
 
     it("a fast request passes through", function()
       local clock = make_clock()
@@ -819,7 +826,7 @@ describe("feature", function()
   -- metrics ---------------------------------------------------------------
   if has_feature("metrics") then describe("metrics", function()
 
-    it("counts ok and err per op", function()
+    if has_feature("netsim") then it("counts ok and err per op", function()
       local h = make_client({ features = {
         { name = "netsim", options = { failTimes = 1, failStatus = 500 } },
         { name = "metrics", options = {} },
@@ -832,7 +839,7 @@ describe("feature", function()
       assert.are.equal(2, m.total.ok)
       assert.are.equal(1, m.total.err)
       assert.are.equal(2, m.ops["widget.load"].count)
-    end)
+    end) end
 
     it("injected clock accumulates durations", function()
       local t = 0
@@ -872,14 +879,14 @@ describe("feature", function()
       assert.is_truthy(string.match(sent["traceparent"], "^00%-.+%-.+%-01$"))
     end)
 
-    it("records a failed span on error", function()
+    if has_feature("netsim") then it("records a failed span on error", function()
       local h = make_client({ features = {
         { name = "netsim", options = { failTimes = 1, failStatus = 500 } },
         { name = "telemetry", options = {} },
       } })
       h.op({ op = "load" })
       assert.is_false(h.client._telemetry.spans[1].ok)
-    end)
+    end) end
 
     it("default id generation and no exporter", function()
       local h = make_client({ features = { { name = "telemetry" } } })
@@ -922,17 +929,17 @@ describe("feature", function()
       local entries = h.client._debug.entries
       assert.are.equal(1, #entries) -- ring buffer capped at max
       assert.are.equal(2, #seen)
-      assert.are.equal("<redacted>", seen[1].headers.authorization)
+      assert.are.equal("[redacted]", seen[1].headers.authorization)
     end)
 
-    it("captures failures", function()
+    if has_feature("netsim") then it("captures failures", function()
       local h = make_client({ features = {
         { name = "netsim", options = { failTimes = 1, failStatus = 500 } },
         { name = "debug", options = {} },
       } })
       h.op({ op = "load" })
       assert.is_false(h.client._debug.entries[1].ok)
-    end)
+    end) end
 
     it("injected clock + custom redact", function()
       local h = make_client({ features = {
@@ -940,7 +947,7 @@ describe("feature", function()
       } })
       h.op({ op = "load", headers = { ["x-secret"] = "hide", ["x-ok"] = "show" } })
       local e = h.client._debug.entries[1]
-      assert.are.equal("<redacted>", e.headers["x-secret"])
+      assert.are.equal("[redacted]", e.headers["x-secret"])
       assert.are.equal("show", e.headers["x-ok"])
     end)
 
@@ -957,7 +964,7 @@ describe("feature", function()
   -- audit -----------------------------------------------------------------
   if has_feature("audit") then describe("audit", function()
 
-    it("one record per op with sink + actor", function()
+    if has_feature("netsim") then it("one record per op with sink + actor", function()
       local sink = {}
       local h = make_client({ features = {
         { name = "netsim", options = { failTimes = 1, failStatus = 500 } },
@@ -972,7 +979,7 @@ describe("feature", function()
       assert.are.equal("svc", recs[1].actor)
       assert.are.equal("per-call", recs[2].actor)
       assert.are.equal(2, #sink)
-    end)
+    end) end
 
     it("default actor is anonymous", function()
       local h = make_client({ features = { { name = "audit" } } })

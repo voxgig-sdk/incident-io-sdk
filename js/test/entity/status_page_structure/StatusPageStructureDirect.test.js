@@ -1,8 +1,8 @@
 
 const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
+require('../../utility').loadEnvLocal(envlocal)
 
-const { test, describe } = require('node:test')
+const { test, describe, afterEach } = require('node:test')
 const assert = require('node:assert')
 
 
@@ -10,10 +10,20 @@ const { IncidentIoSDK } = require('../../..')
 
 const {
   envOverride,
+  liveClientOptions,
+  liveDelay,
+  skipIfMissingIds,
+  liveMiss,
+  liveEmpty,
+  describeLive,
 } = require('../../utility')
 
 
 describe('StatusPageStructureDirect', async () => {
+
+  // Per-test live pacing. Delay is read from sdk-test-control.json's
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
 
   test('direct-exists', async () => {
     const sdk = new IncidentIoSDK({
@@ -28,12 +38,16 @@ describe('StatusPageStructureDirect', async () => {
   })
 
 
-  test('direct-load-status_page_structure', async () => {
+  test('direct-load-status_page_structure', async (t) => {
+    if (liveScenariosActive()) { t.skip('Covered by live operation scenarios'); return }
     const setup = directSetup({ id: 'direct01' })
+    if (skipIfMissingIds(t, setup, ["status_page_structure01"], LIVE_STRICT)) return
     const { client, calls } = setup
 
     const params = {}
-    if (!setup.live) {
+    if (setup.live) {
+      params.id = setup.idmap['status_page_structure01']
+    } else {
       params.id = 'direct01'
     }
 
@@ -43,11 +57,17 @@ describe('StatusPageStructureDirect', async () => {
       params,
     })
 
-    assert(result.ok === true)
-    assert(result.status === 200)
-    assert(null != result.data)
-
-    if (!setup.live) {
+    if (setup.live) {
+      if (!result.ok || result.status < 200 || result.status >= 300) {
+        return void liveMiss(t, LIVE_STRICT, 'Live load failed: ' + describeLive(result))
+      }
+      if (!(null != result.data)) {
+        return void liveMiss(t, LIVE_STRICT, 'Live load returned no data: ' + describeLive(result))
+      }
+    } else {
+      assert(result.ok === true)
+      assert(result.status === 200)
+      assert(null != result.data)
       assert(result.data.id === 'direct01')
       assert(calls.length === 1)
       assert(calls[0].init.method === 'GET')
@@ -59,21 +79,33 @@ describe('StatusPageStructureDirect', async () => {
 
 
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
+
+function liveScenariosActive() { return false && process.env.INCIDENT_IO_TEST_LIVE === 'TRUE' }
 function directSetup(mockres) {
   const calls = []
 
   const env = envOverride({
-    'INCIDENTIO_TEST_STATUS_PAGE_STRUCTURE_ENTID': {},
-    'INCIDENTIO_TEST_LIVE': 'FALSE',
+    'INCIDENT_IO_TEST_STATUS_PAGE_STRUCTURE_ENTID': {},
+    'INCIDENT_IO_TEST_LIVE': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
-  const live = 'TRUE' === env.INCIDENTIO_TEST_LIVE
+  const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
 
   if (live) {
-    const client = new IncidentIoSDK({
-    })
+    // Merged so the generated fields win: sdk-test-control.json's
+    // test.client.options adds to the live client, it does not redirect it.
+    const client = new IncidentIoSDK(
+      Object.assign({}, liveClientOptions(), {
+      apikey: env.INCIDENT_IO_APIKEY,
+      }))
 
-    let idmap = env['INCIDENTIO_TEST_STATUS_PAGE_STRUCTURE_ENTID']
+    let idmap = env['INCIDENT_IO_TEST_STATUS_PAGE_STRUCTURE_ENTID']
     if ('string' === typeof idmap && idmap.startsWith('{')) {
       idmap = JSON.parse(idmap)
     }

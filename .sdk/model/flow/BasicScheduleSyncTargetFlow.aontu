@@ -7,16 +7,16 @@ main: kit: flow: BasicScheduleSyncTargetFlow:
   name: "BasicScheduleSyncTargetFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "schedule_sync_target_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
 
     {
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemExists",
           def: {
@@ -27,15 +27,15 @@ main: kit: flow: BasicScheduleSyncTargetFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "schedule_sync_target_ref01",
         srcdatavar: "schedule_sync_target_ref01_data",
         suffix: "_up0",
         textfield: "created_at"
       }
 
-      op: "update",
-      spec: [
+      o: "update",
+      s: [
         {
           apply: "TextFieldMark",
           def: {
@@ -46,18 +46,18 @@ main: kit: flow: BasicScheduleSyncTargetFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "schedule_sync_target_ref01",
         srcdatavar: "schedule_sync_target_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "schedule_sync_target01"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {
@@ -68,25 +68,25 @@ main: kit: flow: BasicScheduleSyncTargetFlow:
     }
 
     {
-      input: {
+      i: {
         ref: "schedule_sync_target_ref01",
         suffix: "_rm0"
       }
 
-      match: {
+      m: {
         id: "schedule_sync_target01"
       }
 
-      op: "remove"
+      o: "remove"
     }
 
     {
-      input: {
+      i: {
         suffix: "_rt0"
       }
 
-      op: "list",
-      valid: [
+      o: "list",
+      v: [
         {
           apply: "ItemNotExists",
           def: {

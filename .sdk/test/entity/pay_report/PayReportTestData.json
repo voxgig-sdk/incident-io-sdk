@@ -1,0 +1,115 @@
+{
+  "existing": {
+    "pay_report": {
+      "PAY_REPORT00": {
+        "created_at": "sbe",
+        "creator": {},
+        "end_date": "sc0",
+        "error_code": "sc1",
+        "error_message": "sc2",
+        "id": "PAY_REPORT00",
+        "name": "sc4",
+        "overlapping_shifts": "sc5",
+        "pay_config_expression": {},
+        "pay_config_id": "PAY_CONFIG01",
+        "published_at": "sc8",
+        "rotation_filters": [],
+        "schedule_ids": [],
+        "start_date": "scb",
+        "status": "scc",
+        "total_duration_seconds": 205,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "scf",
+        "updated_at": "sd0"
+      },
+      "PAY_REPORT01": {
+        "created_at": "s17c",
+        "creator": {},
+        "end_date": "s17e",
+        "error_code": "s17f",
+        "error_message": "s180",
+        "id": "PAY_REPORT01",
+        "name": "s182",
+        "overlapping_shifts": "s183",
+        "pay_config_expression": {},
+        "pay_config_id": "PAY_CONFIG01",
+        "published_at": "s186",
+        "rotation_filters": [],
+        "schedule_ids": [],
+        "start_date": "s189",
+        "status": "s18a",
+        "total_duration_seconds": 395,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s18d",
+        "updated_at": "s18e"
+      },
+      "PAY_REPORT02": {
+        "created_at": "s23a",
+        "creator": {},
+        "end_date": "s23c",
+        "error_code": "s23d",
+        "error_message": "s23e",
+        "id": "PAY_REPORT02",
+        "name": "s240",
+        "overlapping_shifts": "s241",
+        "pay_config_expression": {},
+        "pay_config_id": "PAY_CONFIG01",
+        "published_at": "s244",
+        "rotation_filters": [],
+        "schedule_ids": [],
+        "start_date": "s247",
+        "status": "s248",
+        "total_duration_seconds": 585,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s24b",
+        "updated_at": "s24c"
+      }
+    }
+  },
+  "new": {
+    "pay_report": {
+      "pay_report_ref01": {
+        "created_at": "s2f8",
+        "creator": {},
+        "end_date": "s2fa",
+        "error_code": "s2fb",
+        "error_message": "s2fc",
+        "name": "s2fe",
+        "overlapping_shifts": "s2ff",
+        "pay_config_expression": {},
+        "pay_config_id": "PAY_CONFIG01",
+        "published_at": "s302",
+        "rotation_filters": [],
+        "schedule_ids": [],
+        "start_date": "s305",
+        "status": "s306",
+        "total_duration_seconds": 775,
+        "total_pay_by_currency": {},
+        "unpaid_shifts": "s309",
+        "updated_at": "s30a"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/pay_reports": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/pay_reports": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/pay_reports/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/pay_reports/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

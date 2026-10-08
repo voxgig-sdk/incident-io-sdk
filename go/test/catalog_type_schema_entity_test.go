@@ -15,6 +15,13 @@ import (
 	vs "github.com/voxgig-sdk/incident-io-sdk/go/utility/struct"
 )
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const catalog_type_schemaEntityLiveStrict = true
+
+
 func TestCatalogTypeSchemaEntity(t *testing.T) {
 	t.Run("instance", func(t *testing.T) {
 		testsdk := sdk.TestSDK(nil, nil)
@@ -24,7 +31,21 @@ func TestCatalogTypeSchemaEntity(t *testing.T) {
 		}
 	})
 
-	t.Run("basic", func(t *testing.T) {
+	t.Run("validate", func(t *testing.T) {
+		if !fhHasFeature("validate") {
+			t.Skip("feature not present in this SDK: validate")
+		}
+		client := sdk.TestSDK(nil, map[string]any{
+			"feature": map[string]any{"validate": map[string]any{"active": true}},
+		})
+		_, err := client.CatalogTypeSchema(nil).Create(map[string]any{"catalog_type_id": 1, "annotations": "x", "attributes": "x", "categories": "x", "color": "x", "created_at": "x", "description": "x", "engine_resource_type": "x", "icon": "x", "id": "x", "is_editable": true, "name": "x", "ranked": true, "schema": "x", "semantic_type": "x", "type_name": "x", "updated_at": "x", "use_name_as_identifier": true, "version": 1}, nil)
+		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
+			t.Fatalf("expected validate_failed, got %v", err)
+		}
+	})
+
+	t.Run("basic", func(tt *testing.T) {
+		var t testing.TB = tt
 		setup := catalog_type_schemaBasicSetup(nil)
 		// Per-op sdk-test-control.json skip — basic test exercises a flow
 		// with multiple ops; skipping any op skips the whole flow.
@@ -41,25 +62,26 @@ func TestCatalogTypeSchemaEntity(t *testing.T) {
 				return
 			}
 		}
-		// The basic flow consumes synthetic IDs from the fixture. In live mode
-		// without an *_ENTID env override, those IDs hit the live API and 4xx.
-		if setup.syntheticOnly {
-			t.Skip("live entity test uses synthetic IDs from fixture — set INCIDENTIO_TEST_CATALOG_TYPE_SCHEMA_ENTID JSON to run live")
-			return
+		if setup.live {
+			for _, _liveKey := range []string{"catalog_type01"} {
+				if setup.syntheticOnly || setup.idmap[_liveKey] == nil {
+					liveMiss(t, catalog_type_schemaEntityLiveStrict, "Live entity test blocked: needs %s via INCIDENT_IO_TEST_CATALOG_TYPE_SCHEMA_ENTID", _liveKey)
+				}
+			}
 		}
 		client := setup.client
 
 		// CREATE
 		catalogTypeSchemaRef01Ent := client.CatalogTypeSchema(nil)
 		catalogTypeSchemaRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath([]any{"new", "catalog_type_schema"}, setup.data), "catalog_type_schema_ref01"))
+			vs.GetPath(setup.data, []any{"new", "catalog_type_schema"}), "catalog_type_schema_ref01"))
 		catalogTypeSchemaRef01Data["catalog_type_id"] = setup.idmap["catalog_type01"]
 
 		catalogTypeSchemaRef01DataResult, err := catalogTypeSchemaRef01Ent.Create(catalogTypeSchemaRef01Data, nil)
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		catalogTypeSchemaRef01Data = core.ToMapAny(catalogTypeSchemaRef01DataResult)
+		catalogTypeSchemaRef01Data = core.ToMapAny(entityData(catalogTypeSchemaRef01DataResult))
 		if catalogTypeSchemaRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}
@@ -94,7 +116,7 @@ func catalog_type_schemaBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"catalog_type_schema01", "catalog_type_schema02", "catalog_type_schema03", "catalog_type01", "catalog_type02", "catalog_type03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -104,39 +126,52 @@ func catalog_type_schemaBasicSetup(extra map[string]any) *entityTestSetup {
 		},
 	)
 
-	// Detect ENTID env override before envOverride consumes it. When live
-	// mode is on without a real override, the basic test runs against synthetic
-	// IDs from the fixture and 4xx's. Surface this so the test can skip.
-	entidEnvRaw := os.Getenv("INCIDENTIO_TEST_CATALOG_TYPE_SCHEMA_ENTID")
+	// Whether *_ENTID supplied the idmap, read before envOverride consumes it:
+	// without it, the ids a live flow binds are the fixture's synthetic ones.
+	entidEnvRaw := os.Getenv("INCIDENT_IO_TEST_CATALOG_TYPE_SCHEMA_ENTID")
 	idmapOverridden := entidEnvRaw != "" && strings.HasPrefix(strings.TrimSpace(entidEnvRaw), "{")
 
 	env := envOverride(map[string]any{
-		"INCIDENTIO_TEST_CATALOG_TYPE_SCHEMA_ENTID": idmap,
-		"INCIDENTIO_TEST_LIVE":      "FALSE",
-		"INCIDENTIO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_TEST_CATALOG_TYPE_SCHEMA_ENTID": idmap,
+		"INCIDENT_IO_TEST_LIVE":      "FALSE",
+		"INCIDENT_IO_TEST_EXPLAIN":   "FALSE",
+		"INCIDENT_IO_APIKEY":         "",
 	})
 
-	idmapResolved := core.ToMapAny(env["INCIDENTIO_TEST_CATALOG_TYPE_SCHEMA_ENTID"])
+	idmapResolved := core.ToMapAny(env["INCIDENT_IO_TEST_CATALOG_TYPE_SCHEMA_ENTID"])
 	if idmapResolved == nil {
 		idmapResolved = core.ToMapAny(idmap)
 	}
 
-	if env["INCIDENTIO_TEST_LIVE"] == "TRUE" {
+	if env["INCIDENT_IO_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
+				"apikey": env["INCIDENT_IO_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewIncidentIoSDK(core.ToMapAny(mergedOpts))
 	}
 
-	live := env["INCIDENTIO_TEST_LIVE"] == "TRUE"
+	live := env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
 	return &entityTestSetup{
 		client:        client,
 		data:          entityData,
 		idmap:         idmapResolved,
 		env:           env,
-		explain:       env["INCIDENTIO_TEST_EXPLAIN"] == "TRUE",
+		explain:       env["INCIDENT_IO_TEST_EXPLAIN"] == "TRUE",
 		live:          live,
 		syntheticOnly: live && !idmapOverridden,
 		now:           time.Now().UnixMilli(),

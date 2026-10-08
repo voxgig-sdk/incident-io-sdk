@@ -4,28 +4,36 @@ main: kit: entity: status_page: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "description"
-      req: false
-      type: "`$STRING`"
+  fields: {
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "The description of this status page"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique ID of this status page"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "The title of this status page"
+      t: "`$STRING`"
     }
-    {
-      name: "public_url"
-      req: false
-      type: "`$STRING`"
+    public_url: {
+      h: "Public Url"
+      n: "public_url"
+      r: false
+      sh: "The public URL of this status page"
+      t: "`$STRING`"
     }
-  ]
+  }
 
   id: {
     field: "id"
@@ -38,41 +46,103 @@ main: kit: entity: status_page: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/status_pages"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/status_pages"
-          parts: [
-            "v2"
-            "status_pages"
+          m: "GET"
+          o: "/v2/status_pages"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_pages"
+            }
           ]
-          select: {
-            exist: [
-              "after"
-              "page_size"
+          t: {
+            req: "`reqdata`"
+            res: "`body.status_pages`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/status_pages/{status_page_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "status_page_id"
+                r: true
+                t: "`$STRING`"
+              }
             ]
           }
-          transform: {
+          m: "GET"
+          o: "/v2/status_pages/{status_page_id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              status_page_id: "id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_pages"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.status_page`"
           }
         }
       ]

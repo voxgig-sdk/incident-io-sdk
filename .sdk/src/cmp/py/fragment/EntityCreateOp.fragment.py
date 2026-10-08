@@ -1,11 +1,11 @@
-from utility.voxgig_struct import voxgig_struct as vs
-from core import helpers
+from projectname_sdk.utility.voxgig_struct import voxgig_struct as vs
+from projectname_sdk.core import helpers
 
 entity_create_op = None
 
 # EJECT-START
 
-    def create(self, reqdata: EntityNameCreateData, ctrl=None) -> EntityName:
+    def create(self, reqdata: EntityNameCreateData, ctrl=None) -> EntyClass:
         utility = self._utility
         ctx = utility.make_context({
             "opname": "create",

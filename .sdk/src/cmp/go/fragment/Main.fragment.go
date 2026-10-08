@@ -1,7 +1,9 @@
 package core
 
 import (
+	"encoding/json"
 	"fmt"
+	"strings"
 
 	vs "github.com/voxgig/struct"
 )
@@ -22,7 +24,7 @@ func NewProjectNameSDK(options map[string]any) *ProjectNameSDK {
 
 	sdk.utility = NewUtility()
 
-	config := MakeConfig()
+	config := SharedConfig()
 
 	sdk.rootctx = sdk.utility.MakeContext(map[string]any{
 		"client":  sdk,
@@ -34,7 +36,7 @@ func NewProjectNameSDK(options map[string]any) *ProjectNameSDK {
 
 	sdk.options = sdk.utility.MakeOptions(sdk.rootctx)
 
-	if vs.GetPath([]any{"feature", "test", "active"}, sdk.options) == true {
+	if vs.GetPath(sdk.options, []any{"feature", "test", "active"}) == true {
 		sdk.Mode = "test"
 	}
 
@@ -47,7 +49,7 @@ func NewProjectNameSDK(options map[string]any) *ProjectNameSDK {
 	// must be added before them to sit at the base of the chain.
 	featureOpts := ToMapAny(vs.GetProp(sdk.options, "feature"))
 	if featureOpts != nil {
-		if fo, ok := vs.GetPath([]any{"__derived__", "featureorder"}, sdk.options).([]any); ok {
+		if fo, ok := vs.GetPath(sdk.options, []any{"__derived__", "featureorder"}).([]any); ok {
 			for _, n := range fo {
 				fname, _ := n.(string)
 				fopts := ToMapAny(featureOpts[fname])
@@ -81,6 +83,22 @@ func NewProjectNameSDK(options map[string]any) *ProjectNameSDK {
 	sdk.utility.FeatureHook(sdk.rootctx, "PostConstruct")
 
 	return sdk
+}
+
+// The client holds the credential in its options, so a print or a JSON dump
+// carries the name alone. Value receivers: a dereferenced client prints the
+// same way.
+func (sdk ProjectNameSDK) String() string {
+	return "ProjectName " + vs.Jsonify(map[string]any{"name": "ProjectName"},
+		map[string]any{"indent": 0})
+}
+
+func (sdk ProjectNameSDK) GoString() string {
+	return sdk.String()
+}
+
+func (sdk ProjectNameSDK) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]any{"name": "ProjectName"})
 }
 
 func (sdk *ProjectNameSDK) OptionsMap() map[string]any {
@@ -128,6 +146,14 @@ func (sdk *ProjectNameSDK) Prepare(fetchargs map[string]any) (map[string]any, er
 	if method == "" {
 		method = "GET"
 	}
+	method = strings.ToUpper(method)
+
+	allowMethodVal := vs.GetPath(options, []any{"allow", "method"})
+	if !Allowed(allowMethodVal, method) {
+		allowMethod, _ := allowMethodVal.(string)
+		return nil, ctx.MakeError("spec_method_allow",
+			"Method \""+method+"\" not allowed by SDK option allow.method value: \""+allowMethod+"\"")
+	}
 
 	params := ToMapAny(vs.GetProp(fetchargs, "params"))
 	if params == nil {
@@ -174,12 +200,41 @@ func (sdk *ProjectNameSDK) Prepare(fetchargs map[string]any) (map[string]any, er
 	return utility.MakeFetchDef(ctx)
 }
 
+// Raw endpoint access is operator-controllable, like every entity op.
+// Blocking it means denying BOTH the 'direct' and 'graphql' tokens, since
+// either one reaches the same endpoint.
 func (sdk *ProjectNameSDK) Direct(fetchargs map[string]any) (map[string]any, error) {
+	if !sdk.opAllowed("direct") {
+		return sdk.opDenied("direct"), nil
+	}
+
+	return sdk.rawRequest(fetchargs)
+}
+
+// Is this raw-access op permitted by the SDK's allow.op option?
+func (sdk *ProjectNameSDK) opAllowed(op string) bool {
+	return Allowed(vs.GetPath(sdk.options, []any{"allow", "op"}), op)
+}
+
+func (sdk *ProjectNameSDK) opDenied(op string) map[string]any {
+	allowOp, _ := vs.GetPath(sdk.options, []any{"allow", "op"}).(string)
+	return map[string]any{
+		"ok": false,
+		"err": fmt.Errorf("ProjectNameSDK: %s: operation not allowed by"+
+			" SDK option allow.op value: \"%s\"", op, allowOp),
+	}
+}
+
+// Ungated request path shared by Direct and Graphql, each of which checks
+// its own allow.op token first. Unexported, rather than a flag on fetchargs:
+// a caller-supplied marker would let anyone opt straight back out of the
+// gate by passing it.
+func (sdk *ProjectNameSDK) rawRequest(fetchargs map[string]any) (map[string]any, error) {
 	utility := sdk.utility
 
 	fetchdef, err := sdk.Prepare(fetchargs)
 	if err != nil {
-		return map[string]any{"ok": false, "err": err}, nil
+		return map[string]any{"ok": false, "err": sdk.cleanErr(sdk.rootctx, err)}, nil
 	}
 
 	if fetchargs == nil {
@@ -205,7 +260,7 @@ func (sdk *ProjectNameSDK) Direct(fetchargs map[string]any) (map[string]any, err
 	fetched, fetchErr := utility.Fetcher(ctx, url, fetchdef)
 
 	if fetchErr != nil {
-		return map[string]any{"ok": false, "err": fetchErr}, nil
+		return map[string]any{"ok": false, "err": sdk.cleanErr(ctx, fetchErr)}, nil
 	}
 
 	if fetched == nil {
@@ -230,24 +285,90 @@ func (sdk *ProjectNameSDK) Direct(fetchargs map[string]any) (map[string]any, err
 		noBody := status == 204 || status == 304 || contentLength == "0"
 
 		var jsonData any
+		var bodyErr error
 		if !noBody {
 			if jf := vs.GetProp(fm, "json"); jf != nil {
 				if f, ok := jf.(func() any); ok {
-					// f() returns nil on parse error in our fetcher.
 					jsonData = f()
 				}
 			}
+			if unreadable, _ := vs.GetProp(fm, "unreadable").(bool); unreadable {
+				var failed error
+				if status < 200 || status >= 300 {
+					failed = ctx.MakeError("request_status",
+						fmt.Sprintf("request: %d: %v", status, vs.GetProp(fm, "statusText")))
+				}
+				bodyErr = UnreadableBody(ctx, status, headers, vs.GetProp(fm, "body"),
+					fetchdef["headers"], failed)
+			}
 		}
 
-		return map[string]any{
-			"ok":      status >= 200 && status < 300,
+		out := map[string]any{
+			"ok":      bodyErr == nil && status >= 200 && status < 300,
 			"status":  status,
 			"headers": headers,
 			"data":    jsonData,
-		}, nil
+		}
+		if bodyErr != nil {
+			out["err"] = sdk.cleanErr(ctx, bodyErr)
+		}
+		return out, nil
 	}
 
 	return map[string]any{"ok": false, "err": ctx.MakeError("direct_invalid", "invalid response type")}, nil
+}
+
+// A raw request returns its error rather than passing it through MakeError.
+func (sdk *ProjectNameSDK) cleanErr(ctx *Context, err error) error {
+	if cleaned, ok := sdk.utility.Clean(ctx, err).(error); ok {
+		return cleaned
+	}
+	return err
+}
+
+func (sdk *ProjectNameSDK) Graphql(
+	query string, variables map[string]any, ctrl map[string]any,
+) (map[string]any, error) {
+	if !sdk.opAllowed("graphql") {
+		return sdk.opDenied("graphql"), nil
+	}
+
+	if variables == nil {
+		variables = map[string]any{}
+	}
+	if ctrl == nil {
+		ctrl = map[string]any{}
+	}
+
+	res, err := sdk.rawRequest(map[string]any{
+		"method":  "POST",
+		"headers": map[string]any{"content-type": "application/json"},
+		"body":    map[string]any{"query": query, "variables": variables},
+		"ctrl":    ctrl,
+	})
+
+	if err != nil {
+		return res, err
+	}
+
+	// Errors are read BEFORE any status check: a GraphQL parse or validation
+	// failure comes back as HTTP 400 carrying the standard { errors: [...] }
+	// body, and the raw path represents a non-2xx as ok:false with no err —
+	// so returning early on status would discard the server's own
+	// diagnostics, which are the only useful part of that response.
+	errors, _ := vs.GetPath(res, []any{"data", "errors"}).([]any)
+
+	if 0 < len(errors) {
+		msg, _ := vs.GetProp(errors[0], "message").(string)
+		if msg == "" {
+			msg = "graphql error"
+		}
+		res["ok"] = false
+		res["err"] = fmt.Errorf("ProjectNameSDK: graphql: %s", msg)
+		res["graphql"] = errors
+	}
+
+	return res, nil
 }
 
 // <[SLOT]>

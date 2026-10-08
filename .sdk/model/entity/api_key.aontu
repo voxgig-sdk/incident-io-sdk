@@ -4,73 +4,94 @@ main: kit: entity: api_key: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "comment"
-      req: false
-      type: "`$STRING`"
+  fields: {
+    comments: {
+      h: "Comments"
+      n: "comments"
+      r: false
+      sh: "Freeform notes about this API key"
+      t: "`$STRING`"
     }
-    {
-      name: "created_at"
-      req: true
-      type: "`$STRING`"
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When the API key was created"
+      t: "`$STRING`"
     }
-    {
-      name: "creator"
-      req: true
-      type: "`$OBJECT`"
+    creator: {
+      h: "Creator"
+      n: "creator"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "grace_period_minute"
-      req: true
-      type: "`$INTEGER`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this API key"
+      t: "`$STRING`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    last_used_at: {
+      fo: "date-time"
+      h: "Last Used At"
+      n: "last_used_at"
+      r: false
+      sh: "When the key was last used to authenticate a request"
+      t: "`$STRING`"
     }
-    {
-      name: "last_used_at"
-      req: false
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "The name of the API key, for the user's reference"
+      t: "`$STRING`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    role_names: {
+      h: "Role Names"
+      n: "role_names"
+      r: true
+      sh: "Account-level roles to assign to the API key."
+      t: "`$ARRAY`"
     }
-    {
-      name: "role"
-      req: true
-      type: "`$ARRAY`"
+    roles: {
+      h: "Roles"
+      n: "roles"
+      r: true
+      sh: "The account-level roles assigned to this API key"
+      t: "`$ARRAY`"
     }
-    {
-      name: "role_name"
-      req: true
-      type: "`$ARRAY`"
+    team_ids: {
+      h: "Team Ids"
+      n: "team_ids"
+      r: true
+      sh: "IDs of teams that this API key is scoped to"
+      t: "`$ARRAY`"
     }
-    {
-      name: "team_id"
-      req: true
-      type: "`$ARRAY`"
+    team_role_names: {
+      h: "Team Role Names"
+      n: "team_role_names"
+      r: true
+      sh: "Roles to grant for the teams specified in `team_ids`."
+      t: "`$ARRAY`"
     }
-    {
-      name: "team_role"
-      req: true
-      type: "`$ARRAY`"
+    team_roles: {
+      h: "Team Roles"
+      n: "team_roles"
+      r: true
+      sh: "The team-level roles assigned to this API key"
+      t: "`$ARRAY`"
     }
-    {
-      name: "team_role_name"
-      req: true
-      type: "`$ARRAY`"
+    token_last_issued_at: {
+      fo: "date-time"
+      h: "Token Last Issued At"
+      n: "token_last_issued_at"
+      r: true
+      sh: "When the current token for this API was last issued."
+      t: "`$STRING`"
     }
-    {
-      name: "token_last_issued_at"
-      req: true
-      type: "`$STRING`"
-    }
-  ]
+  }
 
   id: {
     field: "id"
@@ -83,46 +104,88 @@ main: kit: entity: api_key: {
       name: "create"
       points: [
         {
-          args: {
+          bf: [
+            "grace_period_minutes"
+          ]
+          co: {
+            id: "POST /v1/api_keys/{id}/actions/rotate"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "POST"
-          orig: "/v1/api_keys/{id}/actions/rotate"
-          parts: [
-            "v1"
-            "api_keys"
-            "{id}"
-            "actions"
-            "rotate"
-          ]
-          select: {
+          m: "POST"
+          o: "/v1/api_keys/{id}/actions/rotate"
+          q: {
             "$action": "action_rotate"
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "api_keys"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "rotate"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.api_key`"
           }
         }
         {
-          method: "POST"
-          orig: "/v1/api_keys"
-          parts: [
-            "v1"
-            "api_keys"
+          bf: [
+            "comments"
+            "name"
+            "role_names"
+            "team_ids"
+            "team_role_names"
           ]
-          transform: {
+          co: {
+            id: "POST /v1/api_keys"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/api_keys"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "api_keys"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.api_key`"
           }
@@ -133,41 +196,48 @@ main: kit: entity: api_key: {
       name: "list"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/api_keys"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             query: [
               {
-                example: "01FDAG4SAP5TYPT98WGR2N7W91"
-                kind: "query"
-                name: "after"
-                orig: "after"
-                reqd: false
-                type: "`$STRING`"
+                ex: "01FDAG4SAP5TYPT98WGR2N7W91"
+                k: "query"
+                n: "after"
+                or: "after"
+                r: false
+                t: "`$STRING`"
               }
               {
-                example: 25
-                kind: "query"
-                name: "page_size"
-                orig: "page_size"
-                reqd: false
-                type: "`$INTEGER`"
+                ex: 25
+                k: "query"
+                n: "page_size"
+                or: "page_size"
+                r: false
+                t: "`$INTEGER`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/api_keys"
-          parts: [
-            "v1"
-            "api_keys"
-          ]
-          select: {
-            exist: [
-              "after"
-              "page_size"
-            ]
+          m: "GET"
+          o: "/v1/api_keys"
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
-          transform: {
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "api_keys"
+            }
+          ]
+          t: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.api_keys`"
           }
         }
       ]
@@ -176,31 +246,46 @@ main: kit: entity: api_key: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v1/api_keys/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v1/api_keys/{id}"
-          parts: [
-            "v1"
-            "api_keys"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v1/api_keys/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "api_keys"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.api_key`"
           }
@@ -211,31 +296,42 @@ main: kit: entity: api_key: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v1/api_keys/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v1/api_keys/{id}"
-          parts: [
-            "v1"
-            "api_keys"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v1/api_keys/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "api_keys"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -246,31 +342,53 @@ main: kit: entity: api_key: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "comments"
+            "name"
+            "role_names"
+            "team_ids"
+            "team_role_names"
+          ]
+          co: {
+            id: "PUT /v1/api_keys/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01FCNDV6P870EA6S7TK1DSYDG0"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v1/api_keys/{id}"
-          parts: [
-            "v1"
-            "api_keys"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v1/api_keys/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "api_keys"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.api_key`"
           }

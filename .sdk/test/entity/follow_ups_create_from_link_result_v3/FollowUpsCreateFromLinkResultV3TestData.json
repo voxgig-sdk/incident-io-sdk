@@ -1,0 +1,36 @@
+{
+  "existing": {
+    "follow_ups_create_from_link_result_v3": {
+      "FOLLOW_UPS_CREATE_FROM_LINK_RESULT_V300": {
+        "incident_id": "INCIDENT01",
+        "url": "s15",
+        "id": "FOLLOW_UPS_CREATE_FROM_LINK_RESULT_V300"
+      },
+      "FOLLOW_UPS_CREATE_FROM_LINK_RESULT_V301": {
+        "incident_id": "INCIDENT01",
+        "url": "s29",
+        "id": "FOLLOW_UPS_CREATE_FROM_LINK_RESULT_V301"
+      },
+      "FOLLOW_UPS_CREATE_FROM_LINK_RESULT_V302": {
+        "incident_id": "INCIDENT01",
+        "url": "s3d",
+        "id": "FOLLOW_UPS_CREATE_FROM_LINK_RESULT_V302"
+      }
+    }
+  },
+  "new": {
+    "follow_ups_create_from_link_result_v3": {
+      "follow_ups_create_from_link_result_v3_ref01": {
+        "incident_id": "INCIDENT01",
+        "url": "s51"
+      }
+    }
+  },
+  "requests": {
+    "POST /v3/follow_ups/actions/create_from_link": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

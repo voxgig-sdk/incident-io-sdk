@@ -21,7 +21,6 @@ import type {
   PostmortemDocumentUpdateData,
 } from '../IncidentIoTypes'
 
-// TODO: needs Entity superclass
 class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> {
 
   constructor(client: IncidentIoSDK, entopts: any) {
@@ -38,14 +37,15 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
 
 
 
-  async load(this: any, reqmatch?: PostmortemDocumentLoadMatch, ctrl?: Control): Promise<PostmortemDocument> {
+  async load(this: any, reqmatch?: PostmortemDocumentLoadMatch, ctrl?: Control): Promise<PostmortemDocumentEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -129,12 +129,20 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -143,7 +151,7 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<PostmortemDocument> return stays clean under strict null checks.
+        // Promise<PostmortemDocumentEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -151,14 +159,15 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
 
 
 
-  async list(this: any, reqmatch?: PostmortemDocumentListMatch, ctrl?: Control): Promise<PostmortemDocument[]> {
+  async list(this: any, reqmatch?: PostmortemDocumentListMatch, ctrl?: Control): Promise<PostmortemDocumentEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -241,9 +250,15 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
       return done(ctx)
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -252,7 +267,7 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<PostmortemDocument[]> return stays clean under strict null checks.
+        // Promise<PostmortemDocumentEntity[]> return stays clean under strict null checks.
         return undefined as any
       }
     }
@@ -261,14 +276,15 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
 
 
 
-  async update(this: any, reqdata?: PostmortemDocumentUpdateData, ctrl?: Control): Promise<PostmortemDocument> {
+  async update(this: any, reqdata?: PostmortemDocumentUpdateData, ctrl?: Control): Promise<PostmortemDocumentEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -353,12 +369,20 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
+      // What a hook throws here must not escape the cleaning below.
+      try {
 
-      fres = featureHook(ctx, 'PreUnexpected')
-      if (fres instanceof Promise) { await fres }
+        fres = featureHook(ctx, 'PreUnexpected')
+        if (fres instanceof Promise) { await fres }
+      }
+      catch (hookerr: any) {
+        err = hookerr
+      }
 
       err = this._unexpected(ctx, err)
 
@@ -367,11 +391,12 @@ class PostmortemDocumentEntity extends IncidentIoEntityBase<PostmortemDocument> 
       }
       else {
         // Off-happy-path (throw disabled): typed as any so the method's
-        // Promise<PostmortemDocument> return stays clean under strict null checks.
+        // Promise<PostmortemDocumentEntity> return stays clean under strict null checks.
         return undefined as any
       }
     }
   }
+
 
 
 

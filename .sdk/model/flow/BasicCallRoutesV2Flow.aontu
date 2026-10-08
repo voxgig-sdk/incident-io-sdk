@@ -1,0 +1,9 @@
+# BasicCallRoutesV2Flow
+
+main: kit: flow: BasicCallRoutesV2Flow:
+{
+  entity: "call_routes_v2",
+  kind: "basic",
+  name: "BasicCallRoutesV2Flow",
+  "key$": "BasicCallRoutesV2Flow"
+}

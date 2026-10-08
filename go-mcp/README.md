@@ -1,10 +1,14 @@
 # incident-io-mcp
 
 [MCP](https://modelcontextprotocol.io) server exposing the IncidentIo SDK as
-two agent tools — `incident-io_list` and `incident-io_load` — built on the
+2 agent tools, `incident-io_list` and `incident-io_load`, built on the
 [official Go MCP SDK](https://github.com/modelcontextprotocol/go-sdk) and the
 sibling Go SDK at `../go`. Runs over **stdio** (default, for spawnable installs)
 or **streamable HTTP** (one shared server for several agents).
+
+The server only reads. Create, update, patch and remove become tools too when the
+SDK's own model sets `main: kit: target: 'go-mcp': tool: write: true`; they are off by default, as an agent calling
+them changes the API's data.
 
 ## Examples
 
@@ -28,10 +32,9 @@ Tool-call arguments (what an agent sends):
 ```jsonc
 // incident-io_list: first page of records
 { "entity": "action" }
-{ "entity": "action", "query": { } }
 
-// incident-io_load: one record by id
-{ "entity": "action", "query": { "id": 1 } }
+// incident-io_load: one record
+{ "entity": "action", "query": { "id": "example_id" } }
 ```
 
 > The rest of this guide follows the [Diátaxis](https://diataxis.fr) framework:
@@ -59,8 +62,8 @@ Tool-call arguments (what an agent sends):
      -- "$PWD"/dist/*/incident-io-mcp -transport stdio
    ```
 
-4. **Restart Claude Code.** The `incident-io_list` and `incident-io_load` tools now appear
-   in new sessions. Ask the agent to *"list action using incident-io"*
+4. **Restart Claude Code.** The `incident-io_list` and `incident-io_load` tools now appear in new
+   sessions. Ask the agent to *"list action using incident-io"*
    and it calls `incident-io_list` with `{"entity":"action"}`.
 
 ## How-to guides
@@ -88,8 +91,8 @@ default) spawns a fresh process per client.
 
 ### Call the `incident-io_list` tool
 
-Args: `entity` (required), `query` (optional filter map). Returns the first
-page of records as JSON:
+Args: `entity` (required), `query` (optional: optional filter map; omit it for the first page).
+Returns the first page of records as JSON:
 
 ```jsonc
 { "entity": "action" }
@@ -97,11 +100,19 @@ page of records as JSON:
 
 ### Call the `incident-io_load` tool
 
-Args: `entity` (required), `query` = `{"id":N}` (required). Returns the single
-record as JSON:
+Args: `entity` (required), `query` (required: match map naming the record, such as {"id":1}).
+Returns the record as JSON:
 
 ```jsonc
-{ "entity": "action", "query": { "id": 1 } }
+{ "entity": "action", "query": { "id": "example_id" } }
+```
+
+### Turn on the write tools
+
+In the SDK's own model (`.sdk/model/sdk.aontu`), then regenerate:
+
+```
+main: kit: target: 'go-mcp': tool: write: true
 ```
 
 ### Cross-compile release binaries
@@ -115,25 +126,28 @@ make build-all   # linux/darwin/windows x amd64/arm64, under dist/<os>-<arch>/
 
 ### Tools
 
-| Tool | Args | Returns |
-|------|------|---------|
-| `incident-io_list` | `entity` (required), `query` (optional map) | First page of records as JSON |
-| `incident-io_load` | `entity` (required), `query` = `{id:N}` | Single record as JSON |
+| Tool | Args | Returns | MCP hints |
+|------|------|---------|-----------|
+| `incident-io_list` | `entity`, `query` (optional map) | The first page of records as JSON | read-only |
+| `incident-io_load` | `entity`, `query` (required map) | The record as JSON | read-only |
 
 On error, a tool returns an MCP error result (`isError: true`) whose text is the
 failure message (e.g. unknown entity, or an API error).
 
-### `Args` schema
+### Entities
 
-Both tools take the same argument object:
+Each tool takes as its `entity` argument one of the entities that has its
+operation, of the 109 the SDK has:
 
-| Field | Type | Notes |
-|-------|------|-------|
-| `entity` | string | One of the 48 supported entities (see below). |
-| `query` | object | Optional match map. `{"id":N}` for load; omit or `{}` for list. |
+| Tool | Entities |
+|------|----------|
+| `incident-io_list` | action, alert, alert_attribute, alert_note, alert_route, alert_source, alert_tag, alerts_transition_incident_alert_result_v2, announcement_rule, announcement_template, api_key, call_route, call_routes_list_allowed_callers_result_v2, call_routes_list_options_result_v2, call_session, call_transcript_entry, catalog_entry, catalog_resource, catalog_type, custom_field, custom_field_option, escalation, escalation_path_template, follow_up, incident, incident_activity_log_entry, incident_attachment, incident_form, incident_participant_workload, incident_relationship, incident_role, incident_status, incident_template, incident_timeline_item, incident_timestamp, incident_type, incident_update, ip_range, maintenance_window, on_call_notification_method_public_v2, on_call_notification_rule_public_v2, pay_config, pay_configs_list_one_off_rules_result_v2, pay_configs_list_weekly_rules_result_v2, pay_report, policy, policy_finding, postmortem_document, schedule, schedule_replica, schedule_sync_rule, schedule_sync_target, schedules_show_override_result_v2, secret, severity, status_page, status_page_component, status_page_incident, status_page_linked_response_incident_v1, status_page_maintenance, team, user, workflow, workflow_run |
+| `incident-io_load` | action, alert, alert_attribute, alert_note, alert_route, alert_source, announcement_rule, announcement_template, api_key, call_route, call_routes_show_allowed_caller_result_v2, call_routes_show_option_result_v2, catalog_entry, catalog_type, custom_field, custom_field_option, escalation, escalation_path_template, follow_up, identity, incident, incident_form, incident_participant, incident_role, incident_status, incident_template, incident_timestamp, incident_type, ip_allowlist, maintenance_window, pay_config, pay_configs_show_one_off_rule_result_v2, pay_configs_show_weekly_rule_result_v2, pay_report, pay_reports_v2, policy, policy_finding, postmortem_document, schedule, schedule_entry, schedule_replica, schedule_sync_rule, schedule_sync_target, schedules_show_override_result_v2, secret, severity, status_page, status_page_component, status_page_component_availability_v2, status_page_incident, status_page_maintenance, status_page_structure, team, user, workflow, workflow_run |
 
-JSON schemas are emitted by the SDK from the `Args` struct's `json` /
-`jsonschema` tags — no schema is hand-written.
+JSON schemas are emitted by the SDK from each tool's argument struct's
+`json` / `jsonschema` tags — no schema is hand-written. Each tool's
+`entity` is an `enum` of the entities in its row, so the server refuses
+any other before it runs a call.
 
 ### Transports & flags
 
@@ -148,12 +162,6 @@ JSON schemas are emitted by the SDK from the `Args` struct's `json` /
 |----------|---------|
 | `INCIDENT_IO_APIKEY` | API key sent with every request. |
 | `INCIDENT_IO_BASE` | Optional override of the API base URL. |
-
-### Entities
-
-The 48 entities valid as the `entity` argument:
-
-action | alert | alert_attribute | alert_note | alert_route | alert_source | api_key | catalog_entry | catalog_resource | catalog_type | catalog_type_schema | custom_field | custom_field_option | escalation | follow_up | incident | incident_alert | incident_attachment | incident_membership | incident_participant | incident_participant_workload | incident_relationship | incident_role | incident_status | incident_timestamp | incident_type | incident_update | ip_allowlist | maintenance_window | postmortem_document | schedule | schedule_entry | schedule_replica | schedule_sync_rule | schedule_sync_target | secret | severity | status_page | status_page_incident | status_page_incident_update | status_page_maintenance | status_page_maintenance_update | status_page_structure | team | telemetry_data_source | user | workflow | workflow_run
 
 ### Smoke test via HTTP (raw JSON-RPC)
 
@@ -173,7 +181,7 @@ curl -sN -X POST http://localhost:18080 \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
   -H "Mcp-Session-Id: $SESSION" \
-  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"incident-io_load","arguments":{"entity":"action","query":{"id":1}}}}'
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"incident-io_list","arguments":{"entity":"action"}}}'
 ```
 
 ## Explanation
@@ -181,9 +189,10 @@ curl -sN -X POST http://localhost:18080 \
 ### How tools map to the SDK
 
 `main.go` builds the SDK client (configured from the environment) and registers
-two tools. Each dispatches on the `entity` argument to the matching entity in
-the sibling Go SDK at `../go`, calls `List` or `Load`, unwraps the `Entity`
-wrappers to plain data, and returns it as pretty-printed JSON.
+one tool per operation the SDK's entities have. Each dispatches on the
+`entity` argument to the matching entity in the sibling Go SDK at `../go`,
+calls its operation, unwraps the `Entity` wrappers to plain data, and returns
+it as pretty-printed JSON.
 
 ### Why two transports
 
@@ -193,9 +202,10 @@ that many agents can share — handy for a long-lived deployment.
 
 ### Schema generation
 
-The input schema is derived from the `Args` Go struct's `json` / `jsonschema`
-tags at registration time, so the advertised tool schema can never drift from
-the code that consumes it.
+The input schema is derived from each tool's argument struct's `json` /
+`jsonschema` tags at registration time, so the advertised tool schema can
+never drift from the code that consumes it. The `entity` enum comes from the
+same list the tool is registered for.
 
 ## Generated by
 

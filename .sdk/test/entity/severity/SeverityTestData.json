@@ -6,7 +6,7 @@
         "description": "s3d",
         "id": "SEVERITY00",
         "name": "s3f",
-        "rank": "s40",
+        "rank": 64,
         "updated_at": "s41"
       },
       "SEVERITY01": {
@@ -14,7 +14,7 @@
         "description": "s79",
         "id": "SEVERITY01",
         "name": "s7b",
-        "rank": "s7c",
+        "rank": 124,
         "updated_at": "s7d"
       },
       "SEVERITY02": {
@@ -22,7 +22,7 @@
         "description": "sb5",
         "id": "SEVERITY02",
         "name": "sb7",
-        "rank": "sb8",
+        "rank": 184,
         "updated_at": "sb9"
       }
     }
@@ -33,9 +33,31 @@
         "created_at": "sf0",
         "description": "sf1",
         "name": "sf3",
-        "rank": "sf4",
+        "rank": 244,
         "updated_at": "sf5"
       }
+    }
+  },
+  "requests": {
+    "POST /v1/severities": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/severities": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/severities/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v1/severities/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

@@ -9,7 +9,8 @@
 --      network). Each client constructor is rewritten to the seeded
 --      test-mode form, and fragments that only use `client` get a seeded
 --      test client injected. A call to a method that does not exist raises
---      "call a nil value" and FAILS the test. A seeded-fixture miss surfaces
+--      "call a nil value" and FAILS the test, as does an SDK module that
+--      does not load. A seeded-fixture miss surfaces
 --      as a tolerated (nil, err) not-found domain error, not a raised error.
 --   3. Completeness: total == executed + illustration per doc. A block that
 --      is neither runnable nor an explicit comment-only placeholder FAILS
@@ -20,7 +21,7 @@ local SDK_MODULE = "incident-io_sdk"
 -- A test-mode client seeded with a fixture for every entity. The constructor
 -- of each runnable snippet is rewritten to this form so the offline mock has
 -- data to return.
-local TEST_SEED = '{ entity = { ["action"] = { ["test01"] = { id = "test01" } }, ["alert"] = { ["test01"] = { id = "test01" } }, ["alert_attribute"] = { ["test01"] = { id = "test01" } }, ["alert_note"] = { ["test01"] = { id = "test01" } }, ["alert_route"] = { ["test01"] = { id = "test01" } }, ["alert_source"] = { ["test01"] = { id = "test01" } }, ["api_key"] = { ["test01"] = { id = "test01" } }, ["catalog_entry"] = { ["test01"] = { id = "test01" } }, ["catalog_resource"] = { ["test01"] = { id = "test01" } }, ["catalog_type"] = { ["test01"] = { id = "test01" } }, ["catalog_type_schema"] = { ["test01"] = { id = "test01" } }, ["custom_field"] = { ["test01"] = { id = "test01" } }, ["custom_field_option"] = { ["test01"] = { id = "test01" } }, ["escalation"] = { ["test01"] = { id = "test01" } }, ["follow_up"] = { ["test01"] = { id = "test01" } }, ["incident"] = { ["test01"] = { id = "test01" } }, ["incident_alert"] = { ["test01"] = { id = "test01" } }, ["incident_attachment"] = { ["test01"] = { id = "test01" } }, ["incident_membership"] = { ["test01"] = { id = "test01" } }, ["incident_participant"] = { ["test01"] = { id = "test01" } }, ["incident_participant_workload"] = { ["test01"] = { id = "test01" } }, ["incident_relationship"] = { ["test01"] = { id = "test01" } }, ["incident_role"] = { ["test01"] = { id = "test01" } }, ["incident_status"] = { ["test01"] = { id = "test01" } }, ["incident_timestamp"] = { ["test01"] = { id = "test01" } }, ["incident_type"] = { ["test01"] = { id = "test01" } }, ["incident_update"] = { ["test01"] = { id = "test01" } }, ["ip_allowlist"] = { ["test01"] = { id = "test01" } }, ["maintenance_window"] = { ["test01"] = { id = "test01" } }, ["postmortem_document"] = { ["test01"] = { id = "test01" } }, ["schedule"] = { ["test01"] = { id = "test01" } }, ["schedule_entry"] = { ["test01"] = { id = "test01" } }, ["schedule_replica"] = { ["test01"] = { id = "test01" } }, ["schedule_sync_rule"] = { ["test01"] = { id = "test01" } }, ["schedule_sync_target"] = { ["test01"] = { id = "test01" } }, ["secret"] = { ["test01"] = { id = "test01" } }, ["severity"] = { ["test01"] = { id = "test01" } }, ["status_page"] = { ["test01"] = { id = "test01" } }, ["status_page_incident"] = { ["test01"] = { id = "test01" } }, ["status_page_incident_update"] = { ["test01"] = { id = "test01" } }, ["status_page_maintenance"] = { ["test01"] = { id = "test01" } }, ["status_page_maintenance_update"] = { ["test01"] = { id = "test01" } }, ["status_page_structure"] = { ["test01"] = { id = "test01" } }, ["team"] = { ["test01"] = { id = "test01" } }, ["telemetry_data_source"] = { ["test01"] = { id = "test01" } }, ["user"] = { ["test01"] = { id = "test01" } }, ["workflow"] = { ["test01"] = { id = "test01" } }, ["workflow_run"] = { ["test01"] = { id = "test01" } } } }'
+local TEST_SEED = '{ entity = { ["action"] = { ["test01"] = { id = "test01" } }, ["alert"] = { ["test01"] = { id = "test01" } }, ["alert_attribute"] = { ["test01"] = { id = "test01" } }, ["alert_note"] = { ["test01"] = { id = "test01" } }, ["alert_route"] = { ["test01"] = { id = "test01" } }, ["alert_source"] = { ["test01"] = { id = "test01" } }, ["alert_sources_v2"] = { ["test01"] = { id = "test01" } }, ["alert_tag"] = { ["test01"] = { id = "test01" } }, ["alerts_add_tags_result_v2"] = { ["test01"] = { id = "test01" } }, ["alerts_remove_tags_result_v2"] = { ["test01"] = { id = "test01" } }, ["alerts_set_tags_result_v2"] = { ["test01"] = { id = "test01" } }, ["alerts_transition_incident_alert_result_v2"] = { ["test01"] = { id = "test01" } }, ["announcement_rule"] = { ["test01"] = { id = "test01" } }, ["announcement_template"] = { ["test01"] = { id = "test01" } }, ["api_key"] = { ["test01"] = { id = "test01" } }, ["call_route"] = { ["test01"] = { id = "test01" } }, ["call_routes_create_allowed_caller_result_v2"] = { ["test01"] = { id = "test01" } }, ["call_routes_create_option_result_v2"] = { ["test01"] = { id = "test01" } }, ["call_routes_list_allowed_callers_result_v2"] = { ["test01"] = { id = "test01" } }, ["call_routes_list_options_result_v2"] = { ["test01"] = { id = "test01" } }, ["call_routes_show_allowed_caller_result_v2"] = { ["test01"] = { id = "test01" } }, ["call_routes_show_option_result_v2"] = { ["test01"] = { id = "test01" } }, ["call_routes_update_allowed_caller_result_v2"] = { ["test01"] = { id = "test01" } }, ["call_routes_update_option_result_v2"] = { ["test01"] = { id = "test01" } }, ["call_routes_v2"] = { ["test01"] = { id = "test01" } }, ["call_session"] = { ["test01"] = { id = "test01" } }, ["call_transcript_entry"] = { ["test01"] = { id = "test01" } }, ["catalog_entry"] = { ["test01"] = { id = "test01" } }, ["catalog_resource"] = { ["test01"] = { id = "test01" } }, ["catalog_type"] = { ["test01"] = { id = "test01" } }, ["catalog_type_schema"] = { ["test01"] = { id = "test01" } }, ["custom_field"] = { ["test01"] = { id = "test01" } }, ["custom_field_option"] = { ["test01"] = { id = "test01" } }, ["escalation"] = { ["test01"] = { id = "test01" } }, ["escalation_path_template"] = { ["test01"] = { id = "test01" } }, ["escalations_check_escalation_permissions_result_v2"] = { ["test01"] = { id = "test01" } }, ["escalations_reassign_escalation_result_v2"] = { ["test01"] = { id = "test01" } }, ["follow_up"] = { ["test01"] = { id = "test01" } }, ["follow_ups_connect_external_issue_result_v3"] = { ["test01"] = { id = "test01" } }, ["follow_ups_create_from_link_result_v3"] = { ["test01"] = { id = "test01" } }, ["identity"] = { ["test01"] = { id = "test01" } }, ["incident"] = { ["test01"] = { id = "test01" } }, ["incident_activity_log_entry"] = { ["test01"] = { id = "test01" } }, ["incident_attachment"] = { ["test01"] = { id = "test01" } }, ["incident_form"] = { ["test01"] = { id = "test01" } }, ["incident_membership"] = { ["test01"] = { id = "test01" } }, ["incident_participant"] = { ["test01"] = { id = "test01" } }, ["incident_participant_workload"] = { ["test01"] = { id = "test01" } }, ["incident_relationship"] = { ["test01"] = { id = "test01" } }, ["incident_role"] = { ["test01"] = { id = "test01" } }, ["incident_status"] = { ["test01"] = { id = "test01" } }, ["incident_team_membership"] = { ["test01"] = { id = "test01" } }, ["incident_team_memberships_v1"] = { ["test01"] = { id = "test01" } }, ["incident_template"] = { ["test01"] = { id = "test01" } }, ["incident_templates_validate_result_v1"] = { ["test01"] = { id = "test01" } }, ["incident_timeline_item"] = { ["test01"] = { id = "test01" } }, ["incident_timestamp"] = { ["test01"] = { id = "test01" } }, ["incident_type"] = { ["test01"] = { id = "test01" } }, ["incident_update"] = { ["test01"] = { id = "test01" } }, ["ip_allowlist"] = { ["test01"] = { id = "test01" } }, ["ip_range"] = { ["test01"] = { id = "test01" } }, ["maintenance_window"] = { ["test01"] = { id = "test01" } }, ["on_call_notification_method_public_v2"] = { ["test01"] = { id = "test01" } }, ["on_call_notification_rule_public_v2"] = { ["test01"] = { id = "test01" } }, ["pay_config"] = { ["test01"] = { id = "test01" } }, ["pay_configs_create_one_off_rule_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_configs_create_weekly_rule_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_configs_list_one_off_rules_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_configs_list_weekly_rules_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_configs_show_one_off_rule_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_configs_show_weekly_rule_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_configs_update_one_off_rule_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_configs_update_weekly_rule_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_configs_v2"] = { ["test01"] = { id = "test01" } }, ["pay_report"] = { ["test01"] = { id = "test01" } }, ["pay_reports_publish_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_reports_unpublish_result_v2"] = { ["test01"] = { id = "test01" } }, ["pay_reports_v2"] = { ["test01"] = { id = "test01" } }, ["policies_v2"] = { ["test01"] = { id = "test01" } }, ["policy"] = { ["test01"] = { id = "test01" } }, ["policy_finding"] = { ["test01"] = { id = "test01" } }, ["policy_findings_dismiss_result_v2"] = { ["test01"] = { id = "test01" } }, ["policy_findings_restore_result_v2"] = { ["test01"] = { id = "test01" } }, ["postmortem_document"] = { ["test01"] = { id = "test01" } }, ["schedule"] = { ["test01"] = { id = "test01" } }, ["schedule_entries_list_payload_v2"] = { ["test01"] = { id = "test01" } }, ["schedule_entry"] = { ["test01"] = { id = "test01" } }, ["schedule_replica"] = { ["test01"] = { id = "test01" } }, ["schedule_sync_rule"] = { ["test01"] = { id = "test01" } }, ["schedule_sync_target"] = { ["test01"] = { id = "test01" } }, ["schedules_show_override_result_v2"] = { ["test01"] = { id = "test01" } }, ["schedules_update_override_result_v2"] = { ["test01"] = { id = "test01" } }, ["secret"] = { ["test01"] = { id = "test01" } }, ["severity"] = { ["test01"] = { id = "test01" } }, ["status_page"] = { ["test01"] = { id = "test01" } }, ["status_page_component"] = { ["test01"] = { id = "test01" } }, ["status_page_component_availability_v2"] = { ["test01"] = { id = "test01" } }, ["status_page_incident"] = { ["test01"] = { id = "test01" } }, ["status_page_incident_update"] = { ["test01"] = { id = "test01" } }, ["status_page_linked_response_incident_v1"] = { ["test01"] = { id = "test01" } }, ["status_page_maintenance"] = { ["test01"] = { id = "test01" } }, ["status_page_maintenance_update"] = { ["test01"] = { id = "test01" } }, ["status_page_structure"] = { ["test01"] = { id = "test01" } }, ["status_pages_v2"] = { ["test01"] = { id = "test01" } }, ["team"] = { ["test01"] = { id = "test01" } }, ["telemetry_data_source_v2"] = { ["test01"] = { id = "test01" } }, ["user"] = { ["test01"] = { id = "test01" } }, ["workflow"] = { ["test01"] = { id = "test01" } }, ["workflow_run"] = { ["test01"] = { id = "test01" } } } }'
 local TEST_CTOR = "sdk.test(" .. TEST_SEED .. ")"
 
 local function script_dir()
@@ -76,12 +77,18 @@ local function extract_blocks(md, lang)
   return blocks
 end
 
+-- The client VARIABLE, not the word: a module name carries the word between
+-- hyphens (multifon-client_sdk).
+local function uses_client(src)
+  return (" " .. src .. " "):find("[^%w_%-%./\"']client[^%w_%-/\"']") ~= nil
+end
+
 -- A block is runnable if it builds a client (sdk.new / sdk.test) or uses one
 -- (references `client`). These are the blocks we EXECUTE offline.
 local function is_runnable(block)
   return block:find("sdk%s*%.%s*new") ~= nil
     or block:find("sdk%s*%.%s*test") ~= nil
-    or block:find("client") ~= nil
+    or uses_client(block)
 end
 
 -- NARROW illustration class:
@@ -123,7 +130,7 @@ local function make_runnable(block)
   if not src:find("require%s*%(") then
     table.insert(prelude, 'local sdk = require("' .. SDK_MODULE .. '")')
   end
-  if not constructs and src:find("client") then
+  if not constructs and uses_client(src) then
     table.insert(prelude, "local client = " .. TEST_CTOR)
   end
 
@@ -187,12 +194,14 @@ for _, doc in ipairs(DOCS) do
           if not ok then
             local msg = tostring(e)
             -- A nil accessor / missing method / bad index is a real doc bug:
-            -- the documented call does not exist.
+            -- the documented call does not exist. A module that does not
+            -- load is an SDK that does not load.
             if msg:find("nil value") or msg:find("attempt to call")
-              or msg:find("attempt to index") then
+              or msg:find("attempt to index") or msg:find("error loading module")
+              or msg:find("module '[^']*' not found") then
               assert.is_true(false,
                 doc.label .. " runnable block #" .. i .. " hit a runtime " ..
-                "error (missing method / nil call): " .. msg ..
+                "error (missing method / nil call / module load): " .. msg ..
                 "\n----\n" .. src .. "\n----")
             end
             -- Other runtime errors (a seeded-fixture miss surfaces as a

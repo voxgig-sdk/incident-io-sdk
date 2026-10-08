@@ -1,32 +1,36 @@
 
-const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
 
 
 import { IncidentIoSDK } from '../../..'
 
 import {
   envOverride,
+  liveClientOptions,
   liveDelay,
+  loadEnvLocal,
   maybeSkipControl,
   skipIfMissingIds,
+  liveMiss,
+  liveEmpty,
+  describeLive,
 } from '../../utility'
+
+
+loadEnvLocal(__dirname + '/../../../.env.local')
 
 
 describe('StatusPageDirect', async () => {
 
   // Per-test live pacing. Delay is read from sdk-test-control.json's
-  // `test.live.delayMs`; only sleeps when INCIDENTIO_TEST_LIVE=TRUE.
-  afterEach(liveDelay('INCIDENTIO_TEST_LIVE'))
+  // `test.live.delayMs`; only sleeps when INCIDENT_IO_TEST_LIVE=TRUE.
+  afterEach(liveDelay('INCIDENT_IO_TEST_LIVE'))
 
   test('direct-exists', async () => {
     const sdk = new IncidentIoSDK({
-      // Concrete base: a live construction must satisfy any server
-      // variables a templated base URL declares; overriding base with a
-      // literal (as the direct flow tests do) sidesteps the requirement.
       base: 'http://localhost:8080',
       system: { fetch: async () => ({}) }
     })
@@ -35,7 +39,47 @@ describe('StatusPageDirect', async () => {
   })
 
 
+  test('direct-load-status_page', async (t: any) => {
+    if (liveScenariosActive()) { t.skip('Covered by live operation scenarios'); return }
+    const setup = directSetup({ id: 'direct01' })
+    if (maybeSkipControl(t, 'direct', 'direct-load-status_page', setup.live)) return
+    const { client, calls } = setup
+
+    const params: any = {}
+    const query: any = {}
+    if (setup.live) {
+      params.id = "01FCNDV6P870EA6S7TK1DSYDG0"
+    } else {
+      params.id = 'direct01'
+    }
+
+    const result: any = await client.direct({
+      path: 'v2/status_pages/{id}',
+      method: 'GET',
+      params,
+      query,
+    })
+
+    if (setup.live) {
+      if (!result.ok || result.status < 200 || result.status >= 300) {
+        return void liveMiss(t, LIVE_STRICT, 'Live load failed: ' + describeLive(result))
+      }
+      if (!(null != result.data)) {
+        return void liveMiss(t, LIVE_STRICT, 'Live load returned no data: ' + describeLive(result))
+      }
+    } else {
+      assert(result.ok === true)
+      assert(result.status === 200)
+      assert(null != result.data)
+      assert(result.data.id === 'direct01')
+      assert(calls.length === 1)
+      assert(calls[0].init.method === 'GET')
+      assert(calls[0].url.includes('direct01'))
+    }
+  })
+
   test('direct-list-status_page', async (t: any) => {
+    if (liveScenariosActive()) { t.skip('Covered by live operation scenarios'); return }
     const setup = directSetup([{ id: 'direct01' }, { id: 'direct02' }])
     if (maybeSkipControl(t, 'direct', 'direct-list-status_page', setup.live)) return
     const { client, calls } = setup
@@ -51,15 +95,11 @@ describe('StatusPageDirect', async () => {
     })
 
     if (setup.live) {
-      // Live mode is lenient: synthetic IDs frequently 4xx and the list-
-      // response shape varies wildly across public APIs. Skip rather than
-      // fail when the call doesn't return a usable list.
       if (!result.ok || result.status < 200 || result.status >= 300) {
-        return
+        return void liveMiss(t, LIVE_STRICT, 'Live list failed: ' + describeLive(result))
       }
-      const listArr = unwrapListData(result.data)
-      if (!Array.isArray(listArr)) {
-        return
+      if (!(Array.isArray(unwrapListData(result.data)))) {
+        return void liveMiss(t, LIVE_STRICT, 'Live list returned no list: ' + describeLive(result))
       }
     } else {
       assert(result.ok === true)
@@ -77,26 +117,39 @@ describe('StatusPageDirect', async () => {
 
 
 
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true
+
+function liveScenariosActive() { return false && process.env.INCIDENT_IO_TEST_LIVE === 'TRUE' }
 function directSetup(mockres?: any) {
   const calls: any[] = []
 
   const env = envOverride({
-    'INCIDENTIO_TEST_STATUS_PAGE_ENTID': {},
-    'INCIDENTIO_TEST_LIVE': 'FALSE',
+    'INCIDENT_IO_TEST_STATUS_PAGE_ENTID': {},
+    'INCIDENT_IO_TEST_LIVE': 'FALSE',
+    'INCIDENT_IO_APIKEY': '',
   })
 
-  const live = 'TRUE' === env.INCIDENTIO_TEST_LIVE
+  const live = 'TRUE' === env.INCIDENT_IO_TEST_LIVE
 
   if (live) {
-    const client = new IncidentIoSDK({
-    })
+    const transport = createLiveTransport()
+    // Merged so the generated fields win: sdk-test-control.json's
+    // test.client.options adds to the live client, it does not redirect it.
+    const client = new IncidentIoSDK(
+      Object.assign({}, liveClientOptions(), { system: { fetch: transport.fetch },
+      apikey: env.INCIDENT_IO_APIKEY,
+      }))
 
-    let idmap: any = env['INCIDENTIO_TEST_STATUS_PAGE_ENTID']
+    let idmap: any = env['INCIDENT_IO_TEST_STATUS_PAGE_ENTID']
     if ('string' === typeof idmap && idmap.startsWith('{')) {
       idmap = JSON.parse(idmap)
     }
 
-    return { client, calls, live, idmap }
+    return { client, calls, live, idmap, transport }
   }
 
   const mockFetch = async (url: string, init: any) => {

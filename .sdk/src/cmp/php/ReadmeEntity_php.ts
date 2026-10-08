@@ -1,5 +1,5 @@
 
-import { cmp, each, Content, canonToType, canonKey, entityIdField, opRequestShape } from '@voxgig/sdkgen'
+import { cmp, each, Content, canonToType, canonKey, canonScalarKey, entityIdField, opRequestShape, phpEntityAccessor, opNeedsAction, listMatchArg } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -12,7 +12,8 @@ import {
 // doc test EXECUTES runnable blocks, so a comment placeholder would not
 // parse).
 function phpLit(type: any, placeholder: string = 'example'): string {
-  const k = canonKey(type)
+  const k = canonScalarKey(type)
+  if ('NULL' === k) return 'null'
   if ('INTEGER' === k || 'NUMBER' === k) return '1'
   if ('BOOLEAN' === k) return 'true'
   if ('ARRAY' === k || 'OBJECT' === k) return '[]'
@@ -28,6 +29,7 @@ const OP_DESC: Record<string, { method: string, desc: string }> = {
   list:   { method: 'list(match)',   desc: 'List entities matching the criteria.' },
   create: { method: 'create(data)',  desc: 'Create a new entity with the given data.' },
   update: { method: 'update(data)',  desc: 'Update an existing entity.' },
+  patch:  { method: 'patch(data)',   desc: 'Change part of an existing entity.' },
   remove: { method: 'remove(match)', desc: 'Remove the matching entity.' },
 }
 
@@ -53,8 +55,9 @@ const ReadmeEntity = cmp(function ReadmeEntity(props: any) {
 
   publishedEntities.map((entity: any) => {
     const opnames = Object.keys(entity.op || {})
-    const fields = entity.fields || []
-    // Model-driven id key: null when this entity has no id-like field.
+    // An op that needs an action has no plain call to show.
+    const callable = opnames.filter((o: string) => !opNeedsAction(entity.op[o]))
+    const fields = Object.values(entity.fields || {})
     const idF = entityIdField(entity)
 
     Content(`
@@ -68,7 +71,7 @@ const ReadmeEntity = cmp(function ReadmeEntity(props: any) {
 `)
     }
 
-    Content(`Create an instance: \`$${entity.name} = $client->${entity.Name}();\`
+    Content(`Create an instance: \`$${entity.name} = $client->${phpEntityAccessor(entity.Name)}();\`
 
 `)
 
@@ -98,8 +101,8 @@ const ReadmeEntity = cmp(function ReadmeEntity(props: any) {
 `)
 
       each(fields, (field: any) => {
-        const desc = field.short || ''
-        Content(`| \`${field.name}\` | \`${canonToType(field.type, target.name)}\` | ${desc} |
+        const desc = field.sh || ''
+        Content(`| \`${field.n}\` | \`${canonToType(field.t, target.name)}\` | ${desc} |
 `)
       })
 
@@ -107,10 +110,7 @@ const ReadmeEntity = cmp(function ReadmeEntity(props: any) {
 `)
     }
 
-    if (opnames.includes('load')) {
-      // The id key plus every REQUIRED match key (parent path params like
-      // page_id) — the same shape the runtime resolves path params from, so
-      // the example always works.
+    if (callable.includes('load')) {
       const loadItems = opRequestShape(entity, 'load').items
         .filter((it: any) => !it.optional || it.name === idF)
         .sort((a: any, b: any) =>
@@ -123,25 +123,25 @@ const ReadmeEntity = cmp(function ReadmeEntity(props: any) {
       Content(`#### Example: Load
 
 \`\`\`php
-// load() returns the bare ${entity.Name} record (throws on error).
-$${entity.name} = $client->${entity.Name}()->load(${loadArg});
+// load() returns the ENTITY — call data_get() for the ${entity.Name} record (throws on error).
+$${entity.name} = $client->${phpEntityAccessor(entity.Name)}()->load(${loadArg});
 \`\`\`
 
 `)
     }
 
-    if (opnames.includes('list')) {
+    if (callable.includes('list')) {
       Content(`#### Example: List
 
 \`\`\`php
-// list() returns an array of ${entity.Name} records (throws on error).
-$${entity.name}s = $client->${entity.Name}()->list();
+// list() returns an array of ${entity.Name} entities, one per record (throws on error).
+$${entity.name}s = $client->${phpEntityAccessor(entity.Name)}()->list(${listMatchArg('php', entity)});
 \`\`\`
 
 `)
     }
 
-    if (opnames.includes('create')) {
+    if (callable.includes('create')) {
       // Members come from the SAME shape the runtime validates
       // (opRequestShape): every required member must appear — including a
       // required id and parent keys like page_id.
@@ -150,7 +150,7 @@ $${entity.name}s = $client->${entity.Name}()->list();
       Content(`#### Example: Create
 
 \`\`\`php
-$${entity.name} = $client->${entity.Name}()->create([
+$${entity.name} = $client->${phpEntityAccessor(entity.Name)}()->create([
 `)
       createItems.map((it: any) => {
         Content(`    "${it.name}" => null, // ${canonToType(it.type, target.name)}

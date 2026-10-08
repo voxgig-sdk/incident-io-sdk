@@ -4,28 +4,38 @@ main: kit: entity: ip_allowlist: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "allowlist"
-      req: true
-      type: "`$ARRAY`"
+  fields: {
+    allowlist: {
+      h: "Allowlist"
+      n: "allowlist"
+      r: true
+      sh: "A list of IP addresses or CIDR prefixes to allow"
+      t: "`$ARRAY`"
     }
-    {
-      name: "enabled"
-      req: true
-      type: "`$BOOLEAN`"
+    enabled: {
+      h: "Enabled"
+      n: "enabled"
+      r: true
+      sh: "Whether this IP allowlist is enabled or not"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "updated_at"
-      req: false
-      type: "`$STRING`"
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: false
+      sh: "The time this allowlist was last updated"
+      t: "`$STRING`"
     }
-    {
-      name: "version"
-      req: true
-      type: "`$INTEGER`"
+    version: {
+      fo: "int64"
+      h: "Version"
+      n: "version"
+      r: true
+      sh: "The version of this IP allowlist"
+      t: "`$INTEGER`"
     }
-  ]
+  }
 
   name: "ip_allowlist"
   op: {
@@ -33,13 +43,26 @@ main: kit: entity: ip_allowlist: {
       name: "load"
       points: [
         {
-          method: "GET"
-          orig: "/v1/ip_allowlists"
-          parts: [
-            "v1"
-            "ip_allowlists"
+          co: {
+            id: "GET /v1/ip_allowlists"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v1/ip_allowlists"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "ip_allowlists"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.ip_allowlist`"
           }
@@ -50,13 +73,31 @@ main: kit: entity: ip_allowlist: {
       name: "update"
       points: [
         {
-          method: "PUT"
-          orig: "/v1/ip_allowlists"
-          parts: [
-            "v1"
-            "ip_allowlists"
+          bf: [
+            "allowlist"
+            "enabled"
+            "version"
           ]
-          transform: {
+          co: {
+            id: "PUT /v1/ip_allowlists"
+            source: "openapi3"
+            version: 2
+          }
+          m: "PUT"
+          o: "/v1/ip_allowlists"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "ip_allowlists"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.ip_allowlist`"
           }

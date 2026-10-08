@@ -1,0 +1,51 @@
+{
+  "existing": {
+    "escalations_reassign_escalation_result_v2": {
+      "ESCALATIONS_REASSIGN_ESCALATION_RESULT_V200": {
+        "description": "s32",
+        "escalation_path_id": "ESCALATION_PATH01",
+        "resolve_original": true,
+        "title": "s35",
+        "user_ids": [],
+        "escalation_id": "ESCALATION01",
+        "id": "ESCALATIONS_REASSIGN_ESCALATION_RESULT_V200"
+      },
+      "ESCALATIONS_REASSIGN_ESCALATION_RESULT_V201": {
+        "description": "s64",
+        "escalation_path_id": "ESCALATION_PATH01",
+        "resolve_original": true,
+        "title": "s67",
+        "user_ids": [],
+        "escalation_id": "ESCALATION01",
+        "id": "ESCALATIONS_REASSIGN_ESCALATION_RESULT_V201"
+      },
+      "ESCALATIONS_REASSIGN_ESCALATION_RESULT_V202": {
+        "description": "s96",
+        "escalation_path_id": "ESCALATION_PATH01",
+        "resolve_original": true,
+        "title": "s99",
+        "user_ids": [],
+        "escalation_id": "ESCALATION01",
+        "id": "ESCALATIONS_REASSIGN_ESCALATION_RESULT_V202"
+      }
+    }
+  },
+  "new": {
+    "escalations_reassign_escalation_result_v2": {
+      "escalations_reassign_escalation_result_v2_ref01": {
+        "description": "sc8",
+        "escalation_path_id": "ESCALATION_PATH01",
+        "resolve_original": true,
+        "title": "scb",
+        "user_ids": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/escalations/{escalation_id}/actions/reassign": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

@@ -4,78 +4,129 @@ main: kit: entity: alert_source: {
 
   alias: field: {}
 
-  fields: [
-    {
-      name: "alert_events_url"
-      req: false
-      type: "`$STRING`"
+  fields: {
+    alert_events_url: {
+      h: "Alert Events Url"
+      n: "alert_events_url"
+      r: false
+      sh: "URL that can be used to send alert events to this source."
+      t: "`$STRING`"
     }
-    {
-      name: "auto_resolve_incident_alert"
-      req: false
-      type: "`$BOOLEAN`"
+    auto_resolve_incident_alerts: {
+      h: "Auto Resolve Incident Alerts"
+      n: "auto_resolve_incident_alerts"
+      r: false
+      sh: "Whether alerts from this source keep counting down to auto-resolve while attached to an incident."
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "auto_resolve_timeout_minute"
-      req: false
-      type: "`$INTEGER`"
+    auto_resolve_timeout_minutes: {
+      fo: "int64"
+      h: "Auto Resolve Timeout Minutes"
+      n: "auto_resolve_timeout_minutes"
+      r: false
+      sh: "When set, alerts from this source will automatically resolve after this many minutes."
+      t: "`$INTEGER`"
     }
-    {
-      name: "disabled"
-      req: false
-      type: "`$BOOLEAN`"
+    azure_devops_options: {
+      h: "Azure Devops Options"
+      n: "azure_devops_options"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "email_option"
-      req: true
-      type: "`$OBJECT`"
+    disabled: {
+      h: "Disabled"
+      n: "disabled"
+      r: false
+      sh: "For heartbeat sources, set to true to disable monitoring"
+      t: "`$BOOLEAN`"
     }
-    {
-      name: "heartbeat_option"
-      req: true
-      type: "`$OBJECT`"
+    email_options: {
+      h: "Email Options"
+      n: "email_options"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "http_custom_option"
-      req: true
-      type: "`$OBJECT`"
+    filter_condition_groups: {
+      h: "Filter Condition Groups"
+      n: "filter_condition_groups"
+      r: false
+      sh: "Conditions an incoming event must match to be ingested from this source, evaluated against the event's payload and this source's expressions."
+      t: "`$ARRAY`"
     }
-    {
-      name: "id"
-      req: true
-      type: "`$STRING`"
+    fixed_team_id: {
+      h: "Fixed Team Id"
+      n: "fixed_team_id"
+      r: false
+      sh: "When set, the team every alert from this source is attributed to."
+      t: "`$STRING`"
     }
-    {
-      name: "jira_option"
-      req: true
-      type: "`$OBJECT`"
+    heartbeat_options: {
+      h: "Heartbeat Options"
+      n: "heartbeat_options"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "name"
-      req: true
-      type: "`$STRING`"
+    http_custom_options: {
+      h: "Http Custom Options"
+      n: "http_custom_options"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "owning_team_id"
-      req: false
-      type: "`$ARRAY`"
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "The ID of this alert source"
+      t: "`$STRING`"
     }
-    {
-      name: "secret_token"
-      req: false
-      type: "`$STRING`"
+    jira_options: {
+      h: "Jira Options"
+      n: "jira_options"
+      r: true
+      t: "`$OBJECT`"
     }
-    {
-      name: "source_type"
-      req: true
-      type: "`$STRING`"
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "Unique name of the alert source"
+      t: "`$STRING`"
     }
-    {
-      name: "template"
-      req: true
-      type: "`$OBJECT`"
+    owning_team_ids: {
+      h: "Owning Team Ids"
+      n: "owning_team_ids"
+      r: false
+      sh: "IDs of teams that own this alert source"
+      t: "`$ARRAY`"
     }
-  ]
+    rate_limit_sharding: {
+      h: "Rate Limit Sharding"
+      n: "rate_limit_sharding"
+      r: true
+      sh: "Controls how this source's ingest rate limit is split into buckets."
+      t: "`$OBJECT`"
+    }
+    secret_token: {
+      h: "Secret Token"
+      n: "secret_token"
+      r: false
+      sh: "Secret token used to authenticate this source, if applicable."
+      t: "`$STRING`"
+    }
+    source_type: {
+      h: "Source Type"
+      n: "source_type"
+      r: true
+      sh: "Type of alert source"
+      t: "`$STRING`"
+    }
+    template: {
+      h: "Template"
+      n: "template"
+      r: true
+      t: "`$OBJECT`"
+    }
+  }
 
   id: {
     field: "id"
@@ -88,13 +139,42 @@ main: kit: entity: alert_source: {
       name: "create"
       points: [
         {
-          method: "POST"
-          orig: "/v2/alert_sources"
-          parts: [
-            "v2"
-            "alert_sources"
+          bf: [
+            "auto_resolve_incident_alerts"
+            "auto_resolve_timeout_minutes"
+            "azure_devops_options"
+            "email_options"
+            "filter_condition_groups"
+            "fixed_team_id"
+            "heartbeat_options"
+            "http_custom_options"
+            "jira_options"
+            "name"
+            "owning_team_ids"
+            "rate_limit_sharding"
+            "source_type"
+            "template"
           ]
-          transform: {
+          co: {
+            id: "POST /v2/alert_sources"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/alert_sources"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_sources"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_source`"
           }
@@ -105,13 +185,26 @@ main: kit: entity: alert_source: {
       name: "list"
       points: [
         {
-          method: "GET"
-          orig: "/v2/alert_sources"
-          parts: [
-            "v2"
-            "alert_sources"
+          co: {
+            id: "GET /v2/alert_sources"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v2/alert_sources"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_sources"
+            }
           ]
-          transform: {
+          t: {
             req: "`reqdata`"
             res: "`body.alert_sources`"
           }
@@ -122,31 +215,46 @@ main: kit: entity: alert_source: {
       name: "load"
       points: [
         {
-          args: {
+          co: {
+            id: "GET /v2/alert_sources/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01GW2G3V0S59R238FAHPDS1R66"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "GET"
-          orig: "/v2/alert_sources/{id}"
-          parts: [
-            "v2"
-            "alert_sources"
-            "{id}"
-          ]
-          select: {
+          m: "GET"
+          o: "/v2/alert_sources/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_sources"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_source`"
           }
@@ -157,31 +265,42 @@ main: kit: entity: alert_source: {
       name: "remove"
       points: [
         {
-          args: {
+          co: {
+            id: "DELETE /v2/alert_sources/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01GW2G3V0S59R238FAHPDS1R66"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "DELETE"
-          orig: "/v2/alert_sources/{id}"
-          parts: [
-            "v2"
-            "alert_sources"
-            "{id}"
-          ]
-          select: {
+          m: "DELETE"
+          o: "/v2/alert_sources/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_sources"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body`"
           }
@@ -192,31 +311,62 @@ main: kit: entity: alert_source: {
       name: "update"
       points: [
         {
-          args: {
+          bf: [
+            "auto_resolve_incident_alerts"
+            "auto_resolve_timeout_minutes"
+            "azure_devops_options"
+            "disabled"
+            "email_options"
+            "filter_condition_groups"
+            "fixed_team_id"
+            "heartbeat_options"
+            "http_custom_options"
+            "jira_options"
+            "name"
+            "owning_team_ids"
+            "rate_limit_sharding"
+            "template"
+          ]
+          co: {
+            id: "PUT /v2/alert_sources/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
             params: [
               {
-                example: "01GW2G3V0S59R238FAHPDS1R66"
-                kind: "param"
-                name: "id"
-                orig: "id"
-                reqd: true
-                type: "`$STRING`"
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
               }
             ]
           }
-          method: "PUT"
-          orig: "/v2/alert_sources/{id}"
-          parts: [
-            "v2"
-            "alert_sources"
-            "{id}"
-          ]
-          select: {
+          m: "PUT"
+          o: "/v2/alert_sources/{id}"
+          q: {
             exist: [
               "id"
             ]
           }
-          transform: {
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_sources"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
             req: "`reqdata`"
             res: "`body.alert_source`"
           }

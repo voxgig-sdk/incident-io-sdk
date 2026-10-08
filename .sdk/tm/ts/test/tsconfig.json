@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "module": "nodenext",
     "noEmitOnError": true,
@@ -10,5 +11,6 @@
     "strict": true,
     "target": "ES2022",
     "types": ["node"]
-  }
+  },
+  "references": [{ "path": "../src" }]
 }

@@ -25,5 +25,22 @@
         "resource": {}
       }
     }
+  },
+  "requests": {
+    "POST /v1/incident_attachments": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/incident_attachments": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v1/incident_attachments/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }
