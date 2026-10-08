@@ -11,25 +11,25 @@ def: 'incident-io-openapi.json'
 
 
 # API Information
-@"api/api-info.aontu"
+@"./api/api-info.aontu"
 
 
 # SDK Configuration.
-@"config.aontu"
+@"./config.aontu"
 
 
 # SDK Entities
-@"entity/entity-index.aontu"
+@"./entity/entity-index.aontu"
 
 
 # SDK Features.
-@"feature/feature-index.aontu"
+@"./feature/feature-index.aontu"
  
 
 # SDK Targets.
-@"target/target-index.aontu"
+@"./target/target-index.aontu"
 
 
 # Operation workflows.
-@"flow/flow-index.aontu"
+@"./flow/flow-index.aontu"
 

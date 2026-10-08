@@ -8,10 +8,10 @@
 # the prospect working file; revisit once it is fixed upstream.
 
 
-@"ts.aontu"
-@"js.aontu"
-@"py.aontu"
-@"php.aontu"
-@"lua.aontu"
-@"go-mcp.aontu"
-@"go.aontu"
+@"./ts.aontu"
+@"./js.aontu"
+@"./py.aontu"
+@"./php.aontu"
+@"./lua.aontu"
+@"./go-mcp.aontu"
+@"./go.aontu"
