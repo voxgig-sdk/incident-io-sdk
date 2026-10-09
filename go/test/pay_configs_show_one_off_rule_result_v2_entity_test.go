@@ -66,6 +66,7 @@ func TestPayConfigsShowOneOffRuleResultV2Entity(t *testing.T) {
 			liveMiss(t, pay_configs_show_one_off_rule_result_v2EntityLiveStrict, "Live entity test blocked: %s", "the flow loads a pay_configs_show_one_off_rule_result_v2 record it has no list to find")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		payConfigsShowOneOffRuleResultV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.pay_configs_show_one_off_rule_result_v2")))
@@ -81,6 +82,11 @@ func TestPayConfigsShowOneOffRuleResultV2Entity(t *testing.T) {
 		payConfigsShowOneOffRuleResultV2Ref01Ent := client.PayConfigsShowOneOffRuleResultV2(nil)
 		payConfigsShowOneOffRuleResultV2Ref01MatchDt0 := map[string]any{
 			"id": payConfigsShowOneOffRuleResultV2Ref01Data["id"],
+		}
+		if v := setup.idmap["pay_config_id"]; v != nil {
+			payConfigsShowOneOffRuleResultV2Ref01MatchDt0["pay_config_id"] = v
+		} else {
+			payConfigsShowOneOffRuleResultV2Ref01MatchDt0["pay_config_id"] = setup.idmap["pay_config01"]
 		}
 		payConfigsShowOneOffRuleResultV2Ref01DataDt0Loaded, err := payConfigsShowOneOffRuleResultV2Ref01Ent.Load(payConfigsShowOneOffRuleResultV2Ref01MatchDt0, nil)
 		if err != nil {

@@ -70,6 +70,7 @@ func TestPayReportsPublishResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		payReportsPublishResultV2Ref01Ent := client.PayReportsPublishResultV2(nil)

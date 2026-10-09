@@ -201,6 +201,7 @@ func TestIncidentFormEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		incidentFormRef01Ent := client.IncidentForm(nil)

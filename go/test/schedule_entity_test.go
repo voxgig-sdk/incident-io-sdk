@@ -201,6 +201,7 @@ func TestScheduleEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		scheduleRef01Ent := client.Schedule(nil)

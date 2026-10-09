@@ -200,6 +200,7 @@ func TestWorkflowRunEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 		if setup.live {
 			liveExisting(t, workflow_runEntityLiveStrict, setup.data, "workflow_run", func() (any, error) {
 				return client.WorkflowRun(nil).List(map[string]any{}, nil)

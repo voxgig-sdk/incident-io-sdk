@@ -204,6 +204,7 @@ func TestPostmortemDocumentEntity(t *testing.T) {
 			liveMiss(t, postmortem_documentEntityLiveStrict, "Live entity test blocked: %s", "the flow updates a postmortem_document record it did not create")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		postmortemDocumentRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.postmortem_document")))

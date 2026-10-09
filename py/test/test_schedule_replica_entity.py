@@ -67,6 +67,7 @@ class TestScheduleReplicaEntity:
         schedule_replica_ref01_match_dt0 = {
             "id": schedule_replica_ref01_data["id"],
         }
+        schedule_replica_ref01_match_dt0["schedule_id"] = setup["idmap"].get("schedule_id") or setup["idmap"].get("schedule01")
         schedule_replica_ref01_data_dt0_loaded = schedule_replica_ref01_ent.load(schedule_replica_ref01_match_dt0, None)
         schedule_replica_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(schedule_replica_ref01_data_dt0_loaded))
         assert schedule_replica_ref01_data_dt0_load_result is not None

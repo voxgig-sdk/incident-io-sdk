@@ -201,6 +201,7 @@ func TestMaintenanceWindowEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		maintenanceWindowRef01Ent := client.MaintenanceWindow(nil)

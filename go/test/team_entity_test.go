@@ -200,6 +200,7 @@ func TestTeamEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 		if setup.live {
 			liveExisting(t, teamEntityLiveStrict, setup.data, "team", func() (any, error) {
 				return client.Team(nil).List(map[string]any{}, nil)

@@ -70,6 +70,7 @@ func TestPayConfigsCreateWeeklyRuleResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		payConfigsCreateWeeklyRuleResultV2Ref01Ent := client.PayConfigsCreateWeeklyRuleResultV2(nil)

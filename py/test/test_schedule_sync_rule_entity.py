@@ -86,6 +86,7 @@ class TestScheduleSyncRuleEntity:
         schedule_sync_rule_ref01_match_dt0 = {
             "id": schedule_sync_rule_ref01_data["id"],
         }
+        schedule_sync_rule_ref01_match_dt0["schedule_id"] = setup["idmap"].get("schedule_id") or setup["idmap"].get("schedule01")
         schedule_sync_rule_ref01_data_dt0_loaded = schedule_sync_rule_ref01_ent.load(schedule_sync_rule_ref01_match_dt0, None)
         schedule_sync_rule_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(schedule_sync_rule_ref01_data_dt0_loaded))
         assert schedule_sync_rule_ref01_data_dt0_load_result is not None

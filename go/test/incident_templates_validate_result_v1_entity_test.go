@@ -63,6 +63,7 @@ func TestIncidentTemplatesValidateResultV1Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		incidentTemplatesValidateResultV1Ref01Ent := client.IncidentTemplatesValidateResultV1(nil)

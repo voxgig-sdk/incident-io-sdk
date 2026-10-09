@@ -201,6 +201,7 @@ func TestIncidentTimelineItemEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		incidentTimelineItemRef01Ent := client.IncidentTimelineItem(nil)

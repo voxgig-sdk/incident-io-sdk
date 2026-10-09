@@ -70,6 +70,7 @@ func TestCallRoutesListAllowedCallersResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		callRoutesListAllowedCallersResultV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.call_routes_list_allowed_callers_result_v2")))

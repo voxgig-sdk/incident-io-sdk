@@ -70,6 +70,7 @@ func TestAlertsAddTagsResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		alertsAddTagsResultV2Ref01Ent := client.AlertsAddTagsResultV2(nil)

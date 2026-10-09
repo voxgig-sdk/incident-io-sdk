@@ -201,6 +201,7 @@ func TestAlertAttributeEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		alertAttributeRef01Ent := client.AlertAttribute(nil)

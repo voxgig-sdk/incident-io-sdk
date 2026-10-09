@@ -63,6 +63,7 @@ func TestIncidentTeamMembershipsV1Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		incidentTeamMembershipsV1Ref01Ent := client.IncidentTeamMembershipsV1(nil)

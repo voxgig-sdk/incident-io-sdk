@@ -200,6 +200,7 @@ func TestIncidentTypeEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 		if setup.live {
 			liveExisting(t, incident_typeEntityLiveStrict, setup.data, "incident_type", func() (any, error) {
 				return client.IncidentType(nil).List(map[string]any{}, nil)

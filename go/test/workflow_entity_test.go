@@ -201,6 +201,7 @@ func TestWorkflowEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		workflowRef01Ent := client.Workflow(nil)

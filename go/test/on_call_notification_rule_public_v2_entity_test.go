@@ -70,6 +70,7 @@ func TestOnCallNotificationRulePublicV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		onCallNotificationRulePublicV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.on_call_notification_rule_public_v2")))

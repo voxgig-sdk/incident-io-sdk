@@ -201,6 +201,7 @@ func TestFollowUpEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		followUpRef01Ent := client.FollowUp(nil)

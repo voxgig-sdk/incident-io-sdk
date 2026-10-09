@@ -70,6 +70,7 @@ func TestScheduleEntriesListPayloadV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		scheduleEntriesListPayloadV2Ref01Ent := client.ScheduleEntriesListPayloadV2(nil)

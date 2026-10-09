@@ -70,6 +70,7 @@ func TestPolicyFindingsDismissResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		policyFindingsDismissResultV2Ref01Ent := client.PolicyFindingsDismissResultV2(nil)

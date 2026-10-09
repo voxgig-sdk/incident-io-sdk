@@ -200,6 +200,7 @@ func TestIncidentActivityLogEntryEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		incidentActivityLogEntryRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.incident_activity_log_entry")))

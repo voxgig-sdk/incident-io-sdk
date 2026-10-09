@@ -74,6 +74,7 @@ func TestPayConfigsUpdateOneOffRuleResultV2Entity(t *testing.T) {
 			liveMiss(t, pay_configs_update_one_off_rule_result_v2EntityLiveStrict, "Live entity test blocked: %s", "the flow updates a pay_configs_update_one_off_rule_result_v2 record it did not create")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		payConfigsUpdateOneOffRuleResultV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.pay_configs_update_one_off_rule_result_v2")))

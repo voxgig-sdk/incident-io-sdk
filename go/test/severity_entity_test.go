@@ -201,6 +201,7 @@ func TestSeverityEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		severityRef01Ent := client.Severity(nil)

@@ -67,6 +67,7 @@ class TestPayConfigsShowWeeklyRuleResultV2Entity:
         pay_configs_show_weekly_rule_result_v2_ref01_match_dt0 = {
             "id": pay_configs_show_weekly_rule_result_v2_ref01_data["id"],
         }
+        pay_configs_show_weekly_rule_result_v2_ref01_match_dt0["pay_config_id"] = setup["idmap"].get("pay_config_id") or setup["idmap"].get("pay_config01")
         pay_configs_show_weekly_rule_result_v2_ref01_data_dt0_loaded = pay_configs_show_weekly_rule_result_v2_ref01_ent.load(pay_configs_show_weekly_rule_result_v2_ref01_match_dt0, None)
         pay_configs_show_weekly_rule_result_v2_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(pay_configs_show_weekly_rule_result_v2_ref01_data_dt0_loaded))
         assert pay_configs_show_weekly_rule_result_v2_ref01_data_dt0_load_result is not None

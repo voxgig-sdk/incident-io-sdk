@@ -70,6 +70,7 @@ class PayConfigsShowOneOffRuleResultV2EntityTest extends TestCase
         $pay_configs_show_one_off_rule_result_v2_ref01_match_dt0 = [
             "id" => $pay_configs_show_one_off_rule_result_v2_ref01_data["id"],
         ];
+        $pay_configs_show_one_off_rule_result_v2_ref01_match_dt0["pay_config_id"] = $setup["idmap"]["pay_config_id"] ?? $setup["idmap"]["pay_config01"] ?? null;
         $pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded = $pay_configs_show_one_off_rule_result_v2_ref01_ent->load($pay_configs_show_one_off_rule_result_v2_ref01_match_dt0, null);
         $pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_load_result = Helpers::to_map(is_object($pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded) && method_exists($pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded, 'data_get') ? $pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded->data_get() : $pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded);
         $this->assertNotNull($pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_load_result);

@@ -63,6 +63,7 @@ func TestAlertSourcesV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		alertSourcesV2Ref01Ent := client.AlertSourcesV2(nil)

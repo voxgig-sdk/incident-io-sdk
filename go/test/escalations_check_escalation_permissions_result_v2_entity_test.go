@@ -70,6 +70,7 @@ func TestEscalationsCheckEscalationPermissionsResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		escalationsCheckEscalationPermissionsResultV2Ref01Ent := client.EscalationsCheckEscalationPermissionsResultV2(nil)

@@ -77,7 +77,7 @@ describe('CallRoutesUpdateAllowedCallerResultV2Entity', async () => {
     const call_routes_update_allowed_caller_result_v2_ref01_ent = client.CallRoutesUpdateAllowedCallerResultV2()
     const call_routes_update_allowed_caller_result_v2_ref01_data_up0: any = {}
     call_routes_update_allowed_caller_result_v2_ref01_data_up0.id = call_routes_update_allowed_caller_result_v2_ref01_data.id
-    call_routes_update_allowed_caller_result_v2_ref01_data_up0 ['call_route_id'] = setup.idmap['call_route_id']
+    call_routes_update_allowed_caller_result_v2_ref01_data_up0['call_route_id'] = setup.idmap['call_route_id'] ?? setup.idmap['call_route01']
 
     const call_routes_update_allowed_caller_result_v2_ref01_markdef_up0 = { name: 'name', value: 'Mark01-call_routes_update_allowed_caller_result_v2_ref01_' + setup.now }
     ;(call_routes_update_allowed_caller_result_v2_ref01_data_up0 as any)[call_routes_update_allowed_caller_result_v2_ref01_markdef_up0.name] = call_routes_update_allowed_caller_result_v2_ref01_markdef_up0.value

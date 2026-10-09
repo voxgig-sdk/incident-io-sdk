@@ -93,6 +93,7 @@ class ScheduleSyncRuleEntityTest extends TestCase
         $schedule_sync_rule_ref01_match_dt0 = [
             "id" => $schedule_sync_rule_ref01_data["id"],
         ];
+        $schedule_sync_rule_ref01_match_dt0["schedule_id"] = $setup["idmap"]["schedule_id"] ?? $setup["idmap"]["schedule01"] ?? null;
         $schedule_sync_rule_ref01_data_dt0_loaded = $schedule_sync_rule_ref01_ent->load($schedule_sync_rule_ref01_match_dt0, null);
         $schedule_sync_rule_ref01_data_dt0_load_result = Helpers::to_map(is_object($schedule_sync_rule_ref01_data_dt0_loaded) && method_exists($schedule_sync_rule_ref01_data_dt0_loaded, 'data_get') ? $schedule_sync_rule_ref01_data_dt0_loaded->data_get() : $schedule_sync_rule_ref01_data_dt0_loaded);
         $this->assertNotNull($schedule_sync_rule_ref01_data_dt0_load_result);

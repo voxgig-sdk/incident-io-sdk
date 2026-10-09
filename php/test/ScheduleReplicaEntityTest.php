@@ -70,6 +70,7 @@ class ScheduleReplicaEntityTest extends TestCase
         $schedule_replica_ref01_match_dt0 = [
             "id" => $schedule_replica_ref01_data["id"],
         ];
+        $schedule_replica_ref01_match_dt0["schedule_id"] = $setup["idmap"]["schedule_id"] ?? $setup["idmap"]["schedule01"] ?? null;
         $schedule_replica_ref01_data_dt0_loaded = $schedule_replica_ref01_ent->load($schedule_replica_ref01_match_dt0, null);
         $schedule_replica_ref01_data_dt0_load_result = Helpers::to_map(is_object($schedule_replica_ref01_data_dt0_loaded) && method_exists($schedule_replica_ref01_data_dt0_loaded, 'data_get') ? $schedule_replica_ref01_data_dt0_loaded->data_get() : $schedule_replica_ref01_data_dt0_loaded);
         $this->assertNotNull($schedule_replica_ref01_data_dt0_load_result);

@@ -66,6 +66,7 @@ func TestStatusPageStructureEntity(t *testing.T) {
 			liveMiss(t, status_page_structureEntityLiveStrict, "Live entity test blocked: %s", "the flow loads a status_page_structure record it has no list to find")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		statusPageStructureRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.status_page_structure")))

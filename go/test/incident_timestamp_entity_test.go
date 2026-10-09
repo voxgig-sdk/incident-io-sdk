@@ -200,6 +200,7 @@ func TestIncidentTimestampEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 		if setup.live {
 			liveExisting(t, incident_timestampEntityLiveStrict, setup.data, "incident_timestamp", func() (any, error) {
 				return client.IncidentTimestamp(nil).List(map[string]any{}, nil)

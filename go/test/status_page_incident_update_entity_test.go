@@ -63,6 +63,7 @@ func TestStatusPageIncidentUpdateEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		statusPageIncidentUpdateRef01Ent := client.StatusPageIncidentUpdate(nil)

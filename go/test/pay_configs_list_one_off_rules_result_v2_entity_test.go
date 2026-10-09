@@ -70,6 +70,7 @@ func TestPayConfigsListOneOffRulesResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		payConfigsListOneOffRulesResultV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.pay_configs_list_one_off_rules_result_v2")))

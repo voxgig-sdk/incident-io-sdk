@@ -200,6 +200,7 @@ func TestSchedulesShowOverrideResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		schedulesShowOverrideResultV2Ref01Ent := client.SchedulesShowOverrideResultV2(nil)

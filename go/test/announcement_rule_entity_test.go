@@ -201,6 +201,7 @@ func TestAnnouncementRuleEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		announcementRuleRef01Ent := client.AnnouncementRule(nil)

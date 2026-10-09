@@ -81,7 +81,7 @@ const utility_1 = require("../../utility");
         const schedule_sync_rule_ref01_ent = client.ScheduleSyncRule();
         const schedule_sync_rule_ref01_data_up0 = {};
         schedule_sync_rule_ref01_data_up0.id = schedule_sync_rule_ref01_data.id;
-        schedule_sync_rule_ref01_data_up0['schedule_id'] = setup.idmap['schedule_id'];
+        schedule_sync_rule_ref01_data_up0['schedule_id'] = setup.idmap['schedule_id'] ?? setup.idmap['schedule01'];
         const schedule_sync_rule_ref01_markdef_up0 = { name: 'created_at', value: 'Mark01-schedule_sync_rule_ref01_' + setup.now };
         schedule_sync_rule_ref01_data_up0[schedule_sync_rule_ref01_markdef_up0.name] = schedule_sync_rule_ref01_markdef_up0.value;
         const schedule_sync_rule_ref01_resdata_up0 = (await schedule_sync_rule_ref01_ent.update(schedule_sync_rule_ref01_data_up0)).data();
@@ -90,6 +90,7 @@ const utility_1 = require("../../utility");
         // LOAD
         const schedule_sync_rule_ref01_match_dt0 = {};
         schedule_sync_rule_ref01_match_dt0.id = schedule_sync_rule_ref01_data.id;
+        schedule_sync_rule_ref01_match_dt0['schedule_id'] = setup.idmap['schedule_id'] ?? setup.idmap['schedule01'];
         const schedule_sync_rule_ref01_data_dt0 = (await schedule_sync_rule_ref01_ent.load(schedule_sync_rule_ref01_match_dt0)).data();
         (0, node_assert_1.default)(schedule_sync_rule_ref01_data_dt0.id === schedule_sync_rule_ref01_data.id);
     });

@@ -70,6 +70,7 @@ func TestCallRoutesCreateOptionResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		callRoutesCreateOptionResultV2Ref01Ent := client.CallRoutesCreateOptionResultV2(nil)

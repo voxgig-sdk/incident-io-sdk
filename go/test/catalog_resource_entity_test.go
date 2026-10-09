@@ -200,6 +200,7 @@ func TestCatalogResourceEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		catalogResourceRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.catalog_resource")))

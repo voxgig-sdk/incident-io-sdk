@@ -201,6 +201,7 @@ func TestScheduleSyncTargetEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		scheduleSyncTargetRef01Ent := client.ScheduleSyncTarget(nil)

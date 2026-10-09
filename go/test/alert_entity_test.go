@@ -200,6 +200,7 @@ func TestAlertEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 		if setup.live {
 			liveExisting(t, alertEntityLiveStrict, setup.data, "alert", func() (any, error) {
 				return client.Alert(nil).List(map[string]any{}, nil)

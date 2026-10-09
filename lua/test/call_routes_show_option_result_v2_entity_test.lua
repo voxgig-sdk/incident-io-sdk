@@ -62,6 +62,7 @@ describe("CallRoutesShowOptionResultV2Entity", function()
     local call_routes_show_option_result_v2_ref01_match_dt0 = {
       id = call_routes_show_option_result_v2_ref01_data["id"],
     }
+    call_routes_show_option_result_v2_ref01_match_dt0["call_route_id"] = setup.idmap["call_route_id"] or setup.idmap["call_route01"]
     local call_routes_show_option_result_v2_ref01_data_dt0_loaded, err = call_routes_show_option_result_v2_ref01_ent:load(call_routes_show_option_result_v2_ref01_match_dt0, nil)
     assert.is_nil(err)
     local call_routes_show_option_result_v2_ref01_data_dt0_load_result = helpers.to_map(type(call_routes_show_option_result_v2_ref01_data_dt0_loaded) == 'table' and call_routes_show_option_result_v2_ref01_data_dt0_loaded.data_get and call_routes_show_option_result_v2_ref01_data_dt0_loaded:data_get() or call_routes_show_option_result_v2_ref01_data_dt0_loaded)

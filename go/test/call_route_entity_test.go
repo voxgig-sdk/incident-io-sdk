@@ -204,6 +204,7 @@ func TestCallRouteEntity(t *testing.T) {
 			liveMiss(t, call_routeEntityLiveStrict, "Live entity test blocked: %s", "the flow updates a call_route record it did not create")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		callRouteRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.call_route")))

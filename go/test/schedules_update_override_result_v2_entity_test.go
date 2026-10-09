@@ -67,6 +67,7 @@ func TestSchedulesUpdateOverrideResultV2Entity(t *testing.T) {
 			liveMiss(t, schedules_update_override_result_v2EntityLiveStrict, "Live entity test blocked: %s", "the flow updates a schedules_update_override_result_v2 record it did not create")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		schedulesUpdateOverrideResultV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.schedules_update_override_result_v2")))

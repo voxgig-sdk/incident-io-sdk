@@ -66,6 +66,7 @@ func TestScheduleReplicaEntity(t *testing.T) {
 			liveMiss(t, schedule_replicaEntityLiveStrict, "Live entity test blocked: %s", "the flow loads a schedule_replica record it has no list to find")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		scheduleReplicaRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.schedule_replica")))
@@ -81,6 +82,11 @@ func TestScheduleReplicaEntity(t *testing.T) {
 		scheduleReplicaRef01Ent := client.ScheduleReplica(nil)
 		scheduleReplicaRef01MatchDt0 := map[string]any{
 			"id": scheduleReplicaRef01Data["id"],
+		}
+		if v := setup.idmap["schedule_id"]; v != nil {
+			scheduleReplicaRef01MatchDt0["schedule_id"] = v
+		} else {
+			scheduleReplicaRef01MatchDt0["schedule_id"] = setup.idmap["schedule01"]
 		}
 		scheduleReplicaRef01DataDt0Loaded, err := scheduleReplicaRef01Ent.Load(scheduleReplicaRef01MatchDt0, nil)
 		if err != nil {

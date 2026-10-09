@@ -67,6 +67,7 @@ class TestCallRoutesShowAllowedCallerResultV2Entity:
         call_routes_show_allowed_caller_result_v2_ref01_match_dt0 = {
             "id": call_routes_show_allowed_caller_result_v2_ref01_data["id"],
         }
+        call_routes_show_allowed_caller_result_v2_ref01_match_dt0["call_route_id"] = setup["idmap"].get("call_route_id") or setup["idmap"].get("call_route01")
         call_routes_show_allowed_caller_result_v2_ref01_data_dt0_loaded = call_routes_show_allowed_caller_result_v2_ref01_ent.load(call_routes_show_allowed_caller_result_v2_ref01_match_dt0, None)
         call_routes_show_allowed_caller_result_v2_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(call_routes_show_allowed_caller_result_v2_ref01_data_dt0_loaded))
         assert call_routes_show_allowed_caller_result_v2_ref01_data_dt0_load_result is not None

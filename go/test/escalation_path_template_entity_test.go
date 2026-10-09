@@ -201,6 +201,7 @@ func TestEscalationPathTemplateEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		escalationPathTemplateRef01Ent := client.EscalationPathTemplate(nil)

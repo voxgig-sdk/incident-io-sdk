@@ -70,6 +70,7 @@ func TestEscalationsReassignEscalationResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		escalationsReassignEscalationResultV2Ref01Ent := client.EscalationsReassignEscalationResultV2(nil)

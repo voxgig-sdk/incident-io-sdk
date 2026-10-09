@@ -2534,7 +2534,7 @@ $call_routes_v2 = $client->CallRoutesV2();
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
 
 ```php
-$result = $client->CallRoutesV2()->remove(["call_route_id" => "call_route_id", "id" => "id"]);
+$result = $client->CallRoutesV2()->remove(["id" => "call_routes_v2_id", "call_route_id" => "call_route_id"]);
 ```
 
 ### Common Methods
@@ -4288,7 +4288,7 @@ $results = $client->IncidentAttachment()->list();
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
 
 ```php
-$result = $client->IncidentAttachment()->remove(["id" => "id"]);
+$result = $client->IncidentAttachment()->remove(["id" => "incident_attachment_id"]);
 ```
 
 ### Common Methods
@@ -6431,7 +6431,7 @@ $pay_configs_v2 = $client->PayConfigsV2();
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
 
 ```php
-$result = $client->PayConfigsV2()->remove(["id" => "id", "pay_config_id" => "pay_config_id"]);
+$result = $client->PayConfigsV2()->remove(["id" => "pay_configs_v2_id", "pay_config_id" => "pay_config_id"]);
 ```
 
 ### Common Methods
@@ -6823,7 +6823,7 @@ $policies_v2 = $client->PoliciesV2();
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
 
 ```php
-$result = $client->PoliciesV2()->remove(["id" => "id"]);
+$result = $client->PoliciesV2()->remove(["id" => "policies_v2_id"]);
 ```
 
 ### Common Methods

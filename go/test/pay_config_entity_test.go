@@ -201,6 +201,7 @@ func TestPayConfigEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		payConfigRef01Ent := client.PayConfig(nil)

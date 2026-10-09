@@ -201,6 +201,7 @@ func TestAnnouncementTemplateEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		announcementTemplateRef01Ent := client.AnnouncementTemplate(nil)

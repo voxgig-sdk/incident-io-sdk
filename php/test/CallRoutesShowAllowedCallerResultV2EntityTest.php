@@ -70,6 +70,7 @@ class CallRoutesShowAllowedCallerResultV2EntityTest extends TestCase
         $call_routes_show_allowed_caller_result_v2_ref01_match_dt0 = [
             "id" => $call_routes_show_allowed_caller_result_v2_ref01_data["id"],
         ];
+        $call_routes_show_allowed_caller_result_v2_ref01_match_dt0["call_route_id"] = $setup["idmap"]["call_route_id"] ?? $setup["idmap"]["call_route01"] ?? null;
         $call_routes_show_allowed_caller_result_v2_ref01_data_dt0_loaded = $call_routes_show_allowed_caller_result_v2_ref01_ent->load($call_routes_show_allowed_caller_result_v2_ref01_match_dt0, null);
         $call_routes_show_allowed_caller_result_v2_ref01_data_dt0_load_result = Helpers::to_map(is_object($call_routes_show_allowed_caller_result_v2_ref01_data_dt0_loaded) && method_exists($call_routes_show_allowed_caller_result_v2_ref01_data_dt0_loaded, 'data_get') ? $call_routes_show_allowed_caller_result_v2_ref01_data_dt0_loaded->data_get() : $call_routes_show_allowed_caller_result_v2_ref01_data_dt0_loaded);
         $this->assertNotNull($call_routes_show_allowed_caller_result_v2_ref01_data_dt0_load_result);

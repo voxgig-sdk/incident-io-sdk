@@ -200,6 +200,7 @@ func TestPayReportEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		payReportRef01Ent := client.PayReport(nil)

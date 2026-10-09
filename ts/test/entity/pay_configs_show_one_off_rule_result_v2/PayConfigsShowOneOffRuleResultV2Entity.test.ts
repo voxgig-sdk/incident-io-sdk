@@ -77,6 +77,7 @@ describe('PayConfigsShowOneOffRuleResultV2Entity', async () => {
     const pay_configs_show_one_off_rule_result_v2_ref01_ent = client.PayConfigsShowOneOffRuleResultV2()
     const pay_configs_show_one_off_rule_result_v2_ref01_match_dt0: any = {}
     pay_configs_show_one_off_rule_result_v2_ref01_match_dt0.id = pay_configs_show_one_off_rule_result_v2_ref01_data.id
+    pay_configs_show_one_off_rule_result_v2_ref01_match_dt0['pay_config_id'] = setup.idmap['pay_config_id'] ?? setup.idmap['pay_config01']
     const pay_configs_show_one_off_rule_result_v2_ref01_data_dt0 = (await pay_configs_show_one_off_rule_result_v2_ref01_ent.load(pay_configs_show_one_off_rule_result_v2_ref01_match_dt0)).data()
     assert(pay_configs_show_one_off_rule_result_v2_ref01_data_dt0.id === pay_configs_show_one_off_rule_result_v2_ref01_data.id)
 

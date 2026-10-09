@@ -201,6 +201,7 @@ func TestActionEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		actionRef01Ent := client.Action(nil)

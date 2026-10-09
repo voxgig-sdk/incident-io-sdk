@@ -62,6 +62,7 @@ describe("PayConfigsShowOneOffRuleResultV2Entity", function()
     local pay_configs_show_one_off_rule_result_v2_ref01_match_dt0 = {
       id = pay_configs_show_one_off_rule_result_v2_ref01_data["id"],
     }
+    pay_configs_show_one_off_rule_result_v2_ref01_match_dt0["pay_config_id"] = setup.idmap["pay_config_id"] or setup.idmap["pay_config01"]
     local pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded, err = pay_configs_show_one_off_rule_result_v2_ref01_ent:load(pay_configs_show_one_off_rule_result_v2_ref01_match_dt0, nil)
     assert.is_nil(err)
     local pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_load_result = helpers.to_map(type(pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded) == 'table' and pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded.data_get and pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded:data_get() or pay_configs_show_one_off_rule_result_v2_ref01_data_dt0_loaded)

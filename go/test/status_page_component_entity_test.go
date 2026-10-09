@@ -201,6 +201,7 @@ func TestStatusPageComponentEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		statusPageComponentRef01Ent := client.StatusPageComponent(nil)

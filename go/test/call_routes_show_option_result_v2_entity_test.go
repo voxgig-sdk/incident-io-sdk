@@ -66,6 +66,7 @@ func TestCallRoutesShowOptionResultV2Entity(t *testing.T) {
 			liveMiss(t, call_routes_show_option_result_v2EntityLiveStrict, "Live entity test blocked: %s", "the flow loads a call_routes_show_option_result_v2 record it has no list to find")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		callRoutesShowOptionResultV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.call_routes_show_option_result_v2")))
@@ -81,6 +82,11 @@ func TestCallRoutesShowOptionResultV2Entity(t *testing.T) {
 		callRoutesShowOptionResultV2Ref01Ent := client.CallRoutesShowOptionResultV2(nil)
 		callRoutesShowOptionResultV2Ref01MatchDt0 := map[string]any{
 			"id": callRoutesShowOptionResultV2Ref01Data["id"],
+		}
+		if v := setup.idmap["call_route_id"]; v != nil {
+			callRoutesShowOptionResultV2Ref01MatchDt0["call_route_id"] = v
+		} else {
+			callRoutesShowOptionResultV2Ref01MatchDt0["call_route_id"] = setup.idmap["call_route01"]
 		}
 		callRoutesShowOptionResultV2Ref01DataDt0Loaded, err := callRoutesShowOptionResultV2Ref01Ent.Load(callRoutesShowOptionResultV2Ref01MatchDt0, nil)
 		if err != nil {

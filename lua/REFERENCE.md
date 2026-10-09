@@ -2532,7 +2532,7 @@ local call_routes_v2 = client:CallRoutesV2(nil)
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:CallRoutesV2():remove({ call_route_id = "call_route_id", id = "id" })
+local result, err = client:CallRoutesV2():remove({ id = "call_routes_v2_id", call_route_id = "call_route_id" })
 ```
 
 ### Common Methods
@@ -4286,7 +4286,7 @@ local results, err = client:IncidentAttachment():list()
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:IncidentAttachment():remove({ id = "id" })
+local result, err = client:IncidentAttachment():remove({ id = "incident_attachment_id" })
 ```
 
 ### Common Methods
@@ -6429,7 +6429,7 @@ local pay_configs_v2 = client:PayConfigsV2(nil)
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:PayConfigsV2():remove({ id = "id", pay_config_id = "pay_config_id" })
+local result, err = client:PayConfigsV2():remove({ id = "pay_configs_v2_id", pay_config_id = "pay_config_id" })
 ```
 
 ### Common Methods
@@ -6821,7 +6821,7 @@ local policies_v2 = client:PoliciesV2(nil)
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:PoliciesV2():remove({ id = "id" })
+local result, err = client:PoliciesV2():remove({ id = "policies_v2_id" })
 ```
 
 ### Common Methods

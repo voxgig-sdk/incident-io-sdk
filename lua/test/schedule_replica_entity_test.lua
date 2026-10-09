@@ -62,6 +62,7 @@ describe("ScheduleReplicaEntity", function()
     local schedule_replica_ref01_match_dt0 = {
       id = schedule_replica_ref01_data["id"],
     }
+    schedule_replica_ref01_match_dt0["schedule_id"] = setup.idmap["schedule_id"] or setup.idmap["schedule01"]
     local schedule_replica_ref01_data_dt0_loaded, err = schedule_replica_ref01_ent:load(schedule_replica_ref01_match_dt0, nil)
     assert.is_nil(err)
     local schedule_replica_ref01_data_dt0_load_result = helpers.to_map(type(schedule_replica_ref01_data_dt0_loaded) == 'table' and schedule_replica_ref01_data_dt0_loaded.data_get and schedule_replica_ref01_data_dt0_loaded:data_get() or schedule_replica_ref01_data_dt0_loaded)

@@ -200,6 +200,7 @@ func TestEscalationEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		escalationRef01Ent := client.Escalation(nil)

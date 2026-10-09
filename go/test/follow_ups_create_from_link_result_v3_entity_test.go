@@ -63,6 +63,7 @@ func TestFollowUpsCreateFromLinkResultV3Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		followUpsCreateFromLinkResultV3Ref01Ent := client.FollowUpsCreateFromLinkResultV3(nil)

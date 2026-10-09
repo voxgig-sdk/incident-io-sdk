@@ -200,6 +200,7 @@ func TestStatusPageEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 		if setup.live {
 			liveExisting(t, status_pageEntityLiveStrict, setup.data, "status_page", func() (any, error) {
 				return client.StatusPage(nil).List(map[string]any{}, nil)

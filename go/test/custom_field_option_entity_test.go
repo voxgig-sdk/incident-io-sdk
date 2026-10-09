@@ -201,6 +201,7 @@ func TestCustomFieldOptionEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		customFieldOptionRef01Ent := client.CustomFieldOption(nil)

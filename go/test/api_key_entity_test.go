@@ -201,6 +201,7 @@ func TestApiKeyEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		apiKeyRef01Ent := client.ApiKey(nil)

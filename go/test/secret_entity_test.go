@@ -201,6 +201,7 @@ func TestSecretEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		secretRef01Ent := client.Secret(nil)

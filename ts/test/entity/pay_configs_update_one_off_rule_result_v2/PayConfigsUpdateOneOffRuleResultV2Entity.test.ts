@@ -77,7 +77,7 @@ describe('PayConfigsUpdateOneOffRuleResultV2Entity', async () => {
     const pay_configs_update_one_off_rule_result_v2_ref01_ent = client.PayConfigsUpdateOneOffRuleResultV2()
     const pay_configs_update_one_off_rule_result_v2_ref01_data_up0: any = {}
     pay_configs_update_one_off_rule_result_v2_ref01_data_up0.id = pay_configs_update_one_off_rule_result_v2_ref01_data.id
-    pay_configs_update_one_off_rule_result_v2_ref01_data_up0 ['pay_config_id'] = setup.idmap['pay_config_id']
+    pay_configs_update_one_off_rule_result_v2_ref01_data_up0['pay_config_id'] = setup.idmap['pay_config_id'] ?? setup.idmap['pay_config01']
 
     const pay_configs_update_one_off_rule_result_v2_ref01_markdef_up0 = { name: 'end_at', value: 'Mark01-pay_configs_update_one_off_rule_result_v2_ref01_' + setup.now }
     ;(pay_configs_update_one_off_rule_result_v2_ref01_data_up0 as any)[pay_configs_update_one_off_rule_result_v2_ref01_markdef_up0.name] = pay_configs_update_one_off_rule_result_v2_ref01_markdef_up0.value

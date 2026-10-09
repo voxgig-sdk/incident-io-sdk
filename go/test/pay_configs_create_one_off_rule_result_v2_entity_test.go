@@ -70,6 +70,7 @@ func TestPayConfigsCreateOneOffRuleResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		payConfigsCreateOneOffRuleResultV2Ref01Ent := client.PayConfigsCreateOneOffRuleResultV2(nil)

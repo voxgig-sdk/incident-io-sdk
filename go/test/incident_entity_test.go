@@ -200,6 +200,7 @@ func TestIncidentEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		incidentRef01Ent := client.Incident(nil)

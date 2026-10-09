@@ -70,6 +70,7 @@ func TestStatusPageLinkedResponseIncidentV1Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		statusPageLinkedResponseIncidentV1Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.status_page_linked_response_incident_v1")))

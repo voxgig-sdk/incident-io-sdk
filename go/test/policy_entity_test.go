@@ -201,6 +201,7 @@ func TestPolicyEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		policyRef01Ent := client.Policy(nil)

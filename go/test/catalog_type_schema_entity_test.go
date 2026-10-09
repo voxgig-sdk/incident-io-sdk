@@ -70,6 +70,7 @@ func TestCatalogTypeSchemaEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		catalogTypeSchemaRef01Ent := client.CatalogTypeSchema(nil)

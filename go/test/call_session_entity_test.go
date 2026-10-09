@@ -200,6 +200,7 @@ func TestCallSessionEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		callSessionRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.call_session")))

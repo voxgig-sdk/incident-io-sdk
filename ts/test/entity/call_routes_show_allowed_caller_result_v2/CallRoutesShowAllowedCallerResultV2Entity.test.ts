@@ -77,6 +77,7 @@ describe('CallRoutesShowAllowedCallerResultV2Entity', async () => {
     const call_routes_show_allowed_caller_result_v2_ref01_ent = client.CallRoutesShowAllowedCallerResultV2()
     const call_routes_show_allowed_caller_result_v2_ref01_match_dt0: any = {}
     call_routes_show_allowed_caller_result_v2_ref01_match_dt0.id = call_routes_show_allowed_caller_result_v2_ref01_data.id
+    call_routes_show_allowed_caller_result_v2_ref01_match_dt0['call_route_id'] = setup.idmap['call_route_id'] ?? setup.idmap['call_route01']
     const call_routes_show_allowed_caller_result_v2_ref01_data_dt0 = (await call_routes_show_allowed_caller_result_v2_ref01_ent.load(call_routes_show_allowed_caller_result_v2_ref01_match_dt0)).data()
     assert(call_routes_show_allowed_caller_result_v2_ref01_data_dt0.id === call_routes_show_allowed_caller_result_v2_ref01_data.id)
 

@@ -201,6 +201,7 @@ func TestCatalogTypeEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		catalogTypeRef01Ent := client.CatalogType(nil)

@@ -2884,7 +2884,7 @@ fmt.Println(callRoutesV2.GetName()) // "call_routes_v2"
 Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
 
 ```go
-result, err := client.CallRoutesV2(nil).Remove(map[string]any{"call_route_id": "call_route_id", "id": "id"}, nil)
+result, err := client.CallRoutesV2(nil).Remove(map[string]any{"id": "call_routes_v2_id", "call_route_id": "call_route_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -4909,7 +4909,7 @@ fmt.Println(result.(sdk.Entity).Data())
 Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
 
 ```go
-result, err := client.IncidentAttachment(nil).Remove(map[string]any{"id": "id"}, nil)
+result, err := client.IncidentAttachment(nil).Remove(map[string]any{"id": "incident_attachment_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -7416,7 +7416,7 @@ fmt.Println(payConfigsV2.GetName()) // "pay_configs_v2"
 Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
 
 ```go
-result, err := client.PayConfigsV2(nil).Remove(map[string]any{"id": "id", "pay_config_id": "pay_config_id"}, nil)
+result, err := client.PayConfigsV2(nil).Remove(map[string]any{"id": "pay_configs_v2_id", "pay_config_id": "pay_config_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -7857,7 +7857,7 @@ fmt.Println(policiesV2.GetName()) // "policies_v2"
 Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
 
 ```go
-result, err := client.PoliciesV2(nil).Remove(map[string]any{"id": "id"}, nil)
+result, err := client.PoliciesV2(nil).Remove(map[string]any{"id": "policies_v2_id"}, nil)
 if err != nil {
     panic(err)
 }

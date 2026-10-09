@@ -70,6 +70,7 @@ func TestFollowUpsConnectExternalIssueResultV3Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		followUpsConnectExternalIssueResultV3Ref01Ent := client.FollowUpsConnectExternalIssueResultV3(nil)

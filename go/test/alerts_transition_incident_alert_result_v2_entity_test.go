@@ -200,6 +200,7 @@ func TestAlertsTransitionIncidentAlertResultV2Entity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		alertsTransitionIncidentAlertResultV2Ref01Ent := client.AlertsTransitionIncidentAlertResultV2(nil)

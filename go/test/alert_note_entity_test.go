@@ -201,6 +201,7 @@ func TestAlertNoteEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		alertNoteRef01Ent := client.AlertNote(nil)

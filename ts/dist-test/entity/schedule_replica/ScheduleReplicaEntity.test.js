@@ -81,6 +81,7 @@ const utility_1 = require("../../utility");
         const schedule_replica_ref01_ent = client.ScheduleReplica();
         const schedule_replica_ref01_match_dt0 = {};
         schedule_replica_ref01_match_dt0.id = schedule_replica_ref01_data.id;
+        schedule_replica_ref01_match_dt0['schedule_id'] = setup.idmap['schedule_id'] ?? setup.idmap['schedule01'];
         const schedule_replica_ref01_data_dt0 = (await schedule_replica_ref01_ent.load(schedule_replica_ref01_match_dt0)).data();
         (0, node_assert_1.default)(schedule_replica_ref01_data_dt0.id === schedule_replica_ref01_data.id);
     });

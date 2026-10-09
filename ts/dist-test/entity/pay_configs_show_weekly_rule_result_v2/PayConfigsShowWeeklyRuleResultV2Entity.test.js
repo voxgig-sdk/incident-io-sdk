@@ -81,6 +81,7 @@ const utility_1 = require("../../utility");
         const pay_configs_show_weekly_rule_result_v2_ref01_ent = client.PayConfigsShowWeeklyRuleResultV2();
         const pay_configs_show_weekly_rule_result_v2_ref01_match_dt0 = {};
         pay_configs_show_weekly_rule_result_v2_ref01_match_dt0.id = pay_configs_show_weekly_rule_result_v2_ref01_data.id;
+        pay_configs_show_weekly_rule_result_v2_ref01_match_dt0['pay_config_id'] = setup.idmap['pay_config_id'] ?? setup.idmap['pay_config01'];
         const pay_configs_show_weekly_rule_result_v2_ref01_data_dt0 = (await pay_configs_show_weekly_rule_result_v2_ref01_ent.load(pay_configs_show_weekly_rule_result_v2_ref01_match_dt0)).data();
         (0, node_assert_1.default)(pay_configs_show_weekly_rule_result_v2_ref01_data_dt0.id === pay_configs_show_weekly_rule_result_v2_ref01_data.id);
     });

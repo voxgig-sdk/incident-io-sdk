@@ -201,6 +201,7 @@ func TestAlertRouteEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 
 		// CREATE
 		alertRouteRef01Ent := client.AlertRoute(nil)

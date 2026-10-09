@@ -67,6 +67,7 @@ func TestTelemetryDataSourceV2Entity(t *testing.T) {
 			liveMiss(t, telemetry_data_source_v2EntityLiveStrict, "Live entity test blocked: %s", "the flow updates a telemetry_data_source_v2 record it did not create")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		telemetryDataSourceV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.telemetry_data_source_v2")))

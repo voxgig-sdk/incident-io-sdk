@@ -74,6 +74,7 @@ func TestScheduleSyncRuleEntity(t *testing.T) {
 			liveMiss(t, schedule_sync_ruleEntityLiveStrict, "Live entity test blocked: %s", "the flow updates a schedule_sync_rule record it did not create")
 		}
 		client := setup.client
+		_ = client
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		scheduleSyncRuleRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.schedule_sync_rule")))
@@ -114,6 +115,11 @@ func TestScheduleSyncRuleEntity(t *testing.T) {
 		// LOAD
 		scheduleSyncRuleRef01MatchDt0 := map[string]any{
 			"id": scheduleSyncRuleRef01Data["id"],
+		}
+		if v := setup.idmap["schedule_id"]; v != nil {
+			scheduleSyncRuleRef01MatchDt0["schedule_id"] = v
+		} else {
+			scheduleSyncRuleRef01MatchDt0["schedule_id"] = setup.idmap["schedule01"]
 		}
 		scheduleSyncRuleRef01DataDt0Loaded, err := scheduleSyncRuleRef01Ent.Load(scheduleSyncRuleRef01MatchDt0, nil)
 		if err != nil {

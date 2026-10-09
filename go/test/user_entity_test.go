@@ -200,6 +200,7 @@ func TestUserEntity(t *testing.T) {
 			}
 		}
 		client := setup.client
+		_ = client
 		if setup.live {
 			liveExisting(t, userEntityLiveStrict, setup.data, "user", func() (any, error) {
 				return client.User(nil).List(map[string]any{}, nil)
