@@ -1,0 +1,80 @@
+# Entity: status_pages_create_status_page_retrospective_incident_result_v2
+
+main: kit: entity: status_pages_create_status_page_retrospective_incident_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    idempotency_key: {
+      h: "Idempotency Key"
+      n: "idempotency_key"
+      r: true
+      sh: "A unique key to de-duplicate requests."
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      sh: "A title for the incident"
+      t: "`$STRING`"
+    }
+    status_page_id: {
+      h: "Status Page Id"
+      n: "status_page_id"
+      r: true
+      sh: "ID of the status page."
+      t: "`$STRING`"
+    }
+    updates: {
+      h: "Updates"
+      n: "updates"
+      r: true
+      sh: "The reconstructed timeline of updates for this incident, ordered chronologically (earliest first)."
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "status_pages_create_status_page_retrospective_incident_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "idempotency_key"
+            "name"
+            "status_page_id"
+            "updates"
+          ]
+          co: {
+            id: "POST /v2/status_page_retrospective_incidents"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/status_page_retrospective_incidents"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "status_page_retrospective_incidents"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.status_page_incident`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

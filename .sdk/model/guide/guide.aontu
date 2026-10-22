@@ -3,3 +3,19 @@
 @"@voxgig/apidef/model/guide.aontu"
 
 @"./base-guide.aontu"
+
+# Escalations V2 answers its respond and cancel with no record, so the
+# heuristic names both from the tag and they collide on one selector. They
+# are actions on the escalation, and address it by the same key as its item
+# path.
+guide: entity: escalation: path: "/v2/escalations/{escalation_id}/actions/respond": {
+  action: respond: {}
+  rename: param: escalation_id: id
+  op: create: method: POST
+}
+guide: entity: escalation: path: "/v2/escalations/{id}/actions/cancel": {
+  action: cancel: {}
+  op: create: method: POST
+}
+guide: entity: escalations_v2: path: "/v2/escalations/{escalation_id}/actions/respond": active: false
+guide: entity: escalations_v2: path: "/v2/escalations/{id}/actions/cancel": active: false

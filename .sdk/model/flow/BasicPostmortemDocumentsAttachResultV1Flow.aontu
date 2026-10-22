@@ -7,11 +7,11 @@ main: kit: flow: BasicPostmortemDocumentsAttachResultV1Flow:
   name: "BasicPostmortemDocumentsAttachResultV1Flow",
   step: [
     {
-      input: {
+      i: {
         ref: "postmortem_documents_attach_result_v1_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
   ],
   "key$": "BasicPostmortemDocumentsAttachResultV1Flow"

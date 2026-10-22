@@ -29,5 +29,12 @@
         "permalink": "s7a"
       }
     }
+  },
+  "requests": {
+    "POST /v1/postmortem_documents/actions/attach": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

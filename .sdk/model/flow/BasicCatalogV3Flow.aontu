@@ -7,24 +7,11 @@ main: kit: flow: BasicCatalogV3Flow:
   name: "BasicCatalogV3Flow",
   step: [
     {
-      input: {
+      i: {
         ref: "catalog_v3_ref01"
       }
 
-      op: "create"
-    }
-
-    {
-      input: {
-        ref: "catalog_v3_ref01",
-        suffix: "_rm0"
-      }
-
-      match: {
-        id: "catalog_v301"
-      }
-
-      op: "remove"
+      o: "create"
     }
   ],
   "key$": "BasicCatalogV3Flow"

@@ -16,5 +16,17 @@
     "heartbeat_v2": {
       "heartbeat_v2_ref01": {}
     }
+  },
+  "requests": {
+    "POST /v2/heartbeat/{alert_source_config_id}/ping": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/heartbeat/{alert_source_config_id}/ping": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

@@ -28,5 +28,12 @@
         "title": "s51"
       }
     }
+  },
+  "requests": {
+    "POST /v2/incidents/{id}/actions/import_postmortem_document": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

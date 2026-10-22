@@ -180,6 +180,34 @@ class AlertAttributeRemoveMatch(TypedDict):
     id: str
 
 
+class AlertEventsV2Required(TypedDict):
+    deduplication_key: str
+    message: str
+    status: str
+    title: str
+
+
+class AlertEventsV2(AlertEventsV2Required, total=False):
+    description: str
+    metadata: dict
+    source_url: str
+
+
+class AlertEventsV2CreateDataRequired(TypedDict):
+    alert_source_config_id: str
+    status: str
+    title: str
+
+
+class AlertEventsV2CreateData(AlertEventsV2CreateDataRequired, total=False):
+    query: dict
+    token: str
+    deduplication_key: str
+    description: str
+    metadata: dict
+    source_url: str
+
+
 class AlertNoteRequired(TypedDict):
     content: str
     created_at: str
@@ -1064,6 +1092,24 @@ class CatalogTypeSchemaCreateData(TypedDict):
     version: int
 
 
+class CatalogV3Required(TypedDict):
+    catalog_type_id: str
+    entries: list
+
+
+class CatalogV3(CatalogV3Required, total=False):
+    update_attributes: list
+
+
+class CatalogV3CreateDataRequired(TypedDict):
+    catalog_type_id: str
+    entries: list
+
+
+class CatalogV3CreateData(CatalogV3CreateDataRequired, total=False):
+    update_attributes: list
+
+
 class CustomFieldRequired(TypedDict):
     created_at: str
     description: str
@@ -1365,6 +1411,17 @@ class EscalationsReassignEscalationResultV2CreateData(EscalationsReassignEscalat
     user_ids: list
 
 
+class EscalationsV2(TypedDict):
+    response: str
+    snooze_details: dict
+
+
+class EscalationsV2CreateData(TypedDict):
+    escalation_id: str
+    response: str
+    snooze_details: dict
+
+
 class FollowUpRequired(TypedDict):
     assignee: dict
     assignee_team: dict
@@ -1439,6 +1496,34 @@ class FollowUpRemoveMatch(TypedDict):
     id: str
 
 
+class FollowUpsConnectExternalIssueResultV2Required(TypedDict):
+    assignee: dict
+    assignee_team: dict
+    created_at: str
+    creator: dict
+    external_issue_reference: dict
+    id: str
+    incident_id: str
+    labels: list
+    priority: dict
+    provider: str
+    status: str
+    title: str
+    updated_at: str
+    url: str
+
+
+class FollowUpsConnectExternalIssueResultV2(FollowUpsConnectExternalIssueResultV2Required, total=False):
+    completed_at: str
+    description: str
+
+
+class FollowUpsConnectExternalIssueResultV2CreateData(TypedDict):
+    follow_up_id: str
+    provider: str
+    url: str
+
+
 class FollowUpsConnectExternalIssueResultV3Required(TypedDict):
     assignee: dict
     assignee_team: dict
@@ -1476,6 +1561,26 @@ class FollowUpsCreateFromLinkResultV3(TypedDict):
 class FollowUpsCreateFromLinkResultV3CreateData(TypedDict):
     incident_id: str
     url: str
+
+
+class HeartbeatV2(TypedDict, total=False):
+    id: str
+
+
+class HeartbeatV2LoadMatchRequired(TypedDict):
+    id: str
+
+
+class HeartbeatV2LoadMatch(HeartbeatV2LoadMatchRequired, total=False):
+    token: str
+
+
+class HeartbeatV2CreateDataRequired(TypedDict):
+    id: str
+
+
+class HeartbeatV2CreateData(HeartbeatV2CreateDataRequired, total=False):
+    token: str
 
 
 class Identity(TypedDict):
@@ -1677,6 +1782,16 @@ class IncidentMembership(TypedDict):
 
 
 class IncidentMembershipCreateData(TypedDict):
+    incident_id: str
+    user_id: str
+
+
+class IncidentMembershipsV1(TypedDict):
+    incident_id: str
+    user_id: str
+
+
+class IncidentMembershipsV1CreateData(TypedDict):
     incident_id: str
     user_id: str
 
@@ -2022,6 +2137,17 @@ class IncidentUpdateCreateData(IncidentUpdateCreateDataRequired, total=False):
     message: str
     to_incident_status_id: str
     to_severity_id: str
+
+
+class IncidentsImportPostmortemDocumentResultV2(TypedDict):
+    content: str
+    title: str
+
+
+class IncidentsImportPostmortemDocumentResultV2CreateData(TypedDict):
+    incident_id: str
+    content: str
+    title: str
 
 
 class IpAllowlistRequired(TypedDict):
@@ -2689,6 +2815,32 @@ class PostmortemDocumentUpdateData(PostmortemDocumentUpdateDataRequired, total=F
     status: str
 
 
+class PostmortemDocumentsAttachResultV1Required(TypedDict):
+    incident_id: str
+    permalink: str
+
+
+class PostmortemDocumentsAttachResultV1(PostmortemDocumentsAttachResultV1Required, total=False):
+    document_provider: str
+
+
+class PostmortemDocumentsAttachResultV1CreateDataRequired(TypedDict):
+    incident_id: str
+    permalink: str
+
+
+class PostmortemDocumentsAttachResultV1CreateData(PostmortemDocumentsAttachResultV1CreateDataRequired, total=False):
+    document_provider: str
+
+
+class PostmortemDocumentsShowContentResultV1(TypedDict):
+    markdown: str
+
+
+class PostmortemDocumentsShowContentResultV1LoadMatch(TypedDict):
+    postmortem_document_id: str
+
+
 class ScheduleRequired(TypedDict):
     annotations: dict
     config: dict
@@ -3347,6 +3499,20 @@ class StatusPageStructureLoadMatch(TypedDict):
     id: str
 
 
+class StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(TypedDict):
+    idempotency_key: str
+    name: str
+    status_page_id: str
+    updates: list
+
+
+class StatusPagesCreateStatusPageRetrospectiveIncidentResultV2CreateData(TypedDict):
+    idempotency_key: str
+    name: str
+    status_page_id: str
+    updates: list
+
+
 class Team(TypedDict):
     catalog_entry: dict
     id: str
@@ -3414,6 +3580,27 @@ class UserListMatch(TypedDict, total=False):
     include_inactive: bool
     page_size: int
     slack_user_id: str
+
+
+class UsersShowPagingProviderResultV2(TypedDict, total=False):
+    preferred_escalation_provider: str
+
+
+class UsersShowPagingProviderResultV2LoadMatch(TypedDict):
+    user_id: str
+
+
+class UsersShowPagingProviderResultV2CreateData(TypedDict):
+    user_id: str
+    preferred_escalation_provider: str
+
+
+class UtilitiesV1(TypedDict):
+    pass
+
+
+class UtilitiesV1LoadMatch(TypedDict):
+    pass
 
 
 class WorkflowRequired(TypedDict):

@@ -429,6 +429,24 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
+    private $_alert_events_v2 = null;
+
+    // Canonical facade: $client->AlertEventsV2()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->alert_events_v2()
+    // resolves here too.
+    public function AlertEventsV2($data = null)
+    {
+        require_once __DIR__ . '/entity/alert_events_v2_entity.php';
+        if ($data === null) {
+            if ($this->_alert_events_v2 === null) {
+                $this->_alert_events_v2 = new AlertEventsV2Entity($this, null);
+            }
+            return $this->_alert_events_v2;
+        }
+        return new AlertEventsV2Entity($this, $data);
+    }
+
+
     private $_alert_note = null;
 
     // Canonical facade: $client->AlertNote()->list() / ->load(["id" => ...]).
@@ -789,6 +807,24 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
+    private $_catalog_v3 = null;
+
+    // Canonical facade: $client->CatalogV3()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->catalog_v3()
+    // resolves here too.
+    public function CatalogV3($data = null)
+    {
+        require_once __DIR__ . '/entity/catalog_v3_entity.php';
+        if ($data === null) {
+            if ($this->_catalog_v3 === null) {
+                $this->_catalog_v3 = new CatalogV3Entity($this, null);
+            }
+            return $this->_catalog_v3;
+        }
+        return new CatalogV3Entity($this, $data);
+    }
+
+
     private $_custom_field = null;
 
     // Canonical facade: $client->CustomField()->list() / ->load(["id" => ...]).
@@ -915,6 +951,24 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
+    private $_escalations_v2 = null;
+
+    // Canonical facade: $client->EscalationsV2()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->escalations_v2()
+    // resolves here too.
+    public function EscalationsV2($data = null)
+    {
+        require_once __DIR__ . '/entity/escalations_v2_entity.php';
+        if ($data === null) {
+            if ($this->_escalations_v2 === null) {
+                $this->_escalations_v2 = new EscalationsV2Entity($this, null);
+            }
+            return $this->_escalations_v2;
+        }
+        return new EscalationsV2Entity($this, $data);
+    }
+
+
     private $_follow_up = null;
 
     // Canonical facade: $client->FollowUp()->list() / ->load(["id" => ...]).
@@ -930,6 +984,24 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_follow_up;
         }
         return new FollowUpEntity($this, $data);
+    }
+
+
+    private $_follow_ups_connect_external_issue_result_v2 = null;
+
+    // Canonical facade: $client->FollowUpsConnectExternalIssueResultV2()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->follow_ups_connect_external_issue_result_v2()
+    // resolves here too.
+    public function FollowUpsConnectExternalIssueResultV2($data = null)
+    {
+        require_once __DIR__ . '/entity/follow_ups_connect_external_issue_result_v2_entity.php';
+        if ($data === null) {
+            if ($this->_follow_ups_connect_external_issue_result_v2 === null) {
+                $this->_follow_ups_connect_external_issue_result_v2 = new FollowUpsConnectExternalIssueResultV2Entity($this, null);
+            }
+            return $this->_follow_ups_connect_external_issue_result_v2;
+        }
+        return new FollowUpsConnectExternalIssueResultV2Entity($this, $data);
     }
 
 
@@ -966,6 +1038,24 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_follow_ups_create_from_link_result_v3;
         }
         return new FollowUpsCreateFromLinkResultV3Entity($this, $data);
+    }
+
+
+    private $_heartbeat_v2 = null;
+
+    // Canonical facade: $client->HeartbeatV2()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->heartbeat_v2()
+    // resolves here too.
+    public function HeartbeatV2($data = null)
+    {
+        require_once __DIR__ . '/entity/heartbeat_v2_entity.php';
+        if ($data === null) {
+            if ($this->_heartbeat_v2 === null) {
+                $this->_heartbeat_v2 = new HeartbeatV2Entity($this, null);
+            }
+            return $this->_heartbeat_v2;
+        }
+        return new HeartbeatV2Entity($this, $data);
     }
 
 
@@ -1074,6 +1164,24 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_incident_membership;
         }
         return new IncidentMembershipEntity($this, $data);
+    }
+
+
+    private $_incident_memberships_v1 = null;
+
+    // Canonical facade: $client->IncidentMembershipsV1()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->incident_memberships_v1()
+    // resolves here too.
+    public function IncidentMembershipsV1($data = null)
+    {
+        require_once __DIR__ . '/entity/incident_memberships_v1_entity.php';
+        if ($data === null) {
+            if ($this->_incident_memberships_v1 === null) {
+                $this->_incident_memberships_v1 = new IncidentMembershipsV1Entity($this, null);
+            }
+            return $this->_incident_memberships_v1;
+        }
+        return new IncidentMembershipsV1Entity($this, $data);
     }
 
 
@@ -1308,6 +1416,24 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_incident_update;
         }
         return new IncidentUpdateEntity($this, $data);
+    }
+
+
+    private $_incidents_import_postmortem_document_result_v2 = null;
+
+    // Canonical facade: $client->IncidentsImportPostmortemDocumentResultV2()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->incidents_import_postmortem_document_result_v2()
+    // resolves here too.
+    public function IncidentsImportPostmortemDocumentResultV2($data = null)
+    {
+        require_once __DIR__ . '/entity/incidents_import_postmortem_document_result_v2_entity.php';
+        if ($data === null) {
+            if ($this->_incidents_import_postmortem_document_result_v2 === null) {
+                $this->_incidents_import_postmortem_document_result_v2 = new IncidentsImportPostmortemDocumentResultV2Entity($this, null);
+            }
+            return $this->_incidents_import_postmortem_document_result_v2;
+        }
+        return new IncidentsImportPostmortemDocumentResultV2Entity($this, $data);
     }
 
 
@@ -1653,6 +1779,42 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
+    private $_postmortem_documents_attach_result_v1 = null;
+
+    // Canonical facade: $client->PostmortemDocumentsAttachResultV1()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->postmortem_documents_attach_result_v1()
+    // resolves here too.
+    public function PostmortemDocumentsAttachResultV1($data = null)
+    {
+        require_once __DIR__ . '/entity/postmortem_documents_attach_result_v1_entity.php';
+        if ($data === null) {
+            if ($this->_postmortem_documents_attach_result_v1 === null) {
+                $this->_postmortem_documents_attach_result_v1 = new PostmortemDocumentsAttachResultV1Entity($this, null);
+            }
+            return $this->_postmortem_documents_attach_result_v1;
+        }
+        return new PostmortemDocumentsAttachResultV1Entity($this, $data);
+    }
+
+
+    private $_postmortem_documents_show_content_result_v1 = null;
+
+    // Canonical facade: $client->PostmortemDocumentsShowContentResultV1()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->postmortem_documents_show_content_result_v1()
+    // resolves here too.
+    public function PostmortemDocumentsShowContentResultV1($data = null)
+    {
+        require_once __DIR__ . '/entity/postmortem_documents_show_content_result_v1_entity.php';
+        if ($data === null) {
+            if ($this->_postmortem_documents_show_content_result_v1 === null) {
+                $this->_postmortem_documents_show_content_result_v1 = new PostmortemDocumentsShowContentResultV1Entity($this, null);
+            }
+            return $this->_postmortem_documents_show_content_result_v1;
+        }
+        return new PostmortemDocumentsShowContentResultV1Entity($this, $data);
+    }
+
+
     private $_schedule = null;
 
     // Canonical facade: $client->Schedule()->list() / ->load(["id" => ...]).
@@ -1977,6 +2139,24 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
+    private $_status_pages_create_status_page_retrospective_incident_result_v2 = null;
+
+    // Canonical facade: $client->StatusPagesCreateStatusPageRetrospectiveIncidentResultV2()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_pages_create_status_page_retrospective_incident_result_v2()
+    // resolves here too.
+    public function StatusPagesCreateStatusPageRetrospectiveIncidentResultV2($data = null)
+    {
+        require_once __DIR__ . '/entity/status_pages_create_status_page_retrospective_incident_result_v2_entity.php';
+        if ($data === null) {
+            if ($this->_status_pages_create_status_page_retrospective_incident_result_v2 === null) {
+                $this->_status_pages_create_status_page_retrospective_incident_result_v2 = new StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity($this, null);
+            }
+            return $this->_status_pages_create_status_page_retrospective_incident_result_v2;
+        }
+        return new StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity($this, $data);
+    }
+
+
     private $_team = null;
 
     // Canonical facade: $client->Team()->list() / ->load(["id" => ...]).
@@ -2028,6 +2208,42 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_user;
         }
         return new UserEntity($this, $data);
+    }
+
+
+    private $_users_show_paging_provider_result_v2 = null;
+
+    // Canonical facade: $client->UsersShowPagingProviderResultV2()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->users_show_paging_provider_result_v2()
+    // resolves here too.
+    public function UsersShowPagingProviderResultV2($data = null)
+    {
+        require_once __DIR__ . '/entity/users_show_paging_provider_result_v2_entity.php';
+        if ($data === null) {
+            if ($this->_users_show_paging_provider_result_v2 === null) {
+                $this->_users_show_paging_provider_result_v2 = new UsersShowPagingProviderResultV2Entity($this, null);
+            }
+            return $this->_users_show_paging_provider_result_v2;
+        }
+        return new UsersShowPagingProviderResultV2Entity($this, $data);
+    }
+
+
+    private $_utilities_v1 = null;
+
+    // Canonical facade: $client->UtilitiesV1()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->utilities_v1()
+    // resolves here too.
+    public function UtilitiesV1($data = null)
+    {
+        require_once __DIR__ . '/entity/utilities_v1_entity.php';
+        if ($data === null) {
+            if ($this->_utilities_v1 === null) {
+                $this->_utilities_v1 = new UtilitiesV1Entity($this, null);
+            }
+            return $this->_utilities_v1;
+        }
+        return new UtilitiesV1Entity($this, $data);
     }
 
 

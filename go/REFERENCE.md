@@ -60,6 +60,10 @@ Create a new `Alert` entity instance. Pass `nil` for no initial data.
 
 Create a new `AlertAttribute` entity instance. Pass `nil` for no initial data.
 
+#### `AlertEventsV2(data map[string]any) IncidentIoEntity`
+
+Create a new `AlertEventsV2` entity instance. Pass `nil` for no initial data.
+
 #### `AlertNote(data map[string]any) IncidentIoEntity`
 
 Create a new `AlertNote` entity instance. Pass `nil` for no initial data.
@@ -140,6 +144,10 @@ Create a new `CatalogType` entity instance. Pass `nil` for no initial data.
 
 Create a new `CatalogTypeSchema` entity instance. Pass `nil` for no initial data.
 
+#### `CatalogV3(data map[string]any) IncidentIoEntity`
+
+Create a new `CatalogV3` entity instance. Pass `nil` for no initial data.
+
 #### `CustomField(data map[string]any) IncidentIoEntity`
 
 Create a new `CustomField` entity instance. Pass `nil` for no initial data.
@@ -168,9 +176,17 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2` entity instance. Pa
 
 Create a new `EscalationsReassignEscalationResultV2` entity instance. Pass `nil` for no initial data.
 
+#### `EscalationsV2(data map[string]any) IncidentIoEntity`
+
+Create a new `EscalationsV2` entity instance. Pass `nil` for no initial data.
+
 #### `FollowUp(data map[string]any) IncidentIoEntity`
 
 Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
+
+#### `FollowUpsConnectExternalIssueResultV2(data map[string]any) IncidentIoEntity`
+
+Create a new `FollowUpsConnectExternalIssueResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `FollowUpsConnectExternalIssueResultV3(data map[string]any) IncidentIoEntity`
 
@@ -179,6 +195,10 @@ Create a new `FollowUpsConnectExternalIssueResultV3` entity instance. Pass `nil`
 #### `FollowUpsCreateFromLinkResultV3(data map[string]any) IncidentIoEntity`
 
 Create a new `FollowUpsCreateFromLinkResultV3` entity instance. Pass `nil` for no initial data.
+
+#### `HeartbeatV2(data map[string]any) IncidentIoEntity`
+
+Create a new `HeartbeatV2` entity instance. Pass `nil` for no initial data.
 
 #### `Identity(data map[string]any) IncidentIoEntity`
 
@@ -203,6 +223,10 @@ Create a new `IncidentForm` entity instance. Pass `nil` for no initial data.
 #### `IncidentMembership(data map[string]any) IncidentIoEntity`
 
 Create a new `IncidentMembership` entity instance. Pass `nil` for no initial data.
+
+#### `IncidentMembershipsV1(data map[string]any) IncidentIoEntity`
+
+Create a new `IncidentMembershipsV1` entity instance. Pass `nil` for no initial data.
 
 #### `IncidentParticipant(data map[string]any) IncidentIoEntity`
 
@@ -255,6 +279,10 @@ Create a new `IncidentType` entity instance. Pass `nil` for no initial data.
 #### `IncidentUpdate(data map[string]any) IncidentIoEntity`
 
 Create a new `IncidentUpdate` entity instance. Pass `nil` for no initial data.
+
+#### `IncidentsImportPostmortemDocumentResultV2(data map[string]any) IncidentIoEntity`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `IpAllowlist(data map[string]any) IncidentIoEntity`
 
@@ -332,6 +360,14 @@ Create a new `PolicyFindingsRestoreResultV2` entity instance. Pass `nil` for no 
 
 Create a new `PostmortemDocument` entity instance. Pass `nil` for no initial data.
 
+#### `PostmortemDocumentsAttachResultV1(data map[string]any) IncidentIoEntity`
+
+Create a new `PostmortemDocumentsAttachResultV1` entity instance. Pass `nil` for no initial data.
+
+#### `PostmortemDocumentsShowContentResultV1(data map[string]any) IncidentIoEntity`
+
+Create a new `PostmortemDocumentsShowContentResultV1` entity instance. Pass `nil` for no initial data.
+
 #### `Schedule(data map[string]any) IncidentIoEntity`
 
 Create a new `Schedule` entity instance. Pass `nil` for no initial data.
@@ -404,6 +440,10 @@ Create a new `StatusPageMaintenanceUpdate` entity instance. Pass `nil` for no in
 
 Create a new `StatusPageStructure` entity instance. Pass `nil` for no initial data.
 
+#### `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data map[string]any) IncidentIoEntity`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2` entity instance. Pass `nil` for no initial data.
+
 #### `Team(data map[string]any) IncidentIoEntity`
 
 Create a new `Team` entity instance. Pass `nil` for no initial data.
@@ -415,6 +455,14 @@ Create a new `TelemetryDataSource` entity instance. Pass `nil` for no initial da
 #### `User(data map[string]any) IncidentIoEntity`
 
 Create a new `User` entity instance. Pass `nil` for no initial data.
+
+#### `UsersShowPagingProviderResultV2(data map[string]any) IncidentIoEntity`
+
+Create a new `UsersShowPagingProviderResultV2` entity instance. Pass `nil` for no initial data.
+
+#### `UtilitiesV1(data map[string]any) IncidentIoEntity`
+
+Create a new `UtilitiesV1` entity instance. Pass `nil` for no initial data.
 
 #### `Workflow(data map[string]any) IncidentIoEntity`
 
@@ -805,6 +853,87 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `AlertAttributeEntity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## AlertEventsV2Entity
+
+```go
+alertEventsV2 := client.AlertEventsV2(nil)
+fmt.Println(alertEventsV2.GetName()) // "alert_events_v2"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `deduplication_key` | `string` | Yes | The deduplication key that the event has been processed with |
+| `description` | `string` | No | Description that optionally adds more detail to title. |
+| `message` | `string` | Yes | Human readable message giving detail about the event |
+| `metadata` | `map[string]any` | No | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Yes | Status of the event |
+| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `deduplication_key` | Yes |
+| `description` | - |
+| `message` | - |
+| `metadata` | - |
+| `source_url` | - |
+| `status` | - |
+| `title` | - |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.AlertEventsV2(nil).Create(map[string]any{
+    "alert_source_config_id": "example_alert_source_config_id",
+    "status": "example_status",
+    "title": "example_title",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `AlertEventsV2Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -2998,6 +3127,70 @@ Return the entity name.
 
 ---
 
+## CatalogV3Entity
+
+```go
+catalogV3 := client.CatalogV3(nil)
+fmt.Println(catalogV3.GetName()) // "catalog_v3"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `catalog_type_id` | `string` | Yes | The unique identifier of the catalog type containing the entries |
+| `entries` | `[]any` | Yes | A list of entries to update with their new values. |
+| `update_attributes` | `[]any` | No | Optional list of specific attribute IDs to update across all entries. |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.CatalogV3(nil).Create(map[string]any{
+    "catalog_type_id": "example_catalog_type_id",
+    "entries": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `CatalogV3Entity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```go
@@ -3781,6 +3974,70 @@ Return the entity name.
 
 ---
 
+## EscalationsV2Entity
+
+```go
+escalationsV2 := client.EscalationsV2(nil)
+fmt.Println(escalationsV2.GetName()) // "escalations_v2"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `response` | `string` | Yes | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` | `map[string]any` | Yes |  |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.EscalationsV2(nil).Create(map[string]any{
+    "escalation_id": "example_escalation_id",
+    "response": "example_response",
+    "snooze_details": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `EscalationsV2Entity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpEntity
 
 ```go
@@ -3940,6 +4197,84 @@ Return the entity name.
 
 ---
 
+## FollowUpsConnectExternalIssueResultV2Entity
+
+```go
+followUpsConnectExternalIssueResultV2 := client.FollowUpsConnectExternalIssueResultV2(nil)
+fmt.Println(followUpsConnectExternalIssueResultV2.GetName()) // "follow_ups_connect_external_issue_result_v2"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `assignee` | `map[string]any` | Yes |  |
+| `assignee_team` | `map[string]any` | Yes |  |
+| `completed_at` | `string` | No | When the follow-up was completed |
+| `created_at` | `string` | Yes | When the follow-up was created |
+| `creator` | `map[string]any` | Yes |  |
+| `description` | `string` | No | Description of the follow-up |
+| `external_issue_reference` | `map[string]any` | Yes |  |
+| `id` | `string` | Yes | Unique identifier for the follow-up |
+| `incident_id` | `string` | Yes | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `[]any` | Yes | Labels associated with this follow-up |
+| `priority` | `map[string]any` | Yes |  |
+| `provider` | `string` | Yes | The issue tracker provider the issue belongs to |
+| `status` | `string` | Yes | Status of the follow-up |
+| `title` | `string` | Yes | Title of the follow-up |
+| `updated_at` | `string` | Yes | When the follow-up was last updated |
+| `url` | `string` | Yes | URL of the issue in the external provider |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.FollowUpsConnectExternalIssueResultV2(nil).Create(map[string]any{
+    "follow_up_id": "example_follow_up_id",
+    "provider": "example_provider",
+    "url": "example_url",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `FollowUpsConnectExternalIssueResultV2Entity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpsConnectExternalIssueResultV3Entity
 
 ```go
@@ -4065,6 +4400,79 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `FollowUpsCreateFromLinkResultV3Entity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## HeartbeatV2Entity
+
+```go
+heartbeatV2 := client.HeartbeatV2(nil)
+fmt.Println(heartbeatV2.GetName()) // "heartbeat_v2"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
+
+### Operations
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.HeartbeatV2(nil).Load(map[string]any{"id": "heartbeat_v2_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.HeartbeatV2(nil).Create(map[string]any{
+    "id": "example_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `HeartbeatV2Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -4641,6 +5049,69 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `IncidentMembershipEntity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## IncidentMembershipsV1Entity
+
+```go
+incidentMembershipsV1 := client.IncidentMembershipsV1(nil)
+fmt.Println(incidentMembershipsV1.GetName()) // "incident_memberships_v1"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `incident_id` | `string` | Yes | Revoke memberships to incident |
+| `user_id` | `string` | Yes |  |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.IncidentMembershipsV1(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "user_id": "example_user_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `IncidentMembershipsV1Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -5755,6 +6226,70 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `IncidentUpdateEntity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## IncidentsImportPostmortemDocumentResultV2Entity
+
+```go
+incidentsImportPostmortemDocumentResultV2 := client.IncidentsImportPostmortemDocumentResultV2(nil)
+fmt.Println(incidentsImportPostmortemDocumentResultV2.GetName()) // "incidents_import_postmortem_document_result_v2"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `content` | `string` | Yes | The document content as GitHub-Flavored Markdown |
+| `title` | `string` | Yes | Title of the postmortem document |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.IncidentsImportPostmortemDocumentResultV2(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "content": "example_content",
+    "title": "example_title",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -7595,6 +8130,129 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `PostmortemDocumentEntity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## PostmortemDocumentsAttachResultV1Entity
+
+```go
+postmortemDocumentsAttachResultV1 := client.PostmortemDocumentsAttachResultV1(nil)
+fmt.Println(postmortemDocumentsAttachResultV1.GetName()) // "postmortem_documents_attach_result_v1"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `document_provider` | `string` | No | The provider hosting the document. |
+| `incident_id` | `string` | Yes | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | `string` | Yes | A URL pointing to the externally-hosted post-mortem document |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.PostmortemDocumentsAttachResultV1(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "permalink": "example_permalink",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `PostmortemDocumentsAttachResultV1Entity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## PostmortemDocumentsShowContentResultV1Entity
+
+```go
+postmortemDocumentsShowContentResultV1 := client.PostmortemDocumentsShowContentResultV1(nil)
+fmt.Println(postmortemDocumentsShowContentResultV1.GetName()) // "postmortem_documents_show_content_result_v1"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `markdown` | `string` | Yes | The full content of the post-mortem document, rendered as markdown. |
+
+### Operations
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.PostmortemDocumentsShowContentResultV1(nil).Load(map[string]any{"postmortem_document_id": "postmortem_document_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `PostmortemDocumentsShowContentResultV1Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -9458,6 +10116,73 @@ Return the entity name.
 
 ---
 
+## StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity
+
+```go
+statusPagesCreateStatusPageRetrospectiveIncidentResultV2 := client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(nil)
+fmt.Println(statusPagesCreateStatusPageRetrospectiveIncidentResultV2.GetName()) // "status_pages_create_status_page_retrospective_incident_result_v2"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `idempotency_key` | `string` | Yes | A unique key to de-duplicate requests. |
+| `name` | `string` | Yes | A title for the incident |
+| `status_page_id` | `string` | Yes | ID of the status page. |
+| `updates` | `[]any` | Yes | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(nil).Create(map[string]any{
+    "idempotency_key": "example_idempotency_key",
+    "name": "example_name",
+    "status_page_id": "example_status_page_id",
+    "updates": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
 ## TeamEntity
 
 ```go
@@ -9684,6 +10409,139 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `UserEntity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## UsersShowPagingProviderResultV2Entity
+
+```go
+usersShowPagingProviderResultV2 := client.UsersShowPagingProviderResultV2(nil)
+fmt.Println(usersShowPagingProviderResultV2.GetName()) // "users_show_paging_provider_result_v2"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `preferred_escalation_provider` | `string` | No | The user's effective escalation provider. |
+
+### Field Usage by Operation
+
+| Field | load | create |
+| --- | --- | --- |
+| `preferred_escalation_provider` | - | Yes |
+
+### Operations
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.UsersShowPagingProviderResultV2(nil).Load(map[string]any{"user_id": "user_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.UsersShowPagingProviderResultV2(nil).Create(map[string]any{
+    "user_id": "example_user_id",
+    "preferred_escalation_provider": "example_preferred_escalation_provider",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `UsersShowPagingProviderResultV2Entity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## UtilitiesV1Entity
+
+```go
+utilitiesV1 := client.UtilitiesV1(nil)
+fmt.Println(utilitiesV1.GetName()) // "utilities_v1"
+```
+
+### Operations
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.UtilitiesV1(nil).Load(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `UtilitiesV1Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`

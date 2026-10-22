@@ -1,0 +1,74 @@
+# Entity: catalog_v3
+
+main: kit: entity: catalog_v3: {
+
+  alias: field: {}
+
+  fields: {
+    catalog_type_id: {
+      h: "Catalog Type Id"
+      n: "catalog_type_id"
+      r: true
+      sh: "The unique identifier of the catalog type containing the entries"
+      t: "`$STRING`"
+    }
+    entries: {
+      h: "Entries"
+      n: "entries"
+      r: true
+      sh: "A list of entries to update with their new values."
+      t: "`$ARRAY`"
+    }
+    update_attributes: {
+      h: "Update Attributes"
+      n: "update_attributes"
+      r: false
+      sh: "Optional list of specific attribute IDs to update across all entries."
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "catalog_v3"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "catalog_type_id"
+            "entries"
+            "update_attributes"
+          ]
+          co: {
+            id: "POST /v3/catalog_entries/actions/bulk_update"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v3/catalog_entries/actions/bulk_update"
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "catalog_entries"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "bulk_update"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

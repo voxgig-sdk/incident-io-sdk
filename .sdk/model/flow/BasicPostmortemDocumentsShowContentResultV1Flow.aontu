@@ -7,18 +7,18 @@ main: kit: flow: BasicPostmortemDocumentsShowContentResultV1Flow:
   name: "BasicPostmortemDocumentsShowContentResultV1Flow",
   step: [
     {
-      input: {
+      i: {
         ref: "postmortem_documents_show_content_result_v1_ref01",
         srcdatavar: "postmortem_documents_show_content_result_v1_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "postmortem_documents_show_content_result_v101"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

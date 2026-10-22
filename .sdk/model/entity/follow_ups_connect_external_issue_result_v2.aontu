@@ -1,0 +1,199 @@
+# Entity: follow_ups_connect_external_issue_result_v2
+
+main: kit: entity: follow_ups_connect_external_issue_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    assignee: {
+      h: "Assignee"
+      n: "assignee"
+      r: true
+      t: "`$OBJECT`"
+    }
+    assignee_team: {
+      h: "Assignee Team"
+      n: "assignee_team"
+      r: true
+      t: "`$OBJECT`"
+    }
+    completed_at: {
+      fo: "date-time"
+      h: "Completed At"
+      n: "completed_at"
+      r: false
+      sh: "When the follow-up was completed"
+      t: "`$STRING`"
+    }
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When the follow-up was created"
+      t: "`$STRING`"
+    }
+    creator: {
+      h: "Creator"
+      n: "creator"
+      r: true
+      t: "`$OBJECT`"
+    }
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "Description of the follow-up"
+      t: "`$STRING`"
+    }
+    external_issue_reference: {
+      h: "External Issue Reference"
+      n: "external_issue_reference"
+      r: true
+      t: "`$OBJECT`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for the follow-up"
+      t: "`$STRING`"
+    }
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "Unique identifier of the incident the follow-up belongs to"
+      t: "`$STRING`"
+    }
+    labels: {
+      h: "Labels"
+      n: "labels"
+      r: true
+      sh: "Labels associated with this follow-up"
+      t: "`$ARRAY`"
+    }
+    priority: {
+      h: "Priority"
+      n: "priority"
+      r: true
+      t: "`$OBJECT`"
+    }
+    provider: {
+      h: "Provider"
+      n: "provider"
+      r: true
+      sh: "The issue tracker provider the issue belongs to"
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: true
+      sh: "Status of the follow-up"
+      t: "`$STRING`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      sh: "Title of the follow-up"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When the follow-up was last updated"
+      t: "`$STRING`"
+    }
+    url: {
+      h: "Url"
+      n: "url"
+      r: true
+      sh: "URL of the issue in the external provider"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "follow_ups_connect_external_issue_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "provider"
+            "url"
+          ]
+          co: {
+            id: "POST /v2/follow_ups/{id}/actions/connect_external_issue"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "follow_up_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/follow_ups/{id}/actions/connect_external_issue"
+          q: {
+            exist: [
+              "follow_up_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "follow_up_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "follow_ups"
+            }
+            {
+              var: "follow_up_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "connect_external_issue"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.follow_up`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.follow_up")]
+  ]
+
+}

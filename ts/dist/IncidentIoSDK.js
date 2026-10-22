@@ -38,6 +38,7 @@ exports.SDK = exports.IncidentIoSDK = exports.IncidentIoEntityBase = exports.Bas
 const ActionEntity_1 = require("./entity/ActionEntity");
 const AlertEntity_1 = require("./entity/AlertEntity");
 const AlertAttributeEntity_1 = require("./entity/AlertAttributeEntity");
+const AlertEventsV2Entity_1 = require("./entity/AlertEventsV2Entity");
 const AlertNoteEntity_1 = require("./entity/AlertNoteEntity");
 const AlertRouteEntity_1 = require("./entity/AlertRouteEntity");
 const AlertSourceEntity_1 = require("./entity/AlertSourceEntity");
@@ -58,6 +59,7 @@ const CatalogEntryEntity_1 = require("./entity/CatalogEntryEntity");
 const CatalogResourceEntity_1 = require("./entity/CatalogResourceEntity");
 const CatalogTypeEntity_1 = require("./entity/CatalogTypeEntity");
 const CatalogTypeSchemaEntity_1 = require("./entity/CatalogTypeSchemaEntity");
+const CatalogV3Entity_1 = require("./entity/CatalogV3Entity");
 const CustomFieldEntity_1 = require("./entity/CustomFieldEntity");
 const CustomFieldOptionEntity_1 = require("./entity/CustomFieldOptionEntity");
 const EscalationEntity_1 = require("./entity/EscalationEntity");
@@ -65,15 +67,19 @@ const EscalationPathEntity_1 = require("./entity/EscalationPathEntity");
 const EscalationPathTemplateEntity_1 = require("./entity/EscalationPathTemplateEntity");
 const EscalationsCheckEscalationPermissionsResultV2Entity_1 = require("./entity/EscalationsCheckEscalationPermissionsResultV2Entity");
 const EscalationsReassignEscalationResultV2Entity_1 = require("./entity/EscalationsReassignEscalationResultV2Entity");
+const EscalationsV2Entity_1 = require("./entity/EscalationsV2Entity");
 const FollowUpEntity_1 = require("./entity/FollowUpEntity");
+const FollowUpsConnectExternalIssueResultV2Entity_1 = require("./entity/FollowUpsConnectExternalIssueResultV2Entity");
 const FollowUpsConnectExternalIssueResultV3Entity_1 = require("./entity/FollowUpsConnectExternalIssueResultV3Entity");
 const FollowUpsCreateFromLinkResultV3Entity_1 = require("./entity/FollowUpsCreateFromLinkResultV3Entity");
+const HeartbeatV2Entity_1 = require("./entity/HeartbeatV2Entity");
 const IdentityEntity_1 = require("./entity/IdentityEntity");
 const IncidentEntity_1 = require("./entity/IncidentEntity");
 const IncidentActivityLogEntryEntity_1 = require("./entity/IncidentActivityLogEntryEntity");
 const IncidentAttachmentEntity_1 = require("./entity/IncidentAttachmentEntity");
 const IncidentFormEntity_1 = require("./entity/IncidentFormEntity");
 const IncidentMembershipEntity_1 = require("./entity/IncidentMembershipEntity");
+const IncidentMembershipsV1Entity_1 = require("./entity/IncidentMembershipsV1Entity");
 const IncidentParticipantEntity_1 = require("./entity/IncidentParticipantEntity");
 const IncidentParticipantWorkloadEntity_1 = require("./entity/IncidentParticipantWorkloadEntity");
 const IncidentRelationshipEntity_1 = require("./entity/IncidentRelationshipEntity");
@@ -87,6 +93,7 @@ const IncidentTimelineItemEntity_1 = require("./entity/IncidentTimelineItemEntit
 const IncidentTimestampEntity_1 = require("./entity/IncidentTimestampEntity");
 const IncidentTypeEntity_1 = require("./entity/IncidentTypeEntity");
 const IncidentUpdateEntity_1 = require("./entity/IncidentUpdateEntity");
+const IncidentsImportPostmortemDocumentResultV2Entity_1 = require("./entity/IncidentsImportPostmortemDocumentResultV2Entity");
 const IpAllowlistEntity_1 = require("./entity/IpAllowlistEntity");
 const IpRangeEntity_1 = require("./entity/IpRangeEntity");
 const MaintenanceWindowEntity_1 = require("./entity/MaintenanceWindowEntity");
@@ -106,6 +113,8 @@ const PolicyFindingEntity_1 = require("./entity/PolicyFindingEntity");
 const PolicyFindingsDismissResultV2Entity_1 = require("./entity/PolicyFindingsDismissResultV2Entity");
 const PolicyFindingsRestoreResultV2Entity_1 = require("./entity/PolicyFindingsRestoreResultV2Entity");
 const PostmortemDocumentEntity_1 = require("./entity/PostmortemDocumentEntity");
+const PostmortemDocumentsAttachResultV1Entity_1 = require("./entity/PostmortemDocumentsAttachResultV1Entity");
+const PostmortemDocumentsShowContentResultV1Entity_1 = require("./entity/PostmortemDocumentsShowContentResultV1Entity");
 const ScheduleEntity_1 = require("./entity/ScheduleEntity");
 const ScheduleEntriesListPayloadV2Entity_1 = require("./entity/ScheduleEntriesListPayloadV2Entity");
 const ScheduleEntryEntity_1 = require("./entity/ScheduleEntryEntity");
@@ -124,9 +133,12 @@ const StatusPageLinkedResponseIncidentEntity_1 = require("./entity/StatusPageLin
 const StatusPageMaintenanceEntity_1 = require("./entity/StatusPageMaintenanceEntity");
 const StatusPageMaintenanceUpdateEntity_1 = require("./entity/StatusPageMaintenanceUpdateEntity");
 const StatusPageStructureEntity_1 = require("./entity/StatusPageStructureEntity");
+const StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity_1 = require("./entity/StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity");
 const TeamEntity_1 = require("./entity/TeamEntity");
 const TelemetryDataSourceEntity_1 = require("./entity/TelemetryDataSourceEntity");
 const UserEntity_1 = require("./entity/UserEntity");
+const UsersShowPagingProviderResultV2Entity_1 = require("./entity/UsersShowPagingProviderResultV2Entity");
+const UtilitiesV1Entity_1 = require("./entity/UtilitiesV1Entity");
 const WorkflowEntity_1 = require("./entity/WorkflowEntity");
 const WorkflowRunEntity_1 = require("./entity/WorkflowRunEntity");
 const node_util_1 = require("node:util");
@@ -399,6 +411,13 @@ class IncidentIoSDK {
         const self = this;
         return new AlertAttributeEntity_1.AlertAttributeEntity(self, entopts);
     }
+    // Entity access: `client.AlertEventsV2().list()` / `client.AlertEventsV2().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    AlertEventsV2(entopts) {
+        const self = this;
+        return new AlertEventsV2Entity_1.AlertEventsV2Entity(self, entopts);
+    }
     // Entity access: `client.AlertNote().list()` / `client.AlertNote().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
@@ -539,6 +558,13 @@ class IncidentIoSDK {
         const self = this;
         return new CatalogTypeSchemaEntity_1.CatalogTypeSchemaEntity(self, entopts);
     }
+    // Entity access: `client.CatalogV3().list()` / `client.CatalogV3().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    CatalogV3(entopts) {
+        const self = this;
+        return new CatalogV3Entity_1.CatalogV3Entity(self, entopts);
+    }
     // Entity access: `client.CustomField().list()` / `client.CustomField().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
@@ -588,12 +614,26 @@ class IncidentIoSDK {
         const self = this;
         return new EscalationsReassignEscalationResultV2Entity_1.EscalationsReassignEscalationResultV2Entity(self, entopts);
     }
+    // Entity access: `client.EscalationsV2().list()` / `client.EscalationsV2().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    EscalationsV2(entopts) {
+        const self = this;
+        return new EscalationsV2Entity_1.EscalationsV2Entity(self, entopts);
+    }
     // Entity access: `client.FollowUp().list()` / `client.FollowUp().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
     FollowUp(entopts) {
         const self = this;
         return new FollowUpEntity_1.FollowUpEntity(self, entopts);
+    }
+    // Entity access: `client.FollowUpsConnectExternalIssueResultV2().list()` / `client.FollowUpsConnectExternalIssueResultV2().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    FollowUpsConnectExternalIssueResultV2(entopts) {
+        const self = this;
+        return new FollowUpsConnectExternalIssueResultV2Entity_1.FollowUpsConnectExternalIssueResultV2Entity(self, entopts);
     }
     // Entity access: `client.FollowUpsConnectExternalIssueResultV3().list()` / `client.FollowUpsConnectExternalIssueResultV3().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -608,6 +648,13 @@ class IncidentIoSDK {
     FollowUpsCreateFromLinkResultV3(entopts) {
         const self = this;
         return new FollowUpsCreateFromLinkResultV3Entity_1.FollowUpsCreateFromLinkResultV3Entity(self, entopts);
+    }
+    // Entity access: `client.HeartbeatV2().list()` / `client.HeartbeatV2().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    HeartbeatV2(entopts) {
+        const self = this;
+        return new HeartbeatV2Entity_1.HeartbeatV2Entity(self, entopts);
     }
     // Entity access: `client.Identity().list()` / `client.Identity().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -650,6 +697,13 @@ class IncidentIoSDK {
     IncidentMembership(entopts) {
         const self = this;
         return new IncidentMembershipEntity_1.IncidentMembershipEntity(self, entopts);
+    }
+    // Entity access: `client.IncidentMembershipsV1().list()` / `client.IncidentMembershipsV1().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    IncidentMembershipsV1(entopts) {
+        const self = this;
+        return new IncidentMembershipsV1Entity_1.IncidentMembershipsV1Entity(self, entopts);
     }
     // Entity access: `client.IncidentParticipant().list()` / `client.IncidentParticipant().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -741,6 +795,13 @@ class IncidentIoSDK {
     IncidentUpdate(entopts) {
         const self = this;
         return new IncidentUpdateEntity_1.IncidentUpdateEntity(self, entopts);
+    }
+    // Entity access: `client.IncidentsImportPostmortemDocumentResultV2().list()` / `client.IncidentsImportPostmortemDocumentResultV2().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    IncidentsImportPostmortemDocumentResultV2(entopts) {
+        const self = this;
+        return new IncidentsImportPostmortemDocumentResultV2Entity_1.IncidentsImportPostmortemDocumentResultV2Entity(self, entopts);
     }
     // Entity access: `client.IpAllowlist().list()` / `client.IpAllowlist().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -875,6 +936,20 @@ class IncidentIoSDK {
         const self = this;
         return new PostmortemDocumentEntity_1.PostmortemDocumentEntity(self, entopts);
     }
+    // Entity access: `client.PostmortemDocumentsAttachResultV1().list()` / `client.PostmortemDocumentsAttachResultV1().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    PostmortemDocumentsAttachResultV1(entopts) {
+        const self = this;
+        return new PostmortemDocumentsAttachResultV1Entity_1.PostmortemDocumentsAttachResultV1Entity(self, entopts);
+    }
+    // Entity access: `client.PostmortemDocumentsShowContentResultV1().list()` / `client.PostmortemDocumentsShowContentResultV1().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    PostmortemDocumentsShowContentResultV1(entopts) {
+        const self = this;
+        return new PostmortemDocumentsShowContentResultV1Entity_1.PostmortemDocumentsShowContentResultV1Entity(self, entopts);
+    }
     // Entity access: `client.Schedule().list()` / `client.Schedule().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
@@ -1001,6 +1076,13 @@ class IncidentIoSDK {
         const self = this;
         return new StatusPageStructureEntity_1.StatusPageStructureEntity(self, entopts);
     }
+    // Entity access: `client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().list()` / `client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(entopts) {
+        const self = this;
+        return new StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity_1.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity(self, entopts);
+    }
     // Entity access: `client.Team().list()` / `client.Team().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
@@ -1021,6 +1103,20 @@ class IncidentIoSDK {
     User(entopts) {
         const self = this;
         return new UserEntity_1.UserEntity(self, entopts);
+    }
+    // Entity access: `client.UsersShowPagingProviderResultV2().list()` / `client.UsersShowPagingProviderResultV2().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    UsersShowPagingProviderResultV2(entopts) {
+        const self = this;
+        return new UsersShowPagingProviderResultV2Entity_1.UsersShowPagingProviderResultV2Entity(self, entopts);
+    }
+    // Entity access: `client.UtilitiesV1().list()` / `client.UtilitiesV1().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    UtilitiesV1(entopts) {
+        const self = this;
+        return new UtilitiesV1Entity_1.UtilitiesV1Entity(self, entopts);
     }
     // Entity access: `client.Workflow().list()` / `client.Workflow().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity

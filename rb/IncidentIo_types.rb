@@ -444,6 +444,80 @@ AlertAttributeRemoveMatch = Struct.new(
   keyword_init: true
 )
 
+# AlertEventsV2 entity data model.
+#
+# @!attribute [rw] deduplication_key
+#   @return [String]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
+# @!attribute [rw] message
+#   @return [String]
+#
+# @!attribute [rw] metadata
+#   @return [Hash, nil]
+#
+# @!attribute [rw] source_url
+#   @return [String, nil]
+#
+# @!attribute [rw] status
+#   @return [String]
+#
+# @!attribute [rw] title
+#   @return [String]
+AlertEventsV2 = Struct.new(
+  :deduplication_key,
+  :description,
+  :message,
+  :metadata,
+  :source_url,
+  :status,
+  :title,
+  keyword_init: true
+)
+
+# Request payload for AlertEventsV2#create.
+#
+# @!attribute [rw] alert_source_config_id
+#   @return [String]
+#
+# @!attribute [rw] query
+#   @return [Hash, nil]
+#
+# @!attribute [rw] token
+#   @return [String, nil]
+#
+# @!attribute [rw] deduplication_key
+#   @return [String, nil]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
+# @!attribute [rw] metadata
+#   @return [Hash, nil]
+#
+# @!attribute [rw] source_url
+#   @return [String, nil]
+#
+# @!attribute [rw] status
+#   @return [String]
+#
+# @!attribute [rw] title
+#   @return [String]
+AlertEventsV2CreateData = Struct.new(
+  :alert_source_config_id,
+  :query,
+  :token,
+  :deduplication_key,
+  :description,
+  :metadata,
+  :source_url,
+  :status,
+  :title,
+  keyword_init: true
+)
+
 # AlertNote entity data model.
 #
 # @!attribute [rw] alert_group_id
@@ -2876,6 +2950,40 @@ CatalogTypeSchemaCreateData = Struct.new(
   keyword_init: true
 )
 
+# CatalogV3 entity data model.
+#
+# @!attribute [rw] catalog_type_id
+#   @return [String]
+#
+# @!attribute [rw] entries
+#   @return [Array]
+#
+# @!attribute [rw] update_attributes
+#   @return [Array, nil]
+CatalogV3 = Struct.new(
+  :catalog_type_id,
+  :entries,
+  :update_attributes,
+  keyword_init: true
+)
+
+# Request payload for CatalogV3#create.
+#
+# @!attribute [rw] catalog_type_id
+#   @return [String]
+#
+# @!attribute [rw] entries
+#   @return [Array]
+#
+# @!attribute [rw] update_attributes
+#   @return [Array, nil]
+CatalogV3CreateData = Struct.new(
+  :catalog_type_id,
+  :entries,
+  :update_attributes,
+  keyword_init: true
+)
+
 # CustomField entity data model.
 #
 # @!attribute [rw] catalog_type_id
@@ -3676,6 +3784,36 @@ EscalationsReassignEscalationResultV2CreateData = Struct.new(
   keyword_init: true
 )
 
+# EscalationsV2 entity data model.
+#
+# @!attribute [rw] response
+#   @return [String]
+#
+# @!attribute [rw] snooze_details
+#   @return [Hash]
+EscalationsV2 = Struct.new(
+  :response,
+  :snooze_details,
+  keyword_init: true
+)
+
+# Request payload for EscalationsV2#create.
+#
+# @!attribute [rw] escalation_id
+#   @return [String]
+#
+# @!attribute [rw] response
+#   @return [String]
+#
+# @!attribute [rw] snooze_details
+#   @return [Hash]
+EscalationsV2CreateData = Struct.new(
+  :escalation_id,
+  :response,
+  :snooze_details,
+  keyword_init: true
+)
+
 # FollowUp entity data model.
 #
 # @!attribute [rw] assignee
@@ -3894,6 +4032,92 @@ FollowUpRemoveMatch = Struct.new(
   keyword_init: true
 )
 
+# FollowUpsConnectExternalIssueResultV2 entity data model.
+#
+# @!attribute [rw] assignee
+#   @return [Hash]
+#
+# @!attribute [rw] assignee_team
+#   @return [Hash]
+#
+# @!attribute [rw] completed_at
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [String]
+#
+# @!attribute [rw] creator
+#   @return [Hash]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
+# @!attribute [rw] external_issue_reference
+#   @return [Hash]
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] incident_id
+#   @return [String]
+#
+# @!attribute [rw] labels
+#   @return [Array]
+#
+# @!attribute [rw] priority
+#   @return [Hash]
+#
+# @!attribute [rw] provider
+#   @return [String]
+#
+# @!attribute [rw] status
+#   @return [String]
+#
+# @!attribute [rw] title
+#   @return [String]
+#
+# @!attribute [rw] updated_at
+#   @return [String]
+#
+# @!attribute [rw] url
+#   @return [String]
+FollowUpsConnectExternalIssueResultV2 = Struct.new(
+  :assignee,
+  :assignee_team,
+  :completed_at,
+  :created_at,
+  :creator,
+  :description,
+  :external_issue_reference,
+  :id,
+  :incident_id,
+  :labels,
+  :priority,
+  :provider,
+  :status,
+  :title,
+  :updated_at,
+  :url,
+  keyword_init: true
+)
+
+# Request payload for FollowUpsConnectExternalIssueResultV2#create.
+#
+# @!attribute [rw] follow_up_id
+#   @return [String]
+#
+# @!attribute [rw] provider
+#   @return [String]
+#
+# @!attribute [rw] url
+#   @return [String]
+FollowUpsConnectExternalIssueResultV2CreateData = Struct.new(
+  :follow_up_id,
+  :provider,
+  :url,
+  keyword_init: true
+)
+
 # FollowUpsConnectExternalIssueResultV3 entity data model.
 #
 # @!attribute [rw] assignee
@@ -4007,6 +4231,41 @@ FollowUpsCreateFromLinkResultV3 = Struct.new(
 FollowUpsCreateFromLinkResultV3CreateData = Struct.new(
   :incident_id,
   :url,
+  keyword_init: true
+)
+
+# HeartbeatV2 entity data model.
+#
+# @!attribute [rw] id
+#   @return [String, nil]
+HeartbeatV2 = Struct.new(
+  :id,
+  keyword_init: true
+)
+
+# Request payload for HeartbeatV2#load.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] token
+#   @return [String, nil]
+HeartbeatV2LoadMatch = Struct.new(
+  :id,
+  :token,
+  keyword_init: true
+)
+
+# Request payload for HeartbeatV2#create.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] token
+#   @return [String, nil]
+HeartbeatV2CreateData = Struct.new(
+  :id,
+  :token,
   keyword_init: true
 )
 
@@ -4593,6 +4852,32 @@ IncidentMembership = Struct.new(
 # @!attribute [rw] user_id
 #   @return [String]
 IncidentMembershipCreateData = Struct.new(
+  :incident_id,
+  :user_id,
+  keyword_init: true
+)
+
+# IncidentMembershipsV1 entity data model.
+#
+# @!attribute [rw] incident_id
+#   @return [String]
+#
+# @!attribute [rw] user_id
+#   @return [String]
+IncidentMembershipsV1 = Struct.new(
+  :incident_id,
+  :user_id,
+  keyword_init: true
+)
+
+# Request payload for IncidentMembershipsV1#create.
+#
+# @!attribute [rw] incident_id
+#   @return [String]
+#
+# @!attribute [rw] user_id
+#   @return [String]
+IncidentMembershipsV1CreateData = Struct.new(
   :incident_id,
   :user_id,
   keyword_init: true
@@ -5462,6 +5747,36 @@ IncidentUpdateCreateData = Struct.new(
   :message,
   :to_incident_status_id,
   :to_severity_id,
+  keyword_init: true
+)
+
+# IncidentsImportPostmortemDocumentResultV2 entity data model.
+#
+# @!attribute [rw] content
+#   @return [String]
+#
+# @!attribute [rw] title
+#   @return [String]
+IncidentsImportPostmortemDocumentResultV2 = Struct.new(
+  :content,
+  :title,
+  keyword_init: true
+)
+
+# Request payload for IncidentsImportPostmortemDocumentResultV2#create.
+#
+# @!attribute [rw] incident_id
+#   @return [String]
+#
+# @!attribute [rw] content
+#   @return [String]
+#
+# @!attribute [rw] title
+#   @return [String]
+IncidentsImportPostmortemDocumentResultV2CreateData = Struct.new(
+  :incident_id,
+  :content,
+  :title,
   keyword_init: true
 )
 
@@ -7354,6 +7669,58 @@ PostmortemDocumentUpdateData = Struct.new(
   keyword_init: true
 )
 
+# PostmortemDocumentsAttachResultV1 entity data model.
+#
+# @!attribute [rw] document_provider
+#   @return [String, nil]
+#
+# @!attribute [rw] incident_id
+#   @return [String]
+#
+# @!attribute [rw] permalink
+#   @return [String]
+PostmortemDocumentsAttachResultV1 = Struct.new(
+  :document_provider,
+  :incident_id,
+  :permalink,
+  keyword_init: true
+)
+
+# Request payload for PostmortemDocumentsAttachResultV1#create.
+#
+# @!attribute [rw] document_provider
+#   @return [String, nil]
+#
+# @!attribute [rw] incident_id
+#   @return [String]
+#
+# @!attribute [rw] permalink
+#   @return [String]
+PostmortemDocumentsAttachResultV1CreateData = Struct.new(
+  :document_provider,
+  :incident_id,
+  :permalink,
+  keyword_init: true
+)
+
+# PostmortemDocumentsShowContentResultV1 entity data model.
+#
+# @!attribute [rw] markdown
+#   @return [String]
+PostmortemDocumentsShowContentResultV1 = Struct.new(
+  :markdown,
+  keyword_init: true
+)
+
+# Request payload for PostmortemDocumentsShowContentResultV1#load.
+#
+# @!attribute [rw] postmortem_document_id
+#   @return [String]
+PostmortemDocumentsShowContentResultV1LoadMatch = Struct.new(
+  :postmortem_document_id,
+  keyword_init: true
+)
+
 # Schedule entity data model.
 #
 # @!attribute [rw] annotations
@@ -8993,6 +9360,48 @@ StatusPageStructureLoadMatch = Struct.new(
   keyword_init: true
 )
 
+# StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 entity data model.
+#
+# @!attribute [rw] idempotency_key
+#   @return [String]
+#
+# @!attribute [rw] name
+#   @return [String]
+#
+# @!attribute [rw] status_page_id
+#   @return [String]
+#
+# @!attribute [rw] updates
+#   @return [Array]
+StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 = Struct.new(
+  :idempotency_key,
+  :name,
+  :status_page_id,
+  :updates,
+  keyword_init: true
+)
+
+# Request payload for StatusPagesCreateStatusPageRetrospectiveIncidentResultV2#create.
+#
+# @!attribute [rw] idempotency_key
+#   @return [String]
+#
+# @!attribute [rw] name
+#   @return [String]
+#
+# @!attribute [rw] status_page_id
+#   @return [String]
+#
+# @!attribute [rw] updates
+#   @return [Array]
+StatusPagesCreateStatusPageRetrospectiveIncidentResultV2CreateData = Struct.new(
+  :idempotency_key,
+  :name,
+  :status_page_id,
+  :updates,
+  keyword_init: true
+)
+
 # Team entity data model.
 #
 # @!attribute [rw] catalog_entry
@@ -9176,6 +9585,45 @@ UserListMatch = Struct.new(
   :slack_user_id,
   keyword_init: true
 )
+
+# UsersShowPagingProviderResultV2 entity data model.
+#
+# @!attribute [rw] preferred_escalation_provider
+#   @return [String, nil]
+UsersShowPagingProviderResultV2 = Struct.new(
+  :preferred_escalation_provider,
+  keyword_init: true
+)
+
+# Request payload for UsersShowPagingProviderResultV2#load.
+#
+# @!attribute [rw] user_id
+#   @return [String]
+UsersShowPagingProviderResultV2LoadMatch = Struct.new(
+  :user_id,
+  keyword_init: true
+)
+
+# Request payload for UsersShowPagingProviderResultV2#create.
+#
+# @!attribute [rw] user_id
+#   @return [String]
+#
+# @!attribute [rw] preferred_escalation_provider
+#   @return [String]
+UsersShowPagingProviderResultV2CreateData = Struct.new(
+  :user_id,
+  :preferred_escalation_provider,
+  keyword_init: true
+)
+
+# UtilitiesV1 entity data model.
+class UtilitiesV1
+end
+
+# Request payload for UtilitiesV1#load.
+class UtilitiesV1LoadMatch
+end
 
 # Workflow entity data model.
 #

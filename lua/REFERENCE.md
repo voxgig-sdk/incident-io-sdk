@@ -53,6 +53,10 @@ Create a new `Alert` entity instance. Pass `nil` for no initial data.
 
 Create a new `AlertAttribute` entity instance. Pass `nil` for no initial data.
 
+#### `AlertEventsV2(data)`
+
+Create a new `AlertEventsV2` entity instance. Pass `nil` for no initial data.
+
 #### `AlertNote(data)`
 
 Create a new `AlertNote` entity instance. Pass `nil` for no initial data.
@@ -133,6 +137,10 @@ Create a new `CatalogType` entity instance. Pass `nil` for no initial data.
 
 Create a new `CatalogTypeSchema` entity instance. Pass `nil` for no initial data.
 
+#### `CatalogV3(data)`
+
+Create a new `CatalogV3` entity instance. Pass `nil` for no initial data.
+
 #### `CustomField(data)`
 
 Create a new `CustomField` entity instance. Pass `nil` for no initial data.
@@ -161,9 +169,17 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2` entity instance. Pa
 
 Create a new `EscalationsReassignEscalationResultV2` entity instance. Pass `nil` for no initial data.
 
+#### `EscalationsV2(data)`
+
+Create a new `EscalationsV2` entity instance. Pass `nil` for no initial data.
+
 #### `FollowUp(data)`
 
 Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
+
+#### `FollowUpsConnectExternalIssueResultV2(data)`
+
+Create a new `FollowUpsConnectExternalIssueResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `FollowUpsConnectExternalIssueResultV3(data)`
 
@@ -172,6 +188,10 @@ Create a new `FollowUpsConnectExternalIssueResultV3` entity instance. Pass `nil`
 #### `FollowUpsCreateFromLinkResultV3(data)`
 
 Create a new `FollowUpsCreateFromLinkResultV3` entity instance. Pass `nil` for no initial data.
+
+#### `HeartbeatV2(data)`
+
+Create a new `HeartbeatV2` entity instance. Pass `nil` for no initial data.
 
 #### `Identity(data)`
 
@@ -196,6 +216,10 @@ Create a new `IncidentForm` entity instance. Pass `nil` for no initial data.
 #### `IncidentMembership(data)`
 
 Create a new `IncidentMembership` entity instance. Pass `nil` for no initial data.
+
+#### `IncidentMembershipsV1(data)`
+
+Create a new `IncidentMembershipsV1` entity instance. Pass `nil` for no initial data.
 
 #### `IncidentParticipant(data)`
 
@@ -248,6 +272,10 @@ Create a new `IncidentType` entity instance. Pass `nil` for no initial data.
 #### `IncidentUpdate(data)`
 
 Create a new `IncidentUpdate` entity instance. Pass `nil` for no initial data.
+
+#### `IncidentsImportPostmortemDocumentResultV2(data)`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `IpAllowlist(data)`
 
@@ -325,6 +353,14 @@ Create a new `PolicyFindingsRestoreResultV2` entity instance. Pass `nil` for no 
 
 Create a new `PostmortemDocument` entity instance. Pass `nil` for no initial data.
 
+#### `PostmortemDocumentsAttachResultV1(data)`
+
+Create a new `PostmortemDocumentsAttachResultV1` entity instance. Pass `nil` for no initial data.
+
+#### `PostmortemDocumentsShowContentResultV1(data)`
+
+Create a new `PostmortemDocumentsShowContentResultV1` entity instance. Pass `nil` for no initial data.
+
 #### `Schedule(data)`
 
 Create a new `Schedule` entity instance. Pass `nil` for no initial data.
@@ -397,6 +433,10 @@ Create a new `StatusPageMaintenanceUpdate` entity instance. Pass `nil` for no in
 
 Create a new `StatusPageStructure` entity instance. Pass `nil` for no initial data.
 
+#### `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data)`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2` entity instance. Pass `nil` for no initial data.
+
 #### `Team(data)`
 
 Create a new `Team` entity instance. Pass `nil` for no initial data.
@@ -408,6 +448,14 @@ Create a new `TelemetryDataSource` entity instance. Pass `nil` for no initial da
 #### `User(data)`
 
 Create a new `User` entity instance. Pass `nil` for no initial data.
+
+#### `UsersShowPagingProviderResultV2(data)`
+
+Create a new `UsersShowPagingProviderResultV2` entity instance. Pass `nil` for no initial data.
+
+#### `UtilitiesV1(data)`
+
+Create a new `UtilitiesV1` entity instance. Pass `nil` for no initial data.
 
 #### `Workflow(data)`
 
@@ -739,6 +787,80 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `AlertAttributeEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## AlertEventsV2Entity
+
+```lua
+local alert_events_v2 = client:AlertEventsV2(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `deduplication_key` | `string` | Yes | The deduplication key that the event has been processed with |
+| `description` | `string` | No | Description that optionally adds more detail to title. |
+| `message` | `string` | Yes | Human readable message giving detail about the event |
+| `metadata` | `table` | No | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Yes | Status of the event |
+| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `deduplication_key` | Yes |
+| `description` | - |
+| `message` | - |
+| `metadata` | - |
+| `source_url` | - |
+| `status` | - |
+| `title` | - |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:AlertEventsV2():create({
+  alert_source_config_id = --[[ string ]],
+  status = --[[ string ]],
+  title = --[[ string ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `AlertEventsV2Entity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -2576,6 +2698,63 @@ Return the entity name.
 
 ---
 
+## CatalogV3Entity
+
+```lua
+local catalog_v3 = client:CatalogV3(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `catalog_type_id` | `string` | Yes | The unique identifier of the catalog type containing the entries |
+| `entries` | `table` | Yes | A list of entries to update with their new values. |
+| `update_attributes` | `table` | No | Optional list of specific attribute IDs to update across all entries. |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:CatalogV3():create({
+  catalog_type_id = --[[ string ]],
+  entries = --[[ table ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogV3Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```lua
@@ -3228,6 +3407,63 @@ Return the entity name.
 
 ---
 
+## EscalationsV2Entity
+
+```lua
+local escalations_v2 = client:EscalationsV2(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `response` | `string` | Yes | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` | `table` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:EscalationsV2():create({
+  escalation_id = --[[ string ]],
+  response = --[[ string ]],
+  snooze_details = --[[ table ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `EscalationsV2Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpEntity
 
 ```lua
@@ -3362,6 +3598,77 @@ Return the entity name.
 
 ---
 
+## FollowUpsConnectExternalIssueResultV2Entity
+
+```lua
+local follow_ups_connect_external_issue_result_v2 = client:FollowUpsConnectExternalIssueResultV2(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `assignee` | `table` | Yes |  |
+| `assignee_team` | `table` | Yes |  |
+| `completed_at` | `string` | No | When the follow-up was completed |
+| `created_at` | `string` | Yes | When the follow-up was created |
+| `creator` | `table` | Yes |  |
+| `description` | `string` | No | Description of the follow-up |
+| `external_issue_reference` | `table` | Yes |  |
+| `id` | `string` | Yes | Unique identifier for the follow-up |
+| `incident_id` | `string` | Yes | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `table` | Yes | Labels associated with this follow-up |
+| `priority` | `table` | Yes |  |
+| `provider` | `string` | Yes | The issue tracker provider the issue belongs to |
+| `status` | `string` | Yes | Status of the follow-up |
+| `title` | `string` | Yes | Title of the follow-up |
+| `updated_at` | `string` | Yes | When the follow-up was last updated |
+| `url` | `string` | Yes | URL of the issue in the external provider |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:FollowUpsConnectExternalIssueResultV2():create({
+  follow_up_id = --[[ string ]],
+  provider = --[[ string ]],
+  url = --[[ string ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `FollowUpsConnectExternalIssueResultV2Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpsConnectExternalIssueResultV3Entity
 
 ```lua
@@ -3481,6 +3788,68 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `FollowUpsCreateFromLinkResultV3Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## HeartbeatV2Entity
+
+```lua
+local heartbeat_v2 = client:HeartbeatV2(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:HeartbeatV2():create({
+  id = --[[ string ]],
+})
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:HeartbeatV2():load({ id = "heartbeat_v2_id" })
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `HeartbeatV2Entity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -3975,6 +4344,62 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `IncidentMembershipEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## IncidentMembershipsV1Entity
+
+```lua
+local incident_memberships_v1 = client:IncidentMembershipsV1(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `incident_id` | `string` | Yes | Revoke memberships to incident |
+| `user_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:IncidentMembershipsV1():create({
+  incident_id = --[[ string ]],
+  user_id = --[[ string ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `IncidentMembershipsV1Entity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -4912,6 +5337,63 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `IncidentUpdateEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## IncidentsImportPostmortemDocumentResultV2Entity
+
+```lua
+local incidents_import_postmortem_document_result_v2 = client:IncidentsImportPostmortemDocumentResultV2(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `content` | `string` | Yes | The document content as GitHub-Flavored Markdown |
+| `title` | `string` | Yes | Title of the postmortem document |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:IncidentsImportPostmortemDocumentResultV2():create({
+  incident_id = --[[ string ]],
+  content = --[[ string ]],
+  title = --[[ string ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2Entity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -6492,6 +6974,115 @@ Return the entity name.
 
 ---
 
+## PostmortemDocumentsAttachResultV1Entity
+
+```lua
+local postmortem_documents_attach_result_v1 = client:PostmortemDocumentsAttachResultV1(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `document_provider` | `string` | No | The provider hosting the document. |
+| `incident_id` | `string` | Yes | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | `string` | Yes | A URL pointing to the externally-hosted post-mortem document |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:PostmortemDocumentsAttachResultV1():create({
+  incident_id = --[[ string ]],
+  permalink = --[[ string ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `PostmortemDocumentsAttachResultV1Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## PostmortemDocumentsShowContentResultV1Entity
+
+```lua
+local postmortem_documents_show_content_result_v1 = client:PostmortemDocumentsShowContentResultV1(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `markdown` | `string` | Yes | The full content of the post-mortem document, rendered as markdown. |
+
+### Operations
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:PostmortemDocumentsShowContentResultV1():load({ postmortem_document_id = "postmortem_document_id" })
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `PostmortemDocumentsShowContentResultV1Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleEntity
 
 ```lua
@@ -8032,6 +8623,66 @@ Return the entity name.
 
 ---
 
+## StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity
+
+```lua
+local status_pages_create_status_page_retrospective_incident_result_v2 = client:StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `idempotency_key` | `string` | Yes | A unique key to de-duplicate requests. |
+| `name` | `string` | Yes | A title for the incident |
+| `status_page_id` | `string` | Yes | ID of the status page. |
+| `updates` | `table` | Yes | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:StatusPagesCreateStatusPageRetrospectiveIncidentResultV2():create({
+  idempotency_key = --[[ string ]],
+  name = --[[ string ]],
+  status_page_id = --[[ string ]],
+  updates = --[[ table ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## TeamEntity
 
 ```lua
@@ -8233,6 +8884,121 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `UserEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## UsersShowPagingProviderResultV2Entity
+
+```lua
+local users_show_paging_provider_result_v2 = client:UsersShowPagingProviderResultV2(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `preferred_escalation_provider` | `string` | No | The user's effective escalation provider. |
+
+### Field Usage by Operation
+
+| Field | load | create |
+| --- | --- | --- |
+| `preferred_escalation_provider` | - | Yes |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:UsersShowPagingProviderResultV2():create({
+  user_id = --[[ string ]],
+  preferred_escalation_provider = --[[ string ]],
+})
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:UsersShowPagingProviderResultV2():load({ user_id = "user_id" })
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `UsersShowPagingProviderResultV2Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## UtilitiesV1Entity
+
+```lua
+local utilities_v1 = client:UtilitiesV1(nil)
+```
+
+### Operations
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:UtilitiesV1():load()
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `UtilitiesV1Entity` instance with the same client and
 options.
 
 #### `get_name() -> string`

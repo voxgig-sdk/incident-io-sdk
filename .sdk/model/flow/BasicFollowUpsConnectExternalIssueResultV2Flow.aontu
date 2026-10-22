@@ -7,15 +7,15 @@ main: kit: flow: BasicFollowUpsConnectExternalIssueResultV2Flow:
   name: "BasicFollowUpsConnectExternalIssueResultV2Flow",
   step: [
     {
-      input: {
+      i: {
         ref: "follow_ups_connect_external_issue_result_v2_ref01"
       }
 
-      match: {
+      m: {
         follow_up_id: "follow_up01"
       }
 
-      op: "create"
+      o: "create"
     }
   ],
   "key$": "BasicFollowUpsConnectExternalIssueResultV2Flow"

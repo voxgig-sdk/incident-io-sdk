@@ -83,6 +83,8 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.Alert(nil), nil
 	case "alert_attribute":
 		return client.AlertAttribute(nil), nil
+	case "alert_events_v2":
+		return client.AlertEventsV2(nil), nil
 	case "alert_note":
 		return client.AlertNote(nil), nil
 	case "alert_route":
@@ -123,6 +125,8 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.CatalogType(nil), nil
 	case "catalog_type_schema":
 		return client.CatalogTypeSchema(nil), nil
+	case "catalog_v3":
+		return client.CatalogV3(nil), nil
 	case "custom_field":
 		return client.CustomField(nil), nil
 	case "custom_field_option":
@@ -137,12 +141,18 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.EscalationsCheckEscalationPermissionsResultV2(nil), nil
 	case "escalations_reassign_escalation_result_v2":
 		return client.EscalationsReassignEscalationResultV2(nil), nil
+	case "escalations_v2":
+		return client.EscalationsV2(nil), nil
 	case "follow_up":
 		return client.FollowUp(nil), nil
+	case "follow_ups_connect_external_issue_result_v2":
+		return client.FollowUpsConnectExternalIssueResultV2(nil), nil
 	case "follow_ups_connect_external_issue_result_v3":
 		return client.FollowUpsConnectExternalIssueResultV3(nil), nil
 	case "follow_ups_create_from_link_result_v3":
 		return client.FollowUpsCreateFromLinkResultV3(nil), nil
+	case "heartbeat_v2":
+		return client.HeartbeatV2(nil), nil
 	case "identity":
 		return client.Identity(nil), nil
 	case "incident":
@@ -155,6 +165,8 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.IncidentForm(nil), nil
 	case "incident_membership":
 		return client.IncidentMembership(nil), nil
+	case "incident_memberships_v1":
+		return client.IncidentMembershipsV1(nil), nil
 	case "incident_participant":
 		return client.IncidentParticipant(nil), nil
 	case "incident_participant_workload":
@@ -181,6 +193,8 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.IncidentType(nil), nil
 	case "incident_update":
 		return client.IncidentUpdate(nil), nil
+	case "incidents_import_postmortem_document_result_v2":
+		return client.IncidentsImportPostmortemDocumentResultV2(nil), nil
 	case "ip_allowlist":
 		return client.IpAllowlist(nil), nil
 	case "ip_range":
@@ -219,6 +233,10 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.PolicyFindingsRestoreResultV2(nil), nil
 	case "postmortem_document":
 		return client.PostmortemDocument(nil), nil
+	case "postmortem_documents_attach_result_v1":
+		return client.PostmortemDocumentsAttachResultV1(nil), nil
+	case "postmortem_documents_show_content_result_v1":
+		return client.PostmortemDocumentsShowContentResultV1(nil), nil
 	case "schedule":
 		return client.Schedule(nil), nil
 	case "schedule_entries_list_payload_v2":
@@ -255,12 +273,18 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.StatusPageMaintenanceUpdate(nil), nil
 	case "status_page_structure":
 		return client.StatusPageStructure(nil), nil
+	case "status_pages_create_status_page_retrospective_incident_result_v2":
+		return client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(nil), nil
 	case "team":
 		return client.Team(nil), nil
 	case "telemetry_data_source":
 		return client.TelemetryDataSource(nil), nil
 	case "user":
 		return client.User(nil), nil
+	case "users_show_paging_provider_result_v2":
+		return client.UsersShowPagingProviderResultV2(nil), nil
+	case "utilities_v1":
+		return client.UtilitiesV1(nil), nil
 	case "workflow":
 		return client.Workflow(nil), nil
 	case "workflow_run":

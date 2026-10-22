@@ -20,7 +20,7 @@ Full documentation for this SDK: [https://voxgig-sdk.github.io/incident-io-sdk/]
 
 ## Entities, not endpoints
 
-This SDK exposes the API as **94 semantic entities** that you
+This SDK exposes the API as **106 semantic entities** that you
 call directly, instead of assembling URL paths and query strings. See the [Entities](#entities) table below for the full list. Entities are
 **Capitalised** to mark them as the primary surface, each with the operations they
 support (`list`, `load`, `create`, `update`, `remove`):
@@ -46,22 +46,22 @@ network, and no credentials:
 // Shape: { entity: { <entity-name>: { <id>: <record> } } }
 const client = IncidentIoSDK.test({
   entity: {
-    escalation_path: {
-      test01: { id: 'test01', name: 'example_name', path: [], repeat_config: {} },
+    incident_status: {
+      test01: { id: 'test01', category: 'example_category', description: 'example_description', name: 'example_name' },
     },
   },
 })
-const escalationpaths = await client.EscalationPath().list()
-// escalationpaths is an array of EscalationPath entities, one per mock record
-console.log(escalationpaths.map((escalationpath) => escalationpath.data()))
+const incidentstatuss = await client.IncidentStatus().list()
+// incidentstatuss is an array of IncidentStatus entities, one per mock record
+console.log(incidentstatuss.map((incidentstatus) => incidentstatus.data()))
 ```
 
 ### Python
 
 ```python
 client = IncidentIoSDK.test()
-escalationpaths = client.EscalationPath().list()
-print([item.data_get() for item in escalationpaths])
+incidentstatuss = client.IncidentStatus().list()
+print([item.data_get() for item in incidentstatuss])
 ```
 
 ### PHP
@@ -69,16 +69,16 @@ print([item.data_get() for item in escalationpaths])
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = IncidentIoSDK::test([
-    "entity" => ["escalation_path" => ["test01" => ["id" => "test01"]]],
+    "entity" => ["incident_status" => ["test01" => ["id" => "test01"]]],
 ]);
-$escalationpaths = $client->EscalationPath()->list();
+$incidentstatuss = $client->IncidentStatus()->list();
 ```
 
 ### Golang
 
 ```go
 client := sdk.Test()
-result, err := client.EscalationPath(nil).List(
+result, err := client.IncidentStatus(nil).List(
     nil, nil,
 )
 ```
@@ -88,16 +88,16 @@ result, err := client.EscalationPath(nil).List(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = IncidentIoSDK.test({
-  "entity" => { "escalation_path" => { "test01" => { "id" => "test01" } } },
+  "entity" => { "incident_status" => { "test01" => { "id" => "test01" } } },
 })
-escalationpaths = client.EscalationPath.list()
+incidentstatuss = client.IncidentStatus.list()
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local results, err = client:EscalationPath():list()
+local results, err = client:IncidentStatus():list()
 ```
 
 ## Packages
@@ -173,13 +173,14 @@ Then add it to your agent's MCP config (Claude Desktop, Cursor, etc.):
 
 ## Entities
 
-The API exposes 94 entities:
+The API exposes 106 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
 | **Action** | The Action entity (create, list, load, remove, update). | `/v3/actions` |
 | **Alert** | The Alert entity (create, list, load). | `/v2/alerts` |
 | **AlertAttribute** | The AlertAttribute entity (create, list, load, remove, update). | `/v2/alert_attributes` |
+| **AlertEventsV2** | The AlertEventsV2 entity (create). | `/v2/alert_events/http/{alert_source_config_id}` |
 | **AlertNote** | The AlertNote entity (create, list, load, remove, update). | `/v1/alert_notes` |
 | **AlertRoute** | The AlertRoute entity (create, list, load, remove, update). | `/v3/alert_routes` |
 | **AlertSource** | The AlertSource entity (create, list, load, remove, update). | `/v2/alert_sources` |
@@ -200,6 +201,7 @@ The API exposes 94 entities:
 | **CatalogResource** | The CatalogResource entity (list). | `/v3/catalog_resources` |
 | **CatalogType** | The CatalogType entity (create, list, load, remove, update). | `/v3/catalog_types` |
 | **CatalogTypeSchema** | The CatalogTypeSchema entity (create). | `/v3/catalog_types/{id}/actions/update_schema` |
+| **CatalogV3** | The CatalogV3 entity (create). | `/v3/catalog_entries/actions/bulk_update` |
 | **CustomField** | The CustomField entity (create, list, load, remove, update). | `/v2/custom_fields` |
 | **CustomFieldOption** | The CustomFieldOption entity (create, list, load, remove, update). | `/v1/custom_field_options` |
 | **Escalation** | The Escalation entity (create, list, load). | `/v2/escalations` |
@@ -207,15 +209,19 @@ The API exposes 94 entities:
 | **EscalationPathTemplate** | The EscalationPathTemplate entity (create, list, load, remove, update). | `/v2/escalation_path_templates` |
 | **EscalationsCheckEscalationPermissionsResultV2** | The EscalationsCheckEscalationPermissionsResultV2 entity (create). | `/v2/escalations/{escalation_id}/actions/check_permissions` |
 | **EscalationsReassignEscalationResultV2** | The EscalationsReassignEscalationResultV2 entity (create). | `/v2/escalations/{escalation_id}/actions/reassign` |
+| **EscalationsV2** | The EscalationsV2 entity (create). | `/v2/escalations/{escalation_id}/actions/respond` |
 | **FollowUp** | The FollowUp entity (create, list, load, remove, update). | `/v3/follow_ups` |
+| **FollowUpsConnectExternalIssueResultV2** | The FollowUpsConnectExternalIssueResultV2 entity (create). | `/v2/follow_ups/{id}/actions/connect_external_issue` |
 | **FollowUpsConnectExternalIssueResultV3** | The FollowUpsConnectExternalIssueResultV3 entity (create). | `/v3/follow_ups/{id}/actions/connect_external_issue` |
 | **FollowUpsCreateFromLinkResultV3** | The FollowUpsCreateFromLinkResultV3 entity (create). | `/v3/follow_ups/actions/create_from_link` |
+| **HeartbeatV2** | The HeartbeatV2 entity (create, load). | `/v2/heartbeat/{alert_source_config_id}/ping` |
 | **Identity** | The Identity entity (load). | `/v1/identity` |
 | **Incident** | The Incident entity (create, list, load). | `/v2/incidents` |
 | **IncidentActivityLogEntry** | The IncidentActivityLogEntry entity (list). | `/v2/incident_activity_log_entries` |
 | **IncidentAttachment** | The IncidentAttachment entity (create, list, remove). | `/v1/incident_attachments` |
 | **IncidentForm** | The IncidentForm entity (create, list, load, remove, update). | `/v3/incident_forms` |
 | **IncidentMembership** | The IncidentMembership entity (create). | `/v1/incident_memberships` |
+| **IncidentMembershipsV1** | The IncidentMembershipsV1 entity (create). | `/v1/incident_memberships/actions/revoke` |
 | **IncidentParticipant** | The IncidentParticipant entity (load). | `/v2/incident_participants` |
 | **IncidentParticipantWorkload** | The IncidentParticipantWorkload entity (list). | `/v2/incident_participant_workloads` |
 | **IncidentRelationship** | The IncidentRelationship entity (list). | `/v1/incident_relationships` |
@@ -229,6 +235,7 @@ The API exposes 94 entities:
 | **IncidentTimestamp** | The IncidentTimestamp entity (list, load). | `/v2/incident_timestamps` |
 | **IncidentType** | The IncidentType entity (list, load). | `/v1/incident_types` |
 | **IncidentUpdate** | The IncidentUpdate entity (create, list). | `/v2/incident_updates` |
+| **IncidentsImportPostmortemDocumentResultV2** | The IncidentsImportPostmortemDocumentResultV2 entity (create). | `/v2/incidents/{id}/actions/import_postmortem_document` |
 | **IpAllowlist** | The IpAllowlist entity (load, update). | `/v1/ip_allowlists` |
 | **IpRange** | The IpRange entity (list). | `/v1/ip_ranges` |
 | **MaintenanceWindow** | The MaintenanceWindow entity (create, list, load, remove, update). | `/v1/maintenance_windows` |
@@ -248,6 +255,8 @@ The API exposes 94 entities:
 | **PolicyFindingsDismissResultV2** | The PolicyFindingsDismissResultV2 entity (create). | `/v2/policy_findings/{id}/actions/dismiss` |
 | **PolicyFindingsRestoreResultV2** | The PolicyFindingsRestoreResultV2 entity (create). | `/v2/policy_findings/{id}/actions/restore` |
 | **PostmortemDocument** | The PostmortemDocument entity (list, load, update). | `/v1/postmortem_documents` |
+| **PostmortemDocumentsAttachResultV1** | The PostmortemDocumentsAttachResultV1 entity (create). | `/v1/postmortem_documents/actions/attach` |
+| **PostmortemDocumentsShowContentResultV1** | The PostmortemDocumentsShowContentResultV1 entity (load). | `/v1/postmortem_documents/{id}/content` |
 | **Schedule** | The Schedule entity (create, list, load, remove, update). | `/v2/schedules` |
 | **ScheduleEntriesListPayloadV2** | The ScheduleEntriesListPayloadV2 entity (create). | `/v2/schedules/{id}/actions/preview_entries` |
 | **ScheduleEntry** | The ScheduleEntry entity (load). | `/v2/schedule_entries` |
@@ -266,9 +275,12 @@ The API exposes 94 entities:
 | **StatusPageMaintenance** | The StatusPageMaintenance entity (create, list, load, remove, update). | `/v2/status_page_maintenances` |
 | **StatusPageMaintenanceUpdate** | The StatusPageMaintenanceUpdate entity (create). | `/v2/status_page_maintenance_updates` |
 | **StatusPageStructure** | The StatusPageStructure entity (load). | `/v2/status_page_structures/{status_page_id}` |
+| **StatusPagesCreateStatusPageRetrospectiveIncidentResultV2** | The StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 entity (create). | `/v2/status_page_retrospective_incidents` |
 | **Team** | The Team entity (list, load). | `/v3/teams` |
 | **TelemetryDataSource** | The TelemetryDataSource entity (update). | `/v2/telemetry/data_sources/{id}` |
 | **User** | The User entity (list, load). | `/v2/users` |
+| **UsersShowPagingProviderResultV2** | The UsersShowPagingProviderResultV2 entity (create, load). | `/v2/users/{user_id}/paging_provider` |
+| **UtilitiesV1** | The UtilitiesV1 entity (load). | `/v1/openapiV3.json` |
 | **Workflow** | The Workflow entity (create, list, load, remove, update). | `/v2/workflows` |
 | **WorkflowRun** | The WorkflowRun entity (list, load). | `/v2/workflow_runs` |
 

@@ -7,11 +7,11 @@ main: kit: flow: BasicStatusPagesCreateStatusPageRetrospectiveIncidentResultV2Fl
   name: "BasicStatusPagesCreateStatusPageRetrospectiveIncidentResultV2Flow",
   step: [
     {
-      input: {
+      i: {
         ref: "status_pages_create_status_page_retrospective_incident_result_v2_ref01"
       }
 
-      op: "create"
+      o: "create"
     }
   ],
   "key$": "BasicStatusPagesCreateStatusPageRetrospectiveIncidentResultV2Flow"

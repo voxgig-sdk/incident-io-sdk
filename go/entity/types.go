@@ -136,6 +136,23 @@ type AlertAttributeRemoveMatch struct {
 	Id string `json:"id"`
 }
 
+// AlertEventsV2 is the typed data model for the alert_events_v2 entity.
+type AlertEventsV2 struct {
+}
+
+// AlertEventsV2CreateData is the typed request payload for AlertEventsV2.CreateTyped.
+type AlertEventsV2CreateData struct {
+	AlertSourceConfigId string `json:"alert_source_config_id"`
+	Query *map[string]any `json:"query,omitempty"`
+	Token *string `json:"token,omitempty"`
+	DeduplicationKey *string `json:"deduplication_key,omitempty"`
+	Description *string `json:"description,omitempty"`
+	Metadata *map[string]any `json:"metadata,omitempty"`
+	SourceUrl *string `json:"source_url,omitempty"`
+	Status string `json:"status"`
+	Title string `json:"title"`
+}
+
 // AlertNote is the typed data model for the alert_note entity.
 type AlertNote struct {
 }
@@ -754,6 +771,17 @@ type CatalogTypeSchemaCreateData struct {
 	Version int `json:"version"`
 }
 
+// CatalogV3 is the typed data model for the catalog_v3 entity.
+type CatalogV3 struct {
+}
+
+// CatalogV3CreateData is the typed request payload for CatalogV3.CreateTyped.
+type CatalogV3CreateData struct {
+	CatalogTypeId string `json:"catalog_type_id"`
+	Entries []any `json:"entries"`
+	UpdateAttributes *[]any `json:"update_attributes,omitempty"`
+}
+
 // CustomField is the typed data model for the custom_field entity.
 type CustomField struct {
 }
@@ -986,6 +1014,17 @@ type EscalationsReassignEscalationResultV2CreateData struct {
 	UserIds *[]any `json:"user_ids,omitempty"`
 }
 
+// EscalationsV2 is the typed data model for the escalations_v2 entity.
+type EscalationsV2 struct {
+}
+
+// EscalationsV2CreateData is the typed request payload for EscalationsV2.CreateTyped.
+type EscalationsV2CreateData struct {
+	EscalationId string `json:"escalation_id"`
+	Response string `json:"response"`
+	SnoozeDetails map[string]any `json:"snooze_details"`
+}
+
 // FollowUp is the typed data model for the follow_up entity.
 type FollowUp struct {
 }
@@ -1037,6 +1076,17 @@ type FollowUpRemoveMatch struct {
 	Id string `json:"id"`
 }
 
+// FollowUpsConnectExternalIssueResultV2 is the typed data model for the follow_ups_connect_external_issue_result_v2 entity.
+type FollowUpsConnectExternalIssueResultV2 struct {
+}
+
+// FollowUpsConnectExternalIssueResultV2CreateData is the typed request payload for FollowUpsConnectExternalIssueResultV2.CreateTyped.
+type FollowUpsConnectExternalIssueResultV2CreateData struct {
+	FollowUpId string `json:"follow_up_id"`
+	Provider string `json:"provider"`
+	Url string `json:"url"`
+}
+
 // FollowUpsConnectExternalIssueResultV3 is the typed data model for the follow_ups_connect_external_issue_result_v3 entity.
 type FollowUpsConnectExternalIssueResultV3 struct {
 }
@@ -1056,6 +1106,22 @@ type FollowUpsCreateFromLinkResultV3 struct {
 type FollowUpsCreateFromLinkResultV3CreateData struct {
 	IncidentId string `json:"incident_id"`
 	Url string `json:"url"`
+}
+
+// HeartbeatV2 is the typed data model for the heartbeat_v2 entity.
+type HeartbeatV2 struct {
+}
+
+// HeartbeatV2LoadMatch is the typed request payload for HeartbeatV2.LoadTyped.
+type HeartbeatV2LoadMatch struct {
+	Id string `json:"id"`
+	Token *string `json:"token,omitempty"`
+}
+
+// HeartbeatV2CreateData is the typed request payload for HeartbeatV2.CreateTyped.
+type HeartbeatV2CreateData struct {
+	Id string `json:"id"`
+	Token *string `json:"token,omitempty"`
 }
 
 // Identity is the typed data model for the identity entity.
@@ -1192,6 +1258,16 @@ type IncidentMembership struct {
 
 // IncidentMembershipCreateData is the typed request payload for IncidentMembership.CreateTyped.
 type IncidentMembershipCreateData struct {
+	IncidentId string `json:"incident_id"`
+	UserId string `json:"user_id"`
+}
+
+// IncidentMembershipsV1 is the typed data model for the incident_memberships_v1 entity.
+type IncidentMembershipsV1 struct {
+}
+
+// IncidentMembershipsV1CreateData is the typed request payload for IncidentMembershipsV1.CreateTyped.
+type IncidentMembershipsV1CreateData struct {
 	IncidentId string `json:"incident_id"`
 	UserId string `json:"user_id"`
 }
@@ -1459,6 +1535,17 @@ type IncidentUpdateCreateData struct {
 	Message *string `json:"message,omitempty"`
 	ToIncidentStatusId *string `json:"to_incident_status_id,omitempty"`
 	ToSeverityId *string `json:"to_severity_id,omitempty"`
+}
+
+// IncidentsImportPostmortemDocumentResultV2 is the typed data model for the incidents_import_postmortem_document_result_v2 entity.
+type IncidentsImportPostmortemDocumentResultV2 struct {
+}
+
+// IncidentsImportPostmortemDocumentResultV2CreateData is the typed request payload for IncidentsImportPostmortemDocumentResultV2.CreateTyped.
+type IncidentsImportPostmortemDocumentResultV2CreateData struct {
+	IncidentId string `json:"incident_id"`
+	Content string `json:"content"`
+	Title string `json:"title"`
 }
 
 // IpAllowlist is the typed data model for the ip_allowlist entity.
@@ -1909,6 +1996,26 @@ type PostmortemDocumentListMatch struct {
 type PostmortemDocumentUpdateData struct {
 	Id string `json:"id"`
 	Status *string `json:"status,omitempty"`
+}
+
+// PostmortemDocumentsAttachResultV1 is the typed data model for the postmortem_documents_attach_result_v1 entity.
+type PostmortemDocumentsAttachResultV1 struct {
+}
+
+// PostmortemDocumentsAttachResultV1CreateData is the typed request payload for PostmortemDocumentsAttachResultV1.CreateTyped.
+type PostmortemDocumentsAttachResultV1CreateData struct {
+	DocumentProvider *string `json:"document_provider,omitempty"`
+	IncidentId string `json:"incident_id"`
+	Permalink string `json:"permalink"`
+}
+
+// PostmortemDocumentsShowContentResultV1 is the typed data model for the postmortem_documents_show_content_result_v1 entity.
+type PostmortemDocumentsShowContentResultV1 struct {
+}
+
+// PostmortemDocumentsShowContentResultV1LoadMatch is the typed request payload for PostmortemDocumentsShowContentResultV1.LoadTyped.
+type PostmortemDocumentsShowContentResultV1LoadMatch struct {
+	PostmortemDocumentId string `json:"postmortem_document_id"`
 }
 
 // Schedule is the typed data model for the schedule entity.
@@ -2395,6 +2502,18 @@ type StatusPageStructureLoadMatch struct {
 	Id string `json:"id"`
 }
 
+// StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 is the typed data model for the status_pages_create_status_page_retrospective_incident_result_v2 entity.
+type StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 struct {
+}
+
+// StatusPagesCreateStatusPageRetrospectiveIncidentResultV2CreateData is the typed request payload for StatusPagesCreateStatusPageRetrospectiveIncidentResultV2.CreateTyped.
+type StatusPagesCreateStatusPageRetrospectiveIncidentResultV2CreateData struct {
+	IdempotencyKey string `json:"idempotency_key"`
+	Name string `json:"name"`
+	StatusPageId string `json:"status_page_id"`
+	Updates []any `json:"updates"`
+}
+
 // Team is the typed data model for the team entity.
 type Team struct {
 }
@@ -2438,6 +2557,29 @@ type UserListMatch struct {
 	IncludeInactive *bool `json:"include_inactive,omitempty"`
 	PageSize *int `json:"page_size,omitempty"`
 	SlackUserId *string `json:"slack_user_id,omitempty"`
+}
+
+// UsersShowPagingProviderResultV2 is the typed data model for the users_show_paging_provider_result_v2 entity.
+type UsersShowPagingProviderResultV2 struct {
+}
+
+// UsersShowPagingProviderResultV2LoadMatch is the typed request payload for UsersShowPagingProviderResultV2.LoadTyped.
+type UsersShowPagingProviderResultV2LoadMatch struct {
+	UserId string `json:"user_id"`
+}
+
+// UsersShowPagingProviderResultV2CreateData is the typed request payload for UsersShowPagingProviderResultV2.CreateTyped.
+type UsersShowPagingProviderResultV2CreateData struct {
+	UserId string `json:"user_id"`
+	PreferredEscalationProvider string `json:"preferred_escalation_provider"`
+}
+
+// UtilitiesV1 is the typed data model for the utilities_v1 entity.
+type UtilitiesV1 struct {
+}
+
+// UtilitiesV1LoadMatch is the typed request payload for UtilitiesV1.LoadTyped.
+type UtilitiesV1LoadMatch struct {
 }
 
 // Workflow is the typed data model for the workflow entity.

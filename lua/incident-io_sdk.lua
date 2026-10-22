@@ -465,6 +465,20 @@ function IncidentIoSDK:AlertAttribute(data)
 end
 
 
+-- Idiomatic facade: client:AlertEventsV2():list() / client:AlertEventsV2():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:AlertEventsV2(data)
+  local EntityMod = require("entity.alert_events_v2_entity")
+  if data == nil then
+    if self._alert_events_v2 == nil then
+      self._alert_events_v2 = EntityMod.new(self, nil)
+    end
+    return self._alert_events_v2
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:AlertNote():list() / client:AlertNote():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:AlertNote(data)
@@ -745,6 +759,20 @@ function IncidentIoSDK:CatalogTypeSchema(data)
 end
 
 
+-- Idiomatic facade: client:CatalogV3():list() / client:CatalogV3():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:CatalogV3(data)
+  local EntityMod = require("entity.catalog_v3_entity")
+  if data == nil then
+    if self._catalog_v3 == nil then
+      self._catalog_v3 = EntityMod.new(self, nil)
+    end
+    return self._catalog_v3
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:CustomField():list() / client:CustomField():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:CustomField(data)
@@ -843,6 +871,20 @@ function IncidentIoSDK:EscalationsReassignEscalationResultV2(data)
 end
 
 
+-- Idiomatic facade: client:EscalationsV2():list() / client:EscalationsV2():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:EscalationsV2(data)
+  local EntityMod = require("entity.escalations_v2_entity")
+  if data == nil then
+    if self._escalations_v2 == nil then
+      self._escalations_v2 = EntityMod.new(self, nil)
+    end
+    return self._escalations_v2
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:FollowUp():list() / client:FollowUp():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:FollowUp(data)
@@ -852,6 +894,20 @@ function IncidentIoSDK:FollowUp(data)
       self._follow_up = EntityMod.new(self, nil)
     end
     return self._follow_up
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:FollowUpsConnectExternalIssueResultV2():list() / client:FollowUpsConnectExternalIssueResultV2():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:FollowUpsConnectExternalIssueResultV2(data)
+  local EntityMod = require("entity.follow_ups_connect_external_issue_result_v2_entity")
+  if data == nil then
+    if self._follow_ups_connect_external_issue_result_v2 == nil then
+      self._follow_ups_connect_external_issue_result_v2 = EntityMod.new(self, nil)
+    end
+    return self._follow_ups_connect_external_issue_result_v2
   end
   return EntityMod.new(self, data)
 end
@@ -880,6 +936,20 @@ function IncidentIoSDK:FollowUpsCreateFromLinkResultV3(data)
       self._follow_ups_create_from_link_result_v3 = EntityMod.new(self, nil)
     end
     return self._follow_ups_create_from_link_result_v3
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:HeartbeatV2():list() / client:HeartbeatV2():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:HeartbeatV2(data)
+  local EntityMod = require("entity.heartbeat_v2_entity")
+  if data == nil then
+    if self._heartbeat_v2 == nil then
+      self._heartbeat_v2 = EntityMod.new(self, nil)
+    end
+    return self._heartbeat_v2
   end
   return EntityMod.new(self, data)
 end
@@ -964,6 +1034,20 @@ function IncidentIoSDK:IncidentMembership(data)
       self._incident_membership = EntityMod.new(self, nil)
     end
     return self._incident_membership
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:IncidentMembershipsV1():list() / client:IncidentMembershipsV1():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:IncidentMembershipsV1(data)
+  local EntityMod = require("entity.incident_memberships_v1_entity")
+  if data == nil then
+    if self._incident_memberships_v1 == nil then
+      self._incident_memberships_v1 = EntityMod.new(self, nil)
+    end
+    return self._incident_memberships_v1
   end
   return EntityMod.new(self, data)
 end
@@ -1146,6 +1230,20 @@ function IncidentIoSDK:IncidentUpdate(data)
       self._incident_update = EntityMod.new(self, nil)
     end
     return self._incident_update
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:IncidentsImportPostmortemDocumentResultV2():list() / client:IncidentsImportPostmortemDocumentResultV2():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:IncidentsImportPostmortemDocumentResultV2(data)
+  local EntityMod = require("entity.incidents_import_postmortem_document_result_v2_entity")
+  if data == nil then
+    if self._incidents_import_postmortem_document_result_v2 == nil then
+      self._incidents_import_postmortem_document_result_v2 = EntityMod.new(self, nil)
+    end
+    return self._incidents_import_postmortem_document_result_v2
   end
   return EntityMod.new(self, data)
 end
@@ -1417,6 +1515,34 @@ function IncidentIoSDK:PostmortemDocument(data)
 end
 
 
+-- Idiomatic facade: client:PostmortemDocumentsAttachResultV1():list() / client:PostmortemDocumentsAttachResultV1():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:PostmortemDocumentsAttachResultV1(data)
+  local EntityMod = require("entity.postmortem_documents_attach_result_v1_entity")
+  if data == nil then
+    if self._postmortem_documents_attach_result_v1 == nil then
+      self._postmortem_documents_attach_result_v1 = EntityMod.new(self, nil)
+    end
+    return self._postmortem_documents_attach_result_v1
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:PostmortemDocumentsShowContentResultV1():list() / client:PostmortemDocumentsShowContentResultV1():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:PostmortemDocumentsShowContentResultV1(data)
+  local EntityMod = require("entity.postmortem_documents_show_content_result_v1_entity")
+  if data == nil then
+    if self._postmortem_documents_show_content_result_v1 == nil then
+      self._postmortem_documents_show_content_result_v1 = EntityMod.new(self, nil)
+    end
+    return self._postmortem_documents_show_content_result_v1
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:Schedule():list() / client:Schedule():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:Schedule(data)
@@ -1669,6 +1795,20 @@ function IncidentIoSDK:StatusPageStructure(data)
 end
 
 
+-- Idiomatic facade: client:StatusPagesCreateStatusPageRetrospectiveIncidentResultV2():list() / client:StatusPagesCreateStatusPageRetrospectiveIncidentResultV2():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data)
+  local EntityMod = require("entity.status_pages_create_status_page_retrospective_incident_result_v2_entity")
+  if data == nil then
+    if self._status_pages_create_status_page_retrospective_incident_result_v2 == nil then
+      self._status_pages_create_status_page_retrospective_incident_result_v2 = EntityMod.new(self, nil)
+    end
+    return self._status_pages_create_status_page_retrospective_incident_result_v2
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:Team():list() / client:Team():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:Team(data)
@@ -1706,6 +1846,34 @@ function IncidentIoSDK:User(data)
       self._user = EntityMod.new(self, nil)
     end
     return self._user
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:UsersShowPagingProviderResultV2():list() / client:UsersShowPagingProviderResultV2():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:UsersShowPagingProviderResultV2(data)
+  local EntityMod = require("entity.users_show_paging_provider_result_v2_entity")
+  if data == nil then
+    if self._users_show_paging_provider_result_v2 == nil then
+      self._users_show_paging_provider_result_v2 = EntityMod.new(self, nil)
+    end
+    return self._users_show_paging_provider_result_v2
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:UtilitiesV1():list() / client:UtilitiesV1():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:UtilitiesV1(data)
+  local EntityMod = require("entity.utilities_v1_entity")
+  if data == nil then
+    if self._utilities_v1 == nil then
+      self._utilities_v1 = EntityMod.new(self, nil)
+    end
+    return self._utilities_v1
   end
   return EntityMod.new(self, data)
 end

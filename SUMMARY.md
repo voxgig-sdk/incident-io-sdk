@@ -222,7 +222,7 @@
 
 This guide introduces the API, the client libraries, and the companion tools in this repository. Start with the API capabilities, choose a client for your application, and use the linked reference when you need exact request and response details.
 
-The selected API surface contains 94 entities and 315 HTTP routes. There are 6 SDK targets and 2 companion tools.
+The selected API surface contains 106 entities and 330 HTTP routes. There are 6 SDK targets and 2 companion tools.
 
 An entity groups related API operations. An operation can have several routes with different inputs or authentication requirements. The SDK exposes the entity and its operations using the conventions of the selected language.
 
@@ -269,6 +269,20 @@ Key fields to recognise:
 - `id`: The ID of this attribute
 - `name`: Unique name of this attribute
 - `required`: Whether this attribute is required. If this field is not set, the existing setting will be preserved.
+
+### [AlertEventsV2](docs/api/alert_events_v2.html)
+
+Results: Accepted response.
+
+SDK operations: `create`.
+
+Key fields to recognise:
+
+- `deduplication_key`: The deduplication key that the event has been processed with
+- `description`: Description that optionally adds more detail to title.
+- `message`: Human readable message giving detail about the event
+- `metadata`: Additional metadata about the error, keyed by a string identifier
+- `source_url`: If applicable, a link to the alert in the upstream system
 
 ### [AlertNote](docs/api/alert_note.html)
 
@@ -543,6 +557,18 @@ Key fields to recognise:
 - `color`: Sets the display color of this type in the dashboard
 - `created_at`: When this type was created
 
+### [CatalogV3](docs/api/catalog_v3.html)
+
+Results: No Content response.
+
+SDK operations: `create`.
+
+Key fields to recognise:
+
+- `catalog_type_id`: The unique identifier of the catalog type containing the entries
+- `entries`: A list of entries to update with their new values.
+- `update_attributes`: Optional list of specific attribute IDs to update across all entries.
+
 ### [CustomField](docs/api/custom_field.html)
 
 Results: Created response.; OK response.; No Content response.
@@ -637,6 +663,16 @@ Key fields to recognise:
 - `title`: The title of this escalation
 - `user_ids`: IDs of users to reassign directly to
 
+### [EscalationsV2](docs/api/escalations_v2.html)
+
+Results: OK response.
+
+SDK operations: `create`.
+
+Key fields to recognise:
+
+- `response`: Whether to acknowledge, decline or snooze the escalation
+
 ### [FollowUp](docs/api/follow_up.html)
 
 Results: Created response.; OK response.; No Content response.
@@ -650,6 +686,20 @@ Key fields to recognise:
 - `completed_at`: When the follow-up was completed
 - `created_at`: When the follow-up was created
 - `description`: Description of the follow-up
+
+### [FollowUpsConnectExternalIssueResultV2](docs/api/follow_ups_connect_external_issue_result_v2.html)
+
+Results: OK response.
+
+SDK operations: `create`.
+
+Key fields to recognise:
+
+- `completed_at`: When the follow-up was completed
+- `created_at`: When the follow-up was created
+- `description`: Description of the follow-up
+- `id`: Unique identifier for the follow-up
+- `incident_id`: Unique identifier of the incident the follow-up belongs to
 
 ### [FollowUpsConnectExternalIssueResultV3](docs/api/follow_ups_connect_external_issue_result_v3.html)
 
@@ -675,6 +725,12 @@ Key fields to recognise:
 
 - `incident_id`: Unique identifier of the incident the follow-up belongs to
 - `url`: URL of the issue in the external provider
+
+### [HeartbeatV2](docs/api/heartbeat_v2.html)
+
+Results: No Content response.
+
+SDK operations: `create`, `load`.
 
 ### [Identity](docs/api/identity.html)
 
@@ -752,6 +808,16 @@ SDK operations: `create`.
 Key fields to recognise:
 
 - `incident_id`: Unique identifier of the incident
+
+### [IncidentMembershipsV1](docs/api/incident_memberships_v1.html)
+
+Results: No Content response.
+
+SDK operations: `create`.
+
+Key fields to recognise:
+
+- `incident_id`: Revoke memberships to incident
 
 ### [IncidentParticipant](docs/api/incident_participant.html)
 
@@ -913,6 +979,17 @@ Key fields to recognise:
 - `idempotency_key`: Unique string used to de-duplicate incident update requests.
 - `incident_id`: The incident this update relates to
 - `merged_into_incident_id`: The ID of the incident this incident was merged into, if the to state of this update is &#39;merged&#39;.
+
+### [IncidentsImportPostmortemDocumentResultV2](docs/api/incidents_import_postmortem_document_result_v2.html)
+
+Results: Created response.
+
+SDK operations: `create`.
+
+Key fields to recognise:
+
+- `content`: The document content as GitHub-Flavored Markdown
+- `title`: The display title of the post-mortem document
 
 ### [IpAllowlist](docs/api/ip_allowlist.html)
 
@@ -1166,6 +1243,28 @@ Key fields to recognise:
 - `exported_urls`: URLs of any external locations this document has been exported to
 - `id`: Unique identifier for the post-mortem document
 
+### [PostmortemDocumentsAttachResultV1](docs/api/postmortem_documents_attach_result_v1.html)
+
+Results: Created response.
+
+SDK operations: `create`.
+
+Key fields to recognise:
+
+- `document_provider`: The provider hosting the document.
+- `incident_id`: The unique identifier of the incident that this post-mortem document belongs to
+- `permalink`: A URL pointing to the externally-hosted post-mortem document
+
+### [PostmortemDocumentsShowContentResultV1](docs/api/postmortem_documents_show_content_result_v1.html)
+
+Results: OK response.
+
+SDK operations: `load`.
+
+Key fields to recognise:
+
+- `markdown`: The full content of the post-mortem document, rendered as markdown. Includes all sections, resolved mentions, timeline, follow-ups, and custom fields.
+
 ### [Schedule](docs/api/schedule.html)
 
 Results: Created response.; OK response.; Accepted response.
@@ -1405,6 +1504,19 @@ Key fields to recognise:
 - `display_uptime_mode`: How the page shows uptime against its components
 - `id`: Unique ID of this component group
 
+### [StatusPagesCreateStatusPageRetrospectiveIncidentResultV2](docs/api/status_pages_create_status_page_retrospective_incident_result_v2.html)
+
+Results: Created response.
+
+SDK operations: `create`.
+
+Key fields to recognise:
+
+- `idempotency_key`: A unique key to de-duplicate requests.
+- `name`: A title for the incident
+- `status_page_id`: The ID of the corresponding status page
+- `updates`: A list of updates posted to this status page incident
+
 ### [Team](docs/api/team.html)
 
 Results: OK response.
@@ -1444,6 +1556,22 @@ Key fields to recognise:
 - `is_active`: Whether the user is active. False if the user has been deactivated (for example offboarded) or is not yet active.
 - `name`: Name of the user
 - `role`: DEPRECATED: Role of the user as of March 9th 2023, this value is no longer updated.
+
+### [UsersShowPagingProviderResultV2](docs/api/users_show_paging_provider_result_v2.html)
+
+Results: No Content response.; OK response.
+
+SDK operations: `create`, `load`.
+
+Key fields to recognise:
+
+- `preferred_escalation_provider`: The user&#39;s effective escalation provider.
+
+### [UtilitiesV1](docs/api/utilities_v1.html)
+
+Results: OK response.
+
+SDK operations: `load`.
 
 ### [Workflow](docs/api/workflow.html)
 
@@ -1499,6 +1627,7 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [AlertAttribute](docs/api/alert_attribute.html) | `load` | `GET /v2/alert_attributes/{id}` | Required |
 | [AlertAttribute](docs/api/alert_attribute.html) | `remove` | `DELETE /v2/alert_attributes/{id}` | Required |
 | [AlertAttribute](docs/api/alert_attribute.html) | `update` | `PUT /v2/alert_attributes/{id}` | Required |
+| [AlertEventsV2](docs/api/alert_events_v2.html) | `create` | `POST /v2/alert_events/http/{alert_source_config_id}` | Not required |
 | [AlertNote](docs/api/alert_note.html) | `create` | `POST /v1/alert_notes` | Required |
 | [AlertNote](docs/api/alert_note.html) | `list` | `GET /v1/alert_notes` | Required |
 | [AlertNote](docs/api/alert_note.html) | `load` | `GET /v1/alert_notes/{id}` | Required |
@@ -1582,6 +1711,7 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [CatalogType](docs/api/catalog_type.html) | `update` | `PUT /v3/catalog_types/{id}` | Required |
 | [CatalogTypeSchema](docs/api/catalog_type_schema.html) | `create` | `POST /v2/catalog_types/{id}/actions/update_schema` | Required |
 | [CatalogTypeSchema](docs/api/catalog_type_schema.html) | `create` | `POST /v3/catalog_types/{id}/actions/update_schema` | Required |
+| [CatalogV3](docs/api/catalog_v3.html) | `create` | `POST /v3/catalog_entries/actions/bulk_update` | Required |
 | [CustomField](docs/api/custom_field.html) | `create` | `POST /v1/custom_fields` | Required |
 | [CustomField](docs/api/custom_field.html) | `create` | `POST /v2/custom_fields` | Required |
 | [CustomField](docs/api/custom_field.html) | `list` | `GET /v1/custom_fields` | Required |
@@ -1612,6 +1742,8 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [EscalationPathTemplate](docs/api/escalation_path_template.html) | `update` | `PUT /v2/escalation_path_templates/{id}` | Required |
 | [EscalationsCheckEscalationPermissionsResultV2](docs/api/escalations_check_escalation_permissions_result_v2.html) | `create` | `POST /v2/escalations/{escalation_id}/actions/check_permissions` | Required |
 | [EscalationsReassignEscalationResultV2](docs/api/escalations_reassign_escalation_result_v2.html) | `create` | `POST /v2/escalations/{escalation_id}/actions/reassign` | Required |
+| [EscalationsV2](docs/api/escalations_v2.html) | `create` | `POST /v2/escalations/{escalation_id}/actions/respond` | Required |
+| [EscalationsV2](docs/api/escalations_v2.html) | `create` | `POST /v2/escalations/{id}/actions/cancel` | Required |
 | [FollowUp](docs/api/follow_up.html) | `create` | `POST /v2/follow_ups` | Required |
 | [FollowUp](docs/api/follow_up.html) | `create` | `POST /v3/follow_ups` | Required |
 | [FollowUp](docs/api/follow_up.html) | `list` | `GET /v2/follow_ups` | Required |
@@ -1622,8 +1754,11 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [FollowUp](docs/api/follow_up.html) | `remove` | `DELETE /v3/follow_ups/{id}` | Required |
 | [FollowUp](docs/api/follow_up.html) | `update` | `PUT /v2/follow_ups/{id}` | Required |
 | [FollowUp](docs/api/follow_up.html) | `update` | `PUT /v3/follow_ups/{id}` | Required |
+| [FollowUpsConnectExternalIssueResultV2](docs/api/follow_ups_connect_external_issue_result_v2.html) | `create` | `POST /v2/follow_ups/{id}/actions/connect_external_issue` | Required |
 | [FollowUpsConnectExternalIssueResultV3](docs/api/follow_ups_connect_external_issue_result_v3.html) | `create` | `POST /v3/follow_ups/{id}/actions/connect_external_issue` | Required |
 | [FollowUpsCreateFromLinkResultV3](docs/api/follow_ups_create_from_link_result_v3.html) | `create` | `POST /v3/follow_ups/actions/create_from_link` | Required |
+| [HeartbeatV2](docs/api/heartbeat_v2.html) | `create` | `POST /v2/heartbeat/{alert_source_config_id}/ping` | Not required |
+| [HeartbeatV2](docs/api/heartbeat_v2.html) | `load` | `GET /v2/heartbeat/{alert_source_config_id}/ping` | Required |
 | [Identity](docs/api/identity.html) | `load` | `GET /v1/identity` | Required |
 | [Incident](docs/api/incident.html) | `create` | `POST /v2/incidents/{id}/actions/edit` | Required |
 | [Incident](docs/api/incident.html) | `create` | `POST /v1/incidents` | Required |
@@ -1642,6 +1777,7 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [IncidentForm](docs/api/incident_form.html) | `remove` | `DELETE /v3/incident_forms/{id}` | Required |
 | [IncidentForm](docs/api/incident_form.html) | `update` | `PUT /v3/incident_forms/{id}` | Required |
 | [IncidentMembership](docs/api/incident_membership.html) | `create` | `POST /v1/incident_memberships` | Required |
+| [IncidentMembershipsV1](docs/api/incident_memberships_v1.html) | `create` | `POST /v1/incident_memberships/actions/revoke` | Required |
 | [IncidentParticipant](docs/api/incident_participant.html) | `load` | `GET /v2/incident_participants` | Required |
 | [IncidentParticipantWorkload](docs/api/incident_participant_workload.html) | `list` | `GET /v2/incident_participant_workloads` | Required |
 | [IncidentRelationship](docs/api/incident_relationship.html) | `list` | `GET /v1/incident_relationships` | Required |
@@ -1677,6 +1813,7 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [IncidentType](docs/api/incident_type.html) | `load` | `GET /v1/incident_types/{id}` | Required |
 | [IncidentUpdate](docs/api/incident_update.html) | `create` | `POST /v2/incident_updates` | Required |
 | [IncidentUpdate](docs/api/incident_update.html) | `list` | `GET /v2/incident_updates` | Required |
+| [IncidentsImportPostmortemDocumentResultV2](docs/api/incidents_import_postmortem_document_result_v2.html) | `create` | `POST /v2/incidents/{id}/actions/import_postmortem_document` | Required |
 | [IpAllowlist](docs/api/ip_allowlist.html) | `load` | `GET /v1/ip_allowlists` | Required |
 | [IpAllowlist](docs/api/ip_allowlist.html) | `update` | `PUT /v1/ip_allowlists` | Required |
 | [IpRange](docs/api/ip_range.html) | `list` | `GET /v1/ip_ranges` | Not required |
@@ -1724,6 +1861,8 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [PostmortemDocument](docs/api/postmortem_document.html) | `list` | `GET /v1/postmortem_documents` | Required |
 | [PostmortemDocument](docs/api/postmortem_document.html) | `load` | `GET /v1/postmortem_documents/{id}` | Required |
 | [PostmortemDocument](docs/api/postmortem_document.html) | `update` | `PUT /v1/postmortem_documents/{id}` | Required |
+| [PostmortemDocumentsAttachResultV1](docs/api/postmortem_documents_attach_result_v1.html) | `create` | `POST /v1/postmortem_documents/actions/attach` | Required |
+| [PostmortemDocumentsShowContentResultV1](docs/api/postmortem_documents_show_content_result_v1.html) | `load` | `GET /v1/postmortem_documents/{id}/content` | Required |
 | [Schedule](docs/api/schedule.html) | `create` | `POST /v2/schedules` | Required |
 | [Schedule](docs/api/schedule.html) | `list` | `GET /v2/schedules` | Required |
 | [Schedule](docs/api/schedule.html) | `load` | `GET /v2/schedules/{id}` | Required |
@@ -1782,11 +1921,15 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [StatusPageMaintenance](docs/api/status_page_maintenance.html) | `update` | `PUT /v2/status_page_maintenances/{status_page_maintenance_id}` | Required |
 | [StatusPageMaintenanceUpdate](docs/api/status_page_maintenance_update.html) | `create` | `POST /v2/status_page_maintenance_updates` | Required |
 | [StatusPageStructure](docs/api/status_page_structure.html) | `load` | `GET /v2/status_page_structures/{status_page_id}` | Required |
+| [StatusPagesCreateStatusPageRetrospectiveIncidentResultV2](docs/api/status_pages_create_status_page_retrospective_incident_result_v2.html) | `create` | `POST /v2/status_page_retrospective_incidents` | Required |
 | [Team](docs/api/team.html) | `list` | `GET /v3/teams` | Required |
 | [Team](docs/api/team.html) | `load` | `GET /v3/teams/{id}` | Required |
 | [TelemetryDataSource](docs/api/telemetry_data_source.html) | `update` | `PUT /v2/telemetry/data_sources/{id}` | Required |
 | [User](docs/api/user.html) | `list` | `GET /v2/users` | Required |
 | [User](docs/api/user.html) | `load` | `GET /v2/users/{id}` | Required |
+| [UsersShowPagingProviderResultV2](docs/api/users_show_paging_provider_result_v2.html) | `create` | `POST /v2/users/{user_id}/paging_provider` | Required |
+| [UsersShowPagingProviderResultV2](docs/api/users_show_paging_provider_result_v2.html) | `load` | `GET /v2/users/{user_id}/paging_provider` | Required |
+| [UtilitiesV1](docs/api/utilities_v1.html) | `load` | `GET /v1/openapiV3.json` | Not required |
 | [Workflow](docs/api/workflow.html) | `create` | `POST /v2/workflows` | Required |
 | [Workflow](docs/api/workflow.html) | `list` | `GET /v2/workflows` | Required |
 | [Workflow](docs/api/workflow.html) | `load` | `GET /v2/workflows/{id}` | Required |
@@ -1854,7 +1997,7 @@ Use the MCP server to expose supported API operations to an MCP client.
 Repository directory: `go-mcp/`. Not published. Build from the go-mcp directory.
 
 - `incident-io_list`: List records for an entity. Supported entities: `action`, `alert`, `alert_attribute`, `alert_note`, `alert_route`, `alert_source`, `alert_tag`, `alerts_transition_incident_alert_result_v2`, `announcement_rule`, `announcement_template`, `api_key`, `call_route`, `call_route_allowed_caller`, `call_route_option`, `call_session`, `call_transcript_entry`, `catalog_entry`, `catalog_resource`, `catalog_type`, `custom_field`, `custom_field_option`, `escalation`, `escalation_path`, `escalation_path_template`, `follow_up`, `incident`, `incident_activity_log_entry`, `incident_attachment`, `incident_form`, `incident_participant_workload`, `incident_relationship`, `incident_role`, `incident_status`, `incident_template`, `incident_timeline_item`, `incident_timestamp`, `incident_type`, `incident_update`, `ip_range`, `maintenance_window`, `on_call_notification_method_public_v2`, `on_call_notification_pause`, `on_call_notification_rule_public_v2`, `pay_config`, `pay_config_one_off_rule`, `pay_config_weekly_rule`, `pay_report`, `policy`, `policy_finding`, `postmortem_document`, `schedule`, `schedule_override`, `schedule_replica`, `schedule_sync_rule`, `schedule_sync_target`, `secret`, `severity`, `status_page`, `status_page_component`, `status_page_incident`, `status_page_linked_response_incident`, `status_page_maintenance`, `team`, `user`, `workflow`, `workflow_run`.
-- `incident-io_load`: Load one record for an entity. Supported entities: `action`, `alert`, `alert_attribute`, `alert_note`, `alert_route`, `alert_source`, `announcement_rule`, `announcement_template`, `api_key`, `call_route`, `call_route_allowed_caller`, `call_route_option`, `catalog_entry`, `catalog_type`, `custom_field`, `custom_field_option`, `escalation`, `escalation_path`, `escalation_path_template`, `follow_up`, `identity`, `incident`, `incident_form`, `incident_participant`, `incident_role`, `incident_status`, `incident_template`, `incident_timestamp`, `incident_type`, `ip_allowlist`, `maintenance_window`, `on_call_notification_pause`, `pay_config`, `pay_config_one_off_rule`, `pay_config_weekly_rule`, `pay_report`, `pay_reports_v2`, `policy`, `policy_finding`, `postmortem_document`, `schedule`, `schedule_entry`, `schedule_override`, `schedule_replica`, `schedule_sync_rule`, `schedule_sync_target`, `secret`, `severity`, `status_page`, `status_page_component`, `status_page_component_availability`, `status_page_incident`, `status_page_maintenance`, `status_page_structure`, `team`, `user`, `workflow`, `workflow_run`.
+- `incident-io_load`: Load one record for an entity. Supported entities: `action`, `alert`, `alert_attribute`, `alert_note`, `alert_route`, `alert_source`, `announcement_rule`, `announcement_template`, `api_key`, `call_route`, `call_route_allowed_caller`, `call_route_option`, `catalog_entry`, `catalog_type`, `custom_field`, `custom_field_option`, `escalation`, `escalation_path`, `escalation_path_template`, `follow_up`, `heartbeat_v2`, `identity`, `incident`, `incident_form`, `incident_participant`, `incident_role`, `incident_status`, `incident_template`, `incident_timestamp`, `incident_type`, `ip_allowlist`, `maintenance_window`, `on_call_notification_pause`, `pay_config`, `pay_config_one_off_rule`, `pay_config_weekly_rule`, `pay_report`, `pay_reports_v2`, `policy`, `policy_finding`, `postmortem_document`, `postmortem_documents_show_content_result_v1`, `schedule`, `schedule_entry`, `schedule_override`, `schedule_replica`, `schedule_sync_rule`, `schedule_sync_target`, `secret`, `severity`, `status_page`, `status_page_component`, `status_page_component_availability`, `status_page_incident`, `status_page_maintenance`, `status_page_structure`, `team`, `user`, `users_show_paging_provider_result_v2`, `utilities_v1`, `workflow`, `workflow_run`.
 
 ## Operational features
 

@@ -181,6 +181,32 @@ class AlertAttributeRemoveMatch
     public string $id;
 }
 
+/** AlertEventsV2 entity data model. */
+class AlertEventsV2
+{
+    public string $deduplication_key;
+    public ?string $description = null;
+    public string $message;
+    public ?array $metadata = null;
+    public ?string $source_url = null;
+    public string $status;
+    public string $title;
+}
+
+/** Request payload for AlertEventsV2#create. */
+class AlertEventsV2CreateData
+{
+    public string $alert_source_config_id;
+    public ?array $query = null;
+    public ?string $token = null;
+    public ?string $deduplication_key = null;
+    public ?string $description = null;
+    public ?array $metadata = null;
+    public ?string $source_url = null;
+    public string $status;
+    public string $title;
+}
+
 /** AlertNote entity data model. */
 class AlertNote
 {
@@ -1104,6 +1130,22 @@ class CatalogTypeSchemaCreateData
     public int $version;
 }
 
+/** CatalogV3 entity data model. */
+class CatalogV3
+{
+    public string $catalog_type_id;
+    public array $entries;
+    public ?array $update_attributes = null;
+}
+
+/** Request payload for CatalogV3#create. */
+class CatalogV3CreateData
+{
+    public string $catalog_type_id;
+    public array $entries;
+    public ?array $update_attributes = null;
+}
+
 /** CustomField entity data model. */
 class CustomField
 {
@@ -1424,6 +1466,21 @@ class EscalationsReassignEscalationResultV2CreateData
     public ?array $user_ids = null;
 }
 
+/** EscalationsV2 entity data model. */
+class EscalationsV2
+{
+    public string $response;
+    public array $snooze_details;
+}
+
+/** Request payload for EscalationsV2#create. */
+class EscalationsV2CreateData
+{
+    public string $escalation_id;
+    public string $response;
+    public array $snooze_details;
+}
+
 /** FollowUp entity data model. */
 class FollowUp
 {
@@ -1501,6 +1558,35 @@ class FollowUpRemoveMatch
     public string $id;
 }
 
+/** FollowUpsConnectExternalIssueResultV2 entity data model. */
+class FollowUpsConnectExternalIssueResultV2
+{
+    public array $assignee;
+    public array $assignee_team;
+    public ?string $completed_at = null;
+    public string $created_at;
+    public array $creator;
+    public ?string $description = null;
+    public array $external_issue_reference;
+    public string $id;
+    public string $incident_id;
+    public array $labels;
+    public array $priority;
+    public string $provider;
+    public string $status;
+    public string $title;
+    public string $updated_at;
+    public string $url;
+}
+
+/** Request payload for FollowUpsConnectExternalIssueResultV2#create. */
+class FollowUpsConnectExternalIssueResultV2CreateData
+{
+    public string $follow_up_id;
+    public string $provider;
+    public string $url;
+}
+
 /** FollowUpsConnectExternalIssueResultV3 entity data model. */
 class FollowUpsConnectExternalIssueResultV3
 {
@@ -1543,6 +1629,26 @@ class FollowUpsCreateFromLinkResultV3CreateData
 {
     public string $incident_id;
     public string $url;
+}
+
+/** HeartbeatV2 entity data model. */
+class HeartbeatV2
+{
+    public ?string $id = null;
+}
+
+/** Request payload for HeartbeatV2#load. */
+class HeartbeatV2LoadMatch
+{
+    public string $id;
+    public ?string $token = null;
+}
+
+/** Request payload for HeartbeatV2#create. */
+class HeartbeatV2CreateData
+{
+    public string $id;
+    public ?string $token = null;
 }
 
 /** Identity entity data model. */
@@ -1762,6 +1868,20 @@ class IncidentMembership
 
 /** Request payload for IncidentMembership#create. */
 class IncidentMembershipCreateData
+{
+    public string $incident_id;
+    public string $user_id;
+}
+
+/** IncidentMembershipsV1 entity data model. */
+class IncidentMembershipsV1
+{
+    public string $incident_id;
+    public string $user_id;
+}
+
+/** Request payload for IncidentMembershipsV1#create. */
+class IncidentMembershipsV1CreateData
 {
     public string $incident_id;
     public string $user_id;
@@ -2143,6 +2263,21 @@ class IncidentUpdateCreateData
     public ?string $message = null;
     public ?string $to_incident_status_id = null;
     public ?string $to_severity_id = null;
+}
+
+/** IncidentsImportPostmortemDocumentResultV2 entity data model. */
+class IncidentsImportPostmortemDocumentResultV2
+{
+    public string $content;
+    public string $title;
+}
+
+/** Request payload for IncidentsImportPostmortemDocumentResultV2#create. */
+class IncidentsImportPostmortemDocumentResultV2CreateData
+{
+    public string $incident_id;
+    public string $content;
+    public string $title;
 }
 
 /** IpAllowlist entity data model. */
@@ -2865,6 +3000,34 @@ class PostmortemDocumentUpdateData
     public ?string $status = null;
 }
 
+/** PostmortemDocumentsAttachResultV1 entity data model. */
+class PostmortemDocumentsAttachResultV1
+{
+    public ?string $document_provider = null;
+    public string $incident_id;
+    public string $permalink;
+}
+
+/** Request payload for PostmortemDocumentsAttachResultV1#create. */
+class PostmortemDocumentsAttachResultV1CreateData
+{
+    public ?string $document_provider = null;
+    public string $incident_id;
+    public string $permalink;
+}
+
+/** PostmortemDocumentsShowContentResultV1 entity data model. */
+class PostmortemDocumentsShowContentResultV1
+{
+    public string $markdown;
+}
+
+/** Request payload for PostmortemDocumentsShowContentResultV1#load. */
+class PostmortemDocumentsShowContentResultV1LoadMatch
+{
+    public string $postmortem_document_id;
+}
+
 /** Schedule entity data model. */
 class Schedule
 {
@@ -3556,6 +3719,24 @@ class StatusPageStructureLoadMatch
     public string $id;
 }
 
+/** StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 entity data model. */
+class StatusPagesCreateStatusPageRetrospectiveIncidentResultV2
+{
+    public string $idempotency_key;
+    public string $name;
+    public string $status_page_id;
+    public array $updates;
+}
+
+/** Request payload for StatusPagesCreateStatusPageRetrospectiveIncidentResultV2#create. */
+class StatusPagesCreateStatusPageRetrospectiveIncidentResultV2CreateData
+{
+    public string $idempotency_key;
+    public string $name;
+    public string $status_page_id;
+    public array $updates;
+}
+
 /** Team entity data model. */
 class Team
 {
@@ -3630,6 +3811,35 @@ class UserListMatch
     public ?bool $include_inactive = null;
     public ?int $page_size = null;
     public ?string $slack_user_id = null;
+}
+
+/** UsersShowPagingProviderResultV2 entity data model. */
+class UsersShowPagingProviderResultV2
+{
+    public ?string $preferred_escalation_provider = null;
+}
+
+/** Request payload for UsersShowPagingProviderResultV2#load. */
+class UsersShowPagingProviderResultV2LoadMatch
+{
+    public string $user_id;
+}
+
+/** Request payload for UsersShowPagingProviderResultV2#create. */
+class UsersShowPagingProviderResultV2CreateData
+{
+    public string $user_id;
+    public string $preferred_escalation_provider;
+}
+
+/** UtilitiesV1 entity data model. */
+class UtilitiesV1
+{
+}
+
+/** Request payload for UtilitiesV1#load. */
+class UtilitiesV1LoadMatch
+{
 }
 
 /** Workflow entity data model. */

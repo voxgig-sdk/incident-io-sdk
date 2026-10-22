@@ -178,6 +178,28 @@ export interface AlertAttributeRemoveMatch {
   id: string
 }
 
+export interface AlertEventsV2 {
+  deduplication_key: string
+  description?: string
+  message: string
+  metadata?: Record<string, any>
+  source_url?: string
+  status: string
+  title: string
+}
+
+export interface AlertEventsV2CreateData {
+  alert_source_config_id: string
+  query?: Record<string, any>
+  token?: string
+  deduplication_key?: string
+  description?: string
+  metadata?: Record<string, any>
+  source_url?: string
+  status: string
+  title: string
+}
+
 export interface AlertNote {
   alert_group_id?: string
   alert_id?: string
@@ -1041,6 +1063,18 @@ export interface CatalogTypeSchemaCreateData {
   [action: string]: any
 }
 
+export interface CatalogV3 {
+  catalog_type_id: string
+  entries: any[]
+  update_attributes?: any[]
+}
+
+export interface CatalogV3CreateData {
+  catalog_type_id: string
+  entries: any[]
+  update_attributes?: any[]
+}
+
 export interface CustomField {
   catalog_type_id?: string
   created_at: string
@@ -1327,6 +1361,17 @@ export interface EscalationsReassignEscalationResultV2CreateData {
   user_ids?: any[]
 }
 
+export interface EscalationsV2 {
+  response: string
+  snooze_details: Record<string, any>
+}
+
+export interface EscalationsV2CreateData {
+  escalation_id: string
+  response: string
+  snooze_details: Record<string, any>
+}
+
 export interface FollowUp {
   assignee: Record<string, any>
   assignee_id?: string
@@ -1422,6 +1467,31 @@ export interface FollowUpRemoveMatch {
   [action: string]: any
 }
 
+export interface FollowUpsConnectExternalIssueResultV2 {
+  assignee: Record<string, any>
+  assignee_team: Record<string, any>
+  completed_at?: string
+  created_at: string
+  creator: Record<string, any>
+  description?: string
+  external_issue_reference: Record<string, any>
+  id: string
+  incident_id: string
+  labels: any[]
+  priority: Record<string, any>
+  provider: string
+  status: string
+  title: string
+  updated_at: string
+  url: string
+}
+
+export interface FollowUpsConnectExternalIssueResultV2CreateData {
+  follow_up_id: string
+  provider: string
+  url: string
+}
+
 export interface FollowUpsConnectExternalIssueResultV3 {
   assignee: Record<string, any>
   assignee_team: Record<string, any>
@@ -1456,6 +1526,32 @@ export interface FollowUpsCreateFromLinkResultV3 {
 export interface FollowUpsCreateFromLinkResultV3CreateData {
   incident_id: string
   url: string
+}
+
+export interface HeartbeatV2 {
+  id?: string
+}
+
+export interface HeartbeatV2LoadMatch {
+  id: string
+  token?: string
+
+  // Selects a custom action instead of the plain load:
+  //   'ping'
+  // The remaining keys are that action's own payload.
+  $action?: string
+  [action: string]: any
+}
+
+export interface HeartbeatV2CreateData {
+  id: string
+  token?: string
+
+  // Selects a custom action instead of the plain create:
+  //   'ping'
+  // The remaining keys are that action's own payload.
+  $action?: string
+  [action: string]: any
 }
 
 export interface Identity {
@@ -1654,6 +1750,16 @@ export interface IncidentMembership {
 }
 
 export interface IncidentMembershipCreateData {
+  incident_id: string
+  user_id: string
+}
+
+export interface IncidentMembershipsV1 {
+  incident_id: string
+  user_id: string
+}
+
+export interface IncidentMembershipsV1CreateData {
   incident_id: string
   user_id: string
 }
@@ -1978,6 +2084,17 @@ export interface IncidentUpdateCreateData {
   message?: string
   to_incident_status_id?: string
   to_severity_id?: string
+}
+
+export interface IncidentsImportPostmortemDocumentResultV2 {
+  content: string
+  title: string
+}
+
+export interface IncidentsImportPostmortemDocumentResultV2CreateData {
+  incident_id: string
+  content: string
+  title: string
 }
 
 export interface IpAllowlist {
@@ -2568,6 +2685,26 @@ export interface PostmortemDocumentUpdateData {
   status?: string
 }
 
+export interface PostmortemDocumentsAttachResultV1 {
+  document_provider?: string
+  incident_id: string
+  permalink: string
+}
+
+export interface PostmortemDocumentsAttachResultV1CreateData {
+  document_provider?: string
+  incident_id: string
+  permalink: string
+}
+
+export interface PostmortemDocumentsShowContentResultV1 {
+  markdown: string
+}
+
+export interface PostmortemDocumentsShowContentResultV1LoadMatch {
+  postmortem_document_id: string
+}
+
 export interface Schedule {
   annotations: Record<string, any>
   config: Record<string, any>
@@ -3115,6 +3252,20 @@ export interface StatusPageStructureLoadMatch {
   id: string
 }
 
+export interface StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 {
+  idempotency_key: string
+  name: string
+  status_page_id: string
+  updates: any[]
+}
+
+export interface StatusPagesCreateStatusPageRetrospectiveIncidentResultV2CreateData {
+  idempotency_key: string
+  name: string
+  status_page_id: string
+  updates: any[]
+}
+
 export interface Team {
   catalog_entry: Record<string, any>
   id: string
@@ -3173,6 +3324,25 @@ export interface UserListMatch {
   include_inactive?: boolean
   page_size?: number
   slack_user_id?: string
+}
+
+export interface UsersShowPagingProviderResultV2 {
+  preferred_escalation_provider?: string
+}
+
+export interface UsersShowPagingProviderResultV2LoadMatch {
+  user_id: string
+}
+
+export interface UsersShowPagingProviderResultV2CreateData {
+  user_id: string
+  preferred_escalation_provider: string
+}
+
+export interface UtilitiesV1 {
+}
+
+export interface UtilitiesV1LoadMatch {
 }
 
 export interface Workflow {

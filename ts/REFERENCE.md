@@ -85,6 +85,18 @@ Create a new `AlertAttribute` entity instance.
 
 **Returns:** `AlertAttributeEntity` instance.
 
+#### `AlertEventsV2(data?: object)`
+
+Create a new `AlertEventsV2` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `AlertEventsV2Entity` instance.
+
 #### `AlertNote(data?: object)`
 
 Create a new `AlertNote` entity instance.
@@ -325,6 +337,18 @@ Create a new `CatalogTypeSchema` entity instance.
 
 **Returns:** `CatalogTypeSchemaEntity` instance.
 
+#### `CatalogV3(data?: object)`
+
+Create a new `CatalogV3` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `CatalogV3Entity` instance.
+
 #### `CustomField(data?: object)`
 
 Create a new `CustomField` entity instance.
@@ -409,6 +433,18 @@ Create a new `EscalationsReassignEscalationResultV2` entity instance.
 
 **Returns:** `EscalationsReassignEscalationResultV2Entity` instance.
 
+#### `EscalationsV2(data?: object)`
+
+Create a new `EscalationsV2` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `EscalationsV2Entity` instance.
+
 #### `FollowUp(data?: object)`
 
 Create a new `FollowUp` entity instance.
@@ -420,6 +456,18 @@ Create a new `FollowUp` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `FollowUpEntity` instance.
+
+#### `FollowUpsConnectExternalIssueResultV2(data?: object)`
+
+Create a new `FollowUpsConnectExternalIssueResultV2` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `FollowUpsConnectExternalIssueResultV2Entity` instance.
 
 #### `FollowUpsConnectExternalIssueResultV3(data?: object)`
 
@@ -444,6 +492,18 @@ Create a new `FollowUpsCreateFromLinkResultV3` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `FollowUpsCreateFromLinkResultV3Entity` instance.
+
+#### `HeartbeatV2(data?: object)`
+
+Create a new `HeartbeatV2` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `HeartbeatV2Entity` instance.
 
 #### `Identity(data?: object)`
 
@@ -516,6 +576,18 @@ Create a new `IncidentMembership` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `IncidentMembershipEntity` instance.
+
+#### `IncidentMembershipsV1(data?: object)`
+
+Create a new `IncidentMembershipsV1` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `IncidentMembershipsV1Entity` instance.
 
 #### `IncidentParticipant(data?: object)`
 
@@ -672,6 +744,18 @@ Create a new `IncidentUpdate` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `IncidentUpdateEntity` instance.
+
+#### `IncidentsImportPostmortemDocumentResultV2(data?: object)`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `IncidentsImportPostmortemDocumentResultV2Entity` instance.
 
 #### `IpAllowlist(data?: object)`
 
@@ -901,6 +985,30 @@ Create a new `PostmortemDocument` entity instance.
 
 **Returns:** `PostmortemDocumentEntity` instance.
 
+#### `PostmortemDocumentsAttachResultV1(data?: object)`
+
+Create a new `PostmortemDocumentsAttachResultV1` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `PostmortemDocumentsAttachResultV1Entity` instance.
+
+#### `PostmortemDocumentsShowContentResultV1(data?: object)`
+
+Create a new `PostmortemDocumentsShowContentResultV1` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `PostmortemDocumentsShowContentResultV1Entity` instance.
+
 #### `Schedule(data?: object)`
 
 Create a new `Schedule` entity instance.
@@ -1117,6 +1225,18 @@ Create a new `StatusPageStructure` entity instance.
 
 **Returns:** `StatusPageStructureEntity` instance.
 
+#### `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data?: object)`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance.
+
 #### `Team(data?: object)`
 
 Create a new `Team` entity instance.
@@ -1152,6 +1272,30 @@ Create a new `User` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `UserEntity` instance.
+
+#### `UsersShowPagingProviderResultV2(data?: object)`
+
+Create a new `UsersShowPagingProviderResultV2` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `UsersShowPagingProviderResultV2Entity` instance.
+
+#### `UtilitiesV1(data?: object)`
+
+Create a new `UtilitiesV1` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `UtilitiesV1Entity` instance.
 
 #### `Workflow(data?: object)`
 
@@ -1556,6 +1700,78 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `AlertAttributeEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## AlertEventsV2Entity
+
+```ts
+const alert_events_v2 = client.AlertEventsV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `deduplication_key` | `string` | Yes | The deduplication key that the event has been processed with |
+| `description` | `string` | No | Description that optionally adds more detail to title. |
+| `message` | `string` | Yes | Human readable message giving detail about the event |
+| `metadata` | `Record<string, any>` | No | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Yes | Status of the event |
+| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `deduplication_key` | Yes |
+| `description` | - |
+| `message` | - |
+| `metadata` | - |
+| `source_url` | - |
+| `status` | - |
+| `title` | - |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.AlertEventsV2().create({
+  alert_source_config_id: 'example_alert_source_config_id',
+  status: 'example_status',
+  title: 'example_title',
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `AlertEventsV2Entity` instance with the same client and
 options.
 
 #### `client()`
@@ -3489,6 +3705,61 @@ Return a copy of the entity options.
 
 ---
 
+## CatalogV3Entity
+
+```ts
+const catalog_v3 = client.CatalogV3()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `catalog_type_id` | `string` | Yes | The unique identifier of the catalog type containing the entries |
+| `entries` | `any[]` | Yes | A list of entries to update with their new values. |
+| `update_attributes` | `any[]` | No | Optional list of specific attribute IDs to update across all entries. |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.CatalogV3().create({
+  catalog_type_id: 'example_catalog_type_id',
+  entries: [],
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `CatalogV3Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## CustomFieldEntity
 
 ```ts
@@ -4151,6 +4422,61 @@ Return a copy of the entity options.
 
 ---
 
+## EscalationsV2Entity
+
+```ts
+const escalations_v2 = client.EscalationsV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `response` | `string` | Yes | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` | `Record<string, any>` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.EscalationsV2().create({
+  escalation_id: 'example_escalation_id',
+  response: 'example_response',
+  snooze_details: {},
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `EscalationsV2Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## FollowUpEntity
 
 ```ts
@@ -4307,6 +4633,75 @@ Return a copy of the entity options.
 
 ---
 
+## FollowUpsConnectExternalIssueResultV2Entity
+
+```ts
+const follow_ups_connect_external_issue_result_v2 = client.FollowUpsConnectExternalIssueResultV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `assignee` | `Record<string, any>` | Yes |  |
+| `assignee_team` | `Record<string, any>` | Yes |  |
+| `completed_at` | `string` | No | When the follow-up was completed |
+| `created_at` | `string` | Yes | When the follow-up was created |
+| `creator` | `Record<string, any>` | Yes |  |
+| `description` | `string` | No | Description of the follow-up |
+| `external_issue_reference` | `Record<string, any>` | Yes |  |
+| `id` | `string` | Yes | Unique identifier for the follow-up |
+| `incident_id` | `string` | Yes | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `any[]` | Yes | Labels associated with this follow-up |
+| `priority` | `Record<string, any>` | Yes |  |
+| `provider` | `string` | Yes | The issue tracker provider the issue belongs to |
+| `status` | `string` | Yes | Status of the follow-up |
+| `title` | `string` | Yes | Title of the follow-up |
+| `updated_at` | `string` | Yes | When the follow-up was last updated |
+| `url` | `string` | Yes | URL of the issue in the external provider |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.FollowUpsConnectExternalIssueResultV2().create({
+  follow_up_id: 'example_follow_up_id',
+  provider: 'example_provider',
+  url: 'example_url',
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `FollowUpsConnectExternalIssueResultV2Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## FollowUpsConnectExternalIssueResultV3Entity
 
 ```ts
@@ -4418,6 +4813,87 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `FollowUpsCreateFromLinkResultV3Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## HeartbeatV2Entity
+
+```ts
+const heartbeat_v2 = client.HeartbeatV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `ping` | `/v2/heartbeat/{alert_source_config_id}/ping` | `client.HeartbeatV2().create({ $action: 'ping', ... })` |
+| `ping` | `/v2/heartbeat/{alert_source_config_id}/ping` | `client.HeartbeatV2().load({ $action: 'ping', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+HeartbeatV2 record — check the API definition for its shape.
+
+```ts
+const result = await client.HeartbeatV2().create({
+  $action: 'ping',
+  /* ...the action's own arguments */
+})
+```
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.HeartbeatV2().create({
+  id: 'example_id',
+})
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.HeartbeatV2().load({ id: 'heartbeat_v2_id' })
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `HeartbeatV2Entity` instance with the same client and
 options.
 
 #### `client()`
@@ -4923,6 +5399,60 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `IncidentMembershipEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## IncidentMembershipsV1Entity
+
+```ts
+const incident_memberships_v1 = client.IncidentMembershipsV1()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `incident_id` | `string` | Yes | Revoke memberships to incident |
+| `user_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.IncidentMembershipsV1().create({
+  incident_id: 'example_incident_id',
+  user_id: 'example_user_id',
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `IncidentMembershipsV1Entity` instance with the same client and
 options.
 
 #### `client()`
@@ -5858,6 +6388,61 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `IncidentUpdateEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## IncidentsImportPostmortemDocumentResultV2Entity
+
+```ts
+const incidents_import_postmortem_document_result_v2 = client.IncidentsImportPostmortemDocumentResultV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `content` | `string` | Yes | The document content as GitHub-Flavored Markdown |
+| `title` | `string` | Yes | Title of the postmortem document |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.IncidentsImportPostmortemDocumentResultV2().create({
+  incident_id: 'example_incident_id',
+  content: 'example_content',
+  title: 'example_title',
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2Entity` instance with the same client and
 options.
 
 #### `client()`
@@ -7404,6 +7989,111 @@ Return a copy of the entity options.
 
 ---
 
+## PostmortemDocumentsAttachResultV1Entity
+
+```ts
+const postmortem_documents_attach_result_v1 = client.PostmortemDocumentsAttachResultV1()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `document_provider` | `string` | No | The provider hosting the document. |
+| `incident_id` | `string` | Yes | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | `string` | Yes | A URL pointing to the externally-hosted post-mortem document |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.PostmortemDocumentsAttachResultV1().create({
+  incident_id: 'example_incident_id',
+  permalink: 'example_permalink',
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `PostmortemDocumentsAttachResultV1Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## PostmortemDocumentsShowContentResultV1Entity
+
+```ts
+const postmortem_documents_show_content_result_v1 = client.PostmortemDocumentsShowContentResultV1()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `markdown` | `string` | Yes | The full content of the post-mortem document, rendered as markdown. |
+
+### Operations
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.PostmortemDocumentsShowContentResultV1().load({ postmortem_document_id: 'postmortem_document_id' })
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `PostmortemDocumentsShowContentResultV1Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## ScheduleEntity
 
 ```ts
@@ -8928,6 +9618,64 @@ Return a copy of the entity options.
 
 ---
 
+## StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity
+
+```ts
+const status_pages_create_status_page_retrospective_incident_result_v2 = client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `idempotency_key` | `string` | Yes | A unique key to de-duplicate requests. |
+| `name` | `string` | Yes | A title for the incident |
+| `status_page_id` | `string` | Yes | ID of the status page. |
+| `updates` | `any[]` | Yes | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().create({
+  idempotency_key: 'example_idempotency_key',
+  name: 'example_name',
+  status_page_id: 'example_status_page_id',
+  updates: [],
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## TeamEntity
 
 ```ts
@@ -9119,6 +9867,117 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `UserEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## UsersShowPagingProviderResultV2Entity
+
+```ts
+const users_show_paging_provider_result_v2 = client.UsersShowPagingProviderResultV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `preferred_escalation_provider` | `string` | No | The user's effective escalation provider. |
+
+### Field Usage by Operation
+
+| Field | load | create |
+| --- | --- | --- |
+| `preferred_escalation_provider` | - | Yes |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.UsersShowPagingProviderResultV2().create({
+  user_id: 'example_user_id',
+  preferred_escalation_provider: 'example_preferred_escalation_provider',
+})
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.UsersShowPagingProviderResultV2().load({ user_id: 'user_id' })
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `UsersShowPagingProviderResultV2Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## UtilitiesV1Entity
+
+```ts
+const utilities_v1 = client.UtilitiesV1()
+```
+
+### Operations
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.UtilitiesV1().load()
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `UtilitiesV1Entity` instance with the same client and
 options.
 
 #### `client()`

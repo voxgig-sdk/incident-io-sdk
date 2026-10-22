@@ -54,6 +54,10 @@ Create a new `Alert` entity instance. Pass `nil` for no initial data.
 
 Create a new `AlertAttribute` entity instance. Pass `nil` for no initial data.
 
+#### `AlertEventsV2(data = nil)`
+
+Create a new `AlertEventsV2` entity instance. Pass `nil` for no initial data.
+
 #### `AlertNote(data = nil)`
 
 Create a new `AlertNote` entity instance. Pass `nil` for no initial data.
@@ -134,6 +138,10 @@ Create a new `CatalogType` entity instance. Pass `nil` for no initial data.
 
 Create a new `CatalogTypeSchema` entity instance. Pass `nil` for no initial data.
 
+#### `CatalogV3(data = nil)`
+
+Create a new `CatalogV3` entity instance. Pass `nil` for no initial data.
+
 #### `CustomField(data = nil)`
 
 Create a new `CustomField` entity instance. Pass `nil` for no initial data.
@@ -162,9 +170,17 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2` entity instance. Pa
 
 Create a new `EscalationsReassignEscalationResultV2` entity instance. Pass `nil` for no initial data.
 
+#### `EscalationsV2(data = nil)`
+
+Create a new `EscalationsV2` entity instance. Pass `nil` for no initial data.
+
 #### `FollowUp(data = nil)`
 
 Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
+
+#### `FollowUpsConnectExternalIssueResultV2(data = nil)`
+
+Create a new `FollowUpsConnectExternalIssueResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `FollowUpsConnectExternalIssueResultV3(data = nil)`
 
@@ -173,6 +189,10 @@ Create a new `FollowUpsConnectExternalIssueResultV3` entity instance. Pass `nil`
 #### `FollowUpsCreateFromLinkResultV3(data = nil)`
 
 Create a new `FollowUpsCreateFromLinkResultV3` entity instance. Pass `nil` for no initial data.
+
+#### `HeartbeatV2(data = nil)`
+
+Create a new `HeartbeatV2` entity instance. Pass `nil` for no initial data.
 
 #### `Identity(data = nil)`
 
@@ -197,6 +217,10 @@ Create a new `IncidentForm` entity instance. Pass `nil` for no initial data.
 #### `IncidentMembership(data = nil)`
 
 Create a new `IncidentMembership` entity instance. Pass `nil` for no initial data.
+
+#### `IncidentMembershipsV1(data = nil)`
+
+Create a new `IncidentMembershipsV1` entity instance. Pass `nil` for no initial data.
 
 #### `IncidentParticipant(data = nil)`
 
@@ -249,6 +273,10 @@ Create a new `IncidentType` entity instance. Pass `nil` for no initial data.
 #### `IncidentUpdate(data = nil)`
 
 Create a new `IncidentUpdate` entity instance. Pass `nil` for no initial data.
+
+#### `IncidentsImportPostmortemDocumentResultV2(data = nil)`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `IpAllowlist(data = nil)`
 
@@ -326,6 +354,14 @@ Create a new `PolicyFindingsRestoreResultV2` entity instance. Pass `nil` for no 
 
 Create a new `PostmortemDocument` entity instance. Pass `nil` for no initial data.
 
+#### `PostmortemDocumentsAttachResultV1(data = nil)`
+
+Create a new `PostmortemDocumentsAttachResultV1` entity instance. Pass `nil` for no initial data.
+
+#### `PostmortemDocumentsShowContentResultV1(data = nil)`
+
+Create a new `PostmortemDocumentsShowContentResultV1` entity instance. Pass `nil` for no initial data.
+
 #### `Schedule(data = nil)`
 
 Create a new `Schedule` entity instance. Pass `nil` for no initial data.
@@ -398,6 +434,10 @@ Create a new `StatusPageMaintenanceUpdate` entity instance. Pass `nil` for no in
 
 Create a new `StatusPageStructure` entity instance. Pass `nil` for no initial data.
 
+#### `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data = nil)`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2` entity instance. Pass `nil` for no initial data.
+
 #### `Team(data = nil)`
 
 Create a new `Team` entity instance. Pass `nil` for no initial data.
@@ -409,6 +449,14 @@ Create a new `TelemetryDataSource` entity instance. Pass `nil` for no initial da
 #### `User(data = nil)`
 
 Create a new `User` entity instance. Pass `nil` for no initial data.
+
+#### `UsersShowPagingProviderResultV2(data = nil)`
+
+Create a new `UsersShowPagingProviderResultV2` entity instance. Pass `nil` for no initial data.
+
+#### `UtilitiesV1(data = nil)`
+
+Create a new `UtilitiesV1` entity instance. Pass `nil` for no initial data.
 
 #### `Workflow(data = nil)`
 
@@ -745,6 +793,80 @@ Set the entity match criteria.
 #### `make -> Entity`
 
 Create a new `AlertAttributeEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## AlertEventsV2Entity
+
+```ruby
+alert_events_v2 = client.AlertEventsV2
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `deduplication_key` | `String` | Yes | The deduplication key that the event has been processed with |
+| `description` | `String` | No | Description that optionally adds more detail to title. |
+| `message` | `String` | Yes | Human readable message giving detail about the event |
+| `metadata` | `Hash` | No | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | `String` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `String` | Yes | Status of the event |
+| `title` | `String` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `deduplication_key` | Yes |
+| `description` | - |
+| `message` | - |
+| `metadata` | - |
+| `source_url` | - |
+| `status` | - |
+| `title` | - |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.AlertEventsV2.create({
+  "alert_source_config_id" => "example_alert_source_config_id", # String
+  "status" => "example_status", # String
+  "title" => "example_title", # String
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `AlertEventsV2Entity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -2598,6 +2720,63 @@ Return the entity name.
 
 ---
 
+## CatalogV3Entity
+
+```ruby
+catalog_v3 = client.CatalogV3
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `catalog_type_id` | `String` | Yes | The unique identifier of the catalog type containing the entries |
+| `entries` | `Array` | Yes | A list of entries to update with their new values. |
+| `update_attributes` | `Array` | No | Optional list of specific attribute IDs to update across all entries. |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.CatalogV3.create({
+  "catalog_type_id" => "example_catalog_type_id", # String
+  "entries" => [], # Array
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `CatalogV3Entity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```ruby
@@ -3255,6 +3434,63 @@ Return the entity name.
 
 ---
 
+## EscalationsV2Entity
+
+```ruby
+escalations_v2 = client.EscalationsV2
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `response` | `String` | Yes | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` | `Hash` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.EscalationsV2.create({
+  "escalation_id" => "example_escalation_id", # String
+  "response" => "example_response", # String
+  "snooze_details" => {}, # Hash
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `EscalationsV2Entity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpEntity
 
 ```ruby
@@ -3390,6 +3626,77 @@ Return the entity name.
 
 ---
 
+## FollowUpsConnectExternalIssueResultV2Entity
+
+```ruby
+follow_ups_connect_external_issue_result_v2 = client.FollowUpsConnectExternalIssueResultV2
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `assignee` | `Hash` | Yes |  |
+| `assignee_team` | `Hash` | Yes |  |
+| `completed_at` | `String` | No | When the follow-up was completed |
+| `created_at` | `String` | Yes | When the follow-up was created |
+| `creator` | `Hash` | Yes |  |
+| `description` | `String` | No | Description of the follow-up |
+| `external_issue_reference` | `Hash` | Yes |  |
+| `id` | `String` | Yes | Unique identifier for the follow-up |
+| `incident_id` | `String` | Yes | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `Array` | Yes | Labels associated with this follow-up |
+| `priority` | `Hash` | Yes |  |
+| `provider` | `String` | Yes | The issue tracker provider the issue belongs to |
+| `status` | `String` | Yes | Status of the follow-up |
+| `title` | `String` | Yes | Title of the follow-up |
+| `updated_at` | `String` | Yes | When the follow-up was last updated |
+| `url` | `String` | Yes | URL of the issue in the external provider |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.FollowUpsConnectExternalIssueResultV2.create({
+  "follow_up_id" => "example_follow_up_id", # String
+  "provider" => "example_provider", # String
+  "url" => "example_url", # String
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `FollowUpsConnectExternalIssueResultV2Entity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpsConnectExternalIssueResultV3Entity
 
 ```ruby
@@ -3509,6 +3816,68 @@ Set the entity match criteria.
 #### `make -> Entity`
 
 Create a new `FollowUpsCreateFromLinkResultV3Entity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## HeartbeatV2Entity
+
+```ruby
+heartbeat_v2 = client.HeartbeatV2
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `String` | No |  |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.HeartbeatV2.create({
+  "id" => "example_id", # String
+})
+```
+
+#### `load(reqmatch, ctrl = nil) -> result`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
+
+```ruby
+result = client.HeartbeatV2.load({ "id" => "heartbeat_v2_id" })
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `HeartbeatV2Entity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -4007,6 +4376,62 @@ Set the entity match criteria.
 #### `make -> Entity`
 
 Create a new `IncidentMembershipEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## IncidentMembershipsV1Entity
+
+```ruby
+incident_memberships_v1 = client.IncidentMembershipsV1
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `incident_id` | `String` | Yes | Revoke memberships to incident |
+| `user_id` | `String` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.IncidentMembershipsV1.create({
+  "incident_id" => "example_incident_id", # String
+  "user_id" => "example_user_id", # String
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `IncidentMembershipsV1Entity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -4953,6 +5378,63 @@ Set the entity match criteria.
 #### `make -> Entity`
 
 Create a new `IncidentUpdateEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## IncidentsImportPostmortemDocumentResultV2Entity
+
+```ruby
+incidents_import_postmortem_document_result_v2 = client.IncidentsImportPostmortemDocumentResultV2
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `content` | `String` | Yes | The document content as GitHub-Flavored Markdown |
+| `title` | `String` | Yes | Title of the postmortem document |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.IncidentsImportPostmortemDocumentResultV2.create({
+  "incident_id" => "example_incident_id", # String
+  "content" => "example_content", # String
+  "title" => "example_title", # String
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2Entity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -6545,6 +7027,115 @@ Return the entity name.
 
 ---
 
+## PostmortemDocumentsAttachResultV1Entity
+
+```ruby
+postmortem_documents_attach_result_v1 = client.PostmortemDocumentsAttachResultV1
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `document_provider` | `String` | No | The provider hosting the document. |
+| `incident_id` | `String` | Yes | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | `String` | Yes | A URL pointing to the externally-hosted post-mortem document |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.PostmortemDocumentsAttachResultV1.create({
+  "incident_id" => "example_incident_id", # String
+  "permalink" => "example_permalink", # String
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `PostmortemDocumentsAttachResultV1Entity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## PostmortemDocumentsShowContentResultV1Entity
+
+```ruby
+postmortem_documents_show_content_result_v1 = client.PostmortemDocumentsShowContentResultV1
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `markdown` | `String` | Yes | The full content of the post-mortem document, rendered as markdown. |
+
+### Operations
+
+#### `load(reqmatch, ctrl = nil) -> result`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
+
+```ruby
+result = client.PostmortemDocumentsShowContentResultV1.load({ "postmortem_document_id" => "postmortem_document_id" })
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `PostmortemDocumentsShowContentResultV1Entity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleEntity
 
 ```ruby
@@ -8097,6 +8688,66 @@ Return the entity name.
 
 ---
 
+## StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity
+
+```ruby
+status_pages_create_status_page_retrospective_incident_result_v2 = client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `idempotency_key` | `String` | Yes | A unique key to de-duplicate requests. |
+| `name` | `String` | Yes | A title for the incident |
+| `status_page_id` | `String` | Yes | ID of the status page. |
+| `updates` | `Array` | Yes | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2.create({
+  "idempotency_key" => "example_idempotency_key", # String
+  "name" => "example_name", # String
+  "status_page_id" => "example_status_page_id", # String
+  "updates" => [], # Array
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
 ## TeamEntity
 
 ```ruby
@@ -8300,6 +8951,121 @@ Set the entity match criteria.
 #### `make -> Entity`
 
 Create a new `UserEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## UsersShowPagingProviderResultV2Entity
+
+```ruby
+users_show_paging_provider_result_v2 = client.UsersShowPagingProviderResultV2
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `preferred_escalation_provider` | `String` | No | The user's effective escalation provider. |
+
+### Field Usage by Operation
+
+| Field | load | create |
+| --- | --- | --- |
+| `preferred_escalation_provider` | - | Yes |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.UsersShowPagingProviderResultV2.create({
+  "user_id" => "example_user_id", # String
+  "preferred_escalation_provider" => "example_preferred_escalation_provider", # String
+})
+```
+
+#### `load(reqmatch, ctrl = nil) -> result`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
+
+```ruby
+result = client.UsersShowPagingProviderResultV2.load({ "user_id" => "user_id" })
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `UsersShowPagingProviderResultV2Entity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## UtilitiesV1Entity
+
+```ruby
+utilities_v1 = client.UtilitiesV1
+```
+
+### Operations
+
+#### `load(reqmatch, ctrl = nil) -> result`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
+
+```ruby
+result = client.UtilitiesV1.load()
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `UtilitiesV1Entity` instance with the same client and
 options.
 
 #### `get_name -> String`

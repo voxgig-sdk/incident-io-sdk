@@ -99,8 +99,8 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const escalationpaths = await client.EscalationPath().list()
-  console.log(escalationpaths.map((item) => item.data()))
+  const incidentstatuss = await client.IncidentStatus().list()
+  console.log(incidentstatuss.map((item) => item.data()))
 } catch (err) {
   console.error('list failed:', err)
 }
@@ -164,9 +164,9 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = IncidentIoSDK.test()
 
-const escalationpaths = await client.EscalationPath().list()
-// escalationpaths is an array of EscalationPath entities, one per mock record
-console.log(escalationpaths.map((escalationpath) => escalationpath.data()))
+const incidentstatuss = await client.IncidentStatus().list()
+// incidentstatuss is an array of IncidentStatus entities, one per mock record
+console.log(incidentstatuss.map((incidentstatus) => incidentstatus.data()))
 ```
 
 You can also use the instance method:
@@ -181,7 +181,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.EscalationPath()
+const entity = client.IncidentStatus()
 
 // First call runs the operation and stores its result
 await entity.list()
@@ -271,6 +271,7 @@ new IncidentIoSDK(options?: {
 | `Action(data?)` | `ActionEntity` | Create an Action entity instance. |
 | `Alert(data?)` | `AlertEntity` | Create an Alert entity instance. |
 | `AlertAttribute(data?)` | `AlertAttributeEntity` | Create an AlertAttribute entity instance. |
+| `AlertEventsV2(data?)` | `AlertEventsV2Entity` | Create an AlertEventsV2 entity instance. |
 | `AlertNote(data?)` | `AlertNoteEntity` | Create an AlertNote entity instance. |
 | `AlertRoute(data?)` | `AlertRouteEntity` | Create an AlertRoute entity instance. |
 | `AlertSource(data?)` | `AlertSourceEntity` | Create an AlertSource entity instance. |
@@ -291,6 +292,7 @@ new IncidentIoSDK(options?: {
 | `CatalogResource(data?)` | `CatalogResourceEntity` | Create a CatalogResource entity instance. |
 | `CatalogType(data?)` | `CatalogTypeEntity` | Create a CatalogType entity instance. |
 | `CatalogTypeSchema(data?)` | `CatalogTypeSchemaEntity` | Create a CatalogTypeSchema entity instance. |
+| `CatalogV3(data?)` | `CatalogV3Entity` | Create a CatalogV3 entity instance. |
 | `CustomField(data?)` | `CustomFieldEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption(data?)` | `CustomFieldOptionEntity` | Create a CustomFieldOption entity instance. |
 | `Escalation(data?)` | `EscalationEntity` | Create an Escalation entity instance. |
@@ -298,15 +300,19 @@ new IncidentIoSDK(options?: {
 | `EscalationPathTemplate(data?)` | `EscalationPathTemplateEntity` | Create an EscalationPathTemplate entity instance. |
 | `EscalationsCheckEscalationPermissionsResultV2(data?)` | `EscalationsCheckEscalationPermissionsResultV2Entity` | Create an EscalationsCheckEscalationPermissionsResultV2 entity instance. |
 | `EscalationsReassignEscalationResultV2(data?)` | `EscalationsReassignEscalationResultV2Entity` | Create an EscalationsReassignEscalationResultV2 entity instance. |
+| `EscalationsV2(data?)` | `EscalationsV2Entity` | Create an EscalationsV2 entity instance. |
 | `FollowUp(data?)` | `FollowUpEntity` | Create a FollowUp entity instance. |
+| `FollowUpsConnectExternalIssueResultV2(data?)` | `FollowUpsConnectExternalIssueResultV2Entity` | Create a FollowUpsConnectExternalIssueResultV2 entity instance. |
 | `FollowUpsConnectExternalIssueResultV3(data?)` | `FollowUpsConnectExternalIssueResultV3Entity` | Create a FollowUpsConnectExternalIssueResultV3 entity instance. |
 | `FollowUpsCreateFromLinkResultV3(data?)` | `FollowUpsCreateFromLinkResultV3Entity` | Create a FollowUpsCreateFromLinkResultV3 entity instance. |
+| `HeartbeatV2(data?)` | `HeartbeatV2Entity` | Create a HeartbeatV2 entity instance. |
 | `Identity(data?)` | `IdentityEntity` | Create an Identity entity instance. |
 | `Incident(data?)` | `IncidentEntity` | Create an Incident entity instance. |
 | `IncidentActivityLogEntry(data?)` | `IncidentActivityLogEntryEntity` | Create an IncidentActivityLogEntry entity instance. |
 | `IncidentAttachment(data?)` | `IncidentAttachmentEntity` | Create an IncidentAttachment entity instance. |
 | `IncidentForm(data?)` | `IncidentFormEntity` | Create an IncidentForm entity instance. |
 | `IncidentMembership(data?)` | `IncidentMembershipEntity` | Create an IncidentMembership entity instance. |
+| `IncidentMembershipsV1(data?)` | `IncidentMembershipsV1Entity` | Create an IncidentMembershipsV1 entity instance. |
 | `IncidentParticipant(data?)` | `IncidentParticipantEntity` | Create an IncidentParticipant entity instance. |
 | `IncidentParticipantWorkload(data?)` | `IncidentParticipantWorkloadEntity` | Create an IncidentParticipantWorkload entity instance. |
 | `IncidentRelationship(data?)` | `IncidentRelationshipEntity` | Create an IncidentRelationship entity instance. |
@@ -320,6 +326,7 @@ new IncidentIoSDK(options?: {
 | `IncidentTimestamp(data?)` | `IncidentTimestampEntity` | Create an IncidentTimestamp entity instance. |
 | `IncidentType(data?)` | `IncidentTypeEntity` | Create an IncidentType entity instance. |
 | `IncidentUpdate(data?)` | `IncidentUpdateEntity` | Create an IncidentUpdate entity instance. |
+| `IncidentsImportPostmortemDocumentResultV2(data?)` | `IncidentsImportPostmortemDocumentResultV2Entity` | Create an IncidentsImportPostmortemDocumentResultV2 entity instance. |
 | `IpAllowlist(data?)` | `IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `IpRange(data?)` | `IpRangeEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow(data?)` | `MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
@@ -339,6 +346,8 @@ new IncidentIoSDK(options?: {
 | `PolicyFindingsDismissResultV2(data?)` | `PolicyFindingsDismissResultV2Entity` | Create a PolicyFindingsDismissResultV2 entity instance. |
 | `PolicyFindingsRestoreResultV2(data?)` | `PolicyFindingsRestoreResultV2Entity` | Create a PolicyFindingsRestoreResultV2 entity instance. |
 | `PostmortemDocument(data?)` | `PostmortemDocumentEntity` | Create a PostmortemDocument entity instance. |
+| `PostmortemDocumentsAttachResultV1(data?)` | `PostmortemDocumentsAttachResultV1Entity` | Create a PostmortemDocumentsAttachResultV1 entity instance. |
+| `PostmortemDocumentsShowContentResultV1(data?)` | `PostmortemDocumentsShowContentResultV1Entity` | Create a PostmortemDocumentsShowContentResultV1 entity instance. |
 | `Schedule(data?)` | `ScheduleEntity` | Create a Schedule entity instance. |
 | `ScheduleEntriesListPayloadV2(data?)` | `ScheduleEntriesListPayloadV2Entity` | Create a ScheduleEntriesListPayloadV2 entity instance. |
 | `ScheduleEntry(data?)` | `ScheduleEntryEntity` | Create a ScheduleEntry entity instance. |
@@ -357,9 +366,12 @@ new IncidentIoSDK(options?: {
 | `StatusPageMaintenance(data?)` | `StatusPageMaintenanceEntity` | Create a StatusPageMaintenance entity instance. |
 | `StatusPageMaintenanceUpdate(data?)` | `StatusPageMaintenanceUpdateEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
 | `StatusPageStructure(data?)` | `StatusPageStructureEntity` | Create a StatusPageStructure entity instance. |
+| `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data?)` | `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` | Create a StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 entity instance. |
 | `Team(data?)` | `TeamEntity` | Create a Team entity instance. |
 | `TelemetryDataSource(data?)` | `TelemetryDataSourceEntity` | Create a TelemetryDataSource entity instance. |
 | `User(data?)` | `UserEntity` | Create an User entity instance. |
+| `UsersShowPagingProviderResultV2(data?)` | `UsersShowPagingProviderResultV2Entity` | Create an UsersShowPagingProviderResultV2 entity instance. |
+| `UtilitiesV1(data?)` | `UtilitiesV1Entity` | Create an UtilitiesV1 entity instance. |
 | `Workflow(data?)` | `WorkflowEntity` | Create a Workflow entity instance. |
 | `WorkflowRun(data?)` | `WorkflowRunEntity` | Create a WorkflowRun entity instance. |
 | `tester(testopts?, sdkopts?)` | `IncidentIoSDK` | Create a test-mode client instance. |
@@ -488,6 +500,22 @@ API path: `/v2/alerts/{id}/actions/resolve`
 Operations: create, list, load, remove, update.
 
 API path: `/v2/alert_attributes`
+
+#### AlertEventsV2
+
+| Field | Description |
+| --- | --- |
+| `deduplication_key` | The deduplication key that the event has been processed with |
+| `description` | Description that optionally adds more detail to title. |
+| `message` | Human readable message giving detail about the event |
+| `metadata` | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | If applicable, a link to the alert in the upstream system |
+| `status` | Status of the event |
+| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+Operations: create.
+
+API path: `/v2/alert_events/http/{alert_source_config_id}`
 
 #### AlertNote
 
@@ -890,6 +918,18 @@ Operations: create.
 
 API path: `/v2/catalog_types/{id}/actions/update_schema`
 
+#### CatalogV3
+
+| Field | Description |
+| --- | --- |
+| `catalog_type_id` | The unique identifier of the catalog type containing the entries |
+| `entries` | A list of entries to update with their new values. |
+| `update_attributes` | Optional list of specific attribute IDs to update across all entries. |
+
+Operations: create.
+
+API path: `/v3/catalog_entries/actions/bulk_update`
+
 #### CustomField
 
 | Field | Description |
@@ -1009,6 +1049,17 @@ Operations: create.
 
 API path: `/v2/escalations/{escalation_id}/actions/reassign`
 
+#### EscalationsV2
+
+| Field | Description |
+| --- | --- |
+| `response` | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` |  |
+
+Operations: create.
+
+API path: `/v2/escalations/{escalation_id}/actions/respond`
+
 #### FollowUp
 
 | Field | Description |
@@ -1037,6 +1088,31 @@ API path: `/v2/escalations/{escalation_id}/actions/reassign`
 Operations: create, list, load, remove, update.
 
 API path: `/v2/follow_ups`
+
+#### FollowUpsConnectExternalIssueResultV2
+
+| Field | Description |
+| --- | --- |
+| `assignee` |  |
+| `assignee_team` |  |
+| `completed_at` | When the follow-up was completed |
+| `created_at` | When the follow-up was created |
+| `creator` |  |
+| `description` | Description of the follow-up |
+| `external_issue_reference` |  |
+| `id` | Unique identifier for the follow-up |
+| `incident_id` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | Labels associated with this follow-up |
+| `priority` |  |
+| `provider` | The issue tracker provider the issue belongs to |
+| `status` | Status of the follow-up |
+| `title` | Title of the follow-up |
+| `updated_at` | When the follow-up was last updated |
+| `url` | URL of the issue in the external provider |
+
+Operations: create.
+
+API path: `/v2/follow_ups/{id}/actions/connect_external_issue`
 
 #### FollowUpsConnectExternalIssueResultV3
 
@@ -1074,6 +1150,16 @@ API path: `/v3/follow_ups/{id}/actions/connect_external_issue`
 Operations: create.
 
 API path: `/v3/follow_ups/actions/create_from_link`
+
+#### HeartbeatV2
+
+| Field | Description |
+| --- | --- |
+| `id` |  |
+
+Operations: create, load.
+
+API path: `/v2/heartbeat/{alert_source_config_id}/ping`
 
 #### Identity
 
@@ -1192,6 +1278,17 @@ API path: `/v3/incident_forms`
 Operations: create.
 
 API path: `/v1/incident_memberships`
+
+#### IncidentMembershipsV1
+
+| Field | Description |
+| --- | --- |
+| `incident_id` | Revoke memberships to incident |
+| `user_id` |  |
+
+Operations: create.
+
+API path: `/v1/incident_memberships/actions/revoke`
 
 #### IncidentParticipant
 
@@ -1379,6 +1476,17 @@ API path: `/v1/incident_types`
 Operations: create, list.
 
 API path: `/v2/incident_updates`
+
+#### IncidentsImportPostmortemDocumentResultV2
+
+| Field | Description |
+| --- | --- |
+| `content` | The document content as GitHub-Flavored Markdown |
+| `title` | Title of the postmortem document |
+
+Operations: create.
+
+API path: `/v2/incidents/{id}/actions/import_postmortem_document`
 
 #### IpAllowlist
 
@@ -1755,6 +1863,28 @@ Operations: list, load, update.
 
 API path: `/v1/postmortem_documents`
 
+#### PostmortemDocumentsAttachResultV1
+
+| Field | Description |
+| --- | --- |
+| `document_provider` | The provider hosting the document. |
+| `incident_id` | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | A URL pointing to the externally-hosted post-mortem document |
+
+Operations: create.
+
+API path: `/v1/postmortem_documents/actions/attach`
+
+#### PostmortemDocumentsShowContentResultV1
+
+| Field | Description |
+| --- | --- |
+| `markdown` | The full content of the post-mortem document, rendered as markdown. |
+
+Operations: load.
+
+API path: `/v1/postmortem_documents/{id}/content`
+
 #### Schedule
 
 | Field | Description |
@@ -2049,6 +2179,19 @@ Operations: load.
 
 API path: `/v2/status_page_structures/{status_page_id}`
 
+#### StatusPagesCreateStatusPageRetrospectiveIncidentResultV2
+
+| Field | Description |
+| --- | --- |
+| `idempotency_key` | A unique key to de-duplicate requests. |
+| `name` | A title for the incident |
+| `status_page_id` | ID of the status page. |
+| `updates` | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+Operations: create.
+
+API path: `/v2/status_page_retrospective_incidents`
+
 #### Team
 
 | Field | Description |
@@ -2098,6 +2241,25 @@ API path: `/v2/telemetry/data_sources/{id}`
 Operations: list, load.
 
 API path: `/v2/users`
+
+#### UsersShowPagingProviderResultV2
+
+| Field | Description |
+| --- | --- |
+| `preferred_escalation_provider` | The user's effective escalation provider. |
+
+Operations: create, load.
+
+API path: `/v2/users/{user_id}/paging_provider`
+
+#### UtilitiesV1
+
+| Field | Description |
+| --- | --- |
+
+Operations: load.
+
+API path: `/v1/openapiV3.json`
 
 #### Workflow
 
@@ -2315,6 +2477,39 @@ const alert_attribute = await client.AlertAttribute().create({
   array: true,
   name: 'example_name',
   type: 'example_type',
+})
+```
+
+
+### AlertEventsV2
+
+Create an instance: `const alert_events_v2 = client.AlertEventsV2()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `deduplication_key` | `string` | The deduplication key that the event has been processed with |
+| `description` | `string` | Description that optionally adds more detail to title. |
+| `message` | `string` | Human readable message giving detail about the event |
+| `metadata` | `Record<string, any>` | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Status of the event |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+#### Example: Create
+
+```ts
+const alert_events_v2 = await client.AlertEventsV2().create({
+  alert_source_config_id: 'example_alert_source_config_id',
+  status: 'example_status',
+  title: 'example_title',
 })
 ```
 
@@ -3232,6 +3427,34 @@ const catalog_type_schema = await client.CatalogTypeSchema().create({
 ```
 
 
+### CatalogV3
+
+Create an instance: `const catalog_v3 = client.CatalogV3()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `catalog_type_id` | `string` | The unique identifier of the catalog type containing the entries |
+| `entries` | `any[]` | A list of entries to update with their new values. |
+| `update_attributes` | `any[]` | Optional list of specific attribute IDs to update across all entries. |
+
+#### Example: Create
+
+```ts
+const catalog_v3 = await client.CatalogV3().create({
+  catalog_type_id: 'example_catalog_type_id',
+  entries: [],
+})
+```
+
+
 ### CustomField
 
 Create an instance: `const custom_field = client.CustomField()`
@@ -3545,6 +3768,34 @@ const escalations_reassign_escalation_result_v2 = await client.EscalationsReassi
 ```
 
 
+### EscalationsV2
+
+Create an instance: `const escalations_v2 = client.EscalationsV2()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `response` | `string` | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` | `Record<string, any>` |  |
+
+#### Example: Create
+
+```ts
+const escalations_v2 = await client.EscalationsV2().create({
+  escalation_id: 'example_escalation_id',
+  response: 'example_response',
+  snooze_details: {},
+})
+```
+
+
 ### FollowUp
 
 Create an instance: `const follow_up = client.FollowUp()`
@@ -3602,6 +3853,48 @@ const follow_ups = await client.FollowUp().list()
 const follow_up = await client.FollowUp().create({
   incident_id: 'example_incident_id',
   title: 'example_title',
+})
+```
+
+
+### FollowUpsConnectExternalIssueResultV2
+
+Create an instance: `const follow_ups_connect_external_issue_result_v2 = client.FollowUpsConnectExternalIssueResultV2()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `assignee` | `Record<string, any>` |  |
+| `assignee_team` | `Record<string, any>` |  |
+| `completed_at` | `string` | When the follow-up was completed |
+| `created_at` | `string` | When the follow-up was created |
+| `creator` | `Record<string, any>` |  |
+| `description` | `string` | Description of the follow-up |
+| `external_issue_reference` | `Record<string, any>` |  |
+| `id` | `string` | Unique identifier for the follow-up |
+| `incident_id` | `string` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `any[]` | Labels associated with this follow-up |
+| `priority` | `Record<string, any>` |  |
+| `provider` | `string` | The issue tracker provider the issue belongs to |
+| `status` | `string` | Status of the follow-up |
+| `title` | `string` | Title of the follow-up |
+| `updated_at` | `string` | When the follow-up was last updated |
+| `url` | `string` | URL of the issue in the external provider |
+
+#### Example: Create
+
+```ts
+const follow_ups_connect_external_issue_result_v2 = await client.FollowUpsConnectExternalIssueResultV2().create({
+  follow_up_id: 'example_follow_up_id',
+  provider: 'example_provider',
+  url: 'example_url',
 })
 ```
 
@@ -3672,6 +3965,38 @@ Create an instance: `const follow_ups_create_from_link_result_v3 = client.Follow
 const follow_ups_create_from_link_result_v3 = await client.FollowUpsCreateFromLinkResultV3().create({
   incident_id: 'example_incident_id',
   url: 'example_url',
+})
+```
+
+
+### HeartbeatV2
+
+Create an instance: `const heartbeat_v2 = client.HeartbeatV2()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
+
+#### Example: Load
+
+```ts
+const heartbeat_v2 = await client.HeartbeatV2().load({ id: 'heartbeat_v2_id' })
+```
+
+#### Example: Create
+
+```ts
+const heartbeat_v2 = await client.HeartbeatV2().create({
+  id: 'example_id',
 })
 ```
 
@@ -3916,6 +4241,33 @@ Create an instance: `const incident_membership = client.IncidentMembership()`
 
 ```ts
 const incident_membership = await client.IncidentMembership().create({
+  incident_id: 'example_incident_id',
+  user_id: 'example_user_id',
+})
+```
+
+
+### IncidentMembershipsV1
+
+Create an instance: `const incident_memberships_v1 = client.IncidentMembershipsV1()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `incident_id` | `string` | Revoke memberships to incident |
+| `user_id` | `string` |  |
+
+#### Example: Create
+
+```ts
+const incident_memberships_v1 = await client.IncidentMembershipsV1().create({
   incident_id: 'example_incident_id',
   user_id: 'example_user_id',
 })
@@ -4380,6 +4732,34 @@ const incident_updates = await client.IncidentUpdate().list()
 const incident_update = await client.IncidentUpdate().create({
   idempotency_key: 'example_idempotency_key',
   incident_id: 'example_incident_id',
+})
+```
+
+
+### IncidentsImportPostmortemDocumentResultV2
+
+Create an instance: `const incidents_import_postmortem_document_result_v2 = client.IncidentsImportPostmortemDocumentResultV2()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `content` | `string` | The document content as GitHub-Flavored Markdown |
+| `title` | `string` | Title of the postmortem document |
+
+#### Example: Create
+
+```ts
+const incidents_import_postmortem_document_result_v2 = await client.IncidentsImportPostmortemDocumentResultV2().create({
+  incident_id: 'example_incident_id',
+  content: 'example_content',
+  title: 'example_title',
 })
 ```
 
@@ -5192,6 +5572,57 @@ const postmortem_documents = await client.PostmortemDocument().list()
 ```
 
 
+### PostmortemDocumentsAttachResultV1
+
+Create an instance: `const postmortem_documents_attach_result_v1 = client.PostmortemDocumentsAttachResultV1()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `document_provider` | `string` | The provider hosting the document. |
+| `incident_id` | `string` | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | `string` | A URL pointing to the externally-hosted post-mortem document |
+
+#### Example: Create
+
+```ts
+const postmortem_documents_attach_result_v1 = await client.PostmortemDocumentsAttachResultV1().create({
+  incident_id: 'example_incident_id',
+  permalink: 'example_permalink',
+})
+```
+
+
+### PostmortemDocumentsShowContentResultV1
+
+Create an instance: `const postmortem_documents_show_content_result_v1 = client.PostmortemDocumentsShowContentResultV1()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `markdown` | `string` | The full content of the post-mortem document, rendered as markdown. |
+
+#### Example: Load
+
+```ts
+const postmortem_documents_show_content_result_v1 = await client.PostmortemDocumentsShowContentResultV1().load({ postmortem_document_id: 'postmortem_document_id' })
+```
+
+
 ### Schedule
 
 Create an instance: `const schedule = client.Schedule()`
@@ -5943,6 +6374,37 @@ const status_page_structure = await client.StatusPageStructure().load({ id: 'sta
 ```
 
 
+### StatusPagesCreateStatusPageRetrospectiveIncidentResultV2
+
+Create an instance: `const status_pages_create_status_page_retrospective_incident_result_v2 = client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `idempotency_key` | `string` | A unique key to de-duplicate requests. |
+| `name` | `string` | A title for the incident |
+| `status_page_id` | `string` | ID of the status page. |
+| `updates` | `any[]` | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+#### Example: Create
+
+```ts
+const status_pages_create_status_page_retrospective_incident_result_v2 = await client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().create({
+  idempotency_key: 'example_idempotency_key',
+  name: 'example_name',
+  status_page_id: 'example_status_page_id',
+  updates: [],
+})
+```
+
+
 ### Team
 
 Create an instance: `const team = client.Team()`
@@ -6037,6 +6499,56 @@ const user = await client.User().load({ id: 'user_id' })
 
 ```ts
 const users = await client.User().list()
+```
+
+
+### UsersShowPagingProviderResultV2
+
+Create an instance: `const users_show_paging_provider_result_v2 = client.UsersShowPagingProviderResultV2()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `preferred_escalation_provider` | `string` | The user's effective escalation provider. |
+
+#### Example: Load
+
+```ts
+const users_show_paging_provider_result_v2 = await client.UsersShowPagingProviderResultV2().load({ user_id: 'user_id' })
+```
+
+#### Example: Create
+
+```ts
+const users_show_paging_provider_result_v2 = await client.UsersShowPagingProviderResultV2().create({
+  user_id: 'example_user_id',
+  preferred_escalation_provider: 'example_preferred_escalation_provider',
+})
+```
+
+
+### UtilitiesV1
+
+Create an instance: `const utilities_v1 = client.UtilitiesV1()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Example: Load
+
+```ts
+const utilities_v1 = await client.UtilitiesV1().load()
 ```
 
 
@@ -6390,11 +6902,11 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const escalationpath = client.EscalationPath()
-await escalationpath.list()
+const incidentstatus = client.IncidentStatus()
+await incidentstatus.list()
 
-// escalationpath.data() now returns the escalationpath data from the last `list`
-// escalationpath.match() returns the last match criteria
+// incidentstatus.data() now returns the incidentstatus data from the last `list`
+// incidentstatus.match() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

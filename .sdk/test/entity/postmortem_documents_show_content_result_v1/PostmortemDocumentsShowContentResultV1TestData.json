@@ -24,5 +24,12 @@
         "markdown": "s28"
       }
     }
+  },
+  "requests": {
+    "GET /v1/postmortem_documents/{id}/content": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

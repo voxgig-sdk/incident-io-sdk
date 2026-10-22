@@ -54,6 +54,10 @@ Create a new `AlertEntity` instance. Pass `null` for no initial data.
 
 Create a new `AlertAttributeEntity` instance. Pass `null` for no initial data.
 
+#### `AlertEventsV2($data = null)`
+
+Create a new `AlertEventsV2Entity` instance. Pass `null` for no initial data.
+
 #### `AlertNote($data = null)`
 
 Create a new `AlertNoteEntity` instance. Pass `null` for no initial data.
@@ -134,6 +138,10 @@ Create a new `CatalogTypeEntity` instance. Pass `null` for no initial data.
 
 Create a new `CatalogTypeSchemaEntity` instance. Pass `null` for no initial data.
 
+#### `CatalogV3($data = null)`
+
+Create a new `CatalogV3Entity` instance. Pass `null` for no initial data.
+
 #### `CustomField($data = null)`
 
 Create a new `CustomFieldEntity` instance. Pass `null` for no initial data.
@@ -162,9 +170,17 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2Entity` instance. Pas
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance. Pass `null` for no initial data.
 
+#### `EscalationsV2($data = null)`
+
+Create a new `EscalationsV2Entity` instance. Pass `null` for no initial data.
+
 #### `FollowUp($data = null)`
 
 Create a new `FollowUpEntity` instance. Pass `null` for no initial data.
+
+#### `FollowUpsConnectExternalIssueResultV2($data = null)`
+
+Create a new `FollowUpsConnectExternalIssueResultV2Entity` instance. Pass `null` for no initial data.
 
 #### `FollowUpsConnectExternalIssueResultV3($data = null)`
 
@@ -173,6 +189,10 @@ Create a new `FollowUpsConnectExternalIssueResultV3Entity` instance. Pass `null`
 #### `FollowUpsCreateFromLinkResultV3($data = null)`
 
 Create a new `FollowUpsCreateFromLinkResultV3Entity` instance. Pass `null` for no initial data.
+
+#### `HeartbeatV2($data = null)`
+
+Create a new `HeartbeatV2Entity` instance. Pass `null` for no initial data.
 
 #### `Identity($data = null)`
 
@@ -197,6 +217,10 @@ Create a new `IncidentFormEntity` instance. Pass `null` for no initial data.
 #### `IncidentMembership($data = null)`
 
 Create a new `IncidentMembershipEntity` instance. Pass `null` for no initial data.
+
+#### `IncidentMembershipsV1($data = null)`
+
+Create a new `IncidentMembershipsV1Entity` instance. Pass `null` for no initial data.
 
 #### `IncidentParticipant($data = null)`
 
@@ -249,6 +273,10 @@ Create a new `IncidentTypeEntity` instance. Pass `null` for no initial data.
 #### `IncidentUpdate($data = null)`
 
 Create a new `IncidentUpdateEntity` instance. Pass `null` for no initial data.
+
+#### `IncidentsImportPostmortemDocumentResultV2($data = null)`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2Entity` instance. Pass `null` for no initial data.
 
 #### `IpAllowlist($data = null)`
 
@@ -326,6 +354,14 @@ Create a new `PolicyFindingsRestoreResultV2Entity` instance. Pass `null` for no 
 
 Create a new `PostmortemDocumentEntity` instance. Pass `null` for no initial data.
 
+#### `PostmortemDocumentsAttachResultV1($data = null)`
+
+Create a new `PostmortemDocumentsAttachResultV1Entity` instance. Pass `null` for no initial data.
+
+#### `PostmortemDocumentsShowContentResultV1($data = null)`
+
+Create a new `PostmortemDocumentsShowContentResultV1Entity` instance. Pass `null` for no initial data.
+
 #### `Schedule($data = null)`
 
 Create a new `ScheduleEntity` instance. Pass `null` for no initial data.
@@ -398,6 +434,10 @@ Create a new `StatusPageMaintenanceUpdateEntity` instance. Pass `null` for no in
 
 Create a new `StatusPageStructureEntity` instance. Pass `null` for no initial data.
 
+#### `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2($data = null)`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance. Pass `null` for no initial data.
+
 #### `Team($data = null)`
 
 Create a new `TeamEntity` instance. Pass `null` for no initial data.
@@ -409,6 +449,14 @@ Create a new `TelemetryDataSourceEntity` instance. Pass `null` for no initial da
 #### `User($data = null)`
 
 Create a new `UserEntity` instance. Pass `null` for no initial data.
+
+#### `UsersShowPagingProviderResultV2($data = null)`
+
+Create a new `UsersShowPagingProviderResultV2Entity` instance. Pass `null` for no initial data.
+
+#### `UtilitiesV1($data = null)`
+
+Create a new `UtilitiesV1Entity` instance. Pass `null` for no initial data.
 
 #### `Workflow($data = null)`
 
@@ -741,6 +789,80 @@ Set the entity match criteria.
 #### `make(): AlertAttributeEntity`
 
 Create a new `AlertAttributeEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## AlertEventsV2Entity
+
+```php
+$alert_events_v2 = $client->AlertEventsV2();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `deduplication_key` | `string` | Yes | The deduplication key that the event has been processed with |
+| `description` | `string` | No | Description that optionally adds more detail to title. |
+| `message` | `string` | Yes | Human readable message giving detail about the event |
+| `metadata` | `array` | No | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Yes | Status of the event |
+| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `deduplication_key` | Yes |
+| `description` | - |
+| `message` | - |
+| `metadata` | - |
+| `source_url` | - |
+| `status` | - |
+| `title` | - |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->AlertEventsV2()->create([
+  "alert_source_config_id" => null, // string
+  "status" => null, // string
+  "title" => null, // string
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): AlertEventsV2Entity`
+
+Create a new `AlertEventsV2Entity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -2578,6 +2700,63 @@ Return the entity name.
 
 ---
 
+## CatalogV3Entity
+
+```php
+$catalog_v3 = $client->CatalogV3();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `catalog_type_id` | `string` | Yes | The unique identifier of the catalog type containing the entries |
+| `entries` | `array` | Yes | A list of entries to update with their new values. |
+| `update_attributes` | `array` | No | Optional list of specific attribute IDs to update across all entries. |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->CatalogV3()->create([
+  "catalog_type_id" => null, // string
+  "entries" => null, // array
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): CatalogV3Entity`
+
+Create a new `CatalogV3Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```php
@@ -3230,6 +3409,63 @@ Return the entity name.
 
 ---
 
+## EscalationsV2Entity
+
+```php
+$escalations_v2 = $client->EscalationsV2();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `response` | `string` | Yes | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` | `array` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->EscalationsV2()->create([
+  "escalation_id" => null, // string
+  "response" => null, // string
+  "snooze_details" => null, // array
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): EscalationsV2Entity`
+
+Create a new `EscalationsV2Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpEntity
 
 ```php
@@ -3364,6 +3600,77 @@ Return the entity name.
 
 ---
 
+## FollowUpsConnectExternalIssueResultV2Entity
+
+```php
+$follow_ups_connect_external_issue_result_v2 = $client->FollowUpsConnectExternalIssueResultV2();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `assignee` | `array` | Yes |  |
+| `assignee_team` | `array` | Yes |  |
+| `completed_at` | `string` | No | When the follow-up was completed |
+| `created_at` | `string` | Yes | When the follow-up was created |
+| `creator` | `array` | Yes |  |
+| `description` | `string` | No | Description of the follow-up |
+| `external_issue_reference` | `array` | Yes |  |
+| `id` | `string` | Yes | Unique identifier for the follow-up |
+| `incident_id` | `string` | Yes | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `array` | Yes | Labels associated with this follow-up |
+| `priority` | `array` | Yes |  |
+| `provider` | `string` | Yes | The issue tracker provider the issue belongs to |
+| `status` | `string` | Yes | Status of the follow-up |
+| `title` | `string` | Yes | Title of the follow-up |
+| `updated_at` | `string` | Yes | When the follow-up was last updated |
+| `url` | `string` | Yes | URL of the issue in the external provider |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->FollowUpsConnectExternalIssueResultV2()->create([
+  "follow_up_id" => null, // string
+  "provider" => null, // string
+  "url" => null, // string
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): FollowUpsConnectExternalIssueResultV2Entity`
+
+Create a new `FollowUpsConnectExternalIssueResultV2Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpsConnectExternalIssueResultV3Entity
 
 ```php
@@ -3483,6 +3790,68 @@ Set the entity match criteria.
 #### `make(): FollowUpsCreateFromLinkResultV3Entity`
 
 Create a new `FollowUpsCreateFromLinkResultV3Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## HeartbeatV2Entity
+
+```php
+$heartbeat_v2 = $client->HeartbeatV2();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | No |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->HeartbeatV2()->create([
+  "id" => null, // string
+]);
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->HeartbeatV2()->load(["id" => "heartbeat_v2_id"]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): HeartbeatV2Entity`
+
+Create a new `HeartbeatV2Entity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -3977,6 +4346,62 @@ Set the entity match criteria.
 #### `make(): IncidentMembershipEntity`
 
 Create a new `IncidentMembershipEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## IncidentMembershipsV1Entity
+
+```php
+$incident_memberships_v1 = $client->IncidentMembershipsV1();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `incident_id` | `string` | Yes | Revoke memberships to incident |
+| `user_id` | `string` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->IncidentMembershipsV1()->create([
+  "incident_id" => null, // string
+  "user_id" => null, // string
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): IncidentMembershipsV1Entity`
+
+Create a new `IncidentMembershipsV1Entity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -4914,6 +5339,63 @@ Set the entity match criteria.
 #### `make(): IncidentUpdateEntity`
 
 Create a new `IncidentUpdateEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## IncidentsImportPostmortemDocumentResultV2Entity
+
+```php
+$incidents_import_postmortem_document_result_v2 = $client->IncidentsImportPostmortemDocumentResultV2();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `content` | `string` | Yes | The document content as GitHub-Flavored Markdown |
+| `title` | `string` | Yes | Title of the postmortem document |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->IncidentsImportPostmortemDocumentResultV2()->create([
+  "incident_id" => null, // string
+  "content" => null, // string
+  "title" => null, // string
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): IncidentsImportPostmortemDocumentResultV2Entity`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2Entity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -6494,6 +6976,115 @@ Return the entity name.
 
 ---
 
+## PostmortemDocumentsAttachResultV1Entity
+
+```php
+$postmortem_documents_attach_result_v1 = $client->PostmortemDocumentsAttachResultV1();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `document_provider` | `string` | No | The provider hosting the document. |
+| `incident_id` | `string` | Yes | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | `string` | Yes | A URL pointing to the externally-hosted post-mortem document |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->PostmortemDocumentsAttachResultV1()->create([
+  "incident_id" => null, // string
+  "permalink" => null, // string
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): PostmortemDocumentsAttachResultV1Entity`
+
+Create a new `PostmortemDocumentsAttachResultV1Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## PostmortemDocumentsShowContentResultV1Entity
+
+```php
+$postmortem_documents_show_content_result_v1 = $client->PostmortemDocumentsShowContentResultV1();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `markdown` | `string` | Yes | The full content of the post-mortem document, rendered as markdown. |
+
+### Operations
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->PostmortemDocumentsShowContentResultV1()->load(["postmortem_document_id" => "postmortem_document_id"]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): PostmortemDocumentsShowContentResultV1Entity`
+
+Create a new `PostmortemDocumentsShowContentResultV1Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleEntity
 
 ```php
@@ -8034,6 +8625,66 @@ Return the entity name.
 
 ---
 
+## StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity
+
+```php
+$status_pages_create_status_page_retrospective_incident_result_v2 = $client->StatusPagesCreateStatusPageRetrospectiveIncidentResultV2();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `idempotency_key` | `string` | Yes | A unique key to de-duplicate requests. |
+| `name` | `string` | Yes | A title for the incident |
+| `status_page_id` | `string` | Yes | ID of the status page. |
+| `updates` | `array` | Yes | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->StatusPagesCreateStatusPageRetrospectiveIncidentResultV2()->create([
+  "idempotency_key" => null, // string
+  "name" => null, // string
+  "status_page_id" => null, // string
+  "updates" => null, // array
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## TeamEntity
 
 ```php
@@ -8235,6 +8886,121 @@ Set the entity match criteria.
 #### `make(): UserEntity`
 
 Create a new `UserEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## UsersShowPagingProviderResultV2Entity
+
+```php
+$users_show_paging_provider_result_v2 = $client->UsersShowPagingProviderResultV2();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `preferred_escalation_provider` | `string` | No | The user's effective escalation provider. |
+
+### Field Usage by Operation
+
+| Field | load | create |
+| --- | --- | --- |
+| `preferred_escalation_provider` | - | Yes |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->UsersShowPagingProviderResultV2()->create([
+  "user_id" => null, // string
+  "preferred_escalation_provider" => null, // string
+]);
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->UsersShowPagingProviderResultV2()->load(["user_id" => "user_id"]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): UsersShowPagingProviderResultV2Entity`
+
+Create a new `UsersShowPagingProviderResultV2Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## UtilitiesV1Entity
+
+```php
+$utilities_v1 = $client->UtilitiesV1();
+```
+
+### Operations
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->UtilitiesV1()->load();
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): UtilitiesV1Entity`
+
+Create a new `UtilitiesV1Entity` instance with the same client and
 options.
 
 #### `get_name(): string`

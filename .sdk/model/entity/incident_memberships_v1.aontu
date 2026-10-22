@@ -1,0 +1,65 @@
+# Entity: incident_memberships_v1
+
+main: kit: entity: incident_memberships_v1: {
+
+  alias: field: {}
+
+  fields: {
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "Revoke memberships to incident"
+      t: "`$STRING`"
+    }
+    user_id: {
+      h: "User Id"
+      n: "user_id"
+      r: true
+      t: "`$STRING`"
+    }
+  }
+
+  name: "incident_memberships_v1"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "incident_id"
+            "user_id"
+          ]
+          co: {
+            id: "POST /v1/incident_memberships/actions/revoke"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/incident_memberships/actions/revoke"
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "incident_memberships"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "revoke"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

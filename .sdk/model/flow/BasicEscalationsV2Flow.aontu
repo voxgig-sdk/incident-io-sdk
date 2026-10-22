@@ -7,28 +7,15 @@ main: kit: flow: BasicEscalationsV2Flow:
   name: "BasicEscalationsV2Flow",
   step: [
     {
-      input: {
+      i: {
         ref: "escalations_v2_ref01"
       }
 
-      match: {
+      m: {
         escalation_id: "escalation01"
       }
 
-      op: "create"
-    }
-
-    {
-      input: {
-        ref: "escalations_v2_ref01",
-        suffix: "_rm0"
-      }
-
-      match: {
-        id: "escalations_v201"
-      }
-
-      op: "remove"
+      o: "create"
     }
   ],
   "key$": "BasicEscalationsV2Flow"

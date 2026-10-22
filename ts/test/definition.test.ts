@@ -1356,6 +1356,42 @@ const PLAN: any[] = [
     "idField": "id"
   },
   {
+    "entity": "alert_events_v2",
+    "accessor": "AlertEventsV2",
+    "op": "create",
+    "method": "POST",
+    "path": "/v2/alert_events/http/{alert_source_config_id}",
+    "args": [
+      {
+        "name": "alert_source_config_id",
+        "wire": "alert_source_config_id",
+        "value": "01GW2G3V0S59R238FAHPDS1R66"
+      }
+    ],
+    "select": {
+      "query": "v1",
+      "token": "some-random-string"
+    },
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [
+      "token",
+      "query"
+    ],
+    "queryArgs": [],
+    "auth": [],
+    "status": 202,
+    "sample": {
+      "deduplication_key": "unique-key",
+      "message": "Event accepted for processing",
+      "status": "success"
+    },
+    "idField": "id"
+  },
+  {
     "entity": "alert_note",
     "accessor": "AlertNote",
     "op": "create",
@@ -9994,6 +10030,31 @@ const PLAN: any[] = [
     "idField": "id"
   },
   {
+    "entity": "catalog_v3",
+    "accessor": "CatalogV3",
+    "op": "create",
+    "method": "POST",
+    "path": "/v3/catalog_entries/actions/bulk_update",
+    "args": [],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 204,
+    "sample": null,
+    "idField": "id"
+  },
+  {
     "entity": "custom_field",
     "accessor": "CustomField",
     "op": "create",
@@ -13939,6 +14000,98 @@ const PLAN: any[] = [
     "idField": "id"
   },
   {
+    "entity": "follow_ups_connect_external_issue_result_v2",
+    "accessor": "FollowUpsConnectExternalIssueResultV2",
+    "op": "create",
+    "method": "POST",
+    "path": "/v2/follow_ups/{id}/actions/connect_external_issue",
+    "args": [
+      {
+        "name": "follow_up_id",
+        "wire": "id",
+        "value": "01FCNDV6P870EA6S7TK1DSYD5H"
+      }
+    ],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 200,
+    "sample": {
+      "follow_up": {
+        "assignee": {
+          "email": "lisa@incident.io",
+          "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "name": "Lisa Karlin Curtis",
+          "role": "owner",
+          "slack_user_id": "U02AYNF2XJM"
+        },
+        "assignee_team": {
+          "id": "abc123",
+          "name": "abc123"
+        },
+        "completed_at": "2021-08-17T13:28:57.801578Z",
+        "created_at": "2021-08-17T13:28:57.801578Z",
+        "creator": {
+          "alert": {
+            "id": "01GW2G3V0S59R238FAHPDS1R66",
+            "title": "*errors.withMessage: PG::Error failed to connect"
+          },
+          "api_key": {
+            "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+            "name": "My test API key"
+          },
+          "user": {
+            "email": "lisa@incident.io",
+            "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+            "name": "Lisa Karlin Curtis",
+            "role": "owner",
+            "slack_user_id": "U02AYNF2XJM"
+          },
+          "workflow": {
+            "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+            "name": "My little workflow"
+          }
+        },
+        "description": "Call the fire brigade",
+        "external_issue_reference": {
+          "issue_name": "INC-123",
+          "issue_permalink": "https://linear.app/incident-io/issue/INC-1609/find-copywriter-to-write-up",
+          "provider": "asana"
+        },
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "incident_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "labels": [
+          "bug",
+          "urgent"
+        ],
+        "priority": {
+          "description": "A follow-up that requires immediate attention.",
+          "id": "01GNW4BAQ7XRMFF6FHKNXDFPRW",
+          "name": "Urgent",
+          "rank": 10
+        },
+        "status": "outstanding",
+        "title": "Cat is stuck in the tree",
+        "updated_at": "2021-08-17T13:28:57.801578Z"
+      }
+    },
+    "idField": "id"
+  },
+  {
     "entity": "follow_ups_connect_external_issue_result_v3",
     "accessor": "FollowUpsConnectExternalIssueResultV3",
     "op": "create",
@@ -14126,6 +14279,75 @@ const PLAN: any[] = [
         "updated_at": "2021-08-17T13:28:57.801578Z"
       }
     },
+    "idField": "id"
+  },
+  {
+    "entity": "heartbeat_v2",
+    "accessor": "HeartbeatV2",
+    "op": "create",
+    "method": "POST",
+    "path": "/v2/heartbeat/{alert_source_config_id}/ping",
+    "action": "ping",
+    "args": [
+      {
+        "name": "id",
+        "wire": "alert_source_config_id",
+        "value": "01GW2G3V0S59R238FAHPDS1R66"
+      }
+    ],
+    "select": {
+      "token": "some-random-string"
+    },
+    "headers": [],
+    "cookies": [],
+    "query": [
+      "token"
+    ],
+    "queryArgs": [],
+    "auth": [],
+    "status": 204,
+    "sample": null,
+    "idField": "id"
+  },
+  {
+    "entity": "heartbeat_v2",
+    "accessor": "HeartbeatV2",
+    "op": "load",
+    "method": "GET",
+    "path": "/v2/heartbeat/{alert_source_config_id}/ping",
+    "action": "ping",
+    "args": [
+      {
+        "name": "id",
+        "wire": "alert_source_config_id",
+        "value": "01GW2G3V0S59R238FAHPDS1R66"
+      }
+    ],
+    "select": {
+      "token": "some-random-string"
+    },
+    "headers": [],
+    "cookies": [],
+    "query": [
+      "token"
+    ],
+    "queryArgs": [
+      {
+        "name": "token",
+        "wire": "token"
+      }
+    ],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 204,
+    "sample": null,
     "idField": "id"
   },
   {
@@ -17196,6 +17418,31 @@ const PLAN: any[] = [
     "idField": "id"
   },
   {
+    "entity": "incident_memberships_v1",
+    "accessor": "IncidentMembershipsV1",
+    "op": "create",
+    "method": "POST",
+    "path": "/v1/incident_memberships/actions/revoke",
+    "args": [],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 204,
+    "sample": null,
+    "idField": "id"
+  },
+  {
     "entity": "incident_participant",
     "accessor": "IncidentParticipant",
     "op": "load",
@@ -19621,6 +19868,64 @@ const PLAN: any[] = [
       "pagination_meta": {
         "after": "01FCNDV6P870EA6S7TK1DSYDG0",
         "page_size": 25
+      }
+    },
+    "idField": "id"
+  },
+  {
+    "entity": "incidents_import_postmortem_document_result_v2",
+    "accessor": "IncidentsImportPostmortemDocumentResultV2",
+    "op": "create",
+    "method": "POST",
+    "path": "/v2/incidents/{id}/actions/import_postmortem_document",
+    "args": [
+      {
+        "name": "incident_id",
+        "wire": "id",
+        "value": "01GBA8J19SMXQWPJMX3P2ESCVG"
+      }
+    ],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 201,
+    "sample": {
+      "postmortem_document": {
+        "created_at": "2021-08-17T13:28:57.801578Z",
+        "document_url": "https://app.incident.io/my-org/incidents/123/post-mortems/01GDZEW57FDA1K4S63MGMQ5DS9",
+        "editors": [
+          {
+            "email": "lisa@incident.io",
+            "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+            "name": "Lisa Karlin Curtis",
+            "role": "viewer",
+            "slack_user_id": "U02AYNF2XJM"
+          }
+        ],
+        "exported_urls": [
+          "https://www.notion.so/INC-123-sad-database",
+          "https://docs.google.com/document/d/1234"
+        ],
+        "id": "01GDZEW57FDA1K4S63MGMQ5DS9",
+        "incident_id": "01GBA8J19SMXQWPJMX3P2ESCVG",
+        "status": "in_progress",
+        "title": "INC-123: Database is sad",
+        "type": "in_app",
+        "updated_at": "abc123"
       }
     },
     "idField": "id"
@@ -23919,6 +24224,94 @@ const PLAN: any[] = [
     "idField": "id"
   },
   {
+    "entity": "postmortem_documents_attach_result_v1",
+    "accessor": "PostmortemDocumentsAttachResultV1",
+    "op": "create",
+    "method": "POST",
+    "path": "/v1/postmortem_documents/actions/attach",
+    "args": [],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 201,
+    "sample": {
+      "postmortem_document": {
+        "created_at": "2021-08-17T13:28:57.801578Z",
+        "document_url": "https://app.incident.io/my-org/incidents/123/post-mortems/01GDZEW57FDA1K4S63MGMQ5DS9",
+        "editors": [
+          {
+            "email": "lisa@incident.io",
+            "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+            "name": "Lisa Karlin Curtis",
+            "role": "viewer",
+            "slack_user_id": "U02AYNF2XJM"
+          }
+        ],
+        "exported_urls": [
+          "https://www.notion.so/INC-123-sad-database",
+          "https://docs.google.com/document/d/1234"
+        ],
+        "id": "01GDZEW57FDA1K4S63MGMQ5DS9",
+        "incident_id": "01GBA8J19SMXQWPJMX3P2ESCVG",
+        "status": "in_progress",
+        "title": "INC-123: Database is sad",
+        "type": "in_app",
+        "updated_at": "abc123"
+      }
+    },
+    "idField": "id"
+  },
+  {
+    "entity": "postmortem_documents_show_content_result_v1",
+    "accessor": "PostmortemDocumentsShowContentResultV1",
+    "op": "load",
+    "method": "GET",
+    "path": "/v1/postmortem_documents/{id}/content",
+    "args": [
+      {
+        "name": "postmortem_document_id",
+        "wire": "id",
+        "value": "01GDZEW57FDA1K4S63MGMQ5DS9"
+      }
+    ],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 200,
+    "sample": {
+      "markdown": "# Incident Postmortem\n\n## Summary\n\nThis incident was investigated by Alice Smith and affected the API Gateway service.\n\n## Timeline\n\n### 2024-06-15 (UTC)\n\n* [10:30] **Alert fired**\n\n* [10:35] **Incident declared**\n\n## Follow-ups\n\n* **Add monitoring** - Assignee: Alice Smith\n"
+    },
+    "idField": "id"
+  },
+  {
     "entity": "schedule",
     "accessor": "Schedule",
     "op": "create",
@@ -27475,6 +27868,65 @@ const PLAN: any[] = [
     "idField": "id"
   },
   {
+    "entity": "status_pages_create_status_page_retrospective_incident_result_v2",
+    "accessor": "StatusPagesCreateStatusPageRetrospectiveIncidentResultV2",
+    "op": "create",
+    "method": "POST",
+    "path": "/v2/status_page_retrospective_incidents",
+    "args": [],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 201,
+    "sample": {
+      "status_page_incident": {
+        "component_impacts": [
+          {
+            "component_id": "01GW7P4ES31Q6V1ZQH321T0GJN",
+            "component_status": "degraded_performance",
+            "end_at": "2021-08-17T13:28:57.801578Z",
+            "start_at": "2021-08-17T13:28:57.801578Z"
+          }
+        ],
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "incident_status": "investigating",
+        "name": "Elevated API latency",
+        "published_at": "2021-08-17T13:28:57.801578Z",
+        "status_page_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "updates": [
+          {
+            "component_statuses": [
+              {
+                "component_id": "01FCNDV6P870EA6S7TK1DSYDG2",
+                "component_status": "operational"
+              }
+            ],
+            "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+            "incident_status": "investigating",
+            "message": "abc123",
+            "published_at": "2021-08-17T13:28:57.801578Z",
+            "status_page_incident_id": "01FCNDV6P870EA6S7TK1DSYDG1"
+          }
+        ]
+      }
+    },
+    "idField": "id"
+  },
+  {
     "entity": "team",
     "accessor": "Team",
     "op": "list",
@@ -27791,6 +28243,93 @@ const PLAN: any[] = [
         "slack_user_id": "U02AYNF2XJM"
       }
     },
+    "idField": "id"
+  },
+  {
+    "entity": "users_show_paging_provider_result_v2",
+    "accessor": "UsersShowPagingProviderResultV2",
+    "op": "create",
+    "method": "POST",
+    "path": "/v2/users/{user_id}/paging_provider",
+    "args": [
+      {
+        "name": "user_id",
+        "wire": "user_id",
+        "value": "01FCNDV6P870EA6S7TK1DSYDG0"
+      }
+    ],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 204,
+    "sample": null,
+    "idField": "id"
+  },
+  {
+    "entity": "users_show_paging_provider_result_v2",
+    "accessor": "UsersShowPagingProviderResultV2",
+    "op": "load",
+    "method": "GET",
+    "path": "/v2/users/{user_id}/paging_provider",
+    "args": [
+      {
+        "name": "user_id",
+        "wire": "user_id",
+        "value": "01FCNDV6P870EA6S7TK1DSYDG0"
+      }
+    ],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 200,
+    "sample": {
+      "preferred_escalation_provider": "native"
+    },
+    "idField": "id"
+  },
+  {
+    "entity": "utilities_v1",
+    "accessor": "UtilitiesV1",
+    "op": "load",
+    "method": "GET",
+    "path": "/v1/openapiV3.json",
+    "args": [],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [],
+    "status": 200,
+    "sample": "x",
     "idField": "id"
   },
   {

@@ -1,0 +1,177 @@
+# Entity: heartbeat_v2
+
+main: kit: entity: heartbeat_v2: {
+
+  alias: field: {}
+
+  fields: {
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "heartbeat_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /v2/heartbeat/{alert_source_config_id}/ping"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            header: [
+              {
+                ex: "Bearer some-random-string"
+                k: "header"
+                n: "authorization"
+                or: "authorization"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "id"
+                or: "alert_source_config_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: "some-random-string"
+                k: "query"
+                n: "token"
+                or: "token"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/heartbeat/{alert_source_config_id}/ping"
+          q: {
+            "$action": "ping"
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              alert_source_config_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "heartbeat"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "ping"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/heartbeat/{alert_source_config_id}/ping"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            header: [
+              {
+                ex: "Bearer some-random-string"
+                k: "header"
+                n: "authorization"
+                or: "authorization"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "id"
+                or: "alert_source_config_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                ex: "some-random-string"
+                k: "query"
+                n: "token"
+                or: "token"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/heartbeat/{alert_source_config_id}/ping"
+          q: {
+            "$action": "ping"
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              alert_source_config_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "heartbeat"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "ping"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

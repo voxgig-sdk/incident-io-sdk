@@ -366,6 +366,12 @@ class IncidentIoSDK:
         return AlertAttributeEntity(self, data)
 
 
+    def AlertEventsV2(self, data=None) -> "AlertEventsV2Entity":
+        """Entity factory: client.AlertEventsV2().list() / client.AlertEventsV2().load({"id": ...})."""
+        from incidentio_sdk.entity.alert_events_v2_entity import AlertEventsV2Entity
+        return AlertEventsV2Entity(self, data)
+
+
     def AlertNote(self, data=None) -> "AlertNoteEntity":
         """Entity factory: client.AlertNote().list() / client.AlertNote().load({"id": ...})."""
         from incidentio_sdk.entity.alert_note_entity import AlertNoteEntity
@@ -486,6 +492,12 @@ class IncidentIoSDK:
         return CatalogTypeSchemaEntity(self, data)
 
 
+    def CatalogV3(self, data=None) -> "CatalogV3Entity":
+        """Entity factory: client.CatalogV3().list() / client.CatalogV3().load({"id": ...})."""
+        from incidentio_sdk.entity.catalog_v3_entity import CatalogV3Entity
+        return CatalogV3Entity(self, data)
+
+
     def CustomField(self, data=None) -> "CustomFieldEntity":
         """Entity factory: client.CustomField().list() / client.CustomField().load({"id": ...})."""
         from incidentio_sdk.entity.custom_field_entity import CustomFieldEntity
@@ -528,10 +540,22 @@ class IncidentIoSDK:
         return EscalationsReassignEscalationResultV2Entity(self, data)
 
 
+    def EscalationsV2(self, data=None) -> "EscalationsV2Entity":
+        """Entity factory: client.EscalationsV2().list() / client.EscalationsV2().load({"id": ...})."""
+        from incidentio_sdk.entity.escalations_v2_entity import EscalationsV2Entity
+        return EscalationsV2Entity(self, data)
+
+
     def FollowUp(self, data=None) -> "FollowUpEntity":
         """Entity factory: client.FollowUp().list() / client.FollowUp().load({"id": ...})."""
         from incidentio_sdk.entity.follow_up_entity import FollowUpEntity
         return FollowUpEntity(self, data)
+
+
+    def FollowUpsConnectExternalIssueResultV2(self, data=None) -> "FollowUpsConnectExternalIssueResultV2Entity":
+        """Entity factory: client.FollowUpsConnectExternalIssueResultV2().list() / client.FollowUpsConnectExternalIssueResultV2().load({"id": ...})."""
+        from incidentio_sdk.entity.follow_ups_connect_external_issue_result_v2_entity import FollowUpsConnectExternalIssueResultV2Entity
+        return FollowUpsConnectExternalIssueResultV2Entity(self, data)
 
 
     def FollowUpsConnectExternalIssueResultV3(self, data=None) -> "FollowUpsConnectExternalIssueResultV3Entity":
@@ -544,6 +568,12 @@ class IncidentIoSDK:
         """Entity factory: client.FollowUpsCreateFromLinkResultV3().list() / client.FollowUpsCreateFromLinkResultV3().load({"id": ...})."""
         from incidentio_sdk.entity.follow_ups_create_from_link_result_v3_entity import FollowUpsCreateFromLinkResultV3Entity
         return FollowUpsCreateFromLinkResultV3Entity(self, data)
+
+
+    def HeartbeatV2(self, data=None) -> "HeartbeatV2Entity":
+        """Entity factory: client.HeartbeatV2().list() / client.HeartbeatV2().load({"id": ...})."""
+        from incidentio_sdk.entity.heartbeat_v2_entity import HeartbeatV2Entity
+        return HeartbeatV2Entity(self, data)
 
 
     def Identity(self, data=None) -> "IdentityEntity":
@@ -580,6 +610,12 @@ class IncidentIoSDK:
         """Entity factory: client.IncidentMembership().list() / client.IncidentMembership().load({"id": ...})."""
         from incidentio_sdk.entity.incident_membership_entity import IncidentMembershipEntity
         return IncidentMembershipEntity(self, data)
+
+
+    def IncidentMembershipsV1(self, data=None) -> "IncidentMembershipsV1Entity":
+        """Entity factory: client.IncidentMembershipsV1().list() / client.IncidentMembershipsV1().load({"id": ...})."""
+        from incidentio_sdk.entity.incident_memberships_v1_entity import IncidentMembershipsV1Entity
+        return IncidentMembershipsV1Entity(self, data)
 
 
     def IncidentParticipant(self, data=None) -> "IncidentParticipantEntity":
@@ -658,6 +694,12 @@ class IncidentIoSDK:
         """Entity factory: client.IncidentUpdate().list() / client.IncidentUpdate().load({"id": ...})."""
         from incidentio_sdk.entity.incident_update_entity import IncidentUpdateEntity
         return IncidentUpdateEntity(self, data)
+
+
+    def IncidentsImportPostmortemDocumentResultV2(self, data=None) -> "IncidentsImportPostmortemDocumentResultV2Entity":
+        """Entity factory: client.IncidentsImportPostmortemDocumentResultV2().list() / client.IncidentsImportPostmortemDocumentResultV2().load({"id": ...})."""
+        from incidentio_sdk.entity.incidents_import_postmortem_document_result_v2_entity import IncidentsImportPostmortemDocumentResultV2Entity
+        return IncidentsImportPostmortemDocumentResultV2Entity(self, data)
 
 
     def IpAllowlist(self, data=None) -> "IpAllowlistEntity":
@@ -774,6 +816,18 @@ class IncidentIoSDK:
         return PostmortemDocumentEntity(self, data)
 
 
+    def PostmortemDocumentsAttachResultV1(self, data=None) -> "PostmortemDocumentsAttachResultV1Entity":
+        """Entity factory: client.PostmortemDocumentsAttachResultV1().list() / client.PostmortemDocumentsAttachResultV1().load({"id": ...})."""
+        from incidentio_sdk.entity.postmortem_documents_attach_result_v1_entity import PostmortemDocumentsAttachResultV1Entity
+        return PostmortemDocumentsAttachResultV1Entity(self, data)
+
+
+    def PostmortemDocumentsShowContentResultV1(self, data=None) -> "PostmortemDocumentsShowContentResultV1Entity":
+        """Entity factory: client.PostmortemDocumentsShowContentResultV1().list() / client.PostmortemDocumentsShowContentResultV1().load({"id": ...})."""
+        from incidentio_sdk.entity.postmortem_documents_show_content_result_v1_entity import PostmortemDocumentsShowContentResultV1Entity
+        return PostmortemDocumentsShowContentResultV1Entity(self, data)
+
+
     def Schedule(self, data=None) -> "ScheduleEntity":
         """Entity factory: client.Schedule().list() / client.Schedule().load({"id": ...})."""
         from incidentio_sdk.entity.schedule_entity import ScheduleEntity
@@ -882,6 +936,12 @@ class IncidentIoSDK:
         return StatusPageStructureEntity(self, data)
 
 
+    def StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(self, data=None) -> "StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity":
+        """Entity factory: client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().list() / client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().load({"id": ...})."""
+        from incidentio_sdk.entity.status_pages_create_status_page_retrospective_incident_result_v2_entity import StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity
+        return StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity(self, data)
+
+
     def Team(self, data=None) -> "TeamEntity":
         """Entity factory: client.Team().list() / client.Team().load({"id": ...})."""
         from incidentio_sdk.entity.team_entity import TeamEntity
@@ -898,6 +958,18 @@ class IncidentIoSDK:
         """Entity factory: client.User().list() / client.User().load({"id": ...})."""
         from incidentio_sdk.entity.user_entity import UserEntity
         return UserEntity(self, data)
+
+
+    def UsersShowPagingProviderResultV2(self, data=None) -> "UsersShowPagingProviderResultV2Entity":
+        """Entity factory: client.UsersShowPagingProviderResultV2().list() / client.UsersShowPagingProviderResultV2().load({"id": ...})."""
+        from incidentio_sdk.entity.users_show_paging_provider_result_v2_entity import UsersShowPagingProviderResultV2Entity
+        return UsersShowPagingProviderResultV2Entity(self, data)
+
+
+    def UtilitiesV1(self, data=None) -> "UtilitiesV1Entity":
+        """Entity factory: client.UtilitiesV1().list() / client.UtilitiesV1().load({"id": ...})."""
+        from incidentio_sdk.entity.utilities_v1_entity import UtilitiesV1Entity
+        return UtilitiesV1Entity(self, data)
 
 
     def Workflow(self, data=None) -> "WorkflowEntity":
@@ -942,6 +1014,7 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.action_entity import ActionEntity
     from incidentio_sdk.entity.alert_entity import AlertEntity
     from incidentio_sdk.entity.alert_attribute_entity import AlertAttributeEntity
+    from incidentio_sdk.entity.alert_events_v2_entity import AlertEventsV2Entity
     from incidentio_sdk.entity.alert_note_entity import AlertNoteEntity
     from incidentio_sdk.entity.alert_route_entity import AlertRouteEntity
     from incidentio_sdk.entity.alert_source_entity import AlertSourceEntity
@@ -962,6 +1035,7 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.catalog_resource_entity import CatalogResourceEntity
     from incidentio_sdk.entity.catalog_type_entity import CatalogTypeEntity
     from incidentio_sdk.entity.catalog_type_schema_entity import CatalogTypeSchemaEntity
+    from incidentio_sdk.entity.catalog_v3_entity import CatalogV3Entity
     from incidentio_sdk.entity.custom_field_entity import CustomFieldEntity
     from incidentio_sdk.entity.custom_field_option_entity import CustomFieldOptionEntity
     from incidentio_sdk.entity.escalation_entity import EscalationEntity
@@ -969,15 +1043,19 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.escalation_path_template_entity import EscalationPathTemplateEntity
     from incidentio_sdk.entity.escalations_check_escalation_permissions_result_v2_entity import EscalationsCheckEscalationPermissionsResultV2Entity
     from incidentio_sdk.entity.escalations_reassign_escalation_result_v2_entity import EscalationsReassignEscalationResultV2Entity
+    from incidentio_sdk.entity.escalations_v2_entity import EscalationsV2Entity
     from incidentio_sdk.entity.follow_up_entity import FollowUpEntity
+    from incidentio_sdk.entity.follow_ups_connect_external_issue_result_v2_entity import FollowUpsConnectExternalIssueResultV2Entity
     from incidentio_sdk.entity.follow_ups_connect_external_issue_result_v3_entity import FollowUpsConnectExternalIssueResultV3Entity
     from incidentio_sdk.entity.follow_ups_create_from_link_result_v3_entity import FollowUpsCreateFromLinkResultV3Entity
+    from incidentio_sdk.entity.heartbeat_v2_entity import HeartbeatV2Entity
     from incidentio_sdk.entity.identity_entity import IdentityEntity
     from incidentio_sdk.entity.incident_entity import IncidentEntity
     from incidentio_sdk.entity.incident_activity_log_entry_entity import IncidentActivityLogEntryEntity
     from incidentio_sdk.entity.incident_attachment_entity import IncidentAttachmentEntity
     from incidentio_sdk.entity.incident_form_entity import IncidentFormEntity
     from incidentio_sdk.entity.incident_membership_entity import IncidentMembershipEntity
+    from incidentio_sdk.entity.incident_memberships_v1_entity import IncidentMembershipsV1Entity
     from incidentio_sdk.entity.incident_participant_entity import IncidentParticipantEntity
     from incidentio_sdk.entity.incident_participant_workload_entity import IncidentParticipantWorkloadEntity
     from incidentio_sdk.entity.incident_relationship_entity import IncidentRelationshipEntity
@@ -991,6 +1069,7 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.incident_timestamp_entity import IncidentTimestampEntity
     from incidentio_sdk.entity.incident_type_entity import IncidentTypeEntity
     from incidentio_sdk.entity.incident_update_entity import IncidentUpdateEntity
+    from incidentio_sdk.entity.incidents_import_postmortem_document_result_v2_entity import IncidentsImportPostmortemDocumentResultV2Entity
     from incidentio_sdk.entity.ip_allowlist_entity import IpAllowlistEntity
     from incidentio_sdk.entity.ip_range_entity import IpRangeEntity
     from incidentio_sdk.entity.maintenance_window_entity import MaintenanceWindowEntity
@@ -1010,6 +1089,8 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.policy_findings_dismiss_result_v2_entity import PolicyFindingsDismissResultV2Entity
     from incidentio_sdk.entity.policy_findings_restore_result_v2_entity import PolicyFindingsRestoreResultV2Entity
     from incidentio_sdk.entity.postmortem_document_entity import PostmortemDocumentEntity
+    from incidentio_sdk.entity.postmortem_documents_attach_result_v1_entity import PostmortemDocumentsAttachResultV1Entity
+    from incidentio_sdk.entity.postmortem_documents_show_content_result_v1_entity import PostmortemDocumentsShowContentResultV1Entity
     from incidentio_sdk.entity.schedule_entity import ScheduleEntity
     from incidentio_sdk.entity.schedule_entries_list_payload_v2_entity import ScheduleEntriesListPayloadV2Entity
     from incidentio_sdk.entity.schedule_entry_entity import ScheduleEntryEntity
@@ -1028,8 +1109,11 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.status_page_maintenance_entity import StatusPageMaintenanceEntity
     from incidentio_sdk.entity.status_page_maintenance_update_entity import StatusPageMaintenanceUpdateEntity
     from incidentio_sdk.entity.status_page_structure_entity import StatusPageStructureEntity
+    from incidentio_sdk.entity.status_pages_create_status_page_retrospective_incident_result_v2_entity import StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity
     from incidentio_sdk.entity.team_entity import TeamEntity
     from incidentio_sdk.entity.telemetry_data_source_entity import TelemetryDataSourceEntity
     from incidentio_sdk.entity.user_entity import UserEntity
+    from incidentio_sdk.entity.users_show_paging_provider_result_v2_entity import UsersShowPagingProviderResultV2Entity
+    from incidentio_sdk.entity.utilities_v1_entity import UtilitiesV1Entity
     from incidentio_sdk.entity.workflow_entity import WorkflowEntity
     from incidentio_sdk.entity.workflow_run_entity import WorkflowRunEntity

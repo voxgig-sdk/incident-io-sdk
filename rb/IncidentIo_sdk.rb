@@ -335,6 +335,13 @@ class IncidentIoSDK
   end
 
 
+  # Canonical facade: client.AlertEventsV2.list / client.AlertEventsV2.load({ "id" => ... })
+  def AlertEventsV2(data = nil)
+    require_relative 'entity/alert_events_v2_entity'
+    AlertEventsV2Entity.new(self, data)
+  end
+
+
   # Canonical facade: client.AlertNote.list / client.AlertNote.load({ "id" => ... })
   def AlertNote(data = nil)
     require_relative 'entity/alert_note_entity'
@@ -475,6 +482,13 @@ class IncidentIoSDK
   end
 
 
+  # Canonical facade: client.CatalogV3.list / client.CatalogV3.load({ "id" => ... })
+  def CatalogV3(data = nil)
+    require_relative 'entity/catalog_v3_entity'
+    CatalogV3Entity.new(self, data)
+  end
+
+
   # Canonical facade: client.CustomField.list / client.CustomField.load({ "id" => ... })
   def CustomField(data = nil)
     require_relative 'entity/custom_field_entity'
@@ -524,10 +538,24 @@ class IncidentIoSDK
   end
 
 
+  # Canonical facade: client.EscalationsV2.list / client.EscalationsV2.load({ "id" => ... })
+  def EscalationsV2(data = nil)
+    require_relative 'entity/escalations_v2_entity'
+    EscalationsV2Entity.new(self, data)
+  end
+
+
   # Canonical facade: client.FollowUp.list / client.FollowUp.load({ "id" => ... })
   def FollowUp(data = nil)
     require_relative 'entity/follow_up_entity'
     FollowUpEntity.new(self, data)
+  end
+
+
+  # Canonical facade: client.FollowUpsConnectExternalIssueResultV2.list / client.FollowUpsConnectExternalIssueResultV2.load({ "id" => ... })
+  def FollowUpsConnectExternalIssueResultV2(data = nil)
+    require_relative 'entity/follow_ups_connect_external_issue_result_v2_entity'
+    FollowUpsConnectExternalIssueResultV2Entity.new(self, data)
   end
 
 
@@ -542,6 +570,13 @@ class IncidentIoSDK
   def FollowUpsCreateFromLinkResultV3(data = nil)
     require_relative 'entity/follow_ups_create_from_link_result_v3_entity'
     FollowUpsCreateFromLinkResultV3Entity.new(self, data)
+  end
+
+
+  # Canonical facade: client.HeartbeatV2.list / client.HeartbeatV2.load({ "id" => ... })
+  def HeartbeatV2(data = nil)
+    require_relative 'entity/heartbeat_v2_entity'
+    HeartbeatV2Entity.new(self, data)
   end
 
 
@@ -584,6 +619,13 @@ class IncidentIoSDK
   def IncidentMembership(data = nil)
     require_relative 'entity/incident_membership_entity'
     IncidentMembershipEntity.new(self, data)
+  end
+
+
+  # Canonical facade: client.IncidentMembershipsV1.list / client.IncidentMembershipsV1.load({ "id" => ... })
+  def IncidentMembershipsV1(data = nil)
+    require_relative 'entity/incident_memberships_v1_entity'
+    IncidentMembershipsV1Entity.new(self, data)
   end
 
 
@@ -675,6 +717,13 @@ class IncidentIoSDK
   def IncidentUpdate(data = nil)
     require_relative 'entity/incident_update_entity'
     IncidentUpdateEntity.new(self, data)
+  end
+
+
+  # Canonical facade: client.IncidentsImportPostmortemDocumentResultV2.list / client.IncidentsImportPostmortemDocumentResultV2.load({ "id" => ... })
+  def IncidentsImportPostmortemDocumentResultV2(data = nil)
+    require_relative 'entity/incidents_import_postmortem_document_result_v2_entity'
+    IncidentsImportPostmortemDocumentResultV2Entity.new(self, data)
   end
 
 
@@ -811,6 +860,20 @@ class IncidentIoSDK
   end
 
 
+  # Canonical facade: client.PostmortemDocumentsAttachResultV1.list / client.PostmortemDocumentsAttachResultV1.load({ "id" => ... })
+  def PostmortemDocumentsAttachResultV1(data = nil)
+    require_relative 'entity/postmortem_documents_attach_result_v1_entity'
+    PostmortemDocumentsAttachResultV1Entity.new(self, data)
+  end
+
+
+  # Canonical facade: client.PostmortemDocumentsShowContentResultV1.list / client.PostmortemDocumentsShowContentResultV1.load({ "id" => ... })
+  def PostmortemDocumentsShowContentResultV1(data = nil)
+    require_relative 'entity/postmortem_documents_show_content_result_v1_entity'
+    PostmortemDocumentsShowContentResultV1Entity.new(self, data)
+  end
+
+
   # Canonical facade: client.Schedule.list / client.Schedule.load({ "id" => ... })
   def Schedule(data = nil)
     require_relative 'entity/schedule_entity'
@@ -937,6 +1000,13 @@ class IncidentIoSDK
   end
 
 
+  # Canonical facade: client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2.list / client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2.load({ "id" => ... })
+  def StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data = nil)
+    require_relative 'entity/status_pages_create_status_page_retrospective_incident_result_v2_entity'
+    StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity.new(self, data)
+  end
+
+
   # Canonical facade: client.Team.list / client.Team.load({ "id" => ... })
   def Team(data = nil)
     require_relative 'entity/team_entity'
@@ -955,6 +1025,20 @@ class IncidentIoSDK
   def User(data = nil)
     require_relative 'entity/user_entity'
     UserEntity.new(self, data)
+  end
+
+
+  # Canonical facade: client.UsersShowPagingProviderResultV2.list / client.UsersShowPagingProviderResultV2.load({ "id" => ... })
+  def UsersShowPagingProviderResultV2(data = nil)
+    require_relative 'entity/users_show_paging_provider_result_v2_entity'
+    UsersShowPagingProviderResultV2Entity.new(self, data)
+  end
+
+
+  # Canonical facade: client.UtilitiesV1.list / client.UtilitiesV1.load({ "id" => ... })
+  def UtilitiesV1(data = nil)
+    require_relative 'entity/utilities_v1_entity'
+    UtilitiesV1Entity.new(self, data)
   end
 
 

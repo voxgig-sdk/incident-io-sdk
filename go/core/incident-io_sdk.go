@@ -396,6 +396,14 @@ func (sdk *IncidentIoSDK) AlertAttribute(data map[string]any) IncidentIoEntity {
 }
 
 
+// AlertEventsV2 returns a AlertEventsV2 entity bound to this client.
+// Idiomatic usage: client.AlertEventsV2(nil).List(nil, nil) or
+// client.AlertEventsV2(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) AlertEventsV2(data map[string]any) IncidentIoEntity {
+	return NewAlertEventsV2EntityFunc(sdk, data)
+}
+
+
 // AlertNote returns a AlertNote entity bound to this client.
 // Idiomatic usage: client.AlertNote(nil).List(nil, nil) or
 // client.AlertNote(nil).Load(map[string]any{"id": ...}, nil).
@@ -556,6 +564,14 @@ func (sdk *IncidentIoSDK) CatalogTypeSchema(data map[string]any) IncidentIoEntit
 }
 
 
+// CatalogV3 returns a CatalogV3 entity bound to this client.
+// Idiomatic usage: client.CatalogV3(nil).List(nil, nil) or
+// client.CatalogV3(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) CatalogV3(data map[string]any) IncidentIoEntity {
+	return NewCatalogV3EntityFunc(sdk, data)
+}
+
+
 // CustomField returns a CustomField entity bound to this client.
 // Idiomatic usage: client.CustomField(nil).List(nil, nil) or
 // client.CustomField(nil).Load(map[string]any{"id": ...}, nil).
@@ -612,11 +628,27 @@ func (sdk *IncidentIoSDK) EscalationsReassignEscalationResultV2(data map[string]
 }
 
 
+// EscalationsV2 returns a EscalationsV2 entity bound to this client.
+// Idiomatic usage: client.EscalationsV2(nil).List(nil, nil) or
+// client.EscalationsV2(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) EscalationsV2(data map[string]any) IncidentIoEntity {
+	return NewEscalationsV2EntityFunc(sdk, data)
+}
+
+
 // FollowUp returns a FollowUp entity bound to this client.
 // Idiomatic usage: client.FollowUp(nil).List(nil, nil) or
 // client.FollowUp(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) FollowUp(data map[string]any) IncidentIoEntity {
 	return NewFollowUpEntityFunc(sdk, data)
+}
+
+
+// FollowUpsConnectExternalIssueResultV2 returns a FollowUpsConnectExternalIssueResultV2 entity bound to this client.
+// Idiomatic usage: client.FollowUpsConnectExternalIssueResultV2(nil).List(nil, nil) or
+// client.FollowUpsConnectExternalIssueResultV2(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) FollowUpsConnectExternalIssueResultV2(data map[string]any) IncidentIoEntity {
+	return NewFollowUpsConnectExternalIssueResultV2EntityFunc(sdk, data)
 }
 
 
@@ -633,6 +665,14 @@ func (sdk *IncidentIoSDK) FollowUpsConnectExternalIssueResultV3(data map[string]
 // client.FollowUpsCreateFromLinkResultV3(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) FollowUpsCreateFromLinkResultV3(data map[string]any) IncidentIoEntity {
 	return NewFollowUpsCreateFromLinkResultV3EntityFunc(sdk, data)
+}
+
+
+// HeartbeatV2 returns a HeartbeatV2 entity bound to this client.
+// Idiomatic usage: client.HeartbeatV2(nil).List(nil, nil) or
+// client.HeartbeatV2(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) HeartbeatV2(data map[string]any) IncidentIoEntity {
+	return NewHeartbeatV2EntityFunc(sdk, data)
 }
 
 
@@ -681,6 +721,14 @@ func (sdk *IncidentIoSDK) IncidentForm(data map[string]any) IncidentIoEntity {
 // client.IncidentMembership(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) IncidentMembership(data map[string]any) IncidentIoEntity {
 	return NewIncidentMembershipEntityFunc(sdk, data)
+}
+
+
+// IncidentMembershipsV1 returns a IncidentMembershipsV1 entity bound to this client.
+// Idiomatic usage: client.IncidentMembershipsV1(nil).List(nil, nil) or
+// client.IncidentMembershipsV1(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) IncidentMembershipsV1(data map[string]any) IncidentIoEntity {
+	return NewIncidentMembershipsV1EntityFunc(sdk, data)
 }
 
 
@@ -785,6 +833,14 @@ func (sdk *IncidentIoSDK) IncidentType(data map[string]any) IncidentIoEntity {
 // client.IncidentUpdate(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) IncidentUpdate(data map[string]any) IncidentIoEntity {
 	return NewIncidentUpdateEntityFunc(sdk, data)
+}
+
+
+// IncidentsImportPostmortemDocumentResultV2 returns a IncidentsImportPostmortemDocumentResultV2 entity bound to this client.
+// Idiomatic usage: client.IncidentsImportPostmortemDocumentResultV2(nil).List(nil, nil) or
+// client.IncidentsImportPostmortemDocumentResultV2(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) IncidentsImportPostmortemDocumentResultV2(data map[string]any) IncidentIoEntity {
+	return NewIncidentsImportPostmortemDocumentResultV2EntityFunc(sdk, data)
 }
 
 
@@ -940,6 +996,22 @@ func (sdk *IncidentIoSDK) PostmortemDocument(data map[string]any) IncidentIoEnti
 }
 
 
+// PostmortemDocumentsAttachResultV1 returns a PostmortemDocumentsAttachResultV1 entity bound to this client.
+// Idiomatic usage: client.PostmortemDocumentsAttachResultV1(nil).List(nil, nil) or
+// client.PostmortemDocumentsAttachResultV1(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) PostmortemDocumentsAttachResultV1(data map[string]any) IncidentIoEntity {
+	return NewPostmortemDocumentsAttachResultV1EntityFunc(sdk, data)
+}
+
+
+// PostmortemDocumentsShowContentResultV1 returns a PostmortemDocumentsShowContentResultV1 entity bound to this client.
+// Idiomatic usage: client.PostmortemDocumentsShowContentResultV1(nil).List(nil, nil) or
+// client.PostmortemDocumentsShowContentResultV1(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) PostmortemDocumentsShowContentResultV1(data map[string]any) IncidentIoEntity {
+	return NewPostmortemDocumentsShowContentResultV1EntityFunc(sdk, data)
+}
+
+
 // Schedule returns a Schedule entity bound to this client.
 // Idiomatic usage: client.Schedule(nil).List(nil, nil) or
 // client.Schedule(nil).Load(map[string]any{"id": ...}, nil).
@@ -1084,6 +1156,14 @@ func (sdk *IncidentIoSDK) StatusPageStructure(data map[string]any) IncidentIoEnt
 }
 
 
+// StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 returns a StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 entity bound to this client.
+// Idiomatic usage: client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(nil).List(nil, nil) or
+// client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data map[string]any) IncidentIoEntity {
+	return NewStatusPagesCreateStatusPageRetrospectiveIncidentResultV2EntityFunc(sdk, data)
+}
+
+
 // Team returns a Team entity bound to this client.
 // Idiomatic usage: client.Team(nil).List(nil, nil) or
 // client.Team(nil).Load(map[string]any{"id": ...}, nil).
@@ -1105,6 +1185,22 @@ func (sdk *IncidentIoSDK) TelemetryDataSource(data map[string]any) IncidentIoEnt
 // client.User(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) User(data map[string]any) IncidentIoEntity {
 	return NewUserEntityFunc(sdk, data)
+}
+
+
+// UsersShowPagingProviderResultV2 returns a UsersShowPagingProviderResultV2 entity bound to this client.
+// Idiomatic usage: client.UsersShowPagingProviderResultV2(nil).List(nil, nil) or
+// client.UsersShowPagingProviderResultV2(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) UsersShowPagingProviderResultV2(data map[string]any) IncidentIoEntity {
+	return NewUsersShowPagingProviderResultV2EntityFunc(sdk, data)
+}
+
+
+// UtilitiesV1 returns a UtilitiesV1 entity bound to this client.
+// Idiomatic usage: client.UtilitiesV1(nil).List(nil, nil) or
+// client.UtilitiesV1(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) UtilitiesV1(data map[string]any) IncidentIoEntity {
+	return NewUtilitiesV1EntityFunc(sdk, data)
 }
 
 

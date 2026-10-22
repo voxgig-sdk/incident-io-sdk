@@ -7,15 +7,15 @@ main: kit: flow: BasicAlertEventsV2Flow:
   name: "BasicAlertEventsV2Flow",
   step: [
     {
-      input: {
+      i: {
         ref: "alert_events_v2_ref01"
       }
 
-      match: {
+      m: {
         alert_source_config_id: "alert_source_config01"
       }
 
-      op: "create"
+      o: "create"
     }
   ],
   "key$": "BasicAlertEventsV2Flow"

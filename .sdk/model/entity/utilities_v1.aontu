@@ -1,0 +1,46 @@
+# Entity: utilities_v1
+
+main: kit: entity: utilities_v1: {
+
+  alias: field: {}
+
+  name: "utilities_v1"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v1/openapiV3.json"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v1/openapiV3.json"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "openapiV3.json"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

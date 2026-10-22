@@ -1,0 +1,159 @@
+# Entity: alert_events_v2
+
+main: kit: entity: alert_events_v2: {
+
+  alias: field: {}
+
+  fields: {
+    deduplication_key: {
+      h: "Deduplication Key"
+      n: "deduplication_key"
+      op: {
+        create: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "The deduplication key that the event has been processed with"
+      t: "`$STRING`"
+    }
+    description: {
+      h: "Description"
+      n: "description"
+      r: false
+      sh: "Description that optionally adds more detail to title."
+      t: "`$STRING`"
+    }
+    message: {
+      h: "Message"
+      n: "message"
+      r: true
+      sh: "Human readable message giving detail about the event"
+      t: "`$STRING`"
+    }
+    metadata: {
+      h: "Metadata"
+      n: "metadata"
+      r: false
+      sh: "Any additional metadata that you've configured your alert source to parse"
+      t: "`$OBJECT`"
+    }
+    source_url: {
+      h: "Source Url"
+      n: "source_url"
+      r: false
+      sh: "If applicable, a link to the alert in the upstream system"
+      t: "`$STRING`"
+    }
+    status: {
+      h: "Status"
+      n: "status"
+      r: true
+      sh: "Status of the event"
+      t: "`$STRING`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      sh: "The title of the alert, parsed from the alert payload according to the alert source configuration"
+      t: "`$STRING`"
+    }
+  }
+
+  name: "alert_events_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "deduplication_key"
+            "description"
+            "metadata"
+            "source_url"
+            "status"
+            "title"
+          ]
+          co: {
+            id: "POST /v2/alert_events/http/{alert_source_config_id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            header: [
+              {
+                ex: "some-random-string"
+                k: "header"
+                n: "authorization"
+                or: "authorization"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                ex: "01GW2G3V0S59R238FAHPDS1R66"
+                k: "param"
+                n: "alert_source_config_id"
+                or: "alert_source_config_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                k: "query"
+                n: "query"
+                or: "query"
+                r: false
+                t: "`$OBJECT`"
+              }
+              {
+                ex: "some-random-string"
+                k: "query"
+                n: "token"
+                or: "token"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/alert_events/http/{alert_source_config_id}"
+          q: {
+            exist: [
+              "alert_source_config_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "alert_events"
+            }
+            {
+              lit: "http"
+            }
+            {
+              var: "alert_source_config_id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

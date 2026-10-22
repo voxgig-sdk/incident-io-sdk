@@ -2,32 +2,35 @@
   "existing": {
     "alert_events_v2": {
       "ALERT_EVENTS_V200": {
-        "deduplication_key": "s3c",
-        "description": "s3d",
+        "deduplication_key": "s46",
+        "description": "s47",
+        "message": "s48",
         "metadata": {},
-        "source_url": "s3f",
-        "status": "s40",
-        "title": "s41",
+        "source_url": "s4a",
+        "status": "s4b",
+        "title": "s4c",
         "alert_source_config_id": "ALERT_SOURCE_CONFIG01",
         "id": "ALERT_EVENTS_V200"
       },
       "ALERT_EVENTS_V201": {
-        "deduplication_key": "s78",
-        "description": "s79",
+        "deduplication_key": "s8c",
+        "description": "s8d",
+        "message": "s8e",
         "metadata": {},
-        "source_url": "s7b",
-        "status": "s7c",
-        "title": "s7d",
+        "source_url": "s90",
+        "status": "s91",
+        "title": "s92",
         "alert_source_config_id": "ALERT_SOURCE_CONFIG01",
         "id": "ALERT_EVENTS_V201"
       },
       "ALERT_EVENTS_V202": {
-        "deduplication_key": "sb4",
-        "description": "sb5",
+        "deduplication_key": "sd2",
+        "description": "sd3",
+        "message": "sd4",
         "metadata": {},
-        "source_url": "sb7",
-        "status": "sb8",
-        "title": "sb9",
+        "source_url": "sd6",
+        "status": "sd7",
+        "title": "sd8",
         "alert_source_config_id": "ALERT_SOURCE_CONFIG01",
         "id": "ALERT_EVENTS_V202"
       }
@@ -36,13 +39,21 @@
   "new": {
     "alert_events_v2": {
       "alert_events_v2_ref01": {
-        "deduplication_key": "sf0",
-        "description": "sf1",
+        "deduplication_key": "s118",
+        "description": "s119",
+        "message": "s11a",
         "metadata": {},
-        "source_url": "sf3",
-        "status": "sf4",
-        "title": "sf5"
+        "source_url": "s11c",
+        "status": "s11d",
+        "title": "s11e"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/alert_events/http/{alert_source_config_id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

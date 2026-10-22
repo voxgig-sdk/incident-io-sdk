@@ -1,0 +1,78 @@
+# Entity: postmortem_documents_attach_result_v1
+
+main: kit: entity: postmortem_documents_attach_result_v1: {
+
+  alias: field: {}
+
+  fields: {
+    document_provider: {
+      h: "Document Provider"
+      n: "document_provider"
+      r: false
+      sh: "The provider hosting the document."
+      t: "`$STRING`"
+    }
+    incident_id: {
+      h: "Incident Id"
+      n: "incident_id"
+      r: true
+      sh: "The unique identifier of the incident to attach the post-mortem document to"
+      t: "`$STRING`"
+    }
+    permalink: {
+      h: "Permalink"
+      n: "permalink"
+      r: true
+      sh: "A URL pointing to the externally-hosted post-mortem document"
+      t: "`$STRING`"
+    }
+  }
+
+  name: "postmortem_documents_attach_result_v1"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "document_provider"
+            "incident_id"
+            "permalink"
+          ]
+          co: {
+            id: "POST /v1/postmortem_documents/actions/attach"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v1/postmortem_documents/actions/attach"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "postmortem_documents"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "attach"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.postmortem_document`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

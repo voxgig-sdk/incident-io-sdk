@@ -1,0 +1,98 @@
+# Entity: incidents_import_postmortem_document_result_v2
+
+main: kit: entity: incidents_import_postmortem_document_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    content: {
+      h: "Content"
+      n: "content"
+      r: true
+      sh: "The document content as GitHub-Flavored Markdown"
+      t: "`$STRING`"
+    }
+    title: {
+      h: "Title"
+      n: "title"
+      r: true
+      sh: "Title of the postmortem document"
+      t: "`$STRING`"
+    }
+  }
+
+  name: "incidents_import_postmortem_document_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "content"
+            "title"
+          ]
+          co: {
+            id: "POST /v2/incidents/{id}/actions/import_postmortem_document"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01GBA8J19SMXQWPJMX3P2ESCVG"
+                k: "param"
+                n: "incident_id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/incidents/{id}/actions/import_postmortem_document"
+          q: {
+            exist: [
+              "incident_id"
+            ]
+          }
+          r: {
+            param: {
+              id: "incident_id"
+            }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "incidents"
+            }
+            {
+              var: "incident_id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "import_postmortem_document"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.postmortem_document`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.incident")]
+  ]
+
+}

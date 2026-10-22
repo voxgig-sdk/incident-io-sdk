@@ -1,0 +1,137 @@
+# Entity: users_show_paging_provider_result_v2
+
+main: kit: entity: users_show_paging_provider_result_v2: {
+
+  alias: field: {}
+
+  fields: {
+    preferred_escalation_provider: {
+      h: "Preferred Escalation Provider"
+      n: "preferred_escalation_provider"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      r: false
+      sh: "The user's effective escalation provider."
+      t: "`$STRING`"
+    }
+  }
+
+  name: "users_show_paging_provider_result_v2"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "preferred_escalation_provider"
+          ]
+          co: {
+            id: "POST /v2/users/{user_id}/paging_provider"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "user_id"
+                or: "user_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/users/{user_id}/paging_provider"
+          q: {
+            exist: [
+              "user_id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "user_id"
+            }
+            {
+              lit: "paging_provider"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v2/users/{user_id}/paging_provider"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "user_id"
+                or: "user_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v2/users/{user_id}/paging_provider"
+          q: {
+            exist: [
+              "user_id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "user_id"
+            }
+            {
+              lit: "paging_provider"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+  relations: ancestors: [
+    [path("$.main.kit.entity.user")]
+  ]
+
+}

@@ -7,18 +7,30 @@ main: kit: flow: BasicUsersShowPagingProviderResultV2Flow:
   name: "BasicUsersShowPagingProviderResultV2Flow",
   step: [
     {
-      input: {
+      i: {
+        ref: "users_show_paging_provider_result_v2_ref01"
+      }
+
+      m: {
+        user_id: "user01"
+      }
+
+      o: "create"
+    }
+
+    {
+      i: {
         ref: "users_show_paging_provider_result_v2_ref01",
         srcdatavar: "users_show_paging_provider_result_v2_ref01_data",
         suffix: "_dt0"
       }
 
-      match: {
+      m: {
         id: "users_show_paging_provider_result_v201"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

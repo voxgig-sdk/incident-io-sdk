@@ -100,12 +100,12 @@ Every entity operation returns `(value, error)`. Check `err` before
 using the value — there is no exception to catch:
 
 ```go
-escalationpaths, err := client.EscalationPath(nil).List(nil, nil)
+incidentstatuss, err := client.IncidentStatus(nil).List(nil, nil)
 if err != nil {
     // handle err
     return
 }
-_ = escalationpaths
+_ = incidentstatuss
 ```
 
 `Direct` follows the same `(value, error)` convention:
@@ -169,14 +169,14 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-escalationPaths, err := client.EscalationPath(nil).List(
+incidentStatuss, err := client.IncidentStatus(nil).List(
     nil, nil,
 )
 if err != nil {
     panic(err)
 }
 // A []any of entities, one per mock record.
-for _, item := range escalationPaths.([]any) {
+for _, item := range incidentStatuss.([]any) {
     fmt.Println(item.(sdk.Entity).Data())
 }
 ```
@@ -260,6 +260,7 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `Action` | `(data map[string]any) IncidentIoEntity` | Create an Action entity instance. |
 | `Alert` | `(data map[string]any) IncidentIoEntity` | Create an Alert entity instance. |
 | `AlertAttribute` | `(data map[string]any) IncidentIoEntity` | Create an AlertAttribute entity instance. |
+| `AlertEventsV2` | `(data map[string]any) IncidentIoEntity` | Create an AlertEventsV2 entity instance. |
 | `AlertNote` | `(data map[string]any) IncidentIoEntity` | Create an AlertNote entity instance. |
 | `AlertRoute` | `(data map[string]any) IncidentIoEntity` | Create an AlertRoute entity instance. |
 | `AlertSource` | `(data map[string]any) IncidentIoEntity` | Create an AlertSource entity instance. |
@@ -280,6 +281,7 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `CatalogResource` | `(data map[string]any) IncidentIoEntity` | Create a CatalogResource entity instance. |
 | `CatalogType` | `(data map[string]any) IncidentIoEntity` | Create a CatalogType entity instance. |
 | `CatalogTypeSchema` | `(data map[string]any) IncidentIoEntity` | Create a CatalogTypeSchema entity instance. |
+| `CatalogV3` | `(data map[string]any) IncidentIoEntity` | Create a CatalogV3 entity instance. |
 | `CustomField` | `(data map[string]any) IncidentIoEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `(data map[string]any) IncidentIoEntity` | Create a CustomFieldOption entity instance. |
 | `Escalation` | `(data map[string]any) IncidentIoEntity` | Create an Escalation entity instance. |
@@ -287,15 +289,19 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `EscalationPathTemplate` | `(data map[string]any) IncidentIoEntity` | Create an EscalationPathTemplate entity instance. |
 | `EscalationsCheckEscalationPermissionsResultV2` | `(data map[string]any) IncidentIoEntity` | Create an EscalationsCheckEscalationPermissionsResultV2 entity instance. |
 | `EscalationsReassignEscalationResultV2` | `(data map[string]any) IncidentIoEntity` | Create an EscalationsReassignEscalationResultV2 entity instance. |
+| `EscalationsV2` | `(data map[string]any) IncidentIoEntity` | Create an EscalationsV2 entity instance. |
 | `FollowUp` | `(data map[string]any) IncidentIoEntity` | Create a FollowUp entity instance. |
+| `FollowUpsConnectExternalIssueResultV2` | `(data map[string]any) IncidentIoEntity` | Create a FollowUpsConnectExternalIssueResultV2 entity instance. |
 | `FollowUpsConnectExternalIssueResultV3` | `(data map[string]any) IncidentIoEntity` | Create a FollowUpsConnectExternalIssueResultV3 entity instance. |
 | `FollowUpsCreateFromLinkResultV3` | `(data map[string]any) IncidentIoEntity` | Create a FollowUpsCreateFromLinkResultV3 entity instance. |
+| `HeartbeatV2` | `(data map[string]any) IncidentIoEntity` | Create a HeartbeatV2 entity instance. |
 | `Identity` | `(data map[string]any) IncidentIoEntity` | Create an Identity entity instance. |
 | `Incident` | `(data map[string]any) IncidentIoEntity` | Create an Incident entity instance. |
 | `IncidentActivityLogEntry` | `(data map[string]any) IncidentIoEntity` | Create an IncidentActivityLogEntry entity instance. |
 | `IncidentAttachment` | `(data map[string]any) IncidentIoEntity` | Create an IncidentAttachment entity instance. |
 | `IncidentForm` | `(data map[string]any) IncidentIoEntity` | Create an IncidentForm entity instance. |
 | `IncidentMembership` | `(data map[string]any) IncidentIoEntity` | Create an IncidentMembership entity instance. |
+| `IncidentMembershipsV1` | `(data map[string]any) IncidentIoEntity` | Create an IncidentMembershipsV1 entity instance. |
 | `IncidentParticipant` | `(data map[string]any) IncidentIoEntity` | Create an IncidentParticipant entity instance. |
 | `IncidentParticipantWorkload` | `(data map[string]any) IncidentIoEntity` | Create an IncidentParticipantWorkload entity instance. |
 | `IncidentRelationship` | `(data map[string]any) IncidentIoEntity` | Create an IncidentRelationship entity instance. |
@@ -309,6 +315,7 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `IncidentTimestamp` | `(data map[string]any) IncidentIoEntity` | Create an IncidentTimestamp entity instance. |
 | `IncidentType` | `(data map[string]any) IncidentIoEntity` | Create an IncidentType entity instance. |
 | `IncidentUpdate` | `(data map[string]any) IncidentIoEntity` | Create an IncidentUpdate entity instance. |
+| `IncidentsImportPostmortemDocumentResultV2` | `(data map[string]any) IncidentIoEntity` | Create an IncidentsImportPostmortemDocumentResultV2 entity instance. |
 | `IpAllowlist` | `(data map[string]any) IncidentIoEntity` | Create an IpAllowlist entity instance. |
 | `IpRange` | `(data map[string]any) IncidentIoEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow` | `(data map[string]any) IncidentIoEntity` | Create a MaintenanceWindow entity instance. |
@@ -328,6 +335,8 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `PolicyFindingsDismissResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PolicyFindingsDismissResultV2 entity instance. |
 | `PolicyFindingsRestoreResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PolicyFindingsRestoreResultV2 entity instance. |
 | `PostmortemDocument` | `(data map[string]any) IncidentIoEntity` | Create a PostmortemDocument entity instance. |
+| `PostmortemDocumentsAttachResultV1` | `(data map[string]any) IncidentIoEntity` | Create a PostmortemDocumentsAttachResultV1 entity instance. |
+| `PostmortemDocumentsShowContentResultV1` | `(data map[string]any) IncidentIoEntity` | Create a PostmortemDocumentsShowContentResultV1 entity instance. |
 | `Schedule` | `(data map[string]any) IncidentIoEntity` | Create a Schedule entity instance. |
 | `ScheduleEntriesListPayloadV2` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleEntriesListPayloadV2 entity instance. |
 | `ScheduleEntry` | `(data map[string]any) IncidentIoEntity` | Create a ScheduleEntry entity instance. |
@@ -346,9 +355,12 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `StatusPageMaintenance` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageMaintenance entity instance. |
 | `StatusPageMaintenanceUpdate` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
 | `StatusPageStructure` | `(data map[string]any) IncidentIoEntity` | Create a StatusPageStructure entity instance. |
+| `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2` | `(data map[string]any) IncidentIoEntity` | Create a StatusPagesCreateStatusPageRetrospectiveIncidentResultV2 entity instance. |
 | `Team` | `(data map[string]any) IncidentIoEntity` | Create a Team entity instance. |
 | `TelemetryDataSource` | `(data map[string]any) IncidentIoEntity` | Create a TelemetryDataSource entity instance. |
 | `User` | `(data map[string]any) IncidentIoEntity` | Create an User entity instance. |
+| `UsersShowPagingProviderResultV2` | `(data map[string]any) IncidentIoEntity` | Create an UsersShowPagingProviderResultV2 entity instance. |
+| `UtilitiesV1` | `(data map[string]any) IncidentIoEntity` | Create an UtilitiesV1 entity instance. |
 | `Workflow` | `(data map[string]any) IncidentIoEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `(data map[string]any) IncidentIoEntity` | Create a WorkflowRun entity instance. |
 
@@ -446,6 +458,22 @@ API path: `/v2/alerts/{id}/actions/resolve`
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/alert_attributes`
+
+#### AlertEventsV2
+
+| Field | Description |
+| --- | --- |
+| `"deduplication_key"` | The deduplication key that the event has been processed with |
+| `"description"` | Description that optionally adds more detail to title. |
+| `"message"` | Human readable message giving detail about the event |
+| `"metadata"` | Any additional metadata that you've configured your alert source to parse |
+| `"source_url"` | If applicable, a link to the alert in the upstream system |
+| `"status"` | Status of the event |
+| `"title"` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+Operations: Create.
+
+API path: `/v2/alert_events/http/{alert_source_config_id}`
 
 #### AlertNote
 
@@ -848,6 +876,18 @@ Operations: Create.
 
 API path: `/v2/catalog_types/{id}/actions/update_schema`
 
+#### CatalogV3
+
+| Field | Description |
+| --- | --- |
+| `"catalog_type_id"` | The unique identifier of the catalog type containing the entries |
+| `"entries"` | A list of entries to update with their new values. |
+| `"update_attributes"` | Optional list of specific attribute IDs to update across all entries. |
+
+Operations: Create.
+
+API path: `/v3/catalog_entries/actions/bulk_update`
+
 #### CustomField
 
 | Field | Description |
@@ -967,6 +1007,17 @@ Operations: Create.
 
 API path: `/v2/escalations/{escalation_id}/actions/reassign`
 
+#### EscalationsV2
+
+| Field | Description |
+| --- | --- |
+| `"response"` | Whether to acknowledge, decline or snooze the escalation |
+| `"snooze_details"` |  |
+
+Operations: Create.
+
+API path: `/v2/escalations/{escalation_id}/actions/respond`
+
 #### FollowUp
 
 | Field | Description |
@@ -995,6 +1046,31 @@ API path: `/v2/escalations/{escalation_id}/actions/reassign`
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/follow_ups`
+
+#### FollowUpsConnectExternalIssueResultV2
+
+| Field | Description |
+| --- | --- |
+| `"assignee"` |  |
+| `"assignee_team"` |  |
+| `"completed_at"` | When the follow-up was completed |
+| `"created_at"` | When the follow-up was created |
+| `"creator"` |  |
+| `"description"` | Description of the follow-up |
+| `"external_issue_reference"` |  |
+| `"id"` | Unique identifier for the follow-up |
+| `"incident_id"` | Unique identifier of the incident the follow-up belongs to |
+| `"labels"` | Labels associated with this follow-up |
+| `"priority"` |  |
+| `"provider"` | The issue tracker provider the issue belongs to |
+| `"status"` | Status of the follow-up |
+| `"title"` | Title of the follow-up |
+| `"updated_at"` | When the follow-up was last updated |
+| `"url"` | URL of the issue in the external provider |
+
+Operations: Create.
+
+API path: `/v2/follow_ups/{id}/actions/connect_external_issue`
 
 #### FollowUpsConnectExternalIssueResultV3
 
@@ -1032,6 +1108,16 @@ API path: `/v3/follow_ups/{id}/actions/connect_external_issue`
 Operations: Create.
 
 API path: `/v3/follow_ups/actions/create_from_link`
+
+#### HeartbeatV2
+
+| Field | Description |
+| --- | --- |
+| `"id"` |  |
+
+Operations: Create, Load.
+
+API path: `/v2/heartbeat/{alert_source_config_id}/ping`
 
 #### Identity
 
@@ -1150,6 +1236,17 @@ API path: `/v3/incident_forms`
 Operations: Create.
 
 API path: `/v1/incident_memberships`
+
+#### IncidentMembershipsV1
+
+| Field | Description |
+| --- | --- |
+| `"incident_id"` | Revoke memberships to incident |
+| `"user_id"` |  |
+
+Operations: Create.
+
+API path: `/v1/incident_memberships/actions/revoke`
 
 #### IncidentParticipant
 
@@ -1337,6 +1434,17 @@ API path: `/v1/incident_types`
 Operations: Create, List.
 
 API path: `/v2/incident_updates`
+
+#### IncidentsImportPostmortemDocumentResultV2
+
+| Field | Description |
+| --- | --- |
+| `"content"` | The document content as GitHub-Flavored Markdown |
+| `"title"` | Title of the postmortem document |
+
+Operations: Create.
+
+API path: `/v2/incidents/{id}/actions/import_postmortem_document`
 
 #### IpAllowlist
 
@@ -1713,6 +1821,28 @@ Operations: List, Load, Update.
 
 API path: `/v1/postmortem_documents`
 
+#### PostmortemDocumentsAttachResultV1
+
+| Field | Description |
+| --- | --- |
+| `"document_provider"` | The provider hosting the document. |
+| `"incident_id"` | The unique identifier of the incident to attach the post-mortem document to |
+| `"permalink"` | A URL pointing to the externally-hosted post-mortem document |
+
+Operations: Create.
+
+API path: `/v1/postmortem_documents/actions/attach`
+
+#### PostmortemDocumentsShowContentResultV1
+
+| Field | Description |
+| --- | --- |
+| `"markdown"` | The full content of the post-mortem document, rendered as markdown. |
+
+Operations: Load.
+
+API path: `/v1/postmortem_documents/{id}/content`
+
 #### Schedule
 
 | Field | Description |
@@ -2007,6 +2137,19 @@ Operations: Load.
 
 API path: `/v2/status_page_structures/{status_page_id}`
 
+#### StatusPagesCreateStatusPageRetrospectiveIncidentResultV2
+
+| Field | Description |
+| --- | --- |
+| `"idempotency_key"` | A unique key to de-duplicate requests. |
+| `"name"` | A title for the incident |
+| `"status_page_id"` | ID of the status page. |
+| `"updates"` | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+Operations: Create.
+
+API path: `/v2/status_page_retrospective_incidents`
+
 #### Team
 
 | Field | Description |
@@ -2056,6 +2199,25 @@ API path: `/v2/telemetry/data_sources/{id}`
 Operations: List, Load.
 
 API path: `/v2/users`
+
+#### UsersShowPagingProviderResultV2
+
+| Field | Description |
+| --- | --- |
+| `"preferred_escalation_provider"` | The user's effective escalation provider. |
+
+Operations: Create, Load.
+
+API path: `/v2/users/{user_id}/paging_provider`
+
+#### UtilitiesV1
+
+| Field | Description |
+| --- | --- |
+
+Operations: Load.
+
+API path: `/v1/openapiV3.json`
 
 #### Workflow
 
@@ -2314,6 +2476,43 @@ result, err := client.AlertAttribute(nil).Create(map[string]any{
     "array": true,
     "name": "example_name",
     "type": "example_type",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### AlertEventsV2
+
+Create an instance: `alertEventsV2 := client.AlertEventsV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `deduplication_key` | `string` | The deduplication key that the event has been processed with |
+| `description` | `string` | Description that optionally adds more detail to title. |
+| `message` | `string` | Human readable message giving detail about the event |
+| `metadata` | `map[string]any` | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Status of the event |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+#### Example: Create
+
+```go
+result, err := client.AlertEventsV2(nil).Create(map[string]any{
+    "alert_source_config_id": "example_alert_source_config_id",
+    "status": "example_status",
+    "title": "example_title",
 }, nil)
 if err != nil {
     panic(err)
@@ -3455,6 +3654,38 @@ fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
+### CatalogV3
+
+Create an instance: `catalogV3 := client.CatalogV3(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `catalog_type_id` | `string` | The unique identifier of the catalog type containing the entries |
+| `entries` | `[]any` | A list of entries to update with their new values. |
+| `update_attributes` | `[]any` | Optional list of specific attribute IDs to update across all entries. |
+
+#### Example: Create
+
+```go
+result, err := client.CatalogV3(nil).Create(map[string]any{
+    "catalog_type_id": "example_catalog_type_id",
+    "entries": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
 ### CustomField
 
 Create an instance: `customField := client.CustomField(nil)`
@@ -3851,6 +4082,38 @@ fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
+### EscalationsV2
+
+Create an instance: `escalationsV2 := client.EscalationsV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `response` | `string` | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` | `map[string]any` |  |
+
+#### Example: Create
+
+```go
+result, err := client.EscalationsV2(nil).Create(map[string]any{
+    "escalation_id": "example_escalation_id",
+    "response": "example_response",
+    "snooze_details": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
 ### FollowUp
 
 Create an instance: `followUp := client.FollowUp(nil)`
@@ -3919,6 +4182,52 @@ for _, item := range followUps.([]any) {
 result, err := client.FollowUp(nil).Create(map[string]any{
     "incident_id": "example_incident_id",
     "title": "example_title",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### FollowUpsConnectExternalIssueResultV2
+
+Create an instance: `followUpsConnectExternalIssueResultV2 := client.FollowUpsConnectExternalIssueResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `assignee` | `map[string]any` |  |
+| `assignee_team` | `map[string]any` |  |
+| `completed_at` | `string` | When the follow-up was completed |
+| `created_at` | `string` | When the follow-up was created |
+| `creator` | `map[string]any` |  |
+| `description` | `string` | Description of the follow-up |
+| `external_issue_reference` | `map[string]any` |  |
+| `id` | `string` | Unique identifier for the follow-up |
+| `incident_id` | `string` | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `[]any` | Labels associated with this follow-up |
+| `priority` | `map[string]any` |  |
+| `provider` | `string` | The issue tracker provider the issue belongs to |
+| `status` | `string` | Status of the follow-up |
+| `title` | `string` | Title of the follow-up |
+| `updated_at` | `string` | When the follow-up was last updated |
+| `url` | `string` | URL of the issue in the external provider |
+
+#### Example: Create
+
+```go
+result, err := client.FollowUpsConnectExternalIssueResultV2(nil).Create(map[string]any{
+    "follow_up_id": "example_follow_up_id",
+    "provider": "example_provider",
+    "url": "example_url",
 }, nil)
 if err != nil {
     panic(err)
@@ -3997,6 +4306,46 @@ Create an instance: `followUpsCreateFromLinkResultV3 := client.FollowUpsCreateFr
 result, err := client.FollowUpsCreateFromLinkResultV3(nil).Create(map[string]any{
     "incident_id": "example_incident_id",
     "url": "example_url",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### HeartbeatV2
+
+Create an instance: `heartbeatV2 := client.HeartbeatV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` |  |
+
+#### Example: Load
+
+```go
+heartbeatV2, err := client.HeartbeatV2(nil).Load(map[string]any{"id": "heartbeat_v2_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(heartbeatV2.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: Create
+
+```go
+result, err := client.HeartbeatV2(nil).Create(map[string]any{
+    "id": "example_id",
 }, nil)
 if err != nil {
     panic(err)
@@ -4297,6 +4646,37 @@ Create an instance: `incidentMembership := client.IncidentMembership(nil)`
 
 ```go
 result, err := client.IncidentMembership(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "user_id": "example_user_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### IncidentMembershipsV1
+
+Create an instance: `incidentMembershipsV1 := client.IncidentMembershipsV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `incident_id` | `string` | Revoke memberships to incident |
+| `user_id` | `string` |  |
+
+#### Example: Create
+
+```go
+result, err := client.IncidentMembershipsV1(nil).Create(map[string]any{
     "incident_id": "example_incident_id",
     "user_id": "example_user_id",
 }, nil)
@@ -4880,6 +5260,38 @@ for _, item := range incidentUpdates.([]any) {
 result, err := client.IncidentUpdate(nil).Create(map[string]any{
     "idempotency_key": "example_idempotency_key",
     "incident_id": "example_incident_id",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### IncidentsImportPostmortemDocumentResultV2
+
+Create an instance: `incidentsImportPostmortemDocumentResultV2 := client.IncidentsImportPostmortemDocumentResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `content` | `string` | The document content as GitHub-Flavored Markdown |
+| `title` | `string` | Title of the postmortem document |
+
+#### Example: Create
+
+```go
+result, err := client.IncidentsImportPostmortemDocumentResultV2(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "content": "example_content",
+    "title": "example_title",
 }, nil)
 if err != nil {
     panic(err)
@@ -5868,6 +6280,65 @@ for _, item := range postmortemDocuments.([]any) {
 ```
 
 
+### PostmortemDocumentsAttachResultV1
+
+Create an instance: `postmortemDocumentsAttachResultV1 := client.PostmortemDocumentsAttachResultV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `document_provider` | `string` | The provider hosting the document. |
+| `incident_id` | `string` | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | `string` | A URL pointing to the externally-hosted post-mortem document |
+
+#### Example: Create
+
+```go
+result, err := client.PostmortemDocumentsAttachResultV1(nil).Create(map[string]any{
+    "incident_id": "example_incident_id",
+    "permalink": "example_permalink",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### PostmortemDocumentsShowContentResultV1
+
+Create an instance: `postmortemDocumentsShowContentResultV1 := client.PostmortemDocumentsShowContentResultV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `markdown` | `string` | The full content of the post-mortem document, rendered as markdown. |
+
+#### Example: Load
+
+```go
+postmortemDocumentsShowContentResultV1, err := client.PostmortemDocumentsShowContentResultV1(nil).Load(map[string]any{"postmortem_document_id": "postmortem_document_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(postmortemDocumentsShowContentResultV1.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+
 ### Schedule
 
 Create an instance: `schedule := client.Schedule(nil)`
@@ -6811,6 +7282,41 @@ fmt.Println(statusPageStructure.(sdk.Entity).Data()) // the loaded entity's reco
 ```
 
 
+### StatusPagesCreateStatusPageRetrospectiveIncidentResultV2
+
+Create an instance: `statusPagesCreateStatusPageRetrospectiveIncidentResultV2 := client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `idempotency_key` | `string` | A unique key to de-duplicate requests. |
+| `name` | `string` | A title for the incident |
+| `status_page_id` | `string` | ID of the status page. |
+| `updates` | `[]any` | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+#### Example: Create
+
+```go
+result, err := client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(nil).Create(map[string]any{
+    "idempotency_key": "example_idempotency_key",
+    "name": "example_name",
+    "status_page_id": "example_status_page_id",
+    "updates": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
 ### Team
 
 Create an instance: `team := client.Team(nil)`
@@ -6927,6 +7433,68 @@ if err != nil {
 for _, item := range users.([]any) {
     fmt.Println(item.(sdk.Entity).Data())
 }
+```
+
+
+### UsersShowPagingProviderResultV2
+
+Create an instance: `usersShowPagingProviderResultV2 := client.UsersShowPagingProviderResultV2(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `preferred_escalation_provider` | `string` | The user's effective escalation provider. |
+
+#### Example: Load
+
+```go
+usersShowPagingProviderResultV2, err := client.UsersShowPagingProviderResultV2(nil).Load(map[string]any{"user_id": "user_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(usersShowPagingProviderResultV2.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: Create
+
+```go
+result, err := client.UsersShowPagingProviderResultV2(nil).Create(map[string]any{
+    "user_id": "example_user_id",
+    "preferred_escalation_provider": "example_preferred_escalation_provider",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### UtilitiesV1
+
+Create an instance: `utilitiesV1 := client.UtilitiesV1(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Example: Load
+
+```go
+utilitiesV1, err := client.UtilitiesV1(nil).Load(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(utilitiesV1.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 
@@ -7312,11 +7880,11 @@ Entity instances are stateful. After a successful `List`, the entity
 stores the returned data and match criteria internally.
 
 ```go
-escalationpath := client.EscalationPath(nil)
-escalationpath.List(nil, nil)
+incidentstatus := client.IncidentStatus(nil)
+incidentstatus.List(nil, nil)
 
-// escalationpath.Data() now returns the escalationpath data from the last list
-// escalationpath.Match() returns the last match criteria
+// incidentstatus.Data() now returns the incidentstatus data from the last list
+// incidentstatus.Match() returns the last match criteria
 ```
 
 Call `Make()` to create a fresh instance with the same configuration

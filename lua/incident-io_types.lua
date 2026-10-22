@@ -127,6 +127,26 @@
 ---@class AlertAttributeRemoveMatch
 ---@field id string
 
+---@class AlertEventsV2
+---@field deduplication_key string
+---@field description? string
+---@field message string
+---@field metadata? table
+---@field source_url? string
+---@field status string
+---@field title string
+
+---@class AlertEventsV2CreateData
+---@field alert_source_config_id string
+---@field query? table
+---@field token? string
+---@field deduplication_key? string
+---@field description? string
+---@field metadata? table
+---@field source_url? string
+---@field status string
+---@field title string
+
 ---@class AlertNote
 ---@field alert_group_id? string
 ---@field alert_id? string
@@ -798,6 +818,16 @@
 ---@field attributes table
 ---@field version number
 
+---@class CatalogV3
+---@field catalog_type_id string
+---@field entries table
+---@field update_attributes? table
+
+---@class CatalogV3CreateData
+---@field catalog_type_id string
+---@field entries table
+---@field update_attributes? table
+
 ---@class CustomField
 ---@field catalog_type_id? string
 ---@field created_at string
@@ -1022,6 +1052,15 @@
 ---@field title? string
 ---@field user_ids? table
 
+---@class EscalationsV2
+---@field response string
+---@field snooze_details table
+
+---@class EscalationsV2CreateData
+---@field escalation_id string
+---@field response string
+---@field snooze_details table
+
 ---@class FollowUp
 ---@field assignee table
 ---@field assignee_id? string
@@ -1081,6 +1120,29 @@
 ---@class FollowUpRemoveMatch
 ---@field id string
 
+---@class FollowUpsConnectExternalIssueResultV2
+---@field assignee table
+---@field assignee_team table
+---@field completed_at? string
+---@field created_at string
+---@field creator table
+---@field description? string
+---@field external_issue_reference table
+---@field id string
+---@field incident_id string
+---@field labels table
+---@field priority table
+---@field provider string
+---@field status string
+---@field title string
+---@field updated_at string
+---@field url string
+
+---@class FollowUpsConnectExternalIssueResultV2CreateData
+---@field follow_up_id string
+---@field provider string
+---@field url string
+
 ---@class FollowUpsConnectExternalIssueResultV3
 ---@field assignee table
 ---@field assignee_team table
@@ -1112,6 +1174,17 @@
 ---@class FollowUpsCreateFromLinkResultV3CreateData
 ---@field incident_id string
 ---@field url string
+
+---@class HeartbeatV2
+---@field id? string
+
+---@class HeartbeatV2LoadMatch
+---@field id string
+---@field token? string
+
+---@class HeartbeatV2CreateData
+---@field id string
+---@field token? string
 
 ---@class Identity
 ---@field dashboard_url string
@@ -1272,6 +1345,14 @@
 ---@field user_id string
 
 ---@class IncidentMembershipCreateData
+---@field incident_id string
+---@field user_id string
+
+---@class IncidentMembershipsV1
+---@field incident_id string
+---@field user_id string
+
+---@class IncidentMembershipsV1CreateData
 ---@field incident_id string
 ---@field user_id string
 
@@ -1523,6 +1604,15 @@
 ---@field message? string
 ---@field to_incident_status_id? string
 ---@field to_severity_id? string
+
+---@class IncidentsImportPostmortemDocumentResultV2
+---@field content string
+---@field title string
+
+---@class IncidentsImportPostmortemDocumentResultV2CreateData
+---@field incident_id string
+---@field content string
+---@field title string
 
 ---@class IpAllowlist
 ---@field allowlist table
@@ -2046,6 +2136,22 @@
 ---@field id string
 ---@field status? string
 
+---@class PostmortemDocumentsAttachResultV1
+---@field document_provider? string
+---@field incident_id string
+---@field permalink string
+
+---@class PostmortemDocumentsAttachResultV1CreateData
+---@field document_provider? string
+---@field incident_id string
+---@field permalink string
+
+---@class PostmortemDocumentsShowContentResultV1
+---@field markdown string
+
+---@class PostmortemDocumentsShowContentResultV1LoadMatch
+---@field postmortem_document_id string
+
 ---@class Schedule
 ---@field annotations table
 ---@field config table
@@ -2512,6 +2618,18 @@
 ---@class StatusPageStructureLoadMatch
 ---@field id string
 
+---@class StatusPagesCreateStatusPageRetrospectiveIncidentResultV2
+---@field idempotency_key string
+---@field name string
+---@field status_page_id string
+---@field updates table
+
+---@class StatusPagesCreateStatusPageRetrospectiveIncidentResultV2CreateData
+---@field idempotency_key string
+---@field name string
+---@field status_page_id string
+---@field updates table
+
 ---@class Team
 ---@field catalog_entry table
 ---@field id string
@@ -2563,6 +2681,20 @@
 ---@field include_inactive? boolean
 ---@field page_size? number
 ---@field slack_user_id? string
+
+---@class UsersShowPagingProviderResultV2
+---@field preferred_escalation_provider? string
+
+---@class UsersShowPagingProviderResultV2LoadMatch
+---@field user_id string
+
+---@class UsersShowPagingProviderResultV2CreateData
+---@field user_id string
+---@field preferred_escalation_provider string
+
+---@class UtilitiesV1
+
+---@class UtilitiesV1LoadMatch
 
 ---@class Workflow
 ---@field annotations? table

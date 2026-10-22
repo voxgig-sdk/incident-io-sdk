@@ -28,6 +28,8 @@ var NewAlertEntityFunc func(client *IncidentIoSDK, entopts map[string]any) Incid
 
 var NewAlertAttributeEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
+var NewAlertEventsV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
 var NewAlertNoteEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewAlertRouteEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
@@ -68,6 +70,8 @@ var NewCatalogTypeEntityFunc func(client *IncidentIoSDK, entopts map[string]any)
 
 var NewCatalogTypeSchemaEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
+var NewCatalogV3EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
 var NewCustomFieldEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewCustomFieldOptionEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
@@ -82,11 +86,17 @@ var NewEscalationsCheckEscalationPermissionsResultV2EntityFunc func(client *Inci
 
 var NewEscalationsReassignEscalationResultV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
+var NewEscalationsV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
 var NewFollowUpEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
+var NewFollowUpsConnectExternalIssueResultV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewFollowUpsConnectExternalIssueResultV3EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewFollowUpsCreateFromLinkResultV3EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
+var NewHeartbeatV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewIdentityEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
@@ -99,6 +109,8 @@ var NewIncidentAttachmentEntityFunc func(client *IncidentIoSDK, entopts map[stri
 var NewIncidentFormEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewIncidentMembershipEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
+var NewIncidentMembershipsV1EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewIncidentParticipantEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
@@ -125,6 +137,8 @@ var NewIncidentTimestampEntityFunc func(client *IncidentIoSDK, entopts map[strin
 var NewIncidentTypeEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewIncidentUpdateEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
+var NewIncidentsImportPostmortemDocumentResultV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewIpAllowlistEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
@@ -164,6 +178,10 @@ var NewPolicyFindingsRestoreResultV2EntityFunc func(client *IncidentIoSDK, entop
 
 var NewPostmortemDocumentEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
+var NewPostmortemDocumentsAttachResultV1EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
+var NewPostmortemDocumentsShowContentResultV1EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
 var NewScheduleEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewScheduleEntriesListPayloadV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
@@ -200,11 +218,17 @@ var NewStatusPageMaintenanceUpdateEntityFunc func(client *IncidentIoSDK, entopts
 
 var NewStatusPageStructureEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
+var NewStatusPagesCreateStatusPageRetrospectiveIncidentResultV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
 var NewTeamEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewTelemetryDataSourceEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewUserEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
+var NewUsersShowPagingProviderResultV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
+var NewUtilitiesV1EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewWorkflowEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 

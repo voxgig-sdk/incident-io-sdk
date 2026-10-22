@@ -3,6 +3,7 @@
 import { ActionEntity } from './entity/ActionEntity'
 import { AlertEntity } from './entity/AlertEntity'
 import { AlertAttributeEntity } from './entity/AlertAttributeEntity'
+import { AlertEventsV2Entity } from './entity/AlertEventsV2Entity'
 import { AlertNoteEntity } from './entity/AlertNoteEntity'
 import { AlertRouteEntity } from './entity/AlertRouteEntity'
 import { AlertSourceEntity } from './entity/AlertSourceEntity'
@@ -23,6 +24,7 @@ import { CatalogEntryEntity } from './entity/CatalogEntryEntity'
 import { CatalogResourceEntity } from './entity/CatalogResourceEntity'
 import { CatalogTypeEntity } from './entity/CatalogTypeEntity'
 import { CatalogTypeSchemaEntity } from './entity/CatalogTypeSchemaEntity'
+import { CatalogV3Entity } from './entity/CatalogV3Entity'
 import { CustomFieldEntity } from './entity/CustomFieldEntity'
 import { CustomFieldOptionEntity } from './entity/CustomFieldOptionEntity'
 import { EscalationEntity } from './entity/EscalationEntity'
@@ -30,15 +32,19 @@ import { EscalationPathEntity } from './entity/EscalationPathEntity'
 import { EscalationPathTemplateEntity } from './entity/EscalationPathTemplateEntity'
 import { EscalationsCheckEscalationPermissionsResultV2Entity } from './entity/EscalationsCheckEscalationPermissionsResultV2Entity'
 import { EscalationsReassignEscalationResultV2Entity } from './entity/EscalationsReassignEscalationResultV2Entity'
+import { EscalationsV2Entity } from './entity/EscalationsV2Entity'
 import { FollowUpEntity } from './entity/FollowUpEntity'
+import { FollowUpsConnectExternalIssueResultV2Entity } from './entity/FollowUpsConnectExternalIssueResultV2Entity'
 import { FollowUpsConnectExternalIssueResultV3Entity } from './entity/FollowUpsConnectExternalIssueResultV3Entity'
 import { FollowUpsCreateFromLinkResultV3Entity } from './entity/FollowUpsCreateFromLinkResultV3Entity'
+import { HeartbeatV2Entity } from './entity/HeartbeatV2Entity'
 import { IdentityEntity } from './entity/IdentityEntity'
 import { IncidentEntity } from './entity/IncidentEntity'
 import { IncidentActivityLogEntryEntity } from './entity/IncidentActivityLogEntryEntity'
 import { IncidentAttachmentEntity } from './entity/IncidentAttachmentEntity'
 import { IncidentFormEntity } from './entity/IncidentFormEntity'
 import { IncidentMembershipEntity } from './entity/IncidentMembershipEntity'
+import { IncidentMembershipsV1Entity } from './entity/IncidentMembershipsV1Entity'
 import { IncidentParticipantEntity } from './entity/IncidentParticipantEntity'
 import { IncidentParticipantWorkloadEntity } from './entity/IncidentParticipantWorkloadEntity'
 import { IncidentRelationshipEntity } from './entity/IncidentRelationshipEntity'
@@ -52,6 +58,7 @@ import { IncidentTimelineItemEntity } from './entity/IncidentTimelineItemEntity'
 import { IncidentTimestampEntity } from './entity/IncidentTimestampEntity'
 import { IncidentTypeEntity } from './entity/IncidentTypeEntity'
 import { IncidentUpdateEntity } from './entity/IncidentUpdateEntity'
+import { IncidentsImportPostmortemDocumentResultV2Entity } from './entity/IncidentsImportPostmortemDocumentResultV2Entity'
 import { IpAllowlistEntity } from './entity/IpAllowlistEntity'
 import { IpRangeEntity } from './entity/IpRangeEntity'
 import { MaintenanceWindowEntity } from './entity/MaintenanceWindowEntity'
@@ -71,6 +78,8 @@ import { PolicyFindingEntity } from './entity/PolicyFindingEntity'
 import { PolicyFindingsDismissResultV2Entity } from './entity/PolicyFindingsDismissResultV2Entity'
 import { PolicyFindingsRestoreResultV2Entity } from './entity/PolicyFindingsRestoreResultV2Entity'
 import { PostmortemDocumentEntity } from './entity/PostmortemDocumentEntity'
+import { PostmortemDocumentsAttachResultV1Entity } from './entity/PostmortemDocumentsAttachResultV1Entity'
+import { PostmortemDocumentsShowContentResultV1Entity } from './entity/PostmortemDocumentsShowContentResultV1Entity'
 import { ScheduleEntity } from './entity/ScheduleEntity'
 import { ScheduleEntriesListPayloadV2Entity } from './entity/ScheduleEntriesListPayloadV2Entity'
 import { ScheduleEntryEntity } from './entity/ScheduleEntryEntity'
@@ -89,9 +98,12 @@ import { StatusPageLinkedResponseIncidentEntity } from './entity/StatusPageLinke
 import { StatusPageMaintenanceEntity } from './entity/StatusPageMaintenanceEntity'
 import { StatusPageMaintenanceUpdateEntity } from './entity/StatusPageMaintenanceUpdateEntity'
 import { StatusPageStructureEntity } from './entity/StatusPageStructureEntity'
+import { StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity } from './entity/StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity'
 import { TeamEntity } from './entity/TeamEntity'
 import { TelemetryDataSourceEntity } from './entity/TelemetryDataSourceEntity'
 import { UserEntity } from './entity/UserEntity'
+import { UsersShowPagingProviderResultV2Entity } from './entity/UsersShowPagingProviderResultV2Entity'
+import { UtilitiesV1Entity } from './entity/UtilitiesV1Entity'
 import { WorkflowEntity } from './entity/WorkflowEntity'
 import { WorkflowRunEntity } from './entity/WorkflowRunEntity'
 
@@ -454,6 +466,15 @@ if (null != this._secrets) {
   }
 
 
+  // Entity access: `client.AlertEventsV2().list()` / `client.AlertEventsV2().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  AlertEventsV2(entopts?: Record<string, any>) {
+    const self = this
+    return new AlertEventsV2Entity(self, entopts)
+  }
+
+
   // Entity access: `client.AlertNote().list()` / `client.AlertNote().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -634,6 +655,15 @@ if (null != this._secrets) {
   }
 
 
+  // Entity access: `client.CatalogV3().list()` / `client.CatalogV3().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CatalogV3(entopts?: Record<string, any>) {
+    const self = this
+    return new CatalogV3Entity(self, entopts)
+  }
+
+
   // Entity access: `client.CustomField().list()` / `client.CustomField().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -697,12 +727,30 @@ if (null != this._secrets) {
   }
 
 
+  // Entity access: `client.EscalationsV2().list()` / `client.EscalationsV2().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  EscalationsV2(entopts?: Record<string, any>) {
+    const self = this
+    return new EscalationsV2Entity(self, entopts)
+  }
+
+
   // Entity access: `client.FollowUp().list()` / `client.FollowUp().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
   FollowUp(entopts?: Record<string, any>) {
     const self = this
     return new FollowUpEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.FollowUpsConnectExternalIssueResultV2().list()` / `client.FollowUpsConnectExternalIssueResultV2().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  FollowUpsConnectExternalIssueResultV2(entopts?: Record<string, any>) {
+    const self = this
+    return new FollowUpsConnectExternalIssueResultV2Entity(self, entopts)
   }
 
 
@@ -721,6 +769,15 @@ if (null != this._secrets) {
   FollowUpsCreateFromLinkResultV3(entopts?: Record<string, any>) {
     const self = this
     return new FollowUpsCreateFromLinkResultV3Entity(self, entopts)
+  }
+
+
+  // Entity access: `client.HeartbeatV2().list()` / `client.HeartbeatV2().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  HeartbeatV2(entopts?: Record<string, any>) {
+    const self = this
+    return new HeartbeatV2Entity(self, entopts)
   }
 
 
@@ -775,6 +832,15 @@ if (null != this._secrets) {
   IncidentMembership(entopts?: Record<string, any>) {
     const self = this
     return new IncidentMembershipEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.IncidentMembershipsV1().list()` / `client.IncidentMembershipsV1().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  IncidentMembershipsV1(entopts?: Record<string, any>) {
+    const self = this
+    return new IncidentMembershipsV1Entity(self, entopts)
   }
 
 
@@ -892,6 +958,15 @@ if (null != this._secrets) {
   IncidentUpdate(entopts?: Record<string, any>) {
     const self = this
     return new IncidentUpdateEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.IncidentsImportPostmortemDocumentResultV2().list()` / `client.IncidentsImportPostmortemDocumentResultV2().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  IncidentsImportPostmortemDocumentResultV2(entopts?: Record<string, any>) {
+    const self = this
+    return new IncidentsImportPostmortemDocumentResultV2Entity(self, entopts)
   }
 
 
@@ -1066,6 +1141,24 @@ if (null != this._secrets) {
   }
 
 
+  // Entity access: `client.PostmortemDocumentsAttachResultV1().list()` / `client.PostmortemDocumentsAttachResultV1().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  PostmortemDocumentsAttachResultV1(entopts?: Record<string, any>) {
+    const self = this
+    return new PostmortemDocumentsAttachResultV1Entity(self, entopts)
+  }
+
+
+  // Entity access: `client.PostmortemDocumentsShowContentResultV1().list()` / `client.PostmortemDocumentsShowContentResultV1().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  PostmortemDocumentsShowContentResultV1(entopts?: Record<string, any>) {
+    const self = this
+    return new PostmortemDocumentsShowContentResultV1Entity(self, entopts)
+  }
+
+
   // Entity access: `client.Schedule().list()` / `client.Schedule().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -1228,6 +1321,15 @@ if (null != this._secrets) {
   }
 
 
+  // Entity access: `client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().list()` / `client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(entopts?: Record<string, any>) {
+    const self = this
+    return new StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity(self, entopts)
+  }
+
+
   // Entity access: `client.Team().list()` / `client.Team().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -1252,6 +1354,24 @@ if (null != this._secrets) {
   User(entopts?: Record<string, any>) {
     const self = this
     return new UserEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.UsersShowPagingProviderResultV2().list()` / `client.UsersShowPagingProviderResultV2().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  UsersShowPagingProviderResultV2(entopts?: Record<string, any>) {
+    const self = this
+    return new UsersShowPagingProviderResultV2Entity(self, entopts)
+  }
+
+
+  // Entity access: `client.UtilitiesV1().list()` / `client.UtilitiesV1().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  UtilitiesV1(entopts?: Record<string, any>) {
+    const self = this
+    return new UtilitiesV1Entity(self, entopts)
   }
 
 

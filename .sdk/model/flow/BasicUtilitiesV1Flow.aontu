@@ -7,14 +7,14 @@ main: kit: flow: BasicUtilitiesV1Flow:
   name: "BasicUtilitiesV1Flow",
   step: [
     {
-      input: {
+      i: {
         ref: "utilities_v1_ref01",
         srcdatavar: "utilities_v1_ref01_data",
         suffix: "_dt0"
       }
 
-      op: "load",
-      valid: [
+      o: "load",
+      v: [
         {
           apply: "TextFieldMark",
           def: {

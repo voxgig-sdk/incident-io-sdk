@@ -66,6 +66,9 @@ func init() {
 	core.NewAlertAttributeEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewAlertAttributeEntity(client, entopts)
 	}
+	core.NewAlertEventsV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewAlertEventsV2Entity(client, entopts)
+	}
 	core.NewAlertNoteEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewAlertNoteEntity(client, entopts)
 	}
@@ -126,6 +129,9 @@ func init() {
 	core.NewCatalogTypeSchemaEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewCatalogTypeSchemaEntity(client, entopts)
 	}
+	core.NewCatalogV3EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewCatalogV3Entity(client, entopts)
+	}
 	core.NewCustomFieldEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewCustomFieldEntity(client, entopts)
 	}
@@ -147,14 +153,23 @@ func init() {
 	core.NewEscalationsReassignEscalationResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewEscalationsReassignEscalationResultV2Entity(client, entopts)
 	}
+	core.NewEscalationsV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewEscalationsV2Entity(client, entopts)
+	}
 	core.NewFollowUpEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewFollowUpEntity(client, entopts)
+	}
+	core.NewFollowUpsConnectExternalIssueResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewFollowUpsConnectExternalIssueResultV2Entity(client, entopts)
 	}
 	core.NewFollowUpsConnectExternalIssueResultV3EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewFollowUpsConnectExternalIssueResultV3Entity(client, entopts)
 	}
 	core.NewFollowUpsCreateFromLinkResultV3EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewFollowUpsCreateFromLinkResultV3Entity(client, entopts)
+	}
+	core.NewHeartbeatV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewHeartbeatV2Entity(client, entopts)
 	}
 	core.NewIdentityEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewIdentityEntity(client, entopts)
@@ -173,6 +188,9 @@ func init() {
 	}
 	core.NewIncidentMembershipEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewIncidentMembershipEntity(client, entopts)
+	}
+	core.NewIncidentMembershipsV1EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewIncidentMembershipsV1Entity(client, entopts)
 	}
 	core.NewIncidentParticipantEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewIncidentParticipantEntity(client, entopts)
@@ -212,6 +230,9 @@ func init() {
 	}
 	core.NewIncidentUpdateEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewIncidentUpdateEntity(client, entopts)
+	}
+	core.NewIncidentsImportPostmortemDocumentResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewIncidentsImportPostmortemDocumentResultV2Entity(client, entopts)
 	}
 	core.NewIpAllowlistEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewIpAllowlistEntity(client, entopts)
@@ -270,6 +291,12 @@ func init() {
 	core.NewPostmortemDocumentEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewPostmortemDocumentEntity(client, entopts)
 	}
+	core.NewPostmortemDocumentsAttachResultV1EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewPostmortemDocumentsAttachResultV1Entity(client, entopts)
+	}
+	core.NewPostmortemDocumentsShowContentResultV1EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewPostmortemDocumentsShowContentResultV1Entity(client, entopts)
+	}
 	core.NewScheduleEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewScheduleEntity(client, entopts)
 	}
@@ -324,6 +351,9 @@ func init() {
 	core.NewStatusPageStructureEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewStatusPageStructureEntity(client, entopts)
 	}
+	core.NewStatusPagesCreateStatusPageRetrospectiveIncidentResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity(client, entopts)
+	}
 	core.NewTeamEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewTeamEntity(client, entopts)
 	}
@@ -332,6 +362,12 @@ func init() {
 	}
 	core.NewUserEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewUserEntity(client, entopts)
+	}
+	core.NewUsersShowPagingProviderResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewUsersShowPagingProviderResultV2Entity(client, entopts)
+	}
+	core.NewUtilitiesV1EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewUtilitiesV1Entity(client, entopts)
 	}
 	core.NewWorkflowEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewWorkflowEntity(client, entopts)

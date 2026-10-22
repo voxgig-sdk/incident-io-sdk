@@ -16,5 +16,12 @@
     "utilities_v1": {
       "utilities_v1_ref01": {}
     }
+  },
+  "requests": {
+    "GET /v1/openapiV3.json": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

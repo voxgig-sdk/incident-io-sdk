@@ -25,5 +25,12 @@
         "user_id": "USER01"
       }
     }
+  },
+  "requests": {
+    "POST /v1/incident_memberships/actions/revoke": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

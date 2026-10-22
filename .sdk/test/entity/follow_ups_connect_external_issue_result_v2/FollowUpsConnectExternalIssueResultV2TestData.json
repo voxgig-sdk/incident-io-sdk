@@ -11,7 +11,7 @@
         "external_issue_reference": {},
         "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V200",
         "incident_id": "INCIDENT01",
-        "label": [],
+        "labels": [],
         "priority": {},
         "provider": "sab",
         "status": "sac",
@@ -30,7 +30,7 @@
         "external_issue_reference": {},
         "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V201",
         "incident_id": "INCIDENT01",
-        "label": [],
+        "labels": [],
         "priority": {},
         "provider": "s14b",
         "status": "s14c",
@@ -49,7 +49,7 @@
         "external_issue_reference": {},
         "id": "FOLLOW_UPS_CONNECT_EXTERNAL_ISSUE_RESULT_V202",
         "incident_id": "INCIDENT01",
-        "label": [],
+        "labels": [],
         "priority": {},
         "provider": "s1eb",
         "status": "s1ec",
@@ -71,7 +71,7 @@
         "description": "s285",
         "external_issue_reference": {},
         "incident_id": "INCIDENT01",
-        "label": [],
+        "labels": [],
         "priority": {},
         "provider": "s28b",
         "status": "s28c",
@@ -79,6 +79,13 @@
         "updated_at": "s28e",
         "url": "s28f"
       }
+    }
+  },
+  "requests": {
+    "POST /v2/follow_ups/{id}/actions/connect_external_issue": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

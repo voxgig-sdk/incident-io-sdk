@@ -54,6 +54,10 @@ Create a new `AlertEntity` instance. Pass `None` for no initial data.
 
 Create a new `AlertAttributeEntity` instance. Pass `None` for no initial data.
 
+#### `AlertEventsV2(data=None)`
+
+Create a new `AlertEventsV2Entity` instance. Pass `None` for no initial data.
+
 #### `AlertNote(data=None)`
 
 Create a new `AlertNoteEntity` instance. Pass `None` for no initial data.
@@ -134,6 +138,10 @@ Create a new `CatalogTypeEntity` instance. Pass `None` for no initial data.
 
 Create a new `CatalogTypeSchemaEntity` instance. Pass `None` for no initial data.
 
+#### `CatalogV3(data=None)`
+
+Create a new `CatalogV3Entity` instance. Pass `None` for no initial data.
+
 #### `CustomField(data=None)`
 
 Create a new `CustomFieldEntity` instance. Pass `None` for no initial data.
@@ -162,9 +170,17 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2Entity` instance. Pas
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance. Pass `None` for no initial data.
 
+#### `EscalationsV2(data=None)`
+
+Create a new `EscalationsV2Entity` instance. Pass `None` for no initial data.
+
 #### `FollowUp(data=None)`
 
 Create a new `FollowUpEntity` instance. Pass `None` for no initial data.
+
+#### `FollowUpsConnectExternalIssueResultV2(data=None)`
+
+Create a new `FollowUpsConnectExternalIssueResultV2Entity` instance. Pass `None` for no initial data.
 
 #### `FollowUpsConnectExternalIssueResultV3(data=None)`
 
@@ -173,6 +189,10 @@ Create a new `FollowUpsConnectExternalIssueResultV3Entity` instance. Pass `None`
 #### `FollowUpsCreateFromLinkResultV3(data=None)`
 
 Create a new `FollowUpsCreateFromLinkResultV3Entity` instance. Pass `None` for no initial data.
+
+#### `HeartbeatV2(data=None)`
+
+Create a new `HeartbeatV2Entity` instance. Pass `None` for no initial data.
 
 #### `Identity(data=None)`
 
@@ -197,6 +217,10 @@ Create a new `IncidentFormEntity` instance. Pass `None` for no initial data.
 #### `IncidentMembership(data=None)`
 
 Create a new `IncidentMembershipEntity` instance. Pass `None` for no initial data.
+
+#### `IncidentMembershipsV1(data=None)`
+
+Create a new `IncidentMembershipsV1Entity` instance. Pass `None` for no initial data.
 
 #### `IncidentParticipant(data=None)`
 
@@ -249,6 +273,10 @@ Create a new `IncidentTypeEntity` instance. Pass `None` for no initial data.
 #### `IncidentUpdate(data=None)`
 
 Create a new `IncidentUpdateEntity` instance. Pass `None` for no initial data.
+
+#### `IncidentsImportPostmortemDocumentResultV2(data=None)`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2Entity` instance. Pass `None` for no initial data.
 
 #### `IpAllowlist(data=None)`
 
@@ -326,6 +354,14 @@ Create a new `PolicyFindingsRestoreResultV2Entity` instance. Pass `None` for no 
 
 Create a new `PostmortemDocumentEntity` instance. Pass `None` for no initial data.
 
+#### `PostmortemDocumentsAttachResultV1(data=None)`
+
+Create a new `PostmortemDocumentsAttachResultV1Entity` instance. Pass `None` for no initial data.
+
+#### `PostmortemDocumentsShowContentResultV1(data=None)`
+
+Create a new `PostmortemDocumentsShowContentResultV1Entity` instance. Pass `None` for no initial data.
+
 #### `Schedule(data=None)`
 
 Create a new `ScheduleEntity` instance. Pass `None` for no initial data.
@@ -398,6 +434,10 @@ Create a new `StatusPageMaintenanceUpdateEntity` instance. Pass `None` for no in
 
 Create a new `StatusPageStructureEntity` instance. Pass `None` for no initial data.
 
+#### `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2(data=None)`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance. Pass `None` for no initial data.
+
 #### `Team(data=None)`
 
 Create a new `TeamEntity` instance. Pass `None` for no initial data.
@@ -409,6 +449,14 @@ Create a new `TelemetryDataSourceEntity` instance. Pass `None` for no initial da
 #### `User(data=None)`
 
 Create a new `UserEntity` instance. Pass `None` for no initial data.
+
+#### `UsersShowPagingProviderResultV2(data=None)`
+
+Create a new `UsersShowPagingProviderResultV2Entity` instance. Pass `None` for no initial data.
+
+#### `UtilitiesV1(data=None)`
+
+Create a new `UtilitiesV1Entity` instance. Pass `None` for no initial data.
 
 #### `Workflow(data=None)`
 
@@ -740,6 +788,79 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `AlertAttributeEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## AlertEventsV2Entity
+
+```python
+alert_events_v2 = client.AlertEventsV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `deduplication_key` | `str` | Yes | The deduplication key that the event has been processed with |
+| `description` | `str` | No | Description that optionally adds more detail to title. |
+| `message` | `str` | Yes | Human readable message giving detail about the event |
+| `metadata` | `dict` | No | Any additional metadata that you've configured your alert source to parse |
+| `source_url` | `str` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `str` | Yes | Status of the event |
+| `title` | `str` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `deduplication_key` | Yes |
+| `description` | - |
+| `message` | - |
+| `metadata` | - |
+| `source_url` | - |
+| `status` | - |
+| `title` | - |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> AlertEventsV2Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.AlertEventsV2().create({
+    "alert_source_config_id": "example_alert_source_config_id",  # str
+    "status": "example_status",  # str
+    "title": "example_title",  # str
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `AlertEventsV2Entity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -2588,6 +2709,62 @@ Return the entity name.
 
 ---
 
+## CatalogV3Entity
+
+```python
+catalog_v3 = client.CatalogV3()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `catalog_type_id` | `str` | Yes | The unique identifier of the catalog type containing the entries |
+| `entries` | `list` | Yes | A list of entries to update with their new values. |
+| `update_attributes` | `list` | No | Optional list of specific attribute IDs to update across all entries. |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> CatalogV3Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.CatalogV3().create({
+    "catalog_type_id": "example_catalog_type_id",  # str
+    "entries": [],  # list
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CatalogV3Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## CustomFieldEntity
 
 ```python
@@ -3243,6 +3420,62 @@ Return the entity name.
 
 ---
 
+## EscalationsV2Entity
+
+```python
+escalations_v2 = client.EscalationsV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `response` | `str` | Yes | Whether to acknowledge, decline or snooze the escalation |
+| `snooze_details` | `dict` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> EscalationsV2Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.EscalationsV2().create({
+    "escalation_id": "example_escalation_id",  # str
+    "response": "example_response",  # str
+    "snooze_details": {},  # dict
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `EscalationsV2Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpEntity
 
 ```python
@@ -3378,6 +3611,76 @@ Return the entity name.
 
 ---
 
+## FollowUpsConnectExternalIssueResultV2Entity
+
+```python
+follow_ups_connect_external_issue_result_v2 = client.FollowUpsConnectExternalIssueResultV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `assignee` | `dict` | Yes |  |
+| `assignee_team` | `dict` | Yes |  |
+| `completed_at` | `str` | No | When the follow-up was completed |
+| `created_at` | `str` | Yes | When the follow-up was created |
+| `creator` | `dict` | Yes |  |
+| `description` | `str` | No | Description of the follow-up |
+| `external_issue_reference` | `dict` | Yes |  |
+| `id` | `str` | Yes | Unique identifier for the follow-up |
+| `incident_id` | `str` | Yes | Unique identifier of the incident the follow-up belongs to |
+| `labels` | `list` | Yes | Labels associated with this follow-up |
+| `priority` | `dict` | Yes |  |
+| `provider` | `str` | Yes | The issue tracker provider the issue belongs to |
+| `status` | `str` | Yes | Status of the follow-up |
+| `title` | `str` | Yes | Title of the follow-up |
+| `updated_at` | `str` | Yes | When the follow-up was last updated |
+| `url` | `str` | Yes | URL of the issue in the external provider |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> FollowUpsConnectExternalIssueResultV2Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.FollowUpsConnectExternalIssueResultV2().create({
+    "follow_up_id": "example_follow_up_id",  # str
+    "provider": "example_provider",  # str
+    "url": "example_url",  # str
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `FollowUpsConnectExternalIssueResultV2Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## FollowUpsConnectExternalIssueResultV3Entity
 
 ```python
@@ -3496,6 +3799,67 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `FollowUpsCreateFromLinkResultV3Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## HeartbeatV2Entity
+
+```python
+heartbeat_v2 = client.HeartbeatV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `id` | `str` | No |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> HeartbeatV2Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.HeartbeatV2().create({
+    "id": "example_id",  # str
+})
+```
+
+#### `load(reqmatch, ctrl=None) -> HeartbeatV2Entity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.HeartbeatV2().load({"id": "heartbeat_v2_id"})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `HeartbeatV2Entity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -3992,6 +4356,61 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `IncidentMembershipEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## IncidentMembershipsV1Entity
+
+```python
+incident_memberships_v1 = client.IncidentMembershipsV1()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `incident_id` | `str` | Yes | Revoke memberships to incident |
+| `user_id` | `str` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> IncidentMembershipsV1Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.IncidentMembershipsV1().create({
+    "incident_id": "example_incident_id",  # str
+    "user_id": "example_user_id",  # str
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `IncidentMembershipsV1Entity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -4934,6 +5353,62 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `IncidentUpdateEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## IncidentsImportPostmortemDocumentResultV2Entity
+
+```python
+incidents_import_postmortem_document_result_v2 = client.IncidentsImportPostmortemDocumentResultV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `content` | `str` | Yes | The document content as GitHub-Flavored Markdown |
+| `title` | `str` | Yes | Title of the postmortem document |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> IncidentsImportPostmortemDocumentResultV2Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.IncidentsImportPostmortemDocumentResultV2().create({
+    "incident_id": "example_incident_id",  # str
+    "content": "example_content",  # str
+    "title": "example_title",  # str
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `IncidentsImportPostmortemDocumentResultV2Entity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -6518,6 +6993,113 @@ Return the entity name.
 
 ---
 
+## PostmortemDocumentsAttachResultV1Entity
+
+```python
+postmortem_documents_attach_result_v1 = client.PostmortemDocumentsAttachResultV1()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `document_provider` | `str` | No | The provider hosting the document. |
+| `incident_id` | `str` | Yes | The unique identifier of the incident to attach the post-mortem document to |
+| `permalink` | `str` | Yes | A URL pointing to the externally-hosted post-mortem document |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> PostmortemDocumentsAttachResultV1Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.PostmortemDocumentsAttachResultV1().create({
+    "incident_id": "example_incident_id",  # str
+    "permalink": "example_permalink",  # str
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `PostmortemDocumentsAttachResultV1Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## PostmortemDocumentsShowContentResultV1Entity
+
+```python
+postmortem_documents_show_content_result_v1 = client.PostmortemDocumentsShowContentResultV1()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `markdown` | `str` | Yes | The full content of the post-mortem document, rendered as markdown. |
+
+### Operations
+
+#### `load(reqmatch, ctrl=None) -> PostmortemDocumentsShowContentResultV1Entity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.PostmortemDocumentsShowContentResultV1().load({"postmortem_document_id": "postmortem_document_id"})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `PostmortemDocumentsShowContentResultV1Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleEntity
 
 ```python
@@ -8064,6 +8646,65 @@ Return the entity name.
 
 ---
 
+## StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity
+
+```python
+status_pages_create_status_page_retrospective_incident_result_v2 = client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `idempotency_key` | `str` | Yes | A unique key to de-duplicate requests. |
+| `name` | `str` | Yes | A title for the incident |
+| `status_page_id` | `str` | Yes | ID of the status page. |
+| `updates` | `list` | Yes | The reconstructed timeline of updates for this incident, ordered chronologically (earliest first). |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.StatusPagesCreateStatusPageRetrospectiveIncidentResultV2().create({
+    "idempotency_key": "example_idempotency_key",  # str
+    "name": "example_name",  # str
+    "status_page_id": "example_status_page_id",  # str
+    "updates": [],  # list
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `StatusPagesCreateStatusPageRetrospectiveIncidentResultV2Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## TeamEntity
 
 ```python
@@ -8267,6 +8908,119 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `UserEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## UsersShowPagingProviderResultV2Entity
+
+```python
+users_show_paging_provider_result_v2 = client.UsersShowPagingProviderResultV2()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `preferred_escalation_provider` | `str` | No | The user's effective escalation provider. |
+
+### Field Usage by Operation
+
+| Field | load | create |
+| --- | --- | --- |
+| `preferred_escalation_provider` | - | Yes |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> UsersShowPagingProviderResultV2Entity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.UsersShowPagingProviderResultV2().create({
+    "user_id": "example_user_id",  # str
+    "preferred_escalation_provider": "example_preferred_escalation_provider",  # str
+})
+```
+
+#### `load(reqmatch, ctrl=None) -> UsersShowPagingProviderResultV2Entity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.UsersShowPagingProviderResultV2().load({"user_id": "user_id"})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `UsersShowPagingProviderResultV2Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## UtilitiesV1Entity
+
+```python
+utilities_v1 = client.UtilitiesV1()
+```
+
+### Operations
+
+#### `load(reqmatch, ctrl=None) -> UtilitiesV1Entity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.UtilitiesV1().load()
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `UtilitiesV1Entity` instance with the same options.
 
 #### `get_name() -> str`
 
