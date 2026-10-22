@@ -1,7 +1,7 @@
 import { IncidentIoEntityBase } from '../IncidentIoEntityBase';
 import type { IncidentIoSDK } from '../IncidentIoSDK';
 import type { Control } from '../types';
-import type { CatalogEntry, CatalogEntryLoadMatch, CatalogEntryListMatch, CatalogEntryCreateData, CatalogEntryUpdateData } from '../IncidentIoTypes';
+import type { CatalogEntry, CatalogEntryLoadMatch, CatalogEntryListMatch, CatalogEntryCreateData, CatalogEntryUpdateData, CatalogEntryRemoveMatch } from '../IncidentIoTypes';
 declare class CatalogEntryEntity extends IncidentIoEntityBase<CatalogEntry> {
     constructor(client: IncidentIoSDK, entopts: any);
     make(this: CatalogEntryEntity): CatalogEntryEntity;
@@ -9,5 +9,6 @@ declare class CatalogEntryEntity extends IncidentIoEntityBase<CatalogEntry> {
     list(this: any, reqmatch?: CatalogEntryListMatch, ctrl?: Control): Promise<CatalogEntryEntity[]>;
     create(this: any, reqdata?: CatalogEntryCreateData, ctrl?: Control): Promise<CatalogEntryEntity>;
     update(this: any, reqdata?: CatalogEntryUpdateData, ctrl?: Control): Promise<CatalogEntryEntity>;
+    remove(this: any, reqmatch?: CatalogEntryRemoveMatch, ctrl?: Control): Promise<CatalogEntryEntity>;
 }
 export { CatalogEntryEntity };

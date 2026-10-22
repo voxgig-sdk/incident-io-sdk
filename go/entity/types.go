@@ -23,9 +23,12 @@ type ActionLoadMatch struct {
 
 // ActionListMatch is the typed request payload for Action.ListTyped.
 type ActionListMatch struct {
+	After *string `json:"after,omitempty"`
+	CreatedAt *map[string]any `json:"created_at,omitempty"`
 	IncidentId *string `json:"incident_id,omitempty"`
 	IncidentMode *string `json:"incident_mode,omitempty"`
-	IsFollowUp *bool `json:"is_follow_up,omitempty"`
+	PageSize *int `json:"page_size,omitempty"`
+	UpdatedAt *map[string]any `json:"updated_at,omitempty"`
 }
 
 // ActionCreateData is the typed request payload for Action.CreateTyped.
@@ -180,48 +183,38 @@ type AlertRouteLoadMatch struct {
 // AlertRouteListMatch is the typed request payload for AlertRoute.ListTyped.
 type AlertRouteListMatch struct {
 	After *string `json:"after,omitempty"`
-	PageSize int `json:"page_size"`
+	PageSize *int `json:"page_size,omitempty"`
 }
 
 // AlertRouteCreateData is the typed request payload for AlertRoute.CreateTyped.
 type AlertRouteCreateData struct {
 	AlertSources []any `json:"alert_sources"`
-	ChannelConfig []any `json:"channel_config"`
 	ConditionGroups []any `json:"condition_groups"`
-	CreatedAt *string `json:"created_at,omitempty"`
 	Enabled bool `json:"enabled"`
 	EscalationConfig map[string]any `json:"escalation_config"`
 	Expressions []any `json:"expressions"`
 	GroupingConfig map[string]any `json:"grouping_config"`
 	IncidentConfig map[string]any `json:"incident_config"`
-	IncidentTemplate map[string]any `json:"incident_template"`
 	IsPrivate bool `json:"is_private"`
 	MessageConfig map[string]any `json:"message_config"`
-	MessageTemplate *map[string]any `json:"message_template,omitempty"`
 	Name string `json:"name"`
 	OwningTeamIds *[]any `json:"owning_team_ids,omitempty"`
-	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
 // AlertRouteUpdateData is the typed request payload for AlertRoute.UpdateTyped.
 type AlertRouteUpdateData struct {
 	Id string `json:"id"`
 	AlertSources *[]any `json:"alert_sources,omitempty"`
-	ChannelConfig *[]any `json:"channel_config,omitempty"`
 	ConditionGroups *[]any `json:"condition_groups,omitempty"`
-	CreatedAt *string `json:"created_at,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
 	EscalationConfig *map[string]any `json:"escalation_config,omitempty"`
 	Expressions *[]any `json:"expressions,omitempty"`
 	GroupingConfig *map[string]any `json:"grouping_config,omitempty"`
 	IncidentConfig *map[string]any `json:"incident_config,omitempty"`
-	IncidentTemplate *map[string]any `json:"incident_template,omitempty"`
 	IsPrivate *bool `json:"is_private,omitempty"`
 	MessageConfig *map[string]any `json:"message_config,omitempty"`
-	MessageTemplate *map[string]any `json:"message_template,omitempty"`
 	Name *string `json:"name,omitempty"`
 	OwningTeamIds *[]any `json:"owning_team_ids,omitempty"`
-	UpdatedAt *string `json:"updated_at,omitempty"`
 	Version *int `json:"version,omitempty"`
 }
 
@@ -325,22 +318,18 @@ type AlertTagListMatch struct {
 	Search *string `json:"search,omitempty"`
 }
 
+// AlertTagCreateData is the typed request payload for AlertTag.CreateTyped.
+type AlertTagCreateData struct {
+	AlertId string `json:"alert_id"`
+	Tags []any `json:"tags"`
+}
+
 // AlertsAddTagsResultV2 is the typed data model for the alerts_add_tags_result_v2 entity.
 type AlertsAddTagsResultV2 struct {
 }
 
 // AlertsAddTagsResultV2CreateData is the typed request payload for AlertsAddTagsResultV2.CreateTyped.
 type AlertsAddTagsResultV2CreateData struct {
-	AlertId string `json:"alert_id"`
-	Tags []any `json:"tags"`
-}
-
-// AlertsRemoveTagsResultV2 is the typed data model for the alerts_remove_tags_result_v2 entity.
-type AlertsRemoveTagsResultV2 struct {
-}
-
-// AlertsRemoveTagsResultV2CreateData is the typed request payload for AlertsRemoveTagsResultV2.CreateTyped.
-type AlertsRemoveTagsResultV2CreateData struct {
 	AlertId string `json:"alert_id"`
 	Tags []any `json:"tags"`
 }
@@ -529,85 +518,67 @@ type CallRouteUpdateData struct {
 	UseCallerAllowlist *bool `json:"use_caller_allowlist,omitempty"`
 }
 
-// CallRoutesCreateAllowedCallerResultV2 is the typed data model for the call_routes_create_allowed_caller_result_v2 entity.
-type CallRoutesCreateAllowedCallerResultV2 struct {
+// CallRouteAllowedCaller is the typed data model for the call_route_allowed_caller entity.
+type CallRouteAllowedCaller struct {
 }
 
-// CallRoutesCreateAllowedCallerResultV2CreateData is the typed request payload for CallRoutesCreateAllowedCallerResultV2.CreateTyped.
-type CallRoutesCreateAllowedCallerResultV2CreateData struct {
+// CallRouteAllowedCallerLoadMatch is the typed request payload for CallRouteAllowedCaller.LoadTyped.
+type CallRouteAllowedCallerLoadMatch struct {
 	CallRouteId string `json:"call_route_id"`
+	Id string `json:"id"`
+}
+
+// CallRouteAllowedCallerListMatch is the typed request payload for CallRouteAllowedCaller.ListTyped.
+type CallRouteAllowedCallerListMatch struct {
+	Id string `json:"id"`
+}
+
+// CallRouteAllowedCallerCreateData is the typed request payload for CallRouteAllowedCaller.CreateTyped.
+type CallRouteAllowedCallerCreateData struct {
+	Id string `json:"id"`
 	Name *string `json:"name,omitempty"`
 	PhoneNumber string `json:"phone_number"`
 }
 
-// CallRoutesCreateOptionResultV2 is the typed data model for the call_routes_create_option_result_v2 entity.
-type CallRoutesCreateOptionResultV2 struct {
-}
-
-// CallRoutesCreateOptionResultV2CreateData is the typed request payload for CallRoutesCreateOptionResultV2.CreateTyped.
-type CallRoutesCreateOptionResultV2CreateData struct {
-	CallRouteId string `json:"call_route_id"`
-	Digit string `json:"digit"`
-	Path []any `json:"path"`
-	Prompt string `json:"prompt"`
-}
-
-// CallRoutesListAllowedCallersResultV2 is the typed data model for the call_routes_list_allowed_callers_result_v2 entity.
-type CallRoutesListAllowedCallersResultV2 struct {
-}
-
-// CallRoutesListAllowedCallersResultV2ListMatch is the typed request payload for CallRoutesListAllowedCallersResultV2.ListTyped.
-type CallRoutesListAllowedCallersResultV2ListMatch struct {
-	CallRouteId string `json:"call_route_id"`
-}
-
-// CallRoutesListOptionsResultV2 is the typed data model for the call_routes_list_options_result_v2 entity.
-type CallRoutesListOptionsResultV2 struct {
-}
-
-// CallRoutesListOptionsResultV2ListMatch is the typed request payload for CallRoutesListOptionsResultV2.ListTyped.
-type CallRoutesListOptionsResultV2ListMatch struct {
-	CallRouteId string `json:"call_route_id"`
-}
-
-// CallRoutesShowAllowedCallerResultV2 is the typed data model for the call_routes_show_allowed_caller_result_v2 entity.
-type CallRoutesShowAllowedCallerResultV2 struct {
-}
-
-// CallRoutesShowAllowedCallerResultV2LoadMatch is the typed request payload for CallRoutesShowAllowedCallerResultV2.LoadTyped.
-type CallRoutesShowAllowedCallerResultV2LoadMatch struct {
-	CallRouteId string `json:"call_route_id"`
-	Id string `json:"id"`
-}
-
-// CallRoutesShowOptionResultV2 is the typed data model for the call_routes_show_option_result_v2 entity.
-type CallRoutesShowOptionResultV2 struct {
-}
-
-// CallRoutesShowOptionResultV2LoadMatch is the typed request payload for CallRoutesShowOptionResultV2.LoadTyped.
-type CallRoutesShowOptionResultV2LoadMatch struct {
-	CallRouteId string `json:"call_route_id"`
-	Id string `json:"id"`
-}
-
-// CallRoutesUpdateAllowedCallerResultV2 is the typed data model for the call_routes_update_allowed_caller_result_v2 entity.
-type CallRoutesUpdateAllowedCallerResultV2 struct {
-}
-
-// CallRoutesUpdateAllowedCallerResultV2UpdateData is the typed request payload for CallRoutesUpdateAllowedCallerResultV2.UpdateTyped.
-type CallRoutesUpdateAllowedCallerResultV2UpdateData struct {
+// CallRouteAllowedCallerUpdateData is the typed request payload for CallRouteAllowedCaller.UpdateTyped.
+type CallRouteAllowedCallerUpdateData struct {
 	CallRouteId string `json:"call_route_id"`
 	Id string `json:"id"`
 	Name *string `json:"name,omitempty"`
 	PhoneNumber *string `json:"phone_number,omitempty"`
 }
 
-// CallRoutesUpdateOptionResultV2 is the typed data model for the call_routes_update_option_result_v2 entity.
-type CallRoutesUpdateOptionResultV2 struct {
+// CallRouteAllowedCallerRemoveMatch is the typed request payload for CallRouteAllowedCaller.RemoveTyped.
+type CallRouteAllowedCallerRemoveMatch struct {
+	CallRouteId string `json:"call_route_id"`
+	Id string `json:"id"`
 }
 
-// CallRoutesUpdateOptionResultV2UpdateData is the typed request payload for CallRoutesUpdateOptionResultV2.UpdateTyped.
-type CallRoutesUpdateOptionResultV2UpdateData struct {
+// CallRouteOption is the typed data model for the call_route_option entity.
+type CallRouteOption struct {
+}
+
+// CallRouteOptionLoadMatch is the typed request payload for CallRouteOption.LoadTyped.
+type CallRouteOptionLoadMatch struct {
+	CallRouteId string `json:"call_route_id"`
+	Id string `json:"id"`
+}
+
+// CallRouteOptionListMatch is the typed request payload for CallRouteOption.ListTyped.
+type CallRouteOptionListMatch struct {
+	Id string `json:"id"`
+}
+
+// CallRouteOptionCreateData is the typed request payload for CallRouteOption.CreateTyped.
+type CallRouteOptionCreateData struct {
+	Id string `json:"id"`
+	Digit string `json:"digit"`
+	Path []any `json:"path"`
+	Prompt string `json:"prompt"`
+}
+
+// CallRouteOptionUpdateData is the typed request payload for CallRouteOption.UpdateTyped.
+type CallRouteOptionUpdateData struct {
 	CallRouteId string `json:"call_route_id"`
 	Id string `json:"id"`
 	Digit *string `json:"digit,omitempty"`
@@ -615,12 +586,8 @@ type CallRoutesUpdateOptionResultV2UpdateData struct {
 	Prompt *string `json:"prompt,omitempty"`
 }
 
-// CallRoutesV2 is the typed data model for the call_routes_v2 entity.
-type CallRoutesV2 struct {
-}
-
-// CallRoutesV2RemoveMatch is the typed request payload for CallRoutesV2.RemoveTyped.
-type CallRoutesV2RemoveMatch struct {
+// CallRouteOptionRemoveMatch is the typed request payload for CallRouteOption.RemoveTyped.
+type CallRouteOptionRemoveMatch struct {
 	CallRouteId string `json:"call_route_id"`
 	Id string `json:"id"`
 }
@@ -662,7 +629,7 @@ type CatalogEntryListMatch struct {
 	After *string `json:"after,omitempty"`
 	CatalogTypeId string `json:"catalog_type_id"`
 	Identifier *string `json:"identifier,omitempty"`
-	PageSize *int `json:"page_size,omitempty"`
+	PageSize int `json:"page_size"`
 }
 
 // CatalogEntryCreateData is the typed request payload for CatalogEntry.CreateTyped.
@@ -684,6 +651,11 @@ type CatalogEntryUpdateData struct {
 	Name *string `json:"name,omitempty"`
 	Rank *int `json:"rank,omitempty"`
 	UpdateAttributes *[]any `json:"update_attributes,omitempty"`
+}
+
+// CatalogEntryRemoveMatch is the typed request payload for CatalogEntry.RemoveTyped.
+type CatalogEntryRemoveMatch struct {
+	Id string `json:"id"`
 }
 
 // CatalogResource is the typed data model for the catalog_resource entity.
@@ -730,7 +702,6 @@ type CatalogTypeListMatch struct {
 	RegistryType *string `json:"registry_type,omitempty"`
 	RequiredIntegrations *[]any `json:"required_integrations,omitempty"`
 	Schema *map[string]any `json:"schema,omitempty"`
-	SemanticType *string `json:"semantic_type,omitempty"`
 	SourceRepoUrl *string `json:"source_repo_url,omitempty"`
 	TypeName *string `json:"type_name,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -767,6 +738,11 @@ type CatalogTypeUpdateData struct {
 	UseNameAsIdentifier *bool `json:"use_name_as_identifier,omitempty"`
 }
 
+// CatalogTypeRemoveMatch is the typed request payload for CatalogType.RemoveTyped.
+type CatalogTypeRemoveMatch struct {
+	Id string `json:"id"`
+}
+
 // CatalogTypeSchema is the typed data model for the catalog_type_schema entity.
 type CatalogTypeSchema struct {
 }
@@ -799,13 +775,6 @@ type CustomFieldListMatch struct {
 	HelptextCatalogAttributeId *string `json:"helptext_catalog_attribute_id,omitempty"`
 	Id *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
-	Options *[]any `json:"options,omitempty"`
-	Required *string `json:"required,omitempty"`
-	RequiredV2 *string `json:"required_v2,omitempty"`
-	ShowBeforeClosure *bool `json:"show_before_closure,omitempty"`
-	ShowBeforeCreation *bool `json:"show_before_creation,omitempty"`
-	ShowBeforeUpdate *bool `json:"show_before_update,omitempty"`
-	ShowInAnnouncementPost *bool `json:"show_in_announcement_post,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
@@ -819,12 +788,6 @@ type CustomFieldCreateData struct {
 	GroupByCatalogAttributeId *string `json:"group_by_catalog_attribute_id,omitempty"`
 	HelptextCatalogAttributeId *string `json:"helptext_catalog_attribute_id,omitempty"`
 	Name string `json:"name"`
-	Required *string `json:"required,omitempty"`
-	RequiredV2 *string `json:"required_v2,omitempty"`
-	ShowBeforeClosure bool `json:"show_before_closure"`
-	ShowBeforeCreation bool `json:"show_before_creation"`
-	ShowBeforeUpdate bool `json:"show_before_update"`
-	ShowInAnnouncementPost *bool `json:"show_in_announcement_post,omitempty"`
 }
 
 // CustomFieldUpdateData is the typed request payload for CustomField.UpdateTyped.
@@ -836,12 +799,6 @@ type CustomFieldUpdateData struct {
 	GroupByCatalogAttributeId *string `json:"group_by_catalog_attribute_id,omitempty"`
 	HelptextCatalogAttributeId *string `json:"helptext_catalog_attribute_id,omitempty"`
 	Name *string `json:"name,omitempty"`
-	Required *string `json:"required,omitempty"`
-	RequiredV2 *string `json:"required_v2,omitempty"`
-	ShowBeforeClosure *bool `json:"show_before_closure,omitempty"`
-	ShowBeforeCreation *bool `json:"show_before_creation,omitempty"`
-	ShowBeforeUpdate *bool `json:"show_before_update,omitempty"`
-	ShowInAnnouncementPost *bool `json:"show_in_announcement_post,omitempty"`
 }
 
 // CustomFieldRemoveMatch is the typed request payload for CustomField.RemoveTyped.
@@ -914,6 +871,51 @@ type EscalationCreateData struct {
 	IncidentId *string `json:"incident_id,omitempty"`
 	Title string `json:"title"`
 	UserIds *[]any `json:"user_ids,omitempty"`
+}
+
+// EscalationPath is the typed data model for the escalation_path entity.
+type EscalationPath struct {
+}
+
+// EscalationPathLoadMatch is the typed request payload for EscalationPath.LoadTyped.
+type EscalationPathLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// EscalationPathListMatch is the typed request payload for EscalationPath.ListTyped.
+type EscalationPathListMatch struct {
+	After *string `json:"after,omitempty"`
+	PageSize *int `json:"page_size,omitempty"`
+}
+
+// EscalationPathCreateData is the typed request payload for EscalationPath.CreateTyped.
+type EscalationPathCreateData struct {
+	Kind *string `json:"kind,omitempty"`
+	Name string `json:"name"`
+	ParamBindings *map[string]any `json:"param_bindings,omitempty"`
+	Path []any `json:"path"`
+	RepeatConfig map[string]any `json:"repeat_config"`
+	TeamIds *[]any `json:"team_ids,omitempty"`
+	TemplateId *string `json:"template_id,omitempty"`
+	WorkingHours *[]any `json:"working_hours,omitempty"`
+}
+
+// EscalationPathUpdateData is the typed request payload for EscalationPath.UpdateTyped.
+type EscalationPathUpdateData struct {
+	Id string `json:"id"`
+	Kind *string `json:"kind,omitempty"`
+	Name *string `json:"name,omitempty"`
+	ParamBindings *map[string]any `json:"param_bindings,omitempty"`
+	Path *[]any `json:"path,omitempty"`
+	RepeatConfig *map[string]any `json:"repeat_config,omitempty"`
+	TeamIds *[]any `json:"team_ids,omitempty"`
+	TemplateId *string `json:"template_id,omitempty"`
+	WorkingHours *[]any `json:"working_hours,omitempty"`
+}
+
+// EscalationPathRemoveMatch is the typed request payload for EscalationPath.RemoveTyped.
+type EscalationPathRemoveMatch struct {
+	Id string `json:"id"`
 }
 
 // EscalationPathTemplate is the typed data model for the escalation_path_template entity.
@@ -995,9 +997,13 @@ type FollowUpLoadMatch struct {
 
 // FollowUpListMatch is the typed request payload for FollowUp.ListTyped.
 type FollowUpListMatch struct {
+	After *string `json:"after,omitempty"`
 	AssigneeTeamId *string `json:"assignee_team_id,omitempty"`
+	CreatedAt *map[string]any `json:"created_at,omitempty"`
 	IncidentId *string `json:"incident_id,omitempty"`
 	IncidentMode *string `json:"incident_mode,omitempty"`
+	PageSize *int `json:"page_size,omitempty"`
+	UpdatedAt *map[string]any `json:"updated_at,omitempty"`
 }
 
 // FollowUpCreateData is the typed request payload for FollowUp.CreateTyped.
@@ -1077,8 +1083,18 @@ type IncidentLoadMatch struct {
 // IncidentListMatch is the typed request payload for Incident.ListTyped.
 type IncidentListMatch struct {
 	After *string `json:"after,omitempty"`
+	CreatedAt *map[string]any `json:"created_at,omitempty"`
+	CustomField *map[string]any `json:"custom_field,omitempty"`
+	FilterMode *string `json:"filter_mode,omitempty"`
+	IncidentRole *map[string]any `json:"incident_role,omitempty"`
+	IncidentType *map[string]any `json:"incident_type,omitempty"`
+	Mode *map[string]any `json:"mode,omitempty"`
 	PageSize *int `json:"page_size,omitempty"`
-	Status *[]any `json:"status,omitempty"`
+	Severity *map[string]any `json:"severity,omitempty"`
+	SortBy *string `json:"sort_by,omitempty"`
+	Status *map[string]any `json:"status,omitempty"`
+	StatusCategory *map[string]any `json:"status_category,omitempty"`
+	UpdatedAt *map[string]any `json:"updated_at,omitempty"`
 }
 
 // IncidentCreateData is the typed request payload for Incident.CreateTyped.
@@ -1095,9 +1111,6 @@ type IncidentCreateData struct {
 	SeverityId *string `json:"severity_id,omitempty"`
 	SlackChannelNameOverride *string `json:"slack_channel_name_override,omitempty"`
 	SlackTeamId *string `json:"slack_team_id,omitempty"`
-	SourceMessageChannelId *string `json:"source_message_channel_id,omitempty"`
-	SourceMessageTimestamp *string `json:"source_message_timestamp,omitempty"`
-	Status *string `json:"status,omitempty"`
 	Summary *string `json:"summary,omitempty"`
 	Visibility string `json:"visibility"`
 }
@@ -1228,7 +1241,6 @@ type IncidentRoleListMatch struct {
 	Id *string `json:"id,omitempty"`
 	Instructions *string `json:"instructions,omitempty"`
 	Name *string `json:"name,omitempty"`
-	Required *bool `json:"required,omitempty"`
 	RoleType *string `json:"role_type,omitempty"`
 	Shortform *string `json:"shortform,omitempty"`
 	UpdatedAt *string `json:"updated_at,omitempty"`
@@ -1239,7 +1251,6 @@ type IncidentRoleCreateData struct {
 	Description string `json:"description"`
 	Instructions string `json:"instructions"`
 	Name string `json:"name"`
-	Required bool `json:"required"`
 	Shortform string `json:"shortform"`
 }
 
@@ -1249,7 +1260,6 @@ type IncidentRoleUpdateData struct {
 	Description *string `json:"description,omitempty"`
 	Instructions *string `json:"instructions,omitempty"`
 	Name *string `json:"name,omitempty"`
-	Required *bool `json:"required,omitempty"`
 	Shortform *string `json:"shortform,omitempty"`
 }
 
@@ -1628,76 +1638,32 @@ type PayConfigRemoveMatch struct {
 	Id string `json:"id"`
 }
 
-// PayConfigsCreateOneOffRuleResultV2 is the typed data model for the pay_configs_create_one_off_rule_result_v2 entity.
-type PayConfigsCreateOneOffRuleResultV2 struct {
+// PayConfigOneOffRule is the typed data model for the pay_config_one_off_rule entity.
+type PayConfigOneOffRule struct {
 }
 
-// PayConfigsCreateOneOffRuleResultV2CreateData is the typed request payload for PayConfigsCreateOneOffRuleResultV2.CreateTyped.
-type PayConfigsCreateOneOffRuleResultV2CreateData struct {
+// PayConfigOneOffRuleLoadMatch is the typed request payload for PayConfigOneOffRule.LoadTyped.
+type PayConfigOneOffRuleLoadMatch struct {
+	Id string `json:"id"`
 	PayConfigId string `json:"pay_config_id"`
+}
+
+// PayConfigOneOffRuleListMatch is the typed request payload for PayConfigOneOffRule.ListTyped.
+type PayConfigOneOffRuleListMatch struct {
+	Id string `json:"id"`
+}
+
+// PayConfigOneOffRuleCreateData is the typed request payload for PayConfigOneOffRule.CreateTyped.
+type PayConfigOneOffRuleCreateData struct {
+	Id string `json:"id"`
 	EndAt string `json:"end_at"`
 	Name string `json:"name"`
 	RateCents int `json:"rate_cents"`
 	StartAt string `json:"start_at"`
 }
 
-// PayConfigsCreateWeeklyRuleResultV2 is the typed data model for the pay_configs_create_weekly_rule_result_v2 entity.
-type PayConfigsCreateWeeklyRuleResultV2 struct {
-}
-
-// PayConfigsCreateWeeklyRuleResultV2CreateData is the typed request payload for PayConfigsCreateWeeklyRuleResultV2.CreateTyped.
-type PayConfigsCreateWeeklyRuleResultV2CreateData struct {
-	PayConfigId string `json:"pay_config_id"`
-	EndTime string `json:"end_time"`
-	RateCents int `json:"rate_cents"`
-	StartTime string `json:"start_time"`
-	Weekdays []any `json:"weekdays"`
-}
-
-// PayConfigsListOneOffRulesResultV2 is the typed data model for the pay_configs_list_one_off_rules_result_v2 entity.
-type PayConfigsListOneOffRulesResultV2 struct {
-}
-
-// PayConfigsListOneOffRulesResultV2ListMatch is the typed request payload for PayConfigsListOneOffRulesResultV2.ListTyped.
-type PayConfigsListOneOffRulesResultV2ListMatch struct {
-	PayConfigId string `json:"pay_config_id"`
-}
-
-// PayConfigsListWeeklyRulesResultV2 is the typed data model for the pay_configs_list_weekly_rules_result_v2 entity.
-type PayConfigsListWeeklyRulesResultV2 struct {
-}
-
-// PayConfigsListWeeklyRulesResultV2ListMatch is the typed request payload for PayConfigsListWeeklyRulesResultV2.ListTyped.
-type PayConfigsListWeeklyRulesResultV2ListMatch struct {
-	PayConfigId string `json:"pay_config_id"`
-}
-
-// PayConfigsShowOneOffRuleResultV2 is the typed data model for the pay_configs_show_one_off_rule_result_v2 entity.
-type PayConfigsShowOneOffRuleResultV2 struct {
-}
-
-// PayConfigsShowOneOffRuleResultV2LoadMatch is the typed request payload for PayConfigsShowOneOffRuleResultV2.LoadTyped.
-type PayConfigsShowOneOffRuleResultV2LoadMatch struct {
-	Id string `json:"id"`
-	PayConfigId string `json:"pay_config_id"`
-}
-
-// PayConfigsShowWeeklyRuleResultV2 is the typed data model for the pay_configs_show_weekly_rule_result_v2 entity.
-type PayConfigsShowWeeklyRuleResultV2 struct {
-}
-
-// PayConfigsShowWeeklyRuleResultV2LoadMatch is the typed request payload for PayConfigsShowWeeklyRuleResultV2.LoadTyped.
-type PayConfigsShowWeeklyRuleResultV2LoadMatch struct {
-	Id string `json:"id"`
-	PayConfigId string `json:"pay_config_id"`
-}
-
-// PayConfigsUpdateOneOffRuleResultV2 is the typed data model for the pay_configs_update_one_off_rule_result_v2 entity.
-type PayConfigsUpdateOneOffRuleResultV2 struct {
-}
-
-// PayConfigsUpdateOneOffRuleResultV2UpdateData is the typed request payload for PayConfigsUpdateOneOffRuleResultV2.UpdateTyped.
-type PayConfigsUpdateOneOffRuleResultV2UpdateData struct {
+// PayConfigOneOffRuleUpdateData is the typed request payload for PayConfigOneOffRule.UpdateTyped.
+type PayConfigOneOffRuleUpdateData struct {
 	Id string `json:"id"`
 	PayConfigId string `json:"pay_config_id"`
 	EndAt *string `json:"end_at,omitempty"`
@@ -1706,12 +1672,38 @@ type PayConfigsUpdateOneOffRuleResultV2UpdateData struct {
 	StartAt *string `json:"start_at,omitempty"`
 }
 
-// PayConfigsUpdateWeeklyRuleResultV2 is the typed data model for the pay_configs_update_weekly_rule_result_v2 entity.
-type PayConfigsUpdateWeeklyRuleResultV2 struct {
+// PayConfigOneOffRuleRemoveMatch is the typed request payload for PayConfigOneOffRule.RemoveTyped.
+type PayConfigOneOffRuleRemoveMatch struct {
+	Id string `json:"id"`
+	PayConfigId string `json:"pay_config_id"`
 }
 
-// PayConfigsUpdateWeeklyRuleResultV2UpdateData is the typed request payload for PayConfigsUpdateWeeklyRuleResultV2.UpdateTyped.
-type PayConfigsUpdateWeeklyRuleResultV2UpdateData struct {
+// PayConfigWeeklyRule is the typed data model for the pay_config_weekly_rule entity.
+type PayConfigWeeklyRule struct {
+}
+
+// PayConfigWeeklyRuleLoadMatch is the typed request payload for PayConfigWeeklyRule.LoadTyped.
+type PayConfigWeeklyRuleLoadMatch struct {
+	Id string `json:"id"`
+	PayConfigId string `json:"pay_config_id"`
+}
+
+// PayConfigWeeklyRuleListMatch is the typed request payload for PayConfigWeeklyRule.ListTyped.
+type PayConfigWeeklyRuleListMatch struct {
+	Id string `json:"id"`
+}
+
+// PayConfigWeeklyRuleCreateData is the typed request payload for PayConfigWeeklyRule.CreateTyped.
+type PayConfigWeeklyRuleCreateData struct {
+	Id string `json:"id"`
+	EndTime string `json:"end_time"`
+	RateCents int `json:"rate_cents"`
+	StartTime string `json:"start_time"`
+	Weekdays []any `json:"weekdays"`
+}
+
+// PayConfigWeeklyRuleUpdateData is the typed request payload for PayConfigWeeklyRule.UpdateTyped.
+type PayConfigWeeklyRuleUpdateData struct {
 	Id string `json:"id"`
 	PayConfigId string `json:"pay_config_id"`
 	EndTime *string `json:"end_time,omitempty"`
@@ -1720,12 +1712,8 @@ type PayConfigsUpdateWeeklyRuleResultV2UpdateData struct {
 	Weekdays *[]any `json:"weekdays,omitempty"`
 }
 
-// PayConfigsV2 is the typed data model for the pay_configs_v2 entity.
-type PayConfigsV2 struct {
-}
-
-// PayConfigsV2RemoveMatch is the typed request payload for PayConfigsV2.RemoveTyped.
-type PayConfigsV2RemoveMatch struct {
+// PayConfigWeeklyRuleRemoveMatch is the typed request payload for PayConfigWeeklyRule.RemoveTyped.
+type PayConfigWeeklyRuleRemoveMatch struct {
 	Id string `json:"id"`
 	PayConfigId string `json:"pay_config_id"`
 }
@@ -1793,15 +1781,6 @@ type PayReportsV2LoadMatch struct {
 	PayReportId string `json:"pay_report_id"`
 }
 
-// PoliciesV2 is the typed data model for the policies_v2 entity.
-type PoliciesV2 struct {
-}
-
-// PoliciesV2RemoveMatch is the typed request payload for PoliciesV2.RemoveTyped.
-type PoliciesV2RemoveMatch struct {
-	Id string `json:"id"`
-}
-
 // Policy is the typed data model for the policy entity.
 type Policy struct {
 }
@@ -1849,6 +1828,11 @@ type PolicyUpdateData struct {
 	PostMortem *map[string]any `json:"post_mortem,omitempty"`
 	Schedule *map[string]any `json:"schedule,omitempty"`
 	Status *string `json:"status,omitempty"`
+}
+
+// PolicyRemoveMatch is the typed request payload for Policy.RemoveTyped.
+type PolicyRemoveMatch struct {
+	Id string `json:"id"`
 }
 
 // PolicyFinding is the typed data model for the policy_finding entity.
@@ -1991,6 +1975,49 @@ type ScheduleEntryLoadMatch struct {
 	ScheduleId string `json:"schedule_id"`
 }
 
+// ScheduleOverride is the typed data model for the schedule_override entity.
+type ScheduleOverride struct {
+}
+
+// ScheduleOverrideLoadMatch is the typed request payload for ScheduleOverride.LoadTyped.
+type ScheduleOverrideLoadMatch struct {
+	Id string `json:"id"`
+}
+
+// ScheduleOverrideListMatch is the typed request payload for ScheduleOverride.ListTyped.
+type ScheduleOverrideListMatch struct {
+	After *string `json:"after,omitempty"`
+	LayerId *string `json:"layer_id,omitempty"`
+	PageSize *int `json:"page_size,omitempty"`
+	RotationId *string `json:"rotation_id,omitempty"`
+	ScheduleId string `json:"schedule_id"`
+}
+
+// ScheduleOverrideCreateData is the typed request payload for ScheduleOverride.CreateTyped.
+type ScheduleOverrideCreateData struct {
+	EndAt string `json:"end_at"`
+	LayerId string `json:"layer_id"`
+	RotationId string `json:"rotation_id"`
+	ScheduleId string `json:"schedule_id"`
+	StartAt string `json:"start_at"`
+	User map[string]any `json:"user"`
+}
+
+// ScheduleOverrideUpdateData is the typed request payload for ScheduleOverride.UpdateTyped.
+type ScheduleOverrideUpdateData struct {
+	Id string `json:"id"`
+	EndAt *string `json:"end_at,omitempty"`
+	LayerId *string `json:"layer_id,omitempty"`
+	RotationId *string `json:"rotation_id,omitempty"`
+	StartAt *string `json:"start_at,omitempty"`
+	User *map[string]any `json:"user,omitempty"`
+}
+
+// ScheduleOverrideRemoveMatch is the typed request payload for ScheduleOverride.RemoveTyped.
+type ScheduleOverrideRemoveMatch struct {
+	Id string `json:"id"`
+}
+
 // ScheduleReplica is the typed data model for the schedule_replica entity.
 type ScheduleReplica struct {
 }
@@ -2014,6 +2041,12 @@ type ScheduleReplicaCreateData struct {
 	ReplicaProvider string `json:"replica_provider"`
 	ReplicaProviderId string `json:"replica_provider_id"`
 	Sources []any `json:"sources"`
+}
+
+// ScheduleReplicaRemoveMatch is the typed request payload for ScheduleReplica.RemoveTyped.
+type ScheduleReplicaRemoveMatch struct {
+	Id string `json:"id"`
+	ScheduleId string `json:"schedule_id"`
 }
 
 // ScheduleSyncRule is the typed data model for the schedule_sync_rule entity.
@@ -2052,6 +2085,12 @@ type ScheduleSyncRuleUpdateData struct {
 	SyncType *string `json:"sync_type,omitempty"`
 }
 
+// ScheduleSyncRuleRemoveMatch is the typed request payload for ScheduleSyncRule.RemoveTyped.
+type ScheduleSyncRuleRemoveMatch struct {
+	Id string `json:"id"`
+	ScheduleId string `json:"schedule_id"`
+}
+
 // ScheduleSyncTarget is the typed data model for the schedule_sync_target entity.
 type ScheduleSyncTarget struct {
 }
@@ -2085,48 +2124,6 @@ type ScheduleSyncTargetUpdateData struct {
 // ScheduleSyncTargetRemoveMatch is the typed request payload for ScheduleSyncTarget.RemoveTyped.
 type ScheduleSyncTargetRemoveMatch struct {
 	Id string `json:"id"`
-}
-
-// SchedulesShowOverrideResultV2 is the typed data model for the schedules_show_override_result_v2 entity.
-type SchedulesShowOverrideResultV2 struct {
-}
-
-// SchedulesShowOverrideResultV2LoadMatch is the typed request payload for SchedulesShowOverrideResultV2.LoadTyped.
-type SchedulesShowOverrideResultV2LoadMatch struct {
-	Id string `json:"id"`
-}
-
-// SchedulesShowOverrideResultV2ListMatch is the typed request payload for SchedulesShowOverrideResultV2.ListTyped.
-type SchedulesShowOverrideResultV2ListMatch struct {
-	After *string `json:"after,omitempty"`
-	LayerId *string `json:"layer_id,omitempty"`
-	PageSize *int `json:"page_size,omitempty"`
-	RotationId *string `json:"rotation_id,omitempty"`
-	ScheduleId string `json:"schedule_id"`
-}
-
-// SchedulesShowOverrideResultV2CreateData is the typed request payload for SchedulesShowOverrideResultV2.CreateTyped.
-type SchedulesShowOverrideResultV2CreateData struct {
-	EndAt string `json:"end_at"`
-	LayerId string `json:"layer_id"`
-	RotationId string `json:"rotation_id"`
-	ScheduleId string `json:"schedule_id"`
-	StartAt string `json:"start_at"`
-	User map[string]any `json:"user"`
-}
-
-// SchedulesUpdateOverrideResultV2 is the typed data model for the schedules_update_override_result_v2 entity.
-type SchedulesUpdateOverrideResultV2 struct {
-}
-
-// SchedulesUpdateOverrideResultV2UpdateData is the typed request payload for SchedulesUpdateOverrideResultV2.UpdateTyped.
-type SchedulesUpdateOverrideResultV2UpdateData struct {
-	Id string `json:"id"`
-	EndAt *string `json:"end_at,omitempty"`
-	LayerId *string `json:"layer_id,omitempty"`
-	RotationId *string `json:"rotation_id,omitempty"`
-	StartAt *string `json:"start_at,omitempty"`
-	User *map[string]any `json:"user,omitempty"`
 }
 
 // Secret is the typed data model for the secret entity.
@@ -2200,6 +2197,11 @@ type SeverityUpdateData struct {
 	Rank *int `json:"rank,omitempty"`
 }
 
+// SeverityRemoveMatch is the typed request payload for Severity.RemoveTyped.
+type SeverityRemoveMatch struct {
+	Id string `json:"id"`
+}
+
 // StatusPage is the typed data model for the status_page entity.
 type StatusPage struct {
 }
@@ -2250,12 +2252,12 @@ type StatusPageComponentRemoveMatch struct {
 	Id string `json:"id"`
 }
 
-// StatusPageComponentAvailabilityV2 is the typed data model for the status_page_component_availability_v2 entity.
-type StatusPageComponentAvailabilityV2 struct {
+// StatusPageComponentAvailability is the typed data model for the status_page_component_availability entity.
+type StatusPageComponentAvailability struct {
 }
 
-// StatusPageComponentAvailabilityV2LoadMatch is the typed request payload for StatusPageComponentAvailabilityV2.LoadTyped.
-type StatusPageComponentAvailabilityV2LoadMatch struct {
+// StatusPageComponentAvailabilityLoadMatch is the typed request payload for StatusPageComponentAvailability.LoadTyped.
+type StatusPageComponentAvailabilityLoadMatch struct {
 	ComponentId string `json:"component_id"`
 	StatusPageId string `json:"status_page_id"`
 	EndAt string `json:"end_at"`
@@ -2313,12 +2315,12 @@ type StatusPageIncidentUpdateCreateData struct {
 	StatusPageIncidentId string `json:"status_page_incident_id"`
 }
 
-// StatusPageLinkedResponseIncidentV1 is the typed data model for the status_page_linked_response_incident_v1 entity.
-type StatusPageLinkedResponseIncidentV1 struct {
+// StatusPageLinkedResponseIncident is the typed data model for the status_page_linked_response_incident entity.
+type StatusPageLinkedResponseIncident struct {
 }
 
-// StatusPageLinkedResponseIncidentV1ListMatch is the typed request payload for StatusPageLinkedResponseIncidentV1.ListTyped.
-type StatusPageLinkedResponseIncidentV1ListMatch struct {
+// StatusPageLinkedResponseIncidentListMatch is the typed request payload for StatusPageLinkedResponseIncident.ListTyped.
+type StatusPageLinkedResponseIncidentListMatch struct {
 	IncidentId string `json:"incident_id"`
 	StatusPageId string `json:"status_page_id"`
 }
@@ -2366,6 +2368,11 @@ type StatusPageMaintenanceUpdateData struct {
 	StartAt *string `json:"start_at,omitempty"`
 }
 
+// StatusPageMaintenanceRemoveMatch is the typed request payload for StatusPageMaintenance.RemoveTyped.
+type StatusPageMaintenanceRemoveMatch struct {
+	Id string `json:"id"`
+}
+
 // StatusPageMaintenanceUpdate is the typed data model for the status_page_maintenance_update entity.
 type StatusPageMaintenanceUpdate struct {
 }
@@ -2388,15 +2395,6 @@ type StatusPageStructureLoadMatch struct {
 	Id string `json:"id"`
 }
 
-// StatusPagesV2 is the typed data model for the status_pages_v2 entity.
-type StatusPagesV2 struct {
-}
-
-// StatusPagesV2RemoveMatch is the typed request payload for StatusPagesV2.RemoveTyped.
-type StatusPagesV2RemoveMatch struct {
-	StatusPageMaintenanceId string `json:"status_page_maintenance_id"`
-}
-
 // Team is the typed data model for the team entity.
 type Team struct {
 }
@@ -2412,12 +2410,12 @@ type TeamListMatch struct {
 	PageSize *int `json:"page_size,omitempty"`
 }
 
-// TelemetryDataSourceV2 is the typed data model for the telemetry_data_source_v2 entity.
-type TelemetryDataSourceV2 struct {
+// TelemetryDataSource is the typed data model for the telemetry_data_source entity.
+type TelemetryDataSource struct {
 }
 
-// TelemetryDataSourceV2UpdateData is the typed request payload for TelemetryDataSourceV2.UpdateTyped.
-type TelemetryDataSourceV2UpdateData struct {
+// TelemetryDataSourceUpdateData is the typed request payload for TelemetryDataSource.UpdateTyped.
+type TelemetryDataSourceUpdateData struct {
 	Id string `json:"id"`
 	DatadogConfig *map[string]any `json:"datadog_config,omitempty"`
 	GrafanaConfig *map[string]any `json:"grafana_config,omitempty"`
@@ -2440,12 +2438,6 @@ type UserListMatch struct {
 	IncludeInactive *bool `json:"include_inactive,omitempty"`
 	PageSize *int `json:"page_size,omitempty"`
 	SlackUserId *string `json:"slack_user_id,omitempty"`
-}
-
-// UserCreateData is the typed request payload for User.CreateTyped.
-type UserCreateData struct {
-	Id string `json:"id"`
-	PreferredEscalationProvider *any `json:"preferred_escalation_provider,omitempty"`
 }
 
 // Workflow is the typed data model for the workflow entity.

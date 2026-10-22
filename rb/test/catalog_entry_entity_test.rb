@@ -141,7 +141,7 @@ class CatalogEntryEntityTest < Minitest::Test
     end
     client = IncidentIoSDK.test(nil, { "feature" => { "validate" => { "active" => true } } })
     err = assert_raises(StandardError) do
-      client.CatalogEntry(nil).list({ "after" => 1, "catalog_type_id" => "x" }, nil)
+      client.CatalogEntry(nil).list({ "after" => 1, "catalog_type_id" => "x", "page_size" => 1 }, nil)
     end
     assert_equal "validate_failed", err.code
   end
@@ -150,7 +150,7 @@ class CatalogEntryEntityTest < Minitest::Test
     setup = catalog_entry_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["create", "list", "update", "load"].each do |_op|
+    ["create", "list", "update", "load", "remove"].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "catalog_entry." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
@@ -203,6 +203,23 @@ class CatalogEntryEntityTest < Minitest::Test
     catalog_entry_ref01_data_dt0_load_result = Helpers.to_map(catalog_entry_ref01_data_dt0_loaded.respond_to?(:data_get) ? catalog_entry_ref01_data_dt0_loaded.data_get : catalog_entry_ref01_data_dt0_loaded)
     assert !catalog_entry_ref01_data_dt0_load_result.nil?
     assert_equal catalog_entry_ref01_data_dt0_load_result["id"], catalog_entry_ref01_data["id"]
+
+    # REMOVE
+    catalog_entry_ref01_match_rm0 = {
+      "id" => catalog_entry_ref01_data["id"],
+    }
+    catalog_entry_ref01_ent.remove(catalog_entry_ref01_match_rm0, nil)
+
+    # LIST
+    catalog_entry_ref01_match_rt0 = {}
+
+    catalog_entry_ref01_list_rt0_result = catalog_entry_ref01_ent.list(catalog_entry_ref01_match_rt0, nil)
+    assert catalog_entry_ref01_list_rt0_result.is_a?(Array)
+
+    not_found_item = Vs.select(
+      Runner.entity_list_to_data(catalog_entry_ref01_list_rt0_result),
+      { "id" => catalog_entry_ref01_data["id"] })
+    assert Vs.isempty(not_found_item)
 
   end
 end

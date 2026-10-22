@@ -66,6 +66,35 @@ main: kit: flow: BasicPolicyFlow:
         }
       ]
     }
+
+    {
+      i: {
+        ref: "policy_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "policy01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "policy_ref01"
+          }
+        }
+      ]
+    }
   ],
   "key$": "BasicPolicyFlow"
 }

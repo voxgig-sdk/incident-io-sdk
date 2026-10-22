@@ -9,22 +9,14 @@ import { AlertSourceEntity } from './entity/AlertSourceEntity'
 import { AlertSourcesV2Entity } from './entity/AlertSourcesV2Entity'
 import { AlertTagEntity } from './entity/AlertTagEntity'
 import { AlertsAddTagsResultV2Entity } from './entity/AlertsAddTagsResultV2Entity'
-import { AlertsRemoveTagsResultV2Entity } from './entity/AlertsRemoveTagsResultV2Entity'
 import { AlertsSetTagsResultV2Entity } from './entity/AlertsSetTagsResultV2Entity'
 import { AlertsTransitionIncidentAlertResultV2Entity } from './entity/AlertsTransitionIncidentAlertResultV2Entity'
 import { AnnouncementRuleEntity } from './entity/AnnouncementRuleEntity'
 import { AnnouncementTemplateEntity } from './entity/AnnouncementTemplateEntity'
 import { ApiKeyEntity } from './entity/ApiKeyEntity'
 import { CallRouteEntity } from './entity/CallRouteEntity'
-import { CallRoutesCreateAllowedCallerResultV2Entity } from './entity/CallRoutesCreateAllowedCallerResultV2Entity'
-import { CallRoutesCreateOptionResultV2Entity } from './entity/CallRoutesCreateOptionResultV2Entity'
-import { CallRoutesListAllowedCallersResultV2Entity } from './entity/CallRoutesListAllowedCallersResultV2Entity'
-import { CallRoutesListOptionsResultV2Entity } from './entity/CallRoutesListOptionsResultV2Entity'
-import { CallRoutesShowAllowedCallerResultV2Entity } from './entity/CallRoutesShowAllowedCallerResultV2Entity'
-import { CallRoutesShowOptionResultV2Entity } from './entity/CallRoutesShowOptionResultV2Entity'
-import { CallRoutesUpdateAllowedCallerResultV2Entity } from './entity/CallRoutesUpdateAllowedCallerResultV2Entity'
-import { CallRoutesUpdateOptionResultV2Entity } from './entity/CallRoutesUpdateOptionResultV2Entity'
-import { CallRoutesV2Entity } from './entity/CallRoutesV2Entity'
+import { CallRouteAllowedCallerEntity } from './entity/CallRouteAllowedCallerEntity'
+import { CallRouteOptionEntity } from './entity/CallRouteOptionEntity'
 import { CallSessionEntity } from './entity/CallSessionEntity'
 import { CallTranscriptEntryEntity } from './entity/CallTranscriptEntryEntity'
 import { CatalogEntryEntity } from './entity/CatalogEntryEntity'
@@ -34,6 +26,7 @@ import { CatalogTypeSchemaEntity } from './entity/CatalogTypeSchemaEntity'
 import { CustomFieldEntity } from './entity/CustomFieldEntity'
 import { CustomFieldOptionEntity } from './entity/CustomFieldOptionEntity'
 import { EscalationEntity } from './entity/EscalationEntity'
+import { EscalationPathEntity } from './entity/EscalationPathEntity'
 import { EscalationPathTemplateEntity } from './entity/EscalationPathTemplateEntity'
 import { EscalationsCheckEscalationPermissionsResultV2Entity } from './entity/EscalationsCheckEscalationPermissionsResultV2Entity'
 import { EscalationsReassignEscalationResultV2Entity } from './entity/EscalationsReassignEscalationResultV2Entity'
@@ -67,20 +60,12 @@ import { OnCallNotificationMethodPublicV2Entity } from './entity/OnCallNotificat
 import { OnCallNotificationPauseEntity } from './entity/OnCallNotificationPauseEntity'
 import { OnCallNotificationRulePublicV2Entity } from './entity/OnCallNotificationRulePublicV2Entity'
 import { PayConfigEntity } from './entity/PayConfigEntity'
-import { PayConfigsCreateOneOffRuleResultV2Entity } from './entity/PayConfigsCreateOneOffRuleResultV2Entity'
-import { PayConfigsCreateWeeklyRuleResultV2Entity } from './entity/PayConfigsCreateWeeklyRuleResultV2Entity'
-import { PayConfigsListOneOffRulesResultV2Entity } from './entity/PayConfigsListOneOffRulesResultV2Entity'
-import { PayConfigsListWeeklyRulesResultV2Entity } from './entity/PayConfigsListWeeklyRulesResultV2Entity'
-import { PayConfigsShowOneOffRuleResultV2Entity } from './entity/PayConfigsShowOneOffRuleResultV2Entity'
-import { PayConfigsShowWeeklyRuleResultV2Entity } from './entity/PayConfigsShowWeeklyRuleResultV2Entity'
-import { PayConfigsUpdateOneOffRuleResultV2Entity } from './entity/PayConfigsUpdateOneOffRuleResultV2Entity'
-import { PayConfigsUpdateWeeklyRuleResultV2Entity } from './entity/PayConfigsUpdateWeeklyRuleResultV2Entity'
-import { PayConfigsV2Entity } from './entity/PayConfigsV2Entity'
+import { PayConfigOneOffRuleEntity } from './entity/PayConfigOneOffRuleEntity'
+import { PayConfigWeeklyRuleEntity } from './entity/PayConfigWeeklyRuleEntity'
 import { PayReportEntity } from './entity/PayReportEntity'
 import { PayReportsPublishResultV2Entity } from './entity/PayReportsPublishResultV2Entity'
 import { PayReportsUnpublishResultV2Entity } from './entity/PayReportsUnpublishResultV2Entity'
 import { PayReportsV2Entity } from './entity/PayReportsV2Entity'
-import { PoliciesV2Entity } from './entity/PoliciesV2Entity'
 import { PolicyEntity } from './entity/PolicyEntity'
 import { PolicyFindingEntity } from './entity/PolicyFindingEntity'
 import { PolicyFindingsDismissResultV2Entity } from './entity/PolicyFindingsDismissResultV2Entity'
@@ -89,25 +74,23 @@ import { PostmortemDocumentEntity } from './entity/PostmortemDocumentEntity'
 import { ScheduleEntity } from './entity/ScheduleEntity'
 import { ScheduleEntriesListPayloadV2Entity } from './entity/ScheduleEntriesListPayloadV2Entity'
 import { ScheduleEntryEntity } from './entity/ScheduleEntryEntity'
+import { ScheduleOverrideEntity } from './entity/ScheduleOverrideEntity'
 import { ScheduleReplicaEntity } from './entity/ScheduleReplicaEntity'
 import { ScheduleSyncRuleEntity } from './entity/ScheduleSyncRuleEntity'
 import { ScheduleSyncTargetEntity } from './entity/ScheduleSyncTargetEntity'
-import { SchedulesShowOverrideResultV2Entity } from './entity/SchedulesShowOverrideResultV2Entity'
-import { SchedulesUpdateOverrideResultV2Entity } from './entity/SchedulesUpdateOverrideResultV2Entity'
 import { SecretEntity } from './entity/SecretEntity'
 import { SeverityEntity } from './entity/SeverityEntity'
 import { StatusPageEntity } from './entity/StatusPageEntity'
 import { StatusPageComponentEntity } from './entity/StatusPageComponentEntity'
-import { StatusPageComponentAvailabilityV2Entity } from './entity/StatusPageComponentAvailabilityV2Entity'
+import { StatusPageComponentAvailabilityEntity } from './entity/StatusPageComponentAvailabilityEntity'
 import { StatusPageIncidentEntity } from './entity/StatusPageIncidentEntity'
 import { StatusPageIncidentUpdateEntity } from './entity/StatusPageIncidentUpdateEntity'
-import { StatusPageLinkedResponseIncidentV1Entity } from './entity/StatusPageLinkedResponseIncidentV1Entity'
+import { StatusPageLinkedResponseIncidentEntity } from './entity/StatusPageLinkedResponseIncidentEntity'
 import { StatusPageMaintenanceEntity } from './entity/StatusPageMaintenanceEntity'
 import { StatusPageMaintenanceUpdateEntity } from './entity/StatusPageMaintenanceUpdateEntity'
 import { StatusPageStructureEntity } from './entity/StatusPageStructureEntity'
-import { StatusPagesV2Entity } from './entity/StatusPagesV2Entity'
 import { TeamEntity } from './entity/TeamEntity'
-import { TelemetryDataSourceV2Entity } from './entity/TelemetryDataSourceV2Entity'
+import { TelemetryDataSourceEntity } from './entity/TelemetryDataSourceEntity'
 import { UserEntity } from './entity/UserEntity'
 import { WorkflowEntity } from './entity/WorkflowEntity'
 import { WorkflowRunEntity } from './entity/WorkflowRunEntity'
@@ -525,15 +508,6 @@ if (null != this._secrets) {
   }
 
 
-  // Entity access: `client.AlertsRemoveTagsResultV2().list()` / `client.AlertsRemoveTagsResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  AlertsRemoveTagsResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new AlertsRemoveTagsResultV2Entity(self, entopts)
-  }
-
-
   // Entity access: `client.AlertsSetTagsResultV2().list()` / `client.AlertsSetTagsResultV2().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -588,84 +562,21 @@ if (null != this._secrets) {
   }
 
 
-  // Entity access: `client.CallRoutesCreateAllowedCallerResultV2().list()` / `client.CallRoutesCreateAllowedCallerResultV2().load({ id })`.
+  // Entity access: `client.CallRouteAllowedCaller().list()` / `client.CallRouteAllowedCaller().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
-  CallRoutesCreateAllowedCallerResultV2(entopts?: Record<string, any>) {
+  CallRouteAllowedCaller(entopts?: Record<string, any>) {
     const self = this
-    return new CallRoutesCreateAllowedCallerResultV2Entity(self, entopts)
+    return new CallRouteAllowedCallerEntity(self, entopts)
   }
 
 
-  // Entity access: `client.CallRoutesCreateOptionResultV2().list()` / `client.CallRoutesCreateOptionResultV2().load({ id })`.
+  // Entity access: `client.CallRouteOption().list()` / `client.CallRouteOption().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
-  CallRoutesCreateOptionResultV2(entopts?: Record<string, any>) {
+  CallRouteOption(entopts?: Record<string, any>) {
     const self = this
-    return new CallRoutesCreateOptionResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.CallRoutesListAllowedCallersResultV2().list()` / `client.CallRoutesListAllowedCallersResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  CallRoutesListAllowedCallersResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new CallRoutesListAllowedCallersResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.CallRoutesListOptionsResultV2().list()` / `client.CallRoutesListOptionsResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  CallRoutesListOptionsResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new CallRoutesListOptionsResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.CallRoutesShowAllowedCallerResultV2().list()` / `client.CallRoutesShowAllowedCallerResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  CallRoutesShowAllowedCallerResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new CallRoutesShowAllowedCallerResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.CallRoutesShowOptionResultV2().list()` / `client.CallRoutesShowOptionResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  CallRoutesShowOptionResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new CallRoutesShowOptionResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.CallRoutesUpdateAllowedCallerResultV2().list()` / `client.CallRoutesUpdateAllowedCallerResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  CallRoutesUpdateAllowedCallerResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new CallRoutesUpdateAllowedCallerResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.CallRoutesUpdateOptionResultV2().list()` / `client.CallRoutesUpdateOptionResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  CallRoutesUpdateOptionResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new CallRoutesUpdateOptionResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.CallRoutesV2().list()` / `client.CallRoutesV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  CallRoutesV2(entopts?: Record<string, any>) {
-    const self = this
-    return new CallRoutesV2Entity(self, entopts)
+    return new CallRouteOptionEntity(self, entopts)
   }
 
 
@@ -747,6 +658,15 @@ if (null != this._secrets) {
   Escalation(entopts?: Record<string, any>) {
     const self = this
     return new EscalationEntity(self, entopts)
+  }
+
+
+  // Entity access: `client.EscalationPath().list()` / `client.EscalationPath().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  EscalationPath(entopts?: Record<string, any>) {
+    const self = this
+    return new EscalationPathEntity(self, entopts)
   }
 
 
@@ -1047,84 +967,21 @@ if (null != this._secrets) {
   }
 
 
-  // Entity access: `client.PayConfigsCreateOneOffRuleResultV2().list()` / `client.PayConfigsCreateOneOffRuleResultV2().load({ id })`.
+  // Entity access: `client.PayConfigOneOffRule().list()` / `client.PayConfigOneOffRule().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
-  PayConfigsCreateOneOffRuleResultV2(entopts?: Record<string, any>) {
+  PayConfigOneOffRule(entopts?: Record<string, any>) {
     const self = this
-    return new PayConfigsCreateOneOffRuleResultV2Entity(self, entopts)
+    return new PayConfigOneOffRuleEntity(self, entopts)
   }
 
 
-  // Entity access: `client.PayConfigsCreateWeeklyRuleResultV2().list()` / `client.PayConfigsCreateWeeklyRuleResultV2().load({ id })`.
+  // Entity access: `client.PayConfigWeeklyRule().list()` / `client.PayConfigWeeklyRule().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
-  PayConfigsCreateWeeklyRuleResultV2(entopts?: Record<string, any>) {
+  PayConfigWeeklyRule(entopts?: Record<string, any>) {
     const self = this
-    return new PayConfigsCreateWeeklyRuleResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.PayConfigsListOneOffRulesResultV2().list()` / `client.PayConfigsListOneOffRulesResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  PayConfigsListOneOffRulesResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new PayConfigsListOneOffRulesResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.PayConfigsListWeeklyRulesResultV2().list()` / `client.PayConfigsListWeeklyRulesResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  PayConfigsListWeeklyRulesResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new PayConfigsListWeeklyRulesResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.PayConfigsShowOneOffRuleResultV2().list()` / `client.PayConfigsShowOneOffRuleResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  PayConfigsShowOneOffRuleResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new PayConfigsShowOneOffRuleResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.PayConfigsShowWeeklyRuleResultV2().list()` / `client.PayConfigsShowWeeklyRuleResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  PayConfigsShowWeeklyRuleResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new PayConfigsShowWeeklyRuleResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.PayConfigsUpdateOneOffRuleResultV2().list()` / `client.PayConfigsUpdateOneOffRuleResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  PayConfigsUpdateOneOffRuleResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new PayConfigsUpdateOneOffRuleResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.PayConfigsUpdateWeeklyRuleResultV2().list()` / `client.PayConfigsUpdateWeeklyRuleResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  PayConfigsUpdateWeeklyRuleResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new PayConfigsUpdateWeeklyRuleResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.PayConfigsV2().list()` / `client.PayConfigsV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  PayConfigsV2(entopts?: Record<string, any>) {
-    const self = this
-    return new PayConfigsV2Entity(self, entopts)
+    return new PayConfigWeeklyRuleEntity(self, entopts)
   }
 
 
@@ -1161,15 +1018,6 @@ if (null != this._secrets) {
   PayReportsV2(entopts?: Record<string, any>) {
     const self = this
     return new PayReportsV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.PoliciesV2().list()` / `client.PoliciesV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  PoliciesV2(entopts?: Record<string, any>) {
-    const self = this
-    return new PoliciesV2Entity(self, entopts)
   }
 
 
@@ -1245,6 +1093,15 @@ if (null != this._secrets) {
   }
 
 
+  // Entity access: `client.ScheduleOverride().list()` / `client.ScheduleOverride().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  ScheduleOverride(entopts?: Record<string, any>) {
+    const self = this
+    return new ScheduleOverrideEntity(self, entopts)
+  }
+
+
   // Entity access: `client.ScheduleReplica().list()` / `client.ScheduleReplica().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -1269,24 +1126,6 @@ if (null != this._secrets) {
   ScheduleSyncTarget(entopts?: Record<string, any>) {
     const self = this
     return new ScheduleSyncTargetEntity(self, entopts)
-  }
-
-
-  // Entity access: `client.SchedulesShowOverrideResultV2().list()` / `client.SchedulesShowOverrideResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  SchedulesShowOverrideResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new SchedulesShowOverrideResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.SchedulesUpdateOverrideResultV2().list()` / `client.SchedulesUpdateOverrideResultV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  SchedulesUpdateOverrideResultV2(entopts?: Record<string, any>) {
-    const self = this
-    return new SchedulesUpdateOverrideResultV2Entity(self, entopts)
   }
 
 
@@ -1326,12 +1165,12 @@ if (null != this._secrets) {
   }
 
 
-  // Entity access: `client.StatusPageComponentAvailabilityV2().list()` / `client.StatusPageComponentAvailabilityV2().load({ id })`.
+  // Entity access: `client.StatusPageComponentAvailability().list()` / `client.StatusPageComponentAvailability().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
-  StatusPageComponentAvailabilityV2(entopts?: Record<string, any>) {
+  StatusPageComponentAvailability(entopts?: Record<string, any>) {
     const self = this
-    return new StatusPageComponentAvailabilityV2Entity(self, entopts)
+    return new StatusPageComponentAvailabilityEntity(self, entopts)
   }
 
 
@@ -1353,12 +1192,12 @@ if (null != this._secrets) {
   }
 
 
-  // Entity access: `client.StatusPageLinkedResponseIncidentV1().list()` / `client.StatusPageLinkedResponseIncidentV1().load({ id })`.
+  // Entity access: `client.StatusPageLinkedResponseIncident().list()` / `client.StatusPageLinkedResponseIncident().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
-  StatusPageLinkedResponseIncidentV1(entopts?: Record<string, any>) {
+  StatusPageLinkedResponseIncident(entopts?: Record<string, any>) {
     const self = this
-    return new StatusPageLinkedResponseIncidentV1Entity(self, entopts)
+    return new StatusPageLinkedResponseIncidentEntity(self, entopts)
   }
 
 
@@ -1389,15 +1228,6 @@ if (null != this._secrets) {
   }
 
 
-  // Entity access: `client.StatusPagesV2().list()` / `client.StatusPagesV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  StatusPagesV2(entopts?: Record<string, any>) {
-    const self = this
-    return new StatusPagesV2Entity(self, entopts)
-  }
-
-
   // Entity access: `client.Team().list()` / `client.Team().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
@@ -1407,12 +1237,12 @@ if (null != this._secrets) {
   }
 
 
-  // Entity access: `client.TelemetryDataSourceV2().list()` / `client.TelemetryDataSourceV2().load({ id })`.
+  // Entity access: `client.TelemetryDataSource().list()` / `client.TelemetryDataSource().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
-  TelemetryDataSourceV2(entopts?: Record<string, any>) {
+  TelemetryDataSource(entopts?: Record<string, any>) {
     const self = this
-    return new TelemetryDataSourceV2Entity(self, entopts)
+    return new TelemetryDataSourceEntity(self, entopts)
   }
 
 

@@ -194,7 +194,7 @@ class PolicyEntityTest extends TestCase
         $setup = policy_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["create", "list", "update", "load"] as $_op) {
+        foreach (["create", "list", "update", "load", "remove"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "policy." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
@@ -247,6 +247,23 @@ class PolicyEntityTest extends TestCase
         $policy_ref01_data_dt0_load_result = Helpers::to_map(is_object($policy_ref01_data_dt0_loaded) && method_exists($policy_ref01_data_dt0_loaded, 'data_get') ? $policy_ref01_data_dt0_loaded->data_get() : $policy_ref01_data_dt0_loaded);
         $this->assertNotNull($policy_ref01_data_dt0_load_result);
         $this->assertEquals($policy_ref01_data_dt0_load_result["id"], $policy_ref01_data["id"]);
+
+        // REMOVE
+        $policy_ref01_match_rm0 = [
+            "id" => $policy_ref01_data["id"],
+        ];
+        $policy_ref01_ent->remove($policy_ref01_match_rm0, null);
+
+        // LIST
+        $policy_ref01_match_rt0 = [];
+
+        $policy_ref01_list_rt0_result = $policy_ref01_ent->list($policy_ref01_match_rt0, null);
+        $this->assertIsArray($policy_ref01_list_rt0_result);
+
+        $not_found_item = sdk_select(
+            Runner::entity_list_to_data($policy_ref01_list_rt0_result),
+            ["id" => $policy_ref01_data["id"]]);
+        $this->assertEmpty($not_found_item);
 
     }
 }

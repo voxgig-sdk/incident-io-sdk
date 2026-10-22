@@ -37,7 +37,7 @@ describe("ScheduleSyncRuleEntity", function()
     local setup = schedule_sync_rule_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"update", "load"}) do
+    for _, _op in ipairs({"update", "load", "remove", "list"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "schedule_sync_rule." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")

@@ -314,6 +314,33 @@ class ScheduleReplicaEntity
   
 
   
+  # Remove an ScheduleReplica matching the given criteria.
+  #
+  # @param reqmatch [ScheduleReplicaRemoveMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [ScheduleReplicaEntity] the removed ScheduleReplica entity, marked as deleted; raises
+  #   IncidentIoError on failure
+  def remove(reqmatch = nil, ctrl = nil)
+    utility = @_utility
+    ctx = utility.make_context.call({
+      "opname" => "remove",
+      "ctrl" => ctrl,
+      "match" => @_match,
+      "data" => @_data,
+      "reqmatch" => reqmatch,
+    }, @_entctx)
+
+    _run_op(ctx) do
+      if ctx.result
+        @_match = ctx.result.resmatch if ctx.result.resmatch
+        if ctx.result.resdata
+          @_data = IncidentIoHelpers.to_map(VoxgigStruct.clone(ctx.result.resdata)) || {}
+        end
+      end
+    end
+  end
+
+
 
   private
 

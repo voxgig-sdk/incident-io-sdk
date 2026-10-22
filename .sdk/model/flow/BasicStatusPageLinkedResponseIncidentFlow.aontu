@@ -1,0 +1,27 @@
+# BasicStatusPageLinkedResponseIncidentFlow
+
+main: kit: flow: BasicStatusPageLinkedResponseIncidentFlow:
+{
+  entity: "status_page_linked_response_incident",
+  kind: "basic",
+  name: "BasicStatusPageLinkedResponseIncidentFlow",
+  step: [
+    {
+      m: {
+        incident_id: "incident01",
+        status_page_id: "status_page01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "status_page_linked_response_incident_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicStatusPageLinkedResponseIncidentFlow"
+}

@@ -77,10 +77,6 @@ Create a new `AlertTag` entity instance. Pass `nil` for no initial data.
 
 Create a new `AlertsAddTagsResultV2` entity instance. Pass `nil` for no initial data.
 
-#### `AlertsRemoveTagsResultV2(data)`
-
-Create a new `AlertsRemoveTagsResultV2` entity instance. Pass `nil` for no initial data.
-
 #### `AlertsSetTagsResultV2(data)`
 
 Create a new `AlertsSetTagsResultV2` entity instance. Pass `nil` for no initial data.
@@ -105,41 +101,13 @@ Create a new `ApiKey` entity instance. Pass `nil` for no initial data.
 
 Create a new `CallRoute` entity instance. Pass `nil` for no initial data.
 
-#### `CallRoutesCreateAllowedCallerResultV2(data)`
+#### `CallRouteAllowedCaller(data)`
 
-Create a new `CallRoutesCreateAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
+Create a new `CallRouteAllowedCaller` entity instance. Pass `nil` for no initial data.
 
-#### `CallRoutesCreateOptionResultV2(data)`
+#### `CallRouteOption(data)`
 
-Create a new `CallRoutesCreateOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesListAllowedCallersResultV2(data)`
-
-Create a new `CallRoutesListAllowedCallersResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesListOptionsResultV2(data)`
-
-Create a new `CallRoutesListOptionsResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesShowAllowedCallerResultV2(data)`
-
-Create a new `CallRoutesShowAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesShowOptionResultV2(data)`
-
-Create a new `CallRoutesShowOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesUpdateAllowedCallerResultV2(data)`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesUpdateOptionResultV2(data)`
-
-Create a new `CallRoutesUpdateOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesV2(data)`
-
-Create a new `CallRoutesV2` entity instance. Pass `nil` for no initial data.
+Create a new `CallRouteOption` entity instance. Pass `nil` for no initial data.
 
 #### `CallSession(data)`
 
@@ -176,6 +144,10 @@ Create a new `CustomFieldOption` entity instance. Pass `nil` for no initial data
 #### `Escalation(data)`
 
 Create a new `Escalation` entity instance. Pass `nil` for no initial data.
+
+#### `EscalationPath(data)`
+
+Create a new `EscalationPath` entity instance. Pass `nil` for no initial data.
 
 #### `EscalationPathTemplate(data)`
 
@@ -309,41 +281,13 @@ Create a new `OnCallNotificationRulePublicV2` entity instance. Pass `nil` for no
 
 Create a new `PayConfig` entity instance. Pass `nil` for no initial data.
 
-#### `PayConfigsCreateOneOffRuleResultV2(data)`
+#### `PayConfigOneOffRule(data)`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
+Create a new `PayConfigOneOffRule` entity instance. Pass `nil` for no initial data.
 
-#### `PayConfigsCreateWeeklyRuleResultV2(data)`
+#### `PayConfigWeeklyRule(data)`
 
-Create a new `PayConfigsCreateWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsListOneOffRulesResultV2(data)`
-
-Create a new `PayConfigsListOneOffRulesResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsListWeeklyRulesResultV2(data)`
-
-Create a new `PayConfigsListWeeklyRulesResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsShowOneOffRuleResultV2(data)`
-
-Create a new `PayConfigsShowOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsShowWeeklyRuleResultV2(data)`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsUpdateOneOffRuleResultV2(data)`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsUpdateWeeklyRuleResultV2(data)`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsV2(data)`
-
-Create a new `PayConfigsV2` entity instance. Pass `nil` for no initial data.
+Create a new `PayConfigWeeklyRule` entity instance. Pass `nil` for no initial data.
 
 #### `PayReport(data)`
 
@@ -360,10 +304,6 @@ Create a new `PayReportsUnpublishResultV2` entity instance. Pass `nil` for no in
 #### `PayReportsV2(data)`
 
 Create a new `PayReportsV2` entity instance. Pass `nil` for no initial data.
-
-#### `PoliciesV2(data)`
-
-Create a new `PoliciesV2` entity instance. Pass `nil` for no initial data.
 
 #### `Policy(data)`
 
@@ -397,6 +337,10 @@ Create a new `ScheduleEntriesListPayloadV2` entity instance. Pass `nil` for no i
 
 Create a new `ScheduleEntry` entity instance. Pass `nil` for no initial data.
 
+#### `ScheduleOverride(data)`
+
+Create a new `ScheduleOverride` entity instance. Pass `nil` for no initial data.
+
 #### `ScheduleReplica(data)`
 
 Create a new `ScheduleReplica` entity instance. Pass `nil` for no initial data.
@@ -408,14 +352,6 @@ Create a new `ScheduleSyncRule` entity instance. Pass `nil` for no initial data.
 #### `ScheduleSyncTarget(data)`
 
 Create a new `ScheduleSyncTarget` entity instance. Pass `nil` for no initial data.
-
-#### `SchedulesShowOverrideResultV2(data)`
-
-Create a new `SchedulesShowOverrideResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `SchedulesUpdateOverrideResultV2(data)`
-
-Create a new `SchedulesUpdateOverrideResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `Secret(data)`
 
@@ -433,9 +369,9 @@ Create a new `StatusPage` entity instance. Pass `nil` for no initial data.
 
 Create a new `StatusPageComponent` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPageComponentAvailabilityV2(data)`
+#### `StatusPageComponentAvailability(data)`
 
-Create a new `StatusPageComponentAvailabilityV2` entity instance. Pass `nil` for no initial data.
+Create a new `StatusPageComponentAvailability` entity instance. Pass `nil` for no initial data.
 
 #### `StatusPageIncident(data)`
 
@@ -445,9 +381,9 @@ Create a new `StatusPageIncident` entity instance. Pass `nil` for no initial dat
 
 Create a new `StatusPageIncidentUpdate` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPageLinkedResponseIncidentV1(data)`
+#### `StatusPageLinkedResponseIncident(data)`
 
-Create a new `StatusPageLinkedResponseIncidentV1` entity instance. Pass `nil` for no initial data.
+Create a new `StatusPageLinkedResponseIncident` entity instance. Pass `nil` for no initial data.
 
 #### `StatusPageMaintenance(data)`
 
@@ -461,17 +397,13 @@ Create a new `StatusPageMaintenanceUpdate` entity instance. Pass `nil` for no in
 
 Create a new `StatusPageStructure` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPagesV2(data)`
-
-Create a new `StatusPagesV2` entity instance. Pass `nil` for no initial data.
-
 #### `Team(data)`
 
 Create a new `Team` entity instance. Pass `nil` for no initial data.
 
-#### `TelemetryDataSourceV2(data)`
+#### `TelemetryDataSource(data)`
 
-Create a new `TelemetryDataSourceV2` entity instance. Pass `nil` for no initial data.
+Create a new `TelemetryDataSource` entity instance. Pass `nil` for no initial data.
 
 #### `User(data)`
 
@@ -536,30 +468,11 @@ local action = client:Action(nil)
 | `completed_at` | `string` | No | When the action was completed |
 | `created_at` | `string` | Yes | When the action was created |
 | `creator` | `table` | Yes |  |
-| `description` | `string` | No | Description of the action |
-| `external_issue_reference` | `table` | No |  |
-| `follow_up` | `boolean` | Yes | Whether an action is marked as follow-up |
+| `description` | `string` | Yes | Description of the action |
 | `id` | `string` | Yes | Unique identifier for the action |
 | `incident_id` | `string` | Yes | Unique identifier of the incident the action belongs to |
 | `status` | `string` | Yes | Status of the action |
 | `updated_at` | `string` | Yes | When the action was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `assignee` | - | - | - | - | - |
-| `assignee_id` | - | - | - | - | - |
-| `completed_at` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `creator` | - | - | - | - | - |
-| `description` | Yes | Yes | Yes | Yes | - |
-| `external_issue_reference` | - | - | - | - | - |
-| `follow_up` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `incident_id` | - | - | - | - | - |
-| `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -942,24 +855,21 @@ local alert_route = client:AlertRoute(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `alert_sources` | `table` | Yes | Which alert sources should this alert route match? |
-| `channel_config` | `table` | Yes | The channel configuration for this alert route |
-| `condition_groups` | `table` | Yes | What condition groups must be true for this alert route to fire? |
-| `created_at` | `string` | No | The time of creation of this alert route |
-| `enabled` | `boolean` | Yes | Whether this alert route is enabled or not |
+| `alert_sources` | `table` | Yes | Which alert sources this route matches |
+| `condition_groups` | `table` | Yes | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | `string` | No | When this alert route was created |
+| `enabled` | `boolean` | Yes | Whether this alert route is enabled |
 | `escalation_config` | `table` | Yes |  |
-| `expressions` | `table` | Yes | The expressions used in this template |
+| `expressions` | `table` | Yes | The expressions used by bindings in this route |
 | `grouping_config` | `table` | Yes |  |
-| `id` | `string` | Yes | Unique identifier for this alert route config |
+| `id` | `string` | Yes | Unique identifier for this alert route |
 | `incident_config` | `table` | Yes |  |
-| `incident_template` | `table` | Yes |  |
 | `is_private` | `boolean` | Yes | Whether this alert route is private. |
 | `message_config` | `table` | Yes |  |
-| `message_template` | `table` | No |  |
-| `name` | `string` | Yes | The name of this alert route config, for the user's reference |
+| `name` | `string` | Yes | The name of this alert route, for the user's reference |
 | `owning_team_ids` | `table` | No | IDs of teams that own this alert route |
-| `updated_at` | `string` | No | The time of last update of this alert route |
-| `version` | `number` | Yes | The version of this alert route config |
+| `updated_at` | `string` | No | When this alert route was last updated |
+| `version` | `number` | Yes | The version of this alert route |
 
 ### Operations
 
@@ -970,14 +880,12 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:AlertRoute():create({
   alert_sources = --[[ table ]],
-  channel_config = --[[ table ]],
   condition_groups = --[[ table ]],
   enabled = --[[ boolean ]],
   escalation_config = --[[ table ]],
   expressions = --[[ table ]],
   grouping_config = --[[ table ]],
   incident_config = --[[ table ]],
-  incident_template = --[[ table ]],
   is_private = --[[ boolean ]],
   message_config = --[[ table ]],
   name = --[[ string ]],
@@ -989,7 +897,7 @@ local result, err = client:AlertRoute():create({
 List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
 
 ```lua
-local results, err = client:AlertRoute():list({ page_size = 1 })
+local results, err = client:AlertRoute():list()
 ```
 
 #### `load(reqmatch, ctrl) -> any, err`
@@ -1230,10 +1138,52 @@ local alert_tag = client:AlertTag(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for the tag |
+| `alert_group_ids` | `table` | No | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | Yes | The ID of the alert source this alert fired on |
+| `attributes` | `table` | Yes | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | Yes | When this entry was created |
+| `deduplication_key` | `string` | Yes | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | No | The description of the alert |
+| `id` | `string` | Yes | The ID of this alert |
 | `name` | `string` | Yes | The tag name |
+| `resolved_at` | `string` | No | When this alert was resolved |
+| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Yes | Statuses of an alert |
+| `tags` | `table` | No | Tags someone has applied to this alert |
+| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | Yes | When this alert was last updated |
+
+### Field Usage by Operation
+
+| Field | list | create |
+| --- | --- | --- |
+| `alert_group_ids` | - | - |
+| `alert_source_id` | - | - |
+| `attributes` | - | - |
+| `created_at` | - | - |
+| `deduplication_key` | - | - |
+| `description` | - | - |
+| `id` | - | - |
+| `name` | - | - |
+| `resolved_at` | - | - |
+| `source_url` | - | - |
+| `status` | - | - |
+| `tags` | - | Yes |
+| `title` | - | - |
+| `updated_at` | - | - |
 
 ### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:AlertTag():create({
+  alert_id = --[[ string ]],
+  tags = --[[ table ]],
+})
+```
 
 #### `list(reqmatch, ctrl) -> any, err`
 
@@ -1349,91 +1299,6 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `AlertsAddTagsResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## AlertsRemoveTagsResultV2Entity
-
-```lua
-local alerts_remove_tags_result_v2 = client:AlertsRemoveTagsResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `alert_group_ids` | `table` | No | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | `string` | Yes | The ID of the alert source this alert fired on |
-| `attributes` | `table` | Yes | Attribute values parsed from the alerts payload |
-| `created_at` | `string` | Yes | When this entry was created |
-| `deduplication_key` | `string` | Yes | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | `string` | No | The description of the alert |
-| `id` | `string` | Yes | The ID of this alert |
-| `resolved_at` | `string` | No | When this alert was resolved |
-| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
-| `status` | `string` | Yes | Statuses of an alert |
-| `tags` | `table` | No | Tags someone has applied to this alert |
-| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | `string` | Yes | When this alert was last updated |
-
-### Field Usage by Operation
-
-| Field | create |
-| --- | --- |
-| `alert_group_ids` | - |
-| `alert_source_id` | - |
-| `attributes` | - |
-| `created_at` | - |
-| `deduplication_key` | - |
-| `description` | - |
-| `id` | - |
-| `resolved_at` | - |
-| `source_url` | - |
-| `status` | - |
-| `tags` | Yes |
-| `title` | - |
-| `updated_at` | - |
-
-### Operations
-
-#### `create(reqdata, ctrl) -> any, err`
-
-Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:AlertsRemoveTagsResultV2():create({
-  alert_id = --[[ string ]],
-  tags = --[[ table ]],
-})
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `AlertsRemoveTagsResultV2Entity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -2013,18 +1878,19 @@ Return the entity name.
 
 ---
 
-## CallRoutesCreateAllowedCallerResultV2Entity
+## CallRouteAllowedCallerEntity
 
 ```lua
-local call_routes_create_allowed_caller_result_v2 = client:CallRoutesCreateAllowedCallerResultV2(nil)
+local call_route_allowed_caller = client:CallRouteAllowedCaller(nil)
 ```
 
 ### Fields
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `string` | Yes | Unique identifier for this allowed caller |
 | `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number to allow, in international format |
+| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
 
 ### Operations
 
@@ -2033,456 +1899,46 @@ local call_routes_create_allowed_caller_result_v2 = client:CallRoutesCreateAllow
 Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:CallRoutesCreateAllowedCallerResultV2():create({
-  call_route_id = --[[ string ]],
+local result, err = client:CallRouteAllowedCaller():create({
+  id = --[[ string ]],
   phone_number = --[[ string ]],
 })
 ```
 
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesCreateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesCreateOptionResultV2Entity
-
-```lua
-local call_routes_create_option_result_v2 = client:CallRoutesCreateOptionResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `path` | `table` | Yes | Who to page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `create(reqdata, ctrl) -> any, err`
-
-Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:CallRoutesCreateOptionResultV2():create({
-  call_route_id = --[[ string ]],
-  digit = --[[ string ]],
-  path = --[[ table ]],
-  prompt = --[[ string ]],
-})
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesCreateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListAllowedCallersResultV2Entity
-
-```lua
-local call_routes_list_allowed_callers_result_v2 = client:CallRoutesListAllowedCallersResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
 #### `list(reqmatch, ctrl) -> any, err`
 
 List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
 
 ```lua
-local results, err = client:CallRoutesListAllowedCallersResultV2():list({ call_route_id = "example" })
+local results, err = client:CallRouteAllowedCaller():list({ id = "example" })
 ```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesListAllowedCallersResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListOptionsResultV2Entity
-
-```lua
-local call_routes_list_options_result_v2 = client:CallRoutesListOptionsResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `table` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `list(reqmatch, ctrl) -> any, err`
-
-List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
-
-```lua
-local results, err = client:CallRoutesListOptionsResultV2():list({ call_route_id = "example" })
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesListOptionsResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowAllowedCallerResultV2Entity
-
-```lua
-local call_routes_show_allowed_caller_result_v2 = client:CallRoutesShowAllowedCallerResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
 
 #### `load(reqmatch, ctrl) -> any, err`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:CallRoutesShowAllowedCallerResultV2():load({ id = "call_routes_show_allowed_caller_result_v2_id", call_route_id = "call_route_id" })
+local result, err = client:CallRouteAllowedCaller():load({ id = "call_route_allowed_caller_id", call_route_id = "call_route_id" })
 ```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesShowAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowOptionResultV2Entity
-
-```lua
-local call_routes_show_option_result_v2 = client:CallRoutesShowOptionResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `table` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `load(reqmatch, ctrl) -> any, err`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
-
-```lua
-local result, err = client:CallRoutesShowOptionResultV2():load({ id = "call_routes_show_option_result_v2_id", call_route_id = "call_route_id" })
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesShowOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateAllowedCallerResultV2Entity
-
-```lua
-local call_routes_update_allowed_caller_result_v2 = client:CallRoutesUpdateAllowedCallerResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `update(reqdata, ctrl) -> any, err`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:CallRoutesUpdateAllowedCallerResultV2():update({
-  call_route_id = "call_route_id",
-  id = "id",
-  -- Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateOptionResultV2Entity
-
-```lua
-local call_routes_update_option_result_v2 = client:CallRoutesUpdateOptionResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `table` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `update(reqdata, ctrl) -> any, err`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:CallRoutesUpdateOptionResultV2():update({
-  call_route_id = "call_route_id",
-  id = "id",
-  -- Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesUpdateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesV2Entity
-
-```lua
-local call_routes_v2 = client:CallRoutesV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
 
 #### `remove(reqmatch, ctrl) -> any, err`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:CallRoutesV2():remove({ id = "call_routes_v2_id", call_route_id = "call_route_id" })
+local result, err = client:CallRouteAllowedCaller():remove({ id = "call_route_allowed_caller_id", call_route_id = "call_route_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:CallRouteAllowedCaller():update({
+  id = "call_route_allowed_caller_id",
+  call_route_id = "call_route_id",
+  -- Fields to update
+})
 ```
 
 ### Common Methods
@@ -2505,7 +1961,103 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `CallRoutesV2Entity` instance with the same client and
+Create a new `CallRouteAllowedCallerEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## CallRouteOptionEntity
+
+```lua
+local call_route_option = client:CallRouteOption(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Yes | Unique identifier for this option |
+| `path` | `table` | Yes | Who we page when a caller chooses this option |
+| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:CallRouteOption():create({
+  id = --[[ string ]],
+  digit = --[[ string ]],
+  path = --[[ table ]],
+  prompt = --[[ string ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
+
+```lua
+local results, err = client:CallRouteOption():list({ id = "example" })
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:CallRouteOption():load({ id = "call_route_option_id", call_route_id = "call_route_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:CallRouteOption():remove({ id = "call_route_option_id", call_route_id = "call_route_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:CallRouteOption():update({
+  id = "call_route_option_id",
+  call_route_id = "call_route_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `CallRouteOptionEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -2652,21 +2204,21 @@ local catalog_entry = client:CatalogEntry(nil)
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `aliases` | - | Yes | - | - |
-| `archived_at` | - | - | - | - |
-| `attribute_values` | - | - | - | - |
-| `catalog_entry` | - | - | - | - |
-| `catalog_type` | - | - | - | - |
-| `catalog_type_id` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `external_id` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | Yes | - | - |
-| `update_attributes` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `aliases` | - | Yes | - | - | - |
+| `archived_at` | - | - | - | - | - |
+| `attribute_values` | - | - | - | - | - |
+| `catalog_entry` | - | - | - | - | - |
+| `catalog_type` | - | - | - | - | - |
+| `catalog_type_id` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `external_id` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | Yes | - | - | - |
+| `update_attributes` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2687,7 +2239,7 @@ local result, err = client:CatalogEntry():create({
 List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
 
 ```lua
-local results, err = client:CatalogEntry():list({ catalog_type_id = "example" })
+local results, err = client:CatalogEntry():list({ catalog_type_id = "example", page_size = 1 })
 ```
 
 #### `load(reqmatch, ctrl) -> any, err`
@@ -2696,6 +2248,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```lua
 local result, err = client:CatalogEntry():load({ id = "catalog_entry_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:CatalogEntry():remove({ id = "catalog_entry_id" })
 ```
 
 #### `update(reqdata, ctrl) -> any, err`
@@ -2825,7 +2385,6 @@ local catalog_type = client:CatalogType(nil)
 | `registry_type` | `string` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `table` | No | If populated, the integrations required for this type |
 | `schema` | `table` | Yes |  |
-| `semantic_type` | `string` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | No | The url of the external repository where this type is managed |
 | `type_name` | `string` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | Yes | When this type was last updated |
@@ -2833,32 +2392,31 @@ local catalog_type = client:CatalogType(nil)
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | Yes | Yes |
-| `categories` | - | - | Yes | Yes |
-| `color` | - | - | Yes | Yes |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `dynamic_resource_parameter` | - | - | - | - |
-| `engine_resource_type` | - | - | - | - |
-| `estimated_count` | - | - | - | - |
-| `icon` | - | - | Yes | Yes |
-| `id` | - | - | - | - |
-| `is_editable` | - | - | - | - |
-| `is_team_type` | - | - | - | - |
-| `last_synced_at` | - | - | - | - |
-| `name` | - | - | - | - |
-| `owning_team_ids` | - | - | - | - |
-| `ranked` | - | - | Yes | Yes |
-| `registry_type` | - | - | - | - |
-| `required_integrations` | - | - | - | - |
-| `schema` | - | - | - | - |
-| `semantic_type` | - | - | - | - |
-| `source_repo_url` | - | - | - | - |
-| `type_name` | - | - | Yes | - |
-| `updated_at` | - | - | - | - |
-| `use_name_as_identifier` | - | - | Yes | Yes |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | Yes | Yes | - |
+| `categories` | - | - | Yes | Yes | - |
+| `color` | - | - | Yes | Yes | - |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - | - |
+| `engine_resource_type` | - | - | - | - | - |
+| `estimated_count` | - | - | - | - | - |
+| `icon` | - | - | Yes | Yes | - |
+| `id` | - | - | - | - | - |
+| `is_editable` | - | - | - | - | - |
+| `is_team_type` | - | - | - | - | - |
+| `last_synced_at` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `owning_team_ids` | - | - | - | - | - |
+| `ranked` | - | - | Yes | Yes | - |
+| `registry_type` | - | - | - | - | - |
+| `required_integrations` | - | - | - | - | - |
+| `schema` | - | - | - | - | - |
+| `source_repo_url` | - | - | - | - | - |
+| `type_name` | - | - | Yes | - | - |
+| `updated_at` | - | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes | - |
 
 ### Operations
 
@@ -2887,6 +2445,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```lua
 local result, err = client:CatalogType():load({ id = "catalog_type_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:CatalogType():remove({ id = "catalog_type_id" })
 ```
 
 #### `update(reqdata, ctrl) -> any, err`
@@ -2960,7 +2526,6 @@ local catalog_type_schema = client:CatalogTypeSchema(nil)
 | `registry_type` | `string` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `table` | No | If populated, the integrations required for this type |
 | `schema` | `table` | Yes |  |
-| `semantic_type` | `string` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | No | The url of the external repository where this type is managed |
 | `type_name` | `string` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | Yes | When this type was last updated |
@@ -3031,13 +2596,6 @@ local custom_field = client:CustomField(nil)
 | `helptext_catalog_attribute_id` | `string` | No | Which catalog attribute provides helptext for the options |
 | `id` | `string` | Yes | Unique identifier for the custom field |
 | `name` | `string` | Yes | Human readable name for the custom field |
-| `options` | `table` | Yes | What options are available for this custom field, if this field has options |
-| `required` | `string` | No | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | `string` | No | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | `boolean` | Yes | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | `boolean` | Yes | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | `boolean` | Yes | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | `boolean` | No | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | `string` | Yes | When the action was last updated |
 
 ### Operations
@@ -3053,9 +2611,6 @@ local result, err = client:CustomField():create({
   filter_by = --[[ table ]],
   fixed_filter = --[[ table ]],
   name = --[[ string ]],
-  show_before_closure = --[[ boolean ]],
-  show_before_creation = --[[ boolean ]],
-  show_before_update = --[[ boolean ]],
 })
 ```
 
@@ -3322,6 +2877,121 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `EscalationEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## EscalationPathEntity
+
+```lua
+local escalation_path = client:EscalationPath(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `current_responders` | `table` | No | Users who are currently on-call for this escalation path |
+| `id` | `string` | Yes | Unique identifier for this escalation path. |
+| `kind` | `string` | Yes | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | `string` | Yes | The name of this escalation path, for the user's reference. |
+| `param_bindings` | `table` | No | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | `table` | Yes | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` | `table` | Yes |  |
+| `team_ids` | `table` | Yes | IDs of the teams that own this escalation path. |
+| `template_id` | `string` | No | For a templated path, the template it is built from. |
+| `working_hours` | `table` | No | The working hours for this escalation path. |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `current_responders` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `kind` | - | - | Yes | Yes | - |
+| `name` | - | - | - | - | - |
+| `param_bindings` | - | - | - | - | - |
+| `path` | - | - | - | - | - |
+| `repeat_config` | - | - | - | - | - |
+| `team_ids` | - | - | Yes | Yes | - |
+| `template_id` | - | - | - | - | - |
+| `working_hours` | - | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:EscalationPath():create({
+  name = --[[ string ]],
+  path = --[[ table ]],
+  repeat_config = --[[ table ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
+
+```lua
+local results, err = client:EscalationPath():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:EscalationPath():load({ id = "escalation_path_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:EscalationPath():remove({ id = "escalation_path_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:EscalationPath():update({
+  id = "escalation_path_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `EscalationPathEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -3918,12 +3588,8 @@ local incident = client:Incident(nil)
 | `slack_channel_name_override` | `string` | No | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | `string` | No | URL to link to the slack channel |
 | `slack_team_id` | `string` | Yes | ID of the Slack team / workspace. |
-| `source_message_channel_id` | `string` | No | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | `string` | No | Timestamp of the source message, if this incident was created from one |
-| `status` | `string` | Yes | Current status of the incident |
 | `summary` | `string` | No | Detailed description of the incident |
 | `team_ids` | `table` | Yes | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | `table` | No | Incident lifecycle events and when they last occurred |
 | `updated_at` | `string` | Yes | When the incident was last updated |
 | `visibility` | `string` | Yes | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | `number` | No | Amount of time spent on the incident in late hours |
@@ -3967,12 +3633,8 @@ local incident = client:Incident(nil)
 | `slack_channel_name_override` | - | - | - |
 | `slack_channel_url` | - | - | - |
 | `slack_team_id` | - | - | Yes |
-| `source_message_channel_id` | - | - | - |
-| `source_message_timestamp` | - | - | - |
-| `status` | - | - | Yes |
 | `summary` | - | - | - |
 | `team_ids` | - | - | - |
-| `timestamps` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -4498,24 +4160,9 @@ local incident_role = client:IncidentRole(nil)
 | `id` | `string` | Yes | Unique identifier for the role |
 | `instructions` | `string` | Yes | Provided to whoever is nominated for the role. |
 | `name` | `string` | Yes | Human readable name of the incident role |
-| `required` | `boolean` | No | DEPRECATED: this will always be false. |
 | `role_type` | `string` | Yes | Type of incident role |
 | `shortform` | `string` | Yes | Short human readable name for Slack. |
 | `updated_at` | `string` | Yes | When the role was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
-| `description` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `instructions` | - | - | - | - | - |
-| `name` | - | - | - | - | - |
-| `required` | - | - | Yes | - | - |
-| `role_type` | - | - | - | - | - |
-| `shortform` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -4528,7 +4175,6 @@ local result, err = client:IncidentRole():create({
   description = --[[ string ]],
   instructions = --[[ string ]],
   name = --[[ string ]],
-  required = --[[ boolean ]],
   shortform = --[[ string ]],
 })
 ```
@@ -5888,10 +5534,10 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateOneOffRuleResultV2Entity
+## PayConfigOneOffRuleEntity
 
 ```lua
-local pay_configs_create_one_off_rule_result_v2 = client:PayConfigsCreateOneOffRuleResultV2(nil)
+local pay_config_one_off_rule = client:PayConfigOneOffRule(nil)
 ```
 
 ### Fields
@@ -5899,6 +5545,7 @@ local pay_configs_create_one_off_rule_result_v2 = client:PayConfigsCreateOneOffR
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_at` | `string` | Yes | When this rule stops applying |
+| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `name` | `string` | Yes | Human readable name for this rule |
 | `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | `string` | Yes | When this rule starts applying |
@@ -5910,8 +5557,8 @@ local pay_configs_create_one_off_rule_result_v2 = client:PayConfigsCreateOneOffR
 Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:PayConfigsCreateOneOffRuleResultV2():create({
-  pay_config_id = --[[ string ]],
+local result, err = client:PayConfigOneOffRule():create({
+  id = --[[ string ]],
   end_at = --[[ string ]],
   name = --[[ string ]],
   rate_cents = --[[ number ]],
@@ -5919,6 +5566,42 @@ local result, err = client:PayConfigsCreateOneOffRuleResultV2():create({
 })
 ```
 
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
+
+```lua
+local results, err = client:PayConfigOneOffRule():list({ id = "example" })
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:PayConfigOneOffRule():load({ id = "pay_config_one_off_rule_id", pay_config_id = "pay_config_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:PayConfigOneOffRule():remove({ id = "pay_config_one_off_rule_id", pay_config_id = "pay_config_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:PayConfigOneOffRule():update({
+  id = "pay_config_one_off_rule_id",
+  pay_config_id = "pay_config_id",
+  -- Fields to update
+})
+```
+
 ### Common Methods
 
 #### `data_get() -> table`
@@ -5939,7 +5622,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2Entity` instance with the same client and
+Create a new `PayConfigOneOffRuleEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -5949,10 +5632,10 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateWeeklyRuleResultV2Entity
+## PayConfigWeeklyRuleEntity
 
 ```lua
-local pay_configs_create_weekly_rule_result_v2 = client:PayConfigsCreateWeeklyRuleResultV2(nil)
+local pay_config_weekly_rule = client:PayConfigWeeklyRule(nil)
 ```
 
 ### Fields
@@ -5960,6 +5643,7 @@ local pay_configs_create_weekly_rule_result_v2 = client:PayConfigsCreateWeeklyRu
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
 | `weekdays` | `table` | Yes | Days of the week this rule applies on |
@@ -5971,8 +5655,8 @@ local pay_configs_create_weekly_rule_result_v2 = client:PayConfigsCreateWeeklyRu
 Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:PayConfigsCreateWeeklyRuleResultV2():create({
-  pay_config_id = --[[ string ]],
+local result, err = client:PayConfigWeeklyRule():create({
+  id = --[[ string ]],
   end_time = --[[ string ]],
   rate_cents = --[[ number ]],
   start_time = --[[ string ]],
@@ -5980,400 +5664,40 @@ local result, err = client:PayConfigsCreateWeeklyRuleResultV2():create({
 })
 ```
 
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsCreateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListOneOffRulesResultV2Entity
-
-```lua
-local pay_configs_list_one_off_rules_result_v2 = client:PayConfigsListOneOffRulesResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
 #### `list(reqmatch, ctrl) -> any, err`
 
 List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
 
 ```lua
-local results, err = client:PayConfigsListOneOffRulesResultV2():list({ pay_config_id = "example" })
+local results, err = client:PayConfigWeeklyRule():list({ id = "example" })
 ```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsListOneOffRulesResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListWeeklyRulesResultV2Entity
-
-```lua
-local pay_configs_list_weekly_rules_result_v2 = client:PayConfigsListWeeklyRulesResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `table` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `list(reqmatch, ctrl) -> any, err`
-
-List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
-
-```lua
-local results, err = client:PayConfigsListWeeklyRulesResultV2():list({ pay_config_id = "example" })
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsListWeeklyRulesResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowOneOffRuleResultV2Entity
-
-```lua
-local pay_configs_show_one_off_rule_result_v2 = client:PayConfigsShowOneOffRuleResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
 
 #### `load(reqmatch, ctrl) -> any, err`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:PayConfigsShowOneOffRuleResultV2():load({ id = "pay_configs_show_one_off_rule_result_v2_id", pay_config_id = "pay_config_id" })
+local result, err = client:PayConfigWeeklyRule():load({ id = "pay_config_weekly_rule_id", pay_config_id = "pay_config_id" })
 ```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsShowOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowWeeklyRuleResultV2Entity
-
-```lua
-local pay_configs_show_weekly_rule_result_v2 = client:PayConfigsShowWeeklyRuleResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `table` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `load(reqmatch, ctrl) -> any, err`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
-
-```lua
-local result, err = client:PayConfigsShowWeeklyRuleResultV2():load({ id = "pay_configs_show_weekly_rule_result_v2_id", pay_config_id = "pay_config_id" })
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateOneOffRuleResultV2Entity
-
-```lua
-local pay_configs_update_one_off_rule_result_v2 = client:PayConfigsUpdateOneOffRuleResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `update(reqdata, ctrl) -> any, err`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:PayConfigsUpdateOneOffRuleResultV2():update({
-  id = "id",
-  pay_config_id = "pay_config_id",
-  -- Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateWeeklyRuleResultV2Entity
-
-```lua
-local pay_configs_update_weekly_rule_result_v2 = client:PayConfigsUpdateWeeklyRuleResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `table` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `update(reqdata, ctrl) -> any, err`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:PayConfigsUpdateWeeklyRuleResultV2():update({
-  id = "id",
-  pay_config_id = "pay_config_id",
-  -- Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsV2Entity
-
-```lua
-local pay_configs_v2 = client:PayConfigsV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
 
 #### `remove(reqmatch, ctrl) -> any, err`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:PayConfigsV2():remove({ id = "pay_configs_v2_id", pay_config_id = "pay_config_id" })
+local result, err = client:PayConfigWeeklyRule():remove({ id = "pay_config_weekly_rule_id", pay_config_id = "pay_config_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:PayConfigWeeklyRule():update({
+  id = "pay_config_weekly_rule_id",
+  pay_config_id = "pay_config_id",
+  -- Fields to update
+})
 ```
 
 ### Common Methods
@@ -6396,7 +5720,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `PayConfigsV2Entity` instance with the same client and
+Create a new `PayConfigWeeklyRuleEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -6720,58 +6044,6 @@ Return the entity name.
 
 ---
 
-## PoliciesV2Entity
-
-```lua
-local policies_v2 = client:PoliciesV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
-
-#### `remove(reqmatch, ctrl) -> any, err`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
-
-```lua
-local result, err = client:PoliciesV2():remove({ id = "policies_v2_id" })
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PoliciesV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
 ## PolicyEntity
 
 ```lua
@@ -6800,23 +6072,23 @@ local policy = client:Policy(nil)
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `assignment_rules` | - | - | - | - |
-| `conditions` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `debrief` | - | - | - | - |
-| `description` | - | - | Yes | Yes |
-| `expressions` | - | - | - | - |
-| `follow_up` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `on_call_readiness` | - | - | - | - |
-| `policy_type` | - | - | - | - |
-| `post_mortem` | - | - | - | - |
-| `schedule` | - | - | - | - |
-| `status` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignment_rules` | - | - | - | - | - |
+| `conditions` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `debrief` | - | - | - | - | - |
+| `description` | - | - | Yes | Yes | - |
+| `expressions` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `on_call_readiness` | - | - | - | - | - |
+| `policy_type` | - | - | - | - | - |
+| `post_mortem` | - | - | - | - | - |
+| `schedule` | - | - | - | - | - |
+| `status` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -6852,6 +6124,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```lua
 local result, err = client:Policy():load({ id = "policy_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:Policy():remove({ id = "policy_id" })
 ```
 
 #### `update(reqdata, ctrl) -> any, err`
@@ -7442,6 +6722,108 @@ Return the entity name.
 
 ---
 
+## ScheduleOverrideEntity
+
+```lua
+local schedule_override = client:ScheduleOverride(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `end_at` | `string` | Yes | End of the override |
+| `id` | `string` | Yes | Unique internal ID of the schedule override |
+| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | Yes | The schedule that this override applies to |
+| `start_at` | `string` | Yes | Start of the override |
+| `updated_at` | `string` | Yes |  |
+| `user` | `table` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:ScheduleOverride():create({
+  end_at = --[[ string ]],
+  layer_id = --[[ string ]],
+  rotation_id = --[[ string ]],
+  schedule_id = --[[ string ]],
+  start_at = --[[ string ]],
+  user = --[[ table ]],
+})
+```
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
+
+```lua
+local results, err = client:ScheduleOverride():list({ schedule_id = "example" })
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:ScheduleOverride():load({ id = "schedule_override_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:ScheduleOverride():remove({ id = "schedule_override_id" })
+```
+
+#### `update(reqdata, ctrl) -> any, err`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:ScheduleOverride():update({
+  id = "schedule_override_id",
+  -- Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleOverrideEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleReplicaEntity
 
 ```lua
@@ -7497,6 +6879,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 local result, err = client:ScheduleReplica():load({ id = "schedule_replica_id", schedule_id = "schedule_id" })
 ```
 
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:ScheduleReplica():remove({ id = "schedule_replica_id", schedule_id = "schedule_id" })
+```
+
 ### Common Methods
 
 #### `data_get() -> table`
@@ -7550,18 +6940,18 @@ local schedule_sync_rule = client:ScheduleSyncRule(nil)
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `permanent_member_user_ids` | - | - | Yes | Yes |
-| `rotation_id` | - | - | - | - |
-| `schedule_id` | - | - | - | - |
-| `schedule_sync_target` | - | - | - | - |
-| `schedule_sync_target_id` | - | - | - | - |
-| `sync_type` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `permanent_member_user_ids` | - | - | Yes | Yes | - |
+| `rotation_id` | - | - | - | - | - |
+| `schedule_id` | - | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - | - |
+| `sync_type` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -7591,6 +6981,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```lua
 local result, err = client:ScheduleSyncRule():load({ id = "schedule_sync_rule_id", schedule_id = "schedule_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:ScheduleSyncRule():remove({ id = "schedule_sync_rule_id", schedule_id = "schedule_id" })
 ```
 
 #### `update(reqdata, ctrl) -> any, err`
@@ -7747,152 +7145,6 @@ Return the entity name.
 
 ---
 
-## SchedulesShowOverrideResultV2Entity
-
-```lua
-local schedules_show_override_result_v2 = client:SchedulesShowOverrideResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `string` | Yes |  |
-| `end_at` | `string` | Yes | End of the override |
-| `id` | `string` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | Yes | The schedule that this override applies to |
-| `start_at` | `string` | Yes | Start of the override |
-| `updated_at` | `string` | Yes |  |
-| `user` | `table` | Yes |  |
-
-### Operations
-
-#### `create(reqdata, ctrl) -> any, err`
-
-Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:SchedulesShowOverrideResultV2():create({
-  end_at = --[[ string ]],
-  layer_id = --[[ string ]],
-  rotation_id = --[[ string ]],
-  schedule_id = --[[ string ]],
-  start_at = --[[ string ]],
-  user = --[[ table ]],
-})
-```
-
-#### `list(reqmatch, ctrl) -> any, err`
-
-List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
-
-```lua
-local results, err = client:SchedulesShowOverrideResultV2():list({ schedule_id = "example" })
-```
-
-#### `load(reqmatch, ctrl) -> any, err`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
-
-```lua
-local result, err = client:SchedulesShowOverrideResultV2():load({ id = "schedules_show_override_result_v2_id" })
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `SchedulesShowOverrideResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
-## SchedulesUpdateOverrideResultV2Entity
-
-```lua
-local schedules_update_override_result_v2 = client:SchedulesUpdateOverrideResultV2(nil)
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `string` | Yes |  |
-| `end_at` | `string` | Yes | End of the override |
-| `id` | `string` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | Yes | The schedule that this override applies to |
-| `start_at` | `string` | Yes | Start of the override |
-| `updated_at` | `string` | Yes |  |
-| `user` | `table` | Yes |  |
-
-### Operations
-
-#### `update(reqdata, ctrl) -> any, err`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:SchedulesUpdateOverrideResultV2():update({
-  id = "id",
-  -- Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `SchedulesUpdateOverrideResultV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
 ## SecretEntity
 
 ```lua
@@ -8028,14 +7280,14 @@ local severity = client:Severity(nil)
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -8064,6 +7316,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```lua
 local result, err = client:Severity():load({ id = "severity_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:Severity():remove({ id = "severity_id" })
 ```
 
 #### `update(reqdata, ctrl) -> any, err`
@@ -8262,10 +7522,10 @@ Return the entity name.
 
 ---
 
-## StatusPageComponentAvailabilityV2Entity
+## StatusPageComponentAvailabilityEntity
 
 ```lua
-local status_page_component_availability_v2 = client:StatusPageComponentAvailabilityV2(nil)
+local status_page_component_availability = client:StatusPageComponentAvailability(nil)
 ```
 
 ### Fields
@@ -8286,7 +7546,7 @@ local status_page_component_availability_v2 = client:StatusPageComponentAvailabi
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:StatusPageComponentAvailabilityV2():load({ component_id = "component_id", status_page_id = "status_page_id", end_at = "end_at", start_at = "start_at" })
+local result, err = client:StatusPageComponentAvailability():load({ component_id = "component_id", status_page_id = "status_page_id", end_at = "end_at", start_at = "start_at" })
 ```
 
 ### Common Methods
@@ -8309,7 +7569,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `StatusPageComponentAvailabilityV2Entity` instance with the same client and
+Create a new `StatusPageComponentAvailabilityEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -8475,10 +7735,10 @@ Return the entity name.
 
 ---
 
-## StatusPageLinkedResponseIncidentV1Entity
+## StatusPageLinkedResponseIncidentEntity
 
 ```lua
-local status_page_linked_response_incident_v1 = client:StatusPageLinkedResponseIncidentV1(nil)
+local status_page_linked_response_incident = client:StatusPageLinkedResponseIncident(nil)
 ```
 
 ### Fields
@@ -8495,7 +7755,7 @@ local status_page_linked_response_incident_v1 = client:StatusPageLinkedResponseI
 List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
 
 ```lua
-local results, err = client:StatusPageLinkedResponseIncidentV1():list({ incident_id = "example", status_page_id = "example" })
+local results, err = client:StatusPageLinkedResponseIncident():list({ incident_id = "example", status_page_id = "example" })
 ```
 
 ### Common Methods
@@ -8518,7 +7778,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `StatusPageLinkedResponseIncidentV1Entity` instance with the same client and
+Create a new `StatusPageLinkedResponseIncidentEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -8555,22 +7815,22 @@ local status_page_maintenance = client:StatusPageMaintenance(nil)
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `affected_component_ids` | - | - | - | - |
-| `automate_maintenance_status` | - | - | Yes | - |
-| `component_maintenance_periods` | - | - | - | - |
-| `end_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `idempotency_key` | - | - | - | - |
-| `maintenance_status` | - | - | - | - |
-| `message` | - | - | - | - |
-| `name` | - | - | - | - |
-| `notify_subscribers` | - | - | - | - |
-| `published_at` | - | - | - | - |
-| `start_at` | - | - | - | - |
-| `status_page_id` | - | - | - | - |
-| `updates` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `affected_component_ids` | - | - | - | - | - |
+| `automate_maintenance_status` | - | - | Yes | - | - |
+| `component_maintenance_periods` | - | - | - | - | - |
+| `end_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `idempotency_key` | - | - | - | - | - |
+| `maintenance_status` | - | - | - | - | - |
+| `message` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `notify_subscribers` | - | - | - | - | - |
+| `published_at` | - | - | - | - | - |
+| `start_at` | - | - | - | - | - |
+| `status_page_id` | - | - | - | - | - |
+| `updates` | - | - | - | - | - |
 
 ### Operations
 
@@ -8606,6 +7866,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```lua
 local result, err = client:StatusPageMaintenance():load({ id = "status_page_maintenance_id" })
+```
+
+#### `remove(reqmatch, ctrl) -> any, err`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
+
+```lua
+local result, err = client:StatusPageMaintenance():remove({ id = "status_page_maintenance_id" })
 ```
 
 #### `update(reqdata, ctrl) -> any, err`
@@ -8764,52 +8032,6 @@ Return the entity name.
 
 ---
 
-## StatusPagesV2Entity
-
-```lua
-local status_pages_v2 = client:StatusPagesV2(nil)
-```
-
-### Operations
-
-#### `remove(reqmatch, ctrl) -> any, err`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted, or `nil` and an error on failure.
-
-```lua
-local result, err = client:StatusPagesV2():remove({ status_page_maintenance_id = "status_page_maintenance_id" })
-```
-
-### Common Methods
-
-#### `data_get() -> table`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> table`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `StatusPagesV2Entity` instance with the same client and
-options.
-
-#### `get_name() -> string`
-
-Return the entity name.
-
-
----
-
 ## TeamEntity
 
 ```lua
@@ -8873,10 +8095,10 @@ Return the entity name.
 
 ---
 
-## TelemetryDataSourceV2Entity
+## TelemetryDataSourceEntity
 
 ```lua
-local telemetry_data_source_v2 = client:TelemetryDataSourceV2(nil)
+local telemetry_data_source = client:TelemetryDataSource(nil)
 ```
 
 ### Fields
@@ -8916,7 +8138,7 @@ local telemetry_data_source_v2 = client:TelemetryDataSourceV2(nil)
 Update an existing entity. The data must include the entity `id`. Returns the updated entity, or `nil` and an error on failure.
 
 ```lua
-local result, err = client:TelemetryDataSourceV2():update({
+local result, err = client:TelemetryDataSource():update({
   id = "id",
   -- Fields to update
 })
@@ -8942,7 +8164,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `TelemetryDataSourceV2Entity` instance with the same client and
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -8973,16 +8195,6 @@ local user = client:User(nil)
 | `slack_user_id` | `string` | No | Slack ID of the user |
 
 ### Operations
-
-#### `create(reqdata, ctrl) -> any, err`
-
-Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:User():create({
-  id = --[[ string ]],
-})
-```
 
 #### `list(reqmatch, ctrl) -> any, err`
 

@@ -134,20 +134,6 @@ class AlertTagEntityTest < Minitest::Test
     assert_operator hook.unexpected, :>, fired
   end
 
-  def test_validate_list_response
-    cfg = IncidentIoConfig.shared_config
-    unless cfg["feature"].is_a?(Hash) && cfg["feature"].key?("validate")
-      skip("feature not present in this SDK: validate")
-    end
-    opts = { "feature" => { "validate" => { "active" => true, "request" => false, "response" => true } } }
-    listed = IncidentIoSDK.test({ "entity" => { "alert_tag" => { "v1" => { "name" => "x" } } } }, opts).AlertTag(nil).list(nil, nil)
-    assert_equal ["v1"], listed.map { |ent| ent.data_get["id"] }
-    err = assert_raises(StandardError) do
-      IncidentIoSDK.test({ "entity" => { "alert_tag" => { "v1" => { "name" => 1 } } } }, opts).AlertTag(nil).list(nil, nil)
-    end
-    assert_equal "validate_failed", err.code
-  end
-
   def test_validate
     cfg = IncidentIoConfig.shared_config
     unless cfg["feature"].is_a?(Hash) && cfg["feature"].key?("validate")
@@ -164,29 +150,43 @@ class AlertTagEntityTest < Minitest::Test
     setup = alert_tag_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["list"].each do |_op|
+    ["create", "list"].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "alert_tag." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
         return
       end
     end
+    if setup[:live]
+      ["alert01"].each do |_live_key|
+        if setup[:synthetic_only] || setup[:idmap][_live_key].nil?
+          Runner.live_miss(LIVE_STRICT, "Live entity test blocked: needs #{_live_key} via INCIDENT_IO_TEST_ALERT_TAG_ENTID")
+        end
+      end
+    end
     client = setup[:client]
 
-    # Bootstrap entity data from existing test data.
-    alert_tag_ref01_data_raw = Vs.items(Helpers.to_map(
-      Vs.getpath(setup[:data], "existing.alert_tag")))
-    alert_tag_ref01_data = nil
-    if alert_tag_ref01_data_raw.length > 0
-      alert_tag_ref01_data = Helpers.to_map(alert_tag_ref01_data_raw[0][1])
-    end
+    # CREATE
+    alert_tag_ref01_ent = client.AlertTag(nil)
+    alert_tag_ref01_data = Helpers.to_map(Vs.getprop(
+      Vs.getpath(setup[:data], "new.alert_tag"), "alert_tag_ref01"))
+    alert_tag_ref01_data["alert_id"] = setup[:idmap]["alert01"]
+
+    alert_tag_ref01_data_result = alert_tag_ref01_ent.create(alert_tag_ref01_data, nil)
+    alert_tag_ref01_data = Helpers.to_map(alert_tag_ref01_data_result.respond_to?(:data_get) ? alert_tag_ref01_data_result.data_get : alert_tag_ref01_data_result)
+    assert !alert_tag_ref01_data.nil?
+    assert !alert_tag_ref01_data["id"].nil?
 
     # LIST
-    alert_tag_ref01_ent = client.AlertTag(nil)
     alert_tag_ref01_match = {}
 
     alert_tag_ref01_list_result = alert_tag_ref01_ent.list(alert_tag_ref01_match, nil)
     assert alert_tag_ref01_list_result.is_a?(Array)
+
+    found_item = Vs.select(
+      Runner.entity_list_to_data(alert_tag_ref01_list_result),
+      { "id" => alert_tag_ref01_data["id"] })
+    assert !Vs.isempty(found_item)
 
   end
 end
@@ -205,7 +205,7 @@ def alert_tag_basic_setup(extra)
 
   # Generate idmap via transform.
   idmap = Vs.transform(
-    ["alert_tag01", "alert_tag02", "alert_tag03"],
+    ["alert_tag01", "alert_tag02", "alert_tag03", "alert01", "alert02", "alert03"],
     {
       "`$PACK`" => ["", {
         "`$KEY`" => "`$COPY`",

@@ -377,13 +377,6 @@ class IncidentIoSDK
   end
 
 
-  # Canonical facade: client.AlertsRemoveTagsResultV2.list / client.AlertsRemoveTagsResultV2.load({ "id" => ... })
-  def AlertsRemoveTagsResultV2(data = nil)
-    require_relative 'entity/alerts_remove_tags_result_v2_entity'
-    AlertsRemoveTagsResultV2Entity.new(self, data)
-  end
-
-
   # Canonical facade: client.AlertsSetTagsResultV2.list / client.AlertsSetTagsResultV2.load({ "id" => ... })
   def AlertsSetTagsResultV2(data = nil)
     require_relative 'entity/alerts_set_tags_result_v2_entity'
@@ -426,66 +419,17 @@ class IncidentIoSDK
   end
 
 
-  # Canonical facade: client.CallRoutesCreateAllowedCallerResultV2.list / client.CallRoutesCreateAllowedCallerResultV2.load({ "id" => ... })
-  def CallRoutesCreateAllowedCallerResultV2(data = nil)
-    require_relative 'entity/call_routes_create_allowed_caller_result_v2_entity'
-    CallRoutesCreateAllowedCallerResultV2Entity.new(self, data)
+  # Canonical facade: client.CallRouteAllowedCaller.list / client.CallRouteAllowedCaller.load({ "id" => ... })
+  def CallRouteAllowedCaller(data = nil)
+    require_relative 'entity/call_route_allowed_caller_entity'
+    CallRouteAllowedCallerEntity.new(self, data)
   end
 
 
-  # Canonical facade: client.CallRoutesCreateOptionResultV2.list / client.CallRoutesCreateOptionResultV2.load({ "id" => ... })
-  def CallRoutesCreateOptionResultV2(data = nil)
-    require_relative 'entity/call_routes_create_option_result_v2_entity'
-    CallRoutesCreateOptionResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.CallRoutesListAllowedCallersResultV2.list / client.CallRoutesListAllowedCallersResultV2.load({ "id" => ... })
-  def CallRoutesListAllowedCallersResultV2(data = nil)
-    require_relative 'entity/call_routes_list_allowed_callers_result_v2_entity'
-    CallRoutesListAllowedCallersResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.CallRoutesListOptionsResultV2.list / client.CallRoutesListOptionsResultV2.load({ "id" => ... })
-  def CallRoutesListOptionsResultV2(data = nil)
-    require_relative 'entity/call_routes_list_options_result_v2_entity'
-    CallRoutesListOptionsResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.CallRoutesShowAllowedCallerResultV2.list / client.CallRoutesShowAllowedCallerResultV2.load({ "id" => ... })
-  def CallRoutesShowAllowedCallerResultV2(data = nil)
-    require_relative 'entity/call_routes_show_allowed_caller_result_v2_entity'
-    CallRoutesShowAllowedCallerResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.CallRoutesShowOptionResultV2.list / client.CallRoutesShowOptionResultV2.load({ "id" => ... })
-  def CallRoutesShowOptionResultV2(data = nil)
-    require_relative 'entity/call_routes_show_option_result_v2_entity'
-    CallRoutesShowOptionResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.CallRoutesUpdateAllowedCallerResultV2.list / client.CallRoutesUpdateAllowedCallerResultV2.load({ "id" => ... })
-  def CallRoutesUpdateAllowedCallerResultV2(data = nil)
-    require_relative 'entity/call_routes_update_allowed_caller_result_v2_entity'
-    CallRoutesUpdateAllowedCallerResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.CallRoutesUpdateOptionResultV2.list / client.CallRoutesUpdateOptionResultV2.load({ "id" => ... })
-  def CallRoutesUpdateOptionResultV2(data = nil)
-    require_relative 'entity/call_routes_update_option_result_v2_entity'
-    CallRoutesUpdateOptionResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.CallRoutesV2.list / client.CallRoutesV2.load({ "id" => ... })
-  def CallRoutesV2(data = nil)
-    require_relative 'entity/call_routes_v2_entity'
-    CallRoutesV2Entity.new(self, data)
+  # Canonical facade: client.CallRouteOption.list / client.CallRouteOption.load({ "id" => ... })
+  def CallRouteOption(data = nil)
+    require_relative 'entity/call_route_option_entity'
+    CallRouteOptionEntity.new(self, data)
   end
 
 
@@ -549,6 +493,13 @@ class IncidentIoSDK
   def Escalation(data = nil)
     require_relative 'entity/escalation_entity'
     EscalationEntity.new(self, data)
+  end
+
+
+  # Canonical facade: client.EscalationPath.list / client.EscalationPath.load({ "id" => ... })
+  def EscalationPath(data = nil)
+    require_relative 'entity/escalation_path_entity'
+    EscalationPathEntity.new(self, data)
   end
 
 
@@ -783,66 +734,17 @@ class IncidentIoSDK
   end
 
 
-  # Canonical facade: client.PayConfigsCreateOneOffRuleResultV2.list / client.PayConfigsCreateOneOffRuleResultV2.load({ "id" => ... })
-  def PayConfigsCreateOneOffRuleResultV2(data = nil)
-    require_relative 'entity/pay_configs_create_one_off_rule_result_v2_entity'
-    PayConfigsCreateOneOffRuleResultV2Entity.new(self, data)
+  # Canonical facade: client.PayConfigOneOffRule.list / client.PayConfigOneOffRule.load({ "id" => ... })
+  def PayConfigOneOffRule(data = nil)
+    require_relative 'entity/pay_config_one_off_rule_entity'
+    PayConfigOneOffRuleEntity.new(self, data)
   end
 
 
-  # Canonical facade: client.PayConfigsCreateWeeklyRuleResultV2.list / client.PayConfigsCreateWeeklyRuleResultV2.load({ "id" => ... })
-  def PayConfigsCreateWeeklyRuleResultV2(data = nil)
-    require_relative 'entity/pay_configs_create_weekly_rule_result_v2_entity'
-    PayConfigsCreateWeeklyRuleResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.PayConfigsListOneOffRulesResultV2.list / client.PayConfigsListOneOffRulesResultV2.load({ "id" => ... })
-  def PayConfigsListOneOffRulesResultV2(data = nil)
-    require_relative 'entity/pay_configs_list_one_off_rules_result_v2_entity'
-    PayConfigsListOneOffRulesResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.PayConfigsListWeeklyRulesResultV2.list / client.PayConfigsListWeeklyRulesResultV2.load({ "id" => ... })
-  def PayConfigsListWeeklyRulesResultV2(data = nil)
-    require_relative 'entity/pay_configs_list_weekly_rules_result_v2_entity'
-    PayConfigsListWeeklyRulesResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.PayConfigsShowOneOffRuleResultV2.list / client.PayConfigsShowOneOffRuleResultV2.load({ "id" => ... })
-  def PayConfigsShowOneOffRuleResultV2(data = nil)
-    require_relative 'entity/pay_configs_show_one_off_rule_result_v2_entity'
-    PayConfigsShowOneOffRuleResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.PayConfigsShowWeeklyRuleResultV2.list / client.PayConfigsShowWeeklyRuleResultV2.load({ "id" => ... })
-  def PayConfigsShowWeeklyRuleResultV2(data = nil)
-    require_relative 'entity/pay_configs_show_weekly_rule_result_v2_entity'
-    PayConfigsShowWeeklyRuleResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.PayConfigsUpdateOneOffRuleResultV2.list / client.PayConfigsUpdateOneOffRuleResultV2.load({ "id" => ... })
-  def PayConfigsUpdateOneOffRuleResultV2(data = nil)
-    require_relative 'entity/pay_configs_update_one_off_rule_result_v2_entity'
-    PayConfigsUpdateOneOffRuleResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.PayConfigsUpdateWeeklyRuleResultV2.list / client.PayConfigsUpdateWeeklyRuleResultV2.load({ "id" => ... })
-  def PayConfigsUpdateWeeklyRuleResultV2(data = nil)
-    require_relative 'entity/pay_configs_update_weekly_rule_result_v2_entity'
-    PayConfigsUpdateWeeklyRuleResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.PayConfigsV2.list / client.PayConfigsV2.load({ "id" => ... })
-  def PayConfigsV2(data = nil)
-    require_relative 'entity/pay_configs_v2_entity'
-    PayConfigsV2Entity.new(self, data)
+  # Canonical facade: client.PayConfigWeeklyRule.list / client.PayConfigWeeklyRule.load({ "id" => ... })
+  def PayConfigWeeklyRule(data = nil)
+    require_relative 'entity/pay_config_weekly_rule_entity'
+    PayConfigWeeklyRuleEntity.new(self, data)
   end
 
 
@@ -871,13 +773,6 @@ class IncidentIoSDK
   def PayReportsV2(data = nil)
     require_relative 'entity/pay_reports_v2_entity'
     PayReportsV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.PoliciesV2.list / client.PoliciesV2.load({ "id" => ... })
-  def PoliciesV2(data = nil)
-    require_relative 'entity/policies_v2_entity'
-    PoliciesV2Entity.new(self, data)
   end
 
 
@@ -937,6 +832,13 @@ class IncidentIoSDK
   end
 
 
+  # Canonical facade: client.ScheduleOverride.list / client.ScheduleOverride.load({ "id" => ... })
+  def ScheduleOverride(data = nil)
+    require_relative 'entity/schedule_override_entity'
+    ScheduleOverrideEntity.new(self, data)
+  end
+
+
   # Canonical facade: client.ScheduleReplica.list / client.ScheduleReplica.load({ "id" => ... })
   def ScheduleReplica(data = nil)
     require_relative 'entity/schedule_replica_entity'
@@ -955,20 +857,6 @@ class IncidentIoSDK
   def ScheduleSyncTarget(data = nil)
     require_relative 'entity/schedule_sync_target_entity'
     ScheduleSyncTargetEntity.new(self, data)
-  end
-
-
-  # Canonical facade: client.SchedulesShowOverrideResultV2.list / client.SchedulesShowOverrideResultV2.load({ "id" => ... })
-  def SchedulesShowOverrideResultV2(data = nil)
-    require_relative 'entity/schedules_show_override_result_v2_entity'
-    SchedulesShowOverrideResultV2Entity.new(self, data)
-  end
-
-
-  # Canonical facade: client.SchedulesUpdateOverrideResultV2.list / client.SchedulesUpdateOverrideResultV2.load({ "id" => ... })
-  def SchedulesUpdateOverrideResultV2(data = nil)
-    require_relative 'entity/schedules_update_override_result_v2_entity'
-    SchedulesUpdateOverrideResultV2Entity.new(self, data)
   end
 
 
@@ -1000,10 +888,10 @@ class IncidentIoSDK
   end
 
 
-  # Canonical facade: client.StatusPageComponentAvailabilityV2.list / client.StatusPageComponentAvailabilityV2.load({ "id" => ... })
-  def StatusPageComponentAvailabilityV2(data = nil)
-    require_relative 'entity/status_page_component_availability_v2_entity'
-    StatusPageComponentAvailabilityV2Entity.new(self, data)
+  # Canonical facade: client.StatusPageComponentAvailability.list / client.StatusPageComponentAvailability.load({ "id" => ... })
+  def StatusPageComponentAvailability(data = nil)
+    require_relative 'entity/status_page_component_availability_entity'
+    StatusPageComponentAvailabilityEntity.new(self, data)
   end
 
 
@@ -1021,10 +909,10 @@ class IncidentIoSDK
   end
 
 
-  # Canonical facade: client.StatusPageLinkedResponseIncidentV1.list / client.StatusPageLinkedResponseIncidentV1.load({ "id" => ... })
-  def StatusPageLinkedResponseIncidentV1(data = nil)
-    require_relative 'entity/status_page_linked_response_incident_v1_entity'
-    StatusPageLinkedResponseIncidentV1Entity.new(self, data)
+  # Canonical facade: client.StatusPageLinkedResponseIncident.list / client.StatusPageLinkedResponseIncident.load({ "id" => ... })
+  def StatusPageLinkedResponseIncident(data = nil)
+    require_relative 'entity/status_page_linked_response_incident_entity'
+    StatusPageLinkedResponseIncidentEntity.new(self, data)
   end
 
 
@@ -1049,13 +937,6 @@ class IncidentIoSDK
   end
 
 
-  # Canonical facade: client.StatusPagesV2.list / client.StatusPagesV2.load({ "id" => ... })
-  def StatusPagesV2(data = nil)
-    require_relative 'entity/status_pages_v2_entity'
-    StatusPagesV2Entity.new(self, data)
-  end
-
-
   # Canonical facade: client.Team.list / client.Team.load({ "id" => ... })
   def Team(data = nil)
     require_relative 'entity/team_entity'
@@ -1063,10 +944,10 @@ class IncidentIoSDK
   end
 
 
-  # Canonical facade: client.TelemetryDataSourceV2.list / client.TelemetryDataSourceV2.load({ "id" => ... })
-  def TelemetryDataSourceV2(data = nil)
-    require_relative 'entity/telemetry_data_source_v2_entity'
-    TelemetryDataSourceV2Entity.new(self, data)
+  # Canonical facade: client.TelemetryDataSource.list / client.TelemetryDataSource.load({ "id" => ... })
+  def TelemetryDataSource(data = nil)
+    require_relative 'entity/telemetry_data_source_entity'
+    TelemetryDataSourceEntity.new(self, data)
   end
 
 

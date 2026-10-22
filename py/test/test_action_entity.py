@@ -120,7 +120,7 @@ class TestActionEntity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.Action(None).list({"incident_id": 1}, None)
+            client.Action(None).list({"after": 1}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

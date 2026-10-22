@@ -34,7 +34,7 @@ class ScheduleSyncRuleEntityTest < Minitest::Test
     setup = schedule_sync_rule_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["update", "load"].each do |_op|
+    ["update", "load", "remove", "list"].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "schedule_sync_rule." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")

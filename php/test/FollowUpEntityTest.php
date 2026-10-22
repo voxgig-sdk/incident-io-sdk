@@ -182,7 +182,7 @@ class FollowUpEntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->FollowUp(null)->list(["assignee_team_id" => 1], null);
+            $client->FollowUp(null)->list(["after" => 1], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

@@ -2,27 +2,83 @@
   "existing": {
     "alert_tag": {
       "ALERT_TAG00": {
+        "alert_group_ids": [],
+        "alert_source_id": "ALERT_SOURCE01",
+        "attributes": [],
+        "created_at": "s8f",
+        "deduplication_key": "s90",
+        "description": "s91",
         "id": "ALERT_TAG00",
-        "name": "s15"
+        "name": "s93",
+        "resolved_at": "s94",
+        "source_url": "s95",
+        "status": "s96",
+        "tags": [],
+        "title": "s98",
+        "updated_at": "s99",
+        "alert_id": "ALERT01"
       },
       "ALERT_TAG01": {
+        "alert_group_ids": [],
+        "alert_source_id": "ALERT_SOURCE01",
+        "attributes": [],
+        "created_at": "s11b",
+        "deduplication_key": "s11c",
+        "description": "s11d",
         "id": "ALERT_TAG01",
-        "name": "s29"
+        "name": "s11f",
+        "resolved_at": "s120",
+        "source_url": "s121",
+        "status": "s122",
+        "tags": [],
+        "title": "s124",
+        "updated_at": "s125",
+        "alert_id": "ALERT01"
       },
       "ALERT_TAG02": {
+        "alert_group_ids": [],
+        "alert_source_id": "ALERT_SOURCE01",
+        "attributes": [],
+        "created_at": "s1a7",
+        "deduplication_key": "s1a8",
+        "description": "s1a9",
         "id": "ALERT_TAG02",
-        "name": "s3d"
+        "name": "s1ab",
+        "resolved_at": "s1ac",
+        "source_url": "s1ad",
+        "status": "s1ae",
+        "tags": [],
+        "title": "s1b0",
+        "updated_at": "s1b1",
+        "alert_id": "ALERT01"
       }
     }
   },
   "new": {
     "alert_tag": {
       "alert_tag_ref01": {
-        "name": "s51"
+        "alert_group_ids": [],
+        "alert_source_id": "ALERT_SOURCE01",
+        "attributes": [],
+        "created_at": "s233",
+        "deduplication_key": "s234",
+        "description": "s235",
+        "name": "s237",
+        "resolved_at": "s238",
+        "source_url": "s239",
+        "status": "s23a",
+        "tags": [],
+        "title": "s23c",
+        "updated_at": "s23d"
       }
     }
   },
   "requests": {
+    "POST /v2/alerts/{id}/actions/remove_tags": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
     "GET /v2/alert_tags": {
       "provenance": "operation-contract",
       "version": 2,

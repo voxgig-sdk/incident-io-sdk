@@ -402,12 +402,6 @@ class IncidentIoSDK:
         return AlertsAddTagsResultV2Entity(self, data)
 
 
-    def AlertsRemoveTagsResultV2(self, data=None) -> "AlertsRemoveTagsResultV2Entity":
-        """Entity factory: client.AlertsRemoveTagsResultV2().list() / client.AlertsRemoveTagsResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.alerts_remove_tags_result_v2_entity import AlertsRemoveTagsResultV2Entity
-        return AlertsRemoveTagsResultV2Entity(self, data)
-
-
     def AlertsSetTagsResultV2(self, data=None) -> "AlertsSetTagsResultV2Entity":
         """Entity factory: client.AlertsSetTagsResultV2().list() / client.AlertsSetTagsResultV2().load({"id": ...})."""
         from incidentio_sdk.entity.alerts_set_tags_result_v2_entity import AlertsSetTagsResultV2Entity
@@ -444,58 +438,16 @@ class IncidentIoSDK:
         return CallRouteEntity(self, data)
 
 
-    def CallRoutesCreateAllowedCallerResultV2(self, data=None) -> "CallRoutesCreateAllowedCallerResultV2Entity":
-        """Entity factory: client.CallRoutesCreateAllowedCallerResultV2().list() / client.CallRoutesCreateAllowedCallerResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_create_allowed_caller_result_v2_entity import CallRoutesCreateAllowedCallerResultV2Entity
-        return CallRoutesCreateAllowedCallerResultV2Entity(self, data)
+    def CallRouteAllowedCaller(self, data=None) -> "CallRouteAllowedCallerEntity":
+        """Entity factory: client.CallRouteAllowedCaller().list() / client.CallRouteAllowedCaller().load({"id": ...})."""
+        from incidentio_sdk.entity.call_route_allowed_caller_entity import CallRouteAllowedCallerEntity
+        return CallRouteAllowedCallerEntity(self, data)
 
 
-    def CallRoutesCreateOptionResultV2(self, data=None) -> "CallRoutesCreateOptionResultV2Entity":
-        """Entity factory: client.CallRoutesCreateOptionResultV2().list() / client.CallRoutesCreateOptionResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_create_option_result_v2_entity import CallRoutesCreateOptionResultV2Entity
-        return CallRoutesCreateOptionResultV2Entity(self, data)
-
-
-    def CallRoutesListAllowedCallersResultV2(self, data=None) -> "CallRoutesListAllowedCallersResultV2Entity":
-        """Entity factory: client.CallRoutesListAllowedCallersResultV2().list() / client.CallRoutesListAllowedCallersResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_list_allowed_callers_result_v2_entity import CallRoutesListAllowedCallersResultV2Entity
-        return CallRoutesListAllowedCallersResultV2Entity(self, data)
-
-
-    def CallRoutesListOptionsResultV2(self, data=None) -> "CallRoutesListOptionsResultV2Entity":
-        """Entity factory: client.CallRoutesListOptionsResultV2().list() / client.CallRoutesListOptionsResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_list_options_result_v2_entity import CallRoutesListOptionsResultV2Entity
-        return CallRoutesListOptionsResultV2Entity(self, data)
-
-
-    def CallRoutesShowAllowedCallerResultV2(self, data=None) -> "CallRoutesShowAllowedCallerResultV2Entity":
-        """Entity factory: client.CallRoutesShowAllowedCallerResultV2().list() / client.CallRoutesShowAllowedCallerResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_show_allowed_caller_result_v2_entity import CallRoutesShowAllowedCallerResultV2Entity
-        return CallRoutesShowAllowedCallerResultV2Entity(self, data)
-
-
-    def CallRoutesShowOptionResultV2(self, data=None) -> "CallRoutesShowOptionResultV2Entity":
-        """Entity factory: client.CallRoutesShowOptionResultV2().list() / client.CallRoutesShowOptionResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_show_option_result_v2_entity import CallRoutesShowOptionResultV2Entity
-        return CallRoutesShowOptionResultV2Entity(self, data)
-
-
-    def CallRoutesUpdateAllowedCallerResultV2(self, data=None) -> "CallRoutesUpdateAllowedCallerResultV2Entity":
-        """Entity factory: client.CallRoutesUpdateAllowedCallerResultV2().list() / client.CallRoutesUpdateAllowedCallerResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_update_allowed_caller_result_v2_entity import CallRoutesUpdateAllowedCallerResultV2Entity
-        return CallRoutesUpdateAllowedCallerResultV2Entity(self, data)
-
-
-    def CallRoutesUpdateOptionResultV2(self, data=None) -> "CallRoutesUpdateOptionResultV2Entity":
-        """Entity factory: client.CallRoutesUpdateOptionResultV2().list() / client.CallRoutesUpdateOptionResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_update_option_result_v2_entity import CallRoutesUpdateOptionResultV2Entity
-        return CallRoutesUpdateOptionResultV2Entity(self, data)
-
-
-    def CallRoutesV2(self, data=None) -> "CallRoutesV2Entity":
-        """Entity factory: client.CallRoutesV2().list() / client.CallRoutesV2().load({"id": ...})."""
-        from incidentio_sdk.entity.call_routes_v2_entity import CallRoutesV2Entity
-        return CallRoutesV2Entity(self, data)
+    def CallRouteOption(self, data=None) -> "CallRouteOptionEntity":
+        """Entity factory: client.CallRouteOption().list() / client.CallRouteOption().load({"id": ...})."""
+        from incidentio_sdk.entity.call_route_option_entity import CallRouteOptionEntity
+        return CallRouteOptionEntity(self, data)
 
 
     def CallSession(self, data=None) -> "CallSessionEntity":
@@ -550,6 +502,12 @@ class IncidentIoSDK:
         """Entity factory: client.Escalation().list() / client.Escalation().load({"id": ...})."""
         from incidentio_sdk.entity.escalation_entity import EscalationEntity
         return EscalationEntity(self, data)
+
+
+    def EscalationPath(self, data=None) -> "EscalationPathEntity":
+        """Entity factory: client.EscalationPath().list() / client.EscalationPath().load({"id": ...})."""
+        from incidentio_sdk.entity.escalation_path_entity import EscalationPathEntity
+        return EscalationPathEntity(self, data)
 
 
     def EscalationPathTemplate(self, data=None) -> "EscalationPathTemplateEntity":
@@ -750,58 +708,16 @@ class IncidentIoSDK:
         return PayConfigEntity(self, data)
 
 
-    def PayConfigsCreateOneOffRuleResultV2(self, data=None) -> "PayConfigsCreateOneOffRuleResultV2Entity":
-        """Entity factory: client.PayConfigsCreateOneOffRuleResultV2().list() / client.PayConfigsCreateOneOffRuleResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_create_one_off_rule_result_v2_entity import PayConfigsCreateOneOffRuleResultV2Entity
-        return PayConfigsCreateOneOffRuleResultV2Entity(self, data)
+    def PayConfigOneOffRule(self, data=None) -> "PayConfigOneOffRuleEntity":
+        """Entity factory: client.PayConfigOneOffRule().list() / client.PayConfigOneOffRule().load({"id": ...})."""
+        from incidentio_sdk.entity.pay_config_one_off_rule_entity import PayConfigOneOffRuleEntity
+        return PayConfigOneOffRuleEntity(self, data)
 
 
-    def PayConfigsCreateWeeklyRuleResultV2(self, data=None) -> "PayConfigsCreateWeeklyRuleResultV2Entity":
-        """Entity factory: client.PayConfigsCreateWeeklyRuleResultV2().list() / client.PayConfigsCreateWeeklyRuleResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_create_weekly_rule_result_v2_entity import PayConfigsCreateWeeklyRuleResultV2Entity
-        return PayConfigsCreateWeeklyRuleResultV2Entity(self, data)
-
-
-    def PayConfigsListOneOffRulesResultV2(self, data=None) -> "PayConfigsListOneOffRulesResultV2Entity":
-        """Entity factory: client.PayConfigsListOneOffRulesResultV2().list() / client.PayConfigsListOneOffRulesResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_list_one_off_rules_result_v2_entity import PayConfigsListOneOffRulesResultV2Entity
-        return PayConfigsListOneOffRulesResultV2Entity(self, data)
-
-
-    def PayConfigsListWeeklyRulesResultV2(self, data=None) -> "PayConfigsListWeeklyRulesResultV2Entity":
-        """Entity factory: client.PayConfigsListWeeklyRulesResultV2().list() / client.PayConfigsListWeeklyRulesResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_list_weekly_rules_result_v2_entity import PayConfigsListWeeklyRulesResultV2Entity
-        return PayConfigsListWeeklyRulesResultV2Entity(self, data)
-
-
-    def PayConfigsShowOneOffRuleResultV2(self, data=None) -> "PayConfigsShowOneOffRuleResultV2Entity":
-        """Entity factory: client.PayConfigsShowOneOffRuleResultV2().list() / client.PayConfigsShowOneOffRuleResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_show_one_off_rule_result_v2_entity import PayConfigsShowOneOffRuleResultV2Entity
-        return PayConfigsShowOneOffRuleResultV2Entity(self, data)
-
-
-    def PayConfigsShowWeeklyRuleResultV2(self, data=None) -> "PayConfigsShowWeeklyRuleResultV2Entity":
-        """Entity factory: client.PayConfigsShowWeeklyRuleResultV2().list() / client.PayConfigsShowWeeklyRuleResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_show_weekly_rule_result_v2_entity import PayConfigsShowWeeklyRuleResultV2Entity
-        return PayConfigsShowWeeklyRuleResultV2Entity(self, data)
-
-
-    def PayConfigsUpdateOneOffRuleResultV2(self, data=None) -> "PayConfigsUpdateOneOffRuleResultV2Entity":
-        """Entity factory: client.PayConfigsUpdateOneOffRuleResultV2().list() / client.PayConfigsUpdateOneOffRuleResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_update_one_off_rule_result_v2_entity import PayConfigsUpdateOneOffRuleResultV2Entity
-        return PayConfigsUpdateOneOffRuleResultV2Entity(self, data)
-
-
-    def PayConfigsUpdateWeeklyRuleResultV2(self, data=None) -> "PayConfigsUpdateWeeklyRuleResultV2Entity":
-        """Entity factory: client.PayConfigsUpdateWeeklyRuleResultV2().list() / client.PayConfigsUpdateWeeklyRuleResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_update_weekly_rule_result_v2_entity import PayConfigsUpdateWeeklyRuleResultV2Entity
-        return PayConfigsUpdateWeeklyRuleResultV2Entity(self, data)
-
-
-    def PayConfigsV2(self, data=None) -> "PayConfigsV2Entity":
-        """Entity factory: client.PayConfigsV2().list() / client.PayConfigsV2().load({"id": ...})."""
-        from incidentio_sdk.entity.pay_configs_v2_entity import PayConfigsV2Entity
-        return PayConfigsV2Entity(self, data)
+    def PayConfigWeeklyRule(self, data=None) -> "PayConfigWeeklyRuleEntity":
+        """Entity factory: client.PayConfigWeeklyRule().list() / client.PayConfigWeeklyRule().load({"id": ...})."""
+        from incidentio_sdk.entity.pay_config_weekly_rule_entity import PayConfigWeeklyRuleEntity
+        return PayConfigWeeklyRuleEntity(self, data)
 
 
     def PayReport(self, data=None) -> "PayReportEntity":
@@ -826,12 +742,6 @@ class IncidentIoSDK:
         """Entity factory: client.PayReportsV2().list() / client.PayReportsV2().load({"id": ...})."""
         from incidentio_sdk.entity.pay_reports_v2_entity import PayReportsV2Entity
         return PayReportsV2Entity(self, data)
-
-
-    def PoliciesV2(self, data=None) -> "PoliciesV2Entity":
-        """Entity factory: client.PoliciesV2().list() / client.PoliciesV2().load({"id": ...})."""
-        from incidentio_sdk.entity.policies_v2_entity import PoliciesV2Entity
-        return PoliciesV2Entity(self, data)
 
 
     def Policy(self, data=None) -> "PolicyEntity":
@@ -882,6 +792,12 @@ class IncidentIoSDK:
         return ScheduleEntryEntity(self, data)
 
 
+    def ScheduleOverride(self, data=None) -> "ScheduleOverrideEntity":
+        """Entity factory: client.ScheduleOverride().list() / client.ScheduleOverride().load({"id": ...})."""
+        from incidentio_sdk.entity.schedule_override_entity import ScheduleOverrideEntity
+        return ScheduleOverrideEntity(self, data)
+
+
     def ScheduleReplica(self, data=None) -> "ScheduleReplicaEntity":
         """Entity factory: client.ScheduleReplica().list() / client.ScheduleReplica().load({"id": ...})."""
         from incidentio_sdk.entity.schedule_replica_entity import ScheduleReplicaEntity
@@ -898,18 +814,6 @@ class IncidentIoSDK:
         """Entity factory: client.ScheduleSyncTarget().list() / client.ScheduleSyncTarget().load({"id": ...})."""
         from incidentio_sdk.entity.schedule_sync_target_entity import ScheduleSyncTargetEntity
         return ScheduleSyncTargetEntity(self, data)
-
-
-    def SchedulesShowOverrideResultV2(self, data=None) -> "SchedulesShowOverrideResultV2Entity":
-        """Entity factory: client.SchedulesShowOverrideResultV2().list() / client.SchedulesShowOverrideResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.schedules_show_override_result_v2_entity import SchedulesShowOverrideResultV2Entity
-        return SchedulesShowOverrideResultV2Entity(self, data)
-
-
-    def SchedulesUpdateOverrideResultV2(self, data=None) -> "SchedulesUpdateOverrideResultV2Entity":
-        """Entity factory: client.SchedulesUpdateOverrideResultV2().list() / client.SchedulesUpdateOverrideResultV2().load({"id": ...})."""
-        from incidentio_sdk.entity.schedules_update_override_result_v2_entity import SchedulesUpdateOverrideResultV2Entity
-        return SchedulesUpdateOverrideResultV2Entity(self, data)
 
 
     def Secret(self, data=None) -> "SecretEntity":
@@ -936,10 +840,10 @@ class IncidentIoSDK:
         return StatusPageComponentEntity(self, data)
 
 
-    def StatusPageComponentAvailabilityV2(self, data=None) -> "StatusPageComponentAvailabilityV2Entity":
-        """Entity factory: client.StatusPageComponentAvailabilityV2().list() / client.StatusPageComponentAvailabilityV2().load({"id": ...})."""
-        from incidentio_sdk.entity.status_page_component_availability_v2_entity import StatusPageComponentAvailabilityV2Entity
-        return StatusPageComponentAvailabilityV2Entity(self, data)
+    def StatusPageComponentAvailability(self, data=None) -> "StatusPageComponentAvailabilityEntity":
+        """Entity factory: client.StatusPageComponentAvailability().list() / client.StatusPageComponentAvailability().load({"id": ...})."""
+        from incidentio_sdk.entity.status_page_component_availability_entity import StatusPageComponentAvailabilityEntity
+        return StatusPageComponentAvailabilityEntity(self, data)
 
 
     def StatusPageIncident(self, data=None) -> "StatusPageIncidentEntity":
@@ -954,10 +858,10 @@ class IncidentIoSDK:
         return StatusPageIncidentUpdateEntity(self, data)
 
 
-    def StatusPageLinkedResponseIncidentV1(self, data=None) -> "StatusPageLinkedResponseIncidentV1Entity":
-        """Entity factory: client.StatusPageLinkedResponseIncidentV1().list() / client.StatusPageLinkedResponseIncidentV1().load({"id": ...})."""
-        from incidentio_sdk.entity.status_page_linked_response_incident_v1_entity import StatusPageLinkedResponseIncidentV1Entity
-        return StatusPageLinkedResponseIncidentV1Entity(self, data)
+    def StatusPageLinkedResponseIncident(self, data=None) -> "StatusPageLinkedResponseIncidentEntity":
+        """Entity factory: client.StatusPageLinkedResponseIncident().list() / client.StatusPageLinkedResponseIncident().load({"id": ...})."""
+        from incidentio_sdk.entity.status_page_linked_response_incident_entity import StatusPageLinkedResponseIncidentEntity
+        return StatusPageLinkedResponseIncidentEntity(self, data)
 
 
     def StatusPageMaintenance(self, data=None) -> "StatusPageMaintenanceEntity":
@@ -978,22 +882,16 @@ class IncidentIoSDK:
         return StatusPageStructureEntity(self, data)
 
 
-    def StatusPagesV2(self, data=None) -> "StatusPagesV2Entity":
-        """Entity factory: client.StatusPagesV2().list() / client.StatusPagesV2().load({"id": ...})."""
-        from incidentio_sdk.entity.status_pages_v2_entity import StatusPagesV2Entity
-        return StatusPagesV2Entity(self, data)
-
-
     def Team(self, data=None) -> "TeamEntity":
         """Entity factory: client.Team().list() / client.Team().load({"id": ...})."""
         from incidentio_sdk.entity.team_entity import TeamEntity
         return TeamEntity(self, data)
 
 
-    def TelemetryDataSourceV2(self, data=None) -> "TelemetryDataSourceV2Entity":
-        """Entity factory: client.TelemetryDataSourceV2().list() / client.TelemetryDataSourceV2().load({"id": ...})."""
-        from incidentio_sdk.entity.telemetry_data_source_v2_entity import TelemetryDataSourceV2Entity
-        return TelemetryDataSourceV2Entity(self, data)
+    def TelemetryDataSource(self, data=None) -> "TelemetryDataSourceEntity":
+        """Entity factory: client.TelemetryDataSource().list() / client.TelemetryDataSource().load({"id": ...})."""
+        from incidentio_sdk.entity.telemetry_data_source_entity import TelemetryDataSourceEntity
+        return TelemetryDataSourceEntity(self, data)
 
 
     def User(self, data=None) -> "UserEntity":
@@ -1050,22 +948,14 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.alert_sources_v2_entity import AlertSourcesV2Entity
     from incidentio_sdk.entity.alert_tag_entity import AlertTagEntity
     from incidentio_sdk.entity.alerts_add_tags_result_v2_entity import AlertsAddTagsResultV2Entity
-    from incidentio_sdk.entity.alerts_remove_tags_result_v2_entity import AlertsRemoveTagsResultV2Entity
     from incidentio_sdk.entity.alerts_set_tags_result_v2_entity import AlertsSetTagsResultV2Entity
     from incidentio_sdk.entity.alerts_transition_incident_alert_result_v2_entity import AlertsTransitionIncidentAlertResultV2Entity
     from incidentio_sdk.entity.announcement_rule_entity import AnnouncementRuleEntity
     from incidentio_sdk.entity.announcement_template_entity import AnnouncementTemplateEntity
     from incidentio_sdk.entity.api_key_entity import ApiKeyEntity
     from incidentio_sdk.entity.call_route_entity import CallRouteEntity
-    from incidentio_sdk.entity.call_routes_create_allowed_caller_result_v2_entity import CallRoutesCreateAllowedCallerResultV2Entity
-    from incidentio_sdk.entity.call_routes_create_option_result_v2_entity import CallRoutesCreateOptionResultV2Entity
-    from incidentio_sdk.entity.call_routes_list_allowed_callers_result_v2_entity import CallRoutesListAllowedCallersResultV2Entity
-    from incidentio_sdk.entity.call_routes_list_options_result_v2_entity import CallRoutesListOptionsResultV2Entity
-    from incidentio_sdk.entity.call_routes_show_allowed_caller_result_v2_entity import CallRoutesShowAllowedCallerResultV2Entity
-    from incidentio_sdk.entity.call_routes_show_option_result_v2_entity import CallRoutesShowOptionResultV2Entity
-    from incidentio_sdk.entity.call_routes_update_allowed_caller_result_v2_entity import CallRoutesUpdateAllowedCallerResultV2Entity
-    from incidentio_sdk.entity.call_routes_update_option_result_v2_entity import CallRoutesUpdateOptionResultV2Entity
-    from incidentio_sdk.entity.call_routes_v2_entity import CallRoutesV2Entity
+    from incidentio_sdk.entity.call_route_allowed_caller_entity import CallRouteAllowedCallerEntity
+    from incidentio_sdk.entity.call_route_option_entity import CallRouteOptionEntity
     from incidentio_sdk.entity.call_session_entity import CallSessionEntity
     from incidentio_sdk.entity.call_transcript_entry_entity import CallTranscriptEntryEntity
     from incidentio_sdk.entity.catalog_entry_entity import CatalogEntryEntity
@@ -1075,6 +965,7 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.custom_field_entity import CustomFieldEntity
     from incidentio_sdk.entity.custom_field_option_entity import CustomFieldOptionEntity
     from incidentio_sdk.entity.escalation_entity import EscalationEntity
+    from incidentio_sdk.entity.escalation_path_entity import EscalationPathEntity
     from incidentio_sdk.entity.escalation_path_template_entity import EscalationPathTemplateEntity
     from incidentio_sdk.entity.escalations_check_escalation_permissions_result_v2_entity import EscalationsCheckEscalationPermissionsResultV2Entity
     from incidentio_sdk.entity.escalations_reassign_escalation_result_v2_entity import EscalationsReassignEscalationResultV2Entity
@@ -1108,20 +999,12 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.on_call_notification_pause_entity import OnCallNotificationPauseEntity
     from incidentio_sdk.entity.on_call_notification_rule_public_v2_entity import OnCallNotificationRulePublicV2Entity
     from incidentio_sdk.entity.pay_config_entity import PayConfigEntity
-    from incidentio_sdk.entity.pay_configs_create_one_off_rule_result_v2_entity import PayConfigsCreateOneOffRuleResultV2Entity
-    from incidentio_sdk.entity.pay_configs_create_weekly_rule_result_v2_entity import PayConfigsCreateWeeklyRuleResultV2Entity
-    from incidentio_sdk.entity.pay_configs_list_one_off_rules_result_v2_entity import PayConfigsListOneOffRulesResultV2Entity
-    from incidentio_sdk.entity.pay_configs_list_weekly_rules_result_v2_entity import PayConfigsListWeeklyRulesResultV2Entity
-    from incidentio_sdk.entity.pay_configs_show_one_off_rule_result_v2_entity import PayConfigsShowOneOffRuleResultV2Entity
-    from incidentio_sdk.entity.pay_configs_show_weekly_rule_result_v2_entity import PayConfigsShowWeeklyRuleResultV2Entity
-    from incidentio_sdk.entity.pay_configs_update_one_off_rule_result_v2_entity import PayConfigsUpdateOneOffRuleResultV2Entity
-    from incidentio_sdk.entity.pay_configs_update_weekly_rule_result_v2_entity import PayConfigsUpdateWeeklyRuleResultV2Entity
-    from incidentio_sdk.entity.pay_configs_v2_entity import PayConfigsV2Entity
+    from incidentio_sdk.entity.pay_config_one_off_rule_entity import PayConfigOneOffRuleEntity
+    from incidentio_sdk.entity.pay_config_weekly_rule_entity import PayConfigWeeklyRuleEntity
     from incidentio_sdk.entity.pay_report_entity import PayReportEntity
     from incidentio_sdk.entity.pay_reports_publish_result_v2_entity import PayReportsPublishResultV2Entity
     from incidentio_sdk.entity.pay_reports_unpublish_result_v2_entity import PayReportsUnpublishResultV2Entity
     from incidentio_sdk.entity.pay_reports_v2_entity import PayReportsV2Entity
-    from incidentio_sdk.entity.policies_v2_entity import PoliciesV2Entity
     from incidentio_sdk.entity.policy_entity import PolicyEntity
     from incidentio_sdk.entity.policy_finding_entity import PolicyFindingEntity
     from incidentio_sdk.entity.policy_findings_dismiss_result_v2_entity import PolicyFindingsDismissResultV2Entity
@@ -1130,25 +1013,23 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.schedule_entity import ScheduleEntity
     from incidentio_sdk.entity.schedule_entries_list_payload_v2_entity import ScheduleEntriesListPayloadV2Entity
     from incidentio_sdk.entity.schedule_entry_entity import ScheduleEntryEntity
+    from incidentio_sdk.entity.schedule_override_entity import ScheduleOverrideEntity
     from incidentio_sdk.entity.schedule_replica_entity import ScheduleReplicaEntity
     from incidentio_sdk.entity.schedule_sync_rule_entity import ScheduleSyncRuleEntity
     from incidentio_sdk.entity.schedule_sync_target_entity import ScheduleSyncTargetEntity
-    from incidentio_sdk.entity.schedules_show_override_result_v2_entity import SchedulesShowOverrideResultV2Entity
-    from incidentio_sdk.entity.schedules_update_override_result_v2_entity import SchedulesUpdateOverrideResultV2Entity
     from incidentio_sdk.entity.secret_entity import SecretEntity
     from incidentio_sdk.entity.severity_entity import SeverityEntity
     from incidentio_sdk.entity.status_page_entity import StatusPageEntity
     from incidentio_sdk.entity.status_page_component_entity import StatusPageComponentEntity
-    from incidentio_sdk.entity.status_page_component_availability_v2_entity import StatusPageComponentAvailabilityV2Entity
+    from incidentio_sdk.entity.status_page_component_availability_entity import StatusPageComponentAvailabilityEntity
     from incidentio_sdk.entity.status_page_incident_entity import StatusPageIncidentEntity
     from incidentio_sdk.entity.status_page_incident_update_entity import StatusPageIncidentUpdateEntity
-    from incidentio_sdk.entity.status_page_linked_response_incident_v1_entity import StatusPageLinkedResponseIncidentV1Entity
+    from incidentio_sdk.entity.status_page_linked_response_incident_entity import StatusPageLinkedResponseIncidentEntity
     from incidentio_sdk.entity.status_page_maintenance_entity import StatusPageMaintenanceEntity
     from incidentio_sdk.entity.status_page_maintenance_update_entity import StatusPageMaintenanceUpdateEntity
     from incidentio_sdk.entity.status_page_structure_entity import StatusPageStructureEntity
-    from incidentio_sdk.entity.status_pages_v2_entity import StatusPagesV2Entity
     from incidentio_sdk.entity.team_entity import TeamEntity
-    from incidentio_sdk.entity.telemetry_data_source_v2_entity import TelemetryDataSourceV2Entity
+    from incidentio_sdk.entity.telemetry_data_source_entity import TelemetryDataSourceEntity
     from incidentio_sdk.entity.user_entity import UserEntity
     from incidentio_sdk.entity.workflow_entity import WorkflowEntity
     from incidentio_sdk.entity.workflow_run_entity import WorkflowRunEntity

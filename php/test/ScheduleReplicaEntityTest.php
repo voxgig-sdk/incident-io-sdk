@@ -45,7 +45,7 @@ class ScheduleReplicaEntityTest extends TestCase
         $setup = schedule_replica_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["load"] as $_op) {
+        foreach (["load", "remove", "list"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "schedule_replica." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
@@ -53,9 +53,17 @@ class ScheduleReplicaEntityTest extends TestCase
             }
         }
         if (!empty($setup["live"])) {
-            Runner::live_miss(self::LIVE_STRICT, "Live entity test blocked: " . "the flow loads a schedule_replica record it has no list to find");
+            foreach (["schedule01"] as $_liveKey) {
+                if (!empty($setup["synthetic_only"]) || null === ($setup["idmap"][$_liveKey] ?? null)) {
+                    Runner::live_miss(self::LIVE_STRICT, "Live entity test blocked: needs " . $_liveKey . " via INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID");
+                }
+            }
         }
         $client = $setup["client"];
+        if (!empty($setup["live"])) {
+            Runner::live_existing($setup, self::LIVE_STRICT, "schedule_replica",
+                fn() => $client->ScheduleReplica(null)->list(["schedule_id" => $setup["idmap"]["schedule01"] ?? null], null));
+        }
 
         // Bootstrap entity data from existing test data.
         $schedule_replica_ref01_data_raw = Vs::items(Helpers::to_map(

@@ -78,10 +78,6 @@ Create a new `AlertTagEntity` instance. Pass `None` for no initial data.
 
 Create a new `AlertsAddTagsResultV2Entity` instance. Pass `None` for no initial data.
 
-#### `AlertsRemoveTagsResultV2(data=None)`
-
-Create a new `AlertsRemoveTagsResultV2Entity` instance. Pass `None` for no initial data.
-
 #### `AlertsSetTagsResultV2(data=None)`
 
 Create a new `AlertsSetTagsResultV2Entity` instance. Pass `None` for no initial data.
@@ -106,41 +102,13 @@ Create a new `ApiKeyEntity` instance. Pass `None` for no initial data.
 
 Create a new `CallRouteEntity` instance. Pass `None` for no initial data.
 
-#### `CallRoutesCreateAllowedCallerResultV2(data=None)`
+#### `CallRouteAllowedCaller(data=None)`
 
-Create a new `CallRoutesCreateAllowedCallerResultV2Entity` instance. Pass `None` for no initial data.
+Create a new `CallRouteAllowedCallerEntity` instance. Pass `None` for no initial data.
 
-#### `CallRoutesCreateOptionResultV2(data=None)`
+#### `CallRouteOption(data=None)`
 
-Create a new `CallRoutesCreateOptionResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `CallRoutesListAllowedCallersResultV2(data=None)`
-
-Create a new `CallRoutesListAllowedCallersResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `CallRoutesListOptionsResultV2(data=None)`
-
-Create a new `CallRoutesListOptionsResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `CallRoutesShowAllowedCallerResultV2(data=None)`
-
-Create a new `CallRoutesShowAllowedCallerResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `CallRoutesShowOptionResultV2(data=None)`
-
-Create a new `CallRoutesShowOptionResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `CallRoutesUpdateAllowedCallerResultV2(data=None)`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `CallRoutesUpdateOptionResultV2(data=None)`
-
-Create a new `CallRoutesUpdateOptionResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `CallRoutesV2(data=None)`
-
-Create a new `CallRoutesV2Entity` instance. Pass `None` for no initial data.
+Create a new `CallRouteOptionEntity` instance. Pass `None` for no initial data.
 
 #### `CallSession(data=None)`
 
@@ -177,6 +145,10 @@ Create a new `CustomFieldOptionEntity` instance. Pass `None` for no initial data
 #### `Escalation(data=None)`
 
 Create a new `EscalationEntity` instance. Pass `None` for no initial data.
+
+#### `EscalationPath(data=None)`
+
+Create a new `EscalationPathEntity` instance. Pass `None` for no initial data.
 
 #### `EscalationPathTemplate(data=None)`
 
@@ -310,41 +282,13 @@ Create a new `OnCallNotificationRulePublicV2Entity` instance. Pass `None` for no
 
 Create a new `PayConfigEntity` instance. Pass `None` for no initial data.
 
-#### `PayConfigsCreateOneOffRuleResultV2(data=None)`
+#### `PayConfigOneOffRule(data=None)`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2Entity` instance. Pass `None` for no initial data.
+Create a new `PayConfigOneOffRuleEntity` instance. Pass `None` for no initial data.
 
-#### `PayConfigsCreateWeeklyRuleResultV2(data=None)`
+#### `PayConfigWeeklyRule(data=None)`
 
-Create a new `PayConfigsCreateWeeklyRuleResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `PayConfigsListOneOffRulesResultV2(data=None)`
-
-Create a new `PayConfigsListOneOffRulesResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `PayConfigsListWeeklyRulesResultV2(data=None)`
-
-Create a new `PayConfigsListWeeklyRulesResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `PayConfigsShowOneOffRuleResultV2(data=None)`
-
-Create a new `PayConfigsShowOneOffRuleResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `PayConfigsShowWeeklyRuleResultV2(data=None)`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `PayConfigsUpdateOneOffRuleResultV2(data=None)`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `PayConfigsUpdateWeeklyRuleResultV2(data=None)`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `PayConfigsV2(data=None)`
-
-Create a new `PayConfigsV2Entity` instance. Pass `None` for no initial data.
+Create a new `PayConfigWeeklyRuleEntity` instance. Pass `None` for no initial data.
 
 #### `PayReport(data=None)`
 
@@ -361,10 +305,6 @@ Create a new `PayReportsUnpublishResultV2Entity` instance. Pass `None` for no in
 #### `PayReportsV2(data=None)`
 
 Create a new `PayReportsV2Entity` instance. Pass `None` for no initial data.
-
-#### `PoliciesV2(data=None)`
-
-Create a new `PoliciesV2Entity` instance. Pass `None` for no initial data.
 
 #### `Policy(data=None)`
 
@@ -398,6 +338,10 @@ Create a new `ScheduleEntriesListPayloadV2Entity` instance. Pass `None` for no i
 
 Create a new `ScheduleEntryEntity` instance. Pass `None` for no initial data.
 
+#### `ScheduleOverride(data=None)`
+
+Create a new `ScheduleOverrideEntity` instance. Pass `None` for no initial data.
+
 #### `ScheduleReplica(data=None)`
 
 Create a new `ScheduleReplicaEntity` instance. Pass `None` for no initial data.
@@ -409,14 +353,6 @@ Create a new `ScheduleSyncRuleEntity` instance. Pass `None` for no initial data.
 #### `ScheduleSyncTarget(data=None)`
 
 Create a new `ScheduleSyncTargetEntity` instance. Pass `None` for no initial data.
-
-#### `SchedulesShowOverrideResultV2(data=None)`
-
-Create a new `SchedulesShowOverrideResultV2Entity` instance. Pass `None` for no initial data.
-
-#### `SchedulesUpdateOverrideResultV2(data=None)`
-
-Create a new `SchedulesUpdateOverrideResultV2Entity` instance. Pass `None` for no initial data.
 
 #### `Secret(data=None)`
 
@@ -434,9 +370,9 @@ Create a new `StatusPageEntity` instance. Pass `None` for no initial data.
 
 Create a new `StatusPageComponentEntity` instance. Pass `None` for no initial data.
 
-#### `StatusPageComponentAvailabilityV2(data=None)`
+#### `StatusPageComponentAvailability(data=None)`
 
-Create a new `StatusPageComponentAvailabilityV2Entity` instance. Pass `None` for no initial data.
+Create a new `StatusPageComponentAvailabilityEntity` instance. Pass `None` for no initial data.
 
 #### `StatusPageIncident(data=None)`
 
@@ -446,9 +382,9 @@ Create a new `StatusPageIncidentEntity` instance. Pass `None` for no initial dat
 
 Create a new `StatusPageIncidentUpdateEntity` instance. Pass `None` for no initial data.
 
-#### `StatusPageLinkedResponseIncidentV1(data=None)`
+#### `StatusPageLinkedResponseIncident(data=None)`
 
-Create a new `StatusPageLinkedResponseIncidentV1Entity` instance. Pass `None` for no initial data.
+Create a new `StatusPageLinkedResponseIncidentEntity` instance. Pass `None` for no initial data.
 
 #### `StatusPageMaintenance(data=None)`
 
@@ -462,17 +398,13 @@ Create a new `StatusPageMaintenanceUpdateEntity` instance. Pass `None` for no in
 
 Create a new `StatusPageStructureEntity` instance. Pass `None` for no initial data.
 
-#### `StatusPagesV2(data=None)`
-
-Create a new `StatusPagesV2Entity` instance. Pass `None` for no initial data.
-
 #### `Team(data=None)`
 
 Create a new `TeamEntity` instance. Pass `None` for no initial data.
 
-#### `TelemetryDataSourceV2(data=None)`
+#### `TelemetryDataSource(data=None)`
 
-Create a new `TelemetryDataSourceV2Entity` instance. Pass `None` for no initial data.
+Create a new `TelemetryDataSourceEntity` instance. Pass `None` for no initial data.
 
 #### `User(data=None)`
 
@@ -533,30 +465,11 @@ action = client.Action()
 | `completed_at` | `str` | No | When the action was completed |
 | `created_at` | `str` | Yes | When the action was created |
 | `creator` | `dict` | Yes |  |
-| `description` | `str` | No | Description of the action |
-| `external_issue_reference` | `dict` | No |  |
-| `follow_up` | `bool` | Yes | Whether an action is marked as follow-up |
+| `description` | `str` | Yes | Description of the action |
 | `id` | `str` | Yes | Unique identifier for the action |
 | `incident_id` | `str` | Yes | Unique identifier of the incident the action belongs to |
 | `status` | `str` | Yes | Status of the action |
 | `updated_at` | `str` | Yes | When the action was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `assignee` | - | - | - | - | - |
-| `assignee_id` | - | - | - | - | - |
-| `completed_at` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `creator` | - | - | - | - | - |
-| `description` | Yes | Yes | Yes | Yes | - |
-| `external_issue_reference` | - | - | - | - | - |
-| `follow_up` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `incident_id` | - | - | - | - | - |
-| `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -943,24 +856,21 @@ alert_route = client.AlertRoute()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `alert_sources` | `list` | Yes | Which alert sources should this alert route match? |
-| `channel_config` | `list` | Yes | The channel configuration for this alert route |
-| `condition_groups` | `list` | Yes | What condition groups must be true for this alert route to fire? |
-| `created_at` | `str` | No | The time of creation of this alert route |
-| `enabled` | `bool` | Yes | Whether this alert route is enabled or not |
+| `alert_sources` | `list` | Yes | Which alert sources this route matches |
+| `condition_groups` | `list` | Yes | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | `str` | No | When this alert route was created |
+| `enabled` | `bool` | Yes | Whether this alert route is enabled |
 | `escalation_config` | `dict` | Yes |  |
-| `expressions` | `list` | Yes | The expressions used in this template |
+| `expressions` | `list` | Yes | The expressions used by bindings in this route |
 | `grouping_config` | `dict` | Yes |  |
-| `id` | `str` | Yes | Unique identifier for this alert route config |
+| `id` | `str` | Yes | Unique identifier for this alert route |
 | `incident_config` | `dict` | Yes |  |
-| `incident_template` | `dict` | Yes |  |
 | `is_private` | `bool` | Yes | Whether this alert route is private. |
 | `message_config` | `dict` | Yes |  |
-| `message_template` | `dict` | No |  |
-| `name` | `str` | Yes | The name of this alert route config, for the user's reference |
+| `name` | `str` | Yes | The name of this alert route, for the user's reference |
 | `owning_team_ids` | `list` | No | IDs of teams that own this alert route |
-| `updated_at` | `str` | No | The time of last update of this alert route |
-| `version` | `int` | Yes | The version of this alert route config |
+| `updated_at` | `str` | No | When this alert route was last updated |
+| `version` | `int` | Yes | The version of this alert route |
 
 ### Operations
 
@@ -971,14 +881,12 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.AlertRoute().create({
     "alert_sources": [],  # list
-    "channel_config": [],  # list
     "condition_groups": [],  # list
     "enabled": True,  # bool
     "escalation_config": {},  # dict
     "expressions": [],  # list
     "grouping_config": {},  # dict
     "incident_config": {},  # dict
-    "incident_template": {},  # dict
     "is_private": True,  # bool
     "message_config": {},  # dict
     "name": "example_name",  # str
@@ -990,7 +898,7 @@ result = client.AlertRoute().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
 
 ```python
-results = client.AlertRoute().list({"page_size": 1})
+results = client.AlertRoute().list()
 for alert_route in results:
     print(alert_route.data_get())
 ```
@@ -1232,10 +1140,52 @@ alert_tag = client.AlertTag()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `str` | Yes | Unique identifier for the tag |
+| `alert_group_ids` | `list` | No | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `str` | Yes | The ID of the alert source this alert fired on |
+| `attributes` | `list` | Yes | Attribute values parsed from the alerts payload |
+| `created_at` | `str` | Yes | When this entry was created |
+| `deduplication_key` | `str` | Yes | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `str` | No | The description of the alert |
+| `id` | `str` | Yes | The ID of this alert |
 | `name` | `str` | Yes | The tag name |
+| `resolved_at` | `str` | No | When this alert was resolved |
+| `source_url` | `str` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `str` | Yes | Statuses of an alert |
+| `tags` | `list` | No | Tags someone has applied to this alert |
+| `title` | `str` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `str` | Yes | When this alert was last updated |
+
+### Field Usage by Operation
+
+| Field | list | create |
+| --- | --- | --- |
+| `alert_group_ids` | - | - |
+| `alert_source_id` | - | - |
+| `attributes` | - | - |
+| `created_at` | - | - |
+| `deduplication_key` | - | - |
+| `description` | - | - |
+| `id` | - | - |
+| `name` | - | - |
+| `resolved_at` | - | - |
+| `source_url` | - | - |
+| `status` | - | - |
+| `tags` | - | Yes |
+| `title` | - | - |
+| `updated_at` | - | - |
 
 ### Operations
+
+#### `create(reqdata, ctrl=None) -> AlertTagEntity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.AlertTag().create({
+    "alert_id": "example_alert_id",  # str
+    "tags": [],  # list
+})
+```
 
 #### `list(reqmatch=None, ctrl=None) -> list[AlertTagEntity]`
 
@@ -1352,90 +1302,6 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `AlertsAddTagsResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## AlertsRemoveTagsResultV2Entity
-
-```python
-alerts_remove_tags_result_v2 = client.AlertsRemoveTagsResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `alert_group_ids` | `list` | No | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | `str` | Yes | The ID of the alert source this alert fired on |
-| `attributes` | `list` | Yes | Attribute values parsed from the alerts payload |
-| `created_at` | `str` | Yes | When this entry was created |
-| `deduplication_key` | `str` | Yes | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | `str` | No | The description of the alert |
-| `id` | `str` | Yes | The ID of this alert |
-| `resolved_at` | `str` | No | When this alert was resolved |
-| `source_url` | `str` | No | If applicable, a link to the alert in the upstream system |
-| `status` | `str` | Yes | Statuses of an alert |
-| `tags` | `list` | No | Tags someone has applied to this alert |
-| `title` | `str` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | `str` | Yes | When this alert was last updated |
-
-### Field Usage by Operation
-
-| Field | create |
-| --- | --- |
-| `alert_group_ids` | - |
-| `alert_source_id` | - |
-| `attributes` | - |
-| `created_at` | - |
-| `deduplication_key` | - |
-| `description` | - |
-| `id` | - |
-| `resolved_at` | - |
-| `source_url` | - |
-| `status` | - |
-| `tags` | Yes |
-| `title` | - |
-| `updated_at` | - |
-
-### Operations
-
-#### `create(reqdata, ctrl=None) -> AlertsRemoveTagsResultV2Entity`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```python
-result = client.AlertsRemoveTagsResultV2().create({
-    "alert_id": "example_alert_id",  # str
-    "tags": [],  # list
-})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `AlertsRemoveTagsResultV2Entity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -2018,29 +1884,68 @@ Return the entity name.
 
 ---
 
-## CallRoutesCreateAllowedCallerResultV2Entity
+## CallRouteAllowedCallerEntity
 
 ```python
-call_routes_create_allowed_caller_result_v2 = client.CallRoutesCreateAllowedCallerResultV2()
+call_route_allowed_caller = client.CallRouteAllowedCaller()
 ```
 
 ### Fields
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `str` | Yes | Unique identifier for this allowed caller |
 | `name` | `str` | No | Label for whose number this is |
-| `phone_number` | `str` | Yes | The number to allow, in international format |
+| `phone_number` | `str` | Yes | The number allowed to call this route, in international format |
 
 ### Operations
 
-#### `create(reqdata, ctrl=None) -> CallRoutesCreateAllowedCallerResultV2Entity`
+#### `create(reqdata, ctrl=None) -> CallRouteAllowedCallerEntity`
 
 Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```python
-result = client.CallRoutesCreateAllowedCallerResultV2().create({
-    "call_route_id": "example_call_route_id",  # str
+result = client.CallRouteAllowedCaller().create({
+    "id": "example_id",  # str
     "phone_number": "example_phone_number",  # str
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list[CallRouteAllowedCallerEntity]`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
+
+```python
+results = client.CallRouteAllowedCaller().list({"id": "example"})
+for call_route_allowed_caller in results:
+    print(call_route_allowed_caller.data_get())
+```
+
+#### `load(reqmatch, ctrl=None) -> CallRouteAllowedCallerEntity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.CallRouteAllowedCaller().load({"id": "call_route_allowed_caller_id", "call_route_id": "call_route_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> CallRouteAllowedCallerEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.CallRouteAllowedCaller().remove({"id": "call_route_allowed_caller_id", "call_route_id": "call_route_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> CallRouteAllowedCallerEntity`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```python
+result = client.CallRouteAllowedCaller().update({
+    "id": "call_route_allowed_caller_id",
+    "call_route_id": "call_route_id",
+    # Fields to update
 })
 ```
 
@@ -2064,7 +1969,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `CallRoutesCreateAllowedCallerResultV2Entity` instance with the same options.
+Create a new `CallRouteAllowedCallerEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -2073,10 +1978,10 @@ Return the entity name.
 
 ---
 
-## CallRoutesCreateOptionResultV2Entity
+## CallRouteOptionEntity
 
 ```python
-call_routes_create_option_result_v2 = client.CallRoutesCreateOptionResultV2()
+call_route_option = client.CallRouteOption()
 ```
 
 ### Fields
@@ -2084,406 +1989,61 @@ call_routes_create_option_result_v2 = client.CallRoutesCreateOptionResultV2()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `digit` | `str` | Yes | The keypad digit a caller presses to choose this option |
-| `path` | `list` | Yes | Who to page when a caller chooses this option |
+| `id` | `str` | Yes | Unique identifier for this option |
+| `path` | `list` | Yes | Who we page when a caller chooses this option |
 | `prompt` | `str` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
 
 ### Operations
 
-#### `create(reqdata, ctrl=None) -> CallRoutesCreateOptionResultV2Entity`
+#### `create(reqdata, ctrl=None) -> CallRouteOptionEntity`
 
 Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```python
-result = client.CallRoutesCreateOptionResultV2().create({
-    "call_route_id": "example_call_route_id",  # str
+result = client.CallRouteOption().create({
+    "id": "example_id",  # str
     "digit": "example_digit",  # str
     "path": [],  # list
     "prompt": "example_prompt",  # str
 })
 ```
 
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesCreateOptionResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListAllowedCallersResultV2Entity
-
-```python
-call_routes_list_allowed_callers_result_v2 = client.CallRoutesListAllowedCallersResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `str` | Yes | Unique identifier for this allowed caller |
-| `name` | `str` | No | Label for whose number this is |
-| `phone_number` | `str` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `list(reqmatch=None, ctrl=None) -> list[CallRoutesListAllowedCallersResultV2Entity]`
+#### `list(reqmatch=None, ctrl=None) -> list[CallRouteOptionEntity]`
 
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
 
 ```python
-results = client.CallRoutesListAllowedCallersResultV2().list({"call_route_id": "example"})
-for call_routes_list_allowed_callers_result_v2 in results:
-    print(call_routes_list_allowed_callers_result_v2.data_get())
+results = client.CallRouteOption().list({"id": "example"})
+for call_route_option in results:
+    print(call_route_option.data_get())
 ```
 
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesListAllowedCallersResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListOptionsResultV2Entity
-
-```python
-call_routes_list_options_result_v2 = client.CallRoutesListOptionsResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `str` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `str` | Yes | Unique identifier for this option |
-| `path` | `list` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `str` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `list(reqmatch=None, ctrl=None) -> list[CallRoutesListOptionsResultV2Entity]`
-
-List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
-
-```python
-results = client.CallRoutesListOptionsResultV2().list({"call_route_id": "example"})
-for call_routes_list_options_result_v2 in results:
-    print(call_routes_list_options_result_v2.data_get())
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesListOptionsResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowAllowedCallerResultV2Entity
-
-```python
-call_routes_show_allowed_caller_result_v2 = client.CallRoutesShowAllowedCallerResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `str` | Yes | Unique identifier for this allowed caller |
-| `name` | `str` | No | Label for whose number this is |
-| `phone_number` | `str` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `load(reqmatch, ctrl=None) -> CallRoutesShowAllowedCallerResultV2Entity`
+#### `load(reqmatch, ctrl=None) -> CallRouteOptionEntity`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
 
 ```python
-result = client.CallRoutesShowAllowedCallerResultV2().load({"id": "call_routes_show_allowed_caller_result_v2_id", "call_route_id": "call_route_id"})
+result = client.CallRouteOption().load({"id": "call_route_option_id", "call_route_id": "call_route_id"})
 ```
 
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesShowAllowedCallerResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowOptionResultV2Entity
-
-```python
-call_routes_show_option_result_v2 = client.CallRoutesShowOptionResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `str` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `str` | Yes | Unique identifier for this option |
-| `path` | `list` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `str` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `load(reqmatch, ctrl=None) -> CallRoutesShowOptionResultV2Entity`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
-
-```python
-result = client.CallRoutesShowOptionResultV2().load({"id": "call_routes_show_option_result_v2_id", "call_route_id": "call_route_id"})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesShowOptionResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateAllowedCallerResultV2Entity
-
-```python
-call_routes_update_allowed_caller_result_v2 = client.CallRoutesUpdateAllowedCallerResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `str` | Yes | Unique identifier for this allowed caller |
-| `name` | `str` | No | Label for whose number this is |
-| `phone_number` | `str` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `update(reqdata, ctrl=None) -> CallRoutesUpdateAllowedCallerResultV2Entity`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```python
-result = client.CallRoutesUpdateAllowedCallerResultV2().update({
-    "call_route_id": "call_route_id",
-    "id": "id",
-    # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateOptionResultV2Entity
-
-```python
-call_routes_update_option_result_v2 = client.CallRoutesUpdateOptionResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `str` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `str` | Yes | Unique identifier for this option |
-| `path` | `list` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `str` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `update(reqdata, ctrl=None) -> CallRoutesUpdateOptionResultV2Entity`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```python
-result = client.CallRoutesUpdateOptionResultV2().update({
-    "call_route_id": "call_route_id",
-    "id": "id",
-    # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `CallRoutesUpdateOptionResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## CallRoutesV2Entity
-
-```python
-call_routes_v2 = client.CallRoutesV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `str` | No |  |
-
-### Operations
-
-#### `remove(reqmatch, ctrl=None) -> CallRoutesV2Entity`
+#### `remove(reqmatch, ctrl=None) -> CallRouteOptionEntity`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
 
 ```python
-result = client.CallRoutesV2().remove({"id": "call_routes_v2_id", "call_route_id": "call_route_id"})
+result = client.CallRouteOption().remove({"id": "call_route_option_id", "call_route_id": "call_route_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> CallRouteOptionEntity`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```python
+result = client.CallRouteOption().update({
+    "id": "call_route_option_id",
+    "call_route_id": "call_route_id",
+    # Fields to update
+})
 ```
 
 ### Common Methods
@@ -2506,7 +2066,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `CallRoutesV2Entity` instance with the same options.
+Create a new `CallRouteOptionEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -2654,21 +2214,21 @@ catalog_entry = client.CatalogEntry()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `aliases` | - | Yes | - | - |
-| `archived_at` | - | - | - | - |
-| `attribute_values` | - | - | - | - |
-| `catalog_entry` | - | - | - | - |
-| `catalog_type` | - | - | - | - |
-| `catalog_type_id` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `external_id` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | Yes | - | - |
-| `update_attributes` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `aliases` | - | Yes | - | - | - |
+| `archived_at` | - | - | - | - | - |
+| `attribute_values` | - | - | - | - | - |
+| `catalog_entry` | - | - | - | - | - |
+| `catalog_type` | - | - | - | - | - |
+| `catalog_type_id` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `external_id` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | Yes | - | - | - |
+| `update_attributes` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2689,7 +2249,7 @@ result = client.CatalogEntry().create({
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
 
 ```python
-results = client.CatalogEntry().list({"catalog_type_id": "example"})
+results = client.CatalogEntry().list({"catalog_type_id": "example", "page_size": 1})
 for catalog_entry in results:
     print(catalog_entry.data_get())
 ```
@@ -2700,6 +2260,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```python
 result = client.CatalogEntry().load({"id": "catalog_entry_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> CatalogEntryEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.CatalogEntry().remove({"id": "catalog_entry_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> CatalogEntryEntity`
@@ -2829,7 +2397,6 @@ catalog_type = client.CatalogType()
 | `registry_type` | `str` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `list` | No | If populated, the integrations required for this type |
 | `schema` | `dict` | Yes |  |
-| `semantic_type` | `str` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `str` | No | The url of the external repository where this type is managed |
 | `type_name` | `str` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `str` | Yes | When this type was last updated |
@@ -2837,32 +2404,31 @@ catalog_type = client.CatalogType()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | Yes | Yes |
-| `categories` | - | - | Yes | Yes |
-| `color` | - | - | Yes | Yes |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `dynamic_resource_parameter` | - | - | - | - |
-| `engine_resource_type` | - | - | - | - |
-| `estimated_count` | - | - | - | - |
-| `icon` | - | - | Yes | Yes |
-| `id` | - | - | - | - |
-| `is_editable` | - | - | - | - |
-| `is_team_type` | - | - | - | - |
-| `last_synced_at` | - | - | - | - |
-| `name` | - | - | - | - |
-| `owning_team_ids` | - | - | - | - |
-| `ranked` | - | - | Yes | Yes |
-| `registry_type` | - | - | - | - |
-| `required_integrations` | - | - | - | - |
-| `schema` | - | - | - | - |
-| `semantic_type` | - | - | - | - |
-| `source_repo_url` | - | - | - | - |
-| `type_name` | - | - | Yes | - |
-| `updated_at` | - | - | - | - |
-| `use_name_as_identifier` | - | - | Yes | Yes |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | Yes | Yes | - |
+| `categories` | - | - | Yes | Yes | - |
+| `color` | - | - | Yes | Yes | - |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - | - |
+| `engine_resource_type` | - | - | - | - | - |
+| `estimated_count` | - | - | - | - | - |
+| `icon` | - | - | Yes | Yes | - |
+| `id` | - | - | - | - | - |
+| `is_editable` | - | - | - | - | - |
+| `is_team_type` | - | - | - | - | - |
+| `last_synced_at` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `owning_team_ids` | - | - | - | - | - |
+| `ranked` | - | - | Yes | Yes | - |
+| `registry_type` | - | - | - | - | - |
+| `required_integrations` | - | - | - | - | - |
+| `schema` | - | - | - | - | - |
+| `source_repo_url` | - | - | - | - | - |
+| `type_name` | - | - | Yes | - | - |
+| `updated_at` | - | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes | - |
 
 ### Operations
 
@@ -2893,6 +2459,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```python
 result = client.CatalogType().load({"id": "catalog_type_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> CatalogTypeEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.CatalogType().remove({"id": "catalog_type_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> CatalogTypeEntity`
@@ -2965,7 +2539,6 @@ catalog_type_schema = client.CatalogTypeSchema()
 | `registry_type` | `str` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `list` | No | If populated, the integrations required for this type |
 | `schema` | `dict` | Yes |  |
-| `semantic_type` | `str` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `str` | No | The url of the external repository where this type is managed |
 | `type_name` | `str` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `str` | Yes | When this type was last updated |
@@ -3035,13 +2608,6 @@ custom_field = client.CustomField()
 | `helptext_catalog_attribute_id` | `str` | No | Which catalog attribute provides helptext for the options |
 | `id` | `str` | Yes | Unique identifier for the custom field |
 | `name` | `str` | Yes | Human readable name for the custom field |
-| `options` | `list` | Yes | What options are available for this custom field, if this field has options |
-| `required` | `str` | No | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | `str` | No | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | `bool` | Yes | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | `bool` | Yes | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | `bool` | Yes | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | `bool` | No | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | `str` | Yes | When the action was last updated |
 
 ### Operations
@@ -3057,9 +2623,6 @@ result = client.CustomField().create({
     "filter_by": {},  # dict
     "fixed_filter": {},  # dict
     "name": "example_name",  # str
-    "show_before_closure": True,  # bool
-    "show_before_creation": True,  # bool
-    "show_before_update": True,  # bool
 })
 ```
 
@@ -3330,6 +2893,122 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `EscalationEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## EscalationPathEntity
+
+```python
+escalation_path = client.EscalationPath()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `current_responders` | `list` | No | Users who are currently on-call for this escalation path |
+| `id` | `str` | Yes | Unique identifier for this escalation path. |
+| `kind` | `str` | Yes | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | `str` | Yes | The name of this escalation path, for the user's reference. |
+| `param_bindings` | `dict` | No | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | `list` | Yes | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` | `dict` | Yes |  |
+| `team_ids` | `list` | Yes | IDs of the teams that own this escalation path. |
+| `template_id` | `str` | No | For a templated path, the template it is built from. |
+| `working_hours` | `list` | No | The working hours for this escalation path. |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `current_responders` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `kind` | - | - | Yes | Yes | - |
+| `name` | - | - | - | - | - |
+| `param_bindings` | - | - | - | - | - |
+| `path` | - | - | - | - | - |
+| `repeat_config` | - | - | - | - | - |
+| `team_ids` | - | - | Yes | Yes | - |
+| `template_id` | - | - | - | - | - |
+| `working_hours` | - | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> EscalationPathEntity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.EscalationPath().create({
+    "name": "example_name",  # str
+    "path": [],  # list
+    "repeat_config": {},  # dict
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list[EscalationPathEntity]`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
+
+```python
+results = client.EscalationPath().list()
+for escalation_path in results:
+    print(escalation_path.data_get())
+```
+
+#### `load(reqmatch, ctrl=None) -> EscalationPathEntity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.EscalationPath().load({"id": "escalation_path_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> EscalationPathEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.EscalationPath().remove({"id": "escalation_path_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> EscalationPathEntity`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```python
+result = client.EscalationPath().update({
+    "id": "escalation_path_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `EscalationPathEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -3922,12 +3601,8 @@ incident = client.Incident()
 | `slack_channel_name_override` | `str` | No | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | `str` | No | URL to link to the slack channel |
 | `slack_team_id` | `str` | Yes | ID of the Slack team / workspace. |
-| `source_message_channel_id` | `str` | No | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | `str` | No | Timestamp of the source message, if this incident was created from one |
-| `status` | `str` | Yes | Current status of the incident |
 | `summary` | `str` | No | Detailed description of the incident |
 | `team_ids` | `list` | Yes | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | `list` | No | Incident lifecycle events and when they last occurred |
 | `updated_at` | `str` | Yes | When the incident was last updated |
 | `visibility` | `str` | Yes | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | `float` | No | Amount of time spent on the incident in late hours |
@@ -3971,12 +3646,8 @@ incident = client.Incident()
 | `slack_channel_name_override` | - | - | - |
 | `slack_channel_url` | - | - | - |
 | `slack_team_id` | - | - | Yes |
-| `source_message_channel_id` | - | - | - |
-| `source_message_timestamp` | - | - | - |
-| `status` | - | - | Yes |
 | `summary` | - | - | - |
 | `team_ids` | - | - | - |
-| `timestamps` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -4506,24 +4177,9 @@ incident_role = client.IncidentRole()
 | `id` | `str` | Yes | Unique identifier for the role |
 | `instructions` | `str` | Yes | Provided to whoever is nominated for the role. |
 | `name` | `str` | Yes | Human readable name of the incident role |
-| `required` | `bool` | No | DEPRECATED: this will always be false. |
 | `role_type` | `str` | Yes | Type of incident role |
 | `shortform` | `str` | Yes | Short human readable name for Slack. |
 | `updated_at` | `str` | Yes | When the role was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
-| `description` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `instructions` | - | - | - | - | - |
-| `name` | - | - | - | - | - |
-| `required` | - | - | Yes | - | - |
-| `role_type` | - | - | - | - | - |
-| `shortform` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -4536,7 +4192,6 @@ result = client.IncidentRole().create({
     "description": "example_description",  # str
     "instructions": "example_instructions",  # str
     "name": "example_name",  # str
-    "required": True,  # bool
     "shortform": "example_shortform",  # str
 })
 ```
@@ -5904,10 +5559,10 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateOneOffRuleResultV2Entity
+## PayConfigOneOffRuleEntity
 
 ```python
-pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleResultV2()
+pay_config_one_off_rule = client.PayConfigOneOffRule()
 ```
 
 ### Fields
@@ -5915,19 +5570,20 @@ pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleRes
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_at` | `str` | Yes | When this rule stops applying |
+| `id` | `str` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `name` | `str` | Yes | Human readable name for this rule |
 | `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | `str` | Yes | When this rule starts applying |
 
 ### Operations
 
-#### `create(reqdata, ctrl=None) -> PayConfigsCreateOneOffRuleResultV2Entity`
+#### `create(reqdata, ctrl=None) -> PayConfigOneOffRuleEntity`
 
 Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```python
-result = client.PayConfigsCreateOneOffRuleResultV2().create({
-    "pay_config_id": "example_pay_config_id",  # str
+result = client.PayConfigOneOffRule().create({
+    "id": "example_id",  # str
     "end_at": "example_end_at",  # str
     "name": "example_name",  # str
     "rate_cents": 1,  # int
@@ -5935,6 +5591,44 @@ result = client.PayConfigsCreateOneOffRuleResultV2().create({
 })
 ```
 
+#### `list(reqmatch=None, ctrl=None) -> list[PayConfigOneOffRuleEntity]`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
+
+```python
+results = client.PayConfigOneOffRule().list({"id": "example"})
+for pay_config_one_off_rule in results:
+    print(pay_config_one_off_rule.data_get())
+```
+
+#### `load(reqmatch, ctrl=None) -> PayConfigOneOffRuleEntity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.PayConfigOneOffRule().load({"id": "pay_config_one_off_rule_id", "pay_config_id": "pay_config_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> PayConfigOneOffRuleEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.PayConfigOneOffRule().remove({"id": "pay_config_one_off_rule_id", "pay_config_id": "pay_config_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> PayConfigOneOffRuleEntity`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```python
+result = client.PayConfigOneOffRule().update({
+    "id": "pay_config_one_off_rule_id",
+    "pay_config_id": "pay_config_id",
+    # Fields to update
+})
+```
+
 ### Common Methods
 
 #### `data_get() -> dict`
@@ -5955,7 +5649,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2Entity` instance with the same options.
+Create a new `PayConfigOneOffRuleEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -5964,10 +5658,10 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateWeeklyRuleResultV2Entity
+## PayConfigWeeklyRuleEntity
 
 ```python
-pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRuleResultV2()
+pay_config_weekly_rule = client.PayConfigWeeklyRule()
 ```
 
 ### Fields
@@ -5975,19 +5669,20 @@ pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRuleResu
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_time` | `str` | Yes | Time of day this rule ends, in 24 hour format. |
+| `id` | `str` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | `str` | Yes | Time of day this rule starts, in 24 hour format |
 | `weekdays` | `list` | Yes | Days of the week this rule applies on |
 
 ### Operations
 
-#### `create(reqdata, ctrl=None) -> PayConfigsCreateWeeklyRuleResultV2Entity`
+#### `create(reqdata, ctrl=None) -> PayConfigWeeklyRuleEntity`
 
 Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```python
-result = client.PayConfigsCreateWeeklyRuleResultV2().create({
-    "pay_config_id": "example_pay_config_id",  # str
+result = client.PayConfigWeeklyRule().create({
+    "id": "example_id",  # str
     "end_time": "example_end_time",  # str
     "rate_cents": 1,  # int
     "start_time": "example_start_time",  # str
@@ -5995,397 +5690,42 @@ result = client.PayConfigsCreateWeeklyRuleResultV2().create({
 })
 ```
 
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsCreateWeeklyRuleResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListOneOffRulesResultV2Entity
-
-```python
-pay_configs_list_one_off_rules_result_v2 = client.PayConfigsListOneOffRulesResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `str` | Yes | When this rule stops applying |
-| `id` | `str` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `str` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `str` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `list(reqmatch=None, ctrl=None) -> list[PayConfigsListOneOffRulesResultV2Entity]`
+#### `list(reqmatch=None, ctrl=None) -> list[PayConfigWeeklyRuleEntity]`
 
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
 
 ```python
-results = client.PayConfigsListOneOffRulesResultV2().list({"pay_config_id": "example"})
-for pay_configs_list_one_off_rules_result_v2 in results:
-    print(pay_configs_list_one_off_rules_result_v2.data_get())
+results = client.PayConfigWeeklyRule().list({"id": "example"})
+for pay_config_weekly_rule in results:
+    print(pay_config_weekly_rule.data_get())
 ```
 
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsListOneOffRulesResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListWeeklyRulesResultV2Entity
-
-```python
-pay_configs_list_weekly_rules_result_v2 = client.PayConfigsListWeeklyRulesResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `str` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `str` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `str` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `list` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `list(reqmatch=None, ctrl=None) -> list[PayConfigsListWeeklyRulesResultV2Entity]`
-
-List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
-
-```python
-results = client.PayConfigsListWeeklyRulesResultV2().list({"pay_config_id": "example"})
-for pay_configs_list_weekly_rules_result_v2 in results:
-    print(pay_configs_list_weekly_rules_result_v2.data_get())
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsListWeeklyRulesResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowOneOffRuleResultV2Entity
-
-```python
-pay_configs_show_one_off_rule_result_v2 = client.PayConfigsShowOneOffRuleResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `str` | Yes | When this rule stops applying |
-| `id` | `str` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `str` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `str` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `load(reqmatch, ctrl=None) -> PayConfigsShowOneOffRuleResultV2Entity`
+#### `load(reqmatch, ctrl=None) -> PayConfigWeeklyRuleEntity`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
 
 ```python
-result = client.PayConfigsShowOneOffRuleResultV2().load({"id": "pay_configs_show_one_off_rule_result_v2_id", "pay_config_id": "pay_config_id"})
+result = client.PayConfigWeeklyRule().load({"id": "pay_config_weekly_rule_id", "pay_config_id": "pay_config_id"})
 ```
 
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsShowOneOffRuleResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowWeeklyRuleResultV2Entity
-
-```python
-pay_configs_show_weekly_rule_result_v2 = client.PayConfigsShowWeeklyRuleResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `str` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `str` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `str` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `list` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `load(reqmatch, ctrl=None) -> PayConfigsShowWeeklyRuleResultV2Entity`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
-
-```python
-result = client.PayConfigsShowWeeklyRuleResultV2().load({"id": "pay_configs_show_weekly_rule_result_v2_id", "pay_config_id": "pay_config_id"})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateOneOffRuleResultV2Entity
-
-```python
-pay_configs_update_one_off_rule_result_v2 = client.PayConfigsUpdateOneOffRuleResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `str` | Yes | When this rule stops applying |
-| `id` | `str` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `str` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `str` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `update(reqdata, ctrl=None) -> PayConfigsUpdateOneOffRuleResultV2Entity`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```python
-result = client.PayConfigsUpdateOneOffRuleResultV2().update({
-    "id": "id",
-    "pay_config_id": "pay_config_id",
-    # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateWeeklyRuleResultV2Entity
-
-```python
-pay_configs_update_weekly_rule_result_v2 = client.PayConfigsUpdateWeeklyRuleResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `str` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `str` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `str` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `list` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `update(reqdata, ctrl=None) -> PayConfigsUpdateWeeklyRuleResultV2Entity`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```python
-result = client.PayConfigsUpdateWeeklyRuleResultV2().update({
-    "id": "id",
-    "pay_config_id": "pay_config_id",
-    # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## PayConfigsV2Entity
-
-```python
-pay_configs_v2 = client.PayConfigsV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `str` | No |  |
-
-### Operations
-
-#### `remove(reqmatch, ctrl=None) -> PayConfigsV2Entity`
+#### `remove(reqmatch, ctrl=None) -> PayConfigWeeklyRuleEntity`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
 
 ```python
-result = client.PayConfigsV2().remove({"id": "pay_configs_v2_id", "pay_config_id": "pay_config_id"})
+result = client.PayConfigWeeklyRule().remove({"id": "pay_config_weekly_rule_id", "pay_config_id": "pay_config_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> PayConfigWeeklyRuleEntity`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```python
+result = client.PayConfigWeeklyRule().update({
+    "id": "pay_config_weekly_rule_id",
+    "pay_config_id": "pay_config_id",
+    # Fields to update
+})
 ```
 
 ### Common Methods
@@ -6408,7 +5748,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `PayConfigsV2Entity` instance with the same options.
+Create a new `PayConfigWeeklyRuleEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -6729,57 +6069,6 @@ Return the entity name.
 
 ---
 
-## PoliciesV2Entity
-
-```python
-policies_v2 = client.PoliciesV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `str` | No |  |
-
-### Operations
-
-#### `remove(reqmatch, ctrl=None) -> PoliciesV2Entity`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
-
-```python
-result = client.PoliciesV2().remove({"id": "policies_v2_id"})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `PoliciesV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
 ## PolicyEntity
 
 ```python
@@ -6808,23 +6097,23 @@ policy = client.Policy()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `assignment_rules` | - | - | - | - |
-| `conditions` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `debrief` | - | - | - | - |
-| `description` | - | - | Yes | Yes |
-| `expressions` | - | - | - | - |
-| `follow_up` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `on_call_readiness` | - | - | - | - |
-| `policy_type` | - | - | - | - |
-| `post_mortem` | - | - | - | - |
-| `schedule` | - | - | - | - |
-| `status` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignment_rules` | - | - | - | - | - |
+| `conditions` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `debrief` | - | - | - | - | - |
+| `description` | - | - | Yes | Yes | - |
+| `expressions` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `on_call_readiness` | - | - | - | - | - |
+| `policy_type` | - | - | - | - | - |
+| `post_mortem` | - | - | - | - | - |
+| `schedule` | - | - | - | - | - |
+| `status` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -6862,6 +6151,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```python
 result = client.Policy().load({"id": "policy_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> PolicyEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.Policy().remove({"id": "policy_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> PolicyEntity`
@@ -7450,6 +6747,109 @@ Return the entity name.
 
 ---
 
+## ScheduleOverrideEntity
+
+```python
+schedule_override = client.ScheduleOverride()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `str` | Yes |  |
+| `end_at` | `str` | Yes | End of the override |
+| `id` | `str` | Yes | Unique internal ID of the schedule override |
+| `layer_id` | `str` | Yes | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `str` | Yes | The rotation on the schedule that this override applies to |
+| `schedule_id` | `str` | Yes | The schedule that this override applies to |
+| `start_at` | `str` | Yes | Start of the override |
+| `updated_at` | `str` | Yes |  |
+| `user` | `dict` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> ScheduleOverrideEntity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.ScheduleOverride().create({
+    "end_at": "example_end_at",  # str
+    "layer_id": "example_layer_id",  # str
+    "rotation_id": "example_rotation_id",  # str
+    "schedule_id": "example_schedule_id",  # str
+    "start_at": "example_start_at",  # str
+    "user": {},  # dict
+})
+```
+
+#### `list(reqmatch=None, ctrl=None) -> list[ScheduleOverrideEntity]`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
+
+```python
+results = client.ScheduleOverride().list({"schedule_id": "example"})
+for schedule_override in results:
+    print(schedule_override.data_get())
+```
+
+#### `load(reqmatch, ctrl=None) -> ScheduleOverrideEntity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.ScheduleOverride().load({"id": "schedule_override_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> ScheduleOverrideEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.ScheduleOverride().remove({"id": "schedule_override_id"})
+```
+
+#### `update(reqdata, ctrl=None) -> ScheduleOverrideEntity`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```python
+result = client.ScheduleOverride().update({
+    "id": "schedule_override_id",
+    # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ScheduleOverrideEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleReplicaEntity
 
 ```python
@@ -7507,6 +6907,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 result = client.ScheduleReplica().load({"id": "schedule_replica_id", "schedule_id": "schedule_id"})
 ```
 
+#### `remove(reqmatch, ctrl=None) -> ScheduleReplicaEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.ScheduleReplica().remove({"id": "schedule_replica_id", "schedule_id": "schedule_id"})
+```
+
 ### Common Methods
 
 #### `data_get() -> dict`
@@ -7559,18 +6967,18 @@ schedule_sync_rule = client.ScheduleSyncRule()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `permanent_member_user_ids` | - | - | Yes | Yes |
-| `rotation_id` | - | - | - | - |
-| `schedule_id` | - | - | - | - |
-| `schedule_sync_target` | - | - | - | - |
-| `schedule_sync_target_id` | - | - | - | - |
-| `sync_type` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `permanent_member_user_ids` | - | - | Yes | Yes | - |
+| `rotation_id` | - | - | - | - | - |
+| `schedule_id` | - | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - | - |
+| `sync_type` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -7602,6 +7010,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```python
 result = client.ScheduleSyncRule().load({"id": "schedule_sync_rule_id", "schedule_id": "schedule_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> ScheduleSyncRuleEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.ScheduleSyncRule().remove({"id": "schedule_sync_rule_id", "schedule_id": "schedule_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> ScheduleSyncRuleEntity`
@@ -7758,152 +7174,6 @@ Return the entity name.
 
 ---
 
-## SchedulesShowOverrideResultV2Entity
-
-```python
-schedules_show_override_result_v2 = client.SchedulesShowOverrideResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `str` | Yes |  |
-| `end_at` | `str` | Yes | End of the override |
-| `id` | `str` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `str` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `str` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `str` | Yes | The schedule that this override applies to |
-| `start_at` | `str` | Yes | Start of the override |
-| `updated_at` | `str` | Yes |  |
-| `user` | `dict` | Yes |  |
-
-### Operations
-
-#### `create(reqdata, ctrl=None) -> SchedulesShowOverrideResultV2Entity`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```python
-result = client.SchedulesShowOverrideResultV2().create({
-    "end_at": "example_end_at",  # str
-    "layer_id": "example_layer_id",  # str
-    "rotation_id": "example_rotation_id",  # str
-    "schedule_id": "example_schedule_id",  # str
-    "start_at": "example_start_at",  # str
-    "user": {},  # dict
-})
-```
-
-#### `list(reqmatch=None, ctrl=None) -> list[SchedulesShowOverrideResultV2Entity]`
-
-List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
-
-```python
-results = client.SchedulesShowOverrideResultV2().list({"schedule_id": "example"})
-for schedules_show_override_result_v2 in results:
-    print(schedules_show_override_result_v2.data_get())
-```
-
-#### `load(reqmatch, ctrl=None) -> SchedulesShowOverrideResultV2Entity`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
-
-```python
-result = client.SchedulesShowOverrideResultV2().load({"id": "schedules_show_override_result_v2_id"})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `SchedulesShowOverrideResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## SchedulesUpdateOverrideResultV2Entity
-
-```python
-schedules_update_override_result_v2 = client.SchedulesUpdateOverrideResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `str` | Yes |  |
-| `end_at` | `str` | Yes | End of the override |
-| `id` | `str` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `str` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `str` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `str` | Yes | The schedule that this override applies to |
-| `start_at` | `str` | Yes | Start of the override |
-| `updated_at` | `str` | Yes |  |
-| `user` | `dict` | Yes |  |
-
-### Operations
-
-#### `update(reqdata, ctrl=None) -> SchedulesUpdateOverrideResultV2Entity`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```python
-result = client.SchedulesUpdateOverrideResultV2().update({
-    "id": "id",
-    # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `SchedulesUpdateOverrideResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
 ## SecretEntity
 
 ```python
@@ -8040,14 +7310,14 @@ severity = client.Severity()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -8078,6 +7348,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```python
 result = client.Severity().load({"id": "severity_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> SeverityEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.Severity().remove({"id": "severity_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> SeverityEntity`
@@ -8277,10 +7555,10 @@ Return the entity name.
 
 ---
 
-## StatusPageComponentAvailabilityV2Entity
+## StatusPageComponentAvailabilityEntity
 
 ```python
-status_page_component_availability_v2 = client.StatusPageComponentAvailabilityV2()
+status_page_component_availability = client.StatusPageComponentAvailability()
 ```
 
 ### Fields
@@ -8296,12 +7574,12 @@ status_page_component_availability_v2 = client.StatusPageComponentAvailabilityV2
 
 ### Operations
 
-#### `load(reqmatch, ctrl=None) -> StatusPageComponentAvailabilityV2Entity`
+#### `load(reqmatch, ctrl=None) -> StatusPageComponentAvailabilityEntity`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
 
 ```python
-result = client.StatusPageComponentAvailabilityV2().load({"component_id": "component_id", "status_page_id": "status_page_id", "end_at": "end_at", "start_at": "start_at"})
+result = client.StatusPageComponentAvailability().load({"component_id": "component_id", "status_page_id": "status_page_id", "end_at": "end_at", "start_at": "start_at"})
 ```
 
 ### Common Methods
@@ -8324,7 +7602,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `StatusPageComponentAvailabilityV2Entity` instance with the same options.
+Create a new `StatusPageComponentAvailabilityEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -8489,10 +7767,10 @@ Return the entity name.
 
 ---
 
-## StatusPageLinkedResponseIncidentV1Entity
+## StatusPageLinkedResponseIncidentEntity
 
 ```python
-status_page_linked_response_incident_v1 = client.StatusPageLinkedResponseIncidentV1()
+status_page_linked_response_incident = client.StatusPageLinkedResponseIncident()
 ```
 
 ### Fields
@@ -8504,14 +7782,14 @@ status_page_linked_response_incident_v1 = client.StatusPageLinkedResponseInciden
 
 ### Operations
 
-#### `list(reqmatch=None, ctrl=None) -> list[StatusPageLinkedResponseIncidentV1Entity]`
+#### `list(reqmatch=None, ctrl=None) -> list[StatusPageLinkedResponseIncidentEntity]`
 
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
 
 ```python
-results = client.StatusPageLinkedResponseIncidentV1().list({"incident_id": "example", "status_page_id": "example"})
-for status_page_linked_response_incident_v1 in results:
-    print(status_page_linked_response_incident_v1.data_get())
+results = client.StatusPageLinkedResponseIncident().list({"incident_id": "example", "status_page_id": "example"})
+for status_page_linked_response_incident in results:
+    print(status_page_linked_response_incident.data_get())
 ```
 
 ### Common Methods
@@ -8534,7 +7812,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `StatusPageLinkedResponseIncidentV1Entity` instance with the same options.
+Create a new `StatusPageLinkedResponseIncidentEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -8570,22 +7848,22 @@ status_page_maintenance = client.StatusPageMaintenance()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `affected_component_ids` | - | - | - | - |
-| `automate_maintenance_status` | - | - | Yes | - |
-| `component_maintenance_periods` | - | - | - | - |
-| `end_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `idempotency_key` | - | - | - | - |
-| `maintenance_status` | - | - | - | - |
-| `message` | - | - | - | - |
-| `name` | - | - | - | - |
-| `notify_subscribers` | - | - | - | - |
-| `published_at` | - | - | - | - |
-| `start_at` | - | - | - | - |
-| `status_page_id` | - | - | - | - |
-| `updates` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `affected_component_ids` | - | - | - | - | - |
+| `automate_maintenance_status` | - | - | Yes | - | - |
+| `component_maintenance_periods` | - | - | - | - | - |
+| `end_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `idempotency_key` | - | - | - | - | - |
+| `maintenance_status` | - | - | - | - | - |
+| `message` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `notify_subscribers` | - | - | - | - | - |
+| `published_at` | - | - | - | - | - |
+| `start_at` | - | - | - | - | - |
+| `status_page_id` | - | - | - | - | - |
+| `updates` | - | - | - | - | - |
 
 ### Operations
 
@@ -8623,6 +7901,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```python
 result = client.StatusPageMaintenance().load({"id": "status_page_maintenance_id"})
+```
+
+#### `remove(reqmatch, ctrl=None) -> StatusPageMaintenanceEntity`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```python
+result = client.StatusPageMaintenance().remove({"id": "status_page_maintenance_id"})
 ```
 
 #### `update(reqdata, ctrl=None) -> StatusPageMaintenanceEntity`
@@ -8778,51 +8064,6 @@ Return the entity name.
 
 ---
 
-## StatusPagesV2Entity
-
-```python
-status_pages_v2 = client.StatusPagesV2()
-```
-
-### Operations
-
-#### `remove(reqmatch, ctrl=None) -> StatusPagesV2Entity`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
-
-```python
-result = client.StatusPagesV2().remove({"status_page_maintenance_id": "status_page_maintenance_id"})
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `StatusPagesV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
 ## TeamEntity
 
 ```python
@@ -8887,10 +8128,10 @@ Return the entity name.
 
 ---
 
-## TelemetryDataSourceV2Entity
+## TelemetryDataSourceEntity
 
 ```python
-telemetry_data_source_v2 = client.TelemetryDataSourceV2()
+telemetry_data_source = client.TelemetryDataSource()
 ```
 
 ### Fields
@@ -8925,12 +8166,12 @@ telemetry_data_source_v2 = client.TelemetryDataSourceV2()
 
 ### Operations
 
-#### `update(reqdata, ctrl=None) -> TelemetryDataSourceV2Entity`
+#### `update(reqdata, ctrl=None) -> TelemetryDataSourceEntity`
 
 Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
 
 ```python
-result = client.TelemetryDataSourceV2().update({
+result = client.TelemetryDataSource().update({
     "id": "id",
     # Fields to update
 })
@@ -8956,7 +8197,7 @@ Set the entity match criteria.
 
 #### `make() -> Entity`
 
-Create a new `TelemetryDataSourceV2Entity` instance with the same options.
+Create a new `TelemetryDataSourceEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -8986,16 +8227,6 @@ user = client.User()
 | `slack_user_id` | `str` | No | Slack ID of the user |
 
 ### Operations
-
-#### `create(reqdata, ctrl=None) -> UserEntity`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```python
-result = client.User().create({
-    "id": "example_id",  # str
-})
-```
 
 #### `list(reqmatch=None, ctrl=None) -> list[UserEntity]`
 

@@ -13,13 +13,13 @@ import (
 
 // ListArgs is what an agent sends to incident-io_list.
 type ListArgs struct {
-	Entity string         `json:"entity" jsonschema:"one of: action | alert | alert_attribute | alert_note | alert_route | alert_source | alert_tag | alerts_transition_incident_alert_result_v2 | announcement_rule | announcement_template | api_key | call_route | call_routes_list_allowed_callers_result_v2 | call_routes_list_options_result_v2 | call_session | call_transcript_entry | catalog_entry | catalog_resource | catalog_type | custom_field | custom_field_option | escalation | escalation_path_template | follow_up | incident | incident_activity_log_entry | incident_attachment | incident_form | incident_participant_workload | incident_relationship | incident_role | incident_status | incident_template | incident_timeline_item | incident_timestamp | incident_type | incident_update | ip_range | maintenance_window | on_call_notification_method_public_v2 | on_call_notification_pause | on_call_notification_rule_public_v2 | pay_config | pay_configs_list_one_off_rules_result_v2 | pay_configs_list_weekly_rules_result_v2 | pay_report | policy | policy_finding | postmortem_document | schedule | schedule_replica | schedule_sync_rule | schedule_sync_target | schedules_show_override_result_v2 | secret | severity | status_page | status_page_component | status_page_incident | status_page_linked_response_incident_v1 | status_page_maintenance | team | user | workflow | workflow_run"`
+	Entity string         `json:"entity" jsonschema:"one of: action | alert | alert_attribute | alert_note | alert_route | alert_source | alert_tag | alerts_transition_incident_alert_result_v2 | announcement_rule | announcement_template | api_key | call_route | call_route_allowed_caller | call_route_option | call_session | call_transcript_entry | catalog_entry | catalog_resource | catalog_type | custom_field | custom_field_option | escalation | escalation_path | escalation_path_template | follow_up | incident | incident_activity_log_entry | incident_attachment | incident_form | incident_participant_workload | incident_relationship | incident_role | incident_status | incident_template | incident_timeline_item | incident_timestamp | incident_type | incident_update | ip_range | maintenance_window | on_call_notification_method_public_v2 | on_call_notification_pause | on_call_notification_rule_public_v2 | pay_config | pay_config_one_off_rule | pay_config_weekly_rule | pay_report | policy | policy_finding | postmortem_document | schedule | schedule_override | schedule_replica | schedule_sync_rule | schedule_sync_target | secret | severity | status_page | status_page_component | status_page_incident | status_page_linked_response_incident | status_page_maintenance | team | user | workflow | workflow_run"`
 	Query  map[string]any `json:"query,omitempty" jsonschema:"optional filter map; omit it for the first page"`
 }
 
 // LoadArgs is what an agent sends to incident-io_load.
 type LoadArgs struct {
-	Entity string         `json:"entity" jsonschema:"one of: action | alert | alert_attribute | alert_note | alert_route | alert_source | announcement_rule | announcement_template | api_key | call_route | call_routes_show_allowed_caller_result_v2 | call_routes_show_option_result_v2 | catalog_entry | catalog_type | custom_field | custom_field_option | escalation | escalation_path_template | follow_up | identity | incident | incident_form | incident_participant | incident_role | incident_status | incident_template | incident_timestamp | incident_type | ip_allowlist | maintenance_window | on_call_notification_pause | pay_config | pay_configs_show_one_off_rule_result_v2 | pay_configs_show_weekly_rule_result_v2 | pay_report | pay_reports_v2 | policy | policy_finding | postmortem_document | schedule | schedule_entry | schedule_replica | schedule_sync_rule | schedule_sync_target | schedules_show_override_result_v2 | secret | severity | status_page | status_page_component | status_page_component_availability_v2 | status_page_incident | status_page_maintenance | status_page_structure | team | user | workflow | workflow_run"`
+	Entity string         `json:"entity" jsonschema:"one of: action | alert | alert_attribute | alert_note | alert_route | alert_source | announcement_rule | announcement_template | api_key | call_route | call_route_allowed_caller | call_route_option | catalog_entry | catalog_type | custom_field | custom_field_option | escalation | escalation_path | escalation_path_template | follow_up | identity | incident | incident_form | incident_participant | incident_role | incident_status | incident_template | incident_timestamp | incident_type | ip_allowlist | maintenance_window | on_call_notification_pause | pay_config | pay_config_one_off_rule | pay_config_weekly_rule | pay_report | pay_reports_v2 | policy | policy_finding | postmortem_document | schedule | schedule_entry | schedule_override | schedule_replica | schedule_sync_rule | schedule_sync_target | secret | severity | status_page | status_page_component | status_page_component_availability | status_page_incident | status_page_maintenance | status_page_structure | team | user | workflow | workflow_run"`
 	Query  map[string]any `json:"query" jsonschema:"match map naming the record, such as {\"id\":1}"`
 }
 
@@ -28,7 +28,7 @@ func registerTools(server *mcp.Server, client *sdk.IncidentIoSDK) {
 		Name:        "incident-io_list",
 		Description: "List records from IncidentIo. Args: entity, query (optional filter map; omit it for the first page). Returns the first page of records as JSON.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
-		InputSchema: entitySchema[ListArgs]("action", "alert", "alert_attribute", "alert_note", "alert_route", "alert_source", "alert_tag", "alerts_transition_incident_alert_result_v2", "announcement_rule", "announcement_template", "api_key", "call_route", "call_routes_list_allowed_callers_result_v2", "call_routes_list_options_result_v2", "call_session", "call_transcript_entry", "catalog_entry", "catalog_resource", "catalog_type", "custom_field", "custom_field_option", "escalation", "escalation_path_template", "follow_up", "incident", "incident_activity_log_entry", "incident_attachment", "incident_form", "incident_participant_workload", "incident_relationship", "incident_role", "incident_status", "incident_template", "incident_timeline_item", "incident_timestamp", "incident_type", "incident_update", "ip_range", "maintenance_window", "on_call_notification_method_public_v2", "on_call_notification_pause", "on_call_notification_rule_public_v2", "pay_config", "pay_configs_list_one_off_rules_result_v2", "pay_configs_list_weekly_rules_result_v2", "pay_report", "policy", "policy_finding", "postmortem_document", "schedule", "schedule_replica", "schedule_sync_rule", "schedule_sync_target", "schedules_show_override_result_v2", "secret", "severity", "status_page", "status_page_component", "status_page_incident", "status_page_linked_response_incident_v1", "status_page_maintenance", "team", "user", "workflow", "workflow_run"),
+		InputSchema: entitySchema[ListArgs]("action", "alert", "alert_attribute", "alert_note", "alert_route", "alert_source", "alert_tag", "alerts_transition_incident_alert_result_v2", "announcement_rule", "announcement_template", "api_key", "call_route", "call_route_allowed_caller", "call_route_option", "call_session", "call_transcript_entry", "catalog_entry", "catalog_resource", "catalog_type", "custom_field", "custom_field_option", "escalation", "escalation_path", "escalation_path_template", "follow_up", "incident", "incident_activity_log_entry", "incident_attachment", "incident_form", "incident_participant_workload", "incident_relationship", "incident_role", "incident_status", "incident_template", "incident_timeline_item", "incident_timestamp", "incident_type", "incident_update", "ip_range", "maintenance_window", "on_call_notification_method_public_v2", "on_call_notification_pause", "on_call_notification_rule_public_v2", "pay_config", "pay_config_one_off_rule", "pay_config_weekly_rule", "pay_report", "policy", "policy_finding", "postmortem_document", "schedule", "schedule_override", "schedule_replica", "schedule_sync_rule", "schedule_sync_target", "secret", "severity", "status_page", "status_page_component", "status_page_incident", "status_page_linked_response_incident", "status_page_maintenance", "team", "user", "workflow", "workflow_run"),
 	}, func(ctx context.Context, req *mcp.CallToolRequest, args ListArgs) (*mcp.CallToolResult, any, error) {
 		return runOp(ctx, client, "list", args.Entity, args.Query)
 	})
@@ -36,7 +36,7 @@ func registerTools(server *mcp.Server, client *sdk.IncidentIoSDK) {
 		Name:        "incident-io_load",
 		Description: "Load one record from IncidentIo. Args: entity, query (match map naming the record, such as {\"id\":1}). Returns the record as JSON.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
-		InputSchema: entitySchema[LoadArgs]("action", "alert", "alert_attribute", "alert_note", "alert_route", "alert_source", "announcement_rule", "announcement_template", "api_key", "call_route", "call_routes_show_allowed_caller_result_v2", "call_routes_show_option_result_v2", "catalog_entry", "catalog_type", "custom_field", "custom_field_option", "escalation", "escalation_path_template", "follow_up", "identity", "incident", "incident_form", "incident_participant", "incident_role", "incident_status", "incident_template", "incident_timestamp", "incident_type", "ip_allowlist", "maintenance_window", "on_call_notification_pause", "pay_config", "pay_configs_show_one_off_rule_result_v2", "pay_configs_show_weekly_rule_result_v2", "pay_report", "pay_reports_v2", "policy", "policy_finding", "postmortem_document", "schedule", "schedule_entry", "schedule_replica", "schedule_sync_rule", "schedule_sync_target", "schedules_show_override_result_v2", "secret", "severity", "status_page", "status_page_component", "status_page_component_availability_v2", "status_page_incident", "status_page_maintenance", "status_page_structure", "team", "user", "workflow", "workflow_run"),
+		InputSchema: entitySchema[LoadArgs]("action", "alert", "alert_attribute", "alert_note", "alert_route", "alert_source", "announcement_rule", "announcement_template", "api_key", "call_route", "call_route_allowed_caller", "call_route_option", "catalog_entry", "catalog_type", "custom_field", "custom_field_option", "escalation", "escalation_path", "escalation_path_template", "follow_up", "identity", "incident", "incident_form", "incident_participant", "incident_role", "incident_status", "incident_template", "incident_timestamp", "incident_type", "ip_allowlist", "maintenance_window", "on_call_notification_pause", "pay_config", "pay_config_one_off_rule", "pay_config_weekly_rule", "pay_report", "pay_reports_v2", "policy", "policy_finding", "postmortem_document", "schedule", "schedule_entry", "schedule_override", "schedule_replica", "schedule_sync_rule", "schedule_sync_target", "secret", "severity", "status_page", "status_page_component", "status_page_component_availability", "status_page_incident", "status_page_maintenance", "status_page_structure", "team", "user", "workflow", "workflow_run"),
 	}, func(ctx context.Context, req *mcp.CallToolRequest, args LoadArgs) (*mcp.CallToolResult, any, error) {
 		return runOp(ctx, client, "load", args.Entity, args.Query)
 	})
@@ -121,8 +121,6 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.AlertTag(nil), nil
 	case "alerts_add_tags_result_v2":
 		return client.AlertsAddTagsResultV2(nil), nil
-	case "alerts_remove_tags_result_v2":
-		return client.AlertsRemoveTagsResultV2(nil), nil
 	case "alerts_set_tags_result_v2":
 		return client.AlertsSetTagsResultV2(nil), nil
 	case "alerts_transition_incident_alert_result_v2":
@@ -135,24 +133,10 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.ApiKey(nil), nil
 	case "call_route":
 		return client.CallRoute(nil), nil
-	case "call_routes_create_allowed_caller_result_v2":
-		return client.CallRoutesCreateAllowedCallerResultV2(nil), nil
-	case "call_routes_create_option_result_v2":
-		return client.CallRoutesCreateOptionResultV2(nil), nil
-	case "call_routes_list_allowed_callers_result_v2":
-		return client.CallRoutesListAllowedCallersResultV2(nil), nil
-	case "call_routes_list_options_result_v2":
-		return client.CallRoutesListOptionsResultV2(nil), nil
-	case "call_routes_show_allowed_caller_result_v2":
-		return client.CallRoutesShowAllowedCallerResultV2(nil), nil
-	case "call_routes_show_option_result_v2":
-		return client.CallRoutesShowOptionResultV2(nil), nil
-	case "call_routes_update_allowed_caller_result_v2":
-		return client.CallRoutesUpdateAllowedCallerResultV2(nil), nil
-	case "call_routes_update_option_result_v2":
-		return client.CallRoutesUpdateOptionResultV2(nil), nil
-	case "call_routes_v2":
-		return client.CallRoutesV2(nil), nil
+	case "call_route_allowed_caller":
+		return client.CallRouteAllowedCaller(nil), nil
+	case "call_route_option":
+		return client.CallRouteOption(nil), nil
 	case "call_session":
 		return client.CallSession(nil), nil
 	case "call_transcript_entry":
@@ -171,6 +155,8 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.CustomFieldOption(nil), nil
 	case "escalation":
 		return client.Escalation(nil), nil
+	case "escalation_path":
+		return client.EscalationPath(nil), nil
 	case "escalation_path_template":
 		return client.EscalationPathTemplate(nil), nil
 	case "escalations_check_escalation_permissions_result_v2":
@@ -237,24 +223,10 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.OnCallNotificationRulePublicV2(nil), nil
 	case "pay_config":
 		return client.PayConfig(nil), nil
-	case "pay_configs_create_one_off_rule_result_v2":
-		return client.PayConfigsCreateOneOffRuleResultV2(nil), nil
-	case "pay_configs_create_weekly_rule_result_v2":
-		return client.PayConfigsCreateWeeklyRuleResultV2(nil), nil
-	case "pay_configs_list_one_off_rules_result_v2":
-		return client.PayConfigsListOneOffRulesResultV2(nil), nil
-	case "pay_configs_list_weekly_rules_result_v2":
-		return client.PayConfigsListWeeklyRulesResultV2(nil), nil
-	case "pay_configs_show_one_off_rule_result_v2":
-		return client.PayConfigsShowOneOffRuleResultV2(nil), nil
-	case "pay_configs_show_weekly_rule_result_v2":
-		return client.PayConfigsShowWeeklyRuleResultV2(nil), nil
-	case "pay_configs_update_one_off_rule_result_v2":
-		return client.PayConfigsUpdateOneOffRuleResultV2(nil), nil
-	case "pay_configs_update_weekly_rule_result_v2":
-		return client.PayConfigsUpdateWeeklyRuleResultV2(nil), nil
-	case "pay_configs_v2":
-		return client.PayConfigsV2(nil), nil
+	case "pay_config_one_off_rule":
+		return client.PayConfigOneOffRule(nil), nil
+	case "pay_config_weekly_rule":
+		return client.PayConfigWeeklyRule(nil), nil
 	case "pay_report":
 		return client.PayReport(nil), nil
 	case "pay_reports_publish_result_v2":
@@ -263,8 +235,6 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.PayReportsUnpublishResultV2(nil), nil
 	case "pay_reports_v2":
 		return client.PayReportsV2(nil), nil
-	case "policies_v2":
-		return client.PoliciesV2(nil), nil
 	case "policy":
 		return client.Policy(nil), nil
 	case "policy_finding":
@@ -281,16 +251,14 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.ScheduleEntriesListPayloadV2(nil), nil
 	case "schedule_entry":
 		return client.ScheduleEntry(nil), nil
+	case "schedule_override":
+		return client.ScheduleOverride(nil), nil
 	case "schedule_replica":
 		return client.ScheduleReplica(nil), nil
 	case "schedule_sync_rule":
 		return client.ScheduleSyncRule(nil), nil
 	case "schedule_sync_target":
 		return client.ScheduleSyncTarget(nil), nil
-	case "schedules_show_override_result_v2":
-		return client.SchedulesShowOverrideResultV2(nil), nil
-	case "schedules_update_override_result_v2":
-		return client.SchedulesUpdateOverrideResultV2(nil), nil
 	case "secret":
 		return client.Secret(nil), nil
 	case "severity":
@@ -299,26 +267,24 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.StatusPage(nil), nil
 	case "status_page_component":
 		return client.StatusPageComponent(nil), nil
-	case "status_page_component_availability_v2":
-		return client.StatusPageComponentAvailabilityV2(nil), nil
+	case "status_page_component_availability":
+		return client.StatusPageComponentAvailability(nil), nil
 	case "status_page_incident":
 		return client.StatusPageIncident(nil), nil
 	case "status_page_incident_update":
 		return client.StatusPageIncidentUpdate(nil), nil
-	case "status_page_linked_response_incident_v1":
-		return client.StatusPageLinkedResponseIncidentV1(nil), nil
+	case "status_page_linked_response_incident":
+		return client.StatusPageLinkedResponseIncident(nil), nil
 	case "status_page_maintenance":
 		return client.StatusPageMaintenance(nil), nil
 	case "status_page_maintenance_update":
 		return client.StatusPageMaintenanceUpdate(nil), nil
 	case "status_page_structure":
 		return client.StatusPageStructure(nil), nil
-	case "status_pages_v2":
-		return client.StatusPagesV2(nil), nil
 	case "team":
 		return client.Team(nil), nil
-	case "telemetry_data_source_v2":
-		return client.TelemetryDataSourceV2(nil), nil
+	case "telemetry_data_source":
+		return client.TelemetryDataSource(nil), nil
 	case "user":
 		return client.User(nil), nil
 	case "workflow":

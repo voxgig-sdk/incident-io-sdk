@@ -194,7 +194,7 @@ class StatusPageMaintenanceEntityTest extends TestCase
         $setup = status_page_maintenance_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["create", "list", "update", "load"] as $_op) {
+        foreach (["create", "list", "update", "load", "remove"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "status_page_maintenance." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
@@ -247,6 +247,23 @@ class StatusPageMaintenanceEntityTest extends TestCase
         $status_page_maintenance_ref01_data_dt0_load_result = Helpers::to_map(is_object($status_page_maintenance_ref01_data_dt0_loaded) && method_exists($status_page_maintenance_ref01_data_dt0_loaded, 'data_get') ? $status_page_maintenance_ref01_data_dt0_loaded->data_get() : $status_page_maintenance_ref01_data_dt0_loaded);
         $this->assertNotNull($status_page_maintenance_ref01_data_dt0_load_result);
         $this->assertEquals($status_page_maintenance_ref01_data_dt0_load_result["id"], $status_page_maintenance_ref01_data["id"]);
+
+        // REMOVE
+        $status_page_maintenance_ref01_match_rm0 = [
+            "id" => $status_page_maintenance_ref01_data["id"],
+        ];
+        $status_page_maintenance_ref01_ent->remove($status_page_maintenance_ref01_match_rm0, null);
+
+        // LIST
+        $status_page_maintenance_ref01_match_rt0 = [];
+
+        $status_page_maintenance_ref01_list_rt0_result = $status_page_maintenance_ref01_ent->list($status_page_maintenance_ref01_match_rt0, null);
+        $this->assertIsArray($status_page_maintenance_ref01_list_rt0_result);
+
+        $not_found_item = sdk_select(
+            Runner::entity_list_to_data($status_page_maintenance_ref01_list_rt0_result),
+            ["id" => $status_page_maintenance_ref01_data["id"]]);
+        $this->assertEmpty($not_found_item);
 
     }
 }

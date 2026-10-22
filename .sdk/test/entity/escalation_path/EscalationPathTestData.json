@@ -1,0 +1,84 @@
+{
+  "existing": {
+    "escalation_path": {
+      "ESCALATION_PATH00": {
+        "current_responders": [],
+        "id": "ESCALATION_PATH00",
+        "kind": "s66",
+        "name": "s67",
+        "param_bindings": {},
+        "path": [],
+        "repeat_config": {},
+        "team_ids": [],
+        "template_id": "TEMPLATE01",
+        "working_hours": []
+      },
+      "ESCALATION_PATH01": {
+        "current_responders": [],
+        "id": "ESCALATION_PATH01",
+        "kind": "sca",
+        "name": "scb",
+        "param_bindings": {},
+        "path": [],
+        "repeat_config": {},
+        "team_ids": [],
+        "template_id": "TEMPLATE01",
+        "working_hours": []
+      },
+      "ESCALATION_PATH02": {
+        "current_responders": [],
+        "id": "ESCALATION_PATH02",
+        "kind": "s12e",
+        "name": "s12f",
+        "param_bindings": {},
+        "path": [],
+        "repeat_config": {},
+        "team_ids": [],
+        "template_id": "TEMPLATE01",
+        "working_hours": []
+      }
+    }
+  },
+  "new": {
+    "escalation_path": {
+      "escalation_path_ref01": {
+        "current_responders": [],
+        "kind": "s192",
+        "name": "s193",
+        "param_bindings": {},
+        "path": [],
+        "repeat_config": {},
+        "team_ids": [],
+        "template_id": "TEMPLATE01",
+        "working_hours": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/escalation_paths": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/escalation_paths": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/escalation_paths/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/escalation_paths/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/escalation_paths/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

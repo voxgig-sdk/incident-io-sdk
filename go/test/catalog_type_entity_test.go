@@ -191,7 +191,7 @@ func TestCatalogTypeEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create", "list", "update", "load"} {
+		for _, _op := range []string{"create", "list", "update", "load", "remove"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "catalog_type." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -275,6 +275,32 @@ func TestCatalogTypeEntity(t *testing.T) {
 		}
 		if catalogTypeRef01DataDt0LoadResult["id"] != catalogTypeRef01Data["id"] {
 			t.Fatal("expected load result id to match")
+		}
+
+		// REMOVE
+		catalogTypeRef01MatchRm0 := map[string]any{
+			"id": catalogTypeRef01Data["id"],
+		}
+		_, err = catalogTypeRef01Ent.Remove(catalogTypeRef01MatchRm0, nil)
+		if err != nil {
+			t.Fatalf("remove failed: %v", err)
+		}
+
+		// LIST
+		catalogTypeRef01MatchRt0 := map[string]any{}
+
+		catalogTypeRef01ListRt0Result, err := catalogTypeRef01Ent.List(catalogTypeRef01MatchRt0, nil)
+		if err != nil {
+			t.Fatalf("list failed: %v", err)
+		}
+		catalogTypeRef01ListRt0, catalogTypeRef01ListRt0Ok := catalogTypeRef01ListRt0Result.([]any)
+		if !catalogTypeRef01ListRt0Ok {
+			t.Fatalf("expected list result to be an array, got %T", catalogTypeRef01ListRt0Result)
+		}
+
+		notFoundItem := vs.Select(entityListToData(catalogTypeRef01ListRt0), map[string]any{"id": catalogTypeRef01Data["id"]})
+		if !vs.IsEmpty(notFoundItem) {
+			t.Fatal("expected removed entity to not be in list")
 		}
 
 	})

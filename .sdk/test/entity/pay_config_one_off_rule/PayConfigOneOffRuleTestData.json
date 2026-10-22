@@ -1,0 +1,67 @@
+{
+  "existing": {
+    "pay_config_one_off_rule": {
+      "PAY_CONFIG_ONE_OFF_RULE00": {
+        "end_at": "s32",
+        "id": "PAY_CONFIG_ONE_OFF_RULE00",
+        "name": "s34",
+        "rate_cents": 53,
+        "start_at": "s36",
+        "pay_config_id": "PAY_CONFIG01"
+      },
+      "PAY_CONFIG_ONE_OFF_RULE01": {
+        "end_at": "s64",
+        "id": "PAY_CONFIG_ONE_OFF_RULE01",
+        "name": "s66",
+        "rate_cents": 103,
+        "start_at": "s68",
+        "pay_config_id": "PAY_CONFIG01"
+      },
+      "PAY_CONFIG_ONE_OFF_RULE02": {
+        "end_at": "s96",
+        "id": "PAY_CONFIG_ONE_OFF_RULE02",
+        "name": "s98",
+        "rate_cents": 153,
+        "start_at": "s9a",
+        "pay_config_id": "PAY_CONFIG01"
+      }
+    }
+  },
+  "new": {
+    "pay_config_one_off_rule": {
+      "pay_config_one_off_rule_ref01": {
+        "end_at": "sc8",
+        "name": "sca",
+        "rate_cents": 203,
+        "start_at": "scc"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/pay_configs/{pay_config_id}/one_off_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/pay_configs/{pay_config_id}/one_off_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/pay_configs/{pay_config_id}/one_off_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/pay_configs/{pay_config_id}/one_off_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/pay_configs/{pay_config_id}/one_off_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

@@ -1,0 +1,157 @@
+# Entity: telemetry_data_source
+
+main: kit: entity: telemetry_data_source: {
+
+  alias: field: {}
+
+  fields: {
+    created_at: {
+      fo: "date-time"
+      h: "Created At"
+      n: "created_at"
+      r: true
+      sh: "When this data source was created"
+      t: "`$STRING`"
+    }
+    datadog_config: {
+      h: "Datadog Config"
+      n: "datadog_config"
+      r: false
+      sh: "Datadog-specific credential updates"
+      t: "`$OBJECT`"
+    }
+    enabled: {
+      h: "Enabled"
+      n: "enabled"
+      r: true
+      sh: "Whether this data source is enabled"
+      t: "`$BOOLEAN`"
+    }
+    grafana_config: {
+      h: "Grafana Config"
+      n: "grafana_config"
+      r: false
+      sh: "Grafana-specific credential and endpoint updates"
+      t: "`$OBJECT`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: true
+      sh: "Unique identifier for this data source"
+      t: "`$STRING`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      op: {
+        update: {
+          req: false
+          type: "`$STRING`"
+        }
+      }
+      r: true
+      sh: "Human-readable name of the data source"
+      t: "`$STRING`"
+    }
+    provider: {
+      h: "Provider"
+      n: "provider"
+      r: true
+      sh: "Provider that hosts this data source"
+      t: "`$STRING`"
+    }
+    source_type: {
+      h: "Source Type"
+      n: "source_type"
+      r: true
+      sh: "Type of data source (e.g., prometheus, loki, tempo)"
+      t: "`$STRING`"
+    }
+    updated_at: {
+      fo: "date-time"
+      h: "Updated At"
+      n: "updated_at"
+      r: true
+      sh: "When this data source was last updated"
+      t: "`$STRING`"
+    }
+    version: {
+      h: "Version"
+      n: "version"
+      r: false
+      sh: "Upstream tool version captured at probe time (e.g."
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "telemetry_data_source"
+  op: {
+    update: {
+      name: "update"
+      points: [
+        {
+          bf: [
+            "datadog_config"
+            "grafana_config"
+            "name"
+          ]
+          co: {
+            id: "PUT /v2/telemetry/data_sources/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "PUT"
+          o: "/v2/telemetry/data_sources/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "telemetry"
+            }
+            {
+              lit: "data_sources"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.data_source`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

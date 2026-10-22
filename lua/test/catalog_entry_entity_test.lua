@@ -139,7 +139,7 @@ describe("CatalogEntryEntity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:CatalogEntry(nil):list({ ["after"] = 1, ["catalog_type_id"] = "x" }, nil)
+    local _, err = client:CatalogEntry(nil):list({ ["after"] = 1, ["catalog_type_id"] = "x", ["page_size"] = 1 }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 
@@ -147,7 +147,7 @@ describe("CatalogEntryEntity", function()
     local setup = catalog_entry_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"create", "list", "update", "load"}) do
+    for _, _op in ipairs({"create", "list", "update", "load", "remove"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "catalog_entry." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
@@ -204,6 +204,25 @@ describe("CatalogEntryEntity", function()
     local catalog_entry_ref01_data_dt0_load_result = helpers.to_map(type(catalog_entry_ref01_data_dt0_loaded) == 'table' and catalog_entry_ref01_data_dt0_loaded.data_get and catalog_entry_ref01_data_dt0_loaded:data_get() or catalog_entry_ref01_data_dt0_loaded)
     assert.is_not_nil(catalog_entry_ref01_data_dt0_load_result)
     assert.are.equal(catalog_entry_ref01_data_dt0_load_result["id"], catalog_entry_ref01_data["id"])
+
+    -- REMOVE
+    local catalog_entry_ref01_match_rm0 = {
+      id = catalog_entry_ref01_data["id"],
+    }
+    local _, err = catalog_entry_ref01_ent:remove(catalog_entry_ref01_match_rm0, nil)
+    assert.is_nil(err)
+
+    -- LIST
+    local catalog_entry_ref01_match_rt0 = {}
+
+    local catalog_entry_ref01_list_rt0_result, err = catalog_entry_ref01_ent:list(catalog_entry_ref01_match_rt0, nil)
+    assert.is_nil(err)
+    assert.is_table(catalog_entry_ref01_list_rt0_result)
+
+    local not_found_item = vs.select(
+      runner.entity_list_to_data(catalog_entry_ref01_list_rt0_result),
+      { id = catalog_entry_ref01_data["id"] })
+    assert.is_true(vs.isempty(not_found_item))
 
   end)
 end)

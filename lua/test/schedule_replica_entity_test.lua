@@ -37,7 +37,7 @@ describe("ScheduleReplicaEntity", function()
     local setup = schedule_replica_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"load"}) do
+    for _, _op in ipairs({"load", "remove", "list"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "schedule_replica." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
@@ -45,9 +45,18 @@ describe("ScheduleReplicaEntity", function()
       end
     end
     if setup.live then
-      runner.live_miss(pending, LIVE_STRICT, "Live entity test blocked: " .. "the flow loads a schedule_replica record it has no list to find")
+      for _, _live_key in ipairs({"schedule01"}) do
+        if setup.synthetic_only or setup.idmap[_live_key] == nil then
+          runner.live_miss(pending, LIVE_STRICT, "Live entity test blocked: needs " .. _live_key .. " via INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID")
+        end
+      end
     end
     local client = setup.client
+    if setup.live then
+      runner.live_existing(pending, setup, LIVE_STRICT, "schedule_replica", function()
+        return client:ScheduleReplica(nil):list({["schedule_id"] = setup.idmap["schedule01"]}, nil)
+      end)
+    end
 
     -- Bootstrap entity data from existing test data.
     local schedule_replica_ref01_data_raw = vs.items(helpers.to_map(

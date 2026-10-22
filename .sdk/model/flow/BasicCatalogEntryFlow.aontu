@@ -66,6 +66,35 @@ main: kit: flow: BasicCatalogEntryFlow:
         }
       ]
     }
+
+    {
+      i: {
+        ref: "catalog_entry_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "catalog_entry01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "catalog_entry_ref01"
+          }
+        }
+      ]
+    }
   ],
   "key$": "BasicCatalogEntryFlow"
 }

@@ -150,7 +150,7 @@ class StatusPageMaintenanceEntityTest < Minitest::Test
     setup = status_page_maintenance_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["create", "list", "update", "load"].each do |_op|
+    ["create", "list", "update", "load", "remove"].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "status_page_maintenance." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
@@ -203,6 +203,23 @@ class StatusPageMaintenanceEntityTest < Minitest::Test
     status_page_maintenance_ref01_data_dt0_load_result = Helpers.to_map(status_page_maintenance_ref01_data_dt0_loaded.respond_to?(:data_get) ? status_page_maintenance_ref01_data_dt0_loaded.data_get : status_page_maintenance_ref01_data_dt0_loaded)
     assert !status_page_maintenance_ref01_data_dt0_load_result.nil?
     assert_equal status_page_maintenance_ref01_data_dt0_load_result["id"], status_page_maintenance_ref01_data["id"]
+
+    # REMOVE
+    status_page_maintenance_ref01_match_rm0 = {
+      "id" => status_page_maintenance_ref01_data["id"],
+    }
+    status_page_maintenance_ref01_ent.remove(status_page_maintenance_ref01_match_rm0, nil)
+
+    # LIST
+    status_page_maintenance_ref01_match_rt0 = {}
+
+    status_page_maintenance_ref01_list_rt0_result = status_page_maintenance_ref01_ent.list(status_page_maintenance_ref01_match_rt0, nil)
+    assert status_page_maintenance_ref01_list_rt0_result.is_a?(Array)
+
+    not_found_item = Vs.select(
+      Runner.entity_list_to_data(status_page_maintenance_ref01_list_rt0_result),
+      { "id" => status_page_maintenance_ref01_data["id"] })
+    assert Vs.isempty(not_found_item)
 
   end
 end

@@ -62,6 +62,9 @@ main: kit: entity: catalog_resource: {
           }
           m: "GET"
           o: "/v2/catalog_resources"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"

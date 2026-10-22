@@ -138,6 +138,9 @@ main: kit: entity: catalog_entry: {
           }
           m: "POST"
           o: "/v2/catalog_entries"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -297,6 +300,7 @@ main: kit: entity: catalog_entry: {
           m: "GET"
           o: "/v2/catalog_entries"
           q: {
+            "$action": "v2"
             exist: [
               "catalog_type_id"
             ]
@@ -344,6 +348,7 @@ main: kit: entity: catalog_entry: {
           m: "GET"
           o: "/v2/catalog_entries/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]
@@ -425,6 +430,94 @@ main: kit: entity: catalog_entry: {
         }
       ]
     }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v2/catalog_entries/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v2/catalog_entries/{id}"
+          q: {
+            "$action": "v2"
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "catalog_entries"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "DELETE /v3/catalog_entries/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v3/catalog_entries/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "catalog_entries"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
     update: {
       name: "update"
       points: [
@@ -456,6 +549,7 @@ main: kit: entity: catalog_entry: {
           m: "PUT"
           o: "/v2/catalog_entries/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]

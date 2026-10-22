@@ -173,24 +173,6 @@ class AlertTagEntityTest extends TestCase
         $this->assertSame(2, $client->_cost["total"]["attempts"]);
     }
 
-    public function test_validate_list_response(): void
-    {
-        $cfg = IncidentIoConfig::shared_config();
-        if (!isset($cfg["feature"]["validate"])) {
-            $this->markTestSkipped('feature not present in this SDK: validate');
-        }
-        $opts = ["feature" => ["validate" => ["active" => true, "request" => false, "response" => true]]];
-        $listed = IncidentIoSDK::test(['entity' => ['alert_tag' => ['v1' => ['name' => 'x']]]], $opts)->AlertTag(null)->list(null, null);
-        $this->assertSame(['v1'], array_map(fn($ent) => $ent->data_get()['id'] ?? null, $listed));
-        $err = null;
-        try {
-            IncidentIoSDK::test(['entity' => ['alert_tag' => ['v1' => ['name' => 1]]]], $opts)->AlertTag(null)->list(null, null);
-        } catch (\Throwable $e) {
-            $err = $e;
-        }
-        $this->assertSame('validate_failed', $err->sdk_code ?? null);
-    }
-
     public function test_validate(): void
     {
         $cfg = IncidentIoConfig::shared_config();
@@ -212,29 +194,43 @@ class AlertTagEntityTest extends TestCase
         $setup = alert_tag_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["list"] as $_op) {
+        foreach (["create", "list"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "alert_tag." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
                 return;
             }
         }
+        if (!empty($setup["live"])) {
+            foreach (["alert01"] as $_liveKey) {
+                if (!empty($setup["synthetic_only"]) || null === ($setup["idmap"][$_liveKey] ?? null)) {
+                    Runner::live_miss(self::LIVE_STRICT, "Live entity test blocked: needs " . $_liveKey . " via INCIDENT_IO_TEST_ALERT_TAG_ENTID");
+                }
+            }
+        }
         $client = $setup["client"];
 
-        // Bootstrap entity data from existing test data.
-        $alert_tag_ref01_data_raw = Vs::items(Helpers::to_map(
-            Vs::getpath($setup["data"], "existing.alert_tag")));
-        $alert_tag_ref01_data = null;
-        if (count($alert_tag_ref01_data_raw) > 0) {
-            $alert_tag_ref01_data = Helpers::to_map($alert_tag_ref01_data_raw[0][1]);
-        }
+        // CREATE
+        $alert_tag_ref01_ent = $client->AlertTag(null);
+        $alert_tag_ref01_data = Helpers::to_map(Vs::getprop(
+            Vs::getpath($setup["data"], "new.alert_tag"), "alert_tag_ref01"));
+        $alert_tag_ref01_data["alert_id"] = $setup["idmap"]["alert01"];
+
+        $alert_tag_ref01_data_result = $alert_tag_ref01_ent->create($alert_tag_ref01_data, null);
+        $alert_tag_ref01_data = Helpers::to_map(is_object($alert_tag_ref01_data_result) && method_exists($alert_tag_ref01_data_result, 'data_get') ? $alert_tag_ref01_data_result->data_get() : $alert_tag_ref01_data_result);
+        $this->assertNotNull($alert_tag_ref01_data);
+        $this->assertNotNull($alert_tag_ref01_data["id"]);
 
         // LIST
-        $alert_tag_ref01_ent = $client->AlertTag(null);
         $alert_tag_ref01_match = [];
 
         $alert_tag_ref01_list_result = $alert_tag_ref01_ent->list($alert_tag_ref01_match, null);
         $this->assertIsArray($alert_tag_ref01_list_result);
+
+        $found_item = sdk_select(
+            Runner::entity_list_to_data($alert_tag_ref01_list_result),
+            ["id" => $alert_tag_ref01_data["id"]]);
+        $this->assertNotEmpty($found_item);
 
     }
 }
@@ -254,7 +250,7 @@ function alert_tag_basic_setup($extra)
 
     // Generate idmap.
     $idmap = [];
-    foreach (["alert_tag01", "alert_tag02", "alert_tag03"] as $k) {
+    foreach (["alert_tag01", "alert_tag02", "alert_tag03", "alert01", "alert02", "alert03"] as $k) {
         $idmap[$k] = strtoupper($k);
     }
 

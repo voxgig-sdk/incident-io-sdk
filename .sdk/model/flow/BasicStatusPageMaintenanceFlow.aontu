@@ -66,6 +66,35 @@ main: kit: flow: BasicStatusPageMaintenanceFlow:
         }
       ]
     }
+
+    {
+      i: {
+        ref: "status_page_maintenance_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "status_page_maintenance01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "status_page_maintenance_ref01"
+          }
+        }
+      ]
+    }
   ],
   "key$": "BasicStatusPageMaintenanceFlow"
 }

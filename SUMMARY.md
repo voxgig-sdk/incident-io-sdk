@@ -222,7 +222,7 @@
 
 This guide introduces the API, the client libraries, and the companion tools in this repository. Start with the API capabilities, choose a client for your application, and use the linked reference when you need exact request and response details.
 
-The selected API surface contains 111 entities and 303 HTTP routes. There are 6 SDK targets and 2 companion tools.
+The selected API surface contains 94 entities and 315 HTTP routes. There are 6 SDK targets and 2 companion tools.
 
 An entity groups related API operations. An operation can have several routes with different inputs or authentication requirements. The SDK exposes the entity and its operations using the conventions of the selected language.
 
@@ -240,7 +240,7 @@ Key fields to recognise:
 - `completed_at`: When the action was completed
 - `created_at`: When the action was created
 - `description`: Description of the action
-- `follow_up`: Whether an action is marked as follow-up
+- `id`: Unique identifier for the action
 
 ### [Alert](docs/api/alert.html)
 
@@ -293,10 +293,10 @@ SDK operations: `create`, `list`, `load`, `remove`, `update`.
 Key fields to recognise:
 
 - `alert_sources`: Which alert sources should this alert route match?
-- `channel_config`: The channel configuration for this alert route
 - `condition_groups`: What condition groups must be true for this alert route to fire?
 - `created_at`: The time of creation of this alert route
 - `enabled`: Whether this alert route is enabled or not
+- `expressions`: The expressions used in this template
 
 ### [AlertSource](docs/api/alert_source.html)
 
@@ -327,18 +327,7 @@ Key fields to recognise:
 
 Results: OK response.
 
-SDK operations: `list`.
-
-Key fields to recognise:
-
-- `id`: Unique identifier for the tag
-- `name`: The tag name
-
-### [AlertsAddTagsResultV2](docs/api/alerts_add_tags_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `create`.
+SDK operations: `create`, `list`.
 
 Key fields to recognise:
 
@@ -348,7 +337,7 @@ Key fields to recognise:
 - `created_at`: When this entry was created
 - `deduplication_key`: A deduplication key which uniquely references this alert from your alert source. For newly created HTTP sources, this field is required. If you send an event with the same `deduplication_key` multiple times, only one alert will be created in incident.io for this alert source config. You can filter on this field to find the alert created by an event you&#39;ve sent us.
 
-### [AlertsRemoveTagsResultV2](docs/api/alerts_remove_tags_result_v2.html)
+### [AlertsAddTagsResultV2](docs/api/alerts_add_tags_result_v2.html)
 
 Results: OK response.
 
@@ -446,34 +435,11 @@ Key fields to recognise:
 - `custom_language`: The language we speak voice prompts in, via text-to-speech
 - `id`: Unique identifier for this call route
 
-### [CallRoutesCreateAllowedCallerResultV2](docs/api/call_routes_create_allowed_caller_result_v2.html)
+### [CallRouteAllowedCaller](docs/api/call_route_allowed_caller.html)
 
-Results: Created response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `create`.
-
-Key fields to recognise:
-
-- `name`: Label for whose number this is
-- `phone_number`: The number allowed to call this route, in international format
-
-### [CallRoutesCreateOptionResultV2](docs/api/call_routes_create_option_result_v2.html)
-
-Results: Created response.
-
-SDK operations: `create`.
-
-Key fields to recognise:
-
-- `digit`: The keypad digit a caller presses to choose this option
-- `path`: Who we page when a caller chooses this option
-- `prompt`: What we read out to offer this option, via text-to-speech in the route&#39;s language, exactly as written
-
-### [CallRoutesListAllowedCallersResultV2](docs/api/call_routes_list_allowed_callers_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `list`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -481,36 +447,11 @@ Key fields to recognise:
 - `name`: Label for whose number this is
 - `phone_number`: The number allowed to call this route, in international format
 
-### [CallRoutesListOptionsResultV2](docs/api/call_routes_list_options_result_v2.html)
+### [CallRouteOption](docs/api/call_route_option.html)
 
-Results: OK response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `list`.
-
-Key fields to recognise:
-
-- `digit`: The keypad digit a caller presses to choose this option
-- `id`: Unique identifier for this option
-- `path`: Who we page when a caller chooses this option
-- `prompt`: What we read out to offer this option, via text-to-speech in the route&#39;s language, exactly as written
-
-### [CallRoutesShowAllowedCallerResultV2](docs/api/call_routes_show_allowed_caller_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `load`.
-
-Key fields to recognise:
-
-- `id`: Unique identifier for this allowed caller
-- `name`: Label for whose number this is
-- `phone_number`: The number allowed to call this route, in international format
-
-### [CallRoutesShowOptionResultV2](docs/api/call_routes_show_option_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `load`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -518,37 +459,6 @@ Key fields to recognise:
 - `id`: Unique identifier for this option
 - `path`: Who we page when a caller chooses this option
 - `prompt`: What we read out to offer this option, via text-to-speech in the route&#39;s language, exactly as written
-
-### [CallRoutesUpdateAllowedCallerResultV2](docs/api/call_routes_update_allowed_caller_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `update`.
-
-Key fields to recognise:
-
-- `id`: Unique identifier for this allowed caller
-- `name`: Label for whose number this is
-- `phone_number`: The number allowed to call this route, in international format
-
-### [CallRoutesUpdateOptionResultV2](docs/api/call_routes_update_option_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `update`.
-
-Key fields to recognise:
-
-- `digit`: The keypad digit a caller presses to choose this option
-- `id`: Unique identifier for this option
-- `path`: Who we page when a caller chooses this option
-- `prompt`: What we read out to offer this option, via text-to-speech in the route&#39;s language, exactly as written
-
-### [CallRoutesV2](docs/api/call_routes_v2.html)
-
-Results: No Content response.
-
-SDK operations: `remove`.
 
 ### [CallSession](docs/api/call_session.html)
 
@@ -579,9 +489,9 @@ Key fields to recognise:
 
 ### [CatalogEntry](docs/api/catalog_entry.html)
 
-Results: Created response.; OK response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `create`, `list`, `load`, `update`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -607,9 +517,9 @@ Key fields to recognise:
 
 ### [CatalogType](docs/api/catalog_type.html)
 
-Results: Created response.; OK response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `create`, `list`, `load`, `update`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -673,6 +583,20 @@ Key fields to recognise:
 - `description`: Additional detail provided with this escalation. When it isn&#39;t set explicitly, this is taken from the alert description or the incident summary, and is empty when neither applies.
 - `escalation_path_id`: Unique identifier of the escalation path that the escalation was created from
 - `events`: Events which describe the history of this escalation. Events include information about what users or channels were notified and what users acked.
+
+### [EscalationPath](docs/api/escalation_path.html)
+
+Results: Created response.; OK response.; No Content response.
+
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
+
+Key fields to recognise:
+
+- `current_responders`: Users who are currently on-call for this escalation path
+- `id`: Unique identifier for this escalation path.
+- `kind`: Whether this path carries its own nodes, or is built from an escalation path template.
+- `name`: The name of this escalation path, for the user&#39;s reference.
+- `param_bindings`: For a templated path, the values bound to the template&#39;s declared parameters, keyed by parameter name.
 
 ### [EscalationPathTemplate](docs/api/escalation_path_template.html)
 
@@ -1096,37 +1020,11 @@ Key fields to recognise:
 - `name`: Human readable name for this pay config
 - `one_off_rules`: Rules that apply over a single window of time, such as a public holiday
 
-### [PayConfigsCreateOneOffRuleResultV2](docs/api/pay_configs_create_one_off_rule_result_v2.html)
+### [PayConfigOneOffRule](docs/api/pay_config_one_off_rule.html)
 
-Results: Created response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `create`.
-
-Key fields to recognise:
-
-- `end_at`: When this rule stops applying
-- `name`: Human readable name for this rule
-- `rate_cents`: Rate paid while this rule applies, in the lowest denomination of the config&#39;s currency
-- `start_at`: When this rule starts applying
-
-### [PayConfigsCreateWeeklyRuleResultV2](docs/api/pay_configs_create_weekly_rule_result_v2.html)
-
-Results: Created response.
-
-SDK operations: `create`.
-
-Key fields to recognise:
-
-- `end_time`: Time of day this rule ends, in 24 hour format. Equal to `start_time` means it runs for the whole day.
-- `rate_cents`: Rate paid while this rule applies, in the lowest denomination of the config&#39;s currency
-- `start_time`: Time of day this rule starts, in 24 hour format
-- `weekdays`: Days of the week this rule applies on
-
-### [PayConfigsListOneOffRulesResultV2](docs/api/pay_configs_list_one_off_rules_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `list`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -1136,39 +1034,11 @@ Key fields to recognise:
 - `rate_cents`: Rate paid while this rule applies, in the lowest denomination of the config&#39;s currency
 - `start_at`: When this rule starts applying
 
-### [PayConfigsListWeeklyRulesResultV2](docs/api/pay_configs_list_weekly_rules_result_v2.html)
+### [PayConfigWeeklyRule](docs/api/pay_config_weekly_rule.html)
 
-Results: OK response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `list`.
-
-Key fields to recognise:
-
-- `end_time`: Time of day this rule ends, in 24 hour format. Equal to `start_time` means it runs for the whole day.
-- `id`: Unique identifier for this rule, stable across edits to the config
-- `rate_cents`: Rate paid while this rule applies, in the lowest denomination of the config&#39;s currency
-- `start_time`: Time of day this rule starts, in 24 hour format
-- `weekdays`: Days of the week this rule applies on
-
-### [PayConfigsShowOneOffRuleResultV2](docs/api/pay_configs_show_one_off_rule_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `load`.
-
-Key fields to recognise:
-
-- `end_at`: When this rule stops applying
-- `id`: Unique identifier for this rule, stable across edits to the config
-- `name`: Human readable name for this rule
-- `rate_cents`: Rate paid while this rule applies, in the lowest denomination of the config&#39;s currency
-- `start_at`: When this rule starts applying
-
-### [PayConfigsShowWeeklyRuleResultV2](docs/api/pay_configs_show_weekly_rule_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `load`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -1177,40 +1047,6 @@ Key fields to recognise:
 - `rate_cents`: Rate paid while this rule applies, in the lowest denomination of the config&#39;s currency
 - `start_time`: Time of day this rule starts, in 24 hour format
 - `weekdays`: Days of the week this rule applies on
-
-### [PayConfigsUpdateOneOffRuleResultV2](docs/api/pay_configs_update_one_off_rule_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `update`.
-
-Key fields to recognise:
-
-- `end_at`: When this rule stops applying
-- `id`: Unique identifier for this rule, stable across edits to the config
-- `name`: Human readable name for this rule
-- `rate_cents`: Rate paid while this rule applies, in the lowest denomination of the config&#39;s currency
-- `start_at`: When this rule starts applying
-
-### [PayConfigsUpdateWeeklyRuleResultV2](docs/api/pay_configs_update_weekly_rule_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `update`.
-
-Key fields to recognise:
-
-- `end_time`: Time of day this rule ends, in 24 hour format. Equal to `start_time` means it runs for the whole day.
-- `id`: Unique identifier for this rule, stable across edits to the config
-- `rate_cents`: Rate paid while this rule applies, in the lowest denomination of the config&#39;s currency
-- `start_time`: Time of day this rule starts, in 24 hour format
-- `weekdays`: Days of the week this rule applies on
-
-### [PayConfigsV2](docs/api/pay_configs_v2.html)
-
-Results: No Content response.
-
-SDK operations: `remove`.
 
 ### [PayReport](docs/api/pay_report.html)
 
@@ -1260,17 +1096,11 @@ Results: OK response.
 
 SDK operations: `load`.
 
-### [PoliciesV2](docs/api/policies_v2.html)
-
-Results: No Content response.
-
-SDK operations: `remove`.
-
 ### [Policy](docs/api/policy.html)
 
-Results: Created response.; OK response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `create`, `list`, `load`, `update`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -1374,11 +1204,25 @@ Key fields to recognise:
 
 - `schedule_entries`: The schedule entries for a window of time, grouped by where they come from. `scheduled` are the entries produced by the schedule&#39;s rotation rules before any overrides are taken into account. `overrides` are the one-off changes that apply within the window. `final` is the effective schedule after overrides have been merged in, this is normally the list to use when working out who is on-call.
 
+### [ScheduleOverride](docs/api/schedule_override.html)
+
+Results: Created response.; OK response.; No Content response.
+
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
+
+Key fields to recognise:
+
+- `end_at`: End of the override
+- `id`: Unique internal ID of the schedule override
+- `layer_id`: The layer on the rotation on the schedule that this override applies to
+- `rotation_id`: The rotation on the schedule that this override applies to
+- `schedule_id`: The schedule that this override applies to
+
 ### [ScheduleReplica](docs/api/schedule_replica.html)
 
-Results: Created response.; OK response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `create`, `list`, `load`.
+SDK operations: `create`, `list`, `load`, `remove`.
 
 Key fields to recognise:
 
@@ -1390,9 +1234,9 @@ Key fields to recognise:
 
 ### [ScheduleSyncRule](docs/api/schedule_sync_rule.html)
 
-Results: Created response.; OK response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `create`, `list`, `load`, `update`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -1416,34 +1260,6 @@ Key fields to recognise:
 - `linked_schedules`: Schedules with an active sync rule pointing at this target
 - `slack_team_id`: Slack team (workspace) ID the user group lives in. On Enterprise Grid this identifies which workspace within the org the group belongs to.
 
-### [SchedulesShowOverrideResultV2](docs/api/schedules_show_override_result_v2.html)
-
-Results: Created response.; OK response.
-
-SDK operations: `create`, `list`, `load`.
-
-Key fields to recognise:
-
-- `end_at`: End of the override
-- `id`: Unique internal ID of the schedule override
-- `layer_id`: The layer on the rotation on the schedule that this override applies to
-- `rotation_id`: The rotation on the schedule that this override applies to
-- `schedule_id`: The schedule that this override applies to
-
-### [SchedulesUpdateOverrideResultV2](docs/api/schedules_update_override_result_v2.html)
-
-Results: OK response.
-
-SDK operations: `update`.
-
-Key fields to recognise:
-
-- `end_at`: End of the override
-- `id`: Unique internal ID of the schedule override
-- `layer_id`: The layer on the rotation on the schedule that this override applies to
-- `rotation_id`: The rotation on the schedule that this override applies to
-- `schedule_id`: The schedule that this override applies to
-
 ### [Secret](docs/api/secret.html)
 
 Results: OK response.; Created response.; No Content response.
@@ -1460,9 +1276,9 @@ Key fields to recognise:
 
 ### [Severity](docs/api/severity.html)
 
-Results: Created response.; OK response.
+Results: Created response.; OK response.; Accepted response.
 
-SDK operations: `create`, `list`, `load`, `update`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -1497,7 +1313,7 @@ Key fields to recognise:
 - `id`: Unique identifier for this component
 - `name`: Human-readable name for the component
 
-### [StatusPageComponentAvailabilityV2](docs/api/status_page_component_availability_v2.html)
+### [StatusPageComponentAvailability](docs/api/status_page_component_availability.html)
 
 Results: OK response.
 
@@ -1539,7 +1355,7 @@ Key fields to recognise:
 - `notify_subscribers`: Whether to notify subscribers about this incident update.
 - `status_page_incident_id`: The ID of the corresponding status page incident
 
-### [StatusPageLinkedResponseIncidentV1](docs/api/status_page_linked_response_incident_v1.html)
+### [StatusPageLinkedResponseIncident](docs/api/status_page_linked_response_incident.html)
 
 Results: OK response.
 
@@ -1552,9 +1368,9 @@ Key fields to recognise:
 
 ### [StatusPageMaintenance](docs/api/status_page_maintenance.html)
 
-Results: Created response.; OK response.
+Results: Created response.; OK response.; No Content response.
 
-SDK operations: `create`, `list`, `load`, `update`.
+SDK operations: `create`, `list`, `load`, `remove`, `update`.
 
 Key fields to recognise:
 
@@ -1589,12 +1405,6 @@ Key fields to recognise:
 - `display_uptime_mode`: How the page shows uptime against its components
 - `id`: Unique ID of this component group
 
-### [StatusPagesV2](docs/api/status_pages_v2.html)
-
-Results: No Content response.
-
-SDK operations: `remove`.
-
 ### [Team](docs/api/team.html)
 
 Results: OK response.
@@ -1607,7 +1417,7 @@ Key fields to recognise:
 - `members`: Members of the team
 - `name`: Name of the team
 
-### [TelemetryDataSourceV2](docs/api/telemetry_data_source_v2.html)
+### [TelemetryDataSource](docs/api/telemetry_data_source.html)
 
 Results: OK response.
 
@@ -1623,16 +1433,16 @@ Key fields to recognise:
 
 ### [User](docs/api/user.html)
 
-Results: No Content response.; OK response.
+Results: OK response.
 
-SDK operations: `create`, `list`, `load`.
+SDK operations: `list`, `load`.
 
 Key fields to recognise:
 
 - `email`: Email address of the user.
 - `id`: Unique identifier of the user
 - `is_active`: Whether the user is active. False if the user has been deactivated (for example offboarded) or is not yet active.
-- `name`: Which rate limit was exceeded
+- `name`: Name of the user
 - `role`: DEPRECATED: Role of the user as of March 9th 2023, this value is no longer updated.
 
 ### [Workflow](docs/api/workflow.html)
@@ -1710,9 +1520,9 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [AlertSource](docs/api/alert_source.html) | `remove` | `DELETE /v2/alert_sources/{id}` | Required |
 | [AlertSource](docs/api/alert_source.html) | `update` | `PUT /v2/alert_sources/{id}` | Required |
 | [AlertSourcesV2](docs/api/alert_sources_v2.html) | `create` | `POST /v2/alert_sources/actions/validate` | Required |
+| [AlertTag](docs/api/alert_tag.html) | `create` | `POST /v2/alerts/{id}/actions/remove_tags` | Required |
 | [AlertTag](docs/api/alert_tag.html) | `list` | `GET /v2/alert_tags` | Required |
 | [AlertsAddTagsResultV2](docs/api/alerts_add_tags_result_v2.html) | `create` | `POST /v2/alerts/{id}/actions/add_tags` | Required |
-| [AlertsRemoveTagsResultV2](docs/api/alerts_remove_tags_result_v2.html) | `create` | `POST /v2/alerts/{id}/actions/remove_tags` | Required |
 | [AlertsSetTagsResultV2](docs/api/alerts_set_tags_result_v2.html) | `create` | `POST /v2/alerts/{id}/actions/set_tags` | Required |
 | [AlertsTransitionIncidentAlertResultV2](docs/api/alerts_transition_incident_alert_result_v2.html) | `create` | `POST /v2/incident_alerts/{id}/actions/transition` | Required |
 | [AlertsTransitionIncidentAlertResultV2](docs/api/alerts_transition_incident_alert_result_v2.html) | `create` | `POST /v2/incident_alerts` | Required |
@@ -1736,16 +1546,16 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [CallRoute](docs/api/call_route.html) | `list` | `GET /v2/call_routes` | Required |
 | [CallRoute](docs/api/call_route.html) | `load` | `GET /v2/call_routes/{id}` | Required |
 | [CallRoute](docs/api/call_route.html) | `update` | `PUT /v2/call_routes/{id}` | Required |
-| [CallRoutesCreateAllowedCallerResultV2](docs/api/call_routes_create_allowed_caller_result_v2.html) | `create` | `POST /v2/call_routes/{call_route_id}/allowed_callers` | Required |
-| [CallRoutesCreateOptionResultV2](docs/api/call_routes_create_option_result_v2.html) | `create` | `POST /v2/call_routes/{call_route_id}/options` | Required |
-| [CallRoutesListAllowedCallersResultV2](docs/api/call_routes_list_allowed_callers_result_v2.html) | `list` | `GET /v2/call_routes/{call_route_id}/allowed_callers` | Required |
-| [CallRoutesListOptionsResultV2](docs/api/call_routes_list_options_result_v2.html) | `list` | `GET /v2/call_routes/{call_route_id}/options` | Required |
-| [CallRoutesShowAllowedCallerResultV2](docs/api/call_routes_show_allowed_caller_result_v2.html) | `load` | `GET /v2/call_routes/{call_route_id}/allowed_callers/{id}` | Required |
-| [CallRoutesShowOptionResultV2](docs/api/call_routes_show_option_result_v2.html) | `load` | `GET /v2/call_routes/{call_route_id}/options/{id}` | Required |
-| [CallRoutesUpdateAllowedCallerResultV2](docs/api/call_routes_update_allowed_caller_result_v2.html) | `update` | `PUT /v2/call_routes/{call_route_id}/allowed_callers/{id}` | Required |
-| [CallRoutesUpdateOptionResultV2](docs/api/call_routes_update_option_result_v2.html) | `update` | `PUT /v2/call_routes/{call_route_id}/options/{id}` | Required |
-| [CallRoutesV2](docs/api/call_routes_v2.html) | `remove` | `DELETE /v2/call_routes/{call_route_id}/allowed_callers/{id}` | Required |
-| [CallRoutesV2](docs/api/call_routes_v2.html) | `remove` | `DELETE /v2/call_routes/{call_route_id}/options/{id}` | Required |
+| [CallRouteAllowedCaller](docs/api/call_route_allowed_caller.html) | `create` | `POST /v2/call_routes/{call_route_id}/allowed_callers` | Required |
+| [CallRouteAllowedCaller](docs/api/call_route_allowed_caller.html) | `list` | `GET /v2/call_routes/{call_route_id}/allowed_callers` | Required |
+| [CallRouteAllowedCaller](docs/api/call_route_allowed_caller.html) | `load` | `GET /v2/call_routes/{call_route_id}/allowed_callers/{id}` | Required |
+| [CallRouteAllowedCaller](docs/api/call_route_allowed_caller.html) | `remove` | `DELETE /v2/call_routes/{call_route_id}/allowed_callers/{id}` | Required |
+| [CallRouteAllowedCaller](docs/api/call_route_allowed_caller.html) | `update` | `PUT /v2/call_routes/{call_route_id}/allowed_callers/{id}` | Required |
+| [CallRouteOption](docs/api/call_route_option.html) | `create` | `POST /v2/call_routes/{call_route_id}/options` | Required |
+| [CallRouteOption](docs/api/call_route_option.html) | `list` | `GET /v2/call_routes/{call_route_id}/options` | Required |
+| [CallRouteOption](docs/api/call_route_option.html) | `load` | `GET /v2/call_routes/{call_route_id}/options/{id}` | Required |
+| [CallRouteOption](docs/api/call_route_option.html) | `remove` | `DELETE /v2/call_routes/{call_route_id}/options/{id}` | Required |
+| [CallRouteOption](docs/api/call_route_option.html) | `update` | `PUT /v2/call_routes/{call_route_id}/options/{id}` | Required |
 | [CallSession](docs/api/call_session.html) | `list` | `GET /v2/call_sessions` | Required |
 | [CallTranscriptEntry](docs/api/call_transcript_entry.html) | `list` | `GET /v2/call_transcript_entries` | Required |
 | [CatalogEntry](docs/api/catalog_entry.html) | `create` | `POST /v2/catalog_entries` | Required |
@@ -1754,6 +1564,8 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [CatalogEntry](docs/api/catalog_entry.html) | `list` | `GET /v2/catalog_entries` | Required |
 | [CatalogEntry](docs/api/catalog_entry.html) | `load` | `GET /v2/catalog_entries/{id}` | Required |
 | [CatalogEntry](docs/api/catalog_entry.html) | `load` | `GET /v3/catalog_entries/{id}` | Required |
+| [CatalogEntry](docs/api/catalog_entry.html) | `remove` | `DELETE /v2/catalog_entries/{id}` | Required |
+| [CatalogEntry](docs/api/catalog_entry.html) | `remove` | `DELETE /v3/catalog_entries/{id}` | Required |
 | [CatalogEntry](docs/api/catalog_entry.html) | `update` | `PUT /v2/catalog_entries/{id}` | Required |
 | [CatalogEntry](docs/api/catalog_entry.html) | `update` | `PUT /v3/catalog_entries/{id}` | Required |
 | [CatalogResource](docs/api/catalog_resource.html) | `list` | `GET /v2/catalog_resources` | Required |
@@ -1764,6 +1576,8 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [CatalogType](docs/api/catalog_type.html) | `list` | `GET /v3/catalog_types` | Required |
 | [CatalogType](docs/api/catalog_type.html) | `load` | `GET /v2/catalog_types/{id}` | Required |
 | [CatalogType](docs/api/catalog_type.html) | `load` | `GET /v3/catalog_types/{id}` | Required |
+| [CatalogType](docs/api/catalog_type.html) | `remove` | `DELETE /v2/catalog_types/{id}` | Required |
+| [CatalogType](docs/api/catalog_type.html) | `remove` | `DELETE /v3/catalog_types/{id}` | Required |
 | [CatalogType](docs/api/catalog_type.html) | `update` | `PUT /v2/catalog_types/{id}` | Required |
 | [CatalogType](docs/api/catalog_type.html) | `update` | `PUT /v3/catalog_types/{id}` | Required |
 | [CatalogTypeSchema](docs/api/catalog_type_schema.html) | `create` | `POST /v2/catalog_types/{id}/actions/update_schema` | Required |
@@ -1786,6 +1600,11 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [Escalation](docs/api/escalation.html) | `create` | `POST /v2/escalations` | Required |
 | [Escalation](docs/api/escalation.html) | `list` | `GET /v2/escalations` | Required |
 | [Escalation](docs/api/escalation.html) | `load` | `GET /v2/escalations/{id}` | Required |
+| [EscalationPath](docs/api/escalation_path.html) | `create` | `POST /v2/escalation_paths` | Required |
+| [EscalationPath](docs/api/escalation_path.html) | `list` | `GET /v2/escalation_paths` | Required |
+| [EscalationPath](docs/api/escalation_path.html) | `load` | `GET /v2/escalation_paths/{id}` | Required |
+| [EscalationPath](docs/api/escalation_path.html) | `remove` | `DELETE /v2/escalation_paths/{id}` | Required |
+| [EscalationPath](docs/api/escalation_path.html) | `update` | `PUT /v2/escalation_paths/{id}` | Required |
 | [EscalationPathTemplate](docs/api/escalation_path_template.html) | `create` | `POST /v2/escalation_path_templates` | Required |
 | [EscalationPathTemplate](docs/api/escalation_path_template.html) | `list` | `GET /v2/escalation_path_templates` | Required |
 | [EscalationPathTemplate](docs/api/escalation_path_template.html) | `load` | `GET /v2/escalation_path_templates/{id}` | Required |
@@ -1876,16 +1695,16 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [PayConfig](docs/api/pay_config.html) | `load` | `GET /v2/pay_configs/{id}` | Required |
 | [PayConfig](docs/api/pay_config.html) | `remove` | `DELETE /v2/pay_configs/{id}` | Required |
 | [PayConfig](docs/api/pay_config.html) | `update` | `PUT /v2/pay_configs/{id}` | Required |
-| [PayConfigsCreateOneOffRuleResultV2](docs/api/pay_configs_create_one_off_rule_result_v2.html) | `create` | `POST /v2/pay_configs/{pay_config_id}/one_off_rules` | Required |
-| [PayConfigsCreateWeeklyRuleResultV2](docs/api/pay_configs_create_weekly_rule_result_v2.html) | `create` | `POST /v2/pay_configs/{pay_config_id}/weekly_rules` | Required |
-| [PayConfigsListOneOffRulesResultV2](docs/api/pay_configs_list_one_off_rules_result_v2.html) | `list` | `GET /v2/pay_configs/{pay_config_id}/one_off_rules` | Required |
-| [PayConfigsListWeeklyRulesResultV2](docs/api/pay_configs_list_weekly_rules_result_v2.html) | `list` | `GET /v2/pay_configs/{pay_config_id}/weekly_rules` | Required |
-| [PayConfigsShowOneOffRuleResultV2](docs/api/pay_configs_show_one_off_rule_result_v2.html) | `load` | `GET /v2/pay_configs/{pay_config_id}/one_off_rules/{id}` | Required |
-| [PayConfigsShowWeeklyRuleResultV2](docs/api/pay_configs_show_weekly_rule_result_v2.html) | `load` | `GET /v2/pay_configs/{pay_config_id}/weekly_rules/{id}` | Required |
-| [PayConfigsUpdateOneOffRuleResultV2](docs/api/pay_configs_update_one_off_rule_result_v2.html) | `update` | `PUT /v2/pay_configs/{pay_config_id}/one_off_rules/{id}` | Required |
-| [PayConfigsUpdateWeeklyRuleResultV2](docs/api/pay_configs_update_weekly_rule_result_v2.html) | `update` | `PUT /v2/pay_configs/{pay_config_id}/weekly_rules/{id}` | Required |
-| [PayConfigsV2](docs/api/pay_configs_v2.html) | `remove` | `DELETE /v2/pay_configs/{pay_config_id}/one_off_rules/{id}` | Required |
-| [PayConfigsV2](docs/api/pay_configs_v2.html) | `remove` | `DELETE /v2/pay_configs/{pay_config_id}/weekly_rules/{id}` | Required |
+| [PayConfigOneOffRule](docs/api/pay_config_one_off_rule.html) | `create` | `POST /v2/pay_configs/{pay_config_id}/one_off_rules` | Required |
+| [PayConfigOneOffRule](docs/api/pay_config_one_off_rule.html) | `list` | `GET /v2/pay_configs/{pay_config_id}/one_off_rules` | Required |
+| [PayConfigOneOffRule](docs/api/pay_config_one_off_rule.html) | `load` | `GET /v2/pay_configs/{pay_config_id}/one_off_rules/{id}` | Required |
+| [PayConfigOneOffRule](docs/api/pay_config_one_off_rule.html) | `remove` | `DELETE /v2/pay_configs/{pay_config_id}/one_off_rules/{id}` | Required |
+| [PayConfigOneOffRule](docs/api/pay_config_one_off_rule.html) | `update` | `PUT /v2/pay_configs/{pay_config_id}/one_off_rules/{id}` | Required |
+| [PayConfigWeeklyRule](docs/api/pay_config_weekly_rule.html) | `create` | `POST /v2/pay_configs/{pay_config_id}/weekly_rules` | Required |
+| [PayConfigWeeklyRule](docs/api/pay_config_weekly_rule.html) | `list` | `GET /v2/pay_configs/{pay_config_id}/weekly_rules` | Required |
+| [PayConfigWeeklyRule](docs/api/pay_config_weekly_rule.html) | `load` | `GET /v2/pay_configs/{pay_config_id}/weekly_rules/{id}` | Required |
+| [PayConfigWeeklyRule](docs/api/pay_config_weekly_rule.html) | `remove` | `DELETE /v2/pay_configs/{pay_config_id}/weekly_rules/{id}` | Required |
+| [PayConfigWeeklyRule](docs/api/pay_config_weekly_rule.html) | `update` | `PUT /v2/pay_configs/{pay_config_id}/weekly_rules/{id}` | Required |
 | [PayReport](docs/api/pay_report.html) | `create` | `POST /v2/pay_reports` | Required |
 | [PayReport](docs/api/pay_report.html) | `list` | `GET /v2/pay_reports` | Required |
 | [PayReport](docs/api/pay_report.html) | `load` | `GET /v2/pay_reports/{id}` | Required |
@@ -1893,10 +1712,10 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [PayReportsPublishResultV2](docs/api/pay_reports_publish_result_v2.html) | `create` | `POST /v2/pay_reports/{id}/actions/publish` | Required |
 | [PayReportsUnpublishResultV2](docs/api/pay_reports_unpublish_result_v2.html) | `create` | `POST /v2/pay_reports/{id}/actions/unpublish` | Required |
 | [PayReportsV2](docs/api/pay_reports_v2.html) | `load` | `GET /v2/pay_reports/{id}/download` | Required |
-| [PoliciesV2](docs/api/policies_v2.html) | `remove` | `DELETE /v2/policies/{id}` | Required |
 | [Policy](docs/api/policy.html) | `create` | `POST /v2/policies` | Required |
 | [Policy](docs/api/policy.html) | `list` | `GET /v2/policies` | Required |
 | [Policy](docs/api/policy.html) | `load` | `GET /v2/policies/{id}` | Required |
+| [Policy](docs/api/policy.html) | `remove` | `DELETE /v2/policies/{id}` | Required |
 | [Policy](docs/api/policy.html) | `update` | `PUT /v2/policies/{id}` | Required |
 | [PolicyFinding](docs/api/policy_finding.html) | `list` | `GET /v2/policy_findings` | Required |
 | [PolicyFinding](docs/api/policy_finding.html) | `load` | `GET /v2/policy_findings/{id}` | Required |
@@ -1912,22 +1731,25 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [Schedule](docs/api/schedule.html) | `update` | `PUT /v2/schedules/{id}` | Required |
 | [ScheduleEntriesListPayloadV2](docs/api/schedule_entries_list_payload_v2.html) | `create` | `POST /v2/schedules/{id}/actions/preview_entries` | Required |
 | [ScheduleEntry](docs/api/schedule_entry.html) | `load` | `GET /v2/schedule_entries` | Required |
+| [ScheduleOverride](docs/api/schedule_override.html) | `create` | `POST /v2/schedule_overrides` | Required |
+| [ScheduleOverride](docs/api/schedule_override.html) | `list` | `GET /v2/schedule_overrides` | Required |
+| [ScheduleOverride](docs/api/schedule_override.html) | `load` | `GET /v2/schedule_overrides/{id}` | Required |
+| [ScheduleOverride](docs/api/schedule_override.html) | `remove` | `DELETE /v2/schedule_overrides/{id}` | Required |
+| [ScheduleOverride](docs/api/schedule_override.html) | `update` | `PUT /v2/schedule_overrides/{id}` | Required |
 | [ScheduleReplica](docs/api/schedule_replica.html) | `create` | `POST /v2/schedules/{schedule_id}/replicas` | Required |
 | [ScheduleReplica](docs/api/schedule_replica.html) | `list` | `GET /v2/schedules/{schedule_id}/replicas` | Required |
 | [ScheduleReplica](docs/api/schedule_replica.html) | `load` | `GET /v2/schedules/{schedule_id}/replicas/{id}` | Required |
+| [ScheduleReplica](docs/api/schedule_replica.html) | `remove` | `DELETE /v2/schedules/{schedule_id}/replicas/{id}` | Required |
 | [ScheduleSyncRule](docs/api/schedule_sync_rule.html) | `create` | `POST /v2/schedules/{schedule_id}/sync_rules` | Required |
 | [ScheduleSyncRule](docs/api/schedule_sync_rule.html) | `list` | `GET /v2/schedules/{schedule_id}/sync_rules` | Required |
 | [ScheduleSyncRule](docs/api/schedule_sync_rule.html) | `load` | `GET /v2/schedules/{schedule_id}/sync_rules/{id}` | Required |
+| [ScheduleSyncRule](docs/api/schedule_sync_rule.html) | `remove` | `DELETE /v2/schedules/{schedule_id}/sync_rules/{id}` | Required |
 | [ScheduleSyncRule](docs/api/schedule_sync_rule.html) | `update` | `PUT /v2/schedules/{schedule_id}/sync_rules/{id}` | Required |
 | [ScheduleSyncTarget](docs/api/schedule_sync_target.html) | `create` | `POST /v2/schedule_sync_targets` | Required |
 | [ScheduleSyncTarget](docs/api/schedule_sync_target.html) | `list` | `GET /v2/schedule_sync_targets` | Required |
 | [ScheduleSyncTarget](docs/api/schedule_sync_target.html) | `load` | `GET /v2/schedule_sync_targets/{id}` | Required |
 | [ScheduleSyncTarget](docs/api/schedule_sync_target.html) | `remove` | `DELETE /v2/schedule_sync_targets/{id}` | Required |
 | [ScheduleSyncTarget](docs/api/schedule_sync_target.html) | `update` | `PUT /v2/schedule_sync_targets/{id}` | Required |
-| [SchedulesShowOverrideResultV2](docs/api/schedules_show_override_result_v2.html) | `create` | `POST /v2/schedule_overrides` | Required |
-| [SchedulesShowOverrideResultV2](docs/api/schedules_show_override_result_v2.html) | `list` | `GET /v2/schedule_overrides` | Required |
-| [SchedulesShowOverrideResultV2](docs/api/schedules_show_override_result_v2.html) | `load` | `GET /v2/schedule_overrides/{id}` | Required |
-| [SchedulesUpdateOverrideResultV2](docs/api/schedules_update_override_result_v2.html) | `update` | `PUT /v2/schedule_overrides/{id}` | Required |
 | [Secret](docs/api/secret.html) | `create` | `POST /v2/secrets/{id}/actions/rotate` | Required |
 | [Secret](docs/api/secret.html) | `create` | `POST /v2/secrets` | Required |
 | [Secret](docs/api/secret.html) | `list` | `GET /v2/secrets` | Required |
@@ -1937,6 +1759,7 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [Severity](docs/api/severity.html) | `create` | `POST /v1/severities` | Required |
 | [Severity](docs/api/severity.html) | `list` | `GET /v1/severities` | Required |
 | [Severity](docs/api/severity.html) | `load` | `GET /v1/severities/{id}` | Required |
+| [Severity](docs/api/severity.html) | `remove` | `DELETE /v1/severities/{id}` | Required |
 | [Severity](docs/api/severity.html) | `update` | `PUT /v1/severities/{id}` | Required |
 | [StatusPage](docs/api/status_page.html) | `list` | `GET /v2/status_pages` | Required |
 | [StatusPage](docs/api/status_page.html) | `load` | `GET /v2/status_pages/{status_page_id}` | Required |
@@ -1945,24 +1768,23 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [StatusPageComponent](docs/api/status_page_component.html) | `load` | `GET /v2/status_page_components/{id}` | Required |
 | [StatusPageComponent](docs/api/status_page_component.html) | `remove` | `DELETE /v2/status_page_components/{id}` | Required |
 | [StatusPageComponent](docs/api/status_page_component.html) | `update` | `PUT /v2/status_page_components/{id}` | Required |
-| [StatusPageComponentAvailabilityV2](docs/api/status_page_component_availability_v2.html) | `load` | `GET /v2/status_pages/{status_page_id}/components/{component_id}/availability` | Required |
+| [StatusPageComponentAvailability](docs/api/status_page_component_availability.html) | `load` | `GET /v2/status_pages/{status_page_id}/components/{component_id}/availability` | Required |
 | [StatusPageIncident](docs/api/status_page_incident.html) | `create` | `POST /v2/status_page_incidents` | Required |
 | [StatusPageIncident](docs/api/status_page_incident.html) | `list` | `GET /v2/status_page_incidents` | Required |
 | [StatusPageIncident](docs/api/status_page_incident.html) | `load` | `GET /v2/status_page_incidents/{status_page_incident_id}` | Required |
 | [StatusPageIncident](docs/api/status_page_incident.html) | `update` | `PUT /v2/status_page_incidents/{status_page_incident_id}` | Required |
 | [StatusPageIncidentUpdate](docs/api/status_page_incident_update.html) | `create` | `POST /v2/status_page_incident_updates` | Required |
-| [StatusPageLinkedResponseIncidentV1](docs/api/status_page_linked_response_incident_v1.html) | `list` | `GET /v1/status-pages/{id}/incidents/{incident_id}/response-incidents` | Required |
+| [StatusPageLinkedResponseIncident](docs/api/status_page_linked_response_incident.html) | `list` | `GET /v1/status-pages/{id}/incidents/{incident_id}/response-incidents` | Required |
 | [StatusPageMaintenance](docs/api/status_page_maintenance.html) | `create` | `POST /v2/status_page_maintenances` | Required |
 | [StatusPageMaintenance](docs/api/status_page_maintenance.html) | `list` | `GET /v2/status_page_maintenances` | Required |
 | [StatusPageMaintenance](docs/api/status_page_maintenance.html) | `load` | `GET /v2/status_page_maintenances/{status_page_maintenance_id}` | Required |
+| [StatusPageMaintenance](docs/api/status_page_maintenance.html) | `remove` | `DELETE /v2/status_page_maintenances/{status_page_maintenance_id}` | Required |
 | [StatusPageMaintenance](docs/api/status_page_maintenance.html) | `update` | `PUT /v2/status_page_maintenances/{status_page_maintenance_id}` | Required |
 | [StatusPageMaintenanceUpdate](docs/api/status_page_maintenance_update.html) | `create` | `POST /v2/status_page_maintenance_updates` | Required |
 | [StatusPageStructure](docs/api/status_page_structure.html) | `load` | `GET /v2/status_page_structures/{status_page_id}` | Required |
-| [StatusPagesV2](docs/api/status_pages_v2.html) | `remove` | `DELETE /v2/status_page_maintenances/{status_page_maintenance_id}` | Required |
 | [Team](docs/api/team.html) | `list` | `GET /v3/teams` | Required |
 | [Team](docs/api/team.html) | `load` | `GET /v3/teams/{id}` | Required |
-| [TelemetryDataSourceV2](docs/api/telemetry_data_source_v2.html) | `update` | `PUT /v2/telemetry/data_sources/{id}` | Required |
-| [User](docs/api/user.html) | `create` | `POST /v2/users/{user_id}/paging_provider` | Required |
+| [TelemetryDataSource](docs/api/telemetry_data_source.html) | `update` | `PUT /v2/telemetry/data_sources/{id}` | Required |
 | [User](docs/api/user.html) | `list` | `GET /v2/users` | Required |
 | [User](docs/api/user.html) | `load` | `GET /v2/users/{id}` | Required |
 | [Workflow](docs/api/workflow.html) | `create` | `POST /v2/workflows` | Required |
@@ -2031,8 +1853,8 @@ Use the MCP server to expose supported API operations to an MCP client.
 
 Repository directory: `go-mcp/`. Not published. Build from the go-mcp directory.
 
-- `incident-io_list`: List records for an entity. Supported entities: `action`, `alert`, `alert_attribute`, `alert_note`, `alert_route`, `alert_source`, `alert_tag`, `alerts_transition_incident_alert_result_v2`, `announcement_rule`, `announcement_template`, `api_key`, `call_route`, `call_routes_list_allowed_callers_result_v2`, `call_routes_list_options_result_v2`, `call_session`, `call_transcript_entry`, `catalog_entry`, `catalog_resource`, `catalog_type`, `custom_field`, `custom_field_option`, `escalation`, `escalation_path_template`, `follow_up`, `incident`, `incident_activity_log_entry`, `incident_attachment`, `incident_form`, `incident_participant_workload`, `incident_relationship`, `incident_role`, `incident_status`, `incident_template`, `incident_timeline_item`, `incident_timestamp`, `incident_type`, `incident_update`, `ip_range`, `maintenance_window`, `on_call_notification_method_public_v2`, `on_call_notification_pause`, `on_call_notification_rule_public_v2`, `pay_config`, `pay_configs_list_one_off_rules_result_v2`, `pay_configs_list_weekly_rules_result_v2`, `pay_report`, `policy`, `policy_finding`, `postmortem_document`, `schedule`, `schedule_replica`, `schedule_sync_rule`, `schedule_sync_target`, `schedules_show_override_result_v2`, `secret`, `severity`, `status_page`, `status_page_component`, `status_page_incident`, `status_page_linked_response_incident_v1`, `status_page_maintenance`, `team`, `user`, `workflow`, `workflow_run`.
-- `incident-io_load`: Load one record for an entity. Supported entities: `action`, `alert`, `alert_attribute`, `alert_note`, `alert_route`, `alert_source`, `announcement_rule`, `announcement_template`, `api_key`, `call_route`, `call_routes_show_allowed_caller_result_v2`, `call_routes_show_option_result_v2`, `catalog_entry`, `catalog_type`, `custom_field`, `custom_field_option`, `escalation`, `escalation_path_template`, `follow_up`, `identity`, `incident`, `incident_form`, `incident_participant`, `incident_role`, `incident_status`, `incident_template`, `incident_timestamp`, `incident_type`, `ip_allowlist`, `maintenance_window`, `on_call_notification_pause`, `pay_config`, `pay_configs_show_one_off_rule_result_v2`, `pay_configs_show_weekly_rule_result_v2`, `pay_report`, `pay_reports_v2`, `policy`, `policy_finding`, `postmortem_document`, `schedule`, `schedule_entry`, `schedule_replica`, `schedule_sync_rule`, `schedule_sync_target`, `schedules_show_override_result_v2`, `secret`, `severity`, `status_page`, `status_page_component`, `status_page_component_availability_v2`, `status_page_incident`, `status_page_maintenance`, `status_page_structure`, `team`, `user`, `workflow`, `workflow_run`.
+- `incident-io_list`: List records for an entity. Supported entities: `action`, `alert`, `alert_attribute`, `alert_note`, `alert_route`, `alert_source`, `alert_tag`, `alerts_transition_incident_alert_result_v2`, `announcement_rule`, `announcement_template`, `api_key`, `call_route`, `call_route_allowed_caller`, `call_route_option`, `call_session`, `call_transcript_entry`, `catalog_entry`, `catalog_resource`, `catalog_type`, `custom_field`, `custom_field_option`, `escalation`, `escalation_path`, `escalation_path_template`, `follow_up`, `incident`, `incident_activity_log_entry`, `incident_attachment`, `incident_form`, `incident_participant_workload`, `incident_relationship`, `incident_role`, `incident_status`, `incident_template`, `incident_timeline_item`, `incident_timestamp`, `incident_type`, `incident_update`, `ip_range`, `maintenance_window`, `on_call_notification_method_public_v2`, `on_call_notification_pause`, `on_call_notification_rule_public_v2`, `pay_config`, `pay_config_one_off_rule`, `pay_config_weekly_rule`, `pay_report`, `policy`, `policy_finding`, `postmortem_document`, `schedule`, `schedule_override`, `schedule_replica`, `schedule_sync_rule`, `schedule_sync_target`, `secret`, `severity`, `status_page`, `status_page_component`, `status_page_incident`, `status_page_linked_response_incident`, `status_page_maintenance`, `team`, `user`, `workflow`, `workflow_run`.
+- `incident-io_load`: Load one record for an entity. Supported entities: `action`, `alert`, `alert_attribute`, `alert_note`, `alert_route`, `alert_source`, `announcement_rule`, `announcement_template`, `api_key`, `call_route`, `call_route_allowed_caller`, `call_route_option`, `catalog_entry`, `catalog_type`, `custom_field`, `custom_field_option`, `escalation`, `escalation_path`, `escalation_path_template`, `follow_up`, `identity`, `incident`, `incident_form`, `incident_participant`, `incident_role`, `incident_status`, `incident_template`, `incident_timestamp`, `incident_type`, `ip_allowlist`, `maintenance_window`, `on_call_notification_pause`, `pay_config`, `pay_config_one_off_rule`, `pay_config_weekly_rule`, `pay_report`, `pay_reports_v2`, `policy`, `policy_finding`, `postmortem_document`, `schedule`, `schedule_entry`, `schedule_override`, `schedule_replica`, `schedule_sync_rule`, `schedule_sync_target`, `secret`, `severity`, `status_page`, `status_page_component`, `status_page_component_availability`, `status_page_incident`, `status_page_maintenance`, `status_page_structure`, `team`, `user`, `workflow`, `workflow_run`.
 
 ## Operational features
 

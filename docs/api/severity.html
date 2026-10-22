@@ -15,22 +15,14 @@
 <a href="../api/alert_sources_v2.html">AlertSourcesV2</a>
 <a href="../api/alert_tag.html">AlertTag</a>
 <a href="../api/alerts_add_tags_result_v2.html">AlertsAddTagsResultV2</a>
-<a href="../api/alerts_remove_tags_result_v2.html">AlertsRemoveTagsResultV2</a>
 <a href="../api/alerts_set_tags_result_v2.html">AlertsSetTagsResultV2</a>
 <a href="../api/alerts_transition_incident_alert_result_v2.html">AlertsTransitionIncidentAlertResultV2</a>
 <a href="../api/announcement_rule.html">AnnouncementRule</a>
 <a href="../api/announcement_template.html">AnnouncementTemplate</a>
 <a href="../api/api_key.html">ApiKey</a>
 <a href="../api/call_route.html">CallRoute</a>
-<a href="../api/call_routes_create_allowed_caller_result_v2.html">CallRoutesCreateAllowedCallerResultV2</a>
-<a href="../api/call_routes_create_option_result_v2.html">CallRoutesCreateOptionResultV2</a>
-<a href="../api/call_routes_list_allowed_callers_result_v2.html">CallRoutesListAllowedCallersResultV2</a>
-<a href="../api/call_routes_list_options_result_v2.html">CallRoutesListOptionsResultV2</a>
-<a href="../api/call_routes_show_allowed_caller_result_v2.html">CallRoutesShowAllowedCallerResultV2</a>
-<a href="../api/call_routes_show_option_result_v2.html">CallRoutesShowOptionResultV2</a>
-<a href="../api/call_routes_update_allowed_caller_result_v2.html">CallRoutesUpdateAllowedCallerResultV2</a>
-<a href="../api/call_routes_update_option_result_v2.html">CallRoutesUpdateOptionResultV2</a>
-<a href="../api/call_routes_v2.html">CallRoutesV2</a>
+<a href="../api/call_route_allowed_caller.html">CallRouteAllowedCaller</a>
+<a href="../api/call_route_option.html">CallRouteOption</a>
 <a href="../api/call_session.html">CallSession</a>
 <a href="../api/call_transcript_entry.html">CallTranscriptEntry</a>
 <a href="../api/catalog_entry.html">CatalogEntry</a>
@@ -40,6 +32,7 @@
 <a href="../api/custom_field.html">CustomField</a>
 <a href="../api/custom_field_option.html">CustomFieldOption</a>
 <a href="../api/escalation.html">Escalation</a>
+<a href="../api/escalation_path.html">EscalationPath</a>
 <a href="../api/escalation_path_template.html">EscalationPathTemplate</a>
 <a href="../api/escalations_check_escalation_permissions_result_v2.html">EscalationsCheckEscalationPermissionsResultV2</a>
 <a href="../api/escalations_reassign_escalation_result_v2.html">EscalationsReassignEscalationResultV2</a>
@@ -73,20 +66,12 @@
 <a href="../api/on_call_notification_pause.html">OnCallNotificationPause</a>
 <a href="../api/on_call_notification_rule_public_v2.html">OnCallNotificationRulePublicV2</a>
 <a href="../api/pay_config.html">PayConfig</a>
-<a href="../api/pay_configs_create_one_off_rule_result_v2.html">PayConfigsCreateOneOffRuleResultV2</a>
-<a href="../api/pay_configs_create_weekly_rule_result_v2.html">PayConfigsCreateWeeklyRuleResultV2</a>
-<a href="../api/pay_configs_list_one_off_rules_result_v2.html">PayConfigsListOneOffRulesResultV2</a>
-<a href="../api/pay_configs_list_weekly_rules_result_v2.html">PayConfigsListWeeklyRulesResultV2</a>
-<a href="../api/pay_configs_show_one_off_rule_result_v2.html">PayConfigsShowOneOffRuleResultV2</a>
-<a href="../api/pay_configs_show_weekly_rule_result_v2.html">PayConfigsShowWeeklyRuleResultV2</a>
-<a href="../api/pay_configs_update_one_off_rule_result_v2.html">PayConfigsUpdateOneOffRuleResultV2</a>
-<a href="../api/pay_configs_update_weekly_rule_result_v2.html">PayConfigsUpdateWeeklyRuleResultV2</a>
-<a href="../api/pay_configs_v2.html">PayConfigsV2</a>
+<a href="../api/pay_config_one_off_rule.html">PayConfigOneOffRule</a>
+<a href="../api/pay_config_weekly_rule.html">PayConfigWeeklyRule</a>
 <a href="../api/pay_report.html">PayReport</a>
 <a href="../api/pay_reports_publish_result_v2.html">PayReportsPublishResultV2</a>
 <a href="../api/pay_reports_unpublish_result_v2.html">PayReportsUnpublishResultV2</a>
 <a href="../api/pay_reports_v2.html">PayReportsV2</a>
-<a href="../api/policies_v2.html">PoliciesV2</a>
 <a href="../api/policy.html">Policy</a>
 <a href="../api/policy_finding.html">PolicyFinding</a>
 <a href="../api/policy_findings_dismiss_result_v2.html">PolicyFindingsDismissResultV2</a>
@@ -95,28 +80,27 @@
 <a href="../api/schedule.html">Schedule</a>
 <a href="../api/schedule_entries_list_payload_v2.html">ScheduleEntriesListPayloadV2</a>
 <a href="../api/schedule_entry.html">ScheduleEntry</a>
+<a href="../api/schedule_override.html">ScheduleOverride</a>
 <a href="../api/schedule_replica.html">ScheduleReplica</a>
 <a href="../api/schedule_sync_rule.html">ScheduleSyncRule</a>
 <a href="../api/schedule_sync_target.html">ScheduleSyncTarget</a>
-<a href="../api/schedules_show_override_result_v2.html">SchedulesShowOverrideResultV2</a>
-<a href="../api/schedules_update_override_result_v2.html">SchedulesUpdateOverrideResultV2</a>
 <a href="../api/secret.html">Secret</a>
 <a aria-current="page" href="../api/severity.html">Severity</a><div class="nav-sections"><a class="nav-section" href="#post-v1severities">POST /v1/severities</a>
 <a class="nav-section" href="#get-v1severities">GET /v1/severities</a>
 <a class="nav-section" href="#get-v1severitiesid">GET /v1/severities/{id}</a>
+<a class="nav-section" href="#delete-v1severitiesid">DELETE /v1/severities/{id}</a>
 <a class="nav-section" href="#put-v1severitiesid">PUT /v1/severities/{id}</a></div>
 <a href="../api/status_page.html">StatusPage</a>
 <a href="../api/status_page_component.html">StatusPageComponent</a>
-<a href="../api/status_page_component_availability_v2.html">StatusPageComponentAvailabilityV2</a>
+<a href="../api/status_page_component_availability.html">StatusPageComponentAvailability</a>
 <a href="../api/status_page_incident.html">StatusPageIncident</a>
 <a href="../api/status_page_incident_update.html">StatusPageIncidentUpdate</a>
-<a href="../api/status_page_linked_response_incident_v1.html">StatusPageLinkedResponseIncidentV1</a>
+<a href="../api/status_page_linked_response_incident.html">StatusPageLinkedResponseIncident</a>
 <a href="../api/status_page_maintenance.html">StatusPageMaintenance</a>
 <a href="../api/status_page_maintenance_update.html">StatusPageMaintenanceUpdate</a>
 <a href="../api/status_page_structure.html">StatusPageStructure</a>
-<a href="../api/status_pages_v2.html">StatusPagesV2</a>
 <a href="../api/team.html">Team</a>
-<a href="../api/telemetry_data_source_v2.html">TelemetryDataSourceV2</a>
+<a href="../api/telemetry_data_source.html">TelemetryDataSource</a>
 <a href="../api/user.html">User</a>
 <a href="../api/workflow.html">Workflow</a>
 <a href="../api/workflow_run.html">WorkflowRun</a></details>
@@ -172,6 +156,12 @@
 <td>OK response</td>
 </tr>
 <tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-v1severitiesid"><code>/v1/severities/{id}</code></a></td>
+<td><code>remove</code></td>
+<td>Accepted response</td>
+</tr>
+<tr>
 <td><code>PUT</code></td>
 <td><a href="#put-v1severitiesid"><code>/v1/severities/{id}</code></a></td>
 <td><code>update</code></td>
@@ -203,6 +193,11 @@ if err != nil {
     panic(err)
 }
 fmt.Println(updated)
+removed, err := client.Severity(nil).Remove(map[string]any{&quot;id&quot;: &quot;example_id&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(removed)
 </code></pre>
 <h3 id="lua">Lua</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/lua.html#set-up-the-client">Lua setup</a>, then call the operations:</p>
@@ -210,6 +205,7 @@ fmt.Println(updated)
 local severity, err = client:Severity():load({ id = &quot;example_id&quot; })
 local created, err = client:Severity():create({ description = &quot;example&quot;, name = &quot;example&quot; })
 local updated, err = client:Severity():update({ id = &quot;example_id&quot;, description = &quot;example&quot;, name = &quot;example&quot; })
+local removed, err = client:Severity():remove({ id = &quot;example_id&quot; })
 </code></pre>
 <h3 id="php">PHP</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/php.html#set-up-the-client">PHP setup</a>, then call the operations:</p>
@@ -217,6 +213,7 @@ local updated, err = client:Severity():update({ id = &quot;example_id&quot;, des
 $severity = $client-&gt;Severity()-&gt;load([&quot;id&quot; =&gt; &quot;example_id&quot;]);
 $created = $client-&gt;Severity()-&gt;create([&quot;description&quot; =&gt; &quot;example&quot;, &quot;name&quot; =&gt; &quot;example&quot;]);
 $updated = $client-&gt;Severity()-&gt;update([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;description&quot; =&gt; &quot;example&quot;, &quot;name&quot; =&gt; &quot;example&quot;]);
+$client-&gt;Severity()-&gt;remove([&quot;id&quot; =&gt; &quot;example_id&quot;]);
 </code></pre>
 <h3 id="python">Python</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/py.html#set-up-the-client">Python setup</a>, then call the operations:</p>
@@ -224,6 +221,7 @@ $updated = $client-&gt;Severity()-&gt;update([&quot;id&quot; =&gt; &quot;example
 severity = client.Severity().load({&quot;id&quot;: &quot;example_id&quot;})
 created = client.Severity().create({ &quot;description&quot;: &quot;example&quot;, &quot;name&quot;: &quot;example&quot; })
 updated = client.Severity().update({&quot;id&quot;: &quot;example_id&quot;, &quot;description&quot;: &quot;example&quot;, &quot;name&quot;: &quot;example&quot;})
+client.Severity().remove({&quot;id&quot;: &quot;example_id&quot;})
 </code></pre>
 <h3 id="ruby">Ruby</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/rb.html#set-up-the-client">Ruby setup</a>, then call the operations:</p>
@@ -231,6 +229,7 @@ updated = client.Severity().update({&quot;id&quot;: &quot;example_id&quot;, &quo
 severity = client.Severity.load({ &quot;id&quot; =&gt; &quot;example_id&quot; })
 created = client.Severity.create({ &quot;description&quot; =&gt; &quot;example&quot;, &quot;name&quot; =&gt; &quot;example&quot; })
 updated = client.Severity.update({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;description&quot; =&gt; &quot;example&quot;, &quot;name&quot; =&gt; &quot;example&quot; })
+client.Severity.remove({ &quot;id&quot; =&gt; &quot;example_id&quot; })
 </code></pre>
 <h3 id="typescript">TypeScript</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/ts.html#set-up-the-client">TypeScript setup</a>, then call the operations:</p>
@@ -238,6 +237,7 @@ updated = client.Severity.update({ &quot;id&quot; =&gt; &quot;example_id&quot;, 
 const severity = await client.Severity().load({ id: &quot;example_id&quot; })
 const created = await client.Severity().create({ description: &quot;example&quot;, name: &quot;example&quot; })
 const updated = await client.Severity().update({ id: &quot;example_id&quot;, description: &quot;example&quot;, name: &quot;example&quot; })
+await client.Severity().remove({ id: &quot;example_id&quot; })
 </code></pre>
 <h2 id="fields">Fields</h2>
 <table>
@@ -5327,9 +5327,9 @@ const updated = await client.Severity().update({ id: &quot;example_id&quot;, des
 </tr>
 </tbody>
 </table>
-<h2 id="update">update</h2>
-<h3 id="put-v1severitiesid" class="operation" data-method="put"><code>PUT</code> /v1/severities/{id}</h3>
-<p>Operation ID: <code>Severities V1#Update</code>.</p>
+<h2 id="remove">remove</h2>
+<h3 id="delete-v1severitiesid" class="operation" data-method="delete"><code>DELETE</code> /v1/severities/{id}</h3>
+<p>Operation ID: <code>Severities V1#Delete</code>.</p>
 <p>Authentication: bearer token (<code>BearerAuth</code>).</p>
 <h4 id="parameters-1">Parameters</h4>
 <table>
@@ -5352,114 +5352,8 @@ const updated = await client.Severity().update({ id: &quot;example_id&quot;, des
 </tr>
 </tbody>
 </table>
-<h4 id="request-body-1">Request body</h4>
-<p><code>application/json</code></p>
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>description</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Description of the severity</td>
-</tr>
-<tr>
-<td><code>name</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Human readable name of the severity</td>
-</tr>
-<tr>
-<td><code>rank</code></td>
-<td><code>integer (int64)</code></td>
-<td>No</td>
-<td>Rank to help sort severities (lower numbers are less severe)</td>
-</tr>
-</tbody>
-</table>
-<p>Example request body:</p>
-<pre><code class="language-json">{
-  &quot;description&quot;: &quot;Issues with **low impact**.&quot;,
-  &quot;name&quot;: &quot;Minor&quot;,
-  &quot;rank&quot;: 1
-}
-</code></pre>
 <h4 id="responses-3">Responses</h4>
-<h5 id="200-ok-response-2" class="status" data-status="2xx">200: OK response</h5>
-<p><code>application/json</code></p>
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>severity</code></td>
-<td><code>object</code></td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td><code>severity.created_at</code></td>
-<td><code>string (date-time)</code></td>
-<td>Yes</td>
-<td>When the action was created</td>
-</tr>
-<tr>
-<td><code>severity.description</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Description of the severity</td>
-</tr>
-<tr>
-<td><code>severity.id</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Unique identifier of the severity</td>
-</tr>
-<tr>
-<td><code>severity.name</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Human readable name of the severity</td>
-</tr>
-<tr>
-<td><code>severity.rank</code></td>
-<td><code>integer (int64)</code></td>
-<td>Yes</td>
-<td>Rank to help sort severities (lower numbers are less severe)</td>
-</tr>
-<tr>
-<td><code>severity.updated_at</code></td>
-<td><code>string (date-time)</code></td>
-<td>Yes</td>
-<td>When the action was last updated</td>
-</tr>
-</tbody>
-</table>
-<p>Example response:</p>
-<pre><code class="language-json">{
-  &quot;severity&quot;: {
-    &quot;created_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;,
-    &quot;description&quot;: &quot;Issues with **low impact**.&quot;,
-    &quot;id&quot;: &quot;01FCNDV6P870EA6S7TK1DSYDG0&quot;,
-    &quot;name&quot;: &quot;Minor&quot;,
-    &quot;rank&quot;: 1,
-    &quot;updated_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;
-  }
-}
-</code></pre>
+<h5 id="202-accepted-response" class="status" data-status="2xx">202: Accepted response</h5>
 <h5 id="400-invalid_request_error-there-was-a-problem-with-the-request-like-a-missing-header-or-querying-a-resource-that-doesn39t-exist-3" class="status" data-status="4xx">400: <code>invalid_request_error</code>: There was a problem with the request, like a missing header or querying a resource that doesn't exist</h5>
 <p><code>application/json</code></p>
 <table>
@@ -6925,6 +6819,1725 @@ const updated = await client.Severity().update({ id: &quot;example_id&quot;, des
 </tbody>
 </table>
 <h5 id="500-api_error-something-went-wrong-and-has-been-reported-internally-3" class="status" data-status="5xx">500: <code>api_error</code>: Something went wrong and has been reported internally</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h2 id="update">update</h2>
+<h3 id="put-v1severitiesid" class="operation" data-method="put"><code>PUT</code> /v1/severities/{id}</h3>
+<p>Operation ID: <code>Severities V1#Update</code>.</p>
+<p>Authentication: bearer token (<code>BearerAuth</code>).</p>
+<h4 id="parameters-2">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>path</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the severity</td>
+</tr>
+</tbody>
+</table>
+<h4 id="request-body-1">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Description of the severity</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable name of the severity</td>
+</tr>
+<tr>
+<td><code>rank</code></td>
+<td><code>integer (int64)</code></td>
+<td>No</td>
+<td>Rank to help sort severities (lower numbers are less severe)</td>
+</tr>
+</tbody>
+</table>
+<p>Example request body:</p>
+<pre><code class="language-json">{
+  &quot;description&quot;: &quot;Issues with **low impact**.&quot;,
+  &quot;name&quot;: &quot;Minor&quot;,
+  &quot;rank&quot;: 1
+}
+</code></pre>
+<h4 id="responses-4">Responses</h4>
+<h5 id="200-ok-response-2" class="status" data-status="2xx">200: OK response</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>severity</code></td>
+<td><code>object</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>severity.created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>Yes</td>
+<td>When the action was created</td>
+</tr>
+<tr>
+<td><code>severity.description</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Description of the severity</td>
+</tr>
+<tr>
+<td><code>severity.id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the severity</td>
+</tr>
+<tr>
+<td><code>severity.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable name of the severity</td>
+</tr>
+<tr>
+<td><code>severity.rank</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>Rank to help sort severities (lower numbers are less severe)</td>
+</tr>
+<tr>
+<td><code>severity.updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>Yes</td>
+<td>When the action was last updated</td>
+</tr>
+</tbody>
+</table>
+<p>Example response:</p>
+<pre><code class="language-json">{
+  &quot;severity&quot;: {
+    &quot;created_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;,
+    &quot;description&quot;: &quot;Issues with **low impact**.&quot;,
+    &quot;id&quot;: &quot;01FCNDV6P870EA6S7TK1DSYDG0&quot;,
+    &quot;name&quot;: &quot;Minor&quot;,
+    &quot;rank&quot;: 1,
+    &quot;updated_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;
+  }
+}
+</code></pre>
+<h5 id="400-invalid_request_error-there-was-a-problem-with-the-request-like-a-missing-header-or-querying-a-resource-that-doesn39t-exist-4" class="status" data-status="4xx">400: <code>invalid_request_error</code>: There was a problem with the request, like a missing header or querying a resource that doesn't exist</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-authentication_error-authentication-failed-4" class="status" data-status="4xx">401: <code>authentication_error</code>: Authentication failed</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-resource_forbidden-access-to-this-resource-is-forbidden-for-the-authenticated-user-4" class="status" data-status="4xx">403: <code>resource_forbidden</code>: Access to this resource is forbidden for the authenticated user</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-not_found-the-referenced-resource-could-not-be-found-4" class="status" data-status="4xx">404: <code>not_found</code>: The referenced resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="405-method_not_allowed-the-endpoint-does-not-support-this-operation-for-the-specified-resource-4" class="status" data-status="4xx">405: <code>method_not_allowed</code>: The endpoint does not support this operation for the specified resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="406-not_acceptable-requested-a-media-type-this-endpoint-does-not-support-4" class="status" data-status="4xx">406: <code>not_acceptable</code>: Requested a media type this endpoint does not support</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="408-request_timeout-the-request-took-too-long-to-process-client_timeout-the-request-was-cancelled-by-the-client-4" class="status" data-status="4xx">408: <code>request_timeout</code>: The request took too long to process. <code>client_timeout</code>: The request was cancelled by the client</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="409-conflict-request-conflicted-with-current-state-of-the-resource-likely-a-concurrent-update-4" class="status" data-status="4xx">409: conflict: Request conflicted with current state of the resource, likely a concurrent update</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="412-precondition_failed-a-required-condition-hasn39t-been-met-4" class="status" data-status="4xx">412: <code>precondition_failed</code>: A required condition hasn't been met</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="413-payload_too_large-the-request-payload-is-too-large-4" class="status" data-status="4xx">413: <code>payload_too_large</code>: The request payload is too large</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-validation_error-a-required-field-was-not-provided-or-the-provided-data-was-invalid-4" class="status" data-status="4xx">422: <code>validation_error</code>: A required field was not provided, or the provided data was invalid</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="429-too_many_requests-too-many-requests-hit-the-api-too-quickly-we-recommend-an-exponential-backoff-of-your-requests-rate_limit_reached-the-rate-limit-associated-with-this-resource-or-api-key-has-been-exceeded-try-again-later-4" class="status" data-status="4xx">429: <code>too_many_requests</code>: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests. <code>rate_limit_reached</code>: The rate limit associated with this resource or API key has been exceeded. Try again later</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="500-api_error-something-went-wrong-and-has-been-reported-internally-4" class="status" data-status="5xx">500: <code>api_error</code>: Something went wrong and has been reported internally</h5>
 <p><code>application/json</code></p>
 <table>
 <thead>

@@ -537,24 +537,6 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
-    private $_alerts_remove_tags_result_v2 = null;
-
-    // Canonical facade: $client->AlertsRemoveTagsResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->alerts_remove_tags_result_v2()
-    // resolves here too.
-    public function AlertsRemoveTagsResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/alerts_remove_tags_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_alerts_remove_tags_result_v2 === null) {
-                $this->_alerts_remove_tags_result_v2 = new AlertsRemoveTagsResultV2Entity($this, null);
-            }
-            return $this->_alerts_remove_tags_result_v2;
-        }
-        return new AlertsRemoveTagsResultV2Entity($this, $data);
-    }
-
-
     private $_alerts_set_tags_result_v2 = null;
 
     // Canonical facade: $client->AlertsSetTagsResultV2()->list() / ->load(["id" => ...]).
@@ -663,165 +645,39 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
-    private $_call_routes_create_allowed_caller_result_v2 = null;
+    private $_call_route_allowed_caller = null;
 
-    // Canonical facade: $client->CallRoutesCreateAllowedCallerResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_create_allowed_caller_result_v2()
+    // Canonical facade: $client->CallRouteAllowedCaller()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->call_route_allowed_caller()
     // resolves here too.
-    public function CallRoutesCreateAllowedCallerResultV2($data = null)
+    public function CallRouteAllowedCaller($data = null)
     {
-        require_once __DIR__ . '/entity/call_routes_create_allowed_caller_result_v2_entity.php';
+        require_once __DIR__ . '/entity/call_route_allowed_caller_entity.php';
         if ($data === null) {
-            if ($this->_call_routes_create_allowed_caller_result_v2 === null) {
-                $this->_call_routes_create_allowed_caller_result_v2 = new CallRoutesCreateAllowedCallerResultV2Entity($this, null);
+            if ($this->_call_route_allowed_caller === null) {
+                $this->_call_route_allowed_caller = new CallRouteAllowedCallerEntity($this, null);
             }
-            return $this->_call_routes_create_allowed_caller_result_v2;
+            return $this->_call_route_allowed_caller;
         }
-        return new CallRoutesCreateAllowedCallerResultV2Entity($this, $data);
+        return new CallRouteAllowedCallerEntity($this, $data);
     }
 
 
-    private $_call_routes_create_option_result_v2 = null;
+    private $_call_route_option = null;
 
-    // Canonical facade: $client->CallRoutesCreateOptionResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_create_option_result_v2()
+    // Canonical facade: $client->CallRouteOption()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->call_route_option()
     // resolves here too.
-    public function CallRoutesCreateOptionResultV2($data = null)
+    public function CallRouteOption($data = null)
     {
-        require_once __DIR__ . '/entity/call_routes_create_option_result_v2_entity.php';
+        require_once __DIR__ . '/entity/call_route_option_entity.php';
         if ($data === null) {
-            if ($this->_call_routes_create_option_result_v2 === null) {
-                $this->_call_routes_create_option_result_v2 = new CallRoutesCreateOptionResultV2Entity($this, null);
+            if ($this->_call_route_option === null) {
+                $this->_call_route_option = new CallRouteOptionEntity($this, null);
             }
-            return $this->_call_routes_create_option_result_v2;
+            return $this->_call_route_option;
         }
-        return new CallRoutesCreateOptionResultV2Entity($this, $data);
-    }
-
-
-    private $_call_routes_list_allowed_callers_result_v2 = null;
-
-    // Canonical facade: $client->CallRoutesListAllowedCallersResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_list_allowed_callers_result_v2()
-    // resolves here too.
-    public function CallRoutesListAllowedCallersResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/call_routes_list_allowed_callers_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_call_routes_list_allowed_callers_result_v2 === null) {
-                $this->_call_routes_list_allowed_callers_result_v2 = new CallRoutesListAllowedCallersResultV2Entity($this, null);
-            }
-            return $this->_call_routes_list_allowed_callers_result_v2;
-        }
-        return new CallRoutesListAllowedCallersResultV2Entity($this, $data);
-    }
-
-
-    private $_call_routes_list_options_result_v2 = null;
-
-    // Canonical facade: $client->CallRoutesListOptionsResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_list_options_result_v2()
-    // resolves here too.
-    public function CallRoutesListOptionsResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/call_routes_list_options_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_call_routes_list_options_result_v2 === null) {
-                $this->_call_routes_list_options_result_v2 = new CallRoutesListOptionsResultV2Entity($this, null);
-            }
-            return $this->_call_routes_list_options_result_v2;
-        }
-        return new CallRoutesListOptionsResultV2Entity($this, $data);
-    }
-
-
-    private $_call_routes_show_allowed_caller_result_v2 = null;
-
-    // Canonical facade: $client->CallRoutesShowAllowedCallerResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_show_allowed_caller_result_v2()
-    // resolves here too.
-    public function CallRoutesShowAllowedCallerResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/call_routes_show_allowed_caller_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_call_routes_show_allowed_caller_result_v2 === null) {
-                $this->_call_routes_show_allowed_caller_result_v2 = new CallRoutesShowAllowedCallerResultV2Entity($this, null);
-            }
-            return $this->_call_routes_show_allowed_caller_result_v2;
-        }
-        return new CallRoutesShowAllowedCallerResultV2Entity($this, $data);
-    }
-
-
-    private $_call_routes_show_option_result_v2 = null;
-
-    // Canonical facade: $client->CallRoutesShowOptionResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_show_option_result_v2()
-    // resolves here too.
-    public function CallRoutesShowOptionResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/call_routes_show_option_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_call_routes_show_option_result_v2 === null) {
-                $this->_call_routes_show_option_result_v2 = new CallRoutesShowOptionResultV2Entity($this, null);
-            }
-            return $this->_call_routes_show_option_result_v2;
-        }
-        return new CallRoutesShowOptionResultV2Entity($this, $data);
-    }
-
-
-    private $_call_routes_update_allowed_caller_result_v2 = null;
-
-    // Canonical facade: $client->CallRoutesUpdateAllowedCallerResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_update_allowed_caller_result_v2()
-    // resolves here too.
-    public function CallRoutesUpdateAllowedCallerResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/call_routes_update_allowed_caller_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_call_routes_update_allowed_caller_result_v2 === null) {
-                $this->_call_routes_update_allowed_caller_result_v2 = new CallRoutesUpdateAllowedCallerResultV2Entity($this, null);
-            }
-            return $this->_call_routes_update_allowed_caller_result_v2;
-        }
-        return new CallRoutesUpdateAllowedCallerResultV2Entity($this, $data);
-    }
-
-
-    private $_call_routes_update_option_result_v2 = null;
-
-    // Canonical facade: $client->CallRoutesUpdateOptionResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_update_option_result_v2()
-    // resolves here too.
-    public function CallRoutesUpdateOptionResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/call_routes_update_option_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_call_routes_update_option_result_v2 === null) {
-                $this->_call_routes_update_option_result_v2 = new CallRoutesUpdateOptionResultV2Entity($this, null);
-            }
-            return $this->_call_routes_update_option_result_v2;
-        }
-        return new CallRoutesUpdateOptionResultV2Entity($this, $data);
-    }
-
-
-    private $_call_routes_v2 = null;
-
-    // Canonical facade: $client->CallRoutesV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->call_routes_v2()
-    // resolves here too.
-    public function CallRoutesV2($data = null)
-    {
-        require_once __DIR__ . '/entity/call_routes_v2_entity.php';
-        if ($data === null) {
-            if ($this->_call_routes_v2 === null) {
-                $this->_call_routes_v2 = new CallRoutesV2Entity($this, null);
-            }
-            return $this->_call_routes_v2;
-        }
-        return new CallRoutesV2Entity($this, $data);
+        return new CallRouteOptionEntity($this, $data);
     }
 
 
@@ -984,6 +840,24 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_escalation;
         }
         return new EscalationEntity($this, $data);
+    }
+
+
+    private $_escalation_path = null;
+
+    // Canonical facade: $client->EscalationPath()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->escalation_path()
+    // resolves here too.
+    public function EscalationPath($data = null)
+    {
+        require_once __DIR__ . '/entity/escalation_path_entity.php';
+        if ($data === null) {
+            if ($this->_escalation_path === null) {
+                $this->_escalation_path = new EscalationPathEntity($this, null);
+            }
+            return $this->_escalation_path;
+        }
+        return new EscalationPathEntity($this, $data);
     }
 
 
@@ -1581,165 +1455,39 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
-    private $_pay_configs_create_one_off_rule_result_v2 = null;
+    private $_pay_config_one_off_rule = null;
 
-    // Canonical facade: $client->PayConfigsCreateOneOffRuleResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_create_one_off_rule_result_v2()
+    // Canonical facade: $client->PayConfigOneOffRule()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->pay_config_one_off_rule()
     // resolves here too.
-    public function PayConfigsCreateOneOffRuleResultV2($data = null)
+    public function PayConfigOneOffRule($data = null)
     {
-        require_once __DIR__ . '/entity/pay_configs_create_one_off_rule_result_v2_entity.php';
+        require_once __DIR__ . '/entity/pay_config_one_off_rule_entity.php';
         if ($data === null) {
-            if ($this->_pay_configs_create_one_off_rule_result_v2 === null) {
-                $this->_pay_configs_create_one_off_rule_result_v2 = new PayConfigsCreateOneOffRuleResultV2Entity($this, null);
+            if ($this->_pay_config_one_off_rule === null) {
+                $this->_pay_config_one_off_rule = new PayConfigOneOffRuleEntity($this, null);
             }
-            return $this->_pay_configs_create_one_off_rule_result_v2;
+            return $this->_pay_config_one_off_rule;
         }
-        return new PayConfigsCreateOneOffRuleResultV2Entity($this, $data);
+        return new PayConfigOneOffRuleEntity($this, $data);
     }
 
 
-    private $_pay_configs_create_weekly_rule_result_v2 = null;
+    private $_pay_config_weekly_rule = null;
 
-    // Canonical facade: $client->PayConfigsCreateWeeklyRuleResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_create_weekly_rule_result_v2()
+    // Canonical facade: $client->PayConfigWeeklyRule()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->pay_config_weekly_rule()
     // resolves here too.
-    public function PayConfigsCreateWeeklyRuleResultV2($data = null)
+    public function PayConfigWeeklyRule($data = null)
     {
-        require_once __DIR__ . '/entity/pay_configs_create_weekly_rule_result_v2_entity.php';
+        require_once __DIR__ . '/entity/pay_config_weekly_rule_entity.php';
         if ($data === null) {
-            if ($this->_pay_configs_create_weekly_rule_result_v2 === null) {
-                $this->_pay_configs_create_weekly_rule_result_v2 = new PayConfigsCreateWeeklyRuleResultV2Entity($this, null);
+            if ($this->_pay_config_weekly_rule === null) {
+                $this->_pay_config_weekly_rule = new PayConfigWeeklyRuleEntity($this, null);
             }
-            return $this->_pay_configs_create_weekly_rule_result_v2;
+            return $this->_pay_config_weekly_rule;
         }
-        return new PayConfigsCreateWeeklyRuleResultV2Entity($this, $data);
-    }
-
-
-    private $_pay_configs_list_one_off_rules_result_v2 = null;
-
-    // Canonical facade: $client->PayConfigsListOneOffRulesResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_list_one_off_rules_result_v2()
-    // resolves here too.
-    public function PayConfigsListOneOffRulesResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/pay_configs_list_one_off_rules_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_pay_configs_list_one_off_rules_result_v2 === null) {
-                $this->_pay_configs_list_one_off_rules_result_v2 = new PayConfigsListOneOffRulesResultV2Entity($this, null);
-            }
-            return $this->_pay_configs_list_one_off_rules_result_v2;
-        }
-        return new PayConfigsListOneOffRulesResultV2Entity($this, $data);
-    }
-
-
-    private $_pay_configs_list_weekly_rules_result_v2 = null;
-
-    // Canonical facade: $client->PayConfigsListWeeklyRulesResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_list_weekly_rules_result_v2()
-    // resolves here too.
-    public function PayConfigsListWeeklyRulesResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/pay_configs_list_weekly_rules_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_pay_configs_list_weekly_rules_result_v2 === null) {
-                $this->_pay_configs_list_weekly_rules_result_v2 = new PayConfigsListWeeklyRulesResultV2Entity($this, null);
-            }
-            return $this->_pay_configs_list_weekly_rules_result_v2;
-        }
-        return new PayConfigsListWeeklyRulesResultV2Entity($this, $data);
-    }
-
-
-    private $_pay_configs_show_one_off_rule_result_v2 = null;
-
-    // Canonical facade: $client->PayConfigsShowOneOffRuleResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_show_one_off_rule_result_v2()
-    // resolves here too.
-    public function PayConfigsShowOneOffRuleResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/pay_configs_show_one_off_rule_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_pay_configs_show_one_off_rule_result_v2 === null) {
-                $this->_pay_configs_show_one_off_rule_result_v2 = new PayConfigsShowOneOffRuleResultV2Entity($this, null);
-            }
-            return $this->_pay_configs_show_one_off_rule_result_v2;
-        }
-        return new PayConfigsShowOneOffRuleResultV2Entity($this, $data);
-    }
-
-
-    private $_pay_configs_show_weekly_rule_result_v2 = null;
-
-    // Canonical facade: $client->PayConfigsShowWeeklyRuleResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_show_weekly_rule_result_v2()
-    // resolves here too.
-    public function PayConfigsShowWeeklyRuleResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/pay_configs_show_weekly_rule_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_pay_configs_show_weekly_rule_result_v2 === null) {
-                $this->_pay_configs_show_weekly_rule_result_v2 = new PayConfigsShowWeeklyRuleResultV2Entity($this, null);
-            }
-            return $this->_pay_configs_show_weekly_rule_result_v2;
-        }
-        return new PayConfigsShowWeeklyRuleResultV2Entity($this, $data);
-    }
-
-
-    private $_pay_configs_update_one_off_rule_result_v2 = null;
-
-    // Canonical facade: $client->PayConfigsUpdateOneOffRuleResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_update_one_off_rule_result_v2()
-    // resolves here too.
-    public function PayConfigsUpdateOneOffRuleResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/pay_configs_update_one_off_rule_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_pay_configs_update_one_off_rule_result_v2 === null) {
-                $this->_pay_configs_update_one_off_rule_result_v2 = new PayConfigsUpdateOneOffRuleResultV2Entity($this, null);
-            }
-            return $this->_pay_configs_update_one_off_rule_result_v2;
-        }
-        return new PayConfigsUpdateOneOffRuleResultV2Entity($this, $data);
-    }
-
-
-    private $_pay_configs_update_weekly_rule_result_v2 = null;
-
-    // Canonical facade: $client->PayConfigsUpdateWeeklyRuleResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_update_weekly_rule_result_v2()
-    // resolves here too.
-    public function PayConfigsUpdateWeeklyRuleResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/pay_configs_update_weekly_rule_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_pay_configs_update_weekly_rule_result_v2 === null) {
-                $this->_pay_configs_update_weekly_rule_result_v2 = new PayConfigsUpdateWeeklyRuleResultV2Entity($this, null);
-            }
-            return $this->_pay_configs_update_weekly_rule_result_v2;
-        }
-        return new PayConfigsUpdateWeeklyRuleResultV2Entity($this, $data);
-    }
-
-
-    private $_pay_configs_v2 = null;
-
-    // Canonical facade: $client->PayConfigsV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->pay_configs_v2()
-    // resolves here too.
-    public function PayConfigsV2($data = null)
-    {
-        require_once __DIR__ . '/entity/pay_configs_v2_entity.php';
-        if ($data === null) {
-            if ($this->_pay_configs_v2 === null) {
-                $this->_pay_configs_v2 = new PayConfigsV2Entity($this, null);
-            }
-            return $this->_pay_configs_v2;
-        }
-        return new PayConfigsV2Entity($this, $data);
+        return new PayConfigWeeklyRuleEntity($this, $data);
     }
 
 
@@ -1812,24 +1560,6 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_pay_reports_v2;
         }
         return new PayReportsV2Entity($this, $data);
-    }
-
-
-    private $_policies_v2 = null;
-
-    // Canonical facade: $client->PoliciesV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->policies_v2()
-    // resolves here too.
-    public function PoliciesV2($data = null)
-    {
-        require_once __DIR__ . '/entity/policies_v2_entity.php';
-        if ($data === null) {
-            if ($this->_policies_v2 === null) {
-                $this->_policies_v2 = new PoliciesV2Entity($this, null);
-            }
-            return $this->_policies_v2;
-        }
-        return new PoliciesV2Entity($this, $data);
     }
 
 
@@ -1977,6 +1707,24 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
+    private $_schedule_override = null;
+
+    // Canonical facade: $client->ScheduleOverride()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->schedule_override()
+    // resolves here too.
+    public function ScheduleOverride($data = null)
+    {
+        require_once __DIR__ . '/entity/schedule_override_entity.php';
+        if ($data === null) {
+            if ($this->_schedule_override === null) {
+                $this->_schedule_override = new ScheduleOverrideEntity($this, null);
+            }
+            return $this->_schedule_override;
+        }
+        return new ScheduleOverrideEntity($this, $data);
+    }
+
+
     private $_schedule_replica = null;
 
     // Canonical facade: $client->ScheduleReplica()->list() / ->load(["id" => ...]).
@@ -2028,42 +1776,6 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_schedule_sync_target;
         }
         return new ScheduleSyncTargetEntity($this, $data);
-    }
-
-
-    private $_schedules_show_override_result_v2 = null;
-
-    // Canonical facade: $client->SchedulesShowOverrideResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->schedules_show_override_result_v2()
-    // resolves here too.
-    public function SchedulesShowOverrideResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/schedules_show_override_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_schedules_show_override_result_v2 === null) {
-                $this->_schedules_show_override_result_v2 = new SchedulesShowOverrideResultV2Entity($this, null);
-            }
-            return $this->_schedules_show_override_result_v2;
-        }
-        return new SchedulesShowOverrideResultV2Entity($this, $data);
-    }
-
-
-    private $_schedules_update_override_result_v2 = null;
-
-    // Canonical facade: $client->SchedulesUpdateOverrideResultV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->schedules_update_override_result_v2()
-    // resolves here too.
-    public function SchedulesUpdateOverrideResultV2($data = null)
-    {
-        require_once __DIR__ . '/entity/schedules_update_override_result_v2_entity.php';
-        if ($data === null) {
-            if ($this->_schedules_update_override_result_v2 === null) {
-                $this->_schedules_update_override_result_v2 = new SchedulesUpdateOverrideResultV2Entity($this, null);
-            }
-            return $this->_schedules_update_override_result_v2;
-        }
-        return new SchedulesUpdateOverrideResultV2Entity($this, $data);
     }
 
 
@@ -2139,21 +1851,21 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
-    private $_status_page_component_availability_v2 = null;
+    private $_status_page_component_availability = null;
 
-    // Canonical facade: $client->StatusPageComponentAvailabilityV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->status_page_component_availability_v2()
+    // Canonical facade: $client->StatusPageComponentAvailability()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_page_component_availability()
     // resolves here too.
-    public function StatusPageComponentAvailabilityV2($data = null)
+    public function StatusPageComponentAvailability($data = null)
     {
-        require_once __DIR__ . '/entity/status_page_component_availability_v2_entity.php';
+        require_once __DIR__ . '/entity/status_page_component_availability_entity.php';
         if ($data === null) {
-            if ($this->_status_page_component_availability_v2 === null) {
-                $this->_status_page_component_availability_v2 = new StatusPageComponentAvailabilityV2Entity($this, null);
+            if ($this->_status_page_component_availability === null) {
+                $this->_status_page_component_availability = new StatusPageComponentAvailabilityEntity($this, null);
             }
-            return $this->_status_page_component_availability_v2;
+            return $this->_status_page_component_availability;
         }
-        return new StatusPageComponentAvailabilityV2Entity($this, $data);
+        return new StatusPageComponentAvailabilityEntity($this, $data);
     }
 
 
@@ -2193,21 +1905,21 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
-    private $_status_page_linked_response_incident_v1 = null;
+    private $_status_page_linked_response_incident = null;
 
-    // Canonical facade: $client->StatusPageLinkedResponseIncidentV1()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->status_page_linked_response_incident_v1()
+    // Canonical facade: $client->StatusPageLinkedResponseIncident()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->status_page_linked_response_incident()
     // resolves here too.
-    public function StatusPageLinkedResponseIncidentV1($data = null)
+    public function StatusPageLinkedResponseIncident($data = null)
     {
-        require_once __DIR__ . '/entity/status_page_linked_response_incident_v1_entity.php';
+        require_once __DIR__ . '/entity/status_page_linked_response_incident_entity.php';
         if ($data === null) {
-            if ($this->_status_page_linked_response_incident_v1 === null) {
-                $this->_status_page_linked_response_incident_v1 = new StatusPageLinkedResponseIncidentV1Entity($this, null);
+            if ($this->_status_page_linked_response_incident === null) {
+                $this->_status_page_linked_response_incident = new StatusPageLinkedResponseIncidentEntity($this, null);
             }
-            return $this->_status_page_linked_response_incident_v1;
+            return $this->_status_page_linked_response_incident;
         }
-        return new StatusPageLinkedResponseIncidentV1Entity($this, $data);
+        return new StatusPageLinkedResponseIncidentEntity($this, $data);
     }
 
 
@@ -2265,24 +1977,6 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
-    private $_status_pages_v2 = null;
-
-    // Canonical facade: $client->StatusPagesV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->status_pages_v2()
-    // resolves here too.
-    public function StatusPagesV2($data = null)
-    {
-        require_once __DIR__ . '/entity/status_pages_v2_entity.php';
-        if ($data === null) {
-            if ($this->_status_pages_v2 === null) {
-                $this->_status_pages_v2 = new StatusPagesV2Entity($this, null);
-            }
-            return $this->_status_pages_v2;
-        }
-        return new StatusPagesV2Entity($this, $data);
-    }
-
-
     private $_team = null;
 
     // Canonical facade: $client->Team()->list() / ->load(["id" => ...]).
@@ -2301,21 +1995,21 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
-    private $_telemetry_data_source_v2 = null;
+    private $_telemetry_data_source = null;
 
-    // Canonical facade: $client->TelemetryDataSourceV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->telemetry_data_source_v2()
+    // Canonical facade: $client->TelemetryDataSource()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->telemetry_data_source()
     // resolves here too.
-    public function TelemetryDataSourceV2($data = null)
+    public function TelemetryDataSource($data = null)
     {
-        require_once __DIR__ . '/entity/telemetry_data_source_v2_entity.php';
+        require_once __DIR__ . '/entity/telemetry_data_source_entity.php';
         if ($data === null) {
-            if ($this->_telemetry_data_source_v2 === null) {
-                $this->_telemetry_data_source_v2 = new TelemetryDataSourceV2Entity($this, null);
+            if ($this->_telemetry_data_source === null) {
+                $this->_telemetry_data_source = new TelemetryDataSourceEntity($this, null);
             }
-            return $this->_telemetry_data_source_v2;
+            return $this->_telemetry_data_source;
         }
-        return new TelemetryDataSourceV2Entity($this, $data);
+        return new TelemetryDataSourceEntity($this, $data);
     }
 
 

@@ -20,7 +20,7 @@ class ActionRequired(TypedDict):
     assignee: dict
     created_at: str
     creator: dict
-    follow_up: bool
+    description: str
     id: str
     incident_id: str
     status: str
@@ -30,8 +30,6 @@ class ActionRequired(TypedDict):
 class Action(ActionRequired, total=False):
     assignee_id: str
     completed_at: str
-    description: str
-    external_issue_reference: dict
 
 
 class ActionLoadMatch(TypedDict):
@@ -39,9 +37,12 @@ class ActionLoadMatch(TypedDict):
 
 
 class ActionListMatch(TypedDict, total=False):
+    after: str
+    created_at: dict
     incident_id: str
     incident_mode: str
-    is_follow_up: bool
+    page_size: int
+    updated_at: dict
 
 
 class ActionCreateDataRequired(TypedDict):
@@ -228,7 +229,6 @@ class AlertNoteRemoveMatch(TypedDict):
 
 class AlertRouteRequired(TypedDict):
     alert_sources: list
-    channel_config: list
     condition_groups: list
     enabled: bool
     escalation_config: dict
@@ -236,7 +236,6 @@ class AlertRouteRequired(TypedDict):
     grouping_config: dict
     id: str
     incident_config: dict
-    incident_template: dict
     is_private: bool
     message_config: dict
     name: str
@@ -245,7 +244,6 @@ class AlertRouteRequired(TypedDict):
 
 class AlertRoute(AlertRouteRequired, total=False):
     created_at: str
-    message_template: dict
     owning_team_ids: list
     updated_at: str
 
@@ -254,34 +252,26 @@ class AlertRouteLoadMatch(TypedDict):
     id: str
 
 
-class AlertRouteListMatchRequired(TypedDict):
-    page_size: int
-
-
-class AlertRouteListMatch(AlertRouteListMatchRequired, total=False):
+class AlertRouteListMatch(TypedDict, total=False):
     after: str
+    page_size: int
 
 
 class AlertRouteCreateDataRequired(TypedDict):
     alert_sources: list
-    channel_config: list
     condition_groups: list
     enabled: bool
     escalation_config: dict
     expressions: list
     grouping_config: dict
     incident_config: dict
-    incident_template: dict
     is_private: bool
     message_config: dict
     name: str
 
 
 class AlertRouteCreateData(AlertRouteCreateDataRequired, total=False):
-    created_at: str
-    message_template: dict
     owning_team_ids: list
-    updated_at: str
 
 
 class AlertRouteUpdateDataRequired(TypedDict):
@@ -290,21 +280,16 @@ class AlertRouteUpdateDataRequired(TypedDict):
 
 class AlertRouteUpdateData(AlertRouteUpdateDataRequired, total=False):
     alert_sources: list
-    channel_config: list
     condition_groups: list
-    created_at: str
     enabled: bool
     escalation_config: dict
     expressions: list
     grouping_config: dict
     incident_config: dict
-    incident_template: dict
     is_private: bool
     message_config: dict
-    message_template: dict
     name: str
     owning_team_ids: list
-    updated_at: str
     version: int
 
 
@@ -424,15 +409,35 @@ class AlertSourcesV2CreateData(AlertSourcesV2CreateDataRequired, total=False):
     owning_team_ids: list
 
 
-class AlertTag(TypedDict):
+class AlertTagRequired(TypedDict):
+    alert_source_id: str
+    attributes: list
+    created_at: str
+    deduplication_key: str
     id: str
     name: str
+    status: str
+    title: str
+    updated_at: str
+
+
+class AlertTag(AlertTagRequired, total=False):
+    alert_group_ids: list
+    description: str
+    resolved_at: str
+    source_url: str
+    tags: list
 
 
 class AlertTagListMatch(TypedDict, total=False):
     after: str
     page_size: int
     search: str
+
+
+class AlertTagCreateData(TypedDict):
+    alert_id: str
+    tags: list
 
 
 class AlertsAddTagsResultV2Required(TypedDict):
@@ -455,30 +460,6 @@ class AlertsAddTagsResultV2(AlertsAddTagsResultV2Required, total=False):
 
 
 class AlertsAddTagsResultV2CreateData(TypedDict):
-    alert_id: str
-    tags: list
-
-
-class AlertsRemoveTagsResultV2Required(TypedDict):
-    alert_source_id: str
-    attributes: list
-    created_at: str
-    deduplication_key: str
-    id: str
-    status: str
-    title: str
-    updated_at: str
-
-
-class AlertsRemoveTagsResultV2(AlertsRemoveTagsResultV2Required, total=False):
-    alert_group_ids: list
-    description: str
-    resolved_at: str
-    source_url: str
-    tags: list
-
-
-class AlertsRemoveTagsResultV2CreateData(TypedDict):
     alert_id: str
     tags: list
 
@@ -748,128 +729,83 @@ class CallRouteUpdateData(CallRouteUpdateDataRequired, total=False):
     use_caller_allowlist: bool
 
 
-class CallRoutesCreateAllowedCallerResultV2Required(TypedDict):
-    phone_number: str
-
-
-class CallRoutesCreateAllowedCallerResultV2(CallRoutesCreateAllowedCallerResultV2Required, total=False):
-    name: str
-
-
-class CallRoutesCreateAllowedCallerResultV2CreateDataRequired(TypedDict):
-    call_route_id: str
-    phone_number: str
-
-
-class CallRoutesCreateAllowedCallerResultV2CreateData(CallRoutesCreateAllowedCallerResultV2CreateDataRequired, total=False):
-    name: str
-
-
-class CallRoutesCreateOptionResultV2(TypedDict):
-    digit: str
-    path: list
-    prompt: str
-
-
-class CallRoutesCreateOptionResultV2CreateData(TypedDict):
-    call_route_id: str
-    digit: str
-    path: list
-    prompt: str
-
-
-class CallRoutesListAllowedCallersResultV2Required(TypedDict):
+class CallRouteAllowedCallerRequired(TypedDict):
     id: str
     phone_number: str
 
 
-class CallRoutesListAllowedCallersResultV2(CallRoutesListAllowedCallersResultV2Required, total=False):
+class CallRouteAllowedCaller(CallRouteAllowedCallerRequired, total=False):
     name: str
 
 
-class CallRoutesListAllowedCallersResultV2ListMatch(TypedDict):
+class CallRouteAllowedCallerLoadMatch(TypedDict):
     call_route_id: str
-
-
-class CallRoutesListOptionsResultV2(TypedDict):
-    digit: str
     id: str
-    path: list
-    prompt: str
 
 
-class CallRoutesListOptionsResultV2ListMatch(TypedDict):
-    call_route_id: str
+class CallRouteAllowedCallerListMatch(TypedDict):
+    id: str
 
 
-class CallRoutesShowAllowedCallerResultV2Required(TypedDict):
+class CallRouteAllowedCallerCreateDataRequired(TypedDict):
     id: str
     phone_number: str
 
 
-class CallRoutesShowAllowedCallerResultV2(CallRoutesShowAllowedCallerResultV2Required, total=False):
+class CallRouteAllowedCallerCreateData(CallRouteAllowedCallerCreateDataRequired, total=False):
     name: str
 
 
-class CallRoutesShowAllowedCallerResultV2LoadMatch(TypedDict):
+class CallRouteAllowedCallerUpdateDataRequired(TypedDict):
     call_route_id: str
     id: str
 
 
-class CallRoutesShowOptionResultV2(TypedDict):
+class CallRouteAllowedCallerUpdateData(CallRouteAllowedCallerUpdateDataRequired, total=False):
+    name: str
+    phone_number: str
+
+
+class CallRouteAllowedCallerRemoveMatch(TypedDict):
+    call_route_id: str
+    id: str
+
+
+class CallRouteOption(TypedDict):
     digit: str
     id: str
     path: list
     prompt: str
 
 
-class CallRoutesShowOptionResultV2LoadMatch(TypedDict):
+class CallRouteOptionLoadMatch(TypedDict):
     call_route_id: str
     id: str
 
 
-class CallRoutesUpdateAllowedCallerResultV2Required(TypedDict):
-    id: str
-    phone_number: str
-
-
-class CallRoutesUpdateAllowedCallerResultV2(CallRoutesUpdateAllowedCallerResultV2Required, total=False):
-    name: str
-
-
-class CallRoutesUpdateAllowedCallerResultV2UpdateDataRequired(TypedDict):
-    call_route_id: str
+class CallRouteOptionListMatch(TypedDict):
     id: str
 
 
-class CallRoutesUpdateAllowedCallerResultV2UpdateData(CallRoutesUpdateAllowedCallerResultV2UpdateDataRequired, total=False):
-    name: str
-    phone_number: str
-
-
-class CallRoutesUpdateOptionResultV2(TypedDict):
-    digit: str
+class CallRouteOptionCreateData(TypedDict):
     id: str
-    path: list
-    prompt: str
-
-
-class CallRoutesUpdateOptionResultV2UpdateDataRequired(TypedDict):
-    call_route_id: str
-    id: str
-
-
-class CallRoutesUpdateOptionResultV2UpdateData(CallRoutesUpdateOptionResultV2UpdateDataRequired, total=False):
     digit: str
     path: list
     prompt: str
 
 
-class CallRoutesV2(TypedDict, total=False):
+class CallRouteOptionUpdateDataRequired(TypedDict):
+    call_route_id: str
     id: str
 
 
-class CallRoutesV2RemoveMatch(TypedDict):
+class CallRouteOptionUpdateData(CallRouteOptionUpdateDataRequired, total=False):
+    digit: str
+    path: list
+    prompt: str
+
+
+class CallRouteOptionRemoveMatch(TypedDict):
     call_route_id: str
     id: str
 
@@ -939,12 +875,12 @@ class CatalogEntryLoadMatch(CatalogEntryLoadMatchRequired, total=False):
 
 class CatalogEntryListMatchRequired(TypedDict):
     catalog_type_id: str
+    page_size: int
 
 
 class CatalogEntryListMatch(CatalogEntryListMatchRequired, total=False):
     after: str
     identifier: str
-    page_size: int
 
 
 class CatalogEntryCreateDataRequired(TypedDict):
@@ -970,6 +906,10 @@ class CatalogEntryUpdateData(CatalogEntryUpdateDataRequired, total=False):
     name: str
     rank: int
     update_attributes: list
+
+
+class CatalogEntryRemoveMatch(TypedDict):
+    id: str
 
 
 class CatalogResource(TypedDict):
@@ -1003,7 +943,6 @@ class CatalogTypeRequired(TypedDict):
     name: str
     ranked: bool
     schema: dict
-    semantic_type: str
     type_name: str
     updated_at: str
     use_name_as_identifier: bool
@@ -1044,7 +983,6 @@ class CatalogTypeListMatch(TypedDict, total=False):
     registry_type: str
     required_integrations: list
     schema: dict
-    semantic_type: str
     source_repo_url: str
     type_name: str
     updated_at: str
@@ -1085,6 +1023,10 @@ class CatalogTypeUpdateData(CatalogTypeUpdateDataRequired, total=False):
     use_name_as_identifier: bool
 
 
+class CatalogTypeRemoveMatch(TypedDict):
+    id: str
+
+
 class CatalogTypeSchemaRequired(TypedDict):
     annotations: dict
     attributes: list
@@ -1099,7 +1041,6 @@ class CatalogTypeSchemaRequired(TypedDict):
     name: str
     ranked: bool
     schema: dict
-    semantic_type: str
     type_name: str
     updated_at: str
     use_name_as_identifier: bool
@@ -1131,10 +1072,6 @@ class CustomFieldRequired(TypedDict):
     fixed_filter: dict
     id: str
     name: str
-    options: list
-    show_before_closure: bool
-    show_before_creation: bool
-    show_before_update: bool
     updated_at: str
 
 
@@ -1142,9 +1079,6 @@ class CustomField(CustomFieldRequired, total=False):
     catalog_type_id: str
     group_by_catalog_attribute_id: str
     helptext_catalog_attribute_id: str
-    required: str
-    required_v2: str
-    show_in_announcement_post: bool
 
 
 class CustomFieldLoadMatch(TypedDict):
@@ -1162,13 +1096,6 @@ class CustomFieldListMatch(TypedDict, total=False):
     helptext_catalog_attribute_id: str
     id: str
     name: str
-    options: list
-    required: str
-    required_v2: str
-    show_before_closure: bool
-    show_before_creation: bool
-    show_before_update: bool
-    show_in_announcement_post: bool
     updated_at: str
 
 
@@ -1178,18 +1105,12 @@ class CustomFieldCreateDataRequired(TypedDict):
     filter_by: dict
     fixed_filter: dict
     name: str
-    show_before_closure: bool
-    show_before_creation: bool
-    show_before_update: bool
 
 
 class CustomFieldCreateData(CustomFieldCreateDataRequired, total=False):
     catalog_type_id: str
     group_by_catalog_attribute_id: str
     helptext_catalog_attribute_id: str
-    required: str
-    required_v2: str
-    show_in_announcement_post: bool
 
 
 class CustomFieldUpdateDataRequired(TypedDict):
@@ -1203,12 +1124,6 @@ class CustomFieldUpdateData(CustomFieldUpdateDataRequired, total=False):
     group_by_catalog_attribute_id: str
     helptext_catalog_attribute_id: str
     name: str
-    required: str
-    required_v2: str
-    show_before_closure: bool
-    show_before_creation: bool
-    show_before_update: bool
-    show_in_announcement_post: bool
 
 
 class CustomFieldRemoveMatch(TypedDict):
@@ -1304,6 +1219,64 @@ class EscalationCreateData(EscalationCreateDataRequired, total=False):
     escalation_path_id: str
     incident_id: str
     user_ids: list
+
+
+class EscalationPathRequired(TypedDict):
+    id: str
+    kind: str
+    name: str
+    path: list
+    repeat_config: dict
+    team_ids: list
+
+
+class EscalationPath(EscalationPathRequired, total=False):
+    current_responders: list
+    param_bindings: dict
+    template_id: str
+    working_hours: list
+
+
+class EscalationPathLoadMatch(TypedDict):
+    id: str
+
+
+class EscalationPathListMatch(TypedDict, total=False):
+    after: str
+    page_size: int
+
+
+class EscalationPathCreateDataRequired(TypedDict):
+    name: str
+    path: list
+    repeat_config: dict
+
+
+class EscalationPathCreateData(EscalationPathCreateDataRequired, total=False):
+    kind: str
+    param_bindings: dict
+    team_ids: list
+    template_id: str
+    working_hours: list
+
+
+class EscalationPathUpdateDataRequired(TypedDict):
+    id: str
+
+
+class EscalationPathUpdateData(EscalationPathUpdateDataRequired, total=False):
+    kind: str
+    name: str
+    param_bindings: dict
+    path: list
+    repeat_config: dict
+    team_ids: list
+    template_id: str
+    working_hours: list
+
+
+class EscalationPathRemoveMatch(TypedDict):
+    id: str
 
 
 class EscalationPathTemplateRequired(TypedDict):
@@ -1423,9 +1396,13 @@ class FollowUpLoadMatch(TypedDict):
 
 
 class FollowUpListMatch(TypedDict, total=False):
+    after: str
     assignee_team_id: str
+    created_at: dict
     incident_id: str
     incident_mode: str
+    page_size: int
+    updated_at: dict
 
 
 class FollowUpCreateDataRequired(TypedDict):
@@ -1534,7 +1511,6 @@ class IncidentRequired(TypedDict):
     severity: dict
     slack_channel_id: str
     slack_team_id: str
-    status: str
     team_ids: list
     updated_at: str
     visibility: str
@@ -1557,10 +1533,7 @@ class Incident(IncidentRequired, total=False):
     slack_channel_name: str
     slack_channel_name_override: str
     slack_channel_url: str
-    source_message_channel_id: str
-    source_message_timestamp: str
     summary: str
-    timestamps: list
     workload_minutes_late: float
     workload_minutes_sleeping: float
     workload_minutes_total: float
@@ -1573,8 +1546,18 @@ class IncidentLoadMatch(TypedDict):
 
 class IncidentListMatch(TypedDict, total=False):
     after: str
+    created_at: dict
+    custom_field: dict
+    filter_mode: str
+    incident_role: dict
+    incident_type: dict
+    mode: dict
     page_size: int
-    status: list
+    severity: dict
+    sort_by: str
+    status: dict
+    status_category: dict
+    updated_at: dict
 
 
 class IncidentCreateDataRequired(TypedDict):
@@ -1594,9 +1577,6 @@ class IncidentCreateData(IncidentCreateDataRequired, total=False):
     severity_id: str
     slack_channel_name_override: str
     slack_team_id: str
-    source_message_channel_id: str
-    source_message_timestamp: str
-    status: str
     summary: str
 
 
@@ -1738,7 +1718,7 @@ class IncidentRelationshipListMatch(IncidentRelationshipListMatchRequired, total
     page_size: int
 
 
-class IncidentRoleRequired(TypedDict):
+class IncidentRole(TypedDict):
     created_at: str
     description: str
     id: str
@@ -1747,10 +1727,6 @@ class IncidentRoleRequired(TypedDict):
     role_type: str
     shortform: str
     updated_at: str
-
-
-class IncidentRole(IncidentRoleRequired, total=False):
-    required: bool
 
 
 class IncidentRoleLoadMatch(TypedDict):
@@ -1763,7 +1739,6 @@ class IncidentRoleListMatch(TypedDict, total=False):
     id: str
     instructions: str
     name: str
-    required: bool
     role_type: str
     shortform: str
     updated_at: str
@@ -1773,7 +1748,6 @@ class IncidentRoleCreateData(TypedDict):
     description: str
     instructions: str
     name: str
-    required: bool
     shortform: str
 
 
@@ -1785,7 +1759,6 @@ class IncidentRoleUpdateData(IncidentRoleUpdateDataRequired, total=False):
     description: str
     instructions: str
     name: str
-    required: bool
     shortform: str
 
 
@@ -2216,10 +2189,12 @@ class OnCallNotificationPauseLoadMatch(TypedDict):
     id: str
 
 
-class OnCallNotificationPauseListMatch(TypedDict, total=False):
-    after: str
-    page_size: int
-    to: str
+OnCallNotificationPauseListMatch = TypedDict('OnCallNotificationPauseListMatch', {
+    "after": str,
+    "from": str,
+    "page_size": int,
+    "to": str,
+}, total=False)
 
 
 class OnCallNotificationRulePublicV2Required(TypedDict):
@@ -2294,37 +2269,7 @@ class PayConfigRemoveMatch(TypedDict):
     id: str
 
 
-class PayConfigsCreateOneOffRuleResultV2(TypedDict):
-    end_at: str
-    name: str
-    rate_cents: int
-    start_at: str
-
-
-class PayConfigsCreateOneOffRuleResultV2CreateData(TypedDict):
-    pay_config_id: str
-    end_at: str
-    name: str
-    rate_cents: int
-    start_at: str
-
-
-class PayConfigsCreateWeeklyRuleResultV2(TypedDict):
-    end_time: str
-    rate_cents: int
-    start_time: str
-    weekdays: list
-
-
-class PayConfigsCreateWeeklyRuleResultV2CreateData(TypedDict):
-    pay_config_id: str
-    end_time: str
-    rate_cents: int
-    start_time: str
-    weekdays: list
-
-
-class PayConfigsListOneOffRulesResultV2(TypedDict):
+class PayConfigOneOffRule(TypedDict):
     end_at: str
     id: str
     name: str
@@ -2332,93 +2277,78 @@ class PayConfigsListOneOffRulesResultV2(TypedDict):
     start_at: str
 
 
-class PayConfigsListOneOffRulesResultV2ListMatch(TypedDict):
-    pay_config_id: str
-
-
-class PayConfigsListWeeklyRulesResultV2(TypedDict):
-    end_time: str
-    id: str
-    rate_cents: int
-    start_time: str
-    weekdays: list
-
-
-class PayConfigsListWeeklyRulesResultV2ListMatch(TypedDict):
-    pay_config_id: str
-
-
-class PayConfigsShowOneOffRuleResultV2(TypedDict):
-    end_at: str
-    id: str
-    name: str
-    rate_cents: int
-    start_at: str
-
-
-class PayConfigsShowOneOffRuleResultV2LoadMatch(TypedDict):
+class PayConfigOneOffRuleLoadMatch(TypedDict):
     id: str
     pay_config_id: str
 
 
-class PayConfigsShowWeeklyRuleResultV2(TypedDict):
-    end_time: str
+class PayConfigOneOffRuleListMatch(TypedDict):
     id: str
-    rate_cents: int
-    start_time: str
-    weekdays: list
 
 
-class PayConfigsShowWeeklyRuleResultV2LoadMatch(TypedDict):
+class PayConfigOneOffRuleCreateData(TypedDict):
     id: str
-    pay_config_id: str
-
-
-class PayConfigsUpdateOneOffRuleResultV2(TypedDict):
-    end_at: str
-    id: str
-    name: str
-    rate_cents: int
-    start_at: str
-
-
-class PayConfigsUpdateOneOffRuleResultV2UpdateDataRequired(TypedDict):
-    id: str
-    pay_config_id: str
-
-
-class PayConfigsUpdateOneOffRuleResultV2UpdateData(PayConfigsUpdateOneOffRuleResultV2UpdateDataRequired, total=False):
     end_at: str
     name: str
     rate_cents: int
     start_at: str
 
 
-class PayConfigsUpdateWeeklyRuleResultV2(TypedDict):
-    end_time: str
-    id: str
-    rate_cents: int
-    start_time: str
-    weekdays: list
-
-
-class PayConfigsUpdateWeeklyRuleResultV2UpdateDataRequired(TypedDict):
+class PayConfigOneOffRuleUpdateDataRequired(TypedDict):
     id: str
     pay_config_id: str
 
 
-class PayConfigsUpdateWeeklyRuleResultV2UpdateData(PayConfigsUpdateWeeklyRuleResultV2UpdateDataRequired, total=False):
+class PayConfigOneOffRuleUpdateData(PayConfigOneOffRuleUpdateDataRequired, total=False):
+    end_at: str
+    name: str
+    rate_cents: int
+    start_at: str
+
+
+class PayConfigOneOffRuleRemoveMatch(TypedDict):
+    id: str
+    pay_config_id: str
+
+
+class PayConfigWeeklyRule(TypedDict):
+    end_time: str
+    id: str
+    rate_cents: int
+    start_time: str
+    weekdays: list
+
+
+class PayConfigWeeklyRuleLoadMatch(TypedDict):
+    id: str
+    pay_config_id: str
+
+
+class PayConfigWeeklyRuleListMatch(TypedDict):
+    id: str
+
+
+class PayConfigWeeklyRuleCreateData(TypedDict):
+    id: str
     end_time: str
     rate_cents: int
     start_time: str
     weekdays: list
 
 
-class PayConfigsV2(TypedDict, total=False):
+class PayConfigWeeklyRuleUpdateDataRequired(TypedDict):
     id: str
+    pay_config_id: str
 
 
-class PayConfigsV2RemoveMatch(TypedDict):
+class PayConfigWeeklyRuleUpdateData(PayConfigWeeklyRuleUpdateDataRequired, total=False):
+    end_time: str
+    rate_cents: int
+    start_time: str
+    weekdays: list
+
+
+class PayConfigWeeklyRuleRemoveMatch(TypedDict):
     id: str
     pay_config_id: str
 
@@ -2542,14 +2472,6 @@ class PayReportsV2LoadMatch(TypedDict):
     pay_report_id: str
 
 
-class PoliciesV2(TypedDict, total=False):
-    id: str
-
-
-class PoliciesV2RemoveMatch(TypedDict):
-    id: str
-
-
 class PolicyRequired(TypedDict):
     assignment_rules: dict
     conditions: list
@@ -2616,6 +2538,10 @@ class PolicyUpdateData(PolicyUpdateDataRequired, total=False):
     post_mortem: dict
     schedule: dict
     status: str
+
+
+class PolicyRemoveMatch(TypedDict):
+    id: str
 
 
 class PolicyFindingRequired(TypedDict):
@@ -2855,6 +2781,58 @@ class ScheduleEntryLoadMatch(ScheduleEntryLoadMatchRequired, total=False):
     entry_window_start: str
 
 
+class ScheduleOverride(TypedDict):
+    created_at: str
+    end_at: str
+    id: str
+    layer_id: str
+    rotation_id: str
+    schedule_id: str
+    start_at: str
+    updated_at: str
+    user: dict
+
+
+class ScheduleOverrideLoadMatch(TypedDict):
+    id: str
+
+
+class ScheduleOverrideListMatchRequired(TypedDict):
+    schedule_id: str
+
+
+class ScheduleOverrideListMatch(ScheduleOverrideListMatchRequired, total=False):
+    after: str
+    layer_id: str
+    page_size: int
+    rotation_id: str
+
+
+class ScheduleOverrideCreateData(TypedDict):
+    end_at: str
+    layer_id: str
+    rotation_id: str
+    schedule_id: str
+    start_at: str
+    user: dict
+
+
+class ScheduleOverrideUpdateDataRequired(TypedDict):
+    id: str
+
+
+class ScheduleOverrideUpdateData(ScheduleOverrideUpdateDataRequired, total=False):
+    end_at: str
+    layer_id: str
+    rotation_id: str
+    start_at: str
+    user: dict
+
+
+class ScheduleOverrideRemoveMatch(TypedDict):
+    id: str
+
+
 class ScheduleReplicaRequired(TypedDict):
     created_at: str
     id: str
@@ -2892,6 +2870,11 @@ class ScheduleReplicaCreateDataRequired(TypedDict):
 
 class ScheduleReplicaCreateData(ScheduleReplicaCreateDataRequired, total=False):
     mirror_window_days: int
+
+
+class ScheduleReplicaRemoveMatch(TypedDict):
+    id: str
+    schedule_id: str
 
 
 class ScheduleSyncRuleRequired(TypedDict):
@@ -2947,6 +2930,11 @@ class ScheduleSyncRuleUpdateData(ScheduleSyncRuleUpdateDataRequired, total=False
     sync_type: str
 
 
+class ScheduleSyncRuleRemoveMatch(TypedDict):
+    id: str
+    schedule_id: str
+
+
 class ScheduleSyncTargetRequired(TypedDict):
     add_bot_to_group: bool
     created_at: str
@@ -2992,66 +2980,6 @@ class ScheduleSyncTargetUpdateData(ScheduleSyncTargetUpdateDataRequired, total=F
 
 class ScheduleSyncTargetRemoveMatch(TypedDict):
     id: str
-
-
-class SchedulesShowOverrideResultV2(TypedDict):
-    created_at: str
-    end_at: str
-    id: str
-    layer_id: str
-    rotation_id: str
-    schedule_id: str
-    start_at: str
-    updated_at: str
-    user: dict
-
-
-class SchedulesShowOverrideResultV2LoadMatch(TypedDict):
-    id: str
-
-
-class SchedulesShowOverrideResultV2ListMatchRequired(TypedDict):
-    schedule_id: str
-
-
-class SchedulesShowOverrideResultV2ListMatch(SchedulesShowOverrideResultV2ListMatchRequired, total=False):
-    after: str
-    layer_id: str
-    page_size: int
-    rotation_id: str
-
-
-class SchedulesShowOverrideResultV2CreateData(TypedDict):
-    end_at: str
-    layer_id: str
-    rotation_id: str
-    schedule_id: str
-    start_at: str
-    user: dict
-
-
-class SchedulesUpdateOverrideResultV2(TypedDict):
-    created_at: str
-    end_at: str
-    id: str
-    layer_id: str
-    rotation_id: str
-    schedule_id: str
-    start_at: str
-    updated_at: str
-    user: dict
-
-
-class SchedulesUpdateOverrideResultV2UpdateDataRequired(TypedDict):
-    id: str
-
-
-class SchedulesUpdateOverrideResultV2UpdateData(SchedulesUpdateOverrideResultV2UpdateDataRequired, total=False):
-    end_at: str
-    layer_id: str
-    rotation_id: str
-    start_at: str
-    user: dict
 
 
 class SecretRequired(TypedDict):
@@ -3146,6 +3074,10 @@ class SeverityUpdateData(SeverityUpdateDataRequired, total=False):
     rank: int
 
 
+class SeverityRemoveMatch(TypedDict):
+    id: str
+
+
 class StatusPageRequired(TypedDict):
     id: str
     name: str
@@ -3207,7 +3139,7 @@ class StatusPageComponentRemoveMatch(TypedDict):
     id: str
 
 
-class StatusPageComponentAvailabilityV2Required(TypedDict):
+class StatusPageComponentAvailabilityRequired(TypedDict):
     component_id: str
     data_available_since: str
     end_at: str
@@ -3215,11 +3147,11 @@ class StatusPageComponentAvailabilityV2Required(TypedDict):
     status_page_id: str
 
 
-class StatusPageComponentAvailabilityV2(StatusPageComponentAvailabilityV2Required, total=False):
+class StatusPageComponentAvailability(StatusPageComponentAvailabilityRequired, total=False):
     availability_percent: str
 
 
-class StatusPageComponentAvailabilityV2LoadMatch(TypedDict):
+class StatusPageComponentAvailabilityLoadMatch(TypedDict):
     component_id: str
     status_page_id: str
     end_at: str
@@ -3304,12 +3236,12 @@ class StatusPageIncidentUpdateCreateData(StatusPageIncidentUpdateCreateDataRequi
     incident_status: str
 
 
-class StatusPageLinkedResponseIncidentV1(TypedDict):
+class StatusPageLinkedResponseIncident(TypedDict):
     id: str
     linked_at: str
 
 
-class StatusPageLinkedResponseIncidentV1ListMatch(TypedDict):
+class StatusPageLinkedResponseIncidentListMatch(TypedDict):
     incident_id: str
     status_page_id: str
 
@@ -3375,6 +3307,10 @@ class StatusPageMaintenanceUpdateData(StatusPageMaintenanceUpdateDataRequired, t
     start_at: str
 
 
+class StatusPageMaintenanceRemoveMatch(TypedDict):
+    id: str
+
+
 class StatusPageMaintenanceUpdateRequired(TypedDict):
     message: str
     notify_subscribers: bool
@@ -3411,14 +3347,6 @@ class StatusPageStructureLoadMatch(TypedDict):
     id: str
 
 
-class StatusPagesV2(TypedDict):
-    pass
-
-
-class StatusPagesV2RemoveMatch(TypedDict):
-    status_page_maintenance_id: str
-
-
 class Team(TypedDict):
     catalog_entry: dict
     id: str
@@ -3435,7 +3363,7 @@ class TeamListMatch(TypedDict, total=False):
     page_size: int
 
 
-class TelemetryDataSourceV2Required(TypedDict):
+class TelemetryDataSourceRequired(TypedDict):
     created_at: str
     enabled: bool
     id: str
@@ -3445,17 +3373,17 @@ class TelemetryDataSourceV2Required(TypedDict):
     updated_at: str
 
 
-class TelemetryDataSourceV2(TelemetryDataSourceV2Required, total=False):
+class TelemetryDataSource(TelemetryDataSourceRequired, total=False):
     datadog_config: dict
     grafana_config: dict
     version: str
 
 
-class TelemetryDataSourceV2UpdateDataRequired(TypedDict):
+class TelemetryDataSourceUpdateDataRequired(TypedDict):
     id: str
 
 
-class TelemetryDataSourceV2UpdateData(TelemetryDataSourceV2UpdateDataRequired, total=False):
+class TelemetryDataSourceUpdateData(TelemetryDataSourceUpdateDataRequired, total=False):
     datadog_config: dict
     grafana_config: dict
     name: str
@@ -3486,14 +3414,6 @@ class UserListMatch(TypedDict, total=False):
     include_inactive: bool
     page_size: int
     slack_user_id: str
-
-
-class UserCreateDataRequired(TypedDict):
-    id: str
-
-
-class UserCreateData(UserCreateDataRequired, total=False):
-    preferred_escalation_provider: Any
 
 
 class WorkflowRequired(TypedDict):

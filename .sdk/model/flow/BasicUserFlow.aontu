@@ -7,18 +7,6 @@ main: kit: flow: BasicUserFlow:
   name: "BasicUserFlow",
   step: [
     {
-      i: {
-        ref: "user_ref01"
-      }
-
-      m: {
-        user_id: "user01"
-      }
-
-      o: "create"
-    }
-
-    {
       o: "list",
       v: [
         {

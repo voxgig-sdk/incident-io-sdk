@@ -176,7 +176,7 @@ func TestCatalogEntryEntity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.CatalogEntry(nil).List(map[string]any{"after": 1, "catalog_type_id": "x"}, nil)
+		_, err := client.CatalogEntry(nil).List(map[string]any{"after": 1, "catalog_type_id": "x", "page_size": 1}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}
@@ -191,7 +191,7 @@ func TestCatalogEntryEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create", "list", "update", "load"} {
+		for _, _op := range []string{"create", "list", "update", "load", "remove"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "catalog_entry." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -275,6 +275,32 @@ func TestCatalogEntryEntity(t *testing.T) {
 		}
 		if catalogEntryRef01DataDt0LoadResult["id"] != catalogEntryRef01Data["id"] {
 			t.Fatal("expected load result id to match")
+		}
+
+		// REMOVE
+		catalogEntryRef01MatchRm0 := map[string]any{
+			"id": catalogEntryRef01Data["id"],
+		}
+		_, err = catalogEntryRef01Ent.Remove(catalogEntryRef01MatchRm0, nil)
+		if err != nil {
+			t.Fatalf("remove failed: %v", err)
+		}
+
+		// LIST
+		catalogEntryRef01MatchRt0 := map[string]any{}
+
+		catalogEntryRef01ListRt0Result, err := catalogEntryRef01Ent.List(catalogEntryRef01MatchRt0, nil)
+		if err != nil {
+			t.Fatalf("list failed: %v", err)
+		}
+		catalogEntryRef01ListRt0, catalogEntryRef01ListRt0Ok := catalogEntryRef01ListRt0Result.([]any)
+		if !catalogEntryRef01ListRt0Ok {
+			t.Fatalf("expected list result to be an array, got %T", catalogEntryRef01ListRt0Result)
+		}
+
+		notFoundItem := vs.Select(entityListToData(catalogEntryRef01ListRt0), map[string]any{"id": catalogEntryRef01Data["id"]})
+		if !vs.IsEmpty(notFoundItem) {
+			t.Fatal("expected removed entity to not be in list")
 		}
 
 	})

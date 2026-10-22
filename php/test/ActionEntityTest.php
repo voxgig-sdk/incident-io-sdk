@@ -182,7 +182,7 @@ class ActionEntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->Action(null)->list(["incident_id" => 1], null);
+            $client->Action(null)->list(["after" => 1], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

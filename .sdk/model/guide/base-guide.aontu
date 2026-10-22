@@ -4,26 +4,30 @@
 #   guide.aontu
 
 guide: {
-  metrics: count: entity: 128
+  metrics: count: entity: 106
   metrics: count: path: 186
   metrics: count: method: 330
 
   entity: action: {
     path: "/v1/actions": {
+      action: "v1": {}
       op: list: method: *GET
       op: list: transform: res: *("`body.actions`")|top
     }
     path: "/v1/actions/{id}": {
+      action: "v1": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.action`")|top
     }
     path: "/v2/actions": {
+      action: "v2": {}
       op: create: method: *POST
       op: create: transform: res: *("`body.action`")|top
       op: list: method: *GET
       op: list: transform: res: *("`body.actions`")|top
     }
     path: "/v2/actions/{id}": {
+      action: "v2": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.action`")|top
       op: remove: method: *DELETE
@@ -101,12 +105,14 @@ guide: {
 
   entity: alert_route: {
     path: "/v2/alert_routes": {
+      action: "v2": {}
       op: create: method: *POST
       op: create: transform: res: *("`body.alert_route`")|top
       op: list: method: *GET
       op: list: transform: res: *("`body.alert_routes`")|top
     }
     path: "/v2/alert_routes/{id}": {
+      action: "v2": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.alert_route`")|top
       op: remove: method: *DELETE
@@ -155,18 +161,15 @@ guide: {
       op: list: method: *GET
       op: list: transform: res: *("`body.alert_tags`")|top
     }
-  }
-
-  entity: alerts_add_tags_result_v2: {
-    path: "/v2/alerts/{id}/actions/add_tags": {
+    path: "/v2/alerts/{id}/actions/remove_tags": {
       rename: param: "id": *"alert_id"
       op: create: method: *POST
       op: create: transform: res: *("`body.alert`")|top
     }
   }
 
-  entity: alerts_remove_tags_result_v2: {
-    path: "/v2/alerts/{id}/actions/remove_tags": {
+  entity: alerts_add_tags_result_v2: {
+    path: "/v2/alerts/{id}/actions/add_tags": {
       rename: param: "id": *"alert_id"
       op: create: method: *POST
       op: create: transform: res: *("`body.alert`")|top
@@ -261,68 +264,37 @@ guide: {
     }
   }
 
-  entity: call_routes_create_allowed_caller_result_v2: {
+  entity: call_route_allowed_caller: {
     path: "/v2/call_routes/{call_route_id}/allowed_callers": {
+      rename: param: "call_route_id": *"id"
       op: create: method: *POST
       op: create: transform: res: *("`body.allowed_caller`")|top
-    }
-  }
-
-  entity: call_routes_create_option_result_v2: {
-    path: "/v2/call_routes/{call_route_id}/options": {
-      op: create: method: *POST
-      op: create: transform: res: *("`body.option`")|top
-    }
-  }
-
-  entity: call_routes_list_allowed_callers_result_v2: {
-    path: "/v2/call_routes/{call_route_id}/allowed_callers": {
       op: list: method: *GET
       op: list: transform: res: *("`body.allowed_callers`")|top
     }
-  }
-
-  entity: call_routes_list_options_result_v2: {
-    path: "/v2/call_routes/{call_route_id}/options": {
-      op: list: method: *GET
-      op: list: transform: res: *("`body.options`")|top
-    }
-  }
-
-  entity: call_routes_show_allowed_caller_result_v2: {
     path: "/v2/call_routes/{call_route_id}/allowed_callers/{id}": {
       op: load: method: *GET
       op: load: transform: res: *("`body.allowed_caller`")|top
-    }
-  }
-
-  entity: call_routes_show_option_result_v2: {
-    path: "/v2/call_routes/{call_route_id}/options/{id}": {
-      op: load: method: *GET
-      op: load: transform: res: *("`body.option`")|top
-    }
-  }
-
-  entity: call_routes_update_allowed_caller_result_v2: {
-    path: "/v2/call_routes/{call_route_id}/allowed_callers/{id}": {
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.allowed_caller`")|top
     }
   }
 
-  entity: call_routes_update_option_result_v2: {
+  entity: call_route_option: {
+    path: "/v2/call_routes/{call_route_id}/options": {
+      rename: param: "call_route_id": *"id"
+      op: create: method: *POST
+      op: create: transform: res: *("`body.option`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.options`")|top
+    }
     path: "/v2/call_routes/{call_route_id}/options/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.option`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.option`")|top
-    }
-  }
-
-  entity: call_routes_v2: {
-    path: "/v2/call_routes/{call_route_id}/allowed_callers/{id}": {
-      op: remove: method: *DELETE
-    }
-    path: "/v2/call_routes/{call_route_id}/options/{id}": {
-      op: remove: method: *DELETE
     }
   }
 
@@ -342,14 +314,17 @@ guide: {
 
   entity: catalog_entry: {
     path: "/v2/catalog_entries": {
+      action: "v2": {}
       op: create: method: *POST
       op: create: transform: res: *("`body.catalog_entry`")|top
       op: list: method: *GET
       op: list: transform: res: *("`body.catalog_entries`")|top
     }
     path: "/v2/catalog_entries/{id}": {
+      action: "v2": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.catalog_entry`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.catalog_entry`")|top
     }
@@ -362,6 +337,7 @@ guide: {
     path: "/v3/catalog_entries/{id}": {
       op: load: method: *GET
       op: load: transform: res: *("`body.catalog_entry`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.catalog_entry`")|top
     }
@@ -369,6 +345,7 @@ guide: {
 
   entity: catalog_resource: {
     path: "/v2/catalog_resources": {
+      action: "v2": {}
       op: list: method: *GET
       op: list: transform: res: *("`body.resources`")|top
     }
@@ -380,14 +357,17 @@ guide: {
 
   entity: catalog_type: {
     path: "/v2/catalog_types": {
+      action: "v2": {}
       op: create: method: *POST
       op: create: transform: res: *("`body.catalog_type`")|top
       op: list: method: *GET
       op: list: transform: res: *("`body.catalog_types`")|top
     }
     path: "/v2/catalog_types/{id}": {
+      action: "v2": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.catalog_type`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.catalog_type`")|top
     }
@@ -400,6 +380,7 @@ guide: {
     path: "/v3/catalog_types/{id}": {
       op: load: method: *GET
       op: load: transform: res: *("`body.catalog_type`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.catalog_type`")|top
     }
@@ -407,6 +388,7 @@ guide: {
 
   entity: catalog_type_schema: {
     path: "/v2/catalog_types/{id}/actions/update_schema": {
+      action: "v2": {}
       rename: param: "id": *"catalog_type_id"
       op: create: method: *POST
       op: create: transform: res: *("`body.catalog_type`")|top
@@ -418,35 +400,22 @@ guide: {
     }
   }
 
-  entity: catalog_v2: {
-    path: "/v2/catalog_entries/{id}": {
-      op: remove: method: *DELETE
-    }
-    path: "/v2/catalog_types/{id}": {
-      op: remove: method: *DELETE
-    }
-  }
-
   entity: catalog_v3: {
     path: "/v3/catalog_entries/actions/bulk_update": {
       op: create: method: *POST
-    }
-    path: "/v3/catalog_entries/{id}": {
-      op: remove: method: *DELETE
-    }
-    path: "/v3/catalog_types/{id}": {
-      op: remove: method: *DELETE
     }
   }
 
   entity: custom_field: {
     path: "/v1/custom_fields": {
+      action: "v1": {}
       op: create: method: *POST
       op: create: transform: res: *("`body.custom_field`")|top
       op: list: method: *GET
       op: list: transform: res: *("`body.custom_fields`")|top
     }
     path: "/v1/custom_fields/{id}": {
+      action: "v1": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.custom_field`")|top
       op: remove: method: *DELETE
@@ -497,6 +466,22 @@ guide: {
     }
   }
 
+  entity: escalation_path: {
+    path: "/v2/escalation_paths": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.escalation_path`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.escalation_paths`")|top
+    }
+    path: "/v2/escalation_paths/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.escalation_path`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.escalation_path`")|top
+    }
+  }
+
   entity: escalation_path_template: {
     path: "/v2/escalation_path_templates": {
       op: create: method: *POST
@@ -526,30 +511,7 @@ guide: {
     }
   }
 
-  entity: escalations_show_path_result_v2: {
-    path: "/v2/escalation_paths": {
-      op: create: method: *POST
-      op: create: transform: res: *("`body.escalation_path`")|top
-      op: list: method: *GET
-      op: list: transform: res: *("`body.escalation_paths`")|top
-    }
-    path: "/v2/escalation_paths/{id}": {
-      op: load: method: *GET
-      op: load: transform: res: *("`body.escalation_path`")|top
-    }
-  }
-
-  entity: escalations_update_path_result_v2: {
-    path: "/v2/escalation_paths/{id}": {
-      op: update: method: *PUT
-      op: update: transform: res: *("`body.escalation_path`")|top
-    }
-  }
-
   entity: escalations_v2: {
-    path: "/v2/escalation_paths/{id}": {
-      op: remove: method: *DELETE
-    }
     path: "/v2/escalations/{escalation_id}/actions/respond": {
       op: create: method: *POST
     }
@@ -561,12 +523,14 @@ guide: {
 
   entity: follow_up: {
     path: "/v2/follow_ups": {
+      action: "v2": {}
       op: create: method: *POST
       op: create: transform: res: *("`body.follow_up`")|top
       op: list: method: *GET
       op: list: transform: res: *("`body.follow_ups`")|top
     }
     path: "/v2/follow_ups/{id}": {
+      action: "v2": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.follow_up`")|top
       op: remove: method: *DELETE
@@ -629,12 +593,14 @@ guide: {
 
   entity: incident: {
     path: "/v1/incidents": {
+      action: "v1": {}
       op: create: method: *POST
       op: create: transform: res: *("`body.incident`")|top
       op: list: method: *GET
       op: list: transform: res: *("`body.incidents`")|top
     }
     path: "/v1/incidents/{id}": {
+      action: "v1": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.incident`")|top
     }
@@ -726,12 +692,14 @@ guide: {
 
   entity: incident_role: {
     path: "/v1/incident_roles": {
+      action: "v1": {}
       op: create: method: *POST
       op: create: transform: res: *("`body.incident_role`")|top
       op: list: method: *GET
       op: list: transform: res: *("`body.incident_roles`")|top
     }
     path: "/v1/incident_roles/{id}": {
+      action: "v1": {}
       op: load: method: *GET
       op: load: transform: res: *("`body.incident_role`")|top
       op: remove: method: *DELETE
@@ -936,68 +904,37 @@ guide: {
     }
   }
 
-  entity: pay_configs_create_one_off_rule_result_v2: {
+  entity: pay_config_one_off_rule: {
     path: "/v2/pay_configs/{pay_config_id}/one_off_rules": {
+      rename: param: "pay_config_id": *"id"
       op: create: method: *POST
       op: create: transform: res: *("`body.one_off_rule`")|top
-    }
-  }
-
-  entity: pay_configs_create_weekly_rule_result_v2: {
-    path: "/v2/pay_configs/{pay_config_id}/weekly_rules": {
-      op: create: method: *POST
-      op: create: transform: res: *("`body.weekly_rule`")|top
-    }
-  }
-
-  entity: pay_configs_list_one_off_rules_result_v2: {
-    path: "/v2/pay_configs/{pay_config_id}/one_off_rules": {
       op: list: method: *GET
       op: list: transform: res: *("`body.one_off_rules`")|top
     }
-  }
-
-  entity: pay_configs_list_weekly_rules_result_v2: {
-    path: "/v2/pay_configs/{pay_config_id}/weekly_rules": {
-      op: list: method: *GET
-      op: list: transform: res: *("`body.weekly_rules`")|top
-    }
-  }
-
-  entity: pay_configs_show_one_off_rule_result_v2: {
     path: "/v2/pay_configs/{pay_config_id}/one_off_rules/{id}": {
       op: load: method: *GET
       op: load: transform: res: *("`body.one_off_rule`")|top
-    }
-  }
-
-  entity: pay_configs_show_weekly_rule_result_v2: {
-    path: "/v2/pay_configs/{pay_config_id}/weekly_rules/{id}": {
-      op: load: method: *GET
-      op: load: transform: res: *("`body.weekly_rule`")|top
-    }
-  }
-
-  entity: pay_configs_update_one_off_rule_result_v2: {
-    path: "/v2/pay_configs/{pay_config_id}/one_off_rules/{id}": {
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.one_off_rule`")|top
     }
   }
 
-  entity: pay_configs_update_weekly_rule_result_v2: {
+  entity: pay_config_weekly_rule: {
+    path: "/v2/pay_configs/{pay_config_id}/weekly_rules": {
+      rename: param: "pay_config_id": *"id"
+      op: create: method: *POST
+      op: create: transform: res: *("`body.weekly_rule`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.weekly_rules`")|top
+    }
     path: "/v2/pay_configs/{pay_config_id}/weekly_rules/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.weekly_rule`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.weekly_rule`")|top
-    }
-  }
-
-  entity: pay_configs_v2: {
-    path: "/v2/pay_configs/{pay_config_id}/one_off_rules/{id}": {
-      op: remove: method: *DELETE
-    }
-    path: "/v2/pay_configs/{pay_config_id}/weekly_rules/{id}": {
-      op: remove: method: *DELETE
     }
   }
 
@@ -1038,12 +975,6 @@ guide: {
     }
   }
 
-  entity: policies_v2: {
-    path: "/v2/policies/{id}": {
-      op: remove: method: *DELETE
-    }
-  }
-
   entity: policy: {
     path: "/v2/policies": {
       op: create: method: *POST
@@ -1054,6 +985,7 @@ guide: {
     path: "/v2/policies/{id}": {
       op: load: method: *GET
       op: load: transform: res: *("`body.policy`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.policy`")|top
     }
@@ -1145,6 +1077,22 @@ guide: {
     }
   }
 
+  entity: schedule_override: {
+    path: "/v2/schedule_overrides": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.override`")|top
+      op: list: method: *GET
+      op: list: transform: res: *("`body.overrides`")|top
+    }
+    path: "/v2/schedule_overrides/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.override`")|top
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+      op: update: transform: res: *("`body.override`")|top
+    }
+  }
+
   entity: schedule_replica: {
     path: "/v2/schedules/{schedule_id}/replicas": {
       rename: param: "schedule_id": *"id"
@@ -1157,6 +1105,7 @@ guide: {
     path: "/v2/schedules/{schedule_id}/replicas/{id}": {
       op: load: method: *GET
       op: load: transform: res: *("`body.schedule_replica`")|top
+      op: remove: method: *DELETE
     }
   }
 
@@ -1172,6 +1121,7 @@ guide: {
     path: "/v2/schedules/{schedule_id}/sync_rules/{id}": {
       op: load: method: *GET
       op: load: transform: res: *("`body.schedule_sync_rule`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.schedule_sync_rule`")|top
     }
@@ -1191,38 +1141,6 @@ guide: {
       op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.schedule_sync_target`")|top
-    }
-  }
-
-  entity: schedules_show_override_result_v2: {
-    path: "/v2/schedule_overrides": {
-      op: create: method: *POST
-      op: create: transform: res: *("`body.override`")|top
-      op: list: method: *GET
-      op: list: transform: res: *("`body.overrides`")|top
-    }
-    path: "/v2/schedule_overrides/{id}": {
-      op: load: method: *GET
-      op: load: transform: res: *("`body.override`")|top
-    }
-  }
-
-  entity: schedules_update_override_result_v2: {
-    path: "/v2/schedule_overrides/{id}": {
-      op: update: method: *PUT
-      op: update: transform: res: *("`body.override`")|top
-    }
-  }
-
-  entity: schedules_v2: {
-    path: "/v2/schedule_overrides/{id}": {
-      op: remove: method: *DELETE
-    }
-    path: "/v2/schedules/{schedule_id}/replicas/{id}": {
-      op: remove: method: *DELETE
-    }
-    path: "/v2/schedules/{schedule_id}/sync_rules/{id}": {
-      op: remove: method: *DELETE
     }
   }
 
@@ -1247,12 +1165,6 @@ guide: {
     }
   }
 
-  entity: severities_v1: {
-    path: "/v1/severities/{id}": {
-      op: remove: method: *DELETE
-    }
-  }
-
   entity: severity: {
     path: "/v1/severities": {
       op: create: method: *POST
@@ -1263,6 +1175,7 @@ guide: {
     path: "/v1/severities/{id}": {
       op: load: method: *GET
       op: load: transform: res: *("`body.severity`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.severity`")|top
     }
@@ -1296,7 +1209,7 @@ guide: {
     }
   }
 
-  entity: status_page_component_availability_v2: {
+  entity: status_page_component_availability: {
     path: "/v2/status_pages/{status_page_id}/components/{component_id}/availability": {
       op: load: method: *GET
       op: load: transform: res: *("`body.availability`")|top
@@ -1326,7 +1239,7 @@ guide: {
     }
   }
 
-  entity: status_page_linked_response_incident_v1: {
+  entity: status_page_linked_response_incident: {
     path: "/v1/status-pages/{id}/incidents/{incident_id}/response-incidents": {
       rename: param: "id": *"status_page_id"
       op: list: method: *GET
@@ -1345,6 +1258,7 @@ guide: {
       rename: param: "status_page_maintenance_id": *"id"
       op: load: method: *GET
       op: load: transform: res: *("`body.status_page_maintenance`")|top
+      op: remove: method: *DELETE
       op: update: method: *PUT
       op: update: transform: res: *("`body.status_page_maintenance`")|top
     }
@@ -1371,12 +1285,6 @@ guide: {
     }
   }
 
-  entity: status_pages_v2: {
-    path: "/v2/status_page_maintenances/{status_page_maintenance_id}": {
-      op: remove: method: *DELETE
-    }
-  }
-
   entity: team: {
     path: "/v3/teams": {
       op: list: method: *GET
@@ -1388,7 +1296,7 @@ guide: {
     }
   }
 
-  entity: telemetry_data_source_v2: {
+  entity: telemetry_data_source: {
     path: "/v2/telemetry/data_sources/{id}": {
       op: update: method: *PUT
       op: update: transform: res: *("`body.data_source`")|top
@@ -1404,15 +1312,11 @@ guide: {
       op: load: method: *GET
       op: load: transform: res: *("`body.user`")|top
     }
-    path: "/v2/users/{user_id}/paging_provider": {
-      action: "paging_provider": {}
-      rename: param: "user_id": *"id"
-      op: create: method: *POST
-    }
   }
 
   entity: users_show_paging_provider_result_v2: {
     path: "/v2/users/{user_id}/paging_provider": {
+      op: create: method: *POST
       op: load: method: *GET
     }
   }

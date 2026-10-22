@@ -1,0 +1,63 @@
+{
+  "existing": {
+    "call_route_option": {
+      "CALL_ROUTE_OPTION00": {
+        "digit": "s28",
+        "id": "CALL_ROUTE_OPTION00",
+        "path": [],
+        "prompt": "s2b",
+        "call_route_id": "CALL_ROUTE01"
+      },
+      "CALL_ROUTE_OPTION01": {
+        "digit": "s50",
+        "id": "CALL_ROUTE_OPTION01",
+        "path": [],
+        "prompt": "s53",
+        "call_route_id": "CALL_ROUTE01"
+      },
+      "CALL_ROUTE_OPTION02": {
+        "digit": "s78",
+        "id": "CALL_ROUTE_OPTION02",
+        "path": [],
+        "prompt": "s7b",
+        "call_route_id": "CALL_ROUTE01"
+      }
+    }
+  },
+  "new": {
+    "call_route_option": {
+      "call_route_option_ref01": {
+        "digit": "sa0",
+        "path": [],
+        "prompt": "sa3"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/call_routes/{call_route_id}/options": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/call_routes/{call_route_id}/options": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/call_routes/{call_route_id}/options/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/call_routes/{call_route_id}/options/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/call_routes/{call_route_id}/options/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

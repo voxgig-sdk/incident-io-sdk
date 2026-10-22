@@ -12,9 +12,7 @@
 ---@field completed_at? string
 ---@field created_at string
 ---@field creator table
----@field description? string
----@field external_issue_reference? table
----@field follow_up boolean
+---@field description string
 ---@field id string
 ---@field incident_id string
 ---@field status string
@@ -24,9 +22,12 @@
 ---@field id string
 
 ---@class ActionListMatch
+---@field after? string
+---@field created_at? table
 ---@field incident_id? string
 ---@field incident_mode? string
----@field is_follow_up? boolean
+---@field page_size? number
+---@field updated_at? table
 
 ---@class ActionCreateData
 ---@field assignee_id? string
@@ -160,7 +161,6 @@
 
 ---@class AlertRoute
 ---@field alert_sources table
----@field channel_config table
 ---@field condition_groups table
 ---@field created_at? string
 ---@field enabled boolean
@@ -169,10 +169,8 @@
 ---@field grouping_config table
 ---@field id string
 ---@field incident_config table
----@field incident_template table
 ---@field is_private boolean
 ---@field message_config table
----@field message_template? table
 ---@field name string
 ---@field owning_team_ids? table
 ---@field updated_at? string
@@ -183,44 +181,34 @@
 
 ---@class AlertRouteListMatch
 ---@field after? string
----@field page_size number
+---@field page_size? number
 
 ---@class AlertRouteCreateData
 ---@field alert_sources table
----@field channel_config table
 ---@field condition_groups table
----@field created_at? string
 ---@field enabled boolean
 ---@field escalation_config table
 ---@field expressions table
 ---@field grouping_config table
 ---@field incident_config table
----@field incident_template table
 ---@field is_private boolean
 ---@field message_config table
----@field message_template? table
 ---@field name string
 ---@field owning_team_ids? table
----@field updated_at? string
 
 ---@class AlertRouteUpdateData
 ---@field id string
 ---@field alert_sources? table
----@field channel_config? table
 ---@field condition_groups? table
----@field created_at? string
 ---@field enabled? boolean
 ---@field escalation_config? table
 ---@field expressions? table
 ---@field grouping_config? table
 ---@field incident_config? table
----@field incident_template? table
 ---@field is_private? boolean
 ---@field message_config? table
----@field message_template? table
 ---@field name? string
 ---@field owning_team_ids? table
----@field updated_at? string
 ---@field version? number
 
 ---@class AlertRouteRemoveMatch
@@ -316,13 +304,29 @@
 ---@field template table
 
 ---@class AlertTag
+---@field alert_group_ids? table
+---@field alert_source_id string
+---@field attributes table
+---@field created_at string
+---@field deduplication_key string
+---@field description? string
 ---@field id string
 ---@field name string
+---@field resolved_at? string
+---@field source_url? string
+---@field status string
+---@field tags? table
+---@field title string
+---@field updated_at string
 
 ---@class AlertTagListMatch
 ---@field after? string
 ---@field page_size? number
 ---@field search? string
+
+---@class AlertTagCreateData
+---@field alert_id string
+---@field tags table
 
 ---@class AlertsAddTagsResultV2
 ---@field alert_group_ids? table
@@ -340,25 +344,6 @@
 ---@field updated_at string
 
 ---@class AlertsAddTagsResultV2CreateData
----@field alert_id string
----@field tags table
-
----@class AlertsRemoveTagsResultV2
----@field alert_group_ids? table
----@field alert_source_id string
----@field attributes table
----@field created_at string
----@field deduplication_key string
----@field description? string
----@field id string
----@field resolved_at? string
----@field source_url? string
----@field status string
----@field tags? table
----@field title string
----@field updated_at string
-
----@class AlertsRemoveTagsResultV2CreateData
 ---@field alert_id string
 ---@field tags table
 
@@ -558,90 +543,60 @@
 ---@field responder_caller_id? string
 ---@field use_caller_allowlist? boolean
 
----@class CallRoutesCreateAllowedCallerResultV2
----@field name? string
----@field phone_number string
-
----@class CallRoutesCreateAllowedCallerResultV2CreateData
----@field call_route_id string
----@field name? string
----@field phone_number string
-
----@class CallRoutesCreateOptionResultV2
----@field digit string
----@field path table
----@field prompt string
-
----@class CallRoutesCreateOptionResultV2CreateData
----@field call_route_id string
----@field digit string
----@field path table
----@field prompt string
-
----@class CallRoutesListAllowedCallersResultV2
+---@class CallRouteAllowedCaller
 ---@field id string
 ---@field name? string
 ---@field phone_number string
 
----@class CallRoutesListAllowedCallersResultV2ListMatch
+---@class CallRouteAllowedCallerLoadMatch
 ---@field call_route_id string
-
----@class CallRoutesListOptionsResultV2
----@field digit string
 ---@field id string
----@field path table
----@field prompt string
 
----@class CallRoutesListOptionsResultV2ListMatch
----@field call_route_id string
+---@class CallRouteAllowedCallerListMatch
+---@field id string
 
----@class CallRoutesShowAllowedCallerResultV2
+---@class CallRouteAllowedCallerCreateData
 ---@field id string
 ---@field name? string
 ---@field phone_number string
 
----@class CallRoutesShowAllowedCallerResultV2LoadMatch
----@field call_route_id string
----@field id string
-
----@class CallRoutesShowOptionResultV2
----@field digit string
----@field id string
----@field path table
----@field prompt string
-
----@class CallRoutesShowOptionResultV2LoadMatch
----@field call_route_id string
----@field id string
-
----@class CallRoutesUpdateAllowedCallerResultV2
----@field id string
----@field name? string
----@field phone_number string
-
----@class CallRoutesUpdateAllowedCallerResultV2UpdateData
+---@class CallRouteAllowedCallerUpdateData
 ---@field call_route_id string
 ---@field id string
 ---@field name? string
 ---@field phone_number? string
 
----@class CallRoutesUpdateOptionResultV2
+---@class CallRouteAllowedCallerRemoveMatch
+---@field call_route_id string
+---@field id string
+
+---@class CallRouteOption
 ---@field digit string
 ---@field id string
 ---@field path table
 ---@field prompt string
 
----@class CallRoutesUpdateOptionResultV2UpdateData
+---@class CallRouteOptionLoadMatch
+---@field call_route_id string
+---@field id string
+
+---@class CallRouteOptionListMatch
+---@field id string
+
+---@class CallRouteOptionCreateData
+---@field id string
+---@field digit string
+---@field path table
+---@field prompt string
+
+---@class CallRouteOptionUpdateData
 ---@field call_route_id string
 ---@field id string
 ---@field digit? string
 ---@field path? table
 ---@field prompt? string
 
----@class CallRoutesV2
----@field id? string
-
----@class CallRoutesV2RemoveMatch
+---@class CallRouteOptionRemoveMatch
 ---@field call_route_id string
 ---@field id string
 
@@ -691,7 +646,7 @@
 ---@field after? string
 ---@field catalog_type_id string
 ---@field identifier? string
----@field page_size? number
+---@field page_size number
 
 ---@class CatalogEntryCreateData
 ---@field aliases? table
@@ -709,6 +664,9 @@
 ---@field name? string
 ---@field rank? number
 ---@field update_attributes? table
+
+---@class CatalogEntryRemoveMatch
+---@field id string
 
 ---@class CatalogResource
 ---@field category string
@@ -746,7 +704,6 @@
 ---@field registry_type? string
 ---@field required_integrations? table
 ---@field schema table
----@field semantic_type string
 ---@field source_repo_url? string
 ---@field type_name string
 ---@field updated_at string
@@ -775,7 +732,6 @@
 ---@field registry_type? string
 ---@field required_integrations? table
 ---@field schema? table
----@field semantic_type? string
 ---@field source_repo_url? string
 ---@field type_name? string
 ---@field updated_at? string
@@ -807,6 +763,9 @@
 ---@field source_repo_url? string
 ---@field use_name_as_identifier? boolean
 
+---@class CatalogTypeRemoveMatch
+---@field id string
+
 ---@class CatalogTypeSchema
 ---@field annotations table
 ---@field attributes table
@@ -828,7 +787,6 @@
 ---@field registry_type? string
 ---@field required_integrations? table
 ---@field schema table
----@field semantic_type string
 ---@field source_repo_url? string
 ---@field type_name string
 ---@field updated_at string
@@ -851,13 +809,6 @@
 ---@field helptext_catalog_attribute_id? string
 ---@field id string
 ---@field name string
----@field options table
----@field required? string
----@field required_v2? string
----@field show_before_closure boolean
----@field show_before_creation boolean
----@field show_before_update boolean
----@field show_in_announcement_post? boolean
 ---@field updated_at string
 
 ---@class CustomFieldLoadMatch
@@ -874,13 +825,6 @@
 ---@field helptext_catalog_attribute_id? string
 ---@field id? string
 ---@field name? string
----@field options? table
----@field required? string
----@field required_v2? string
----@field show_before_closure? boolean
----@field show_before_creation? boolean
----@field show_before_update? boolean
----@field show_in_announcement_post? boolean
 ---@field updated_at? string
 
 ---@class CustomFieldCreateData
@@ -892,12 +836,6 @@
 ---@field group_by_catalog_attribute_id? string
 ---@field helptext_catalog_attribute_id? string
 ---@field name string
----@field required? string
----@field required_v2? string
----@field show_before_closure boolean
----@field show_before_creation boolean
----@field show_before_update boolean
----@field show_in_announcement_post? boolean
 
 ---@class CustomFieldUpdateData
 ---@field id string
@@ -907,12 +845,6 @@
 ---@field group_by_catalog_attribute_id? string
 ---@field helptext_catalog_attribute_id? string
 ---@field name? string
----@field required? string
----@field required_v2? string
----@field show_before_closure? boolean
----@field show_before_creation? boolean
----@field show_before_update? boolean
----@field show_in_announcement_post? boolean
 
 ---@class CustomFieldRemoveMatch
 ---@field id string
@@ -982,6 +914,49 @@
 ---@field incident_id? string
 ---@field title string
 ---@field user_ids? table
+
+---@class EscalationPath
+---@field current_responders? table
+---@field id string
+---@field kind string
+---@field name string
+---@field param_bindings? table
+---@field path table
+---@field repeat_config table
+---@field team_ids table
+---@field template_id? string
+---@field working_hours? table
+
+---@class EscalationPathLoadMatch
+---@field id string
+
+---@class EscalationPathListMatch
+---@field after? string
+---@field page_size? number
+
+---@class EscalationPathCreateData
+---@field kind? string
+---@field name string
+---@field param_bindings? table
+---@field path table
+---@field repeat_config table
+---@field team_ids? table
+---@field template_id? string
+---@field working_hours? table
+
+---@class EscalationPathUpdateData
+---@field id string
+---@field kind? string
+---@field name? string
+---@field param_bindings? table
+---@field path? table
+---@field repeat_config? table
+---@field team_ids? table
+---@field template_id? string
+---@field working_hours? table
+
+---@class EscalationPathRemoveMatch
+---@field id string
 
 ---@class EscalationPathTemplate
 ---@field description? string
@@ -1073,9 +1048,13 @@
 ---@field id string
 
 ---@class FollowUpListMatch
+---@field after? string
 ---@field assignee_team_id? string
+---@field created_at? table
 ---@field incident_id? string
 ---@field incident_mode? string
+---@field page_size? number
+---@field updated_at? table
 
 ---@class FollowUpCreateData
 ---@field assignee_id? string
@@ -1181,12 +1160,8 @@
 ---@field slack_channel_name_override? string
 ---@field slack_channel_url? string
 ---@field slack_team_id string
----@field source_message_channel_id? string
----@field source_message_timestamp? string
----@field status string
 ---@field summary? string
 ---@field team_ids table
----@field timestamps? table
 ---@field updated_at string
 ---@field visibility string
 ---@field workload_minutes_late? number
@@ -1199,8 +1174,18 @@
 
 ---@class IncidentListMatch
 ---@field after? string
+---@field created_at? table
+---@field custom_field? table
+---@field filter_mode? string
+---@field incident_role? table
+---@field incident_type? table
+---@field mode? table
 ---@field page_size? number
+---@field severity? table
+---@field sort_by? string
 ---@field status? table
+---@field status_category? table
+---@field updated_at? table
 
 ---@class IncidentCreateData
 ---@field custom_field_entries? table
@@ -1215,9 +1200,6 @@
 ---@field severity_id? string
 ---@field slack_channel_name_override? string
 ---@field slack_team_id? string
----@field source_message_channel_id? string
----@field source_message_timestamp? string
----@field status? string
 ---@field summary? string
 ---@field visibility string
 
@@ -1324,7 +1306,6 @@
 ---@field id string
 ---@field instructions string
 ---@field name string
----@field required? boolean
 ---@field role_type string
 ---@field shortform string
 ---@field updated_at string
@@ -1338,7 +1319,6 @@
 ---@field id? string
 ---@field instructions? string
 ---@field name? string
----@field required? boolean
 ---@field role_type? string
 ---@field shortform? string
 ---@field updated_at? string
@@ -1347,7 +1327,6 @@
 ---@field description string
 ---@field instructions string
 ---@field name string
----@field required boolean
 ---@field shortform string
 
 ---@class IncidentRoleUpdateData
@@ -1355,7 +1334,6 @@
 ---@field description? string
 ---@field instructions? string
 ---@field name? string
----@field required? boolean
 ---@field shortform? string
 
 ---@class IncidentRoleRemoveMatch
@@ -1731,82 +1709,28 @@
 ---@class PayConfigRemoveMatch
 ---@field id string
 
----@class PayConfigsCreateOneOffRuleResultV2
----@field end_at string
----@field name string
----@field rate_cents number
----@field start_at string
-
----@class PayConfigsCreateOneOffRuleResultV2CreateData
----@field pay_config_id string
----@field end_at string
----@field name string
----@field rate_cents number
----@field start_at string
-
----@class PayConfigsCreateWeeklyRuleResultV2
----@field end_time string
----@field rate_cents number
----@field start_time string
----@field weekdays table
-
----@class PayConfigsCreateWeeklyRuleResultV2CreateData
----@field pay_config_id string
----@field end_time string
----@field rate_cents number
----@field start_time string
----@field weekdays table
-
----@class PayConfigsListOneOffRulesResultV2
+---@class PayConfigOneOffRule
 ---@field end_at string
 ---@field id string
 ---@field name string
 ---@field rate_cents number
 ---@field start_at string
 
----@class PayConfigsListOneOffRulesResultV2ListMatch
----@field pay_config_id string
-
----@class PayConfigsListWeeklyRulesResultV2
----@field end_time string
+---@class PayConfigOneOffRuleLoadMatch
 ---@field id string
----@field rate_cents number
----@field start_time string
----@field weekdays table
-
----@class PayConfigsListWeeklyRulesResultV2ListMatch
 ---@field pay_config_id string
 
----@class PayConfigsShowOneOffRuleResultV2
+---@class PayConfigOneOffRuleListMatch
+---@field id string
+
+---@class PayConfigOneOffRuleCreateData
+---@field id string
 ---@field end_at string
----@field id string
 ---@field name string
 ---@field rate_cents number
 ---@field start_at string
 
----@class PayConfigsShowOneOffRuleResultV2LoadMatch
----@field id string
----@field pay_config_id string
-
----@class PayConfigsShowWeeklyRuleResultV2
----@field end_time string
----@field id string
----@field rate_cents number
----@field start_time string
----@field weekdays table
-
----@class PayConfigsShowWeeklyRuleResultV2LoadMatch
----@field id string
----@field pay_config_id string
-
----@class PayConfigsUpdateOneOffRuleResultV2
----@field end_at string
----@field id string
----@field name string
----@field rate_cents number
----@field start_at string
-
----@class PayConfigsUpdateOneOffRuleResultV2UpdateData
+---@class PayConfigOneOffRuleUpdateData
 ---@field id string
 ---@field pay_config_id string
 ---@field end_at? string
@@ -1814,14 +1738,32 @@
 ---@field rate_cents? number
 ---@field start_at? string
 
----@class PayConfigsUpdateWeeklyRuleResultV2
+---@class PayConfigOneOffRuleRemoveMatch
+---@field id string
+---@field pay_config_id string
+
+---@class PayConfigWeeklyRule
 ---@field end_time string
 ---@field id string
 ---@field rate_cents number
 ---@field start_time string
 ---@field weekdays table
 
----@class PayConfigsUpdateWeeklyRuleResultV2UpdateData
+---@class PayConfigWeeklyRuleLoadMatch
+---@field id string
+---@field pay_config_id string
+
+---@class PayConfigWeeklyRuleListMatch
+---@field id string
+
+---@class PayConfigWeeklyRuleCreateData
+---@field id string
+---@field end_time string
+---@field rate_cents number
+---@field start_time string
+---@field weekdays table
+
+---@class PayConfigWeeklyRuleUpdateData
 ---@field id string
 ---@field pay_config_id string
 ---@field end_time? string
@@ -1829,10 +1771,7 @@
 ---@field start_time? string
 ---@field weekdays? table
 
----@class PayConfigsV2
----@field id? string
-
----@class PayConfigsV2RemoveMatch
+---@class PayConfigWeeklyRuleRemoveMatch
 ---@field id string
 ---@field pay_config_id string
 
@@ -1931,12 +1870,6 @@
 ---@class PayReportsV2LoadMatch
 ---@field pay_report_id string
 
----@class PoliciesV2
----@field id? string
-
----@class PoliciesV2RemoveMatch
----@field id string
-
 ---@class Policy
 ---@field assignment_rules table
 ---@field conditions table
@@ -1990,6 +1923,9 @@
 ---@field post_mortem? table
 ---@field schedule? table
 ---@field status? string
+
+---@class PolicyRemoveMatch
+---@field id string
 
 ---@class PolicyFinding
 ---@field created_at string
@@ -2174,6 +2110,46 @@
 ---@field entry_window_start? string
 ---@field schedule_id string
 
+---@class ScheduleOverride
+---@field created_at string
+---@field end_at string
+---@field id string
+---@field layer_id string
+---@field rotation_id string
+---@field schedule_id string
+---@field start_at string
+---@field updated_at string
+---@field user table
+
+---@class ScheduleOverrideLoadMatch
+---@field id string
+
+---@class ScheduleOverrideListMatch
+---@field after? string
+---@field layer_id? string
+---@field page_size? number
+---@field rotation_id? string
+---@field schedule_id string
+
+---@class ScheduleOverrideCreateData
+---@field end_at string
+---@field layer_id string
+---@field rotation_id string
+---@field schedule_id string
+---@field start_at string
+---@field user table
+
+---@class ScheduleOverrideUpdateData
+---@field id string
+---@field end_at? string
+---@field layer_id? string
+---@field rotation_id? string
+---@field start_at? string
+---@field user? table
+
+---@class ScheduleOverrideRemoveMatch
+---@field id string
+
 ---@class ScheduleReplica
 ---@field created_at string
 ---@field id string
@@ -2202,6 +2178,10 @@
 ---@field replica_provider string
 ---@field replica_provider_id string
 ---@field sources table
+
+---@class ScheduleReplicaRemoveMatch
+---@field id string
+---@field schedule_id string
 
 ---@class ScheduleSyncRule
 ---@field annotations? table
@@ -2239,6 +2219,10 @@
 ---@field permanent_member_user_ids? table
 ---@field sync_type? string
 
+---@class ScheduleSyncRuleRemoveMatch
+---@field id string
+---@field schedule_id string
+
 ---@class ScheduleSyncTarget
 ---@field add_bot_to_group boolean
 ---@field annotations? table
@@ -2270,54 +2254,6 @@
 
 ---@class ScheduleSyncTargetRemoveMatch
 ---@field id string
-
----@class SchedulesShowOverrideResultV2
----@field created_at string
----@field end_at string
----@field id string
----@field layer_id string
----@field rotation_id string
----@field schedule_id string
----@field start_at string
----@field updated_at string
----@field user table
-
----@class SchedulesShowOverrideResultV2LoadMatch
----@field id string
-
----@class SchedulesShowOverrideResultV2ListMatch
----@field after? string
----@field layer_id? string
----@field page_size? number
----@field rotation_id? string
----@field schedule_id string
-
----@class SchedulesShowOverrideResultV2CreateData
----@field end_at string
----@field layer_id string
----@field rotation_id string
----@field schedule_id string
----@field start_at string
----@field user table
-
----@class SchedulesUpdateOverrideResultV2
----@field created_at string
----@field end_at string
----@field id string
----@field layer_id string
----@field rotation_id string
----@field schedule_id string
----@field start_at string
----@field updated_at string
----@field user table
-
----@class SchedulesUpdateOverrideResultV2UpdateData
----@field id string
----@field end_at? string
----@field layer_id? string
----@field rotation_id? string
----@field start_at? string
----@field user? table
 
 ---@class Secret
 ---@field created_at string
@@ -2385,6 +2321,9 @@
 ---@field name? string
 ---@field rank? number
 
+---@class SeverityRemoveMatch
+---@field id string
+
 ---@class StatusPage
 ---@field description? string
 ---@field id string
@@ -2425,7 +2364,7 @@
 ---@class StatusPageComponentRemoveMatch
 ---@field id string
 
----@class StatusPageComponentAvailabilityV2
+---@class StatusPageComponentAvailability
 ---@field availability_percent? string
 ---@field component_id string
 ---@field data_available_since string
@@ -2433,7 +2372,7 @@
 ---@field start_at string
 ---@field status_page_id string
 
----@class StatusPageComponentAvailabilityV2LoadMatch
+---@class StatusPageComponentAvailabilityLoadMatch
 ---@field component_id string
 ---@field status_page_id string
 ---@field end_at string
@@ -2492,11 +2431,11 @@
 ---@field notify_subscribers boolean
 ---@field status_page_incident_id string
 
----@class StatusPageLinkedResponseIncidentV1
+---@class StatusPageLinkedResponseIncident
 ---@field id string
 ---@field linked_at string
 
----@class StatusPageLinkedResponseIncidentV1ListMatch
+---@class StatusPageLinkedResponseIncidentListMatch
 ---@field incident_id string
 ---@field status_page_id string
 
@@ -2547,6 +2486,9 @@
 ---@field name? string
 ---@field start_at? string
 
+---@class StatusPageMaintenanceRemoveMatch
+---@field id string
+
 ---@class StatusPageMaintenanceUpdate
 ---@field component_statuses? table
 ---@field maintenance_status? string
@@ -2570,11 +2512,6 @@
 ---@class StatusPageStructureLoadMatch
 ---@field id string
 
----@class StatusPagesV2
-
----@class StatusPagesV2RemoveMatch
----@field status_page_maintenance_id string
-
 ---@class Team
 ---@field catalog_entry table
 ---@field id string
@@ -2588,7 +2525,7 @@
 ---@field after? string
 ---@field page_size? number
 
----@class TelemetryDataSourceV2
+---@class TelemetryDataSource
 ---@field created_at string
 ---@field datadog_config? table
 ---@field enabled boolean
@@ -2600,7 +2537,7 @@
 ---@field updated_at string
 ---@field version? string
 
----@class TelemetryDataSourceV2UpdateData
+---@class TelemetryDataSourceUpdateData
 ---@field id string
 ---@field datadog_config? table
 ---@field grafana_config? table
@@ -2626,10 +2563,6 @@
 ---@field include_inactive? boolean
 ---@field page_size? number
 ---@field slack_user_id? string
-
----@class UserCreateData
----@field id string
----@field preferred_escalation_provider? any
 
 ---@class Workflow
 ---@field annotations? table

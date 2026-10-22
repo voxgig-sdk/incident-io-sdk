@@ -129,7 +129,7 @@ class TestPolicyEntity:
         # multiple ops; skipping any one skips the whole flow (steps depend
         # on each other).
         _live = setup.get("live", False)
-        for _op in ["create", "list", "update", "load"]:
+        for _op in ["create", "list", "update", "load", "remove"]:
             _skip, _reason = runner.is_control_skipped("entityOp", "policy." + _op, "live" if _live else "unit")
             if _skip:
                 pytest.skip(_reason or "skipped via sdk-test-control.json")
@@ -178,6 +178,23 @@ class TestPolicyEntity:
         policy_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(policy_ref01_data_dt0_loaded))
         assert policy_ref01_data_dt0_load_result is not None
         assert policy_ref01_data_dt0_load_result["id"] == policy_ref01_data["id"]
+
+        # REMOVE
+        policy_ref01_match_rm0 = {
+            "id": policy_ref01_data["id"],
+        }
+        policy_ref01_ent.remove(policy_ref01_match_rm0, None)
+
+        # LIST
+        policy_ref01_match_rt0 = {}
+
+        policy_ref01_list_rt0_result = policy_ref01_ent.list(policy_ref01_match_rt0, None)
+        assert isinstance(policy_ref01_list_rt0_result, list)
+
+        not_found_item = vs.select(
+            runner.entity_list_to_data(policy_ref01_list_rt0_result),
+            {"id": policy_ref01_data["id"]})
+        assert vs.isempty(not_found_item)
 
 
 

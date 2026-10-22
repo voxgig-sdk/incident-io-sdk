@@ -4,44 +4,38 @@
       "ACTION00": {
         "assignee": {},
         "assignee_id": "ASSIGNEE01",
-        "completed_at": "s7a",
-        "created_at": "s7b",
+        "completed_at": "s66",
+        "created_at": "s67",
         "creator": {},
-        "description": "s7d",
-        "external_issue_reference": {},
-        "follow_up": false,
+        "description": "s69",
         "id": "ACTION00",
         "incident_id": "INCIDENT01",
-        "status": "s82",
-        "updated_at": "s83"
+        "status": "s6c",
+        "updated_at": "s6d"
       },
       "ACTION01": {
         "assignee": {},
         "assignee_id": "ASSIGNEE01",
-        "completed_at": "sf2",
-        "created_at": "sf3",
+        "completed_at": "sca",
+        "created_at": "scb",
         "creator": {},
-        "description": "sf5",
-        "external_issue_reference": {},
-        "follow_up": false,
+        "description": "scd",
         "id": "ACTION01",
         "incident_id": "INCIDENT01",
-        "status": "sfa",
-        "updated_at": "sfb"
+        "status": "sd0",
+        "updated_at": "sd1"
       },
       "ACTION02": {
         "assignee": {},
         "assignee_id": "ASSIGNEE01",
-        "completed_at": "s16a",
-        "created_at": "s16b",
+        "completed_at": "s12e",
+        "created_at": "s12f",
         "creator": {},
-        "description": "s16d",
-        "external_issue_reference": {},
-        "follow_up": false,
+        "description": "s131",
         "id": "ACTION02",
         "incident_id": "INCIDENT01",
-        "status": "s172",
-        "updated_at": "s173"
+        "status": "s134",
+        "updated_at": "s135"
       }
     }
   },
@@ -50,15 +44,13 @@
       "action_ref01": {
         "assignee": {},
         "assignee_id": "ASSIGNEE01",
-        "completed_at": "s1e2",
-        "created_at": "s1e3",
+        "completed_at": "s192",
+        "created_at": "s193",
         "creator": {},
-        "description": "s1e5",
-        "external_issue_reference": {},
-        "follow_up": false,
+        "description": "s195",
         "incident_id": "INCIDENT01",
-        "status": "s1ea",
-        "updated_at": "s1eb"
+        "status": "s198",
+        "updated_at": "s199"
       }
     }
   },

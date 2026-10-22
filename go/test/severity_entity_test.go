@@ -191,7 +191,7 @@ func TestSeverityEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create", "list", "update", "load"} {
+		for _, _op := range []string{"create", "list", "update", "load", "remove"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "severity." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -275,6 +275,32 @@ func TestSeverityEntity(t *testing.T) {
 		}
 		if severityRef01DataDt0LoadResult["id"] != severityRef01Data["id"] {
 			t.Fatal("expected load result id to match")
+		}
+
+		// REMOVE
+		severityRef01MatchRm0 := map[string]any{
+			"id": severityRef01Data["id"],
+		}
+		_, err = severityRef01Ent.Remove(severityRef01MatchRm0, nil)
+		if err != nil {
+			t.Fatalf("remove failed: %v", err)
+		}
+
+		// LIST
+		severityRef01MatchRt0 := map[string]any{}
+
+		severityRef01ListRt0Result, err := severityRef01Ent.List(severityRef01MatchRt0, nil)
+		if err != nil {
+			t.Fatalf("list failed: %v", err)
+		}
+		severityRef01ListRt0, severityRef01ListRt0Ok := severityRef01ListRt0Result.([]any)
+		if !severityRef01ListRt0Ok {
+			t.Fatalf("expected list result to be an array, got %T", severityRef01ListRt0Result)
+		}
+
+		notFoundItem := vs.Select(entityListToData(severityRef01ListRt0), map[string]any{"id": severityRef01Data["id"]})
+		if !vs.IsEmpty(notFoundItem) {
+			t.Fatal("expected removed entity to not be in list")
 		}
 
 	})

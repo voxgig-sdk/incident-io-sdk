@@ -176,7 +176,7 @@ func TestActionEntity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.Action(nil).List(map[string]any{"incident_id": 1}, nil)
+		_, err := client.Action(nil).List(map[string]any{"after": 1}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

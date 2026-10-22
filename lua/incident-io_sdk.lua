@@ -549,20 +549,6 @@ function IncidentIoSDK:AlertsAddTagsResultV2(data)
 end
 
 
--- Idiomatic facade: client:AlertsRemoveTagsResultV2():list() / client:AlertsRemoveTagsResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:AlertsRemoveTagsResultV2(data)
-  local EntityMod = require("entity.alerts_remove_tags_result_v2_entity")
-  if data == nil then
-    if self._alerts_remove_tags_result_v2 == nil then
-      self._alerts_remove_tags_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._alerts_remove_tags_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
 -- Idiomatic facade: client:AlertsSetTagsResultV2():list() / client:AlertsSetTagsResultV2():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:AlertsSetTagsResultV2(data)
@@ -647,127 +633,29 @@ function IncidentIoSDK:CallRoute(data)
 end
 
 
--- Idiomatic facade: client:CallRoutesCreateAllowedCallerResultV2():list() / client:CallRoutesCreateAllowedCallerResultV2():load({ id = ... })
+-- Idiomatic facade: client:CallRouteAllowedCaller():list() / client:CallRouteAllowedCaller():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesCreateAllowedCallerResultV2(data)
-  local EntityMod = require("entity.call_routes_create_allowed_caller_result_v2_entity")
+function IncidentIoSDK:CallRouteAllowedCaller(data)
+  local EntityMod = require("entity.call_route_allowed_caller_entity")
   if data == nil then
-    if self._call_routes_create_allowed_caller_result_v2 == nil then
-      self._call_routes_create_allowed_caller_result_v2 = EntityMod.new(self, nil)
+    if self._call_route_allowed_caller == nil then
+      self._call_route_allowed_caller = EntityMod.new(self, nil)
     end
-    return self._call_routes_create_allowed_caller_result_v2
+    return self._call_route_allowed_caller
   end
   return EntityMod.new(self, data)
 end
 
 
--- Idiomatic facade: client:CallRoutesCreateOptionResultV2():list() / client:CallRoutesCreateOptionResultV2():load({ id = ... })
+-- Idiomatic facade: client:CallRouteOption():list() / client:CallRouteOption():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesCreateOptionResultV2(data)
-  local EntityMod = require("entity.call_routes_create_option_result_v2_entity")
+function IncidentIoSDK:CallRouteOption(data)
+  local EntityMod = require("entity.call_route_option_entity")
   if data == nil then
-    if self._call_routes_create_option_result_v2 == nil then
-      self._call_routes_create_option_result_v2 = EntityMod.new(self, nil)
+    if self._call_route_option == nil then
+      self._call_route_option = EntityMod.new(self, nil)
     end
-    return self._call_routes_create_option_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:CallRoutesListAllowedCallersResultV2():list() / client:CallRoutesListAllowedCallersResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesListAllowedCallersResultV2(data)
-  local EntityMod = require("entity.call_routes_list_allowed_callers_result_v2_entity")
-  if data == nil then
-    if self._call_routes_list_allowed_callers_result_v2 == nil then
-      self._call_routes_list_allowed_callers_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._call_routes_list_allowed_callers_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:CallRoutesListOptionsResultV2():list() / client:CallRoutesListOptionsResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesListOptionsResultV2(data)
-  local EntityMod = require("entity.call_routes_list_options_result_v2_entity")
-  if data == nil then
-    if self._call_routes_list_options_result_v2 == nil then
-      self._call_routes_list_options_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._call_routes_list_options_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:CallRoutesShowAllowedCallerResultV2():list() / client:CallRoutesShowAllowedCallerResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesShowAllowedCallerResultV2(data)
-  local EntityMod = require("entity.call_routes_show_allowed_caller_result_v2_entity")
-  if data == nil then
-    if self._call_routes_show_allowed_caller_result_v2 == nil then
-      self._call_routes_show_allowed_caller_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._call_routes_show_allowed_caller_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:CallRoutesShowOptionResultV2():list() / client:CallRoutesShowOptionResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesShowOptionResultV2(data)
-  local EntityMod = require("entity.call_routes_show_option_result_v2_entity")
-  if data == nil then
-    if self._call_routes_show_option_result_v2 == nil then
-      self._call_routes_show_option_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._call_routes_show_option_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:CallRoutesUpdateAllowedCallerResultV2():list() / client:CallRoutesUpdateAllowedCallerResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesUpdateAllowedCallerResultV2(data)
-  local EntityMod = require("entity.call_routes_update_allowed_caller_result_v2_entity")
-  if data == nil then
-    if self._call_routes_update_allowed_caller_result_v2 == nil then
-      self._call_routes_update_allowed_caller_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._call_routes_update_allowed_caller_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:CallRoutesUpdateOptionResultV2():list() / client:CallRoutesUpdateOptionResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesUpdateOptionResultV2(data)
-  local EntityMod = require("entity.call_routes_update_option_result_v2_entity")
-  if data == nil then
-    if self._call_routes_update_option_result_v2 == nil then
-      self._call_routes_update_option_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._call_routes_update_option_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:CallRoutesV2():list() / client:CallRoutesV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:CallRoutesV2(data)
-  local EntityMod = require("entity.call_routes_v2_entity")
-  if data == nil then
-    if self._call_routes_v2 == nil then
-      self._call_routes_v2 = EntityMod.new(self, nil)
-    end
-    return self._call_routes_v2
+    return self._call_route_option
   end
   return EntityMod.new(self, data)
 end
@@ -894,6 +782,20 @@ function IncidentIoSDK:Escalation(data)
       self._escalation = EntityMod.new(self, nil)
     end
     return self._escalation
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:EscalationPath():list() / client:EscalationPath():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:EscalationPath(data)
+  local EntityMod = require("entity.escalation_path_entity")
+  if data == nil then
+    if self._escalation_path == nil then
+      self._escalation_path = EntityMod.new(self, nil)
+    end
+    return self._escalation_path
   end
   return EntityMod.new(self, data)
 end
@@ -1361,127 +1263,29 @@ function IncidentIoSDK:PayConfig(data)
 end
 
 
--- Idiomatic facade: client:PayConfigsCreateOneOffRuleResultV2():list() / client:PayConfigsCreateOneOffRuleResultV2():load({ id = ... })
+-- Idiomatic facade: client:PayConfigOneOffRule():list() / client:PayConfigOneOffRule():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsCreateOneOffRuleResultV2(data)
-  local EntityMod = require("entity.pay_configs_create_one_off_rule_result_v2_entity")
+function IncidentIoSDK:PayConfigOneOffRule(data)
+  local EntityMod = require("entity.pay_config_one_off_rule_entity")
   if data == nil then
-    if self._pay_configs_create_one_off_rule_result_v2 == nil then
-      self._pay_configs_create_one_off_rule_result_v2 = EntityMod.new(self, nil)
+    if self._pay_config_one_off_rule == nil then
+      self._pay_config_one_off_rule = EntityMod.new(self, nil)
     end
-    return self._pay_configs_create_one_off_rule_result_v2
+    return self._pay_config_one_off_rule
   end
   return EntityMod.new(self, data)
 end
 
 
--- Idiomatic facade: client:PayConfigsCreateWeeklyRuleResultV2():list() / client:PayConfigsCreateWeeklyRuleResultV2():load({ id = ... })
+-- Idiomatic facade: client:PayConfigWeeklyRule():list() / client:PayConfigWeeklyRule():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsCreateWeeklyRuleResultV2(data)
-  local EntityMod = require("entity.pay_configs_create_weekly_rule_result_v2_entity")
+function IncidentIoSDK:PayConfigWeeklyRule(data)
+  local EntityMod = require("entity.pay_config_weekly_rule_entity")
   if data == nil then
-    if self._pay_configs_create_weekly_rule_result_v2 == nil then
-      self._pay_configs_create_weekly_rule_result_v2 = EntityMod.new(self, nil)
+    if self._pay_config_weekly_rule == nil then
+      self._pay_config_weekly_rule = EntityMod.new(self, nil)
     end
-    return self._pay_configs_create_weekly_rule_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:PayConfigsListOneOffRulesResultV2():list() / client:PayConfigsListOneOffRulesResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsListOneOffRulesResultV2(data)
-  local EntityMod = require("entity.pay_configs_list_one_off_rules_result_v2_entity")
-  if data == nil then
-    if self._pay_configs_list_one_off_rules_result_v2 == nil then
-      self._pay_configs_list_one_off_rules_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._pay_configs_list_one_off_rules_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:PayConfigsListWeeklyRulesResultV2():list() / client:PayConfigsListWeeklyRulesResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsListWeeklyRulesResultV2(data)
-  local EntityMod = require("entity.pay_configs_list_weekly_rules_result_v2_entity")
-  if data == nil then
-    if self._pay_configs_list_weekly_rules_result_v2 == nil then
-      self._pay_configs_list_weekly_rules_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._pay_configs_list_weekly_rules_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:PayConfigsShowOneOffRuleResultV2():list() / client:PayConfigsShowOneOffRuleResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsShowOneOffRuleResultV2(data)
-  local EntityMod = require("entity.pay_configs_show_one_off_rule_result_v2_entity")
-  if data == nil then
-    if self._pay_configs_show_one_off_rule_result_v2 == nil then
-      self._pay_configs_show_one_off_rule_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._pay_configs_show_one_off_rule_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:PayConfigsShowWeeklyRuleResultV2():list() / client:PayConfigsShowWeeklyRuleResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsShowWeeklyRuleResultV2(data)
-  local EntityMod = require("entity.pay_configs_show_weekly_rule_result_v2_entity")
-  if data == nil then
-    if self._pay_configs_show_weekly_rule_result_v2 == nil then
-      self._pay_configs_show_weekly_rule_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._pay_configs_show_weekly_rule_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:PayConfigsUpdateOneOffRuleResultV2():list() / client:PayConfigsUpdateOneOffRuleResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsUpdateOneOffRuleResultV2(data)
-  local EntityMod = require("entity.pay_configs_update_one_off_rule_result_v2_entity")
-  if data == nil then
-    if self._pay_configs_update_one_off_rule_result_v2 == nil then
-      self._pay_configs_update_one_off_rule_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._pay_configs_update_one_off_rule_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:PayConfigsUpdateWeeklyRuleResultV2():list() / client:PayConfigsUpdateWeeklyRuleResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsUpdateWeeklyRuleResultV2(data)
-  local EntityMod = require("entity.pay_configs_update_weekly_rule_result_v2_entity")
-  if data == nil then
-    if self._pay_configs_update_weekly_rule_result_v2 == nil then
-      self._pay_configs_update_weekly_rule_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._pay_configs_update_weekly_rule_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:PayConfigsV2():list() / client:PayConfigsV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PayConfigsV2(data)
-  local EntityMod = require("entity.pay_configs_v2_entity")
-  if data == nil then
-    if self._pay_configs_v2 == nil then
-      self._pay_configs_v2 = EntityMod.new(self, nil)
-    end
-    return self._pay_configs_v2
+    return self._pay_config_weekly_rule
   end
   return EntityMod.new(self, data)
 end
@@ -1538,20 +1342,6 @@ function IncidentIoSDK:PayReportsV2(data)
       self._pay_reports_v2 = EntityMod.new(self, nil)
     end
     return self._pay_reports_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:PoliciesV2():list() / client:PoliciesV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:PoliciesV2(data)
-  local EntityMod = require("entity.policies_v2_entity")
-  if data == nil then
-    if self._policies_v2 == nil then
-      self._policies_v2 = EntityMod.new(self, nil)
-    end
-    return self._policies_v2
   end
   return EntityMod.new(self, data)
 end
@@ -1669,6 +1459,20 @@ function IncidentIoSDK:ScheduleEntry(data)
 end
 
 
+-- Idiomatic facade: client:ScheduleOverride():list() / client:ScheduleOverride():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:ScheduleOverride(data)
+  local EntityMod = require("entity.schedule_override_entity")
+  if data == nil then
+    if self._schedule_override == nil then
+      self._schedule_override = EntityMod.new(self, nil)
+    end
+    return self._schedule_override
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:ScheduleReplica():list() / client:ScheduleReplica():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:ScheduleReplica(data)
@@ -1706,34 +1510,6 @@ function IncidentIoSDK:ScheduleSyncTarget(data)
       self._schedule_sync_target = EntityMod.new(self, nil)
     end
     return self._schedule_sync_target
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:SchedulesShowOverrideResultV2():list() / client:SchedulesShowOverrideResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:SchedulesShowOverrideResultV2(data)
-  local EntityMod = require("entity.schedules_show_override_result_v2_entity")
-  if data == nil then
-    if self._schedules_show_override_result_v2 == nil then
-      self._schedules_show_override_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._schedules_show_override_result_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
--- Idiomatic facade: client:SchedulesUpdateOverrideResultV2():list() / client:SchedulesUpdateOverrideResultV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:SchedulesUpdateOverrideResultV2(data)
-  local EntityMod = require("entity.schedules_update_override_result_v2_entity")
-  if data == nil then
-    if self._schedules_update_override_result_v2 == nil then
-      self._schedules_update_override_result_v2 = EntityMod.new(self, nil)
-    end
-    return self._schedules_update_override_result_v2
   end
   return EntityMod.new(self, data)
 end
@@ -1795,15 +1571,15 @@ function IncidentIoSDK:StatusPageComponent(data)
 end
 
 
--- Idiomatic facade: client:StatusPageComponentAvailabilityV2():list() / client:StatusPageComponentAvailabilityV2():load({ id = ... })
+-- Idiomatic facade: client:StatusPageComponentAvailability():list() / client:StatusPageComponentAvailability():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:StatusPageComponentAvailabilityV2(data)
-  local EntityMod = require("entity.status_page_component_availability_v2_entity")
+function IncidentIoSDK:StatusPageComponentAvailability(data)
+  local EntityMod = require("entity.status_page_component_availability_entity")
   if data == nil then
-    if self._status_page_component_availability_v2 == nil then
-      self._status_page_component_availability_v2 = EntityMod.new(self, nil)
+    if self._status_page_component_availability == nil then
+      self._status_page_component_availability = EntityMod.new(self, nil)
     end
-    return self._status_page_component_availability_v2
+    return self._status_page_component_availability
   end
   return EntityMod.new(self, data)
 end
@@ -1837,15 +1613,15 @@ function IncidentIoSDK:StatusPageIncidentUpdate(data)
 end
 
 
--- Idiomatic facade: client:StatusPageLinkedResponseIncidentV1():list() / client:StatusPageLinkedResponseIncidentV1():load({ id = ... })
+-- Idiomatic facade: client:StatusPageLinkedResponseIncident():list() / client:StatusPageLinkedResponseIncident():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:StatusPageLinkedResponseIncidentV1(data)
-  local EntityMod = require("entity.status_page_linked_response_incident_v1_entity")
+function IncidentIoSDK:StatusPageLinkedResponseIncident(data)
+  local EntityMod = require("entity.status_page_linked_response_incident_entity")
   if data == nil then
-    if self._status_page_linked_response_incident_v1 == nil then
-      self._status_page_linked_response_incident_v1 = EntityMod.new(self, nil)
+    if self._status_page_linked_response_incident == nil then
+      self._status_page_linked_response_incident = EntityMod.new(self, nil)
     end
-    return self._status_page_linked_response_incident_v1
+    return self._status_page_linked_response_incident
   end
   return EntityMod.new(self, data)
 end
@@ -1893,20 +1669,6 @@ function IncidentIoSDK:StatusPageStructure(data)
 end
 
 
--- Idiomatic facade: client:StatusPagesV2():list() / client:StatusPagesV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:StatusPagesV2(data)
-  local EntityMod = require("entity.status_pages_v2_entity")
-  if data == nil then
-    if self._status_pages_v2 == nil then
-      self._status_pages_v2 = EntityMod.new(self, nil)
-    end
-    return self._status_pages_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
 -- Idiomatic facade: client:Team():list() / client:Team():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:Team(data)
@@ -1921,15 +1683,15 @@ function IncidentIoSDK:Team(data)
 end
 
 
--- Idiomatic facade: client:TelemetryDataSourceV2():list() / client:TelemetryDataSourceV2():load({ id = ... })
+-- Idiomatic facade: client:TelemetryDataSource():list() / client:TelemetryDataSource():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:TelemetryDataSourceV2(data)
-  local EntityMod = require("entity.telemetry_data_source_v2_entity")
+function IncidentIoSDK:TelemetryDataSource(data)
+  local EntityMod = require("entity.telemetry_data_source_entity")
   if data == nil then
-    if self._telemetry_data_source_v2 == nil then
-      self._telemetry_data_source_v2 = EntityMod.new(self, nil)
+    if self._telemetry_data_source == nil then
+      self._telemetry_data_source = EntityMod.new(self, nil)
     end
-    return self._telemetry_data_source_v2
+    return self._telemetry_data_source
   end
   return EntityMod.new(self, data)
 end

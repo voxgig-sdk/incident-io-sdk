@@ -56,6 +56,40 @@ main: kit: flow: BasicScheduleReplicaFlow:
         }
       ]
     }
+
+    {
+      i: {
+        ref: "schedule_replica_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "schedule_replica01",
+        schedule_id: "schedule01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      m: {
+        schedule_id: "schedule01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "schedule_replica_ref01"
+          }
+        }
+      ]
+    }
   ],
   "key$": "BasicScheduleReplicaFlow"
 }

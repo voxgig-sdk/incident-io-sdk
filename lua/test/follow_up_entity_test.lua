@@ -139,7 +139,7 @@ describe("FollowUpEntity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:FollowUp(nil):list({ ["assignee_team_id"] = 1 }, nil)
+    local _, err = client:FollowUp(nil):list({ ["after"] = 1 }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 

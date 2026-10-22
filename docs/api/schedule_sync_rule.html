@@ -15,22 +15,14 @@
 <a href="../api/alert_sources_v2.html">AlertSourcesV2</a>
 <a href="../api/alert_tag.html">AlertTag</a>
 <a href="../api/alerts_add_tags_result_v2.html">AlertsAddTagsResultV2</a>
-<a href="../api/alerts_remove_tags_result_v2.html">AlertsRemoveTagsResultV2</a>
 <a href="../api/alerts_set_tags_result_v2.html">AlertsSetTagsResultV2</a>
 <a href="../api/alerts_transition_incident_alert_result_v2.html">AlertsTransitionIncidentAlertResultV2</a>
 <a href="../api/announcement_rule.html">AnnouncementRule</a>
 <a href="../api/announcement_template.html">AnnouncementTemplate</a>
 <a href="../api/api_key.html">ApiKey</a>
 <a href="../api/call_route.html">CallRoute</a>
-<a href="../api/call_routes_create_allowed_caller_result_v2.html">CallRoutesCreateAllowedCallerResultV2</a>
-<a href="../api/call_routes_create_option_result_v2.html">CallRoutesCreateOptionResultV2</a>
-<a href="../api/call_routes_list_allowed_callers_result_v2.html">CallRoutesListAllowedCallersResultV2</a>
-<a href="../api/call_routes_list_options_result_v2.html">CallRoutesListOptionsResultV2</a>
-<a href="../api/call_routes_show_allowed_caller_result_v2.html">CallRoutesShowAllowedCallerResultV2</a>
-<a href="../api/call_routes_show_option_result_v2.html">CallRoutesShowOptionResultV2</a>
-<a href="../api/call_routes_update_allowed_caller_result_v2.html">CallRoutesUpdateAllowedCallerResultV2</a>
-<a href="../api/call_routes_update_option_result_v2.html">CallRoutesUpdateOptionResultV2</a>
-<a href="../api/call_routes_v2.html">CallRoutesV2</a>
+<a href="../api/call_route_allowed_caller.html">CallRouteAllowedCaller</a>
+<a href="../api/call_route_option.html">CallRouteOption</a>
 <a href="../api/call_session.html">CallSession</a>
 <a href="../api/call_transcript_entry.html">CallTranscriptEntry</a>
 <a href="../api/catalog_entry.html">CatalogEntry</a>
@@ -40,6 +32,7 @@
 <a href="../api/custom_field.html">CustomField</a>
 <a href="../api/custom_field_option.html">CustomFieldOption</a>
 <a href="../api/escalation.html">Escalation</a>
+<a href="../api/escalation_path.html">EscalationPath</a>
 <a href="../api/escalation_path_template.html">EscalationPathTemplate</a>
 <a href="../api/escalations_check_escalation_permissions_result_v2.html">EscalationsCheckEscalationPermissionsResultV2</a>
 <a href="../api/escalations_reassign_escalation_result_v2.html">EscalationsReassignEscalationResultV2</a>
@@ -73,20 +66,12 @@
 <a href="../api/on_call_notification_pause.html">OnCallNotificationPause</a>
 <a href="../api/on_call_notification_rule_public_v2.html">OnCallNotificationRulePublicV2</a>
 <a href="../api/pay_config.html">PayConfig</a>
-<a href="../api/pay_configs_create_one_off_rule_result_v2.html">PayConfigsCreateOneOffRuleResultV2</a>
-<a href="../api/pay_configs_create_weekly_rule_result_v2.html">PayConfigsCreateWeeklyRuleResultV2</a>
-<a href="../api/pay_configs_list_one_off_rules_result_v2.html">PayConfigsListOneOffRulesResultV2</a>
-<a href="../api/pay_configs_list_weekly_rules_result_v2.html">PayConfigsListWeeklyRulesResultV2</a>
-<a href="../api/pay_configs_show_one_off_rule_result_v2.html">PayConfigsShowOneOffRuleResultV2</a>
-<a href="../api/pay_configs_show_weekly_rule_result_v2.html">PayConfigsShowWeeklyRuleResultV2</a>
-<a href="../api/pay_configs_update_one_off_rule_result_v2.html">PayConfigsUpdateOneOffRuleResultV2</a>
-<a href="../api/pay_configs_update_weekly_rule_result_v2.html">PayConfigsUpdateWeeklyRuleResultV2</a>
-<a href="../api/pay_configs_v2.html">PayConfigsV2</a>
+<a href="../api/pay_config_one_off_rule.html">PayConfigOneOffRule</a>
+<a href="../api/pay_config_weekly_rule.html">PayConfigWeeklyRule</a>
 <a href="../api/pay_report.html">PayReport</a>
 <a href="../api/pay_reports_publish_result_v2.html">PayReportsPublishResultV2</a>
 <a href="../api/pay_reports_unpublish_result_v2.html">PayReportsUnpublishResultV2</a>
 <a href="../api/pay_reports_v2.html">PayReportsV2</a>
-<a href="../api/policies_v2.html">PoliciesV2</a>
 <a href="../api/policy.html">Policy</a>
 <a href="../api/policy_finding.html">PolicyFinding</a>
 <a href="../api/policy_findings_dismiss_result_v2.html">PolicyFindingsDismissResultV2</a>
@@ -95,28 +80,27 @@
 <a href="../api/schedule.html">Schedule</a>
 <a href="../api/schedule_entries_list_payload_v2.html">ScheduleEntriesListPayloadV2</a>
 <a href="../api/schedule_entry.html">ScheduleEntry</a>
+<a href="../api/schedule_override.html">ScheduleOverride</a>
 <a href="../api/schedule_replica.html">ScheduleReplica</a>
 <a aria-current="page" href="../api/schedule_sync_rule.html">ScheduleSyncRule</a><div class="nav-sections"><a class="nav-section" href="#post-v2schedulesschedule_idsync_rules">POST /v2/schedules/{schedule_id}/sync_rules</a>
 <a class="nav-section" href="#get-v2schedulesschedule_idsync_rules">GET /v2/schedules/{schedule_id}/sync_rules</a>
 <a class="nav-section" href="#get-v2schedulesschedule_idsync_rulesid">GET /v2/schedules/{schedule_id}/sync_rules/{id}</a>
+<a class="nav-section" href="#delete-v2schedulesschedule_idsync_rulesid">DELETE /v2/schedules/{schedule_id}/sync_rules/{id}</a>
 <a class="nav-section" href="#put-v2schedulesschedule_idsync_rulesid">PUT /v2/schedules/{schedule_id}/sync_rules/{id}</a></div>
 <a href="../api/schedule_sync_target.html">ScheduleSyncTarget</a>
-<a href="../api/schedules_show_override_result_v2.html">SchedulesShowOverrideResultV2</a>
-<a href="../api/schedules_update_override_result_v2.html">SchedulesUpdateOverrideResultV2</a>
 <a href="../api/secret.html">Secret</a>
 <a href="../api/severity.html">Severity</a>
 <a href="../api/status_page.html">StatusPage</a>
 <a href="../api/status_page_component.html">StatusPageComponent</a>
-<a href="../api/status_page_component_availability_v2.html">StatusPageComponentAvailabilityV2</a>
+<a href="../api/status_page_component_availability.html">StatusPageComponentAvailability</a>
 <a href="../api/status_page_incident.html">StatusPageIncident</a>
 <a href="../api/status_page_incident_update.html">StatusPageIncidentUpdate</a>
-<a href="../api/status_page_linked_response_incident_v1.html">StatusPageLinkedResponseIncidentV1</a>
+<a href="../api/status_page_linked_response_incident.html">StatusPageLinkedResponseIncident</a>
 <a href="../api/status_page_maintenance.html">StatusPageMaintenance</a>
 <a href="../api/status_page_maintenance_update.html">StatusPageMaintenanceUpdate</a>
 <a href="../api/status_page_structure.html">StatusPageStructure</a>
-<a href="../api/status_pages_v2.html">StatusPagesV2</a>
 <a href="../api/team.html">Team</a>
-<a href="../api/telemetry_data_source_v2.html">TelemetryDataSourceV2</a>
+<a href="../api/telemetry_data_source.html">TelemetryDataSource</a>
 <a href="../api/user.html">User</a>
 <a href="../api/workflow.html">Workflow</a>
 <a href="../api/workflow_run.html">WorkflowRun</a></details>
@@ -172,6 +156,12 @@
 <td>OK response</td>
 </tr>
 <tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-v2schedulesschedule_idsync_rulesid"><code>/v2/schedules/{schedule_id}/sync_rules/{id}</code></a></td>
+<td><code>remove</code></td>
+<td>No Content response</td>
+</tr>
+<tr>
 <td><code>PUT</code></td>
 <td><a href="#put-v2schedulesschedule_idsync_rulesid"><code>/v2/schedules/{schedule_id}/sync_rules/{id}</code></a></td>
 <td><code>update</code></td>
@@ -203,6 +193,11 @@ if err != nil {
     panic(err)
 }
 fmt.Println(updated)
+removed, err := client.ScheduleSyncRule(nil).Remove(map[string]any{&quot;id&quot;: &quot;example_id&quot;, &quot;schedule_id&quot;: &quot;example&quot;}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(removed)
 </code></pre>
 <h3 id="lua">Lua</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/lua.html#set-up-the-client">Lua setup</a>, then call the operations:</p>
@@ -210,6 +205,7 @@ fmt.Println(updated)
 local schedule_sync_rule, err = client:ScheduleSyncRule():load({ id = &quot;example_id&quot;, schedule_id = &quot;example&quot; })
 local created, err = client:ScheduleSyncRule():create({ id = &quot;example&quot;, schedule_sync_target_id = &quot;example&quot;, sync_type = &quot;example&quot; })
 local updated, err = client:ScheduleSyncRule():update({ id = &quot;example_id&quot;, schedule_id = &quot;example&quot;, annotations = {} })
+local removed, err = client:ScheduleSyncRule():remove({ id = &quot;example_id&quot;, schedule_id = &quot;example&quot; })
 </code></pre>
 <h3 id="php">PHP</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/php.html#set-up-the-client">PHP setup</a>, then call the operations:</p>
@@ -217,6 +213,7 @@ local updated, err = client:ScheduleSyncRule():update({ id = &quot;example_id&qu
 $schedule_sync_rule = $client-&gt;ScheduleSyncRule()-&gt;load([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;schedule_id&quot; =&gt; &quot;example&quot;]);
 $created = $client-&gt;ScheduleSyncRule()-&gt;create([&quot;id&quot; =&gt; &quot;example&quot;, &quot;schedule_sync_target_id&quot; =&gt; &quot;example&quot;, &quot;sync_type&quot; =&gt; &quot;example&quot;]);
 $updated = $client-&gt;ScheduleSyncRule()-&gt;update([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;schedule_id&quot; =&gt; &quot;example&quot;, &quot;annotations&quot; =&gt; []]);
+$client-&gt;ScheduleSyncRule()-&gt;remove([&quot;id&quot; =&gt; &quot;example_id&quot;, &quot;schedule_id&quot; =&gt; &quot;example&quot;]);
 </code></pre>
 <h3 id="python">Python</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/py.html#set-up-the-client">Python setup</a>, then call the operations:</p>
@@ -224,6 +221,7 @@ $updated = $client-&gt;ScheduleSyncRule()-&gt;update([&quot;id&quot; =&gt; &quot
 schedule_sync_rule = client.ScheduleSyncRule().load({&quot;id&quot;: &quot;example_id&quot;, &quot;schedule_id&quot;: &quot;example&quot;})
 created = client.ScheduleSyncRule().create({ &quot;id&quot;: &quot;example&quot;, &quot;schedule_sync_target_id&quot;: &quot;example&quot;, &quot;sync_type&quot;: &quot;example&quot; })
 updated = client.ScheduleSyncRule().update({&quot;id&quot;: &quot;example_id&quot;, &quot;schedule_id&quot;: &quot;example&quot;, &quot;annotations&quot;: {}})
+client.ScheduleSyncRule().remove({&quot;id&quot;: &quot;example_id&quot;, &quot;schedule_id&quot;: &quot;example&quot;})
 </code></pre>
 <h3 id="ruby">Ruby</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/rb.html#set-up-the-client">Ruby setup</a>, then call the operations:</p>
@@ -231,6 +229,7 @@ updated = client.ScheduleSyncRule().update({&quot;id&quot;: &quot;example_id&quo
 schedule_sync_rule = client.ScheduleSyncRule.load({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;schedule_id&quot; =&gt; &quot;example&quot; })
 created = client.ScheduleSyncRule.create({ &quot;id&quot; =&gt; &quot;example&quot;, &quot;schedule_sync_target_id&quot; =&gt; &quot;example&quot;, &quot;sync_type&quot; =&gt; &quot;example&quot; })
 updated = client.ScheduleSyncRule.update({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;schedule_id&quot; =&gt; &quot;example&quot;, &quot;annotations&quot; =&gt; {} })
+client.ScheduleSyncRule.remove({ &quot;id&quot; =&gt; &quot;example_id&quot;, &quot;schedule_id&quot; =&gt; &quot;example&quot; })
 </code></pre>
 <h3 id="typescript">TypeScript</h3>
 <p>Construct <code>client</code> as shown in the <a href="../sdks/ts.html#set-up-the-client">TypeScript setup</a>, then call the operations:</p>
@@ -238,6 +237,7 @@ updated = client.ScheduleSyncRule.update({ &quot;id&quot; =&gt; &quot;example_id
 const schedule_sync_rule = await client.ScheduleSyncRule().load({ id: &quot;example_id&quot;, schedule_id: &quot;example&quot; })
 const created = await client.ScheduleSyncRule().create({ id: &quot;example&quot;, schedule_sync_target_id: &quot;example&quot;, sync_type: &quot;example&quot; })
 const updated = await client.ScheduleSyncRule().update({ id: &quot;example_id&quot;, schedule_id: &quot;example&quot;, annotations: {} })
+await client.ScheduleSyncRule().remove({ id: &quot;example_id&quot;, schedule_id: &quot;example&quot; })
 </code></pre>
 <h2 id="fields">Fields</h2>
 <table>
@@ -5759,9 +5759,9 @@ const updated = await client.ScheduleSyncRule().update({ id: &quot;example_id&qu
 </tr>
 </tbody>
 </table>
-<h2 id="update">update</h2>
-<h3 id="put-v2schedulesschedule_idsync_rulesid" class="operation" data-method="put"><code>PUT</code> /v2/schedules/{schedule_id}/sync_rules/{id}</h3>
-<p>Operation ID: <code>Schedules V2#UpdateScheduleSyncRule</code>.</p>
+<h2 id="remove">remove</h2>
+<h3 id="delete-v2schedulesschedule_idsync_rulesid" class="operation" data-method="delete"><code>DELETE</code> /v2/schedules/{schedule_id}/sync_rules/{id}</h3>
+<p>Operation ID: <code>Schedules V2#DestroyScheduleSyncRule</code>.</p>
 <p>Authentication: bearer token (<code>BearerAuth</code>).</p>
 <h4 id="parameters-3">Parameters</h4>
 <table>
@@ -5787,221 +5787,12 @@ const updated = await client.ScheduleSyncRule().update({ id: &quot;example_id&qu
 <td><code>path</code></td>
 <td><code>string</code></td>
 <td>Yes</td>
-<td>The sync rule ID</td>
+<td>The sync rule ID to archive</td>
 </tr>
 </tbody>
 </table>
-<h4 id="request-body-1">Request body</h4>
-<p><code>application/json</code></p>
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>annotations</code></td>
-<td><code>object</code></td>
-<td>No</td>
-<td>Annotations that track metadata about this resource</td>
-</tr>
-<tr>
-<td><code>permanent_member_user_ids</code></td>
-<td><code>array of string</code></td>
-<td>No</td>
-<td>IDs of users to always keep in the Slack user group, regardless of who is on call. Each must be an active user in your organisation. Replaces the rule's current permanent members: pass an empty array to remove them all, or omit the field to leave them unchanged.</td>
-</tr>
-<tr>
-<td><code>sync_type</code></td>
-<td><code>enum: on_call, all_users, next_on_call</code></td>
-<td>Yes</td>
-<td>Which schedule members sync to the user group</td>
-</tr>
-</tbody>
-</table>
-<p>Example request body:</p>
-<pre><code class="language-json">{
-  &quot;annotations&quot;: {
-    &quot;incident.io/terraform/version&quot;: &quot;3.0.0&quot;
-  },
-  &quot;permanent_member_user_ids&quot;: [
-    &quot;01G0J1EXE7AXZ2C93K61WBPYEH&quot;
-  ],
-  &quot;sync_type&quot;: &quot;on_call&quot;
-}
-</code></pre>
 <h4 id="responses-3">Responses</h4>
-<h5 id="200-ok-response-2" class="status" data-status="2xx">200: OK response</h5>
-<p><code>application/json</code></p>
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>schedule_sync_rule</code></td>
-<td><code>object</code></td>
-<td>Yes</td>
-<td>A sync rule links a schedule to a sync target, telling us which of the schedule's members should flow into the target's Slack user group. <code>sync_type</code> decides who is synced: <code>on_call</code> syncs only the people currently on call, <code>next_on_call</code> syncs the people on the next upcoming shift, and <code>all_users</code> syncs everyone on the schedule. By default every rotation on the schedule is included; set <code>rotation_id</code> to scope the rule to a single rotation. As the schedule's shifts change hands, we keep the target's Slack user group membership in step with the rule. A user group's members are the union of every rule feeding it, so one schedule can have several rules for the same target as long as they differ on <code>rotation_id</code> or <code>sync_type</code>. Point an <code>on_call</code> and a <code>next_on_call</code> rule at one group and it holds both the current and the next on-call. <code>permanent_member_user_ids</code> names users who stay in the group whichever way the shifts fall, on top of whoever <code>sync_type</code> selects.</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.created_at</code></td>
-<td><code>string (date-time)</code></td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.id</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Unique identifier of the sync rule</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.permanent_member_user_ids</code></td>
-<td><code>array of string</code></td>
-<td>Yes</td>
-<td>IDs of users always kept in the Slack user group, regardless of who is on call. Useful for keeping for example a manager in the group so they see mentions without being paged. Scoped to this rule: when several rules feed the same group, we sync the union of their permanent members.</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.rotation_id</code></td>
-<td><code>string</code></td>
-<td>No</td>
-<td>If set, only members of this rotation sync to the user group. When unset, all rotations on the schedule are synced.</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_id</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>The schedule this rule belongs to</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target</code></td>
-<td><code>object</code></td>
-<td>Yes</td>
-<td>A sync target is the link between incident.io and a single Slack user group, used to keep that group's membership in step with who is currently on call. A target identifies the group by its Slack user group ID and Slack team ID, and remembers whether the incident.io bot should be added to the group so it can manage membership. On its own a target does nothing: you link it to a schedule by creating a schedule sync rule (see the Schedules service), and that rule decides which schedule members flow into the group. As the schedule's shifts change hands, we update the Slack user group to match. A single target can be referenced by sync rules on several schedules at once; <code>linked_schedules</code> lists every schedule with an active rule pointing at it.</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.add_bot_to_group</code></td>
-<td><code>boolean</code></td>
-<td>Yes</td>
-<td>Whether the incident.io bot should be added to the group as a member. This is needed for some Slack configurations to let us manage the group's membership.</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.created_at</code></td>
-<td><code>string (date-time)</code></td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.id</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Unique identifier of the sync target</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.linked_schedules</code></td>
-<td><code>array of object</code></td>
-<td>Yes</td>
-<td>Schedules with an active sync rule pointing at this target</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.linked_schedules[].id</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Unique internal ID of the schedule</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.linked_schedules[].name</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Human readable name of the schedule</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.linked_schedules[].team_ids</code></td>
-<td><code>array of string</code></td>
-<td>Yes</td>
-<td>IDs of teams that own this schedule</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.slack_team_id</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Slack team (workspace) ID the user group lives in. On Enterprise Grid this identifies which workspace within the org the group belongs to.</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.slack_user_group_id</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>Slack ID of the user group whose membership is kept in sync. This is the Slack-assigned group ID (starting with 'S'), not the @-handle.</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target.updated_at</code></td>
-<td><code>string (date-time)</code></td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.schedule_sync_target_id</code></td>
-<td><code>string</code></td>
-<td>Yes</td>
-<td>The sync target ID this rule links to</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.sync_type</code></td>
-<td><code>enum: on_call, all_users, next_on_call</code></td>
-<td>Yes</td>
-<td>Which schedule members sync to the user group</td>
-</tr>
-<tr>
-<td><code>schedule_sync_rule.updated_at</code></td>
-<td><code>string (date-time)</code></td>
-<td>Yes</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Example response:</p>
-<pre><code class="language-json">{
-  &quot;schedule_sync_rule&quot;: {
-    &quot;created_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;,
-    &quot;id&quot;: &quot;01JXYZ000000000000000000CD&quot;,
-    &quot;permanent_member_user_ids&quot;: [
-      &quot;01G0J1EXE7AXZ2C93K61WBPYEH&quot;
-    ],
-    &quot;rotation_id&quot;: &quot;01JXYZ000000000000000000RT&quot;,
-    &quot;schedule_id&quot;: &quot;01JXYZ000000000000000000EF&quot;,
-    &quot;schedule_sync_target&quot;: {
-      &quot;add_bot_to_group&quot;: true,
-      &quot;created_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;,
-      &quot;id&quot;: &quot;01JXYZ000000000000000000AB&quot;,
-      &quot;linked_schedules&quot;: [
-        {
-          &quot;id&quot;: &quot;01G0J1EXE7AXZ2C93K61WBPYEH&quot;,
-          &quot;name&quot;: &quot;Primary On-Call Schedule&quot;,
-          &quot;team_ids&quot;: [
-            &quot;01JPQA75EPNEES4479P16P4XAB&quot;
-          ]
-        }
-      ],
-      &quot;slack_team_id&quot;: &quot;T02A1AZHG3J&quot;,
-      &quot;slack_user_group_id&quot;: &quot;S06MNNU5BMK&quot;,
-      &quot;updated_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;
-    },
-    &quot;schedule_sync_target_id&quot;: &quot;01JXYZ000000000000000000AB&quot;,
-    &quot;sync_type&quot;: &quot;on_call&quot;,
-    &quot;updated_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;
-  }
-}
-</code></pre>
+<h5 id="204-no-content-response" class="status" data-status="2xx">204: No Content response</h5>
 <h5 id="400-invalid_request_error-there-was-a-problem-with-the-request-like-a-missing-header-or-querying-a-resource-that-doesn39t-exist-3" class="status" data-status="4xx">400: <code>invalid_request_error</code>: There was a problem with the request, like a missing header or querying a resource that doesn't exist</h5>
 <p><code>application/json</code></p>
 <table>
@@ -7467,6 +7258,1835 @@ const updated = await client.ScheduleSyncRule().update({ id: &quot;example_id&qu
 </tbody>
 </table>
 <h5 id="500-api_error-something-went-wrong-and-has-been-reported-internally-3" class="status" data-status="5xx">500: <code>api_error</code>: Something went wrong and has been reported internally</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h2 id="update">update</h2>
+<h3 id="put-v2schedulesschedule_idsync_rulesid" class="operation" data-method="put"><code>PUT</code> /v2/schedules/{schedule_id}/sync_rules/{id}</h3>
+<p>Operation ID: <code>Schedules V2#UpdateScheduleSyncRule</code>.</p>
+<p>Authentication: bearer token (<code>BearerAuth</code>).</p>
+<h4 id="parameters-4">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schedule_id</code></td>
+<td><code>path</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The parent schedule ID</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>path</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The sync rule ID</td>
+</tr>
+</tbody>
+</table>
+<h4 id="request-body-1">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>annotations</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Annotations that track metadata about this resource</td>
+</tr>
+<tr>
+<td><code>permanent_member_user_ids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>IDs of users to always keep in the Slack user group, regardless of who is on call. Each must be an active user in your organisation. Replaces the rule's current permanent members: pass an empty array to remove them all, or omit the field to leave them unchanged.</td>
+</tr>
+<tr>
+<td><code>sync_type</code></td>
+<td><code>enum: on_call, all_users, next_on_call</code></td>
+<td>Yes</td>
+<td>Which schedule members sync to the user group</td>
+</tr>
+</tbody>
+</table>
+<p>Example request body:</p>
+<pre><code class="language-json">{
+  &quot;annotations&quot;: {
+    &quot;incident.io/terraform/version&quot;: &quot;3.0.0&quot;
+  },
+  &quot;permanent_member_user_ids&quot;: [
+    &quot;01G0J1EXE7AXZ2C93K61WBPYEH&quot;
+  ],
+  &quot;sync_type&quot;: &quot;on_call&quot;
+}
+</code></pre>
+<h4 id="responses-4">Responses</h4>
+<h5 id="200-ok-response-2" class="status" data-status="2xx">200: OK response</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schedule_sync_rule</code></td>
+<td><code>object</code></td>
+<td>Yes</td>
+<td>A sync rule links a schedule to a sync target, telling us which of the schedule's members should flow into the target's Slack user group. <code>sync_type</code> decides who is synced: <code>on_call</code> syncs only the people currently on call, <code>next_on_call</code> syncs the people on the next upcoming shift, and <code>all_users</code> syncs everyone on the schedule. By default every rotation on the schedule is included; set <code>rotation_id</code> to scope the rule to a single rotation. As the schedule's shifts change hands, we keep the target's Slack user group membership in step with the rule. A user group's members are the union of every rule feeding it, so one schedule can have several rules for the same target as long as they differ on <code>rotation_id</code> or <code>sync_type</code>. Point an <code>on_call</code> and a <code>next_on_call</code> rule at one group and it holds both the current and the next on-call. <code>permanent_member_user_ids</code> names users who stay in the group whichever way the shifts fall, on top of whoever <code>sync_type</code> selects.</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the sync rule</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.permanent_member_user_ids</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>IDs of users always kept in the Slack user group, regardless of who is on call. Useful for keeping for example a manager in the group so they see mentions without being paged. Scoped to this rule: when several rules feed the same group, we sync the union of their permanent members.</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.rotation_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>If set, only members of this rotation sync to the user group. When unset, all rotations on the schedule are synced.</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The schedule this rule belongs to</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target</code></td>
+<td><code>object</code></td>
+<td>Yes</td>
+<td>A sync target is the link between incident.io and a single Slack user group, used to keep that group's membership in step with who is currently on call. A target identifies the group by its Slack user group ID and Slack team ID, and remembers whether the incident.io bot should be added to the group so it can manage membership. On its own a target does nothing: you link it to a schedule by creating a schedule sync rule (see the Schedules service), and that rule decides which schedule members flow into the group. As the schedule's shifts change hands, we update the Slack user group to match. A single target can be referenced by sync rules on several schedules at once; <code>linked_schedules</code> lists every schedule with an active rule pointing at it.</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.add_bot_to_group</code></td>
+<td><code>boolean</code></td>
+<td>Yes</td>
+<td>Whether the incident.io bot should be added to the group as a member. This is needed for some Slack configurations to let us manage the group's membership.</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.created_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the sync target</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.linked_schedules</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>Schedules with an active sync rule pointing at this target</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.linked_schedules[].id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique internal ID of the schedule</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.linked_schedules[].name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable name of the schedule</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.linked_schedules[].team_ids</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>IDs of teams that own this schedule</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.slack_team_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Slack team (workspace) ID the user group lives in. On Enterprise Grid this identifies which workspace within the org the group belongs to.</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.slack_user_group_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Slack ID of the user group whose membership is kept in sync. This is the Slack-assigned group ID (starting with 'S'), not the @-handle.</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target.updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.schedule_sync_target_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The sync target ID this rule links to</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.sync_type</code></td>
+<td><code>enum: on_call, all_users, next_on_call</code></td>
+<td>Yes</td>
+<td>Which schedule members sync to the user group</td>
+</tr>
+<tr>
+<td><code>schedule_sync_rule.updated_at</code></td>
+<td><code>string (date-time)</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Example response:</p>
+<pre><code class="language-json">{
+  &quot;schedule_sync_rule&quot;: {
+    &quot;created_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;,
+    &quot;id&quot;: &quot;01JXYZ000000000000000000CD&quot;,
+    &quot;permanent_member_user_ids&quot;: [
+      &quot;01G0J1EXE7AXZ2C93K61WBPYEH&quot;
+    ],
+    &quot;rotation_id&quot;: &quot;01JXYZ000000000000000000RT&quot;,
+    &quot;schedule_id&quot;: &quot;01JXYZ000000000000000000EF&quot;,
+    &quot;schedule_sync_target&quot;: {
+      &quot;add_bot_to_group&quot;: true,
+      &quot;created_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;,
+      &quot;id&quot;: &quot;01JXYZ000000000000000000AB&quot;,
+      &quot;linked_schedules&quot;: [
+        {
+          &quot;id&quot;: &quot;01G0J1EXE7AXZ2C93K61WBPYEH&quot;,
+          &quot;name&quot;: &quot;Primary On-Call Schedule&quot;,
+          &quot;team_ids&quot;: [
+            &quot;01JPQA75EPNEES4479P16P4XAB&quot;
+          ]
+        }
+      ],
+      &quot;slack_team_id&quot;: &quot;T02A1AZHG3J&quot;,
+      &quot;slack_user_group_id&quot;: &quot;S06MNNU5BMK&quot;,
+      &quot;updated_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;
+    },
+    &quot;schedule_sync_target_id&quot;: &quot;01JXYZ000000000000000000AB&quot;,
+    &quot;sync_type&quot;: &quot;on_call&quot;,
+    &quot;updated_at&quot;: &quot;2021-08-17T13:28:57.801578Z&quot;
+  }
+}
+</code></pre>
+<h5 id="400-invalid_request_error-there-was-a-problem-with-the-request-like-a-missing-header-or-querying-a-resource-that-doesn39t-exist-4" class="status" data-status="4xx">400: <code>invalid_request_error</code>: There was a problem with the request, like a missing header or querying a resource that doesn't exist</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="401-authentication_error-authentication-failed-4" class="status" data-status="4xx">401: <code>authentication_error</code>: Authentication failed</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="403-resource_forbidden-access-to-this-resource-is-forbidden-for-the-authenticated-user-4" class="status" data-status="4xx">403: <code>resource_forbidden</code>: Access to this resource is forbidden for the authenticated user</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="404-not_found-the-referenced-resource-could-not-be-found-4" class="status" data-status="4xx">404: <code>not_found</code>: The referenced resource could not be found</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="405-method_not_allowed-the-endpoint-does-not-support-this-operation-for-the-specified-resource-4" class="status" data-status="4xx">405: <code>method_not_allowed</code>: The endpoint does not support this operation for the specified resource</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="406-not_acceptable-requested-a-media-type-this-endpoint-does-not-support-4" class="status" data-status="4xx">406: <code>not_acceptable</code>: Requested a media type this endpoint does not support</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="408-request_timeout-the-request-took-too-long-to-process-client_timeout-the-request-was-cancelled-by-the-client-4" class="status" data-status="4xx">408: <code>request_timeout</code>: The request took too long to process. <code>client_timeout</code>: The request was cancelled by the client</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="409-conflict-request-conflicted-with-current-state-of-the-resource-likely-a-concurrent-update-4" class="status" data-status="4xx">409: conflict: Request conflicted with current state of the resource, likely a concurrent update</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="412-precondition_failed-a-required-condition-hasn39t-been-met-4" class="status" data-status="4xx">412: <code>precondition_failed</code>: A required condition hasn't been met</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="413-payload_too_large-the-request-payload-is-too-large-4" class="status" data-status="4xx">413: <code>payload_too_large</code>: The request payload is too large</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="422-validation_error-a-required-field-was-not-provided-or-the-provided-data-was-invalid-4" class="status" data-status="4xx">422: <code>validation_error</code>: A required field was not provided, or the provided data was invalid</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="429-too_many_requests-too-many-requests-hit-the-api-too-quickly-we-recommend-an-exponential-backoff-of-your-requests-rate_limit_reached-the-rate-limit-associated-with-this-resource-or-api-key-has-been-exceeded-try-again-later-4" class="status" data-status="4xx">429: <code>too_many_requests</code>: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests. <code>rate_limit_reached</code>: The rate limit associated with this resource or API key has been exceeded. Try again later</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>debug.message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Original internal error message</td>
+</tr>
+<tr>
+<td><code>debug.stacktrace</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Stacktrace of the error, if applicable</td>
+</tr>
+<tr>
+<td><code>errors</code></td>
+<td><code>array of object</code></td>
+<td>Yes</td>
+<td>List of errors that caused this request to fail</td>
+</tr>
+<tr>
+<td><code>errors[].code</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for this specific error</td>
+</tr>
+<tr>
+<td><code>errors[].message</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Human readable description of the error</td>
+</tr>
+<tr>
+<td><code>errors[].metadata</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Additional metadata about the error, keyed by a string identifier</td>
+</tr>
+<tr>
+<td><code>errors[].source</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>errors[].source.field</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Field name that is the source of the error</td>
+</tr>
+<tr>
+<td><code>errors[].source.pointer</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>JSON pointer to the request field that is the source of the error</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limit.limit</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The maximum number of requests that the consumer is permitted to make per minute</td>
+</tr>
+<tr>
+<td><code>rate_limit.name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Which rate limit was exceeded</td>
+</tr>
+<tr>
+<td><code>rate_limit.remaining</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>The number of requests remaining in the current rate limit window</td>
+</tr>
+<tr>
+<td><code>rate_limit.retry_after</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>When the client can retry, as an RFC3339 timestamp in UTC. Prefer the Retry-After response header, which carries the same instant as a number of seconds</td>
+</tr>
+<tr>
+<td><code>request_id</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the request</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>integer (int64)</code></td>
+<td>Yes</td>
+<td>HTTP status of the response</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: invalid_request_error, authentication_error, resource_forbidden, not_found, not_acceptable, method_not_allowed, ...</code></td>
+<td>Yes</td>
+<td>Machine-readable identifier for the general category of error</td>
+</tr>
+</tbody>
+</table>
+<h5 id="500-api_error-something-went-wrong-and-has-been-reported-internally-4" class="status" data-status="5xx">500: <code>api_error</code>: Something went wrong and has been reported internally</h5>
 <p><code>application/json</code></p>
 <table>
 <thead>

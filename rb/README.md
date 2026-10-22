@@ -56,15 +56,15 @@ rescue => err
 end
 ```
 
-### 3. Load a callroutesshowallowedcallerresultv2
+### 3. Load a callrouteallowedcaller
 
-CallRoutesShowAllowedCallerResultV2 is nested under call_route, so provide the `call_route_id`.
+CallRouteAllowedCaller is nested under call_route, so provide the `call_route_id`.
 
 ```ruby
 begin
-  # load returns the ENTITY — call data_get for the CallRoutesShowAllowedCallerResultV2 record (raises on error).
-  callroutesshowallowedcallerresultv2 = client.CallRoutesShowAllowedCallerResultV2.load({ "call_route_id" => "example_call_route_id", "id" => "example_id" })
-  puts callroutesshowallowedcallerresultv2.data_get
+  # load returns the ENTITY — call data_get for the CallRouteAllowedCaller record (raises on error).
+  callrouteallowedcaller = client.CallRouteAllowedCaller.load({ "call_route_id" => "example_call_route_id", "id" => "example_id" })
+  puts callrouteallowedcaller.data_get
 rescue => err
   warn "load failed: #{err}"
 end
@@ -90,7 +90,7 @@ Entity operations raise on failure, so rescue them:
 
 ```ruby
 begin
-  incidentstatuss = client.IncidentStatus.list()
+  escalationpaths = client.EscalationPath.list()
 rescue => err
   warn "list failed: #{err}"
 end
@@ -158,13 +158,13 @@ data via the `entity` option so offline calls resolve without a live server:
 
 ```ruby
 client = IncidentIoSDK.test({
-  "entity" => { "incident_status" => { "test01" => { "id" => "test01" } } },
+  "entity" => { "escalation_path" => { "test01" => { "id" => "test01" } } },
 })
 
-# list returns an Array of IncidentStatus entities, one per mock record (raises on
+# list returns an Array of EscalationPath entities, one per mock record (raises on
 # error); data_get reads each record.
-incidentstatuss = client.IncidentStatus.list()
-incidentstatuss.each { |item| puts item.data_get }
+escalationpaths = client.EscalationPath.list()
+escalationpaths.each { |item| puts item.data_get }
 ```
 
 ### Use a custom fetch function
@@ -251,22 +251,14 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `AlertSourcesV2` | `(data) -> AlertSourcesV2Entity` | Create an AlertSourcesV2 entity instance. |
 | `AlertTag` | `(data) -> AlertTagEntity` | Create an AlertTag entity instance. |
 | `AlertsAddTagsResultV2` | `(data) -> AlertsAddTagsResultV2Entity` | Create an AlertsAddTagsResultV2 entity instance. |
-| `AlertsRemoveTagsResultV2` | `(data) -> AlertsRemoveTagsResultV2Entity` | Create an AlertsRemoveTagsResultV2 entity instance. |
 | `AlertsSetTagsResultV2` | `(data) -> AlertsSetTagsResultV2Entity` | Create an AlertsSetTagsResultV2 entity instance. |
 | `AlertsTransitionIncidentAlertResultV2` | `(data) -> AlertsTransitionIncidentAlertResultV2Entity` | Create an AlertsTransitionIncidentAlertResultV2 entity instance. |
 | `AnnouncementRule` | `(data) -> AnnouncementRuleEntity` | Create an AnnouncementRule entity instance. |
 | `AnnouncementTemplate` | `(data) -> AnnouncementTemplateEntity` | Create an AnnouncementTemplate entity instance. |
 | `ApiKey` | `(data) -> ApiKeyEntity` | Create an ApiKey entity instance. |
 | `CallRoute` | `(data) -> CallRouteEntity` | Create a CallRoute entity instance. |
-| `CallRoutesCreateAllowedCallerResultV2` | `(data) -> CallRoutesCreateAllowedCallerResultV2Entity` | Create a CallRoutesCreateAllowedCallerResultV2 entity instance. |
-| `CallRoutesCreateOptionResultV2` | `(data) -> CallRoutesCreateOptionResultV2Entity` | Create a CallRoutesCreateOptionResultV2 entity instance. |
-| `CallRoutesListAllowedCallersResultV2` | `(data) -> CallRoutesListAllowedCallersResultV2Entity` | Create a CallRoutesListAllowedCallersResultV2 entity instance. |
-| `CallRoutesListOptionsResultV2` | `(data) -> CallRoutesListOptionsResultV2Entity` | Create a CallRoutesListOptionsResultV2 entity instance. |
-| `CallRoutesShowAllowedCallerResultV2` | `(data) -> CallRoutesShowAllowedCallerResultV2Entity` | Create a CallRoutesShowAllowedCallerResultV2 entity instance. |
-| `CallRoutesShowOptionResultV2` | `(data) -> CallRoutesShowOptionResultV2Entity` | Create a CallRoutesShowOptionResultV2 entity instance. |
-| `CallRoutesUpdateAllowedCallerResultV2` | `(data) -> CallRoutesUpdateAllowedCallerResultV2Entity` | Create a CallRoutesUpdateAllowedCallerResultV2 entity instance. |
-| `CallRoutesUpdateOptionResultV2` | `(data) -> CallRoutesUpdateOptionResultV2Entity` | Create a CallRoutesUpdateOptionResultV2 entity instance. |
-| `CallRoutesV2` | `(data) -> CallRoutesV2Entity` | Create a CallRoutesV2 entity instance. |
+| `CallRouteAllowedCaller` | `(data) -> CallRouteAllowedCallerEntity` | Create a CallRouteAllowedCaller entity instance. |
+| `CallRouteOption` | `(data) -> CallRouteOptionEntity` | Create a CallRouteOption entity instance. |
 | `CallSession` | `(data) -> CallSessionEntity` | Create a CallSession entity instance. |
 | `CallTranscriptEntry` | `(data) -> CallTranscriptEntryEntity` | Create a CallTranscriptEntry entity instance. |
 | `CatalogEntry` | `(data) -> CatalogEntryEntity` | Create a CatalogEntry entity instance. |
@@ -276,6 +268,7 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `CustomField` | `(data) -> CustomFieldEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `(data) -> CustomFieldOptionEntity` | Create a CustomFieldOption entity instance. |
 | `Escalation` | `(data) -> EscalationEntity` | Create an Escalation entity instance. |
+| `EscalationPath` | `(data) -> EscalationPathEntity` | Create an EscalationPath entity instance. |
 | `EscalationPathTemplate` | `(data) -> EscalationPathTemplateEntity` | Create an EscalationPathTemplate entity instance. |
 | `EscalationsCheckEscalationPermissionsResultV2` | `(data) -> EscalationsCheckEscalationPermissionsResultV2Entity` | Create an EscalationsCheckEscalationPermissionsResultV2 entity instance. |
 | `EscalationsReassignEscalationResultV2` | `(data) -> EscalationsReassignEscalationResultV2Entity` | Create an EscalationsReassignEscalationResultV2 entity instance. |
@@ -309,20 +302,12 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `OnCallNotificationPause` | `(data) -> OnCallNotificationPauseEntity` | Create an OnCallNotificationPause entity instance. |
 | `OnCallNotificationRulePublicV2` | `(data) -> OnCallNotificationRulePublicV2Entity` | Create an OnCallNotificationRulePublicV2 entity instance. |
 | `PayConfig` | `(data) -> PayConfigEntity` | Create a PayConfig entity instance. |
-| `PayConfigsCreateOneOffRuleResultV2` | `(data) -> PayConfigsCreateOneOffRuleResultV2Entity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
-| `PayConfigsCreateWeeklyRuleResultV2` | `(data) -> PayConfigsCreateWeeklyRuleResultV2Entity` | Create a PayConfigsCreateWeeklyRuleResultV2 entity instance. |
-| `PayConfigsListOneOffRulesResultV2` | `(data) -> PayConfigsListOneOffRulesResultV2Entity` | Create a PayConfigsListOneOffRulesResultV2 entity instance. |
-| `PayConfigsListWeeklyRulesResultV2` | `(data) -> PayConfigsListWeeklyRulesResultV2Entity` | Create a PayConfigsListWeeklyRulesResultV2 entity instance. |
-| `PayConfigsShowOneOffRuleResultV2` | `(data) -> PayConfigsShowOneOffRuleResultV2Entity` | Create a PayConfigsShowOneOffRuleResultV2 entity instance. |
-| `PayConfigsShowWeeklyRuleResultV2` | `(data) -> PayConfigsShowWeeklyRuleResultV2Entity` | Create a PayConfigsShowWeeklyRuleResultV2 entity instance. |
-| `PayConfigsUpdateOneOffRuleResultV2` | `(data) -> PayConfigsUpdateOneOffRuleResultV2Entity` | Create a PayConfigsUpdateOneOffRuleResultV2 entity instance. |
-| `PayConfigsUpdateWeeklyRuleResultV2` | `(data) -> PayConfigsUpdateWeeklyRuleResultV2Entity` | Create a PayConfigsUpdateWeeklyRuleResultV2 entity instance. |
-| `PayConfigsV2` | `(data) -> PayConfigsV2Entity` | Create a PayConfigsV2 entity instance. |
+| `PayConfigOneOffRule` | `(data) -> PayConfigOneOffRuleEntity` | Create a PayConfigOneOffRule entity instance. |
+| `PayConfigWeeklyRule` | `(data) -> PayConfigWeeklyRuleEntity` | Create a PayConfigWeeklyRule entity instance. |
 | `PayReport` | `(data) -> PayReportEntity` | Create a PayReport entity instance. |
 | `PayReportsPublishResultV2` | `(data) -> PayReportsPublishResultV2Entity` | Create a PayReportsPublishResultV2 entity instance. |
 | `PayReportsUnpublishResultV2` | `(data) -> PayReportsUnpublishResultV2Entity` | Create a PayReportsUnpublishResultV2 entity instance. |
 | `PayReportsV2` | `(data) -> PayReportsV2Entity` | Create a PayReportsV2 entity instance. |
-| `PoliciesV2` | `(data) -> PoliciesV2Entity` | Create a PoliciesV2 entity instance. |
 | `Policy` | `(data) -> PolicyEntity` | Create a Policy entity instance. |
 | `PolicyFinding` | `(data) -> PolicyFindingEntity` | Create a PolicyFinding entity instance. |
 | `PolicyFindingsDismissResultV2` | `(data) -> PolicyFindingsDismissResultV2Entity` | Create a PolicyFindingsDismissResultV2 entity instance. |
@@ -331,25 +316,23 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `Schedule` | `(data) -> ScheduleEntity` | Create a Schedule entity instance. |
 | `ScheduleEntriesListPayloadV2` | `(data) -> ScheduleEntriesListPayloadV2Entity` | Create a ScheduleEntriesListPayloadV2 entity instance. |
 | `ScheduleEntry` | `(data) -> ScheduleEntryEntity` | Create a ScheduleEntry entity instance. |
+| `ScheduleOverride` | `(data) -> ScheduleOverrideEntity` | Create a ScheduleOverride entity instance. |
 | `ScheduleReplica` | `(data) -> ScheduleReplicaEntity` | Create a ScheduleReplica entity instance. |
 | `ScheduleSyncRule` | `(data) -> ScheduleSyncRuleEntity` | Create a ScheduleSyncRule entity instance. |
 | `ScheduleSyncTarget` | `(data) -> ScheduleSyncTargetEntity` | Create a ScheduleSyncTarget entity instance. |
-| `SchedulesShowOverrideResultV2` | `(data) -> SchedulesShowOverrideResultV2Entity` | Create a SchedulesShowOverrideResultV2 entity instance. |
-| `SchedulesUpdateOverrideResultV2` | `(data) -> SchedulesUpdateOverrideResultV2Entity` | Create a SchedulesUpdateOverrideResultV2 entity instance. |
 | `Secret` | `(data) -> SecretEntity` | Create a Secret entity instance. |
 | `Severity` | `(data) -> SeverityEntity` | Create a Severity entity instance. |
 | `StatusPage` | `(data) -> StatusPageEntity` | Create a StatusPage entity instance. |
 | `StatusPageComponent` | `(data) -> StatusPageComponentEntity` | Create a StatusPageComponent entity instance. |
-| `StatusPageComponentAvailabilityV2` | `(data) -> StatusPageComponentAvailabilityV2Entity` | Create a StatusPageComponentAvailabilityV2 entity instance. |
+| `StatusPageComponentAvailability` | `(data) -> StatusPageComponentAvailabilityEntity` | Create a StatusPageComponentAvailability entity instance. |
 | `StatusPageIncident` | `(data) -> StatusPageIncidentEntity` | Create a StatusPageIncident entity instance. |
 | `StatusPageIncidentUpdate` | `(data) -> StatusPageIncidentUpdateEntity` | Create a StatusPageIncidentUpdate entity instance. |
-| `StatusPageLinkedResponseIncidentV1` | `(data) -> StatusPageLinkedResponseIncidentV1Entity` | Create a StatusPageLinkedResponseIncidentV1 entity instance. |
+| `StatusPageLinkedResponseIncident` | `(data) -> StatusPageLinkedResponseIncidentEntity` | Create a StatusPageLinkedResponseIncident entity instance. |
 | `StatusPageMaintenance` | `(data) -> StatusPageMaintenanceEntity` | Create a StatusPageMaintenance entity instance. |
 | `StatusPageMaintenanceUpdate` | `(data) -> StatusPageMaintenanceUpdateEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
 | `StatusPageStructure` | `(data) -> StatusPageStructureEntity` | Create a StatusPageStructure entity instance. |
-| `StatusPagesV2` | `(data) -> StatusPagesV2Entity` | Create a StatusPagesV2 entity instance. |
 | `Team` | `(data) -> TeamEntity` | Create a Team entity instance. |
-| `TelemetryDataSourceV2` | `(data) -> TelemetryDataSourceV2Entity` | Create a TelemetryDataSourceV2 entity instance. |
+| `TelemetryDataSource` | `(data) -> TelemetryDataSourceEntity` | Create a TelemetryDataSource entity instance. |
 | `User` | `(data) -> UserEntity` | Create an User entity instance. |
 | `Workflow` | `(data) -> WorkflowEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `(data) -> WorkflowRunEntity` | Create a WorkflowRun entity instance. |
@@ -402,8 +385,6 @@ returns a result `Hash` with these keys:
 | `created_at` | When the action was created |
 | `creator` |  |
 | `description` | Description of the action |
-| `external_issue_reference` |  |
-| `follow_up` | Whether an action is marked as follow-up |
 | `id` | Unique identifier for the action |
 | `incident_id` | Unique identifier of the incident the action belongs to |
 | `status` | Status of the action |
@@ -472,24 +453,21 @@ API path: `/v1/alert_notes`
 
 | Field | Description |
 | --- | --- |
-| `alert_sources` | Which alert sources should this alert route match? |
-| `channel_config` | The channel configuration for this alert route |
-| `condition_groups` | What condition groups must be true for this alert route to fire? |
-| `created_at` | The time of creation of this alert route |
-| `enabled` | Whether this alert route is enabled or not |
+| `alert_sources` | Which alert sources this route matches |
+| `condition_groups` | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | When this alert route was created |
+| `enabled` | Whether this alert route is enabled |
 | `escalation_config` |  |
-| `expressions` | The expressions used in this template |
+| `expressions` | The expressions used by bindings in this route |
 | `grouping_config` |  |
-| `id` | Unique identifier for this alert route config |
+| `id` | Unique identifier for this alert route |
 | `incident_config` |  |
-| `incident_template` |  |
 | `is_private` | Whether this alert route is private. |
 | `message_config` |  |
-| `message_template` |  |
-| `name` | The name of this alert route config, for the user's reference |
+| `name` | The name of this alert route, for the user's reference |
 | `owning_team_ids` | IDs of teams that own this alert route |
-| `updated_at` | The time of last update of this alert route |
-| `version` | The version of this alert route config |
+| `updated_at` | When this alert route was last updated |
+| `version` | The version of this alert route |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -538,12 +516,24 @@ API path: `/v2/alert_sources/actions/validate`
 
 | Field | Description |
 | --- | --- |
-| `id` | Unique identifier for the tag |
+| `alert_group_ids` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | The ID of the alert source this alert fired on |
+| `attributes` | Attribute values parsed from the alerts payload |
+| `created_at` | When this entry was created |
+| `deduplication_key` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | The description of the alert |
+| `id` | The ID of this alert |
 | `name` | The tag name |
+| `resolved_at` | When this alert was resolved |
+| `source_url` | If applicable, a link to the alert in the upstream system |
+| `status` | Statuses of an alert |
+| `tags` | Tags someone has applied to this alert |
+| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | When this alert was last updated |
 
-Operations: List.
+Operations: Create, List.
 
-API path: `/v2/alert_tags`
+API path: `/v2/alerts/{id}/actions/remove_tags`
 
 #### AlertsAddTagsResultV2
 
@@ -566,28 +556,6 @@ API path: `/v2/alert_tags`
 Operations: Create.
 
 API path: `/v2/alerts/{id}/actions/add_tags`
-
-#### AlertsRemoveTagsResultV2
-
-| Field | Description |
-| --- | --- |
-| `alert_group_ids` | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | The ID of the alert source this alert fired on |
-| `attributes` | Attribute values parsed from the alerts payload |
-| `created_at` | When this entry was created |
-| `deduplication_key` | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | The description of the alert |
-| `id` | The ID of this alert |
-| `resolved_at` | When this alert was resolved |
-| `source_url` | If applicable, a link to the alert in the upstream system |
-| `status` | Statuses of an alert |
-| `tags` | Tags someone has applied to this alert |
-| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | When this alert was last updated |
-
-Operations: Create.
-
-API path: `/v2/alerts/{id}/actions/remove_tags`
 
 #### AlertsSetTagsResultV2
 
@@ -709,113 +677,30 @@ Operations: List, Load, Update.
 
 API path: `/v2/call_routes`
 
-#### CallRoutesCreateAllowedCallerResultV2
+#### CallRouteAllowedCaller
 
 | Field | Description |
 | --- | --- |
+| `id` | Unique identifier for this allowed caller |
 | `name` | Label for whose number this is |
-| `phone_number` | The number to allow, in international format |
+| `phone_number` | The number allowed to call this route, in international format |
 
-Operations: Create.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/call_routes/{call_route_id}/allowed_callers`
 
-#### CallRoutesCreateOptionResultV2
+#### CallRouteOption
 
 | Field | Description |
 | --- | --- |
 | `digit` | The keypad digit a caller presses to choose this option |
-| `path` | Who to page when a caller chooses this option |
+| `id` | Unique identifier for this option |
+| `path` | Who we page when a caller chooses this option |
 | `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
 
-Operations: Create.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/call_routes/{call_route_id}/options`
-
-#### CallRoutesListAllowedCallersResultV2
-
-| Field | Description |
-| --- | --- |
-| `id` | Unique identifier for this allowed caller |
-| `name` | Label for whose number this is |
-| `phone_number` | The number allowed to call this route, in international format |
-
-Operations: List.
-
-API path: `/v2/call_routes/{call_route_id}/allowed_callers`
-
-#### CallRoutesListOptionsResultV2
-
-| Field | Description |
-| --- | --- |
-| `digit` | The keypad digit a caller presses to choose this option |
-| `id` | Unique identifier for this option |
-| `path` | Who we page when a caller chooses this option |
-| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-Operations: List.
-
-API path: `/v2/call_routes/{call_route_id}/options`
-
-#### CallRoutesShowAllowedCallerResultV2
-
-| Field | Description |
-| --- | --- |
-| `id` | Unique identifier for this allowed caller |
-| `name` | Label for whose number this is |
-| `phone_number` | The number allowed to call this route, in international format |
-
-Operations: Load.
-
-API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
-
-#### CallRoutesShowOptionResultV2
-
-| Field | Description |
-| --- | --- |
-| `digit` | The keypad digit a caller presses to choose this option |
-| `id` | Unique identifier for this option |
-| `path` | Who we page when a caller chooses this option |
-| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-Operations: Load.
-
-API path: `/v2/call_routes/{call_route_id}/options/{id}`
-
-#### CallRoutesUpdateAllowedCallerResultV2
-
-| Field | Description |
-| --- | --- |
-| `id` | Unique identifier for this allowed caller |
-| `name` | Label for whose number this is |
-| `phone_number` | The number allowed to call this route, in international format |
-
-Operations: Update.
-
-API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
-
-#### CallRoutesUpdateOptionResultV2
-
-| Field | Description |
-| --- | --- |
-| `digit` | The keypad digit a caller presses to choose this option |
-| `id` | Unique identifier for this option |
-| `path` | Who we page when a caller chooses this option |
-| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-Operations: Update.
-
-API path: `/v2/call_routes/{call_route_id}/options/{id}`
-
-#### CallRoutesV2
-
-| Field | Description |
-| --- | --- |
-| `id` |  |
-
-Operations: Remove.
-
-API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
 
 #### CallSession
 
@@ -862,7 +747,7 @@ API path: `/v2/call_transcript_entries`
 | `update_attributes` | If provided, only update these attribute_values keys. |
 | `updated_at` | When this entry was last updated |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/catalog_entries`
 
@@ -904,13 +789,12 @@ API path: `/v2/catalog_resources`
 | `registry_type` | The registry resource this type is synced from, if any |
 | `required_integrations` | If populated, the integrations required for this type |
 | `schema` |  |
-| `semantic_type` | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | The url of the external repository where this type is managed |
 | `type_name` | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | When this type was last updated |
 | `use_name_as_identifier` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/catalog_types`
 
@@ -938,7 +822,6 @@ API path: `/v2/catalog_types`
 | `registry_type` | The registry resource this type is synced from, if any |
 | `required_integrations` | If populated, the integrations required for this type |
 | `schema` |  |
-| `semantic_type` | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | The url of the external repository where this type is managed |
 | `type_name` | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | When this type was last updated |
@@ -963,13 +846,6 @@ API path: `/v2/catalog_types/{id}/actions/update_schema`
 | `helptext_catalog_attribute_id` | Which catalog attribute provides helptext for the options |
 | `id` | Unique identifier for the custom field |
 | `name` | Human readable name for the custom field |
-| `options` | What options are available for this custom field, if this field has options |
-| `required` | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | When the action was last updated |
 
 Operations: Create, List, Load, Remove, Update.
@@ -1012,6 +888,25 @@ API path: `/v1/custom_field_options`
 Operations: Create, List, Load.
 
 API path: `/v2/escalations`
+
+#### EscalationPath
+
+| Field | Description |
+| --- | --- |
+| `current_responders` | Users who are currently on-call for this escalation path |
+| `id` | Unique identifier for this escalation path. |
+| `kind` | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | The name of this escalation path, for the user's reference. |
+| `param_bindings` | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` |  |
+| `team_ids` | IDs of the teams that own this escalation path. |
+| `template_id` | For a templated path, the template it is built from. |
+| `working_hours` | The working hours for this escalation path. |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/escalation_paths`
 
 #### EscalationPathTemplate
 
@@ -1172,12 +1067,8 @@ API path: `/v1/identity`
 | `slack_channel_name_override` | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | URL to link to the slack channel |
 | `slack_team_id` | ID of the Slack team / workspace. |
-| `source_message_channel_id` | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | Timestamp of the source message, if this incident was created from one |
-| `status` | Current status of the incident |
 | `summary` | Detailed description of the incident |
 | `team_ids` | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | Incident lifecycle events and when they last occurred |
 | `updated_at` | When the incident was last updated |
 | `visibility` | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | Amount of time spent on the incident in late hours |
@@ -1288,7 +1179,6 @@ API path: `/v1/incident_relationships`
 | `id` | Unique identifier for the role |
 | `instructions` | Provided to whoever is nominated for the role. |
 | `name` | Human readable name of the incident role |
-| `required` | DEPRECATED: this will always be false. |
 | `role_type` | Type of incident role |
 | `shortform` | Short human readable name for Slack. |
 | `updated_at` | When the role was last updated |
@@ -1564,125 +1454,33 @@ Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/pay_configs`
 
-#### PayConfigsCreateOneOffRuleResultV2
+#### PayConfigOneOffRule
 
 | Field | Description |
 | --- | --- |
 | `end_at` | When this rule stops applying |
+| `id` | Unique identifier for this rule, stable across edits to the config |
 | `name` | Human readable name for this rule |
 | `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | When this rule starts applying |
 
-Operations: Create.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/pay_configs/{pay_config_id}/one_off_rules`
 
-#### PayConfigsCreateWeeklyRuleResultV2
+#### PayConfigWeeklyRule
 
 | Field | Description |
 | --- | --- |
 | `end_time` | Time of day this rule ends, in 24 hour format. |
+| `id` | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | Time of day this rule starts, in 24 hour format |
 | `weekdays` | Days of the week this rule applies on |
 
-Operations: Create.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/pay_configs/{pay_config_id}/weekly_rules`
-
-#### PayConfigsListOneOffRulesResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_at` | When this rule stops applying |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `name` | Human readable name for this rule |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | When this rule starts applying |
-
-Operations: List.
-
-API path: `/v2/pay_configs/{pay_config_id}/one_off_rules`
-
-#### PayConfigsListWeeklyRulesResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_time` | Time of day this rule ends, in 24 hour format. |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | Days of the week this rule applies on |
-
-Operations: List.
-
-API path: `/v2/pay_configs/{pay_config_id}/weekly_rules`
-
-#### PayConfigsShowOneOffRuleResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_at` | When this rule stops applying |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `name` | Human readable name for this rule |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | When this rule starts applying |
-
-Operations: Load.
-
-API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
-
-#### PayConfigsShowWeeklyRuleResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_time` | Time of day this rule ends, in 24 hour format. |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | Days of the week this rule applies on |
-
-Operations: Load.
-
-API path: `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}`
-
-#### PayConfigsUpdateOneOffRuleResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_at` | When this rule stops applying |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `name` | Human readable name for this rule |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | When this rule starts applying |
-
-Operations: Update.
-
-API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
-
-#### PayConfigsUpdateWeeklyRuleResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_time` | Time of day this rule ends, in 24 hour format. |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | Days of the week this rule applies on |
-
-Operations: Update.
-
-API path: `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}`
-
-#### PayConfigsV2
-
-| Field | Description |
-| --- | --- |
-| `id` |  |
-
-Operations: Remove.
-
-API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
 
 #### PayReport
 
@@ -1774,16 +1572,6 @@ Operations: Load.
 
 API path: `/v2/pay_reports/{id}/download`
 
-#### PoliciesV2
-
-| Field | Description |
-| --- | --- |
-| `id` |  |
-
-Operations: Remove.
-
-API path: `/v2/policies/{id}`
-
 #### Policy
 
 | Field | Description |
@@ -1804,7 +1592,7 @@ API path: `/v2/policies/{id}`
 | `status` | Disabled policies stop evaluating but keep their config |
 | `updated_at` |  |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/policies`
 
@@ -1956,6 +1744,24 @@ Operations: Load.
 
 API path: `/v2/schedule_entries`
 
+#### ScheduleOverride
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `end_at` | End of the override |
+| `id` | Unique internal ID of the schedule override |
+| `layer_id` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | The rotation on the schedule that this override applies to |
+| `schedule_id` | The schedule that this override applies to |
+| `start_at` | Start of the override |
+| `updated_at` |  |
+| `user` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedule_overrides`
+
 #### ScheduleReplica
 
 | Field | Description |
@@ -1973,7 +1779,7 @@ API path: `/v2/schedule_entries`
 | `updated_at` | When this schedule replica was last updated |
 | `user_statuses` | The mapping status of each incident.io user in the schedule to their corresponding user in the external provider. |
 
-Operations: Create, List, Load.
+Operations: Create, List, Load, Remove.
 
 API path: `/v2/schedules/{schedule_id}/replicas`
 
@@ -1992,7 +1798,7 @@ API path: `/v2/schedules/{schedule_id}/replicas`
 | `sync_type` | Which schedule members sync to the user group |
 | `updated_at` |  |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/schedules/{schedule_id}/sync_rules`
 
@@ -2013,42 +1819,6 @@ API path: `/v2/schedules/{schedule_id}/sync_rules`
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/schedule_sync_targets`
-
-#### SchedulesShowOverrideResultV2
-
-| Field | Description |
-| --- | --- |
-| `created_at` |  |
-| `end_at` | End of the override |
-| `id` | Unique internal ID of the schedule override |
-| `layer_id` | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | The rotation on the schedule that this override applies to |
-| `schedule_id` | The schedule that this override applies to |
-| `start_at` | Start of the override |
-| `updated_at` |  |
-| `user` |  |
-
-Operations: Create, List, Load.
-
-API path: `/v2/schedule_overrides`
-
-#### SchedulesUpdateOverrideResultV2
-
-| Field | Description |
-| --- | --- |
-| `created_at` |  |
-| `end_at` | End of the override |
-| `id` | Unique internal ID of the schedule override |
-| `layer_id` | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | The rotation on the schedule that this override applies to |
-| `schedule_id` | The schedule that this override applies to |
-| `start_at` | Start of the override |
-| `updated_at` |  |
-| `user` |  |
-
-Operations: Update.
-
-API path: `/v2/schedule_overrides/{id}`
 
 #### Secret
 
@@ -2081,7 +1851,7 @@ API path: `/v2/secrets/{id}/actions/rotate`
 | `rank` | Rank to help sort severities (lower numbers are less severe) |
 | `updated_at` | When the action was last updated |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/severities`
 
@@ -2111,7 +1881,7 @@ Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/status_page_components`
 
-#### StatusPageComponentAvailabilityV2
+#### StatusPageComponentAvailability
 
 | Field | Description |
 | --- | --- |
@@ -2160,7 +1930,7 @@ Operations: Create.
 
 API path: `/v2/status_page_incident_updates`
 
-#### StatusPageLinkedResponseIncidentV1
+#### StatusPageLinkedResponseIncident
 
 | Field | Description |
 | --- | --- |
@@ -2190,7 +1960,7 @@ API path: `/v1/status-pages/{id}/incidents/{incident_id}/response-incidents`
 | `status_page_id` | The ID of the corresponding status page |
 | `updates` | A list of updates posted to this status page maintenance window |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/status_page_maintenances`
 
@@ -2221,15 +1991,6 @@ Operations: Load.
 
 API path: `/v2/status_page_structures/{status_page_id}`
 
-#### StatusPagesV2
-
-| Field | Description |
-| --- | --- |
-
-Operations: Remove.
-
-API path: `/v2/status_page_maintenances/{status_page_maintenance_id}`
-
 #### Team
 
 | Field | Description |
@@ -2243,7 +2004,7 @@ Operations: List, Load.
 
 API path: `/v3/teams`
 
-#### TelemetryDataSourceV2
+#### TelemetryDataSource
 
 | Field | Description |
 | --- | --- |
@@ -2276,9 +2037,9 @@ API path: `/v2/telemetry/data_sources/{id}`
 | `seats` |  |
 | `slack_user_id` | Slack ID of the user |
 
-Operations: Create, List, Load.
+Operations: List, Load.
 
-API path: `/v2/users/{user_id}/paging_provider`
+API path: `/v2/users`
 
 #### Workflow
 
@@ -2367,8 +2128,6 @@ Create an instance: `action = client.Action`
 | `created_at` | `String` | When the action was created |
 | `creator` | `Hash` |  |
 | `description` | `String` | Description of the action |
-| `external_issue_reference` | `Hash` |  |
-| `follow_up` | `Boolean` | Whether an action is marked as follow-up |
 | `id` | `String` | Unique identifier for the action |
 | `incident_id` | `String` | Unique identifier of the incident the action belongs to |
 | `status` | `String` | Status of the action |
@@ -2581,24 +2340,21 @@ Create an instance: `alert_route = client.AlertRoute`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_sources` | `Array` | Which alert sources should this alert route match? |
-| `channel_config` | `Array` | The channel configuration for this alert route |
-| `condition_groups` | `Array` | What condition groups must be true for this alert route to fire? |
-| `created_at` | `String` | The time of creation of this alert route |
-| `enabled` | `Boolean` | Whether this alert route is enabled or not |
+| `alert_sources` | `Array` | Which alert sources this route matches |
+| `condition_groups` | `Array` | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | `String` | When this alert route was created |
+| `enabled` | `Boolean` | Whether this alert route is enabled |
 | `escalation_config` | `Hash` |  |
-| `expressions` | `Array` | The expressions used in this template |
+| `expressions` | `Array` | The expressions used by bindings in this route |
 | `grouping_config` | `Hash` |  |
-| `id` | `String` | Unique identifier for this alert route config |
+| `id` | `String` | Unique identifier for this alert route |
 | `incident_config` | `Hash` |  |
-| `incident_template` | `Hash` |  |
 | `is_private` | `Boolean` | Whether this alert route is private. |
 | `message_config` | `Hash` |  |
-| `message_template` | `Hash` |  |
-| `name` | `String` | The name of this alert route config, for the user's reference |
+| `name` | `String` | The name of this alert route, for the user's reference |
 | `owning_team_ids` | `Array` | IDs of teams that own this alert route |
-| `updated_at` | `String` | The time of last update of this alert route |
-| `version` | `Integer` | The version of this alert route config |
+| `updated_at` | `String` | When this alert route was last updated |
+| `version` | `Integer` | The version of this alert route |
 
 #### Example: Load
 
@@ -2611,7 +2367,7 @@ alert_route = client.AlertRoute.load({ "id" => "alert_route_id" })
 
 ```ruby
 # list returns an Array of AlertRoute entities, one per record (raises on error).
-alert_routes = client.AlertRoute.list({ "page_size" => 1 })
+alert_routes = client.AlertRoute.list
 alert_routes.each { |item| puts item.data_get }
 ```
 
@@ -2620,14 +2376,12 @@ alert_routes.each { |item| puts item.data_get }
 ```ruby
 alert_route = client.AlertRoute.create({
   "alert_sources" => [], # Array
-  "channel_config" => [], # Array
   "condition_groups" => [], # Array
   "enabled" => true, # Boolean
   "escalation_config" => {}, # Hash
   "expressions" => [], # Array
   "grouping_config" => {}, # Hash
   "incident_config" => {}, # Hash
-  "incident_template" => {}, # Hash
   "is_private" => true, # Boolean
   "message_config" => {}, # Hash
   "name" => "example_name", # String
@@ -2740,14 +2494,27 @@ Create an instance: `alert_tag = client.AlertTag`
 
 | Method | Description |
 | --- | --- |
+| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `String` | Unique identifier for the tag |
+| `alert_group_ids` | `Array` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `String` | The ID of the alert source this alert fired on |
+| `attributes` | `Array` | Attribute values parsed from the alerts payload |
+| `created_at` | `String` | When this entry was created |
+| `deduplication_key` | `String` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `String` | The description of the alert |
+| `id` | `String` | The ID of this alert |
 | `name` | `String` | The tag name |
+| `resolved_at` | `String` | When this alert was resolved |
+| `source_url` | `String` | If applicable, a link to the alert in the upstream system |
+| `status` | `String` | Statuses of an alert |
+| `tags` | `Array` | Tags someone has applied to this alert |
+| `title` | `String` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `String` | When this alert was last updated |
 
 #### Example: List
 
@@ -2755,6 +2522,15 @@ Create an instance: `alert_tag = client.AlertTag`
 # list returns an Array of AlertTag entities, one per record (raises on error).
 alert_tags = client.AlertTag.list
 alert_tags.each { |item| puts item.data_get }
+```
+
+#### Example: Create
+
+```ruby
+alert_tag = client.AlertTag.create({
+  "alert_id" => "example_alert_id", # String
+  "tags" => [], # Array
+})
 ```
 
 
@@ -2790,44 +2566,6 @@ Create an instance: `alerts_add_tags_result_v2 = client.AlertsAddTagsResultV2`
 
 ```ruby
 alerts_add_tags_result_v2 = client.AlertsAddTagsResultV2.create({
-  "alert_id" => "example_alert_id", # String
-  "tags" => [], # Array
-})
-```
-
-
-### AlertsRemoveTagsResultV2
-
-Create an instance: `alerts_remove_tags_result_v2 = client.AlertsRemoveTagsResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `create(data)` | Create a new entity with the given data. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `alert_group_ids` | `Array` | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | `String` | The ID of the alert source this alert fired on |
-| `attributes` | `Array` | Attribute values parsed from the alerts payload |
-| `created_at` | `String` | When this entry was created |
-| `deduplication_key` | `String` | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | `String` | The description of the alert |
-| `id` | `String` | The ID of this alert |
-| `resolved_at` | `String` | When this alert was resolved |
-| `source_url` | `String` | If applicable, a link to the alert in the upstream system |
-| `status` | `String` | Statuses of an alert |
-| `tags` | `Array` | Tags someone has applied to this alert |
-| `title` | `String` | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | `String` | When this alert was last updated |
-
-#### Example: Create
-
-```ruby
-alerts_remove_tags_result_v2 = client.AlertsRemoveTagsResultV2.create({
   "alert_id" => "example_alert_id", # String
   "tags" => [], # Array
 })
@@ -3128,225 +2866,101 @@ call_routes.each { |item| puts item.data_get }
 ```
 
 
-### CallRoutesCreateAllowedCallerResultV2
+### CallRouteAllowedCaller
 
-Create an instance: `call_routes_create_allowed_caller_result_v2 = client.CallRoutesCreateAllowedCallerResultV2`
+Create an instance: `call_route_allowed_caller = client.CallRouteAllowedCaller`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `id` | `String` | Unique identifier for this allowed caller |
 | `name` | `String` | Label for whose number this is |
-| `phone_number` | `String` | The number to allow, in international format |
+| `phone_number` | `String` | The number allowed to call this route, in international format |
+
+#### Example: Load
+
+```ruby
+# load returns the ENTITY — call data_get for the CallRouteAllowedCaller record (raises on error).
+call_route_allowed_caller = client.CallRouteAllowedCaller.load({ "id" => "call_route_allowed_caller_id", "call_route_id" => "call_route_id" })
+```
+
+#### Example: List
+
+```ruby
+# list returns an Array of CallRouteAllowedCaller entities, one per record (raises on error).
+call_route_allowed_callers = client.CallRouteAllowedCaller.list({ "id" => "example" })
+call_route_allowed_callers.each { |item| puts item.data_get }
+```
 
 #### Example: Create
 
 ```ruby
-call_routes_create_allowed_caller_result_v2 = client.CallRoutesCreateAllowedCallerResultV2.create({
-  "call_route_id" => "example_call_route_id", # String
+call_route_allowed_caller = client.CallRouteAllowedCaller.create({
+  "id" => "example_id", # String
   "phone_number" => "example_phone_number", # String
 })
 ```
 
 
-### CallRoutesCreateOptionResultV2
+### CallRouteOption
 
-Create an instance: `call_routes_create_option_result_v2 = client.CallRoutesCreateOptionResultV2`
+Create an instance: `call_route_option = client.CallRouteOption`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `digit` | `String` | The keypad digit a caller presses to choose this option |
-| `path` | `Array` | Who to page when a caller chooses this option |
+| `id` | `String` | Unique identifier for this option |
+| `path` | `Array` | Who we page when a caller chooses this option |
 | `prompt` | `String` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+#### Example: Load
+
+```ruby
+# load returns the ENTITY — call data_get for the CallRouteOption record (raises on error).
+call_route_option = client.CallRouteOption.load({ "id" => "call_route_option_id", "call_route_id" => "call_route_id" })
+```
+
+#### Example: List
+
+```ruby
+# list returns an Array of CallRouteOption entities, one per record (raises on error).
+call_route_options = client.CallRouteOption.list({ "id" => "example" })
+call_route_options.each { |item| puts item.data_get }
+```
 
 #### Example: Create
 
 ```ruby
-call_routes_create_option_result_v2 = client.CallRoutesCreateOptionResultV2.create({
-  "call_route_id" => "example_call_route_id", # String
+call_route_option = client.CallRouteOption.create({
+  "id" => "example_id", # String
   "digit" => "example_digit", # String
   "path" => [], # Array
   "prompt" => "example_prompt", # String
 })
 ```
-
-
-### CallRoutesListAllowedCallersResultV2
-
-Create an instance: `call_routes_list_allowed_callers_result_v2 = client.CallRoutesListAllowedCallersResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `String` | Unique identifier for this allowed caller |
-| `name` | `String` | Label for whose number this is |
-| `phone_number` | `String` | The number allowed to call this route, in international format |
-
-#### Example: List
-
-```ruby
-# list returns an Array of CallRoutesListAllowedCallersResultV2 entities, one per record (raises on error).
-call_routes_list_allowed_callers_result_v2s = client.CallRoutesListAllowedCallersResultV2.list({ "call_route_id" => "example" })
-call_routes_list_allowed_callers_result_v2s.each { |item| puts item.data_get }
-```
-
-
-### CallRoutesListOptionsResultV2
-
-Create an instance: `call_routes_list_options_result_v2 = client.CallRoutesListOptionsResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `digit` | `String` | The keypad digit a caller presses to choose this option |
-| `id` | `String` | Unique identifier for this option |
-| `path` | `Array` | Who we page when a caller chooses this option |
-| `prompt` | `String` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-#### Example: List
-
-```ruby
-# list returns an Array of CallRoutesListOptionsResultV2 entities, one per record (raises on error).
-call_routes_list_options_result_v2s = client.CallRoutesListOptionsResultV2.list({ "call_route_id" => "example" })
-call_routes_list_options_result_v2s.each { |item| puts item.data_get }
-```
-
-
-### CallRoutesShowAllowedCallerResultV2
-
-Create an instance: `call_routes_show_allowed_caller_result_v2 = client.CallRoutesShowAllowedCallerResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `String` | Unique identifier for this allowed caller |
-| `name` | `String` | Label for whose number this is |
-| `phone_number` | `String` | The number allowed to call this route, in international format |
-
-#### Example: Load
-
-```ruby
-# load returns the ENTITY — call data_get for the CallRoutesShowAllowedCallerResultV2 record (raises on error).
-call_routes_show_allowed_caller_result_v2 = client.CallRoutesShowAllowedCallerResultV2.load({ "id" => "call_routes_show_allowed_caller_result_v2_id", "call_route_id" => "call_route_id" })
-```
-
-
-### CallRoutesShowOptionResultV2
-
-Create an instance: `call_routes_show_option_result_v2 = client.CallRoutesShowOptionResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `digit` | `String` | The keypad digit a caller presses to choose this option |
-| `id` | `String` | Unique identifier for this option |
-| `path` | `Array` | Who we page when a caller chooses this option |
-| `prompt` | `String` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-#### Example: Load
-
-```ruby
-# load returns the ENTITY — call data_get for the CallRoutesShowOptionResultV2 record (raises on error).
-call_routes_show_option_result_v2 = client.CallRoutesShowOptionResultV2.load({ "id" => "call_routes_show_option_result_v2_id", "call_route_id" => "call_route_id" })
-```
-
-
-### CallRoutesUpdateAllowedCallerResultV2
-
-Create an instance: `call_routes_update_allowed_caller_result_v2 = client.CallRoutesUpdateAllowedCallerResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `String` | Unique identifier for this allowed caller |
-| `name` | `String` | Label for whose number this is |
-| `phone_number` | `String` | The number allowed to call this route, in international format |
-
-
-### CallRoutesUpdateOptionResultV2
-
-Create an instance: `call_routes_update_option_result_v2 = client.CallRoutesUpdateOptionResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `digit` | `String` | The keypad digit a caller presses to choose this option |
-| `id` | `String` | Unique identifier for this option |
-| `path` | `Array` | Who we page when a caller chooses this option |
-| `prompt` | `String` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-
-### CallRoutesV2
-
-Create an instance: `call_routes_v2 = client.CallRoutesV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `remove(match)` | Remove the matching entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `String` |  |
 
 
 ### CallSession
@@ -3417,6 +3031,7 @@ Create an instance: `catalog_entry = client.CatalogEntry`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -3448,7 +3063,7 @@ catalog_entry = client.CatalogEntry.load({ "id" => "catalog_entry_id" })
 
 ```ruby
 # list returns an Array of CatalogEntry entities, one per record (raises on error).
-catalog_entrys = client.CatalogEntry.list({ "catalog_type_id" => "example" })
+catalog_entrys = client.CatalogEntry.list({ "catalog_type_id" => "example", "page_size" => 1 })
 catalog_entrys.each { |item| puts item.data_get }
 ```
 
@@ -3504,6 +3119,7 @@ Create an instance: `catalog_type = client.CatalogType`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -3529,7 +3145,6 @@ Create an instance: `catalog_type = client.CatalogType`
 | `registry_type` | `String` | The registry resource this type is synced from, if any |
 | `required_integrations` | `Array` | If populated, the integrations required for this type |
 | `schema` | `Hash` |  |
-| `semantic_type` | `String` | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `String` | The url of the external repository where this type is managed |
 | `type_name` | `String` | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `String` | When this type was last updated |
@@ -3594,7 +3209,6 @@ Create an instance: `catalog_type_schema = client.CatalogTypeSchema`
 | `registry_type` | `String` | The registry resource this type is synced from, if any |
 | `required_integrations` | `Array` | If populated, the integrations required for this type |
 | `schema` | `Hash` |  |
-| `semantic_type` | `String` | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `String` | The url of the external repository where this type is managed |
 | `type_name` | `String` | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `String` | When this type was last updated |
@@ -3640,13 +3254,6 @@ Create an instance: `custom_field = client.CustomField`
 | `helptext_catalog_attribute_id` | `String` | Which catalog attribute provides helptext for the options |
 | `id` | `String` | Unique identifier for the custom field |
 | `name` | `String` | Human readable name for the custom field |
-| `options` | `Array` | What options are available for this custom field, if this field has options |
-| `required` | `String` | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | `String` | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | `Boolean` | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | `Boolean` | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | `Boolean` | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | `Boolean` | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | `String` | When the action was last updated |
 
 #### Example: Load
@@ -3673,9 +3280,6 @@ custom_field = client.CustomField.create({
   "filter_by" => {}, # Hash
   "fixed_filter" => {}, # Hash
   "name" => "example_name", # String
-  "show_before_closure" => true, # Boolean
-  "show_before_creation" => true, # Boolean
-  "show_before_update" => true, # Boolean
 })
 ```
 
@@ -3781,6 +3385,61 @@ escalations.each { |item| puts item.data_get }
 escalation = client.Escalation.create({
   "idempotency_key" => "example_idempotency_key", # String
   "title" => "example_title", # String
+})
+```
+
+
+### EscalationPath
+
+Create an instance: `escalation_path = client.EscalationPath`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `current_responders` | `Array` | Users who are currently on-call for this escalation path |
+| `id` | `String` | Unique identifier for this escalation path. |
+| `kind` | `String` | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | `String` | The name of this escalation path, for the user's reference. |
+| `param_bindings` | `Hash` | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | `Array` | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` | `Hash` |  |
+| `team_ids` | `Array` | IDs of the teams that own this escalation path. |
+| `template_id` | `String` | For a templated path, the template it is built from. |
+| `working_hours` | `Array` | The working hours for this escalation path. |
+
+#### Example: Load
+
+```ruby
+# load returns the ENTITY — call data_get for the EscalationPath record (raises on error).
+escalation_path = client.EscalationPath.load({ "id" => "escalation_path_id" })
+```
+
+#### Example: List
+
+```ruby
+# list returns an Array of EscalationPath entities, one per record (raises on error).
+escalation_paths = client.EscalationPath.list
+escalation_paths.each { |item| puts item.data_get }
+```
+
+#### Example: Create
+
+```ruby
+escalation_path = client.EscalationPath.create({
+  "name" => "example_name", # String
+  "path" => [], # Array
+  "repeat_config" => {}, # Hash
 })
 ```
 
@@ -4105,12 +3764,8 @@ Create an instance: `incident = client.Incident`
 | `slack_channel_name_override` | `String` | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | `String` | URL to link to the slack channel |
 | `slack_team_id` | `String` | ID of the Slack team / workspace. |
-| `source_message_channel_id` | `String` | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | `String` | Timestamp of the source message, if this incident was created from one |
-| `status` | `String` | Current status of the incident |
 | `summary` | `String` | Detailed description of the incident |
 | `team_ids` | `Array` | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | `Array` | Incident lifecycle events and when they last occurred |
 | `updated_at` | `String` | When the incident was last updated |
 | `visibility` | `String` | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | `Float` | Amount of time spent on the incident in late hours |
@@ -4392,7 +4047,6 @@ Create an instance: `incident_role = client.IncidentRole`
 | `id` | `String` | Unique identifier for the role |
 | `instructions` | `String` | Provided to whoever is nominated for the role. |
 | `name` | `String` | Human readable name of the incident role |
-| `required` | `Boolean` | DEPRECATED: this will always be false. |
 | `role_type` | `String` | Type of incident role |
 | `shortform` | `String` | Short human readable name for Slack. |
 | `updated_at` | `String` | When the role was last updated |
@@ -4419,7 +4073,6 @@ incident_role = client.IncidentRole.create({
   "description" => "example_description", # String
   "instructions" => "example_instructions", # String
   "name" => "example_name", # String
-  "required" => true, # Boolean
   "shortform" => "example_shortform", # String
 })
 ```
@@ -5087,30 +4740,50 @@ pay_config = client.PayConfig.create({
 ```
 
 
-### PayConfigsCreateOneOffRuleResultV2
+### PayConfigOneOffRule
 
-Create an instance: `pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleResultV2`
+Create an instance: `pay_config_one_off_rule = client.PayConfigOneOffRule`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `end_at` | `String` | When this rule stops applying |
+| `id` | `String` | Unique identifier for this rule, stable across edits to the config |
 | `name` | `String` | Human readable name for this rule |
 | `rate_cents` | `Integer` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | `String` | When this rule starts applying |
 
+#### Example: Load
+
+```ruby
+# load returns the ENTITY — call data_get for the PayConfigOneOffRule record (raises on error).
+pay_config_one_off_rule = client.PayConfigOneOffRule.load({ "id" => "pay_config_one_off_rule_id", "pay_config_id" => "pay_config_id" })
+```
+
+#### Example: List
+
+```ruby
+# list returns an Array of PayConfigOneOffRule entities, one per record (raises on error).
+pay_config_one_off_rules = client.PayConfigOneOffRule.list({ "id" => "example" })
+pay_config_one_off_rules.each { |item| puts item.data_get }
+```
+
 #### Example: Create
 
 ```ruby
-pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleResultV2.create({
-  "pay_config_id" => "example_pay_config_id", # String
+pay_config_one_off_rule = client.PayConfigOneOffRule.create({
+  "id" => "example_id", # String
   "end_at" => "example_end_at", # String
   "name" => "example_name", # String
   "rate_cents" => 1, # Integer
@@ -5119,209 +4792,56 @@ pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleRes
 ```
 
 
-### PayConfigsCreateWeeklyRuleResultV2
+### PayConfigWeeklyRule
 
-Create an instance: `pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRuleResultV2`
+Create an instance: `pay_config_weekly_rule = client.PayConfigWeeklyRule`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `end_time` | `String` | Time of day this rule ends, in 24 hour format. |
+| `id` | `String` | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | `Integer` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | `String` | Time of day this rule starts, in 24 hour format |
 | `weekdays` | `Array` | Days of the week this rule applies on |
 
+#### Example: Load
+
+```ruby
+# load returns the ENTITY — call data_get for the PayConfigWeeklyRule record (raises on error).
+pay_config_weekly_rule = client.PayConfigWeeklyRule.load({ "id" => "pay_config_weekly_rule_id", "pay_config_id" => "pay_config_id" })
+```
+
+#### Example: List
+
+```ruby
+# list returns an Array of PayConfigWeeklyRule entities, one per record (raises on error).
+pay_config_weekly_rules = client.PayConfigWeeklyRule.list({ "id" => "example" })
+pay_config_weekly_rules.each { |item| puts item.data_get }
+```
+
 #### Example: Create
 
 ```ruby
-pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRuleResultV2.create({
-  "pay_config_id" => "example_pay_config_id", # String
+pay_config_weekly_rule = client.PayConfigWeeklyRule.create({
+  "id" => "example_id", # String
   "end_time" => "example_end_time", # String
   "rate_cents" => 1, # Integer
   "start_time" => "example_start_time", # String
   "weekdays" => [], # Array
 })
 ```
-
-
-### PayConfigsListOneOffRulesResultV2
-
-Create an instance: `pay_configs_list_one_off_rules_result_v2 = client.PayConfigsListOneOffRulesResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_at` | `String` | When this rule stops applying |
-| `id` | `String` | Unique identifier for this rule, stable across edits to the config |
-| `name` | `String` | Human readable name for this rule |
-| `rate_cents` | `Integer` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `String` | When this rule starts applying |
-
-#### Example: List
-
-```ruby
-# list returns an Array of PayConfigsListOneOffRulesResultV2 entities, one per record (raises on error).
-pay_configs_list_one_off_rules_result_v2s = client.PayConfigsListOneOffRulesResultV2.list({ "pay_config_id" => "example" })
-pay_configs_list_one_off_rules_result_v2s.each { |item| puts item.data_get }
-```
-
-
-### PayConfigsListWeeklyRulesResultV2
-
-Create an instance: `pay_configs_list_weekly_rules_result_v2 = client.PayConfigsListWeeklyRulesResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_time` | `String` | Time of day this rule ends, in 24 hour format. |
-| `id` | `String` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `Integer` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `String` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `Array` | Days of the week this rule applies on |
-
-#### Example: List
-
-```ruby
-# list returns an Array of PayConfigsListWeeklyRulesResultV2 entities, one per record (raises on error).
-pay_configs_list_weekly_rules_result_v2s = client.PayConfigsListWeeklyRulesResultV2.list({ "pay_config_id" => "example" })
-pay_configs_list_weekly_rules_result_v2s.each { |item| puts item.data_get }
-```
-
-
-### PayConfigsShowOneOffRuleResultV2
-
-Create an instance: `pay_configs_show_one_off_rule_result_v2 = client.PayConfigsShowOneOffRuleResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_at` | `String` | When this rule stops applying |
-| `id` | `String` | Unique identifier for this rule, stable across edits to the config |
-| `name` | `String` | Human readable name for this rule |
-| `rate_cents` | `Integer` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `String` | When this rule starts applying |
-
-#### Example: Load
-
-```ruby
-# load returns the ENTITY — call data_get for the PayConfigsShowOneOffRuleResultV2 record (raises on error).
-pay_configs_show_one_off_rule_result_v2 = client.PayConfigsShowOneOffRuleResultV2.load({ "id" => "pay_configs_show_one_off_rule_result_v2_id", "pay_config_id" => "pay_config_id" })
-```
-
-
-### PayConfigsShowWeeklyRuleResultV2
-
-Create an instance: `pay_configs_show_weekly_rule_result_v2 = client.PayConfigsShowWeeklyRuleResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_time` | `String` | Time of day this rule ends, in 24 hour format. |
-| `id` | `String` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `Integer` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `String` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `Array` | Days of the week this rule applies on |
-
-#### Example: Load
-
-```ruby
-# load returns the ENTITY — call data_get for the PayConfigsShowWeeklyRuleResultV2 record (raises on error).
-pay_configs_show_weekly_rule_result_v2 = client.PayConfigsShowWeeklyRuleResultV2.load({ "id" => "pay_configs_show_weekly_rule_result_v2_id", "pay_config_id" => "pay_config_id" })
-```
-
-
-### PayConfigsUpdateOneOffRuleResultV2
-
-Create an instance: `pay_configs_update_one_off_rule_result_v2 = client.PayConfigsUpdateOneOffRuleResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_at` | `String` | When this rule stops applying |
-| `id` | `String` | Unique identifier for this rule, stable across edits to the config |
-| `name` | `String` | Human readable name for this rule |
-| `rate_cents` | `Integer` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `String` | When this rule starts applying |
-
-
-### PayConfigsUpdateWeeklyRuleResultV2
-
-Create an instance: `pay_configs_update_weekly_rule_result_v2 = client.PayConfigsUpdateWeeklyRuleResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_time` | `String` | Time of day this rule ends, in 24 hour format. |
-| `id` | `String` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `Integer` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `String` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `Array` | Days of the week this rule applies on |
-
-
-### PayConfigsV2
-
-Create an instance: `pay_configs_v2 = client.PayConfigsV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `remove(match)` | Remove the matching entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `String` |  |
 
 
 ### PayReport
@@ -5493,23 +5013,6 @@ pay_reports_v2 = client.PayReportsV2.load({ "pay_report_id" => "pay_report_id" }
 ```
 
 
-### PoliciesV2
-
-Create an instance: `policies_v2 = client.PoliciesV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `remove(match)` | Remove the matching entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `String` |  |
-
-
 ### Policy
 
 Create an instance: `policy = client.Policy`
@@ -5521,6 +5024,7 @@ Create an instance: `policy = client.Policy`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -5881,6 +5385,63 @@ schedule_entry = client.ScheduleEntry.load({ "schedule_id" => "schedule_id" })
 ```
 
 
+### ScheduleOverride
+
+Create an instance: `schedule_override = client.ScheduleOverride`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `String` |  |
+| `end_at` | `String` | End of the override |
+| `id` | `String` | Unique internal ID of the schedule override |
+| `layer_id` | `String` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `String` | The rotation on the schedule that this override applies to |
+| `schedule_id` | `String` | The schedule that this override applies to |
+| `start_at` | `String` | Start of the override |
+| `updated_at` | `String` |  |
+| `user` | `Hash` |  |
+
+#### Example: Load
+
+```ruby
+# load returns the ENTITY — call data_get for the ScheduleOverride record (raises on error).
+schedule_override = client.ScheduleOverride.load({ "id" => "schedule_override_id" })
+```
+
+#### Example: List
+
+```ruby
+# list returns an Array of ScheduleOverride entities, one per record (raises on error).
+schedule_overrides = client.ScheduleOverride.list({ "schedule_id" => "example" })
+schedule_overrides.each { |item| puts item.data_get }
+```
+
+#### Example: Create
+
+```ruby
+schedule_override = client.ScheduleOverride.create({
+  "end_at" => "example_end_at", # String
+  "layer_id" => "example_layer_id", # String
+  "rotation_id" => "example_rotation_id", # String
+  "schedule_id" => "example_schedule_id", # String
+  "start_at" => "example_start_at", # String
+  "user" => {}, # Hash
+})
+```
+
+
 ### ScheduleReplica
 
 Create an instance: `schedule_replica = client.ScheduleReplica`
@@ -5892,6 +5453,7 @@ Create an instance: `schedule_replica = client.ScheduleReplica`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 
 #### Fields
 
@@ -5949,6 +5511,7 @@ Create an instance: `schedule_sync_rule = client.ScheduleSyncRule`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -6045,86 +5608,6 @@ schedule_sync_target = client.ScheduleSyncTarget.create({
 ```
 
 
-### SchedulesShowOverrideResultV2
-
-Create an instance: `schedules_show_override_result_v2 = client.SchedulesShowOverrideResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `create(data)` | Create a new entity with the given data. |
-| `list(match)` | List entities matching the criteria. |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `created_at` | `String` |  |
-| `end_at` | `String` | End of the override |
-| `id` | `String` | Unique internal ID of the schedule override |
-| `layer_id` | `String` | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `String` | The rotation on the schedule that this override applies to |
-| `schedule_id` | `String` | The schedule that this override applies to |
-| `start_at` | `String` | Start of the override |
-| `updated_at` | `String` |  |
-| `user` | `Hash` |  |
-
-#### Example: Load
-
-```ruby
-# load returns the ENTITY — call data_get for the SchedulesShowOverrideResultV2 record (raises on error).
-schedules_show_override_result_v2 = client.SchedulesShowOverrideResultV2.load({ "id" => "schedules_show_override_result_v2_id" })
-```
-
-#### Example: List
-
-```ruby
-# list returns an Array of SchedulesShowOverrideResultV2 entities, one per record (raises on error).
-schedules_show_override_result_v2s = client.SchedulesShowOverrideResultV2.list({ "schedule_id" => "example" })
-schedules_show_override_result_v2s.each { |item| puts item.data_get }
-```
-
-#### Example: Create
-
-```ruby
-schedules_show_override_result_v2 = client.SchedulesShowOverrideResultV2.create({
-  "end_at" => "example_end_at", # String
-  "layer_id" => "example_layer_id", # String
-  "rotation_id" => "example_rotation_id", # String
-  "schedule_id" => "example_schedule_id", # String
-  "start_at" => "example_start_at", # String
-  "user" => {}, # Hash
-})
-```
-
-
-### SchedulesUpdateOverrideResultV2
-
-Create an instance: `schedules_update_override_result_v2 = client.SchedulesUpdateOverrideResultV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `created_at` | `String` |  |
-| `end_at` | `String` | End of the override |
-| `id` | `String` | Unique internal ID of the schedule override |
-| `layer_id` | `String` | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `String` | The rotation on the schedule that this override applies to |
-| `schedule_id` | `String` | The schedule that this override applies to |
-| `start_at` | `String` | Start of the override |
-| `updated_at` | `String` |  |
-| `user` | `Hash` |  |
-
-
 ### Secret
 
 Create an instance: `secret = client.Secret`
@@ -6191,6 +5674,7 @@ Create an instance: `severity = client.Severity`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -6312,9 +5796,9 @@ status_page_component = client.StatusPageComponent.create({
 ```
 
 
-### StatusPageComponentAvailabilityV2
+### StatusPageComponentAvailability
 
-Create an instance: `status_page_component_availability_v2 = client.StatusPageComponentAvailabilityV2`
+Create an instance: `status_page_component_availability = client.StatusPageComponentAvailability`
 
 #### Operations
 
@@ -6336,8 +5820,8 @@ Create an instance: `status_page_component_availability_v2 = client.StatusPageCo
 #### Example: Load
 
 ```ruby
-# load returns the ENTITY — call data_get for the StatusPageComponentAvailabilityV2 record (raises on error).
-status_page_component_availability_v2 = client.StatusPageComponentAvailabilityV2.load({ "component_id" => "component_id", "status_page_id" => "status_page_id", "end_at" => "end_at", "start_at" => "start_at" })
+# load returns the ENTITY — call data_get for the StatusPageComponentAvailability record (raises on error).
+status_page_component_availability = client.StatusPageComponentAvailability.load({ "component_id" => "component_id", "status_page_id" => "status_page_id", "end_at" => "end_at", "start_at" => "start_at" })
 ```
 
 
@@ -6430,9 +5914,9 @@ status_page_incident_update = client.StatusPageIncidentUpdate.create({
 ```
 
 
-### StatusPageLinkedResponseIncidentV1
+### StatusPageLinkedResponseIncident
 
-Create an instance: `status_page_linked_response_incident_v1 = client.StatusPageLinkedResponseIncidentV1`
+Create an instance: `status_page_linked_response_incident = client.StatusPageLinkedResponseIncident`
 
 #### Operations
 
@@ -6450,9 +5934,9 @@ Create an instance: `status_page_linked_response_incident_v1 = client.StatusPage
 #### Example: List
 
 ```ruby
-# list returns an Array of StatusPageLinkedResponseIncidentV1 entities, one per record (raises on error).
-status_page_linked_response_incident_v1s = client.StatusPageLinkedResponseIncidentV1.list({ "incident_id" => "example", "status_page_id" => "example" })
-status_page_linked_response_incident_v1s.each { |item| puts item.data_get }
+# list returns an Array of StatusPageLinkedResponseIncident entities, one per record (raises on error).
+status_page_linked_response_incidents = client.StatusPageLinkedResponseIncident.list({ "incident_id" => "example", "status_page_id" => "example" })
+status_page_linked_response_incidents.each { |item| puts item.data_get }
 ```
 
 
@@ -6467,6 +5951,7 @@ Create an instance: `status_page_maintenance = client.StatusPageMaintenance`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -6578,17 +6063,6 @@ status_page_structure = client.StatusPageStructure.load({ "id" => "status_page_s
 ```
 
 
-### StatusPagesV2
-
-Create an instance: `status_pages_v2 = client.StatusPagesV2`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `remove(match)` | Remove the matching entity. |
-
-
 ### Team
 
 Create an instance: `team = client.Team`
@@ -6625,9 +6099,9 @@ teams.each { |item| puts item.data_get }
 ```
 
 
-### TelemetryDataSourceV2
+### TelemetryDataSource
 
-Create an instance: `telemetry_data_source_v2 = client.TelemetryDataSourceV2`
+Create an instance: `telemetry_data_source = client.TelemetryDataSource`
 
 #### Operations
 
@@ -6659,7 +6133,6 @@ Create an instance: `user = client.User`
 
 | Method | Description |
 | --- | --- |
-| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
@@ -6690,14 +6163,6 @@ user = client.User.load({ "id" => "user_id" })
 # list returns an Array of User entities, one per record (raises on error).
 users = client.User.list
 users.each { |item| puts item.data_get }
-```
-
-#### Example: Create
-
-```ruby
-user = client.User.create({
-  "id" => "example_id", # String
-})
 ```
 
 
@@ -7065,11 +6530,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-incidentstatus = client.IncidentStatus
-incidentstatus.list()
+escalationpath = client.EscalationPath
+escalationpath.list()
 
-# incidentstatus.data_get now returns the incidentstatus data from the last list
-# incidentstatus.match_get returns the last match criteria
+# escalationpath.data_get now returns the escalationpath data from the last list
+# escalationpath.match_get returns the last match criteria
 ```
 
 Call `make` to create a fresh instance with the same configuration

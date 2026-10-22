@@ -190,13 +190,6 @@ main: kit: entity: catalog_type: {
       r: true
       t: "`$OBJECT`"
     }
-    semantic_type: {
-      h: "Semantic Type"
-      n: "semantic_type"
-      r: true
-      sh: "This type has been deprecated, and will always be empty."
-      t: "`$STRING`"
-    }
     source_repo_url: {
       h: "Source Repo Url"
       n: "source_repo_url"
@@ -273,6 +266,9 @@ main: kit: entity: catalog_type: {
           }
           m: "POST"
           o: "/v2/catalog_types"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -341,6 +337,9 @@ main: kit: entity: catalog_type: {
           }
           m: "GET"
           o: "/v2/catalog_types"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -409,6 +408,7 @@ main: kit: entity: catalog_type: {
           m: "GET"
           o: "/v2/catalog_types/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]
@@ -480,6 +480,94 @@ main: kit: entity: catalog_type: {
         }
       ]
     }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          co: {
+            id: "DELETE /v2/catalog_types/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v2/catalog_types/{id}"
+          q: {
+            "$action": "v2"
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "catalog_types"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "DELETE /v3/catalog_types/{id}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "DELETE"
+          o: "/v3/catalog_types/{id}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v3"
+            }
+            {
+              lit: "catalog_types"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
     update: {
       name: "update"
       points: [
@@ -514,6 +602,7 @@ main: kit: entity: catalog_type: {
           m: "PUT"
           o: "/v2/catalog_types/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]

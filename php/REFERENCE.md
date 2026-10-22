@@ -78,10 +78,6 @@ Create a new `AlertTagEntity` instance. Pass `null` for no initial data.
 
 Create a new `AlertsAddTagsResultV2Entity` instance. Pass `null` for no initial data.
 
-#### `AlertsRemoveTagsResultV2($data = null)`
-
-Create a new `AlertsRemoveTagsResultV2Entity` instance. Pass `null` for no initial data.
-
 #### `AlertsSetTagsResultV2($data = null)`
 
 Create a new `AlertsSetTagsResultV2Entity` instance. Pass `null` for no initial data.
@@ -106,41 +102,13 @@ Create a new `ApiKeyEntity` instance. Pass `null` for no initial data.
 
 Create a new `CallRouteEntity` instance. Pass `null` for no initial data.
 
-#### `CallRoutesCreateAllowedCallerResultV2($data = null)`
+#### `CallRouteAllowedCaller($data = null)`
 
-Create a new `CallRoutesCreateAllowedCallerResultV2Entity` instance. Pass `null` for no initial data.
+Create a new `CallRouteAllowedCallerEntity` instance. Pass `null` for no initial data.
 
-#### `CallRoutesCreateOptionResultV2($data = null)`
+#### `CallRouteOption($data = null)`
 
-Create a new `CallRoutesCreateOptionResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `CallRoutesListAllowedCallersResultV2($data = null)`
-
-Create a new `CallRoutesListAllowedCallersResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `CallRoutesListOptionsResultV2($data = null)`
-
-Create a new `CallRoutesListOptionsResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `CallRoutesShowAllowedCallerResultV2($data = null)`
-
-Create a new `CallRoutesShowAllowedCallerResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `CallRoutesShowOptionResultV2($data = null)`
-
-Create a new `CallRoutesShowOptionResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `CallRoutesUpdateAllowedCallerResultV2($data = null)`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `CallRoutesUpdateOptionResultV2($data = null)`
-
-Create a new `CallRoutesUpdateOptionResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `CallRoutesV2($data = null)`
-
-Create a new `CallRoutesV2Entity` instance. Pass `null` for no initial data.
+Create a new `CallRouteOptionEntity` instance. Pass `null` for no initial data.
 
 #### `CallSession($data = null)`
 
@@ -177,6 +145,10 @@ Create a new `CustomFieldOptionEntity` instance. Pass `null` for no initial data
 #### `Escalation($data = null)`
 
 Create a new `EscalationEntity` instance. Pass `null` for no initial data.
+
+#### `EscalationPath($data = null)`
+
+Create a new `EscalationPathEntity` instance. Pass `null` for no initial data.
 
 #### `EscalationPathTemplate($data = null)`
 
@@ -310,41 +282,13 @@ Create a new `OnCallNotificationRulePublicV2Entity` instance. Pass `null` for no
 
 Create a new `PayConfigEntity` instance. Pass `null` for no initial data.
 
-#### `PayConfigsCreateOneOffRuleResultV2($data = null)`
+#### `PayConfigOneOffRule($data = null)`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2Entity` instance. Pass `null` for no initial data.
+Create a new `PayConfigOneOffRuleEntity` instance. Pass `null` for no initial data.
 
-#### `PayConfigsCreateWeeklyRuleResultV2($data = null)`
+#### `PayConfigWeeklyRule($data = null)`
 
-Create a new `PayConfigsCreateWeeklyRuleResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `PayConfigsListOneOffRulesResultV2($data = null)`
-
-Create a new `PayConfigsListOneOffRulesResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `PayConfigsListWeeklyRulesResultV2($data = null)`
-
-Create a new `PayConfigsListWeeklyRulesResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `PayConfigsShowOneOffRuleResultV2($data = null)`
-
-Create a new `PayConfigsShowOneOffRuleResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `PayConfigsShowWeeklyRuleResultV2($data = null)`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `PayConfigsUpdateOneOffRuleResultV2($data = null)`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `PayConfigsUpdateWeeklyRuleResultV2($data = null)`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `PayConfigsV2($data = null)`
-
-Create a new `PayConfigsV2Entity` instance. Pass `null` for no initial data.
+Create a new `PayConfigWeeklyRuleEntity` instance. Pass `null` for no initial data.
 
 #### `PayReport($data = null)`
 
@@ -361,10 +305,6 @@ Create a new `PayReportsUnpublishResultV2Entity` instance. Pass `null` for no in
 #### `PayReportsV2($data = null)`
 
 Create a new `PayReportsV2Entity` instance. Pass `null` for no initial data.
-
-#### `PoliciesV2($data = null)`
-
-Create a new `PoliciesV2Entity` instance. Pass `null` for no initial data.
 
 #### `Policy($data = null)`
 
@@ -398,6 +338,10 @@ Create a new `ScheduleEntriesListPayloadV2Entity` instance. Pass `null` for no i
 
 Create a new `ScheduleEntryEntity` instance. Pass `null` for no initial data.
 
+#### `ScheduleOverride($data = null)`
+
+Create a new `ScheduleOverrideEntity` instance. Pass `null` for no initial data.
+
 #### `ScheduleReplica($data = null)`
 
 Create a new `ScheduleReplicaEntity` instance. Pass `null` for no initial data.
@@ -409,14 +353,6 @@ Create a new `ScheduleSyncRuleEntity` instance. Pass `null` for no initial data.
 #### `ScheduleSyncTarget($data = null)`
 
 Create a new `ScheduleSyncTargetEntity` instance. Pass `null` for no initial data.
-
-#### `SchedulesShowOverrideResultV2($data = null)`
-
-Create a new `SchedulesShowOverrideResultV2Entity` instance. Pass `null` for no initial data.
-
-#### `SchedulesUpdateOverrideResultV2($data = null)`
-
-Create a new `SchedulesUpdateOverrideResultV2Entity` instance. Pass `null` for no initial data.
 
 #### `Secret($data = null)`
 
@@ -434,9 +370,9 @@ Create a new `StatusPageEntity` instance. Pass `null` for no initial data.
 
 Create a new `StatusPageComponentEntity` instance. Pass `null` for no initial data.
 
-#### `StatusPageComponentAvailabilityV2($data = null)`
+#### `StatusPageComponentAvailability($data = null)`
 
-Create a new `StatusPageComponentAvailabilityV2Entity` instance. Pass `null` for no initial data.
+Create a new `StatusPageComponentAvailabilityEntity` instance. Pass `null` for no initial data.
 
 #### `StatusPageIncident($data = null)`
 
@@ -446,9 +382,9 @@ Create a new `StatusPageIncidentEntity` instance. Pass `null` for no initial dat
 
 Create a new `StatusPageIncidentUpdateEntity` instance. Pass `null` for no initial data.
 
-#### `StatusPageLinkedResponseIncidentV1($data = null)`
+#### `StatusPageLinkedResponseIncident($data = null)`
 
-Create a new `StatusPageLinkedResponseIncidentV1Entity` instance. Pass `null` for no initial data.
+Create a new `StatusPageLinkedResponseIncidentEntity` instance. Pass `null` for no initial data.
 
 #### `StatusPageMaintenance($data = null)`
 
@@ -462,17 +398,13 @@ Create a new `StatusPageMaintenanceUpdateEntity` instance. Pass `null` for no in
 
 Create a new `StatusPageStructureEntity` instance. Pass `null` for no initial data.
 
-#### `StatusPagesV2($data = null)`
-
-Create a new `StatusPagesV2Entity` instance. Pass `null` for no initial data.
-
 #### `Team($data = null)`
 
 Create a new `TeamEntity` instance. Pass `null` for no initial data.
 
-#### `TelemetryDataSourceV2($data = null)`
+#### `TelemetryDataSource($data = null)`
 
-Create a new `TelemetryDataSourceV2Entity` instance. Pass `null` for no initial data.
+Create a new `TelemetryDataSourceEntity` instance. Pass `null` for no initial data.
 
 #### `User($data = null)`
 
@@ -538,30 +470,11 @@ $action = $client->Action();
 | `completed_at` | `string` | No | When the action was completed |
 | `created_at` | `string` | Yes | When the action was created |
 | `creator` | `array` | Yes |  |
-| `description` | `string` | No | Description of the action |
-| `external_issue_reference` | `array` | No |  |
-| `follow_up` | `bool` | Yes | Whether an action is marked as follow-up |
+| `description` | `string` | Yes | Description of the action |
 | `id` | `string` | Yes | Unique identifier for the action |
 | `incident_id` | `string` | Yes | Unique identifier of the incident the action belongs to |
 | `status` | `string` | Yes | Status of the action |
 | `updated_at` | `string` | Yes | When the action was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `assignee` | - | - | - | - | - |
-| `assignee_id` | - | - | - | - | - |
-| `completed_at` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `creator` | - | - | - | - | - |
-| `description` | Yes | Yes | Yes | Yes | - |
-| `external_issue_reference` | - | - | - | - | - |
-| `follow_up` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `incident_id` | - | - | - | - | - |
-| `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -944,24 +857,21 @@ $alert_route = $client->AlertRoute();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `alert_sources` | `array` | Yes | Which alert sources should this alert route match? |
-| `channel_config` | `array` | Yes | The channel configuration for this alert route |
-| `condition_groups` | `array` | Yes | What condition groups must be true for this alert route to fire? |
-| `created_at` | `string` | No | The time of creation of this alert route |
-| `enabled` | `bool` | Yes | Whether this alert route is enabled or not |
+| `alert_sources` | `array` | Yes | Which alert sources this route matches |
+| `condition_groups` | `array` | Yes | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | `string` | No | When this alert route was created |
+| `enabled` | `bool` | Yes | Whether this alert route is enabled |
 | `escalation_config` | `array` | Yes |  |
-| `expressions` | `array` | Yes | The expressions used in this template |
+| `expressions` | `array` | Yes | The expressions used by bindings in this route |
 | `grouping_config` | `array` | Yes |  |
-| `id` | `string` | Yes | Unique identifier for this alert route config |
+| `id` | `string` | Yes | Unique identifier for this alert route |
 | `incident_config` | `array` | Yes |  |
-| `incident_template` | `array` | Yes |  |
 | `is_private` | `bool` | Yes | Whether this alert route is private. |
 | `message_config` | `array` | Yes |  |
-| `message_template` | `array` | No |  |
-| `name` | `string` | Yes | The name of this alert route config, for the user's reference |
+| `name` | `string` | Yes | The name of this alert route, for the user's reference |
 | `owning_team_ids` | `array` | No | IDs of teams that own this alert route |
-| `updated_at` | `string` | No | The time of last update of this alert route |
-| `version` | `int` | Yes | The version of this alert route config |
+| `updated_at` | `string` | No | When this alert route was last updated |
+| `version` | `int` | Yes | The version of this alert route |
 
 ### Operations
 
@@ -972,14 +882,12 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->AlertRoute()->create([
   "alert_sources" => null, // array
-  "channel_config" => null, // array
   "condition_groups" => null, // array
   "enabled" => null, // bool
   "escalation_config" => null, // array
   "expressions" => null, // array
   "grouping_config" => null, // array
   "incident_config" => null, // array
-  "incident_template" => null, // array
   "is_private" => null, // bool
   "message_config" => null, // array
   "name" => null, // string
@@ -991,7 +899,7 @@ $result = $client->AlertRoute()->create([
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
 
 ```php
-$results = $client->AlertRoute()->list(["page_size" => 1]);
+$results = $client->AlertRoute()->list();
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -1232,10 +1140,52 @@ $alert_tag = $client->AlertTag();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for the tag |
+| `alert_group_ids` | `array` | No | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | Yes | The ID of the alert source this alert fired on |
+| `attributes` | `array` | Yes | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | Yes | When this entry was created |
+| `deduplication_key` | `string` | Yes | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | No | The description of the alert |
+| `id` | `string` | Yes | The ID of this alert |
 | `name` | `string` | Yes | The tag name |
+| `resolved_at` | `string` | No | When this alert was resolved |
+| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Yes | Statuses of an alert |
+| `tags` | `array` | No | Tags someone has applied to this alert |
+| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | Yes | When this alert was last updated |
+
+### Field Usage by Operation
+
+| Field | list | create |
+| --- | --- | --- |
+| `alert_group_ids` | - | - |
+| `alert_source_id` | - | - |
+| `attributes` | - | - |
+| `created_at` | - | - |
+| `deduplication_key` | - | - |
+| `description` | - | - |
+| `id` | - | - |
+| `name` | - | - |
+| `resolved_at` | - | - |
+| `source_url` | - | - |
+| `status` | - | - |
+| `tags` | - | Yes |
+| `title` | - | - |
+| `updated_at` | - | - |
 
 ### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->AlertTag()->create([
+  "alert_id" => null, // string
+  "tags" => null, // array
+]);
+```
 
 #### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
@@ -1351,91 +1301,6 @@ Set the entity match criteria.
 #### `make(): AlertsAddTagsResultV2Entity`
 
 Create a new `AlertsAddTagsResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## AlertsRemoveTagsResultV2Entity
-
-```php
-$alerts_remove_tags_result_v2 = $client->AlertsRemoveTagsResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `alert_group_ids` | `array` | No | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | `string` | Yes | The ID of the alert source this alert fired on |
-| `attributes` | `array` | Yes | Attribute values parsed from the alerts payload |
-| `created_at` | `string` | Yes | When this entry was created |
-| `deduplication_key` | `string` | Yes | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | `string` | No | The description of the alert |
-| `id` | `string` | Yes | The ID of this alert |
-| `resolved_at` | `string` | No | When this alert was resolved |
-| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
-| `status` | `string` | Yes | Statuses of an alert |
-| `tags` | `array` | No | Tags someone has applied to this alert |
-| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | `string` | Yes | When this alert was last updated |
-
-### Field Usage by Operation
-
-| Field | create |
-| --- | --- |
-| `alert_group_ids` | - |
-| `alert_source_id` | - |
-| `attributes` | - |
-| `created_at` | - |
-| `deduplication_key` | - |
-| `description` | - |
-| `id` | - |
-| `resolved_at` | - |
-| `source_url` | - |
-| `status` | - |
-| `tags` | Yes |
-| `title` | - |
-| `updated_at` | - |
-
-### Operations
-
-#### `create(array $reqdata, ?array $ctrl = null): mixed`
-
-Create a new entity with the given data. Returns the created entity and throws on error.
-
-```php
-$result = $client->AlertsRemoveTagsResultV2()->create([
-  "alert_id" => null, // string
-  "tags" => null, // array
-]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): AlertsRemoveTagsResultV2Entity`
-
-Create a new `AlertsRemoveTagsResultV2Entity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -2015,18 +1880,19 @@ Return the entity name.
 
 ---
 
-## CallRoutesCreateAllowedCallerResultV2Entity
+## CallRouteAllowedCallerEntity
 
 ```php
-$call_routes_create_allowed_caller_result_v2 = $client->CallRoutesCreateAllowedCallerResultV2();
+$call_route_allowed_caller = $client->CallRouteAllowedCaller();
 ```
 
 ### Fields
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `string` | Yes | Unique identifier for this allowed caller |
 | `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number to allow, in international format |
+| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
 
 ### Operations
 
@@ -2035,456 +1901,46 @@ $call_routes_create_allowed_caller_result_v2 = $client->CallRoutesCreateAllowedC
 Create a new entity with the given data. Returns the created entity and throws on error.
 
 ```php
-$result = $client->CallRoutesCreateAllowedCallerResultV2()->create([
-  "call_route_id" => null, // string
+$result = $client->CallRouteAllowedCaller()->create([
+  "id" => null, // string
   "phone_number" => null, // string
 ]);
 ```
 
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): CallRoutesCreateAllowedCallerResultV2Entity`
-
-Create a new `CallRoutesCreateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesCreateOptionResultV2Entity
-
-```php
-$call_routes_create_option_result_v2 = $client->CallRoutesCreateOptionResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `path` | `array` | Yes | Who to page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `create(array $reqdata, ?array $ctrl = null): mixed`
-
-Create a new entity with the given data. Returns the created entity and throws on error.
-
-```php
-$result = $client->CallRoutesCreateOptionResultV2()->create([
-  "call_route_id" => null, // string
-  "digit" => null, // string
-  "path" => null, // array
-  "prompt" => null, // string
-]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): CallRoutesCreateOptionResultV2Entity`
-
-Create a new `CallRoutesCreateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListAllowedCallersResultV2Entity
-
-```php
-$call_routes_list_allowed_callers_result_v2 = $client->CallRoutesListAllowedCallersResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
 #### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
 
 ```php
-$results = $client->CallRoutesListAllowedCallersResultV2()->list(["call_route_id" => "example"]);
+$results = $client->CallRouteAllowedCaller()->list(["id" => "example"]);
 ```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): CallRoutesListAllowedCallersResultV2Entity`
-
-Create a new `CallRoutesListAllowedCallersResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListOptionsResultV2Entity
-
-```php
-$call_routes_list_options_result_v2 = $client->CallRoutesListOptionsResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `array` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
-
-List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
-
-```php
-$results = $client->CallRoutesListOptionsResultV2()->list(["call_route_id" => "example"]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): CallRoutesListOptionsResultV2Entity`
-
-Create a new `CallRoutesListOptionsResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowAllowedCallerResultV2Entity
-
-```php
-$call_routes_show_allowed_caller_result_v2 = $client->CallRoutesShowAllowedCallerResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
 
 ```php
-$result = $client->CallRoutesShowAllowedCallerResultV2()->load(["id" => "call_routes_show_allowed_caller_result_v2_id", "call_route_id" => "call_route_id"]);
+$result = $client->CallRouteAllowedCaller()->load(["id" => "call_route_allowed_caller_id", "call_route_id" => "call_route_id"]);
 ```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): CallRoutesShowAllowedCallerResultV2Entity`
-
-Create a new `CallRoutesShowAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowOptionResultV2Entity
-
-```php
-$call_routes_show_option_result_v2 = $client->CallRoutesShowOptionResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `array` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `load(array $reqmatch, ?array $ctrl = null): mixed`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
-
-```php
-$result = $client->CallRoutesShowOptionResultV2()->load(["id" => "call_routes_show_option_result_v2_id", "call_route_id" => "call_route_id"]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): CallRoutesShowOptionResultV2Entity`
-
-Create a new `CallRoutesShowOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateAllowedCallerResultV2Entity
-
-```php
-$call_routes_update_allowed_caller_result_v2 = $client->CallRoutesUpdateAllowedCallerResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `update(array $reqdata, ?array $ctrl = null): mixed`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
-
-```php
-$result = $client->CallRoutesUpdateAllowedCallerResultV2()->update([
-  "call_route_id" => "call_route_id",
-  "id" => "id",
-  // Fields to update
-]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): CallRoutesUpdateAllowedCallerResultV2Entity`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateOptionResultV2Entity
-
-```php
-$call_routes_update_option_result_v2 = $client->CallRoutesUpdateOptionResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `array` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `update(array $reqdata, ?array $ctrl = null): mixed`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
-
-```php
-$result = $client->CallRoutesUpdateOptionResultV2()->update([
-  "call_route_id" => "call_route_id",
-  "id" => "id",
-  // Fields to update
-]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): CallRoutesUpdateOptionResultV2Entity`
-
-Create a new `CallRoutesUpdateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesV2Entity
-
-```php
-$call_routes_v2 = $client->CallRoutesV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
 
 ```php
-$result = $client->CallRoutesV2()->remove(["id" => "call_routes_v2_id", "call_route_id" => "call_route_id"]);
+$result = $client->CallRouteAllowedCaller()->remove(["id" => "call_route_allowed_caller_id", "call_route_id" => "call_route_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
+
+```php
+$result = $client->CallRouteAllowedCaller()->update([
+  "id" => "call_route_allowed_caller_id",
+  "call_route_id" => "call_route_id",
+  // Fields to update
+]);
 ```
 
 ### Common Methods
@@ -2505,9 +1961,105 @@ Get the entity match criteria.
 
 Set the entity match criteria.
 
-#### `make(): CallRoutesV2Entity`
+#### `make(): CallRouteAllowedCallerEntity`
 
-Create a new `CallRoutesV2Entity` instance with the same client and
+Create a new `CallRouteAllowedCallerEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## CallRouteOptionEntity
+
+```php
+$call_route_option = $client->CallRouteOption();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Yes | Unique identifier for this option |
+| `path` | `array` | Yes | Who we page when a caller chooses this option |
+| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->CallRouteOption()->create([
+  "id" => null, // string
+  "digit" => null, // string
+  "path" => null, // array
+  "prompt" => null, // string
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
+
+```php
+$results = $client->CallRouteOption()->list(["id" => "example"]);
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->CallRouteOption()->load(["id" => "call_route_option_id", "call_route_id" => "call_route_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->CallRouteOption()->remove(["id" => "call_route_option_id", "call_route_id" => "call_route_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
+
+```php
+$result = $client->CallRouteOption()->update([
+  "id" => "call_route_option_id",
+  "call_route_id" => "call_route_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): CallRouteOptionEntity`
+
+Create a new `CallRouteOptionEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -2654,21 +2206,21 @@ $catalog_entry = $client->CatalogEntry();
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `aliases` | - | Yes | - | - |
-| `archived_at` | - | - | - | - |
-| `attribute_values` | - | - | - | - |
-| `catalog_entry` | - | - | - | - |
-| `catalog_type` | - | - | - | - |
-| `catalog_type_id` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `external_id` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | Yes | - | - |
-| `update_attributes` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `aliases` | - | Yes | - | - | - |
+| `archived_at` | - | - | - | - | - |
+| `attribute_values` | - | - | - | - | - |
+| `catalog_entry` | - | - | - | - | - |
+| `catalog_type` | - | - | - | - | - |
+| `catalog_type_id` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `external_id` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | Yes | - | - | - |
+| `update_attributes` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2689,7 +2241,7 @@ $result = $client->CatalogEntry()->create([
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
 
 ```php
-$results = $client->CatalogEntry()->list(["catalog_type_id" => "example"]);
+$results = $client->CatalogEntry()->list(["catalog_type_id" => "example", "page_size" => 1]);
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -2698,6 +2250,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```php
 $result = $client->CatalogEntry()->load(["id" => "catalog_entry_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->CatalogEntry()->remove(["id" => "catalog_entry_id"]);
 ```
 
 #### `update(array $reqdata, ?array $ctrl = null): mixed`
@@ -2827,7 +2387,6 @@ $catalog_type = $client->CatalogType();
 | `registry_type` | `string` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `array` | No | If populated, the integrations required for this type |
 | `schema` | `array` | Yes |  |
-| `semantic_type` | `string` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | No | The url of the external repository where this type is managed |
 | `type_name` | `string` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | Yes | When this type was last updated |
@@ -2835,32 +2394,31 @@ $catalog_type = $client->CatalogType();
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | Yes | Yes |
-| `categories` | - | - | Yes | Yes |
-| `color` | - | - | Yes | Yes |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `dynamic_resource_parameter` | - | - | - | - |
-| `engine_resource_type` | - | - | - | - |
-| `estimated_count` | - | - | - | - |
-| `icon` | - | - | Yes | Yes |
-| `id` | - | - | - | - |
-| `is_editable` | - | - | - | - |
-| `is_team_type` | - | - | - | - |
-| `last_synced_at` | - | - | - | - |
-| `name` | - | - | - | - |
-| `owning_team_ids` | - | - | - | - |
-| `ranked` | - | - | Yes | Yes |
-| `registry_type` | - | - | - | - |
-| `required_integrations` | - | - | - | - |
-| `schema` | - | - | - | - |
-| `semantic_type` | - | - | - | - |
-| `source_repo_url` | - | - | - | - |
-| `type_name` | - | - | Yes | - |
-| `updated_at` | - | - | - | - |
-| `use_name_as_identifier` | - | - | Yes | Yes |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | Yes | Yes | - |
+| `categories` | - | - | Yes | Yes | - |
+| `color` | - | - | Yes | Yes | - |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - | - |
+| `engine_resource_type` | - | - | - | - | - |
+| `estimated_count` | - | - | - | - | - |
+| `icon` | - | - | Yes | Yes | - |
+| `id` | - | - | - | - | - |
+| `is_editable` | - | - | - | - | - |
+| `is_team_type` | - | - | - | - | - |
+| `last_synced_at` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `owning_team_ids` | - | - | - | - | - |
+| `ranked` | - | - | Yes | Yes | - |
+| `registry_type` | - | - | - | - | - |
+| `required_integrations` | - | - | - | - | - |
+| `schema` | - | - | - | - | - |
+| `source_repo_url` | - | - | - | - | - |
+| `type_name` | - | - | Yes | - | - |
+| `updated_at` | - | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes | - |
 
 ### Operations
 
@@ -2889,6 +2447,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```php
 $result = $client->CatalogType()->load(["id" => "catalog_type_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->CatalogType()->remove(["id" => "catalog_type_id"]);
 ```
 
 #### `update(array $reqdata, ?array $ctrl = null): mixed`
@@ -2962,7 +2528,6 @@ $catalog_type_schema = $client->CatalogTypeSchema();
 | `registry_type` | `string` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `array` | No | If populated, the integrations required for this type |
 | `schema` | `array` | Yes |  |
-| `semantic_type` | `string` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | No | The url of the external repository where this type is managed |
 | `type_name` | `string` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | Yes | When this type was last updated |
@@ -3033,13 +2598,6 @@ $custom_field = $client->CustomField();
 | `helptext_catalog_attribute_id` | `string` | No | Which catalog attribute provides helptext for the options |
 | `id` | `string` | Yes | Unique identifier for the custom field |
 | `name` | `string` | Yes | Human readable name for the custom field |
-| `options` | `array` | Yes | What options are available for this custom field, if this field has options |
-| `required` | `string` | No | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | `string` | No | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | `bool` | Yes | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | `bool` | Yes | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | `bool` | Yes | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | `bool` | No | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | `string` | Yes | When the action was last updated |
 
 ### Operations
@@ -3055,9 +2613,6 @@ $result = $client->CustomField()->create([
   "filter_by" => null, // array
   "fixed_filter" => null, // array
   "name" => null, // string
-  "show_before_closure" => null, // bool
-  "show_before_creation" => null, // bool
-  "show_before_update" => null, // bool
 ]);
 ```
 
@@ -3324,6 +2879,121 @@ Set the entity match criteria.
 #### `make(): EscalationEntity`
 
 Create a new `EscalationEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## EscalationPathEntity
+
+```php
+$escalation_path = $client->EscalationPath();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `current_responders` | `array` | No | Users who are currently on-call for this escalation path |
+| `id` | `string` | Yes | Unique identifier for this escalation path. |
+| `kind` | `string` | Yes | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | `string` | Yes | The name of this escalation path, for the user's reference. |
+| `param_bindings` | `array` | No | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | `array` | Yes | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` | `array` | Yes |  |
+| `team_ids` | `array` | Yes | IDs of the teams that own this escalation path. |
+| `template_id` | `string` | No | For a templated path, the template it is built from. |
+| `working_hours` | `array` | No | The working hours for this escalation path. |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `current_responders` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `kind` | - | - | Yes | Yes | - |
+| `name` | - | - | - | - | - |
+| `param_bindings` | - | - | - | - | - |
+| `path` | - | - | - | - | - |
+| `repeat_config` | - | - | - | - | - |
+| `team_ids` | - | - | Yes | Yes | - |
+| `template_id` | - | - | - | - | - |
+| `working_hours` | - | - | - | - | - |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->EscalationPath()->create([
+  "name" => null, // string
+  "path" => null, // array
+  "repeat_config" => null, // array
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
+
+```php
+$results = $client->EscalationPath()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->EscalationPath()->load(["id" => "escalation_path_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->EscalationPath()->remove(["id" => "escalation_path_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
+
+```php
+$result = $client->EscalationPath()->update([
+  "id" => "escalation_path_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): EscalationPathEntity`
+
+Create a new `EscalationPathEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -3920,12 +3590,8 @@ $incident = $client->Incident();
 | `slack_channel_name_override` | `string` | No | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | `string` | No | URL to link to the slack channel |
 | `slack_team_id` | `string` | Yes | ID of the Slack team / workspace. |
-| `source_message_channel_id` | `string` | No | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | `string` | No | Timestamp of the source message, if this incident was created from one |
-| `status` | `string` | Yes | Current status of the incident |
 | `summary` | `string` | No | Detailed description of the incident |
 | `team_ids` | `array` | Yes | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | `array` | No | Incident lifecycle events and when they last occurred |
 | `updated_at` | `string` | Yes | When the incident was last updated |
 | `visibility` | `string` | Yes | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | `float` | No | Amount of time spent on the incident in late hours |
@@ -3969,12 +3635,8 @@ $incident = $client->Incident();
 | `slack_channel_name_override` | - | - | - |
 | `slack_channel_url` | - | - | - |
 | `slack_team_id` | - | - | Yes |
-| `source_message_channel_id` | - | - | - |
-| `source_message_timestamp` | - | - | - |
-| `status` | - | - | Yes |
 | `summary` | - | - | - |
 | `team_ids` | - | - | - |
-| `timestamps` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -4500,24 +4162,9 @@ $incident_role = $client->IncidentRole();
 | `id` | `string` | Yes | Unique identifier for the role |
 | `instructions` | `string` | Yes | Provided to whoever is nominated for the role. |
 | `name` | `string` | Yes | Human readable name of the incident role |
-| `required` | `bool` | No | DEPRECATED: this will always be false. |
 | `role_type` | `string` | Yes | Type of incident role |
 | `shortform` | `string` | Yes | Short human readable name for Slack. |
 | `updated_at` | `string` | Yes | When the role was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
-| `description` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `instructions` | - | - | - | - | - |
-| `name` | - | - | - | - | - |
-| `required` | - | - | Yes | - | - |
-| `role_type` | - | - | - | - | - |
-| `shortform` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -4530,7 +4177,6 @@ $result = $client->IncidentRole()->create([
   "description" => null, // string
   "instructions" => null, // string
   "name" => null, // string
-  "required" => null, // bool
   "shortform" => null, // string
 ]);
 ```
@@ -5890,10 +5536,10 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateOneOffRuleResultV2Entity
+## PayConfigOneOffRuleEntity
 
 ```php
-$pay_configs_create_one_off_rule_result_v2 = $client->PayConfigsCreateOneOffRuleResultV2();
+$pay_config_one_off_rule = $client->PayConfigOneOffRule();
 ```
 
 ### Fields
@@ -5901,6 +5547,7 @@ $pay_configs_create_one_off_rule_result_v2 = $client->PayConfigsCreateOneOffRule
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_at` | `string` | Yes | When this rule stops applying |
+| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `name` | `string` | Yes | Human readable name for this rule |
 | `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | `string` | Yes | When this rule starts applying |
@@ -5912,8 +5559,8 @@ $pay_configs_create_one_off_rule_result_v2 = $client->PayConfigsCreateOneOffRule
 Create a new entity with the given data. Returns the created entity and throws on error.
 
 ```php
-$result = $client->PayConfigsCreateOneOffRuleResultV2()->create([
-  "pay_config_id" => null, // string
+$result = $client->PayConfigOneOffRule()->create([
+  "id" => null, // string
   "end_at" => null, // string
   "name" => null, // string
   "rate_cents" => null, // int
@@ -5921,6 +5568,42 @@ $result = $client->PayConfigsCreateOneOffRuleResultV2()->create([
 ]);
 ```
 
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
+
+```php
+$results = $client->PayConfigOneOffRule()->list(["id" => "example"]);
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->PayConfigOneOffRule()->load(["id" => "pay_config_one_off_rule_id", "pay_config_id" => "pay_config_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->PayConfigOneOffRule()->remove(["id" => "pay_config_one_off_rule_id", "pay_config_id" => "pay_config_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
+
+```php
+$result = $client->PayConfigOneOffRule()->update([
+  "id" => "pay_config_one_off_rule_id",
+  "pay_config_id" => "pay_config_id",
+  // Fields to update
+]);
+```
+
 ### Common Methods
 
 #### `data_get(): array`
@@ -5939,9 +5622,9 @@ Get the entity match criteria.
 
 Set the entity match criteria.
 
-#### `make(): PayConfigsCreateOneOffRuleResultV2Entity`
+#### `make(): PayConfigOneOffRuleEntity`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2Entity` instance with the same client and
+Create a new `PayConfigOneOffRuleEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -5951,10 +5634,10 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateWeeklyRuleResultV2Entity
+## PayConfigWeeklyRuleEntity
 
 ```php
-$pay_configs_create_weekly_rule_result_v2 = $client->PayConfigsCreateWeeklyRuleResultV2();
+$pay_config_weekly_rule = $client->PayConfigWeeklyRule();
 ```
 
 ### Fields
@@ -5962,6 +5645,7 @@ $pay_configs_create_weekly_rule_result_v2 = $client->PayConfigsCreateWeeklyRuleR
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
 | `weekdays` | `array` | Yes | Days of the week this rule applies on |
@@ -5973,8 +5657,8 @@ $pay_configs_create_weekly_rule_result_v2 = $client->PayConfigsCreateWeeklyRuleR
 Create a new entity with the given data. Returns the created entity and throws on error.
 
 ```php
-$result = $client->PayConfigsCreateWeeklyRuleResultV2()->create([
-  "pay_config_id" => null, // string
+$result = $client->PayConfigWeeklyRule()->create([
+  "id" => null, // string
   "end_time" => null, // string
   "rate_cents" => null, // int
   "start_time" => null, // string
@@ -5982,400 +5666,40 @@ $result = $client->PayConfigsCreateWeeklyRuleResultV2()->create([
 ]);
 ```
 
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): PayConfigsCreateWeeklyRuleResultV2Entity`
-
-Create a new `PayConfigsCreateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListOneOffRulesResultV2Entity
-
-```php
-$pay_configs_list_one_off_rules_result_v2 = $client->PayConfigsListOneOffRulesResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
 #### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
 
 ```php
-$results = $client->PayConfigsListOneOffRulesResultV2()->list(["pay_config_id" => "example"]);
+$results = $client->PayConfigWeeklyRule()->list(["id" => "example"]);
 ```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): PayConfigsListOneOffRulesResultV2Entity`
-
-Create a new `PayConfigsListOneOffRulesResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListWeeklyRulesResultV2Entity
-
-```php
-$pay_configs_list_weekly_rules_result_v2 = $client->PayConfigsListWeeklyRulesResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `array` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
-
-List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
-
-```php
-$results = $client->PayConfigsListWeeklyRulesResultV2()->list(["pay_config_id" => "example"]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): PayConfigsListWeeklyRulesResultV2Entity`
-
-Create a new `PayConfigsListWeeklyRulesResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowOneOffRuleResultV2Entity
-
-```php
-$pay_configs_show_one_off_rule_result_v2 = $client->PayConfigsShowOneOffRuleResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
 
 ```php
-$result = $client->PayConfigsShowOneOffRuleResultV2()->load(["id" => "pay_configs_show_one_off_rule_result_v2_id", "pay_config_id" => "pay_config_id"]);
+$result = $client->PayConfigWeeklyRule()->load(["id" => "pay_config_weekly_rule_id", "pay_config_id" => "pay_config_id"]);
 ```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): PayConfigsShowOneOffRuleResultV2Entity`
-
-Create a new `PayConfigsShowOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowWeeklyRuleResultV2Entity
-
-```php
-$pay_configs_show_weekly_rule_result_v2 = $client->PayConfigsShowWeeklyRuleResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `array` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `load(array $reqmatch, ?array $ctrl = null): mixed`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
-
-```php
-$result = $client->PayConfigsShowWeeklyRuleResultV2()->load(["id" => "pay_configs_show_weekly_rule_result_v2_id", "pay_config_id" => "pay_config_id"]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): PayConfigsShowWeeklyRuleResultV2Entity`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateOneOffRuleResultV2Entity
-
-```php
-$pay_configs_update_one_off_rule_result_v2 = $client->PayConfigsUpdateOneOffRuleResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `update(array $reqdata, ?array $ctrl = null): mixed`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
-
-```php
-$result = $client->PayConfigsUpdateOneOffRuleResultV2()->update([
-  "id" => "id",
-  "pay_config_id" => "pay_config_id",
-  // Fields to update
-]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): PayConfigsUpdateOneOffRuleResultV2Entity`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateWeeklyRuleResultV2Entity
-
-```php
-$pay_configs_update_weekly_rule_result_v2 = $client->PayConfigsUpdateWeeklyRuleResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `array` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `update(array $reqdata, ?array $ctrl = null): mixed`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
-
-```php
-$result = $client->PayConfigsUpdateWeeklyRuleResultV2()->update([
-  "id" => "id",
-  "pay_config_id" => "pay_config_id",
-  // Fields to update
-]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): PayConfigsUpdateWeeklyRuleResultV2Entity`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsV2Entity
-
-```php
-$pay_configs_v2 = $client->PayConfigsV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
 
 #### `remove(array $reqmatch, ?array $ctrl = null): mixed`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
 
 ```php
-$result = $client->PayConfigsV2()->remove(["id" => "pay_configs_v2_id", "pay_config_id" => "pay_config_id"]);
+$result = $client->PayConfigWeeklyRule()->remove(["id" => "pay_config_weekly_rule_id", "pay_config_id" => "pay_config_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
+
+```php
+$result = $client->PayConfigWeeklyRule()->update([
+  "id" => "pay_config_weekly_rule_id",
+  "pay_config_id" => "pay_config_id",
+  // Fields to update
+]);
 ```
 
 ### Common Methods
@@ -6396,9 +5720,9 @@ Get the entity match criteria.
 
 Set the entity match criteria.
 
-#### `make(): PayConfigsV2Entity`
+#### `make(): PayConfigWeeklyRuleEntity`
 
-Create a new `PayConfigsV2Entity` instance with the same client and
+Create a new `PayConfigWeeklyRuleEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -6722,58 +6046,6 @@ Return the entity name.
 
 ---
 
-## PoliciesV2Entity
-
-```php
-$policies_v2 = $client->PoliciesV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
-
-#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
-
-```php
-$result = $client->PoliciesV2()->remove(["id" => "policies_v2_id"]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): PoliciesV2Entity`
-
-Create a new `PoliciesV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
 ## PolicyEntity
 
 ```php
@@ -6802,23 +6074,23 @@ $policy = $client->Policy();
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `assignment_rules` | - | - | - | - |
-| `conditions` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `debrief` | - | - | - | - |
-| `description` | - | - | Yes | Yes |
-| `expressions` | - | - | - | - |
-| `follow_up` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `on_call_readiness` | - | - | - | - |
-| `policy_type` | - | - | - | - |
-| `post_mortem` | - | - | - | - |
-| `schedule` | - | - | - | - |
-| `status` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignment_rules` | - | - | - | - | - |
+| `conditions` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `debrief` | - | - | - | - | - |
+| `description` | - | - | Yes | Yes | - |
+| `expressions` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `on_call_readiness` | - | - | - | - | - |
+| `policy_type` | - | - | - | - | - |
+| `post_mortem` | - | - | - | - | - |
+| `schedule` | - | - | - | - | - |
+| `status` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -6854,6 +6126,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```php
 $result = $client->Policy()->load(["id" => "policy_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->Policy()->remove(["id" => "policy_id"]);
 ```
 
 #### `update(array $reqdata, ?array $ctrl = null): mixed`
@@ -7444,6 +6724,108 @@ Return the entity name.
 
 ---
 
+## ScheduleOverrideEntity
+
+```php
+$schedule_override = $client->ScheduleOverride();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `end_at` | `string` | Yes | End of the override |
+| `id` | `string` | Yes | Unique internal ID of the schedule override |
+| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | Yes | The schedule that this override applies to |
+| `start_at` | `string` | Yes | Start of the override |
+| `updated_at` | `string` | Yes |  |
+| `user` | `array` | Yes |  |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->ScheduleOverride()->create([
+  "end_at" => null, // string
+  "layer_id" => null, // string
+  "rotation_id" => null, // string
+  "schedule_id" => null, // string
+  "start_at" => null, // string
+  "user" => null, // array
+]);
+```
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
+
+```php
+$results = $client->ScheduleOverride()->list(["schedule_id" => "example"]);
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->ScheduleOverride()->load(["id" => "schedule_override_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->ScheduleOverride()->remove(["id" => "schedule_override_id"]);
+```
+
+#### `update(array $reqdata, ?array $ctrl = null): mixed`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
+
+```php
+$result = $client->ScheduleOverride()->update([
+  "id" => "schedule_override_id",
+  // Fields to update
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): ScheduleOverrideEntity`
+
+Create a new `ScheduleOverrideEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleReplicaEntity
 
 ```php
@@ -7499,6 +6881,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 $result = $client->ScheduleReplica()->load(["id" => "schedule_replica_id", "schedule_id" => "schedule_id"]);
 ```
 
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->ScheduleReplica()->remove(["id" => "schedule_replica_id", "schedule_id" => "schedule_id"]);
+```
+
 ### Common Methods
 
 #### `data_get(): array`
@@ -7552,18 +6942,18 @@ $schedule_sync_rule = $client->ScheduleSyncRule();
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `permanent_member_user_ids` | - | - | Yes | Yes |
-| `rotation_id` | - | - | - | - |
-| `schedule_id` | - | - | - | - |
-| `schedule_sync_target` | - | - | - | - |
-| `schedule_sync_target_id` | - | - | - | - |
-| `sync_type` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `permanent_member_user_ids` | - | - | Yes | Yes | - |
+| `rotation_id` | - | - | - | - | - |
+| `schedule_id` | - | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - | - |
+| `sync_type` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -7593,6 +6983,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```php
 $result = $client->ScheduleSyncRule()->load(["id" => "schedule_sync_rule_id", "schedule_id" => "schedule_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->ScheduleSyncRule()->remove(["id" => "schedule_sync_rule_id", "schedule_id" => "schedule_id"]);
 ```
 
 #### `update(array $reqdata, ?array $ctrl = null): mixed`
@@ -7749,152 +7147,6 @@ Return the entity name.
 
 ---
 
-## SchedulesShowOverrideResultV2Entity
-
-```php
-$schedules_show_override_result_v2 = $client->SchedulesShowOverrideResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `string` | Yes |  |
-| `end_at` | `string` | Yes | End of the override |
-| `id` | `string` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | Yes | The schedule that this override applies to |
-| `start_at` | `string` | Yes | Start of the override |
-| `updated_at` | `string` | Yes |  |
-| `user` | `array` | Yes |  |
-
-### Operations
-
-#### `create(array $reqdata, ?array $ctrl = null): mixed`
-
-Create a new entity with the given data. Returns the created entity and throws on error.
-
-```php
-$result = $client->SchedulesShowOverrideResultV2()->create([
-  "end_at" => null, // string
-  "layer_id" => null, // string
-  "rotation_id" => null, // string
-  "schedule_id" => null, // string
-  "start_at" => null, // string
-  "user" => null, // array
-]);
-```
-
-#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
-
-List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
-
-```php
-$results = $client->SchedulesShowOverrideResultV2()->list(["schedule_id" => "example"]);
-```
-
-#### `load(array $reqmatch, ?array $ctrl = null): mixed`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
-
-```php
-$result = $client->SchedulesShowOverrideResultV2()->load(["id" => "schedules_show_override_result_v2_id"]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): SchedulesShowOverrideResultV2Entity`
-
-Create a new `SchedulesShowOverrideResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## SchedulesUpdateOverrideResultV2Entity
-
-```php
-$schedules_update_override_result_v2 = $client->SchedulesUpdateOverrideResultV2();
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `string` | Yes |  |
-| `end_at` | `string` | Yes | End of the override |
-| `id` | `string` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | Yes | The schedule that this override applies to |
-| `start_at` | `string` | Yes | Start of the override |
-| `updated_at` | `string` | Yes |  |
-| `user` | `array` | Yes |  |
-
-### Operations
-
-#### `update(array $reqdata, ?array $ctrl = null): mixed`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
-
-```php
-$result = $client->SchedulesUpdateOverrideResultV2()->update([
-  "id" => "id",
-  // Fields to update
-]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): SchedulesUpdateOverrideResultV2Entity`
-
-Create a new `SchedulesUpdateOverrideResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
 ## SecretEntity
 
 ```php
@@ -8030,14 +7282,14 @@ $severity = $client->Severity();
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -8066,6 +7318,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```php
 $result = $client->Severity()->load(["id" => "severity_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->Severity()->remove(["id" => "severity_id"]);
 ```
 
 #### `update(array $reqdata, ?array $ctrl = null): mixed`
@@ -8264,10 +7524,10 @@ Return the entity name.
 
 ---
 
-## StatusPageComponentAvailabilityV2Entity
+## StatusPageComponentAvailabilityEntity
 
 ```php
-$status_page_component_availability_v2 = $client->StatusPageComponentAvailabilityV2();
+$status_page_component_availability = $client->StatusPageComponentAvailability();
 ```
 
 ### Fields
@@ -8288,7 +7548,7 @@ $status_page_component_availability_v2 = $client->StatusPageComponentAvailabilit
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
 
 ```php
-$result = $client->StatusPageComponentAvailabilityV2()->load(["component_id" => "component_id", "status_page_id" => "status_page_id", "end_at" => "end_at", "start_at" => "start_at"]);
+$result = $client->StatusPageComponentAvailability()->load(["component_id" => "component_id", "status_page_id" => "status_page_id", "end_at" => "end_at", "start_at" => "start_at"]);
 ```
 
 ### Common Methods
@@ -8309,9 +7569,9 @@ Get the entity match criteria.
 
 Set the entity match criteria.
 
-#### `make(): StatusPageComponentAvailabilityV2Entity`
+#### `make(): StatusPageComponentAvailabilityEntity`
 
-Create a new `StatusPageComponentAvailabilityV2Entity` instance with the same client and
+Create a new `StatusPageComponentAvailabilityEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -8477,10 +7737,10 @@ Return the entity name.
 
 ---
 
-## StatusPageLinkedResponseIncidentV1Entity
+## StatusPageLinkedResponseIncidentEntity
 
 ```php
-$status_page_linked_response_incident_v1 = $client->StatusPageLinkedResponseIncidentV1();
+$status_page_linked_response_incident = $client->StatusPageLinkedResponseIncident();
 ```
 
 ### Fields
@@ -8497,7 +7757,7 @@ $status_page_linked_response_incident_v1 = $client->StatusPageLinkedResponseInci
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
 
 ```php
-$results = $client->StatusPageLinkedResponseIncidentV1()->list(["incident_id" => "example", "status_page_id" => "example"]);
+$results = $client->StatusPageLinkedResponseIncident()->list(["incident_id" => "example", "status_page_id" => "example"]);
 ```
 
 ### Common Methods
@@ -8518,9 +7778,9 @@ Get the entity match criteria.
 
 Set the entity match criteria.
 
-#### `make(): StatusPageLinkedResponseIncidentV1Entity`
+#### `make(): StatusPageLinkedResponseIncidentEntity`
 
-Create a new `StatusPageLinkedResponseIncidentV1Entity` instance with the same client and
+Create a new `StatusPageLinkedResponseIncidentEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -8557,22 +7817,22 @@ $status_page_maintenance = $client->StatusPageMaintenance();
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `affected_component_ids` | - | - | - | - |
-| `automate_maintenance_status` | - | - | Yes | - |
-| `component_maintenance_periods` | - | - | - | - |
-| `end_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `idempotency_key` | - | - | - | - |
-| `maintenance_status` | - | - | - | - |
-| `message` | - | - | - | - |
-| `name` | - | - | - | - |
-| `notify_subscribers` | - | - | - | - |
-| `published_at` | - | - | - | - |
-| `start_at` | - | - | - | - |
-| `status_page_id` | - | - | - | - |
-| `updates` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `affected_component_ids` | - | - | - | - | - |
+| `automate_maintenance_status` | - | - | Yes | - | - |
+| `component_maintenance_periods` | - | - | - | - | - |
+| `end_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `idempotency_key` | - | - | - | - | - |
+| `maintenance_status` | - | - | - | - | - |
+| `message` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `notify_subscribers` | - | - | - | - | - |
+| `published_at` | - | - | - | - | - |
+| `start_at` | - | - | - | - | - |
+| `status_page_id` | - | - | - | - | - |
+| `updates` | - | - | - | - | - |
 
 ### Operations
 
@@ -8608,6 +7868,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```php
 $result = $client->StatusPageMaintenance()->load(["id" => "status_page_maintenance_id"]);
+```
+
+#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
+
+```php
+$result = $client->StatusPageMaintenance()->remove(["id" => "status_page_maintenance_id"]);
 ```
 
 #### `update(array $reqdata, ?array $ctrl = null): mixed`
@@ -8766,52 +8034,6 @@ Return the entity name.
 
 ---
 
-## StatusPagesV2Entity
-
-```php
-$status_pages_v2 = $client->StatusPagesV2();
-```
-
-### Operations
-
-#### `remove(array $reqmatch, ?array $ctrl = null): mixed`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted, and throws on error.
-
-```php
-$result = $client->StatusPagesV2()->remove(["status_page_maintenance_id" => "status_page_maintenance_id"]);
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): StatusPagesV2Entity`
-
-Create a new `StatusPagesV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
 ## TeamEntity
 
 ```php
@@ -8875,10 +8097,10 @@ Return the entity name.
 
 ---
 
-## TelemetryDataSourceV2Entity
+## TelemetryDataSourceEntity
 
 ```php
-$telemetry_data_source_v2 = $client->TelemetryDataSourceV2();
+$telemetry_data_source = $client->TelemetryDataSource();
 ```
 
 ### Fields
@@ -8918,7 +8140,7 @@ $telemetry_data_source_v2 = $client->TelemetryDataSourceV2();
 Update an existing entity. The data must include the entity `id`. Returns the updated entity and throws on error.
 
 ```php
-$result = $client->TelemetryDataSourceV2()->update([
+$result = $client->TelemetryDataSource()->update([
   "id" => "id",
   // Fields to update
 ]);
@@ -8942,9 +8164,9 @@ Get the entity match criteria.
 
 Set the entity match criteria.
 
-#### `make(): TelemetryDataSourceV2Entity`
+#### `make(): TelemetryDataSourceEntity`
 
-Create a new `TelemetryDataSourceV2Entity` instance with the same client and
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -8975,16 +8197,6 @@ $user = $client->User();
 | `slack_user_id` | `string` | No | Slack ID of the user |
 
 ### Operations
-
-#### `create(array $reqdata, ?array $ctrl = null): mixed`
-
-Create a new entity with the given data. Returns the created entity and throws on error.
-
-```php
-$result = $client->User()->create([
-  "id" => null, // string
-]);
-```
 
 #### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
 

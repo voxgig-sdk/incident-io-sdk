@@ -1,7 +1,7 @@
 import { IncidentIoEntityBase } from '../IncidentIoEntityBase';
 import type { IncidentIoSDK } from '../IncidentIoSDK';
 import type { Control } from '../types';
-import type { StatusPageMaintenance, StatusPageMaintenanceLoadMatch, StatusPageMaintenanceListMatch, StatusPageMaintenanceCreateData, StatusPageMaintenanceUpdateData } from '../IncidentIoTypes';
+import type { StatusPageMaintenance, StatusPageMaintenanceLoadMatch, StatusPageMaintenanceListMatch, StatusPageMaintenanceCreateData, StatusPageMaintenanceUpdateData, StatusPageMaintenanceRemoveMatch } from '../IncidentIoTypes';
 declare class StatusPageMaintenanceEntity extends IncidentIoEntityBase<StatusPageMaintenance> {
     constructor(client: IncidentIoSDK, entopts: any);
     make(this: StatusPageMaintenanceEntity): StatusPageMaintenanceEntity;
@@ -9,5 +9,6 @@ declare class StatusPageMaintenanceEntity extends IncidentIoEntityBase<StatusPag
     list(this: any, reqmatch?: StatusPageMaintenanceListMatch, ctrl?: Control): Promise<StatusPageMaintenanceEntity[]>;
     create(this: any, reqdata?: StatusPageMaintenanceCreateData, ctrl?: Control): Promise<StatusPageMaintenanceEntity>;
     update(this: any, reqdata?: StatusPageMaintenanceUpdateData, ctrl?: Control): Promise<StatusPageMaintenanceEntity>;
+    remove(this: any, reqmatch?: StatusPageMaintenanceRemoveMatch, ctrl?: Control): Promise<StatusPageMaintenanceEntity>;
 }
 export { StatusPageMaintenanceEntity };

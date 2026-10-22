@@ -79,6 +79,40 @@ main: kit: flow: BasicScheduleSyncRuleFlow:
         }
       ]
     }
+
+    {
+      i: {
+        ref: "schedule_sync_rule_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "schedule_sync_rule01",
+        schedule_id: "schedule01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      m: {
+        schedule_id: "schedule01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "schedule_sync_rule_ref01"
+          }
+        }
+      ]
+    }
   ],
   "key$": "BasicScheduleSyncRuleFlow"
 }

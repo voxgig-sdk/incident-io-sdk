@@ -7,15 +7,15 @@ main: kit: flow: BasicTelemetryDataSourceFlow:
   name: "BasicTelemetryDataSourceFlow",
   step: [
     {
-      input: {
+      i: {
         ref: "telemetry_data_source_ref01",
         srcdatavar: "telemetry_data_source_ref01_data",
         suffix: "_up0",
         textfield: "created_at"
       }
 
-      op: "update",
-      spec: [
+      o: "update",
+      s: [
         {
           apply: "TextFieldMark",
           def: {

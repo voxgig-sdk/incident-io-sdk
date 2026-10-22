@@ -74,55 +74,6 @@ main: kit: entity: custom_field: {
       sh: "Human readable name for the custom field"
       t: "`$STRING`"
     }
-    options: {
-      h: "Options"
-      n: "options"
-      r: true
-      sh: "What options are available for this custom field, if this field has options"
-      t: "`$ARRAY`"
-    }
-    required: {
-      h: "Required"
-      n: "required"
-      r: false
-      sh: "When this custom field must be set during the incident lifecycle."
-      t: "`$STRING`"
-    }
-    required_v2: {
-      h: "Required V2"
-      n: "required_v2"
-      r: false
-      sh: "When this custom field must be set during the incident lifecycle."
-      t: "`$STRING`"
-    }
-    show_before_closure: {
-      h: "Show Before Closure"
-      n: "show_before_closure"
-      r: true
-      sh: "Whether a custom field should be shown in the incident resolve modal."
-      t: "`$BOOLEAN`"
-    }
-    show_before_creation: {
-      h: "Show Before Creation"
-      n: "show_before_creation"
-      r: true
-      sh: "Whether a custom field should be shown in the incident creation modal."
-      t: "`$BOOLEAN`"
-    }
-    show_before_update: {
-      h: "Show Before Update"
-      n: "show_before_update"
-      r: true
-      sh: "Whether a custom field should be shown in the incident update modal."
-      t: "`$BOOLEAN`"
-    }
-    show_in_announcement_post: {
-      h: "Show In Announcement Post"
-      n: "show_in_announcement_post"
-      r: false
-      sh: "Whether a custom field should be shown in the list of fields as part of the announcement post when set."
-      t: "`$BOOLEAN`"
-    }
     updated_at: {
       fo: "date-time"
       h: "Updated At"
@@ -162,6 +113,9 @@ main: kit: entity: custom_field: {
           }
           m: "POST"
           o: "/v1/custom_fields"
+          q: {
+            "$action": "v1"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -227,6 +181,9 @@ main: kit: entity: custom_field: {
           }
           m: "GET"
           o: "/v1/custom_fields"
+          q: {
+            "$action": "v1"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -295,6 +252,7 @@ main: kit: entity: custom_field: {
           m: "GET"
           o: "/v1/custom_fields/{id}"
           q: {
+            "$action": "v1"
             exist: [
               "id"
             ]
@@ -390,6 +348,7 @@ main: kit: entity: custom_field: {
           m: "DELETE"
           o: "/v1/custom_fields/{id}"
           q: {
+            "$action": "v1"
             exist: [
               "id"
             ]
@@ -487,6 +446,7 @@ main: kit: entity: custom_field: {
           m: "PUT"
           o: "/v1/custom_fields/{id}"
           q: {
+            "$action": "v1"
             exist: [
               "id"
             ]

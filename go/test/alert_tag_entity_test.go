@@ -190,7 +190,7 @@ func TestAlertTagEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"list"} {
+		for _, _op := range []string{"create", "list"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "alert_tag." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -199,30 +199,49 @@ func TestAlertTagEntity(t *testing.T) {
 				return
 			}
 		}
+		if setup.live {
+			for _, _liveKey := range []string{"alert01"} {
+				if setup.syntheticOnly || setup.idmap[_liveKey] == nil {
+					liveMiss(t, alert_tagEntityLiveStrict, "Live entity test blocked: needs %s via INCIDENT_IO_TEST_ALERT_TAG_ENTID", _liveKey)
+				}
+			}
+		}
 		client := setup.client
 		_ = client
 
-		// Bootstrap entity data from existing test data (no create step in flow).
-		alertTagRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.alert_tag")))
-		var alertTagRef01Data map[string]any
-		if len(alertTagRef01DataRaw) > 0 {
-			alertTagRef01Data = core.ToMapAny(alertTagRef01DataRaw[0][1])
+		// CREATE
+		alertTagRef01Ent := client.AlertTag(nil)
+		alertTagRef01Data := core.ToMapAny(vs.GetProp(
+			vs.GetPath(setup.data, []any{"new", "alert_tag"}), "alert_tag_ref01"))
+		alertTagRef01Data["alert_id"] = setup.idmap["alert01"]
+
+		alertTagRef01DataResult, err := alertTagRef01Ent.Create(alertTagRef01Data, nil)
+		if err != nil {
+			t.Fatalf("create failed: %v", err)
 		}
-		// Discard guards against Go's unused-var check when the flow's steps
-		// happen not to consume the bootstrap data (e.g. list-only flows).
-		_ = alertTagRef01Data
+		alertTagRef01Data = core.ToMapAny(entityData(alertTagRef01DataResult))
+		if alertTagRef01Data == nil {
+			t.Fatal("expected create result to be a map")
+		}
+		if alertTagRef01Data["id"] == nil {
+			t.Fatal("expected created entity to have an id")
+		}
 
 		// LIST
-		alertTagRef01Ent := client.AlertTag(nil)
 		alertTagRef01Match := map[string]any{}
 
 		alertTagRef01ListResult, err := alertTagRef01Ent.List(alertTagRef01Match, nil)
 		if err != nil {
 			t.Fatalf("list failed: %v", err)
 		}
-		_, alertTagRef01ListOk := alertTagRef01ListResult.([]any)
+		alertTagRef01List, alertTagRef01ListOk := alertTagRef01ListResult.([]any)
 		if !alertTagRef01ListOk {
 			t.Fatalf("expected list result to be an array, got %T", alertTagRef01ListResult)
+		}
+
+		foundItem := vs.Select(entityListToData(alertTagRef01List), map[string]any{"id": alertTagRef01Data["id"]})
+		if vs.IsEmpty(foundItem) {
+			t.Fatal("expected to find created entity in list")
 		}
 
 	})
@@ -253,7 +272,7 @@ func alert_tagBasicSetup(extra map[string]any) *entityTestSetup {
 
 	// Generate idmap via transform, matching TS pattern.
 	idmap, _ := vs.Transform(
-		[]any{"alert_tag01", "alert_tag02", "alert_tag03"},
+		[]any{"alert_tag01", "alert_tag02", "alert_tag03", "alert01", "alert02", "alert03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
 				"`$KEY`": "`$COPY`",

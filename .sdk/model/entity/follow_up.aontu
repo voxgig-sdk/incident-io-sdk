@@ -183,6 +183,9 @@ main: kit: entity: follow_up: {
           }
           m: "POST"
           o: "/v2/follow_ups"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -277,6 +280,9 @@ main: kit: entity: follow_up: {
           }
           m: "GET"
           o: "/v2/follow_ups"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -413,6 +419,7 @@ main: kit: entity: follow_up: {
           m: "GET"
           o: "/v2/follow_ups/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]
@@ -508,6 +515,7 @@ main: kit: entity: follow_up: {
           m: "DELETE"
           o: "/v2/follow_ups/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]
@@ -605,6 +613,7 @@ main: kit: entity: follow_up: {
           m: "PUT"
           o: "/v2/follow_ups/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]

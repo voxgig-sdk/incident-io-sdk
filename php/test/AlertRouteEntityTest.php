@@ -182,7 +182,7 @@ class AlertRouteEntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->AlertRoute(null)->list(["after" => 1, "page_size" => 1], null);
+            $client->AlertRoute(null)->list(["after" => 1], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

@@ -53,7 +53,7 @@ func TestScheduleReplicaEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"load"} {
+		for _, _op := range []string{"load", "remove", "list"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "schedule_replica." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -63,10 +63,19 @@ func TestScheduleReplicaEntity(t *testing.T) {
 			}
 		}
 		if setup.live {
-			liveMiss(t, schedule_replicaEntityLiveStrict, "Live entity test blocked: %s", "the flow loads a schedule_replica record it has no list to find")
+			for _, _liveKey := range []string{"schedule01"} {
+				if setup.syntheticOnly || setup.idmap[_liveKey] == nil {
+					liveMiss(t, schedule_replicaEntityLiveStrict, "Live entity test blocked: needs %s via INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID", _liveKey)
+				}
+			}
 		}
 		client := setup.client
 		_ = client
+		if setup.live {
+			liveExisting(t, schedule_replicaEntityLiveStrict, setup.data, "schedule_replica", func() (any, error) {
+				return client.ScheduleReplica(nil).List(map[string]any{"schedule_id": setup.idmap["schedule01"]}, nil)
+			})
+		}
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		scheduleReplicaRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.schedule_replica")))

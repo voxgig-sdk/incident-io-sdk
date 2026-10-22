@@ -1,0 +1,59 @@
+{
+  "existing": {
+    "call_route_allowed_caller": {
+      "CALL_ROUTE_ALLOWED_CALLER00": {
+        "id": "CALL_ROUTE_ALLOWED_CALLER00",
+        "name": "s1f",
+        "phone_number": "s20",
+        "call_route_id": "CALL_ROUTE01"
+      },
+      "CALL_ROUTE_ALLOWED_CALLER01": {
+        "id": "CALL_ROUTE_ALLOWED_CALLER01",
+        "name": "s3d",
+        "phone_number": "s3e",
+        "call_route_id": "CALL_ROUTE01"
+      },
+      "CALL_ROUTE_ALLOWED_CALLER02": {
+        "id": "CALL_ROUTE_ALLOWED_CALLER02",
+        "name": "s5b",
+        "phone_number": "s5c",
+        "call_route_id": "CALL_ROUTE01"
+      }
+    }
+  },
+  "new": {
+    "call_route_allowed_caller": {
+      "call_route_allowed_caller_ref01": {
+        "name": "s79",
+        "phone_number": "s7a"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/call_routes/{call_route_id}/allowed_callers": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/call_routes/{call_route_id}/allowed_callers": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/call_routes/{call_route_id}/allowed_callers/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/call_routes/{call_route_id}/allowed_callers/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/call_routes/{call_route_id}/allowed_callers/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

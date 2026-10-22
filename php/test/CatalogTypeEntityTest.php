@@ -194,7 +194,7 @@ class CatalogTypeEntityTest extends TestCase
         $setup = catalog_type_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["create", "list", "update", "load"] as $_op) {
+        foreach (["create", "list", "update", "load", "remove"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "catalog_type." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
@@ -247,6 +247,23 @@ class CatalogTypeEntityTest extends TestCase
         $catalog_type_ref01_data_dt0_load_result = Helpers::to_map(is_object($catalog_type_ref01_data_dt0_loaded) && method_exists($catalog_type_ref01_data_dt0_loaded, 'data_get') ? $catalog_type_ref01_data_dt0_loaded->data_get() : $catalog_type_ref01_data_dt0_loaded);
         $this->assertNotNull($catalog_type_ref01_data_dt0_load_result);
         $this->assertEquals($catalog_type_ref01_data_dt0_load_result["id"], $catalog_type_ref01_data["id"]);
+
+        // REMOVE
+        $catalog_type_ref01_match_rm0 = [
+            "id" => $catalog_type_ref01_data["id"],
+        ];
+        $catalog_type_ref01_ent->remove($catalog_type_ref01_match_rm0, null);
+
+        // LIST
+        $catalog_type_ref01_match_rt0 = [];
+
+        $catalog_type_ref01_list_rt0_result = $catalog_type_ref01_ent->list($catalog_type_ref01_match_rt0, null);
+        $this->assertIsArray($catalog_type_ref01_list_rt0_result);
+
+        $not_found_item = sdk_select(
+            Runner::entity_list_to_data($catalog_type_ref01_list_rt0_result),
+            ["id" => $catalog_type_ref01_data["id"]]);
+        $this->assertEmpty($not_found_item);
 
     }
 }

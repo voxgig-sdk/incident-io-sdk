@@ -44,22 +44,14 @@ const AlertSourceEntity_1 = require("./entity/AlertSourceEntity");
 const AlertSourcesV2Entity_1 = require("./entity/AlertSourcesV2Entity");
 const AlertTagEntity_1 = require("./entity/AlertTagEntity");
 const AlertsAddTagsResultV2Entity_1 = require("./entity/AlertsAddTagsResultV2Entity");
-const AlertsRemoveTagsResultV2Entity_1 = require("./entity/AlertsRemoveTagsResultV2Entity");
 const AlertsSetTagsResultV2Entity_1 = require("./entity/AlertsSetTagsResultV2Entity");
 const AlertsTransitionIncidentAlertResultV2Entity_1 = require("./entity/AlertsTransitionIncidentAlertResultV2Entity");
 const AnnouncementRuleEntity_1 = require("./entity/AnnouncementRuleEntity");
 const AnnouncementTemplateEntity_1 = require("./entity/AnnouncementTemplateEntity");
 const ApiKeyEntity_1 = require("./entity/ApiKeyEntity");
 const CallRouteEntity_1 = require("./entity/CallRouteEntity");
-const CallRoutesCreateAllowedCallerResultV2Entity_1 = require("./entity/CallRoutesCreateAllowedCallerResultV2Entity");
-const CallRoutesCreateOptionResultV2Entity_1 = require("./entity/CallRoutesCreateOptionResultV2Entity");
-const CallRoutesListAllowedCallersResultV2Entity_1 = require("./entity/CallRoutesListAllowedCallersResultV2Entity");
-const CallRoutesListOptionsResultV2Entity_1 = require("./entity/CallRoutesListOptionsResultV2Entity");
-const CallRoutesShowAllowedCallerResultV2Entity_1 = require("./entity/CallRoutesShowAllowedCallerResultV2Entity");
-const CallRoutesShowOptionResultV2Entity_1 = require("./entity/CallRoutesShowOptionResultV2Entity");
-const CallRoutesUpdateAllowedCallerResultV2Entity_1 = require("./entity/CallRoutesUpdateAllowedCallerResultV2Entity");
-const CallRoutesUpdateOptionResultV2Entity_1 = require("./entity/CallRoutesUpdateOptionResultV2Entity");
-const CallRoutesV2Entity_1 = require("./entity/CallRoutesV2Entity");
+const CallRouteAllowedCallerEntity_1 = require("./entity/CallRouteAllowedCallerEntity");
+const CallRouteOptionEntity_1 = require("./entity/CallRouteOptionEntity");
 const CallSessionEntity_1 = require("./entity/CallSessionEntity");
 const CallTranscriptEntryEntity_1 = require("./entity/CallTranscriptEntryEntity");
 const CatalogEntryEntity_1 = require("./entity/CatalogEntryEntity");
@@ -69,6 +61,7 @@ const CatalogTypeSchemaEntity_1 = require("./entity/CatalogTypeSchemaEntity");
 const CustomFieldEntity_1 = require("./entity/CustomFieldEntity");
 const CustomFieldOptionEntity_1 = require("./entity/CustomFieldOptionEntity");
 const EscalationEntity_1 = require("./entity/EscalationEntity");
+const EscalationPathEntity_1 = require("./entity/EscalationPathEntity");
 const EscalationPathTemplateEntity_1 = require("./entity/EscalationPathTemplateEntity");
 const EscalationsCheckEscalationPermissionsResultV2Entity_1 = require("./entity/EscalationsCheckEscalationPermissionsResultV2Entity");
 const EscalationsReassignEscalationResultV2Entity_1 = require("./entity/EscalationsReassignEscalationResultV2Entity");
@@ -102,20 +95,12 @@ const OnCallNotificationMethodPublicV2Entity_1 = require("./entity/OnCallNotific
 const OnCallNotificationPauseEntity_1 = require("./entity/OnCallNotificationPauseEntity");
 const OnCallNotificationRulePublicV2Entity_1 = require("./entity/OnCallNotificationRulePublicV2Entity");
 const PayConfigEntity_1 = require("./entity/PayConfigEntity");
-const PayConfigsCreateOneOffRuleResultV2Entity_1 = require("./entity/PayConfigsCreateOneOffRuleResultV2Entity");
-const PayConfigsCreateWeeklyRuleResultV2Entity_1 = require("./entity/PayConfigsCreateWeeklyRuleResultV2Entity");
-const PayConfigsListOneOffRulesResultV2Entity_1 = require("./entity/PayConfigsListOneOffRulesResultV2Entity");
-const PayConfigsListWeeklyRulesResultV2Entity_1 = require("./entity/PayConfigsListWeeklyRulesResultV2Entity");
-const PayConfigsShowOneOffRuleResultV2Entity_1 = require("./entity/PayConfigsShowOneOffRuleResultV2Entity");
-const PayConfigsShowWeeklyRuleResultV2Entity_1 = require("./entity/PayConfigsShowWeeklyRuleResultV2Entity");
-const PayConfigsUpdateOneOffRuleResultV2Entity_1 = require("./entity/PayConfigsUpdateOneOffRuleResultV2Entity");
-const PayConfigsUpdateWeeklyRuleResultV2Entity_1 = require("./entity/PayConfigsUpdateWeeklyRuleResultV2Entity");
-const PayConfigsV2Entity_1 = require("./entity/PayConfigsV2Entity");
+const PayConfigOneOffRuleEntity_1 = require("./entity/PayConfigOneOffRuleEntity");
+const PayConfigWeeklyRuleEntity_1 = require("./entity/PayConfigWeeklyRuleEntity");
 const PayReportEntity_1 = require("./entity/PayReportEntity");
 const PayReportsPublishResultV2Entity_1 = require("./entity/PayReportsPublishResultV2Entity");
 const PayReportsUnpublishResultV2Entity_1 = require("./entity/PayReportsUnpublishResultV2Entity");
 const PayReportsV2Entity_1 = require("./entity/PayReportsV2Entity");
-const PoliciesV2Entity_1 = require("./entity/PoliciesV2Entity");
 const PolicyEntity_1 = require("./entity/PolicyEntity");
 const PolicyFindingEntity_1 = require("./entity/PolicyFindingEntity");
 const PolicyFindingsDismissResultV2Entity_1 = require("./entity/PolicyFindingsDismissResultV2Entity");
@@ -124,25 +109,23 @@ const PostmortemDocumentEntity_1 = require("./entity/PostmortemDocumentEntity");
 const ScheduleEntity_1 = require("./entity/ScheduleEntity");
 const ScheduleEntriesListPayloadV2Entity_1 = require("./entity/ScheduleEntriesListPayloadV2Entity");
 const ScheduleEntryEntity_1 = require("./entity/ScheduleEntryEntity");
+const ScheduleOverrideEntity_1 = require("./entity/ScheduleOverrideEntity");
 const ScheduleReplicaEntity_1 = require("./entity/ScheduleReplicaEntity");
 const ScheduleSyncRuleEntity_1 = require("./entity/ScheduleSyncRuleEntity");
 const ScheduleSyncTargetEntity_1 = require("./entity/ScheduleSyncTargetEntity");
-const SchedulesShowOverrideResultV2Entity_1 = require("./entity/SchedulesShowOverrideResultV2Entity");
-const SchedulesUpdateOverrideResultV2Entity_1 = require("./entity/SchedulesUpdateOverrideResultV2Entity");
 const SecretEntity_1 = require("./entity/SecretEntity");
 const SeverityEntity_1 = require("./entity/SeverityEntity");
 const StatusPageEntity_1 = require("./entity/StatusPageEntity");
 const StatusPageComponentEntity_1 = require("./entity/StatusPageComponentEntity");
-const StatusPageComponentAvailabilityV2Entity_1 = require("./entity/StatusPageComponentAvailabilityV2Entity");
+const StatusPageComponentAvailabilityEntity_1 = require("./entity/StatusPageComponentAvailabilityEntity");
 const StatusPageIncidentEntity_1 = require("./entity/StatusPageIncidentEntity");
 const StatusPageIncidentUpdateEntity_1 = require("./entity/StatusPageIncidentUpdateEntity");
-const StatusPageLinkedResponseIncidentV1Entity_1 = require("./entity/StatusPageLinkedResponseIncidentV1Entity");
+const StatusPageLinkedResponseIncidentEntity_1 = require("./entity/StatusPageLinkedResponseIncidentEntity");
 const StatusPageMaintenanceEntity_1 = require("./entity/StatusPageMaintenanceEntity");
 const StatusPageMaintenanceUpdateEntity_1 = require("./entity/StatusPageMaintenanceUpdateEntity");
 const StatusPageStructureEntity_1 = require("./entity/StatusPageStructureEntity");
-const StatusPagesV2Entity_1 = require("./entity/StatusPagesV2Entity");
 const TeamEntity_1 = require("./entity/TeamEntity");
-const TelemetryDataSourceV2Entity_1 = require("./entity/TelemetryDataSourceV2Entity");
+const TelemetryDataSourceEntity_1 = require("./entity/TelemetryDataSourceEntity");
 const UserEntity_1 = require("./entity/UserEntity");
 const WorkflowEntity_1 = require("./entity/WorkflowEntity");
 const WorkflowRunEntity_1 = require("./entity/WorkflowRunEntity");
@@ -458,13 +441,6 @@ class IncidentIoSDK {
         const self = this;
         return new AlertsAddTagsResultV2Entity_1.AlertsAddTagsResultV2Entity(self, entopts);
     }
-    // Entity access: `client.AlertsRemoveTagsResultV2().list()` / `client.AlertsRemoveTagsResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    AlertsRemoveTagsResultV2(entopts) {
-        const self = this;
-        return new AlertsRemoveTagsResultV2Entity_1.AlertsRemoveTagsResultV2Entity(self, entopts);
-    }
     // Entity access: `client.AlertsSetTagsResultV2().list()` / `client.AlertsSetTagsResultV2().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
@@ -507,68 +483,19 @@ class IncidentIoSDK {
         const self = this;
         return new CallRouteEntity_1.CallRouteEntity(self, entopts);
     }
-    // Entity access: `client.CallRoutesCreateAllowedCallerResultV2().list()` / `client.CallRoutesCreateAllowedCallerResultV2().load({ id })`.
+    // Entity access: `client.CallRouteAllowedCaller().list()` / `client.CallRouteAllowedCaller().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
-    CallRoutesCreateAllowedCallerResultV2(entopts) {
+    CallRouteAllowedCaller(entopts) {
         const self = this;
-        return new CallRoutesCreateAllowedCallerResultV2Entity_1.CallRoutesCreateAllowedCallerResultV2Entity(self, entopts);
+        return new CallRouteAllowedCallerEntity_1.CallRouteAllowedCallerEntity(self, entopts);
     }
-    // Entity access: `client.CallRoutesCreateOptionResultV2().list()` / `client.CallRoutesCreateOptionResultV2().load({ id })`.
+    // Entity access: `client.CallRouteOption().list()` / `client.CallRouteOption().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
-    CallRoutesCreateOptionResultV2(entopts) {
+    CallRouteOption(entopts) {
         const self = this;
-        return new CallRoutesCreateOptionResultV2Entity_1.CallRoutesCreateOptionResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.CallRoutesListAllowedCallersResultV2().list()` / `client.CallRoutesListAllowedCallersResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    CallRoutesListAllowedCallersResultV2(entopts) {
-        const self = this;
-        return new CallRoutesListAllowedCallersResultV2Entity_1.CallRoutesListAllowedCallersResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.CallRoutesListOptionsResultV2().list()` / `client.CallRoutesListOptionsResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    CallRoutesListOptionsResultV2(entopts) {
-        const self = this;
-        return new CallRoutesListOptionsResultV2Entity_1.CallRoutesListOptionsResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.CallRoutesShowAllowedCallerResultV2().list()` / `client.CallRoutesShowAllowedCallerResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    CallRoutesShowAllowedCallerResultV2(entopts) {
-        const self = this;
-        return new CallRoutesShowAllowedCallerResultV2Entity_1.CallRoutesShowAllowedCallerResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.CallRoutesShowOptionResultV2().list()` / `client.CallRoutesShowOptionResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    CallRoutesShowOptionResultV2(entopts) {
-        const self = this;
-        return new CallRoutesShowOptionResultV2Entity_1.CallRoutesShowOptionResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.CallRoutesUpdateAllowedCallerResultV2().list()` / `client.CallRoutesUpdateAllowedCallerResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    CallRoutesUpdateAllowedCallerResultV2(entopts) {
-        const self = this;
-        return new CallRoutesUpdateAllowedCallerResultV2Entity_1.CallRoutesUpdateAllowedCallerResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.CallRoutesUpdateOptionResultV2().list()` / `client.CallRoutesUpdateOptionResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    CallRoutesUpdateOptionResultV2(entopts) {
-        const self = this;
-        return new CallRoutesUpdateOptionResultV2Entity_1.CallRoutesUpdateOptionResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.CallRoutesV2().list()` / `client.CallRoutesV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    CallRoutesV2(entopts) {
-        const self = this;
-        return new CallRoutesV2Entity_1.CallRoutesV2Entity(self, entopts);
+        return new CallRouteOptionEntity_1.CallRouteOptionEntity(self, entopts);
     }
     // Entity access: `client.CallSession().list()` / `client.CallSession().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -632,6 +559,13 @@ class IncidentIoSDK {
     Escalation(entopts) {
         const self = this;
         return new EscalationEntity_1.EscalationEntity(self, entopts);
+    }
+    // Entity access: `client.EscalationPath().list()` / `client.EscalationPath().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    EscalationPath(entopts) {
+        const self = this;
+        return new EscalationPathEntity_1.EscalationPathEntity(self, entopts);
     }
     // Entity access: `client.EscalationPathTemplate().list()` / `client.EscalationPathTemplate().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -864,68 +798,19 @@ class IncidentIoSDK {
         const self = this;
         return new PayConfigEntity_1.PayConfigEntity(self, entopts);
     }
-    // Entity access: `client.PayConfigsCreateOneOffRuleResultV2().list()` / `client.PayConfigsCreateOneOffRuleResultV2().load({ id })`.
+    // Entity access: `client.PayConfigOneOffRule().list()` / `client.PayConfigOneOffRule().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
-    PayConfigsCreateOneOffRuleResultV2(entopts) {
+    PayConfigOneOffRule(entopts) {
         const self = this;
-        return new PayConfigsCreateOneOffRuleResultV2Entity_1.PayConfigsCreateOneOffRuleResultV2Entity(self, entopts);
+        return new PayConfigOneOffRuleEntity_1.PayConfigOneOffRuleEntity(self, entopts);
     }
-    // Entity access: `client.PayConfigsCreateWeeklyRuleResultV2().list()` / `client.PayConfigsCreateWeeklyRuleResultV2().load({ id })`.
+    // Entity access: `client.PayConfigWeeklyRule().list()` / `client.PayConfigWeeklyRule().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
-    PayConfigsCreateWeeklyRuleResultV2(entopts) {
+    PayConfigWeeklyRule(entopts) {
         const self = this;
-        return new PayConfigsCreateWeeklyRuleResultV2Entity_1.PayConfigsCreateWeeklyRuleResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.PayConfigsListOneOffRulesResultV2().list()` / `client.PayConfigsListOneOffRulesResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    PayConfigsListOneOffRulesResultV2(entopts) {
-        const self = this;
-        return new PayConfigsListOneOffRulesResultV2Entity_1.PayConfigsListOneOffRulesResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.PayConfigsListWeeklyRulesResultV2().list()` / `client.PayConfigsListWeeklyRulesResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    PayConfigsListWeeklyRulesResultV2(entopts) {
-        const self = this;
-        return new PayConfigsListWeeklyRulesResultV2Entity_1.PayConfigsListWeeklyRulesResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.PayConfigsShowOneOffRuleResultV2().list()` / `client.PayConfigsShowOneOffRuleResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    PayConfigsShowOneOffRuleResultV2(entopts) {
-        const self = this;
-        return new PayConfigsShowOneOffRuleResultV2Entity_1.PayConfigsShowOneOffRuleResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.PayConfigsShowWeeklyRuleResultV2().list()` / `client.PayConfigsShowWeeklyRuleResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    PayConfigsShowWeeklyRuleResultV2(entopts) {
-        const self = this;
-        return new PayConfigsShowWeeklyRuleResultV2Entity_1.PayConfigsShowWeeklyRuleResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.PayConfigsUpdateOneOffRuleResultV2().list()` / `client.PayConfigsUpdateOneOffRuleResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    PayConfigsUpdateOneOffRuleResultV2(entopts) {
-        const self = this;
-        return new PayConfigsUpdateOneOffRuleResultV2Entity_1.PayConfigsUpdateOneOffRuleResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.PayConfigsUpdateWeeklyRuleResultV2().list()` / `client.PayConfigsUpdateWeeklyRuleResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    PayConfigsUpdateWeeklyRuleResultV2(entopts) {
-        const self = this;
-        return new PayConfigsUpdateWeeklyRuleResultV2Entity_1.PayConfigsUpdateWeeklyRuleResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.PayConfigsV2().list()` / `client.PayConfigsV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    PayConfigsV2(entopts) {
-        const self = this;
-        return new PayConfigsV2Entity_1.PayConfigsV2Entity(self, entopts);
+        return new PayConfigWeeklyRuleEntity_1.PayConfigWeeklyRuleEntity(self, entopts);
     }
     // Entity access: `client.PayReport().list()` / `client.PayReport().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -954,13 +839,6 @@ class IncidentIoSDK {
     PayReportsV2(entopts) {
         const self = this;
         return new PayReportsV2Entity_1.PayReportsV2Entity(self, entopts);
-    }
-    // Entity access: `client.PoliciesV2().list()` / `client.PoliciesV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    PoliciesV2(entopts) {
-        const self = this;
-        return new PoliciesV2Entity_1.PoliciesV2Entity(self, entopts);
     }
     // Entity access: `client.Policy().list()` / `client.Policy().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -1018,6 +896,13 @@ class IncidentIoSDK {
         const self = this;
         return new ScheduleEntryEntity_1.ScheduleEntryEntity(self, entopts);
     }
+    // Entity access: `client.ScheduleOverride().list()` / `client.ScheduleOverride().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    ScheduleOverride(entopts) {
+        const self = this;
+        return new ScheduleOverrideEntity_1.ScheduleOverrideEntity(self, entopts);
+    }
     // Entity access: `client.ScheduleReplica().list()` / `client.ScheduleReplica().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
@@ -1038,20 +923,6 @@ class IncidentIoSDK {
     ScheduleSyncTarget(entopts) {
         const self = this;
         return new ScheduleSyncTargetEntity_1.ScheduleSyncTargetEntity(self, entopts);
-    }
-    // Entity access: `client.SchedulesShowOverrideResultV2().list()` / `client.SchedulesShowOverrideResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    SchedulesShowOverrideResultV2(entopts) {
-        const self = this;
-        return new SchedulesShowOverrideResultV2Entity_1.SchedulesShowOverrideResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.SchedulesUpdateOverrideResultV2().list()` / `client.SchedulesUpdateOverrideResultV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    SchedulesUpdateOverrideResultV2(entopts) {
-        const self = this;
-        return new SchedulesUpdateOverrideResultV2Entity_1.SchedulesUpdateOverrideResultV2Entity(self, entopts);
     }
     // Entity access: `client.Secret().list()` / `client.Secret().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -1081,12 +952,12 @@ class IncidentIoSDK {
         const self = this;
         return new StatusPageComponentEntity_1.StatusPageComponentEntity(self, entopts);
     }
-    // Entity access: `client.StatusPageComponentAvailabilityV2().list()` / `client.StatusPageComponentAvailabilityV2().load({ id })`.
+    // Entity access: `client.StatusPageComponentAvailability().list()` / `client.StatusPageComponentAvailability().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
-    StatusPageComponentAvailabilityV2(entopts) {
+    StatusPageComponentAvailability(entopts) {
         const self = this;
-        return new StatusPageComponentAvailabilityV2Entity_1.StatusPageComponentAvailabilityV2Entity(self, entopts);
+        return new StatusPageComponentAvailabilityEntity_1.StatusPageComponentAvailabilityEntity(self, entopts);
     }
     // Entity access: `client.StatusPageIncident().list()` / `client.StatusPageIncident().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -1102,12 +973,12 @@ class IncidentIoSDK {
         const self = this;
         return new StatusPageIncidentUpdateEntity_1.StatusPageIncidentUpdateEntity(self, entopts);
     }
-    // Entity access: `client.StatusPageLinkedResponseIncidentV1().list()` / `client.StatusPageLinkedResponseIncidentV1().load({ id })`.
+    // Entity access: `client.StatusPageLinkedResponseIncident().list()` / `client.StatusPageLinkedResponseIncident().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
-    StatusPageLinkedResponseIncidentV1(entopts) {
+    StatusPageLinkedResponseIncident(entopts) {
         const self = this;
-        return new StatusPageLinkedResponseIncidentV1Entity_1.StatusPageLinkedResponseIncidentV1Entity(self, entopts);
+        return new StatusPageLinkedResponseIncidentEntity_1.StatusPageLinkedResponseIncidentEntity(self, entopts);
     }
     // Entity access: `client.StatusPageMaintenance().list()` / `client.StatusPageMaintenance().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
@@ -1130,13 +1001,6 @@ class IncidentIoSDK {
         const self = this;
         return new StatusPageStructureEntity_1.StatusPageStructureEntity(self, entopts);
     }
-    // Entity access: `client.StatusPagesV2().list()` / `client.StatusPagesV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    StatusPagesV2(entopts) {
-        const self = this;
-        return new StatusPagesV2Entity_1.StatusPagesV2Entity(self, entopts);
-    }
     // Entity access: `client.Team().list()` / `client.Team().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
@@ -1144,12 +1008,12 @@ class IncidentIoSDK {
         const self = this;
         return new TeamEntity_1.TeamEntity(self, entopts);
     }
-    // Entity access: `client.TelemetryDataSourceV2().list()` / `client.TelemetryDataSourceV2().load({ id })`.
+    // Entity access: `client.TelemetryDataSource().list()` / `client.TelemetryDataSource().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
-    TelemetryDataSourceV2(entopts) {
+    TelemetryDataSource(entopts) {
         const self = this;
-        return new TelemetryDataSourceV2Entity_1.TelemetryDataSourceV2Entity(self, entopts);
+        return new TelemetryDataSourceEntity_1.TelemetryDataSourceEntity(self, entopts);
     }
     // Entity access: `client.User().list()` / `client.User().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity

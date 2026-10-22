@@ -114,16 +114,6 @@ class TestAlertTagEntity:
         assert client.AlertTag(None).list(None, {"throw": False}) is None
         assert fired < hook.unexpected
 
-    def test_should_validate_each_listed_record(self):
-        if "validate" not in (shared_config().get("feature") or {}):
-            pytest.skip("feature not present in this SDK: validate")
-        opts = {"feature": {"validate": {"active": True, "request": False, "response": True}}}
-        listed = IncidentIoSDK.test({"entity": {"alert_tag": {"v1": {"name": "x"}}}}, opts).AlertTag(None).list(None, None)
-        assert ["v1"] == [ent.data_get().get("id") for ent in listed]
-        with pytest.raises(Exception) as err:
-            IncidentIoSDK.test({"entity": {"alert_tag": {"v1": {"name": 1}}}}, opts).AlertTag(None).list(None, None)
-        assert "validate_failed" == getattr(err.value, "code", None)
-
     def test_should_refuse_an_invalid_request(self):
         if "validate" not in (shared_config().get("feature") or {}):
             pytest.skip("feature not present in this SDK: validate")
@@ -139,26 +129,37 @@ class TestAlertTagEntity:
         # multiple ops; skipping any one skips the whole flow (steps depend
         # on each other).
         _live = setup.get("live", False)
-        for _op in ["list"]:
+        for _op in ["create", "list"]:
             _skip, _reason = runner.is_control_skipped("entityOp", "alert_tag." + _op, "live" if _live else "unit")
             if _skip:
                 pytest.skip(_reason or "skipped via sdk-test-control.json")
                 return
+        if setup["live"]:
+            for _live_key in ["alert01"]:
+                if setup.get("synthetic_only") or setup["idmap"].get(_live_key) is None:
+                    runner.live_miss(LIVE_STRICT, f"Live entity test blocked: needs {_live_key} via INCIDENT_IO_TEST_ALERT_TAG_ENTID")
         client = setup["client"]
 
-        # Bootstrap entity data from existing test data.
-        alert_tag_ref01_data_raw = vs.items(helpers.to_map(
-            vs.getpath(setup["data"], "existing.alert_tag")))
-        alert_tag_ref01_data = None
-        if len(alert_tag_ref01_data_raw) > 0:
-            alert_tag_ref01_data = helpers.to_map(alert_tag_ref01_data_raw[0][1])
+        # CREATE
+        alert_tag_ref01_ent = client.AlertTag(None)
+        alert_tag_ref01_data = helpers.to_map(vs.getprop(
+            vs.getpath(setup["data"], "new.alert_tag"), "alert_tag_ref01"))
+        alert_tag_ref01_data["alert_id"] = setup["idmap"]["alert01"]
+
+        alert_tag_ref01_data = helpers.to_map(runner.entity_data(alert_tag_ref01_ent.create(alert_tag_ref01_data, None)))
+        assert alert_tag_ref01_data is not None
+        assert alert_tag_ref01_data["id"] is not None
 
         # LIST
-        alert_tag_ref01_ent = client.AlertTag(None)
         alert_tag_ref01_match = {}
 
         alert_tag_ref01_list_result = alert_tag_ref01_ent.list(alert_tag_ref01_match, None)
         assert isinstance(alert_tag_ref01_list_result, list)
+
+        found_item = vs.select(
+            runner.entity_list_to_data(alert_tag_ref01_list_result),
+            {"id": alert_tag_ref01_data["id"]})
+        assert not vs.isempty(found_item)
 
 
 
@@ -178,7 +179,7 @@ def _alert_tag_basic_setup(extra):
 
     # Generate idmap via transform.
     idmap = vs.transform(
-        ["alert_tag01", "alert_tag02", "alert_tag03"],
+        ["alert_tag01", "alert_tag02", "alert_tag03", "alert01", "alert02", "alert03"],
         {
             "`$PACK`": ["", {
                 "`$KEY`": "`$COPY`",

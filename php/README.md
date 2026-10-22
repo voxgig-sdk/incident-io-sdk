@@ -53,15 +53,15 @@ try {
 }
 ```
 
-### 3. Load a callroutesshowallowedcallerresultv2
+### 3. Load a callrouteallowedcaller
 
-CallRoutesShowAllowedCallerResultV2 is nested under call_route, so provide the `call_route_id`.
+CallRouteAllowedCaller is nested under call_route, so provide the `call_route_id`.
 
 ```php
 try {
-    // load() returns the ENTITY — call data_get() for the CallRoutesShowAllowedCallerResultV2 record (throws on error).
-    $callroutesshowallowedcallerresultv2 = $client->CallRoutesShowAllowedCallerResultV2()->load(["call_route_id" => "example_call_route_id", "id" => "example_id"]);
-    print_r($callroutesshowallowedcallerresultv2->data_get());
+    // load() returns the ENTITY — call data_get() for the CallRouteAllowedCaller record (throws on error).
+    $callrouteallowedcaller = $client->CallRouteAllowedCaller()->load(["call_route_id" => "example_call_route_id", "id" => "example_id"]);
+    print_r($callrouteallowedcaller->data_get());
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -88,7 +88,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $incidentstatuss = $client->IncidentStatus()->list();
+    $escalationpaths = $client->EscalationPath()->list();
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -160,13 +160,13 @@ data via the `entity` option so offline calls resolve without a live server:
 
 ```php
 $client = IncidentIoSDK::test([
-    "entity" => ["incident_role" => ["test01" => ["id" => "test01"]]],
+    "entity" => ["incident_type" => ["test01" => ["id" => "test01"]]],
 ]);
 
 // list() returns entity instances (throws on error);
 // call data_get() for the mock record.
-$incidentrole = $client->IncidentRole()->list();
-print_r(array_map(fn($item) => $item->data_get(), $incidentrole));
+$incidenttype = $client->IncidentType()->list();
+print_r(array_map(fn($item) => $item->data_get(), $incidenttype));
 ```
 
 ### Use a custom fetch function
@@ -256,22 +256,14 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `AlertSourcesV2` | `($data): AlertSourcesV2Entity` | Create an AlertSourcesV2 entity instance. |
 | `AlertTag` | `($data): AlertTagEntity` | Create an AlertTag entity instance. |
 | `AlertsAddTagsResultV2` | `($data): AlertsAddTagsResultV2Entity` | Create an AlertsAddTagsResultV2 entity instance. |
-| `AlertsRemoveTagsResultV2` | `($data): AlertsRemoveTagsResultV2Entity` | Create an AlertsRemoveTagsResultV2 entity instance. |
 | `AlertsSetTagsResultV2` | `($data): AlertsSetTagsResultV2Entity` | Create an AlertsSetTagsResultV2 entity instance. |
 | `AlertsTransitionIncidentAlertResultV2` | `($data): AlertsTransitionIncidentAlertResultV2Entity` | Create an AlertsTransitionIncidentAlertResultV2 entity instance. |
 | `AnnouncementRule` | `($data): AnnouncementRuleEntity` | Create an AnnouncementRule entity instance. |
 | `AnnouncementTemplate` | `($data): AnnouncementTemplateEntity` | Create an AnnouncementTemplate entity instance. |
 | `ApiKey` | `($data): ApiKeyEntity` | Create an ApiKey entity instance. |
 | `CallRoute` | `($data): CallRouteEntity` | Create a CallRoute entity instance. |
-| `CallRoutesCreateAllowedCallerResultV2` | `($data): CallRoutesCreateAllowedCallerResultV2Entity` | Create a CallRoutesCreateAllowedCallerResultV2 entity instance. |
-| `CallRoutesCreateOptionResultV2` | `($data): CallRoutesCreateOptionResultV2Entity` | Create a CallRoutesCreateOptionResultV2 entity instance. |
-| `CallRoutesListAllowedCallersResultV2` | `($data): CallRoutesListAllowedCallersResultV2Entity` | Create a CallRoutesListAllowedCallersResultV2 entity instance. |
-| `CallRoutesListOptionsResultV2` | `($data): CallRoutesListOptionsResultV2Entity` | Create a CallRoutesListOptionsResultV2 entity instance. |
-| `CallRoutesShowAllowedCallerResultV2` | `($data): CallRoutesShowAllowedCallerResultV2Entity` | Create a CallRoutesShowAllowedCallerResultV2 entity instance. |
-| `CallRoutesShowOptionResultV2` | `($data): CallRoutesShowOptionResultV2Entity` | Create a CallRoutesShowOptionResultV2 entity instance. |
-| `CallRoutesUpdateAllowedCallerResultV2` | `($data): CallRoutesUpdateAllowedCallerResultV2Entity` | Create a CallRoutesUpdateAllowedCallerResultV2 entity instance. |
-| `CallRoutesUpdateOptionResultV2` | `($data): CallRoutesUpdateOptionResultV2Entity` | Create a CallRoutesUpdateOptionResultV2 entity instance. |
-| `CallRoutesV2` | `($data): CallRoutesV2Entity` | Create a CallRoutesV2 entity instance. |
+| `CallRouteAllowedCaller` | `($data): CallRouteAllowedCallerEntity` | Create a CallRouteAllowedCaller entity instance. |
+| `CallRouteOption` | `($data): CallRouteOptionEntity` | Create a CallRouteOption entity instance. |
 | `CallSession` | `($data): CallSessionEntity` | Create a CallSession entity instance. |
 | `CallTranscriptEntry` | `($data): CallTranscriptEntryEntity` | Create a CallTranscriptEntry entity instance. |
 | `CatalogEntry` | `($data): CatalogEntryEntity` | Create a CatalogEntry entity instance. |
@@ -281,6 +273,7 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `CustomField` | `($data): CustomFieldEntity` | Create a CustomField entity instance. |
 | `CustomFieldOption` | `($data): CustomFieldOptionEntity` | Create a CustomFieldOption entity instance. |
 | `Escalation` | `($data): EscalationEntity` | Create an Escalation entity instance. |
+| `EscalationPath` | `($data): EscalationPathEntity` | Create an EscalationPath entity instance. |
 | `EscalationPathTemplate` | `($data): EscalationPathTemplateEntity` | Create an EscalationPathTemplate entity instance. |
 | `EscalationsCheckEscalationPermissionsResultV2` | `($data): EscalationsCheckEscalationPermissionsResultV2Entity` | Create an EscalationsCheckEscalationPermissionsResultV2 entity instance. |
 | `EscalationsReassignEscalationResultV2` | `($data): EscalationsReassignEscalationResultV2Entity` | Create an EscalationsReassignEscalationResultV2 entity instance. |
@@ -314,20 +307,12 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `OnCallNotificationPause` | `($data): OnCallNotificationPauseEntity` | Create an OnCallNotificationPause entity instance. |
 | `OnCallNotificationRulePublicV2` | `($data): OnCallNotificationRulePublicV2Entity` | Create an OnCallNotificationRulePublicV2 entity instance. |
 | `PayConfig` | `($data): PayConfigEntity` | Create a PayConfig entity instance. |
-| `PayConfigsCreateOneOffRuleResultV2` | `($data): PayConfigsCreateOneOffRuleResultV2Entity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
-| `PayConfigsCreateWeeklyRuleResultV2` | `($data): PayConfigsCreateWeeklyRuleResultV2Entity` | Create a PayConfigsCreateWeeklyRuleResultV2 entity instance. |
-| `PayConfigsListOneOffRulesResultV2` | `($data): PayConfigsListOneOffRulesResultV2Entity` | Create a PayConfigsListOneOffRulesResultV2 entity instance. |
-| `PayConfigsListWeeklyRulesResultV2` | `($data): PayConfigsListWeeklyRulesResultV2Entity` | Create a PayConfigsListWeeklyRulesResultV2 entity instance. |
-| `PayConfigsShowOneOffRuleResultV2` | `($data): PayConfigsShowOneOffRuleResultV2Entity` | Create a PayConfigsShowOneOffRuleResultV2 entity instance. |
-| `PayConfigsShowWeeklyRuleResultV2` | `($data): PayConfigsShowWeeklyRuleResultV2Entity` | Create a PayConfigsShowWeeklyRuleResultV2 entity instance. |
-| `PayConfigsUpdateOneOffRuleResultV2` | `($data): PayConfigsUpdateOneOffRuleResultV2Entity` | Create a PayConfigsUpdateOneOffRuleResultV2 entity instance. |
-| `PayConfigsUpdateWeeklyRuleResultV2` | `($data): PayConfigsUpdateWeeklyRuleResultV2Entity` | Create a PayConfigsUpdateWeeklyRuleResultV2 entity instance. |
-| `PayConfigsV2` | `($data): PayConfigsV2Entity` | Create a PayConfigsV2 entity instance. |
+| `PayConfigOneOffRule` | `($data): PayConfigOneOffRuleEntity` | Create a PayConfigOneOffRule entity instance. |
+| `PayConfigWeeklyRule` | `($data): PayConfigWeeklyRuleEntity` | Create a PayConfigWeeklyRule entity instance. |
 | `PayReport` | `($data): PayReportEntity` | Create a PayReport entity instance. |
 | `PayReportsPublishResultV2` | `($data): PayReportsPublishResultV2Entity` | Create a PayReportsPublishResultV2 entity instance. |
 | `PayReportsUnpublishResultV2` | `($data): PayReportsUnpublishResultV2Entity` | Create a PayReportsUnpublishResultV2 entity instance. |
 | `PayReportsV2` | `($data): PayReportsV2Entity` | Create a PayReportsV2 entity instance. |
-| `PoliciesV2` | `($data): PoliciesV2Entity` | Create a PoliciesV2 entity instance. |
 | `Policy` | `($data): PolicyEntity` | Create a Policy entity instance. |
 | `PolicyFinding` | `($data): PolicyFindingEntity` | Create a PolicyFinding entity instance. |
 | `PolicyFindingsDismissResultV2` | `($data): PolicyFindingsDismissResultV2Entity` | Create a PolicyFindingsDismissResultV2 entity instance. |
@@ -336,25 +321,23 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `Schedule` | `($data): ScheduleEntity` | Create a Schedule entity instance. |
 | `ScheduleEntriesListPayloadV2` | `($data): ScheduleEntriesListPayloadV2Entity` | Create a ScheduleEntriesListPayloadV2 entity instance. |
 | `ScheduleEntry` | `($data): ScheduleEntryEntity` | Create a ScheduleEntry entity instance. |
+| `ScheduleOverride` | `($data): ScheduleOverrideEntity` | Create a ScheduleOverride entity instance. |
 | `ScheduleReplica` | `($data): ScheduleReplicaEntity` | Create a ScheduleReplica entity instance. |
 | `ScheduleSyncRule` | `($data): ScheduleSyncRuleEntity` | Create a ScheduleSyncRule entity instance. |
 | `ScheduleSyncTarget` | `($data): ScheduleSyncTargetEntity` | Create a ScheduleSyncTarget entity instance. |
-| `SchedulesShowOverrideResultV2` | `($data): SchedulesShowOverrideResultV2Entity` | Create a SchedulesShowOverrideResultV2 entity instance. |
-| `SchedulesUpdateOverrideResultV2` | `($data): SchedulesUpdateOverrideResultV2Entity` | Create a SchedulesUpdateOverrideResultV2 entity instance. |
 | `Secret` | `($data): SecretEntity` | Create a Secret entity instance. |
 | `Severity` | `($data): SeverityEntity` | Create a Severity entity instance. |
 | `StatusPage` | `($data): StatusPageEntity` | Create a StatusPage entity instance. |
 | `StatusPageComponent` | `($data): StatusPageComponentEntity` | Create a StatusPageComponent entity instance. |
-| `StatusPageComponentAvailabilityV2` | `($data): StatusPageComponentAvailabilityV2Entity` | Create a StatusPageComponentAvailabilityV2 entity instance. |
+| `StatusPageComponentAvailability` | `($data): StatusPageComponentAvailabilityEntity` | Create a StatusPageComponentAvailability entity instance. |
 | `StatusPageIncident` | `($data): StatusPageIncidentEntity` | Create a StatusPageIncident entity instance. |
 | `StatusPageIncidentUpdate` | `($data): StatusPageIncidentUpdateEntity` | Create a StatusPageIncidentUpdate entity instance. |
-| `StatusPageLinkedResponseIncidentV1` | `($data): StatusPageLinkedResponseIncidentV1Entity` | Create a StatusPageLinkedResponseIncidentV1 entity instance. |
+| `StatusPageLinkedResponseIncident` | `($data): StatusPageLinkedResponseIncidentEntity` | Create a StatusPageLinkedResponseIncident entity instance. |
 | `StatusPageMaintenance` | `($data): StatusPageMaintenanceEntity` | Create a StatusPageMaintenance entity instance. |
 | `StatusPageMaintenanceUpdate` | `($data): StatusPageMaintenanceUpdateEntity` | Create a StatusPageMaintenanceUpdate entity instance. |
 | `StatusPageStructure` | `($data): StatusPageStructureEntity` | Create a StatusPageStructure entity instance. |
-| `StatusPagesV2` | `($data): StatusPagesV2Entity` | Create a StatusPagesV2 entity instance. |
 | `Team` | `($data): TeamEntity` | Create a Team entity instance. |
-| `TelemetryDataSourceV2` | `($data): TelemetryDataSourceV2Entity` | Create a TelemetryDataSourceV2 entity instance. |
+| `TelemetryDataSource` | `($data): TelemetryDataSourceEntity` | Create a TelemetryDataSource entity instance. |
 | `User` | `($data): UserEntity` | Create an User entity instance. |
 | `Workflow` | `($data): WorkflowEntity` | Create a Workflow entity instance. |
 | `WorkflowRun` | `($data): WorkflowRunEntity` | Create a WorkflowRun entity instance. |
@@ -407,8 +390,6 @@ On error, `ok` is `false` and `$err` contains the error value.
 | `created_at` | When the action was created |
 | `creator` |  |
 | `description` | Description of the action |
-| `external_issue_reference` |  |
-| `follow_up` | Whether an action is marked as follow-up |
 | `id` | Unique identifier for the action |
 | `incident_id` | Unique identifier of the incident the action belongs to |
 | `status` | Status of the action |
@@ -477,24 +458,21 @@ API path: `/v1/alert_notes`
 
 | Field | Description |
 | --- | --- |
-| `alert_sources` | Which alert sources should this alert route match? |
-| `channel_config` | The channel configuration for this alert route |
-| `condition_groups` | What condition groups must be true for this alert route to fire? |
-| `created_at` | The time of creation of this alert route |
-| `enabled` | Whether this alert route is enabled or not |
+| `alert_sources` | Which alert sources this route matches |
+| `condition_groups` | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | When this alert route was created |
+| `enabled` | Whether this alert route is enabled |
 | `escalation_config` |  |
-| `expressions` | The expressions used in this template |
+| `expressions` | The expressions used by bindings in this route |
 | `grouping_config` |  |
-| `id` | Unique identifier for this alert route config |
+| `id` | Unique identifier for this alert route |
 | `incident_config` |  |
-| `incident_template` |  |
 | `is_private` | Whether this alert route is private. |
 | `message_config` |  |
-| `message_template` |  |
-| `name` | The name of this alert route config, for the user's reference |
+| `name` | The name of this alert route, for the user's reference |
 | `owning_team_ids` | IDs of teams that own this alert route |
-| `updated_at` | The time of last update of this alert route |
-| `version` | The version of this alert route config |
+| `updated_at` | When this alert route was last updated |
+| `version` | The version of this alert route |
 
 Operations: Create, List, Load, Remove, Update.
 
@@ -543,12 +521,24 @@ API path: `/v2/alert_sources/actions/validate`
 
 | Field | Description |
 | --- | --- |
-| `id` | Unique identifier for the tag |
+| `alert_group_ids` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | The ID of the alert source this alert fired on |
+| `attributes` | Attribute values parsed from the alerts payload |
+| `created_at` | When this entry was created |
+| `deduplication_key` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | The description of the alert |
+| `id` | The ID of this alert |
 | `name` | The tag name |
+| `resolved_at` | When this alert was resolved |
+| `source_url` | If applicable, a link to the alert in the upstream system |
+| `status` | Statuses of an alert |
+| `tags` | Tags someone has applied to this alert |
+| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | When this alert was last updated |
 
-Operations: List.
+Operations: Create, List.
 
-API path: `/v2/alert_tags`
+API path: `/v2/alerts/{id}/actions/remove_tags`
 
 #### AlertsAddTagsResultV2
 
@@ -571,28 +561,6 @@ API path: `/v2/alert_tags`
 Operations: Create.
 
 API path: `/v2/alerts/{id}/actions/add_tags`
-
-#### AlertsRemoveTagsResultV2
-
-| Field | Description |
-| --- | --- |
-| `alert_group_ids` | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | The ID of the alert source this alert fired on |
-| `attributes` | Attribute values parsed from the alerts payload |
-| `created_at` | When this entry was created |
-| `deduplication_key` | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | The description of the alert |
-| `id` | The ID of this alert |
-| `resolved_at` | When this alert was resolved |
-| `source_url` | If applicable, a link to the alert in the upstream system |
-| `status` | Statuses of an alert |
-| `tags` | Tags someone has applied to this alert |
-| `title` | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | When this alert was last updated |
-
-Operations: Create.
-
-API path: `/v2/alerts/{id}/actions/remove_tags`
 
 #### AlertsSetTagsResultV2
 
@@ -714,113 +682,30 @@ Operations: List, Load, Update.
 
 API path: `/v2/call_routes`
 
-#### CallRoutesCreateAllowedCallerResultV2
+#### CallRouteAllowedCaller
 
 | Field | Description |
 | --- | --- |
+| `id` | Unique identifier for this allowed caller |
 | `name` | Label for whose number this is |
-| `phone_number` | The number to allow, in international format |
+| `phone_number` | The number allowed to call this route, in international format |
 
-Operations: Create.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/call_routes/{call_route_id}/allowed_callers`
 
-#### CallRoutesCreateOptionResultV2
+#### CallRouteOption
 
 | Field | Description |
 | --- | --- |
 | `digit` | The keypad digit a caller presses to choose this option |
-| `path` | Who to page when a caller chooses this option |
+| `id` | Unique identifier for this option |
+| `path` | Who we page when a caller chooses this option |
 | `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
 
-Operations: Create.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/call_routes/{call_route_id}/options`
-
-#### CallRoutesListAllowedCallersResultV2
-
-| Field | Description |
-| --- | --- |
-| `id` | Unique identifier for this allowed caller |
-| `name` | Label for whose number this is |
-| `phone_number` | The number allowed to call this route, in international format |
-
-Operations: List.
-
-API path: `/v2/call_routes/{call_route_id}/allowed_callers`
-
-#### CallRoutesListOptionsResultV2
-
-| Field | Description |
-| --- | --- |
-| `digit` | The keypad digit a caller presses to choose this option |
-| `id` | Unique identifier for this option |
-| `path` | Who we page when a caller chooses this option |
-| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-Operations: List.
-
-API path: `/v2/call_routes/{call_route_id}/options`
-
-#### CallRoutesShowAllowedCallerResultV2
-
-| Field | Description |
-| --- | --- |
-| `id` | Unique identifier for this allowed caller |
-| `name` | Label for whose number this is |
-| `phone_number` | The number allowed to call this route, in international format |
-
-Operations: Load.
-
-API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
-
-#### CallRoutesShowOptionResultV2
-
-| Field | Description |
-| --- | --- |
-| `digit` | The keypad digit a caller presses to choose this option |
-| `id` | Unique identifier for this option |
-| `path` | Who we page when a caller chooses this option |
-| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-Operations: Load.
-
-API path: `/v2/call_routes/{call_route_id}/options/{id}`
-
-#### CallRoutesUpdateAllowedCallerResultV2
-
-| Field | Description |
-| --- | --- |
-| `id` | Unique identifier for this allowed caller |
-| `name` | Label for whose number this is |
-| `phone_number` | The number allowed to call this route, in international format |
-
-Operations: Update.
-
-API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
-
-#### CallRoutesUpdateOptionResultV2
-
-| Field | Description |
-| --- | --- |
-| `digit` | The keypad digit a caller presses to choose this option |
-| `id` | Unique identifier for this option |
-| `path` | Who we page when a caller chooses this option |
-| `prompt` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-Operations: Update.
-
-API path: `/v2/call_routes/{call_route_id}/options/{id}`
-
-#### CallRoutesV2
-
-| Field | Description |
-| --- | --- |
-| `id` |  |
-
-Operations: Remove.
-
-API path: `/v2/call_routes/{call_route_id}/allowed_callers/{id}`
 
 #### CallSession
 
@@ -867,7 +752,7 @@ API path: `/v2/call_transcript_entries`
 | `update_attributes` | If provided, only update these attribute_values keys. |
 | `updated_at` | When this entry was last updated |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/catalog_entries`
 
@@ -909,13 +794,12 @@ API path: `/v2/catalog_resources`
 | `registry_type` | The registry resource this type is synced from, if any |
 | `required_integrations` | If populated, the integrations required for this type |
 | `schema` |  |
-| `semantic_type` | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | The url of the external repository where this type is managed |
 | `type_name` | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | When this type was last updated |
 | `use_name_as_identifier` | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/catalog_types`
 
@@ -943,7 +827,6 @@ API path: `/v2/catalog_types`
 | `registry_type` | The registry resource this type is synced from, if any |
 | `required_integrations` | If populated, the integrations required for this type |
 | `schema` |  |
-| `semantic_type` | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | The url of the external repository where this type is managed |
 | `type_name` | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | When this type was last updated |
@@ -968,13 +851,6 @@ API path: `/v2/catalog_types/{id}/actions/update_schema`
 | `helptext_catalog_attribute_id` | Which catalog attribute provides helptext for the options |
 | `id` | Unique identifier for the custom field |
 | `name` | Human readable name for the custom field |
-| `options` | What options are available for this custom field, if this field has options |
-| `required` | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | When the action was last updated |
 
 Operations: Create, List, Load, Remove, Update.
@@ -1017,6 +893,25 @@ API path: `/v1/custom_field_options`
 Operations: Create, List, Load.
 
 API path: `/v2/escalations`
+
+#### EscalationPath
+
+| Field | Description |
+| --- | --- |
+| `current_responders` | Users who are currently on-call for this escalation path |
+| `id` | Unique identifier for this escalation path. |
+| `kind` | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | The name of this escalation path, for the user's reference. |
+| `param_bindings` | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` |  |
+| `team_ids` | IDs of the teams that own this escalation path. |
+| `template_id` | For a templated path, the template it is built from. |
+| `working_hours` | The working hours for this escalation path. |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/escalation_paths`
 
 #### EscalationPathTemplate
 
@@ -1177,12 +1072,8 @@ API path: `/v1/identity`
 | `slack_channel_name_override` | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | URL to link to the slack channel |
 | `slack_team_id` | ID of the Slack team / workspace. |
-| `source_message_channel_id` | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | Timestamp of the source message, if this incident was created from one |
-| `status` | Current status of the incident |
 | `summary` | Detailed description of the incident |
 | `team_ids` | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | Incident lifecycle events and when they last occurred |
 | `updated_at` | When the incident was last updated |
 | `visibility` | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | Amount of time spent on the incident in late hours |
@@ -1293,7 +1184,6 @@ API path: `/v1/incident_relationships`
 | `id` | Unique identifier for the role |
 | `instructions` | Provided to whoever is nominated for the role. |
 | `name` | Human readable name of the incident role |
-| `required` | DEPRECATED: this will always be false. |
 | `role_type` | Type of incident role |
 | `shortform` | Short human readable name for Slack. |
 | `updated_at` | When the role was last updated |
@@ -1569,125 +1459,33 @@ Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/pay_configs`
 
-#### PayConfigsCreateOneOffRuleResultV2
+#### PayConfigOneOffRule
 
 | Field | Description |
 | --- | --- |
 | `end_at` | When this rule stops applying |
+| `id` | Unique identifier for this rule, stable across edits to the config |
 | `name` | Human readable name for this rule |
 | `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | When this rule starts applying |
 
-Operations: Create.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/pay_configs/{pay_config_id}/one_off_rules`
 
-#### PayConfigsCreateWeeklyRuleResultV2
+#### PayConfigWeeklyRule
 
 | Field | Description |
 | --- | --- |
 | `end_time` | Time of day this rule ends, in 24 hour format. |
+| `id` | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | Time of day this rule starts, in 24 hour format |
 | `weekdays` | Days of the week this rule applies on |
 
-Operations: Create.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/pay_configs/{pay_config_id}/weekly_rules`
-
-#### PayConfigsListOneOffRulesResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_at` | When this rule stops applying |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `name` | Human readable name for this rule |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | When this rule starts applying |
-
-Operations: List.
-
-API path: `/v2/pay_configs/{pay_config_id}/one_off_rules`
-
-#### PayConfigsListWeeklyRulesResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_time` | Time of day this rule ends, in 24 hour format. |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | Days of the week this rule applies on |
-
-Operations: List.
-
-API path: `/v2/pay_configs/{pay_config_id}/weekly_rules`
-
-#### PayConfigsShowOneOffRuleResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_at` | When this rule stops applying |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `name` | Human readable name for this rule |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | When this rule starts applying |
-
-Operations: Load.
-
-API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
-
-#### PayConfigsShowWeeklyRuleResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_time` | Time of day this rule ends, in 24 hour format. |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | Days of the week this rule applies on |
-
-Operations: Load.
-
-API path: `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}`
-
-#### PayConfigsUpdateOneOffRuleResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_at` | When this rule stops applying |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `name` | Human readable name for this rule |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | When this rule starts applying |
-
-Operations: Update.
-
-API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
-
-#### PayConfigsUpdateWeeklyRuleResultV2
-
-| Field | Description |
-| --- | --- |
-| `end_time` | Time of day this rule ends, in 24 hour format. |
-| `id` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | Days of the week this rule applies on |
-
-Operations: Update.
-
-API path: `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}`
-
-#### PayConfigsV2
-
-| Field | Description |
-| --- | --- |
-| `id` |  |
-
-Operations: Remove.
-
-API path: `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}`
 
 #### PayReport
 
@@ -1779,16 +1577,6 @@ Operations: Load.
 
 API path: `/v2/pay_reports/{id}/download`
 
-#### PoliciesV2
-
-| Field | Description |
-| --- | --- |
-| `id` |  |
-
-Operations: Remove.
-
-API path: `/v2/policies/{id}`
-
 #### Policy
 
 | Field | Description |
@@ -1809,7 +1597,7 @@ API path: `/v2/policies/{id}`
 | `status` | Disabled policies stop evaluating but keep their config |
 | `updated_at` |  |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/policies`
 
@@ -1961,6 +1749,24 @@ Operations: Load.
 
 API path: `/v2/schedule_entries`
 
+#### ScheduleOverride
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `end_at` | End of the override |
+| `id` | Unique internal ID of the schedule override |
+| `layer_id` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | The rotation on the schedule that this override applies to |
+| `schedule_id` | The schedule that this override applies to |
+| `start_at` | Start of the override |
+| `updated_at` |  |
+| `user` |  |
+
+Operations: Create, List, Load, Remove, Update.
+
+API path: `/v2/schedule_overrides`
+
 #### ScheduleReplica
 
 | Field | Description |
@@ -1978,7 +1784,7 @@ API path: `/v2/schedule_entries`
 | `updated_at` | When this schedule replica was last updated |
 | `user_statuses` | The mapping status of each incident.io user in the schedule to their corresponding user in the external provider. |
 
-Operations: Create, List, Load.
+Operations: Create, List, Load, Remove.
 
 API path: `/v2/schedules/{schedule_id}/replicas`
 
@@ -1997,7 +1803,7 @@ API path: `/v2/schedules/{schedule_id}/replicas`
 | `sync_type` | Which schedule members sync to the user group |
 | `updated_at` |  |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/schedules/{schedule_id}/sync_rules`
 
@@ -2018,42 +1824,6 @@ API path: `/v2/schedules/{schedule_id}/sync_rules`
 Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/schedule_sync_targets`
-
-#### SchedulesShowOverrideResultV2
-
-| Field | Description |
-| --- | --- |
-| `created_at` |  |
-| `end_at` | End of the override |
-| `id` | Unique internal ID of the schedule override |
-| `layer_id` | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | The rotation on the schedule that this override applies to |
-| `schedule_id` | The schedule that this override applies to |
-| `start_at` | Start of the override |
-| `updated_at` |  |
-| `user` |  |
-
-Operations: Create, List, Load.
-
-API path: `/v2/schedule_overrides`
-
-#### SchedulesUpdateOverrideResultV2
-
-| Field | Description |
-| --- | --- |
-| `created_at` |  |
-| `end_at` | End of the override |
-| `id` | Unique internal ID of the schedule override |
-| `layer_id` | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | The rotation on the schedule that this override applies to |
-| `schedule_id` | The schedule that this override applies to |
-| `start_at` | Start of the override |
-| `updated_at` |  |
-| `user` |  |
-
-Operations: Update.
-
-API path: `/v2/schedule_overrides/{id}`
 
 #### Secret
 
@@ -2086,7 +1856,7 @@ API path: `/v2/secrets/{id}/actions/rotate`
 | `rank` | Rank to help sort severities (lower numbers are less severe) |
 | `updated_at` | When the action was last updated |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/severities`
 
@@ -2116,7 +1886,7 @@ Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/status_page_components`
 
-#### StatusPageComponentAvailabilityV2
+#### StatusPageComponentAvailability
 
 | Field | Description |
 | --- | --- |
@@ -2165,7 +1935,7 @@ Operations: Create.
 
 API path: `/v2/status_page_incident_updates`
 
-#### StatusPageLinkedResponseIncidentV1
+#### StatusPageLinkedResponseIncident
 
 | Field | Description |
 | --- | --- |
@@ -2195,7 +1965,7 @@ API path: `/v1/status-pages/{id}/incidents/{incident_id}/response-incidents`
 | `status_page_id` | The ID of the corresponding status page |
 | `updates` | A list of updates posted to this status page maintenance window |
 
-Operations: Create, List, Load, Update.
+Operations: Create, List, Load, Remove, Update.
 
 API path: `/v2/status_page_maintenances`
 
@@ -2226,15 +1996,6 @@ Operations: Load.
 
 API path: `/v2/status_page_structures/{status_page_id}`
 
-#### StatusPagesV2
-
-| Field | Description |
-| --- | --- |
-
-Operations: Remove.
-
-API path: `/v2/status_page_maintenances/{status_page_maintenance_id}`
-
 #### Team
 
 | Field | Description |
@@ -2248,7 +2009,7 @@ Operations: List, Load.
 
 API path: `/v3/teams`
 
-#### TelemetryDataSourceV2
+#### TelemetryDataSource
 
 | Field | Description |
 | --- | --- |
@@ -2281,9 +2042,9 @@ API path: `/v2/telemetry/data_sources/{id}`
 | `seats` |  |
 | `slack_user_id` | Slack ID of the user |
 
-Operations: Create, List, Load.
+Operations: List, Load.
 
-API path: `/v2/users/{user_id}/paging_provider`
+API path: `/v2/users`
 
 #### Workflow
 
@@ -2372,8 +2133,6 @@ Create an instance: `$action = $client->Action();`
 | `created_at` | `string` | When the action was created |
 | `creator` | `array` |  |
 | `description` | `string` | Description of the action |
-| `external_issue_reference` | `array` |  |
-| `follow_up` | `bool` | Whether an action is marked as follow-up |
 | `id` | `string` | Unique identifier for the action |
 | `incident_id` | `string` | Unique identifier of the incident the action belongs to |
 | `status` | `string` | Status of the action |
@@ -2582,24 +2341,21 @@ Create an instance: `$alert_route = $client->AlertRoute();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `alert_sources` | `array` | Which alert sources should this alert route match? |
-| `channel_config` | `array` | The channel configuration for this alert route |
-| `condition_groups` | `array` | What condition groups must be true for this alert route to fire? |
-| `created_at` | `string` | The time of creation of this alert route |
-| `enabled` | `bool` | Whether this alert route is enabled or not |
+| `alert_sources` | `array` | Which alert sources this route matches |
+| `condition_groups` | `array` | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | `string` | When this alert route was created |
+| `enabled` | `bool` | Whether this alert route is enabled |
 | `escalation_config` | `array` |  |
-| `expressions` | `array` | The expressions used in this template |
+| `expressions` | `array` | The expressions used by bindings in this route |
 | `grouping_config` | `array` |  |
-| `id` | `string` | Unique identifier for this alert route config |
+| `id` | `string` | Unique identifier for this alert route |
 | `incident_config` | `array` |  |
-| `incident_template` | `array` |  |
 | `is_private` | `bool` | Whether this alert route is private. |
 | `message_config` | `array` |  |
-| `message_template` | `array` |  |
-| `name` | `string` | The name of this alert route config, for the user's reference |
+| `name` | `string` | The name of this alert route, for the user's reference |
 | `owning_team_ids` | `array` | IDs of teams that own this alert route |
-| `updated_at` | `string` | The time of last update of this alert route |
-| `version` | `int` | The version of this alert route config |
+| `updated_at` | `string` | When this alert route was last updated |
+| `version` | `int` | The version of this alert route |
 
 #### Example: Load
 
@@ -2612,7 +2368,7 @@ $alert_route = $client->AlertRoute()->load(["id" => "alert_route_id"]);
 
 ```php
 // list() returns an array of AlertRoute entities, one per record (throws on error).
-$alert_routes = $client->AlertRoute()->list(["page_size" => 1]);
+$alert_routes = $client->AlertRoute()->list();
 ```
 
 #### Example: Create
@@ -2620,14 +2376,12 @@ $alert_routes = $client->AlertRoute()->list(["page_size" => 1]);
 ```php
 $alert_route = $client->AlertRoute()->create([
     "alert_sources" => null, // array
-    "channel_config" => null, // array
     "condition_groups" => null, // array
     "enabled" => null, // bool
     "escalation_config" => null, // array
     "expressions" => null, // array
     "grouping_config" => null, // array
     "incident_config" => null, // array
-    "incident_template" => null, // array
     "is_private" => null, // bool
     "message_config" => null, // array
     "name" => null, // string
@@ -2739,20 +2493,42 @@ Create an instance: `$alert_tag = $client->AlertTag();`
 
 | Method | Description |
 | --- | --- |
+| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `id` | `string` | Unique identifier for the tag |
+| `alert_group_ids` | `array` | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
+| `attributes` | `array` | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | When this entry was created |
+| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | The description of the alert |
+| `id` | `string` | The ID of this alert |
 | `name` | `string` | The tag name |
+| `resolved_at` | `string` | When this alert was resolved |
+| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Statuses of an alert |
+| `tags` | `array` | Tags someone has applied to this alert |
+| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | When this alert was last updated |
 
 #### Example: List
 
 ```php
 // list() returns an array of AlertTag entities, one per record (throws on error).
 $alert_tags = $client->AlertTag()->list();
+```
+
+#### Example: Create
+
+```php
+$alert_tag = $client->AlertTag()->create([
+    "alert_id" => null, // string
+    "tags" => null, // array
+]);
 ```
 
 
@@ -2788,44 +2564,6 @@ Create an instance: `$alerts_add_tags_result_v2 = $client->AlertsAddTagsResultV2
 
 ```php
 $alerts_add_tags_result_v2 = $client->AlertsAddTagsResultV2()->create([
-    "alert_id" => null, // string
-    "tags" => null, // array
-]);
-```
-
-
-### AlertsRemoveTagsResultV2
-
-Create an instance: `$alerts_remove_tags_result_v2 = $client->AlertsRemoveTagsResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `create(data)` | Create a new entity with the given data. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `alert_group_ids` | `array` | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | `string` | The ID of the alert source this alert fired on |
-| `attributes` | `array` | Attribute values parsed from the alerts payload |
-| `created_at` | `string` | When this entry was created |
-| `deduplication_key` | `string` | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | `string` | The description of the alert |
-| `id` | `string` | The ID of this alert |
-| `resolved_at` | `string` | When this alert was resolved |
-| `source_url` | `string` | If applicable, a link to the alert in the upstream system |
-| `status` | `string` | Statuses of an alert |
-| `tags` | `array` | Tags someone has applied to this alert |
-| `title` | `string` | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | `string` | When this alert was last updated |
-
-#### Example: Create
-
-```php
-$alerts_remove_tags_result_v2 = $client->AlertsRemoveTagsResultV2()->create([
     "alert_id" => null, // string
     "tags" => null, // array
 ]);
@@ -3121,223 +2859,99 @@ $call_routes = $client->CallRoute()->list();
 ```
 
 
-### CallRoutesCreateAllowedCallerResultV2
+### CallRouteAllowedCaller
 
-Create an instance: `$call_routes_create_allowed_caller_result_v2 = $client->CallRoutesCreateAllowedCallerResultV2();`
+Create an instance: `$call_route_allowed_caller = $client->CallRouteAllowedCaller();`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `id` | `string` | Unique identifier for this allowed caller |
 | `name` | `string` | Label for whose number this is |
-| `phone_number` | `string` | The number to allow, in international format |
+| `phone_number` | `string` | The number allowed to call this route, in international format |
+
+#### Example: Load
+
+```php
+// load() returns the ENTITY — call data_get() for the CallRouteAllowedCaller record (throws on error).
+$call_route_allowed_caller = $client->CallRouteAllowedCaller()->load(["id" => "call_route_allowed_caller_id", "call_route_id" => "call_route_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of CallRouteAllowedCaller entities, one per record (throws on error).
+$call_route_allowed_callers = $client->CallRouteAllowedCaller()->list(["id" => "example"]);
+```
 
 #### Example: Create
 
 ```php
-$call_routes_create_allowed_caller_result_v2 = $client->CallRoutesCreateAllowedCallerResultV2()->create([
-    "call_route_id" => null, // string
+$call_route_allowed_caller = $client->CallRouteAllowedCaller()->create([
+    "id" => null, // string
     "phone_number" => null, // string
 ]);
 ```
 
 
-### CallRoutesCreateOptionResultV2
+### CallRouteOption
 
-Create an instance: `$call_routes_create_option_result_v2 = $client->CallRoutesCreateOptionResultV2();`
+Create an instance: `$call_route_option = $client->CallRouteOption();`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `digit` | `string` | The keypad digit a caller presses to choose this option |
-| `path` | `array` | Who to page when a caller chooses this option |
+| `id` | `string` | Unique identifier for this option |
+| `path` | `array` | Who we page when a caller chooses this option |
 | `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+#### Example: Load
+
+```php
+// load() returns the ENTITY — call data_get() for the CallRouteOption record (throws on error).
+$call_route_option = $client->CallRouteOption()->load(["id" => "call_route_option_id", "call_route_id" => "call_route_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of CallRouteOption entities, one per record (throws on error).
+$call_route_options = $client->CallRouteOption()->list(["id" => "example"]);
+```
 
 #### Example: Create
 
 ```php
-$call_routes_create_option_result_v2 = $client->CallRoutesCreateOptionResultV2()->create([
-    "call_route_id" => null, // string
+$call_route_option = $client->CallRouteOption()->create([
+    "id" => null, // string
     "digit" => null, // string
     "path" => null, // array
     "prompt" => null, // string
 ]);
 ```
-
-
-### CallRoutesListAllowedCallersResultV2
-
-Create an instance: `$call_routes_list_allowed_callers_result_v2 = $client->CallRoutesListAllowedCallersResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `string` | Unique identifier for this allowed caller |
-| `name` | `string` | Label for whose number this is |
-| `phone_number` | `string` | The number allowed to call this route, in international format |
-
-#### Example: List
-
-```php
-// list() returns an array of CallRoutesListAllowedCallersResultV2 entities, one per record (throws on error).
-$call_routes_list_allowed_callers_result_v2s = $client->CallRoutesListAllowedCallersResultV2()->list(["call_route_id" => "example"]);
-```
-
-
-### CallRoutesListOptionsResultV2
-
-Create an instance: `$call_routes_list_options_result_v2 = $client->CallRoutesListOptionsResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `digit` | `string` | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Unique identifier for this option |
-| `path` | `array` | Who we page when a caller chooses this option |
-| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-#### Example: List
-
-```php
-// list() returns an array of CallRoutesListOptionsResultV2 entities, one per record (throws on error).
-$call_routes_list_options_result_v2s = $client->CallRoutesListOptionsResultV2()->list(["call_route_id" => "example"]);
-```
-
-
-### CallRoutesShowAllowedCallerResultV2
-
-Create an instance: `$call_routes_show_allowed_caller_result_v2 = $client->CallRoutesShowAllowedCallerResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `string` | Unique identifier for this allowed caller |
-| `name` | `string` | Label for whose number this is |
-| `phone_number` | `string` | The number allowed to call this route, in international format |
-
-#### Example: Load
-
-```php
-// load() returns the ENTITY — call data_get() for the CallRoutesShowAllowedCallerResultV2 record (throws on error).
-$call_routes_show_allowed_caller_result_v2 = $client->CallRoutesShowAllowedCallerResultV2()->load(["id" => "call_routes_show_allowed_caller_result_v2_id", "call_route_id" => "call_route_id"]);
-```
-
-
-### CallRoutesShowOptionResultV2
-
-Create an instance: `$call_routes_show_option_result_v2 = $client->CallRoutesShowOptionResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `digit` | `string` | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Unique identifier for this option |
-| `path` | `array` | Who we page when a caller chooses this option |
-| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-#### Example: Load
-
-```php
-// load() returns the ENTITY — call data_get() for the CallRoutesShowOptionResultV2 record (throws on error).
-$call_routes_show_option_result_v2 = $client->CallRoutesShowOptionResultV2()->load(["id" => "call_routes_show_option_result_v2_id", "call_route_id" => "call_route_id"]);
-```
-
-
-### CallRoutesUpdateAllowedCallerResultV2
-
-Create an instance: `$call_routes_update_allowed_caller_result_v2 = $client->CallRoutesUpdateAllowedCallerResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `string` | Unique identifier for this allowed caller |
-| `name` | `string` | Label for whose number this is |
-| `phone_number` | `string` | The number allowed to call this route, in international format |
-
-
-### CallRoutesUpdateOptionResultV2
-
-Create an instance: `$call_routes_update_option_result_v2 = $client->CallRoutesUpdateOptionResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `digit` | `string` | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Unique identifier for this option |
-| `path` | `array` | Who we page when a caller chooses this option |
-| `prompt` | `string` | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-
-### CallRoutesV2
-
-Create an instance: `$call_routes_v2 = $client->CallRoutesV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `remove(match)` | Remove the matching entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `string` |  |
 
 
 ### CallSession
@@ -3406,6 +3020,7 @@ Create an instance: `$catalog_entry = $client->CatalogEntry();`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -3437,7 +3052,7 @@ $catalog_entry = $client->CatalogEntry()->load(["id" => "catalog_entry_id"]);
 
 ```php
 // list() returns an array of CatalogEntry entities, one per record (throws on error).
-$catalog_entrys = $client->CatalogEntry()->list(["catalog_type_id" => "example"]);
+$catalog_entrys = $client->CatalogEntry()->list(["catalog_type_id" => "example", "page_size" => 1]);
 ```
 
 #### Example: Create
@@ -3491,6 +3106,7 @@ Create an instance: `$catalog_type = $client->CatalogType();`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -3516,7 +3132,6 @@ Create an instance: `$catalog_type = $client->CatalogType();`
 | `registry_type` | `string` | The registry resource this type is synced from, if any |
 | `required_integrations` | `array` | If populated, the integrations required for this type |
 | `schema` | `array` |  |
-| `semantic_type` | `string` | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | The url of the external repository where this type is managed |
 | `type_name` | `string` | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | When this type was last updated |
@@ -3580,7 +3195,6 @@ Create an instance: `$catalog_type_schema = $client->CatalogTypeSchema();`
 | `registry_type` | `string` | The registry resource this type is synced from, if any |
 | `required_integrations` | `array` | If populated, the integrations required for this type |
 | `schema` | `array` |  |
-| `semantic_type` | `string` | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | The url of the external repository where this type is managed |
 | `type_name` | `string` | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | When this type was last updated |
@@ -3626,13 +3240,6 @@ Create an instance: `$custom_field = $client->CustomField();`
 | `helptext_catalog_attribute_id` | `string` | Which catalog attribute provides helptext for the options |
 | `id` | `string` | Unique identifier for the custom field |
 | `name` | `string` | Human readable name for the custom field |
-| `options` | `array` | What options are available for this custom field, if this field has options |
-| `required` | `string` | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | `string` | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | `bool` | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | `bool` | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | `bool` | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | `bool` | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | `string` | When the action was last updated |
 
 #### Example: Load
@@ -3658,9 +3265,6 @@ $custom_field = $client->CustomField()->create([
     "filter_by" => null, // array
     "fixed_filter" => null, // array
     "name" => null, // string
-    "show_before_closure" => null, // bool
-    "show_before_creation" => null, // bool
-    "show_before_update" => null, // bool
 ]);
 ```
 
@@ -3764,6 +3368,60 @@ $escalations = $client->Escalation()->list();
 $escalation = $client->Escalation()->create([
     "idempotency_key" => null, // string
     "title" => null, // string
+]);
+```
+
+
+### EscalationPath
+
+Create an instance: `$escalation_path = $client->EscalationPath();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `current_responders` | `array` | Users who are currently on-call for this escalation path |
+| `id` | `string` | Unique identifier for this escalation path. |
+| `kind` | `string` | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | `string` | The name of this escalation path, for the user's reference. |
+| `param_bindings` | `array` | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | `array` | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` | `array` |  |
+| `team_ids` | `array` | IDs of the teams that own this escalation path. |
+| `template_id` | `string` | For a templated path, the template it is built from. |
+| `working_hours` | `array` | The working hours for this escalation path. |
+
+#### Example: Load
+
+```php
+// load() returns the ENTITY — call data_get() for the EscalationPath record (throws on error).
+$escalation_path = $client->EscalationPath()->load(["id" => "escalation_path_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of EscalationPath entities, one per record (throws on error).
+$escalation_paths = $client->EscalationPath()->list();
+```
+
+#### Example: Create
+
+```php
+$escalation_path = $client->EscalationPath()->create([
+    "name" => null, // string
+    "path" => null, // array
+    "repeat_config" => null, // array
 ]);
 ```
 
@@ -4086,12 +3744,8 @@ Create an instance: `$incident = $client->Incident();`
 | `slack_channel_name_override` | `string` | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | `string` | URL to link to the slack channel |
 | `slack_team_id` | `string` | ID of the Slack team / workspace. |
-| `source_message_channel_id` | `string` | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | `string` | Timestamp of the source message, if this incident was created from one |
-| `status` | `string` | Current status of the incident |
 | `summary` | `string` | Detailed description of the incident |
 | `team_ids` | `array` | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | `array` | Incident lifecycle events and when they last occurred |
 | `updated_at` | `string` | When the incident was last updated |
 | `visibility` | `string` | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | `float` | Amount of time spent on the incident in late hours |
@@ -4367,7 +4021,6 @@ Create an instance: `$incident_role = $client->IncidentRole();`
 | `id` | `string` | Unique identifier for the role |
 | `instructions` | `string` | Provided to whoever is nominated for the role. |
 | `name` | `string` | Human readable name of the incident role |
-| `required` | `bool` | DEPRECATED: this will always be false. |
 | `role_type` | `string` | Type of incident role |
 | `shortform` | `string` | Short human readable name for Slack. |
 | `updated_at` | `string` | When the role was last updated |
@@ -4393,7 +4046,6 @@ $incident_role = $client->IncidentRole()->create([
     "description" => null, // string
     "instructions" => null, // string
     "name" => null, // string
-    "required" => null, // bool
     "shortform" => null, // string
 ]);
 ```
@@ -5049,30 +4701,49 @@ $pay_config = $client->PayConfig()->create([
 ```
 
 
-### PayConfigsCreateOneOffRuleResultV2
+### PayConfigOneOffRule
 
-Create an instance: `$pay_configs_create_one_off_rule_result_v2 = $client->PayConfigsCreateOneOffRuleResultV2();`
+Create an instance: `$pay_config_one_off_rule = $client->PayConfigOneOffRule();`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `end_at` | `string` | When this rule stops applying |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
 | `name` | `string` | Human readable name for this rule |
 | `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | `string` | When this rule starts applying |
 
+#### Example: Load
+
+```php
+// load() returns the ENTITY — call data_get() for the PayConfigOneOffRule record (throws on error).
+$pay_config_one_off_rule = $client->PayConfigOneOffRule()->load(["id" => "pay_config_one_off_rule_id", "pay_config_id" => "pay_config_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of PayConfigOneOffRule entities, one per record (throws on error).
+$pay_config_one_off_rules = $client->PayConfigOneOffRule()->list(["id" => "example"]);
+```
+
 #### Example: Create
 
 ```php
-$pay_configs_create_one_off_rule_result_v2 = $client->PayConfigsCreateOneOffRuleResultV2()->create([
-    "pay_config_id" => null, // string
+$pay_config_one_off_rule = $client->PayConfigOneOffRule()->create([
+    "id" => null, // string
     "end_at" => null, // string
     "name" => null, // string
     "rate_cents" => null, // int
@@ -5081,207 +4752,55 @@ $pay_configs_create_one_off_rule_result_v2 = $client->PayConfigsCreateOneOffRule
 ```
 
 
-### PayConfigsCreateWeeklyRuleResultV2
+### PayConfigWeeklyRule
 
-Create an instance: `$pay_configs_create_weekly_rule_result_v2 = $client->PayConfigsCreateWeeklyRuleResultV2();`
+Create an instance: `$pay_config_weekly_rule = $client->PayConfigWeeklyRule();`
 
 #### Operations
 
 | Method | Description |
 | --- | --- |
 | `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | `string` | Time of day this rule starts, in 24 hour format |
 | `weekdays` | `array` | Days of the week this rule applies on |
 
+#### Example: Load
+
+```php
+// load() returns the ENTITY — call data_get() for the PayConfigWeeklyRule record (throws on error).
+$pay_config_weekly_rule = $client->PayConfigWeeklyRule()->load(["id" => "pay_config_weekly_rule_id", "pay_config_id" => "pay_config_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of PayConfigWeeklyRule entities, one per record (throws on error).
+$pay_config_weekly_rules = $client->PayConfigWeeklyRule()->list(["id" => "example"]);
+```
+
 #### Example: Create
 
 ```php
-$pay_configs_create_weekly_rule_result_v2 = $client->PayConfigsCreateWeeklyRuleResultV2()->create([
-    "pay_config_id" => null, // string
+$pay_config_weekly_rule = $client->PayConfigWeeklyRule()->create([
+    "id" => null, // string
     "end_time" => null, // string
     "rate_cents" => null, // int
     "start_time" => null, // string
     "weekdays" => null, // array
 ]);
 ```
-
-
-### PayConfigsListOneOffRulesResultV2
-
-Create an instance: `$pay_configs_list_one_off_rules_result_v2 = $client->PayConfigsListOneOffRulesResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_at` | `string` | When this rule stops applying |
-| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Human readable name for this rule |
-| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | When this rule starts applying |
-
-#### Example: List
-
-```php
-// list() returns an array of PayConfigsListOneOffRulesResultV2 entities, one per record (throws on error).
-$pay_configs_list_one_off_rules_result_v2s = $client->PayConfigsListOneOffRulesResultV2()->list(["pay_config_id" => "example"]);
-```
-
-
-### PayConfigsListWeeklyRulesResultV2
-
-Create an instance: `$pay_configs_list_weekly_rules_result_v2 = $client->PayConfigsListWeeklyRulesResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `list(match)` | List entities matching the criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `array` | Days of the week this rule applies on |
-
-#### Example: List
-
-```php
-// list() returns an array of PayConfigsListWeeklyRulesResultV2 entities, one per record (throws on error).
-$pay_configs_list_weekly_rules_result_v2s = $client->PayConfigsListWeeklyRulesResultV2()->list(["pay_config_id" => "example"]);
-```
-
-
-### PayConfigsShowOneOffRuleResultV2
-
-Create an instance: `$pay_configs_show_one_off_rule_result_v2 = $client->PayConfigsShowOneOffRuleResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_at` | `string` | When this rule stops applying |
-| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Human readable name for this rule |
-| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | When this rule starts applying |
-
-#### Example: Load
-
-```php
-// load() returns the ENTITY — call data_get() for the PayConfigsShowOneOffRuleResultV2 record (throws on error).
-$pay_configs_show_one_off_rule_result_v2 = $client->PayConfigsShowOneOffRuleResultV2()->load(["id" => "pay_configs_show_one_off_rule_result_v2_id", "pay_config_id" => "pay_config_id"]);
-```
-
-
-### PayConfigsShowWeeklyRuleResultV2
-
-Create an instance: `$pay_configs_show_weekly_rule_result_v2 = $client->PayConfigsShowWeeklyRuleResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `array` | Days of the week this rule applies on |
-
-#### Example: Load
-
-```php
-// load() returns the ENTITY — call data_get() for the PayConfigsShowWeeklyRuleResultV2 record (throws on error).
-$pay_configs_show_weekly_rule_result_v2 = $client->PayConfigsShowWeeklyRuleResultV2()->load(["id" => "pay_configs_show_weekly_rule_result_v2_id", "pay_config_id" => "pay_config_id"]);
-```
-
-
-### PayConfigsUpdateOneOffRuleResultV2
-
-Create an instance: `$pay_configs_update_one_off_rule_result_v2 = $client->PayConfigsUpdateOneOffRuleResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_at` | `string` | When this rule stops applying |
-| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Human readable name for this rule |
-| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | When this rule starts applying |
-
-
-### PayConfigsUpdateWeeklyRuleResultV2
-
-Create an instance: `$pay_configs_update_weekly_rule_result_v2 = $client->PayConfigsUpdateWeeklyRuleResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `end_time` | `string` | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `array` | Days of the week this rule applies on |
-
-
-### PayConfigsV2
-
-Create an instance: `$pay_configs_v2 = $client->PayConfigsV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `remove(match)` | Remove the matching entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `string` |  |
 
 
 ### PayReport
@@ -5452,23 +4971,6 @@ $pay_reports_v2 = $client->PayReportsV2()->load(["pay_report_id" => "pay_report_
 ```
 
 
-### PoliciesV2
-
-Create an instance: `$policies_v2 = $client->PoliciesV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `remove(match)` | Remove the matching entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `id` | `string` |  |
-
-
 ### Policy
 
 Create an instance: `$policy = $client->Policy();`
@@ -5480,6 +4982,7 @@ Create an instance: `$policy = $client->Policy();`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -5836,6 +5339,62 @@ $schedule_entry = $client->ScheduleEntry()->load(["schedule_id" => "schedule_id"
 ```
 
 
+### ScheduleOverride
+
+Create an instance: `$schedule_override = $client->ScheduleOverride();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
+| `update(data)` | Update an existing entity. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `end_at` | `string` | End of the override |
+| `id` | `string` | Unique internal ID of the schedule override |
+| `layer_id` | `string` | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | The schedule that this override applies to |
+| `start_at` | `string` | Start of the override |
+| `updated_at` | `string` |  |
+| `user` | `array` |  |
+
+#### Example: Load
+
+```php
+// load() returns the ENTITY — call data_get() for the ScheduleOverride record (throws on error).
+$schedule_override = $client->ScheduleOverride()->load(["id" => "schedule_override_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of ScheduleOverride entities, one per record (throws on error).
+$schedule_overrides = $client->ScheduleOverride()->list(["schedule_id" => "example"]);
+```
+
+#### Example: Create
+
+```php
+$schedule_override = $client->ScheduleOverride()->create([
+    "end_at" => null, // string
+    "layer_id" => null, // string
+    "rotation_id" => null, // string
+    "schedule_id" => null, // string
+    "start_at" => null, // string
+    "user" => null, // array
+]);
+```
+
+
 ### ScheduleReplica
 
 Create an instance: `$schedule_replica = $client->ScheduleReplica();`
@@ -5847,6 +5406,7 @@ Create an instance: `$schedule_replica = $client->ScheduleReplica();`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 
 #### Fields
 
@@ -5903,6 +5463,7 @@ Create an instance: `$schedule_sync_rule = $client->ScheduleSyncRule();`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -5997,85 +5558,6 @@ $schedule_sync_target = $client->ScheduleSyncTarget()->create([
 ```
 
 
-### SchedulesShowOverrideResultV2
-
-Create an instance: `$schedules_show_override_result_v2 = $client->SchedulesShowOverrideResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `create(data)` | Create a new entity with the given data. |
-| `list(match)` | List entities matching the criteria. |
-| `load(match)` | Load a single entity by match criteria. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `created_at` | `string` |  |
-| `end_at` | `string` | End of the override |
-| `id` | `string` | Unique internal ID of the schedule override |
-| `layer_id` | `string` | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | The schedule that this override applies to |
-| `start_at` | `string` | Start of the override |
-| `updated_at` | `string` |  |
-| `user` | `array` |  |
-
-#### Example: Load
-
-```php
-// load() returns the ENTITY — call data_get() for the SchedulesShowOverrideResultV2 record (throws on error).
-$schedules_show_override_result_v2 = $client->SchedulesShowOverrideResultV2()->load(["id" => "schedules_show_override_result_v2_id"]);
-```
-
-#### Example: List
-
-```php
-// list() returns an array of SchedulesShowOverrideResultV2 entities, one per record (throws on error).
-$schedules_show_override_result_v2s = $client->SchedulesShowOverrideResultV2()->list(["schedule_id" => "example"]);
-```
-
-#### Example: Create
-
-```php
-$schedules_show_override_result_v2 = $client->SchedulesShowOverrideResultV2()->create([
-    "end_at" => null, // string
-    "layer_id" => null, // string
-    "rotation_id" => null, // string
-    "schedule_id" => null, // string
-    "start_at" => null, // string
-    "user" => null, // array
-]);
-```
-
-
-### SchedulesUpdateOverrideResultV2
-
-Create an instance: `$schedules_update_override_result_v2 = $client->SchedulesUpdateOverrideResultV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `update(data)` | Update an existing entity. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `created_at` | `string` |  |
-| `end_at` | `string` | End of the override |
-| `id` | `string` | Unique internal ID of the schedule override |
-| `layer_id` | `string` | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | The schedule that this override applies to |
-| `start_at` | `string` | Start of the override |
-| `updated_at` | `string` |  |
-| `user` | `array` |  |
-
-
 ### Secret
 
 Create an instance: `$secret = $client->Secret();`
@@ -6141,6 +5623,7 @@ Create an instance: `$severity = $client->Severity();`
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -6259,9 +5742,9 @@ $status_page_component = $client->StatusPageComponent()->create([
 ```
 
 
-### StatusPageComponentAvailabilityV2
+### StatusPageComponentAvailability
 
-Create an instance: `$status_page_component_availability_v2 = $client->StatusPageComponentAvailabilityV2();`
+Create an instance: `$status_page_component_availability = $client->StatusPageComponentAvailability();`
 
 #### Operations
 
@@ -6283,8 +5766,8 @@ Create an instance: `$status_page_component_availability_v2 = $client->StatusPag
 #### Example: Load
 
 ```php
-// load() returns the ENTITY — call data_get() for the StatusPageComponentAvailabilityV2 record (throws on error).
-$status_page_component_availability_v2 = $client->StatusPageComponentAvailabilityV2()->load(["component_id" => "component_id", "status_page_id" => "status_page_id", "end_at" => "end_at", "start_at" => "start_at"]);
+// load() returns the ENTITY — call data_get() for the StatusPageComponentAvailability record (throws on error).
+$status_page_component_availability = $client->StatusPageComponentAvailability()->load(["component_id" => "component_id", "status_page_id" => "status_page_id", "end_at" => "end_at", "start_at" => "start_at"]);
 ```
 
 
@@ -6376,9 +5859,9 @@ $status_page_incident_update = $client->StatusPageIncidentUpdate()->create([
 ```
 
 
-### StatusPageLinkedResponseIncidentV1
+### StatusPageLinkedResponseIncident
 
-Create an instance: `$status_page_linked_response_incident_v1 = $client->StatusPageLinkedResponseIncidentV1();`
+Create an instance: `$status_page_linked_response_incident = $client->StatusPageLinkedResponseIncident();`
 
 #### Operations
 
@@ -6396,8 +5879,8 @@ Create an instance: `$status_page_linked_response_incident_v1 = $client->StatusP
 #### Example: List
 
 ```php
-// list() returns an array of StatusPageLinkedResponseIncidentV1 entities, one per record (throws on error).
-$status_page_linked_response_incident_v1s = $client->StatusPageLinkedResponseIncidentV1()->list(["incident_id" => "example", "status_page_id" => "example"]);
+// list() returns an array of StatusPageLinkedResponseIncident entities, one per record (throws on error).
+$status_page_linked_response_incidents = $client->StatusPageLinkedResponseIncident()->list(["incident_id" => "example", "status_page_id" => "example"]);
 ```
 
 
@@ -6412,6 +5895,7 @@ Create an instance: `$status_page_maintenance = $client->StatusPageMaintenance()
 | `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
+| `remove(match)` | Remove the matching entity. |
 | `update(data)` | Update an existing entity. |
 
 #### Fields
@@ -6522,17 +6006,6 @@ $status_page_structure = $client->StatusPageStructure()->load(["id" => "status_p
 ```
 
 
-### StatusPagesV2
-
-Create an instance: `$status_pages_v2 = $client->StatusPagesV2();`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `remove(match)` | Remove the matching entity. |
-
-
 ### Team
 
 Create an instance: `$team = $client->Team();`
@@ -6568,9 +6041,9 @@ $teams = $client->Team()->list();
 ```
 
 
-### TelemetryDataSourceV2
+### TelemetryDataSource
 
-Create an instance: `$telemetry_data_source_v2 = $client->TelemetryDataSourceV2();`
+Create an instance: `$telemetry_data_source = $client->TelemetryDataSource();`
 
 #### Operations
 
@@ -6602,7 +6075,6 @@ Create an instance: `$user = $client->User();`
 
 | Method | Description |
 | --- | --- |
-| `create(data)` | Create a new entity with the given data. |
 | `list(match)` | List entities matching the criteria. |
 | `load(match)` | Load a single entity by match criteria. |
 
@@ -6632,14 +6104,6 @@ $user = $client->User()->load(["id" => "user_id"]);
 ```php
 // list() returns an array of User entities, one per record (throws on error).
 $users = $client->User()->list();
-```
-
-#### Example: Create
-
-```php
-$user = $client->User()->create([
-    "id" => null, // string
-]);
 ```
 
 
@@ -7005,11 +6469,11 @@ Entity instances are stateful. After a successful `list`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$incidentstatus = $client->IncidentStatus();
-$incidentstatus->list();
+$escalationpath = $client->EscalationPath();
+$escalationpath->list();
 
-// $incidentstatus->data_get() now returns the incidentstatus data from the last list
-// $incidentstatus->match_get() returns the last match criteria
+// $escalationpath->data_get() now returns the escalationpath data from the last list
+// $escalationpath->match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

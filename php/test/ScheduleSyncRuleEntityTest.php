@@ -45,7 +45,7 @@ class ScheduleSyncRuleEntityTest extends TestCase
         $setup = schedule_sync_rule_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["update", "load"] as $_op) {
+        foreach (["update", "load", "remove", "list"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "schedule_sync_rule." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");

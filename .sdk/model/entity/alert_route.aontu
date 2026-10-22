@@ -9,21 +9,14 @@ main: kit: entity: alert_route: {
       h: "Alert Sources"
       n: "alert_sources"
       r: true
-      sh: "Which alert sources should this alert route match?"
-      t: "`$ARRAY`"
-    }
-    channel_config: {
-      h: "Channel Config"
-      n: "channel_config"
-      r: true
-      sh: "The channel configuration for this alert route"
+      sh: "Which alert sources this route matches"
       t: "`$ARRAY`"
     }
     condition_groups: {
       h: "Condition Groups"
       n: "condition_groups"
       r: true
-      sh: "What condition groups must be true for this alert route to fire?"
+      sh: "Filter: the condition groups that must be true for this route to fire"
       t: "`$ARRAY`"
     }
     created_at: {
@@ -31,14 +24,14 @@ main: kit: entity: alert_route: {
       h: "Created At"
       n: "created_at"
       r: false
-      sh: "The time of creation of this alert route"
+      sh: "When this alert route was created"
       t: "`$STRING`"
     }
     enabled: {
       h: "Enabled"
       n: "enabled"
       r: true
-      sh: "Whether this alert route is enabled or not"
+      sh: "Whether this alert route is enabled"
       t: "`$BOOLEAN`"
     }
     escalation_config: {
@@ -51,7 +44,7 @@ main: kit: entity: alert_route: {
       h: "Expressions"
       n: "expressions"
       r: true
-      sh: "The expressions used in this template"
+      sh: "The expressions used by bindings in this route"
       t: "`$ARRAY`"
     }
     grouping_config: {
@@ -64,18 +57,12 @@ main: kit: entity: alert_route: {
       h: "Id"
       n: "id"
       r: true
-      sh: "Unique identifier for this alert route config"
+      sh: "Unique identifier for this alert route"
       t: "`$STRING`"
     }
     incident_config: {
       h: "Incident Config"
       n: "incident_config"
-      r: true
-      t: "`$OBJECT`"
-    }
-    incident_template: {
-      h: "Incident Template"
-      n: "incident_template"
       r: true
       t: "`$OBJECT`"
     }
@@ -92,17 +79,11 @@ main: kit: entity: alert_route: {
       r: true
       t: "`$OBJECT`"
     }
-    message_template: {
-      h: "Message Template"
-      n: "message_template"
-      r: false
-      t: "`$OBJECT`"
-    }
     name: {
       h: "Name"
       n: "name"
       r: true
-      sh: "The name of this alert route config, for the user's reference"
+      sh: "The name of this alert route, for the user's reference"
       t: "`$STRING`"
     }
     owning_team_ids: {
@@ -117,7 +98,7 @@ main: kit: entity: alert_route: {
       h: "Updated At"
       n: "updated_at"
       r: false
-      sh: "The time of last update of this alert route"
+      sh: "When this alert route was last updated"
       t: "`$STRING`"
     }
     version: {
@@ -125,7 +106,7 @@ main: kit: entity: alert_route: {
       h: "Version"
       n: "version"
       r: true
-      sh: "The version of this alert route config"
+      sh: "The version of this alert route"
       t: "`$INTEGER`"
     }
   }
@@ -164,6 +145,9 @@ main: kit: entity: alert_route: {
           }
           m: "POST"
           o: "/v2/alert_routes"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -253,6 +237,7 @@ main: kit: entity: alert_route: {
           m: "GET"
           o: "/v2/alert_routes"
           q: {
+            "$action": "v2"
             exist: [
               "page_size"
             ]
@@ -345,6 +330,7 @@ main: kit: entity: alert_route: {
           m: "GET"
           o: "/v2/alert_routes/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]
@@ -440,6 +426,7 @@ main: kit: entity: alert_route: {
           m: "DELETE"
           o: "/v2/alert_routes/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]
@@ -544,6 +531,7 @@ main: kit: entity: alert_route: {
           m: "PUT"
           o: "/v2/alert_routes/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]

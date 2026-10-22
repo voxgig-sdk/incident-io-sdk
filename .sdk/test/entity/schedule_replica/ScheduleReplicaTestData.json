@@ -77,6 +77,11 @@
       "provenance": "operation-contract",
       "version": 2,
       "source": "openapi3"
+    },
+    "DELETE /v2/schedules/{schedule_id}/replicas/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
     }
   }
 }

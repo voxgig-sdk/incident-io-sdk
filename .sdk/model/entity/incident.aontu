@@ -255,33 +255,6 @@ main: kit: entity: incident: {
       sh: "ID of the Slack team / workspace."
       t: "`$STRING`"
     }
-    source_message_channel_id: {
-      h: "Source Message Channel Id"
-      n: "source_message_channel_id"
-      r: false
-      sh: "Channel ID of the source message, if this incident was created from one"
-      t: "`$STRING`"
-    }
-    source_message_timestamp: {
-      h: "Source Message Timestamp"
-      n: "source_message_timestamp"
-      r: false
-      sh: "Timestamp of the source message, if this incident was created from one"
-      t: "`$STRING`"
-    }
-    status: {
-      h: "Status"
-      n: "status"
-      op: {
-        create: {
-          req: false
-          type: "`$STRING`"
-        }
-      }
-      r: true
-      sh: "Current status of the incident"
-      t: "`$STRING`"
-    }
     summary: {
       h: "Summary"
       n: "summary"
@@ -294,13 +267,6 @@ main: kit: entity: incident: {
       n: "team_ids"
       r: true
       sh: "IDs of the teams that own this incident, resolved from your team settings."
-      t: "`$ARRAY`"
-    }
-    timestamps: {
-      h: "Timestamps"
-      n: "timestamps"
-      r: false
-      sh: "Incident lifecycle events and when they last occurred"
       t: "`$ARRAY`"
     }
     updated_at: {
@@ -441,6 +407,9 @@ main: kit: entity: incident: {
           }
           m: "POST"
           o: "/v1/incidents"
+          q: {
+            "$action": "v1"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -542,6 +511,9 @@ main: kit: entity: incident: {
           }
           m: "GET"
           o: "/v1/incidents"
+          q: {
+            "$action": "v1"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -760,6 +732,7 @@ main: kit: entity: incident: {
           m: "GET"
           o: "/v1/incidents/{id}"
           q: {
+            "$action": "v1"
             exist: [
               "id"
             ]

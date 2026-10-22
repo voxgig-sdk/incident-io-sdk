@@ -157,18 +157,6 @@ Create a new `AlertsAddTagsResultV2` entity instance.
 
 **Returns:** `AlertsAddTagsResultV2Entity` instance.
 
-#### `AlertsRemoveTagsResultV2(data?: object)`
-
-Create a new `AlertsRemoveTagsResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `AlertsRemoveTagsResultV2Entity` instance.
-
 #### `AlertsSetTagsResultV2(data?: object)`
 
 Create a new `AlertsSetTagsResultV2` entity instance.
@@ -241,21 +229,9 @@ Create a new `CallRoute` entity instance.
 
 **Returns:** `CallRouteEntity` instance.
 
-#### `CallRoutesCreateAllowedCallerResultV2(data?: object)`
+#### `CallRouteAllowedCaller(data?: object)`
 
-Create a new `CallRoutesCreateAllowedCallerResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `CallRoutesCreateAllowedCallerResultV2Entity` instance.
-
-#### `CallRoutesCreateOptionResultV2(data?: object)`
-
-Create a new `CallRoutesCreateOptionResultV2` entity instance.
+Create a new `CallRouteAllowedCaller` entity instance.
 
 **Parameters:**
 
@@ -263,23 +239,11 @@ Create a new `CallRoutesCreateOptionResultV2` entity instance.
 | --- | --- | --- |
 | `data` | `object` | Initial entity data. |
 
-**Returns:** `CallRoutesCreateOptionResultV2Entity` instance.
+**Returns:** `CallRouteAllowedCallerEntity` instance.
 
-#### `CallRoutesListAllowedCallersResultV2(data?: object)`
+#### `CallRouteOption(data?: object)`
 
-Create a new `CallRoutesListAllowedCallersResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `CallRoutesListAllowedCallersResultV2Entity` instance.
-
-#### `CallRoutesListOptionsResultV2(data?: object)`
-
-Create a new `CallRoutesListOptionsResultV2` entity instance.
+Create a new `CallRouteOption` entity instance.
 
 **Parameters:**
 
@@ -287,67 +251,7 @@ Create a new `CallRoutesListOptionsResultV2` entity instance.
 | --- | --- | --- |
 | `data` | `object` | Initial entity data. |
 
-**Returns:** `CallRoutesListOptionsResultV2Entity` instance.
-
-#### `CallRoutesShowAllowedCallerResultV2(data?: object)`
-
-Create a new `CallRoutesShowAllowedCallerResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `CallRoutesShowAllowedCallerResultV2Entity` instance.
-
-#### `CallRoutesShowOptionResultV2(data?: object)`
-
-Create a new `CallRoutesShowOptionResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `CallRoutesShowOptionResultV2Entity` instance.
-
-#### `CallRoutesUpdateAllowedCallerResultV2(data?: object)`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `CallRoutesUpdateAllowedCallerResultV2Entity` instance.
-
-#### `CallRoutesUpdateOptionResultV2(data?: object)`
-
-Create a new `CallRoutesUpdateOptionResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `CallRoutesUpdateOptionResultV2Entity` instance.
-
-#### `CallRoutesV2(data?: object)`
-
-Create a new `CallRoutesV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `CallRoutesV2Entity` instance.
+**Returns:** `CallRouteOptionEntity` instance.
 
 #### `CallSession(data?: object)`
 
@@ -456,6 +360,18 @@ Create a new `Escalation` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `EscalationEntity` instance.
+
+#### `EscalationPath(data?: object)`
+
+Create a new `EscalationPath` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `EscalationPathEntity` instance.
 
 #### `EscalationPathTemplate(data?: object)`
 
@@ -853,21 +769,9 @@ Create a new `PayConfig` entity instance.
 
 **Returns:** `PayConfigEntity` instance.
 
-#### `PayConfigsCreateOneOffRuleResultV2(data?: object)`
+#### `PayConfigOneOffRule(data?: object)`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `PayConfigsCreateOneOffRuleResultV2Entity` instance.
-
-#### `PayConfigsCreateWeeklyRuleResultV2(data?: object)`
-
-Create a new `PayConfigsCreateWeeklyRuleResultV2` entity instance.
+Create a new `PayConfigOneOffRule` entity instance.
 
 **Parameters:**
 
@@ -875,23 +779,11 @@ Create a new `PayConfigsCreateWeeklyRuleResultV2` entity instance.
 | --- | --- | --- |
 | `data` | `object` | Initial entity data. |
 
-**Returns:** `PayConfigsCreateWeeklyRuleResultV2Entity` instance.
+**Returns:** `PayConfigOneOffRuleEntity` instance.
 
-#### `PayConfigsListOneOffRulesResultV2(data?: object)`
+#### `PayConfigWeeklyRule(data?: object)`
 
-Create a new `PayConfigsListOneOffRulesResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `PayConfigsListOneOffRulesResultV2Entity` instance.
-
-#### `PayConfigsListWeeklyRulesResultV2(data?: object)`
-
-Create a new `PayConfigsListWeeklyRulesResultV2` entity instance.
+Create a new `PayConfigWeeklyRule` entity instance.
 
 **Parameters:**
 
@@ -899,67 +791,7 @@ Create a new `PayConfigsListWeeklyRulesResultV2` entity instance.
 | --- | --- | --- |
 | `data` | `object` | Initial entity data. |
 
-**Returns:** `PayConfigsListWeeklyRulesResultV2Entity` instance.
-
-#### `PayConfigsShowOneOffRuleResultV2(data?: object)`
-
-Create a new `PayConfigsShowOneOffRuleResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `PayConfigsShowOneOffRuleResultV2Entity` instance.
-
-#### `PayConfigsShowWeeklyRuleResultV2(data?: object)`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `PayConfigsShowWeeklyRuleResultV2Entity` instance.
-
-#### `PayConfigsUpdateOneOffRuleResultV2(data?: object)`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `PayConfigsUpdateOneOffRuleResultV2Entity` instance.
-
-#### `PayConfigsUpdateWeeklyRuleResultV2(data?: object)`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `PayConfigsUpdateWeeklyRuleResultV2Entity` instance.
-
-#### `PayConfigsV2(data?: object)`
-
-Create a new `PayConfigsV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `PayConfigsV2Entity` instance.
+**Returns:** `PayConfigWeeklyRuleEntity` instance.
 
 #### `PayReport(data?: object)`
 
@@ -1008,18 +840,6 @@ Create a new `PayReportsV2` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `PayReportsV2Entity` instance.
-
-#### `PoliciesV2(data?: object)`
-
-Create a new `PoliciesV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `PoliciesV2Entity` instance.
 
 #### `Policy(data?: object)`
 
@@ -1117,6 +937,18 @@ Create a new `ScheduleEntry` entity instance.
 
 **Returns:** `ScheduleEntryEntity` instance.
 
+#### `ScheduleOverride(data?: object)`
+
+Create a new `ScheduleOverride` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `ScheduleOverrideEntity` instance.
+
 #### `ScheduleReplica(data?: object)`
 
 Create a new `ScheduleReplica` entity instance.
@@ -1152,30 +984,6 @@ Create a new `ScheduleSyncTarget` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `ScheduleSyncTargetEntity` instance.
-
-#### `SchedulesShowOverrideResultV2(data?: object)`
-
-Create a new `SchedulesShowOverrideResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `SchedulesShowOverrideResultV2Entity` instance.
-
-#### `SchedulesUpdateOverrideResultV2(data?: object)`
-
-Create a new `SchedulesUpdateOverrideResultV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `SchedulesUpdateOverrideResultV2Entity` instance.
 
 #### `Secret(data?: object)`
 
@@ -1225,9 +1033,9 @@ Create a new `StatusPageComponent` entity instance.
 
 **Returns:** `StatusPageComponentEntity` instance.
 
-#### `StatusPageComponentAvailabilityV2(data?: object)`
+#### `StatusPageComponentAvailability(data?: object)`
 
-Create a new `StatusPageComponentAvailabilityV2` entity instance.
+Create a new `StatusPageComponentAvailability` entity instance.
 
 **Parameters:**
 
@@ -1235,7 +1043,7 @@ Create a new `StatusPageComponentAvailabilityV2` entity instance.
 | --- | --- | --- |
 | `data` | `object` | Initial entity data. |
 
-**Returns:** `StatusPageComponentAvailabilityV2Entity` instance.
+**Returns:** `StatusPageComponentAvailabilityEntity` instance.
 
 #### `StatusPageIncident(data?: object)`
 
@@ -1261,9 +1069,9 @@ Create a new `StatusPageIncidentUpdate` entity instance.
 
 **Returns:** `StatusPageIncidentUpdateEntity` instance.
 
-#### `StatusPageLinkedResponseIncidentV1(data?: object)`
+#### `StatusPageLinkedResponseIncident(data?: object)`
 
-Create a new `StatusPageLinkedResponseIncidentV1` entity instance.
+Create a new `StatusPageLinkedResponseIncident` entity instance.
 
 **Parameters:**
 
@@ -1271,7 +1079,7 @@ Create a new `StatusPageLinkedResponseIncidentV1` entity instance.
 | --- | --- | --- |
 | `data` | `object` | Initial entity data. |
 
-**Returns:** `StatusPageLinkedResponseIncidentV1Entity` instance.
+**Returns:** `StatusPageLinkedResponseIncidentEntity` instance.
 
 #### `StatusPageMaintenance(data?: object)`
 
@@ -1309,18 +1117,6 @@ Create a new `StatusPageStructure` entity instance.
 
 **Returns:** `StatusPageStructureEntity` instance.
 
-#### `StatusPagesV2(data?: object)`
-
-Create a new `StatusPagesV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `StatusPagesV2Entity` instance.
-
 #### `Team(data?: object)`
 
 Create a new `Team` entity instance.
@@ -1333,9 +1129,9 @@ Create a new `Team` entity instance.
 
 **Returns:** `TeamEntity` instance.
 
-#### `TelemetryDataSourceV2(data?: object)`
+#### `TelemetryDataSource(data?: object)`
 
-Create a new `TelemetryDataSourceV2` entity instance.
+Create a new `TelemetryDataSource` entity instance.
 
 **Parameters:**
 
@@ -1343,7 +1139,7 @@ Create a new `TelemetryDataSourceV2` entity instance.
 | --- | --- | --- |
 | `data` | `object` | Initial entity data. |
 
-**Returns:** `TelemetryDataSourceV2Entity` instance.
+**Returns:** `TelemetryDataSourceEntity` instance.
 
 #### `User(data?: object)`
 
@@ -1453,30 +1249,37 @@ const action = client.Action()
 | `completed_at` | `string` | No | When the action was completed |
 | `created_at` | `string` | Yes | When the action was created |
 | `creator` | `Record<string, any>` | Yes |  |
-| `description` | `string` | No | Description of the action |
-| `external_issue_reference` | `Record<string, any>` | No |  |
-| `follow_up` | `boolean` | Yes | Whether an action is marked as follow-up |
+| `description` | `string` | Yes | Description of the action |
 | `id` | `string` | Yes | Unique identifier for the action |
 | `incident_id` | `string` | Yes | Unique identifier of the incident the action belongs to |
 | `status` | `string` | Yes | Status of the action |
 | `updated_at` | `string` | Yes | When the action was last updated |
 
-### Field Usage by Operation
+### Actions
 
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `assignee` | - | - | - | - | - |
-| `assignee_id` | - | - | - | - | - |
-| `completed_at` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `creator` | - | - | - | - | - |
-| `description` | Yes | Yes | Yes | Yes | - |
-| `external_issue_reference` | - | - | - | - | - |
-| `follow_up` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `incident_id` | - | - | - | - | - |
-| `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v2` | `/v2/actions` | `client.Action().create({ $action: 'v2', ... })` |
+| `v1` | `/v1/actions` | `client.Action().list({ $action: 'v1', ... })` |
+| `v2` | `/v2/actions` | `client.Action().list({ $action: 'v2', ... })` |
+| `v1` | `/v1/actions/{id}` | `client.Action().load({ $action: 'v1', ... })` |
+| `v2` | `/v2/actions/{id}` | `client.Action().load({ $action: 'v2', ... })` |
+| `v2` | `/v2/actions/{id}` | `client.Action().remove({ $action: 'v2', ... })` |
+| `v2` | `/v2/actions/{id}` | `client.Action().update({ $action: 'v2', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Action record — check the API definition for its shape.
+
+```ts
+const result = await client.Action().create({
+  $action: 'v2',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -1871,24 +1674,45 @@ const alert_route = client.AlertRoute()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `alert_sources` | `any[]` | Yes | Which alert sources should this alert route match? |
-| `channel_config` | `any[]` | Yes | The channel configuration for this alert route |
-| `condition_groups` | `any[]` | Yes | What condition groups must be true for this alert route to fire? |
-| `created_at` | `string` | No | The time of creation of this alert route |
-| `enabled` | `boolean` | Yes | Whether this alert route is enabled or not |
+| `alert_sources` | `any[]` | Yes | Which alert sources this route matches |
+| `condition_groups` | `any[]` | Yes | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | `string` | No | When this alert route was created |
+| `enabled` | `boolean` | Yes | Whether this alert route is enabled |
 | `escalation_config` | `Record<string, any>` | Yes |  |
-| `expressions` | `any[]` | Yes | The expressions used in this template |
+| `expressions` | `any[]` | Yes | The expressions used by bindings in this route |
 | `grouping_config` | `Record<string, any>` | Yes |  |
-| `id` | `string` | Yes | Unique identifier for this alert route config |
+| `id` | `string` | Yes | Unique identifier for this alert route |
 | `incident_config` | `Record<string, any>` | Yes |  |
-| `incident_template` | `Record<string, any>` | Yes |  |
 | `is_private` | `boolean` | Yes | Whether this alert route is private. |
 | `message_config` | `Record<string, any>` | Yes |  |
-| `message_template` | `Record<string, any>` | No |  |
-| `name` | `string` | Yes | The name of this alert route config, for the user's reference |
+| `name` | `string` | Yes | The name of this alert route, for the user's reference |
 | `owning_team_ids` | `any[]` | No | IDs of teams that own this alert route |
-| `updated_at` | `string` | No | The time of last update of this alert route |
-| `version` | `number` | Yes | The version of this alert route config |
+| `updated_at` | `string` | No | When this alert route was last updated |
+| `version` | `number` | Yes | The version of this alert route |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v2` | `/v2/alert_routes` | `client.AlertRoute().create({ $action: 'v2', ... })` |
+| `v2` | `/v2/alert_routes` | `client.AlertRoute().list({ $action: 'v2', ... })` |
+| `v2` | `/v2/alert_routes/{id}` | `client.AlertRoute().load({ $action: 'v2', ... })` |
+| `v2` | `/v2/alert_routes/{id}` | `client.AlertRoute().remove({ $action: 'v2', ... })` |
+| `v2` | `/v2/alert_routes/{id}` | `client.AlertRoute().update({ $action: 'v2', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+AlertRoute record — check the API definition for its shape.
+
+```ts
+const result = await client.AlertRoute().create({
+  $action: 'v2',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -1899,14 +1723,12 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.AlertRoute().create({
   alert_sources: [],
-  channel_config: [],
   condition_groups: [],
   enabled: true,
   escalation_config: {},
   expressions: [],
   grouping_config: {},
   incident_config: {},
-  incident_template: {},
   is_private: true,
   message_config: {},
   name: 'example_name',
@@ -1918,7 +1740,7 @@ const result = await client.AlertRoute().create({
 List entities matching the given criteria. Resolves to an array of entities, one per record.
 
 ```ts
-const results = await client.AlertRoute().list({ page_size: 1 })
+const results = await client.AlertRoute().list()
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -2153,10 +1975,52 @@ const alert_tag = client.AlertTag()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for the tag |
+| `alert_group_ids` | `any[]` | No | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | Yes | The ID of the alert source this alert fired on |
+| `attributes` | `any[]` | Yes | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | Yes | When this entry was created |
+| `deduplication_key` | `string` | Yes | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | No | The description of the alert |
+| `id` | `string` | Yes | The ID of this alert |
 | `name` | `string` | Yes | The tag name |
+| `resolved_at` | `string` | No | When this alert was resolved |
+| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Yes | Statuses of an alert |
+| `tags` | `any[]` | No | Tags someone has applied to this alert |
+| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | Yes | When this alert was last updated |
+
+### Field Usage by Operation
+
+| Field | list | create |
+| --- | --- | --- |
+| `alert_group_ids` | - | - |
+| `alert_source_id` | - | - |
+| `attributes` | - | - |
+| `created_at` | - | - |
+| `deduplication_key` | - | - |
+| `description` | - | - |
+| `id` | - | - |
+| `name` | - | - |
+| `resolved_at` | - | - |
+| `source_url` | - | - |
+| `status` | - | - |
+| `tags` | - | Yes |
+| `title` | - | - |
+| `updated_at` | - | - |
 
 ### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.AlertTag().create({
+  alert_id: 'example_alert_id',
+  tags: [],
+})
+```
 
 #### `list(match: object, ctrl?: object)`
 
@@ -2264,89 +2128,6 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `AlertsAddTagsResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## AlertsRemoveTagsResultV2Entity
-
-```ts
-const alerts_remove_tags_result_v2 = client.AlertsRemoveTagsResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `alert_group_ids` | `any[]` | No | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | `string` | Yes | The ID of the alert source this alert fired on |
-| `attributes` | `any[]` | Yes | Attribute values parsed from the alerts payload |
-| `created_at` | `string` | Yes | When this entry was created |
-| `deduplication_key` | `string` | Yes | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | `string` | No | The description of the alert |
-| `id` | `string` | Yes | The ID of this alert |
-| `resolved_at` | `string` | No | When this alert was resolved |
-| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
-| `status` | `string` | Yes | Statuses of an alert |
-| `tags` | `any[]` | No | Tags someone has applied to this alert |
-| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | `string` | Yes | When this alert was last updated |
-
-### Field Usage by Operation
-
-| Field | create |
-| --- | --- |
-| `alert_group_ids` | - |
-| `alert_source_id` | - |
-| `attributes` | - |
-| `created_at` | - |
-| `deduplication_key` | - |
-| `description` | - |
-| `id` | - |
-| `resolved_at` | - |
-| `source_url` | - |
-| `status` | - |
-| `tags` | Yes |
-| `title` | - |
-| `updated_at` | - |
-
-### Operations
-
-#### `create(data: object, ctrl?: object)`
-
-Create a new entity with the given data. Resolves to the created entity.
-
-```ts
-const result = await client.AlertsRemoveTagsResultV2().create({
-  alert_id: 'example_alert_id',
-  tags: [],
-})
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `AlertsRemoveTagsResultV2Entity` instance with the same client and
 options.
 
 #### `client()`
@@ -2938,18 +2719,19 @@ Return a copy of the entity options.
 
 ---
 
-## CallRoutesCreateAllowedCallerResultV2Entity
+## CallRouteAllowedCallerEntity
 
 ```ts
-const call_routes_create_allowed_caller_result_v2 = client.CallRoutesCreateAllowedCallerResultV2()
+const call_route_allowed_caller = client.CallRouteAllowedCaller()
 ```
 
 ### Fields
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `string` | Yes | Unique identifier for this allowed caller |
 | `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number to allow, in international format |
+| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
 
 ### Operations
 
@@ -2958,440 +2740,46 @@ const call_routes_create_allowed_caller_result_v2 = client.CallRoutesCreateAllow
 Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
-const result = await client.CallRoutesCreateAllowedCallerResultV2().create({
-  call_route_id: 'example_call_route_id',
+const result = await client.CallRouteAllowedCaller().create({
+  id: 'example_id',
   phone_number: 'example_phone_number',
 })
 ```
 
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `CallRoutesCreateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## CallRoutesCreateOptionResultV2Entity
-
-```ts
-const call_routes_create_option_result_v2 = client.CallRoutesCreateOptionResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `path` | `any[]` | Yes | Who to page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `create(data: object, ctrl?: object)`
-
-Create a new entity with the given data. Resolves to the created entity.
-
-```ts
-const result = await client.CallRoutesCreateOptionResultV2().create({
-  call_route_id: 'example_call_route_id',
-  digit: 'example_digit',
-  path: [],
-  prompt: 'example_prompt',
-})
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `CallRoutesCreateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## CallRoutesListAllowedCallersResultV2Entity
-
-```ts
-const call_routes_list_allowed_callers_result_v2 = client.CallRoutesListAllowedCallersResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
 #### `list(match: object, ctrl?: object)`
 
 List entities matching the given criteria. Resolves to an array of entities, one per record.
 
 ```ts
-const results = await client.CallRoutesListAllowedCallersResultV2().list({ call_route_id: "example" })
+const results = await client.CallRouteAllowedCaller().list({ id: "example" })
 ```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `CallRoutesListAllowedCallersResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## CallRoutesListOptionsResultV2Entity
-
-```ts
-const call_routes_list_options_result_v2 = client.CallRoutesListOptionsResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `any[]` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `list(match: object, ctrl?: object)`
-
-List entities matching the given criteria. Resolves to an array of entities, one per record.
-
-```ts
-const results = await client.CallRoutesListOptionsResultV2().list({ call_route_id: "example" })
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `CallRoutesListOptionsResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## CallRoutesShowAllowedCallerResultV2Entity
-
-```ts
-const call_routes_show_allowed_caller_result_v2 = client.CallRoutesShowAllowedCallerResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
 
 #### `load(match: object, ctrl?: object)`
 
 Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
 
 ```ts
-const result = await client.CallRoutesShowAllowedCallerResultV2().load({ id: 'call_routes_show_allowed_caller_result_v2_id', call_route_id: 'call_route_id' })
+const result = await client.CallRouteAllowedCaller().load({ id: 'call_route_allowed_caller_id', call_route_id: 'call_route_id' })
 ```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `CallRoutesShowAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## CallRoutesShowOptionResultV2Entity
-
-```ts
-const call_routes_show_option_result_v2 = client.CallRoutesShowOptionResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `any[]` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `load(match: object, ctrl?: object)`
-
-Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
-
-```ts
-const result = await client.CallRoutesShowOptionResultV2().load({ id: 'call_routes_show_option_result_v2_id', call_route_id: 'call_route_id' })
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `CallRoutesShowOptionResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## CallRoutesUpdateAllowedCallerResultV2Entity
-
-```ts
-const call_routes_update_allowed_caller_result_v2 = client.CallRoutesUpdateAllowedCallerResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `update(data: object, ctrl?: object)`
-
-Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
-
-```ts
-const result = await client.CallRoutesUpdateAllowedCallerResultV2().update({
-  call_route_id: 'call_route_id',
-  id: 'id',
-  // Fields to update
-})
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## CallRoutesUpdateOptionResultV2Entity
-
-```ts
-const call_routes_update_option_result_v2 = client.CallRoutesUpdateOptionResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `any[]` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `update(data: object, ctrl?: object)`
-
-Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
-
-```ts
-const result = await client.CallRoutesUpdateOptionResultV2().update({
-  call_route_id: 'call_route_id',
-  id: 'id',
-  // Fields to update
-})
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `CallRoutesUpdateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## CallRoutesV2Entity
-
-```ts
-const call_routes_v2 = client.CallRoutesV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
 
 #### `remove(match: object, ctrl?: object)`
 
 Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
 
 ```ts
-const result = await client.CallRoutesV2().remove({ id: 'call_routes_v2_id', call_route_id: 'call_route_id' })
+const result = await client.CallRouteAllowedCaller().remove({ id: 'call_route_allowed_caller_id', call_route_id: 'call_route_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
+
+```ts
+const result = await client.CallRouteAllowedCaller().update({
+  id: 'call_route_allowed_caller_id',
+  call_route_id: 'call_route_id',
+  // Fields to update
+})
 ```
 
 ### Common Methods
@@ -3408,7 +2796,101 @@ Get or set the entity match criteria. Works the same as `data()`.
 
 #### `make()`
 
-Create a new `CallRoutesV2Entity` instance with the same client and
+Create a new `CallRouteAllowedCallerEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## CallRouteOptionEntity
+
+```ts
+const call_route_option = client.CallRouteOption()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
+| `id` | `string` | Yes | Unique identifier for this option |
+| `path` | `any[]` | Yes | Who we page when a caller chooses this option |
+| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.CallRouteOption().create({
+  id: 'example_id',
+  digit: 'example_digit',
+  path: [],
+  prompt: 'example_prompt',
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Resolves to an array of entities, one per record.
+
+```ts
+const results = await client.CallRouteOption().list({ id: "example" })
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.CallRouteOption().load({ id: 'call_route_option_id', call_route_id: 'call_route_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.CallRouteOption().remove({ id: 'call_route_option_id', call_route_id: 'call_route_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
+
+```ts
+const result = await client.CallRouteOption().update({
+  id: 'call_route_option_id',
+  call_route_id: 'call_route_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `CallRouteOptionEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -3555,21 +3037,45 @@ const catalog_entry = client.CatalogEntry()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `aliases` | - | Yes | - | - |
-| `archived_at` | - | - | - | - |
-| `attribute_values` | - | - | - | - |
-| `catalog_entry` | - | - | - | - |
-| `catalog_type` | - | - | - | - |
-| `catalog_type_id` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `external_id` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | Yes | - | - |
-| `update_attributes` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `aliases` | - | Yes | - | - | - |
+| `archived_at` | - | - | - | - | - |
+| `attribute_values` | - | - | - | - | - |
+| `catalog_entry` | - | - | - | - | - |
+| `catalog_type` | - | - | - | - | - |
+| `catalog_type_id` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `external_id` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | Yes | - | - | - |
+| `update_attributes` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v2` | `/v2/catalog_entries` | `client.CatalogEntry().create({ $action: 'v2', ... })` |
+| `v2` | `/v2/catalog_entries` | `client.CatalogEntry().list({ $action: 'v2', ... })` |
+| `v2` | `/v2/catalog_entries/{id}` | `client.CatalogEntry().load({ $action: 'v2', ... })` |
+| `v2` | `/v2/catalog_entries/{id}` | `client.CatalogEntry().remove({ $action: 'v2', ... })` |
+| `v2` | `/v2/catalog_entries/{id}` | `client.CatalogEntry().update({ $action: 'v2', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+CatalogEntry record — check the API definition for its shape.
+
+```ts
+const result = await client.CatalogEntry().create({
+  $action: 'v2',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -3590,7 +3096,7 @@ const result = await client.CatalogEntry().create({
 List entities matching the given criteria. Resolves to an array of entities, one per record.
 
 ```ts
-const results = await client.CatalogEntry().list({ catalog_type_id: "example" })
+const results = await client.CatalogEntry().list({ catalog_type_id: "example", page_size: 1 })
 ```
 
 #### `load(match: object, ctrl?: object)`
@@ -3599,6 +3105,14 @@ Load a single entity matching the given criteria. Resolves to the entity, whose 
 
 ```ts
 const result = await client.CatalogEntry().load({ id: 'catalog_entry_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.CatalogEntry().remove({ id: 'catalog_entry_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -3656,6 +3170,26 @@ const catalog_resource = client.CatalogResource()
 | `label` | `string` | Yes | Label for this catalog resource type |
 | `type` | `string` | Yes | Catalog type name for this resource, as used when setting the type of a catalog type attribute |
 | `value_docstring` | `string` | Yes | Documentation for the literal string value of this resource |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v2` | `/v2/catalog_resources` | `client.CatalogResource().list({ $action: 'v2', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+CatalogResource record — check the API definition for its shape.
+
+```ts
+const result = await client.CatalogResource().list({
+  $action: 'v2',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -3724,7 +3258,6 @@ const catalog_type = client.CatalogType()
 | `registry_type` | `string` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `any[]` | No | If populated, the integrations required for this type |
 | `schema` | `Record<string, any>` | Yes |  |
-| `semantic_type` | `string` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | No | The url of the external repository where this type is managed |
 | `type_name` | `string` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | Yes | When this type was last updated |
@@ -3732,32 +3265,55 @@ const catalog_type = client.CatalogType()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | Yes | Yes |
-| `categories` | - | - | Yes | Yes |
-| `color` | - | - | Yes | Yes |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `dynamic_resource_parameter` | - | - | - | - |
-| `engine_resource_type` | - | - | - | - |
-| `estimated_count` | - | - | - | - |
-| `icon` | - | - | Yes | Yes |
-| `id` | - | - | - | - |
-| `is_editable` | - | - | - | - |
-| `is_team_type` | - | - | - | - |
-| `last_synced_at` | - | - | - | - |
-| `name` | - | - | - | - |
-| `owning_team_ids` | - | - | - | - |
-| `ranked` | - | - | Yes | Yes |
-| `registry_type` | - | - | - | - |
-| `required_integrations` | - | - | - | - |
-| `schema` | - | - | - | - |
-| `semantic_type` | - | - | - | - |
-| `source_repo_url` | - | - | - | - |
-| `type_name` | - | - | Yes | - |
-| `updated_at` | - | - | - | - |
-| `use_name_as_identifier` | - | - | Yes | Yes |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | Yes | Yes | - |
+| `categories` | - | - | Yes | Yes | - |
+| `color` | - | - | Yes | Yes | - |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - | - |
+| `engine_resource_type` | - | - | - | - | - |
+| `estimated_count` | - | - | - | - | - |
+| `icon` | - | - | Yes | Yes | - |
+| `id` | - | - | - | - | - |
+| `is_editable` | - | - | - | - | - |
+| `is_team_type` | - | - | - | - | - |
+| `last_synced_at` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `owning_team_ids` | - | - | - | - | - |
+| `ranked` | - | - | Yes | Yes | - |
+| `registry_type` | - | - | - | - | - |
+| `required_integrations` | - | - | - | - | - |
+| `schema` | - | - | - | - | - |
+| `source_repo_url` | - | - | - | - | - |
+| `type_name` | - | - | Yes | - | - |
+| `updated_at` | - | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes | - |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v2` | `/v2/catalog_types` | `client.CatalogType().create({ $action: 'v2', ... })` |
+| `v2` | `/v2/catalog_types` | `client.CatalogType().list({ $action: 'v2', ... })` |
+| `v2` | `/v2/catalog_types/{id}` | `client.CatalogType().load({ $action: 'v2', ... })` |
+| `v2` | `/v2/catalog_types/{id}` | `client.CatalogType().remove({ $action: 'v2', ... })` |
+| `v2` | `/v2/catalog_types/{id}` | `client.CatalogType().update({ $action: 'v2', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+CatalogType record — check the API definition for its shape.
+
+```ts
+const result = await client.CatalogType().create({
+  $action: 'v2',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -3786,6 +3342,14 @@ Load a single entity matching the given criteria. Resolves to the entity, whose 
 
 ```ts
 const result = await client.CatalogType().load({ id: 'catalog_type_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.CatalogType().remove({ id: 'catalog_type_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -3857,12 +3421,31 @@ const catalog_type_schema = client.CatalogTypeSchema()
 | `registry_type` | `string` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `any[]` | No | If populated, the integrations required for this type |
 | `schema` | `Record<string, any>` | Yes |  |
-| `semantic_type` | `string` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | No | The url of the external repository where this type is managed |
 | `type_name` | `string` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | Yes | When this type was last updated |
 | `use_name_as_identifier` | `boolean` | Yes | If enabled, you can refer to entries of this type by their name, as well as their external ID and any aliases. |
 | `version` | `number` | Yes |  |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v2` | `/v2/catalog_types/{id}/actions/update_schema` | `client.CatalogTypeSchema().create({ $action: 'v2', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+CatalogTypeSchema record — check the API definition for its shape.
+
+```ts
+const result = await client.CatalogTypeSchema().create({
+  $action: 'v2',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -3926,14 +3509,31 @@ const custom_field = client.CustomField()
 | `helptext_catalog_attribute_id` | `string` | No | Which catalog attribute provides helptext for the options |
 | `id` | `string` | Yes | Unique identifier for the custom field |
 | `name` | `string` | Yes | Human readable name for the custom field |
-| `options` | `any[]` | Yes | What options are available for this custom field, if this field has options |
-| `required` | `string` | No | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | `string` | No | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | `boolean` | Yes | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | `boolean` | Yes | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | `boolean` | Yes | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | `boolean` | No | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | `string` | Yes | When the action was last updated |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v1` | `/v1/custom_fields` | `client.CustomField().create({ $action: 'v1', ... })` |
+| `v1` | `/v1/custom_fields` | `client.CustomField().list({ $action: 'v1', ... })` |
+| `v1` | `/v1/custom_fields/{id}` | `client.CustomField().load({ $action: 'v1', ... })` |
+| `v1` | `/v1/custom_fields/{id}` | `client.CustomField().remove({ $action: 'v1', ... })` |
+| `v1` | `/v1/custom_fields/{id}` | `client.CustomField().update({ $action: 'v1', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+CustomField record — check the API definition for its shape.
+
+```ts
+const result = await client.CustomField().create({
+  $action: 'v1',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -3948,9 +3548,6 @@ const result = await client.CustomField().create({
   filter_by: {},
   fixed_filter: {},
   name: 'example_name',
-  show_before_closure: true,
-  show_before_creation: true,
-  show_before_update: true,
 })
 ```
 
@@ -4207,6 +3804,119 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `EscalationEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## EscalationPathEntity
+
+```ts
+const escalation_path = client.EscalationPath()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `current_responders` | `any[]` | No | Users who are currently on-call for this escalation path |
+| `id` | `string` | Yes | Unique identifier for this escalation path. |
+| `kind` | `string` | Yes | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | `string` | Yes | The name of this escalation path, for the user's reference. |
+| `param_bindings` | `Record<string, any>` | No | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | `any[]` | Yes | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` | `Record<string, any>` | Yes |  |
+| `team_ids` | `any[]` | Yes | IDs of the teams that own this escalation path. |
+| `template_id` | `string` | No | For a templated path, the template it is built from. |
+| `working_hours` | `any[]` | No | The working hours for this escalation path. |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `current_responders` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `kind` | - | - | Yes | Yes | - |
+| `name` | - | - | - | - | - |
+| `param_bindings` | - | - | - | - | - |
+| `path` | - | - | - | - | - |
+| `repeat_config` | - | - | - | - | - |
+| `team_ids` | - | - | Yes | Yes | - |
+| `template_id` | - | - | - | - | - |
+| `working_hours` | - | - | - | - | - |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.EscalationPath().create({
+  name: 'example_name',
+  path: [],
+  repeat_config: {},
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Resolves to an array of entities, one per record.
+
+```ts
+const results = await client.EscalationPath().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.EscalationPath().load({ id: 'escalation_path_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.EscalationPath().remove({ id: 'escalation_path_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
+
+```ts
+const result = await client.EscalationPath().update({
+  id: 'escalation_path_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `EscalationPathEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -4496,6 +4206,30 @@ const follow_up = client.FollowUp()
 | `status` | - | - | - | - | - |
 | `title` | - | - | - | - | - |
 | `updated_at` | - | - | - | - | - |
+
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v2` | `/v2/follow_ups` | `client.FollowUp().create({ $action: 'v2', ... })` |
+| `v2` | `/v2/follow_ups` | `client.FollowUp().list({ $action: 'v2', ... })` |
+| `v2` | `/v2/follow_ups/{id}` | `client.FollowUp().load({ $action: 'v2', ... })` |
+| `v2` | `/v2/follow_ups/{id}` | `client.FollowUp().remove({ $action: 'v2', ... })` |
+| `v2` | `/v2/follow_ups/{id}` | `client.FollowUp().update({ $action: 'v2', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+FollowUp record — check the API definition for its shape.
+
+```ts
+const result = await client.FollowUp().create({
+  $action: 'v2',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -4793,12 +4527,8 @@ const incident = client.Incident()
 | `slack_channel_name_override` | `string` | No | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | `string` | No | URL to link to the slack channel |
 | `slack_team_id` | `string` | Yes | ID of the Slack team / workspace. |
-| `source_message_channel_id` | `string` | No | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | `string` | No | Timestamp of the source message, if this incident was created from one |
-| `status` | `string` | Yes | Current status of the incident |
 | `summary` | `string` | No | Detailed description of the incident |
 | `team_ids` | `any[]` | Yes | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | `any[]` | No | Incident lifecycle events and when they last occurred |
 | `updated_at` | `string` | Yes | When the incident was last updated |
 | `visibility` | `string` | Yes | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | `number` | No | Amount of time spent on the incident in late hours |
@@ -4842,12 +4572,8 @@ const incident = client.Incident()
 | `slack_channel_name_override` | - | - | - |
 | `slack_channel_url` | - | - | - |
 | `slack_team_id` | - | - | Yes |
-| `source_message_channel_id` | - | - | - |
-| `source_message_timestamp` | - | - | - |
-| `status` | - | - | Yes |
 | `summary` | - | - | - |
 | `team_ids` | - | - | - |
-| `timestamps` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -4864,6 +4590,9 @@ remaining keys are sent as that action's payload.
 | Action | Route | Call |
 | --- | --- | --- |
 | `action_edit` | `/v2/incidents/{id}/actions/edit` | `client.Incident().create({ $action: 'action_edit', ... })` |
+| `v1` | `/v1/incidents` | `client.Incident().create({ $action: 'v1', ... })` |
+| `v1` | `/v1/incidents` | `client.Incident().list({ $action: 'v1', ... })` |
+| `v1` | `/v1/incidents/{id}` | `client.Incident().load({ $action: 'v1', ... })` |
 
 An action returns that action's OWN response, which is not necessarily a
 Incident record — check the API definition for its shape.
@@ -5377,24 +5106,33 @@ const incident_role = client.IncidentRole()
 | `id` | `string` | Yes | Unique identifier for the role |
 | `instructions` | `string` | Yes | Provided to whoever is nominated for the role. |
 | `name` | `string` | Yes | Human readable name of the incident role |
-| `required` | `boolean` | No | DEPRECATED: this will always be false. |
 | `role_type` | `string` | Yes | Type of incident role |
 | `shortform` | `string` | Yes | Short human readable name for Slack. |
 | `updated_at` | `string` | Yes | When the role was last updated |
 
-### Field Usage by Operation
+### Actions
 
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
-| `description` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `instructions` | - | - | - | - | - |
-| `name` | - | - | - | - | - |
-| `required` | - | - | Yes | - | - |
-| `role_type` | - | - | - | - | - |
-| `shortform` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `v1` | `/v1/incident_roles` | `client.IncidentRole().create({ $action: 'v1', ... })` |
+| `v1` | `/v1/incident_roles` | `client.IncidentRole().list({ $action: 'v1', ... })` |
+| `v1` | `/v1/incident_roles/{id}` | `client.IncidentRole().load({ $action: 'v1', ... })` |
+| `v1` | `/v1/incident_roles/{id}` | `client.IncidentRole().remove({ $action: 'v1', ... })` |
+| `v1` | `/v1/incident_roles/{id}` | `client.IncidentRole().update({ $action: 'v1', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+IncidentRole record — check the API definition for its shape.
+
+```ts
+const result = await client.IncidentRole().create({
+  $action: 'v1',
+  /* ...the action's own arguments */
+})
+```
 
 ### Operations
 
@@ -5407,7 +5145,6 @@ const result = await client.IncidentRole().create({
   description: 'example_description',
   instructions: 'example_instructions',
   name: 'example_name',
-  required: true,
   shortform: 'example_shortform',
 })
 ```
@@ -6731,10 +6468,10 @@ Return a copy of the entity options.
 
 ---
 
-## PayConfigsCreateOneOffRuleResultV2Entity
+## PayConfigOneOffRuleEntity
 
 ```ts
-const pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleResultV2()
+const pay_config_one_off_rule = client.PayConfigOneOffRule()
 ```
 
 ### Fields
@@ -6742,6 +6479,7 @@ const pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffR
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_at` | `string` | Yes | When this rule stops applying |
+| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `name` | `string` | Yes | Human readable name for this rule |
 | `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | `string` | Yes | When this rule starts applying |
@@ -6753,8 +6491,8 @@ const pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffR
 Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
-const result = await client.PayConfigsCreateOneOffRuleResultV2().create({
-  pay_config_id: 'example_pay_config_id',
+const result = await client.PayConfigOneOffRule().create({
+  id: 'example_id',
   end_at: 'example_end_at',
   name: 'example_name',
   rate_cents: 1,
@@ -6762,6 +6500,42 @@ const result = await client.PayConfigsCreateOneOffRuleResultV2().create({
 })
 ```
 
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Resolves to an array of entities, one per record.
+
+```ts
+const results = await client.PayConfigOneOffRule().list({ id: "example" })
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.PayConfigOneOffRule().load({ id: 'pay_config_one_off_rule_id', pay_config_id: 'pay_config_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.PayConfigOneOffRule().remove({ id: 'pay_config_one_off_rule_id', pay_config_id: 'pay_config_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
+
+```ts
+const result = await client.PayConfigOneOffRule().update({
+  id: 'pay_config_one_off_rule_id',
+  pay_config_id: 'pay_config_id',
+  // Fields to update
+})
+```
+
 ### Common Methods
 
 #### `data(data?: object)`
@@ -6776,7 +6550,7 @@ Get or set the entity match criteria. Works the same as `data()`.
 
 #### `make()`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2Entity` instance with the same client and
+Create a new `PayConfigOneOffRuleEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -6790,10 +6564,10 @@ Return a copy of the entity options.
 
 ---
 
-## PayConfigsCreateWeeklyRuleResultV2Entity
+## PayConfigWeeklyRuleEntity
 
 ```ts
-const pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRuleResultV2()
+const pay_config_weekly_rule = client.PayConfigWeeklyRule()
 ```
 
 ### Fields
@@ -6801,6 +6575,7 @@ const pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRu
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
 | `weekdays` | `any[]` | Yes | Days of the week this rule applies on |
@@ -6812,8 +6587,8 @@ const pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRu
 Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
-const result = await client.PayConfigsCreateWeeklyRuleResultV2().create({
-  pay_config_id: 'example_pay_config_id',
+const result = await client.PayConfigWeeklyRule().create({
+  id: 'example_id',
   end_time: 'example_end_time',
   rate_cents: 1,
   start_time: 'example_start_time',
@@ -6821,386 +6596,40 @@ const result = await client.PayConfigsCreateWeeklyRuleResultV2().create({
 })
 ```
 
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `PayConfigsCreateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## PayConfigsListOneOffRulesResultV2Entity
-
-```ts
-const pay_configs_list_one_off_rules_result_v2 = client.PayConfigsListOneOffRulesResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
 #### `list(match: object, ctrl?: object)`
 
 List entities matching the given criteria. Resolves to an array of entities, one per record.
 
 ```ts
-const results = await client.PayConfigsListOneOffRulesResultV2().list({ pay_config_id: "example" })
+const results = await client.PayConfigWeeklyRule().list({ id: "example" })
 ```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `PayConfigsListOneOffRulesResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## PayConfigsListWeeklyRulesResultV2Entity
-
-```ts
-const pay_configs_list_weekly_rules_result_v2 = client.PayConfigsListWeeklyRulesResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `any[]` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `list(match: object, ctrl?: object)`
-
-List entities matching the given criteria. Resolves to an array of entities, one per record.
-
-```ts
-const results = await client.PayConfigsListWeeklyRulesResultV2().list({ pay_config_id: "example" })
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `PayConfigsListWeeklyRulesResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## PayConfigsShowOneOffRuleResultV2Entity
-
-```ts
-const pay_configs_show_one_off_rule_result_v2 = client.PayConfigsShowOneOffRuleResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
 
 #### `load(match: object, ctrl?: object)`
 
 Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
 
 ```ts
-const result = await client.PayConfigsShowOneOffRuleResultV2().load({ id: 'pay_configs_show_one_off_rule_result_v2_id', pay_config_id: 'pay_config_id' })
+const result = await client.PayConfigWeeklyRule().load({ id: 'pay_config_weekly_rule_id', pay_config_id: 'pay_config_id' })
 ```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `PayConfigsShowOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## PayConfigsShowWeeklyRuleResultV2Entity
-
-```ts
-const pay_configs_show_weekly_rule_result_v2 = client.PayConfigsShowWeeklyRuleResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `any[]` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `load(match: object, ctrl?: object)`
-
-Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
-
-```ts
-const result = await client.PayConfigsShowWeeklyRuleResultV2().load({ id: 'pay_configs_show_weekly_rule_result_v2_id', pay_config_id: 'pay_config_id' })
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## PayConfigsUpdateOneOffRuleResultV2Entity
-
-```ts
-const pay_configs_update_one_off_rule_result_v2 = client.PayConfigsUpdateOneOffRuleResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `update(data: object, ctrl?: object)`
-
-Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
-
-```ts
-const result = await client.PayConfigsUpdateOneOffRuleResultV2().update({
-  id: 'id',
-  pay_config_id: 'pay_config_id',
-  // Fields to update
-})
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## PayConfigsUpdateWeeklyRuleResultV2Entity
-
-```ts
-const pay_configs_update_weekly_rule_result_v2 = client.PayConfigsUpdateWeeklyRuleResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `number` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `any[]` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `update(data: object, ctrl?: object)`
-
-Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
-
-```ts
-const result = await client.PayConfigsUpdateWeeklyRuleResultV2().update({
-  id: 'id',
-  pay_config_id: 'pay_config_id',
-  // Fields to update
-})
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## PayConfigsV2Entity
-
-```ts
-const pay_configs_v2 = client.PayConfigsV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
 
 #### `remove(match: object, ctrl?: object)`
 
 Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
 
 ```ts
-const result = await client.PayConfigsV2().remove({ id: 'pay_configs_v2_id', pay_config_id: 'pay_config_id' })
+const result = await client.PayConfigWeeklyRule().remove({ id: 'pay_config_weekly_rule_id', pay_config_id: 'pay_config_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
+
+```ts
+const result = await client.PayConfigWeeklyRule().update({
+  id: 'pay_config_weekly_rule_id',
+  pay_config_id: 'pay_config_id',
+  // Fields to update
+})
 ```
 
 ### Common Methods
@@ -7217,7 +6646,7 @@ Get or set the entity match criteria. Works the same as `data()`.
 
 #### `make()`
 
-Create a new `PayConfigsV2Entity` instance with the same client and
+Create a new `PayConfigWeeklyRuleEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -7537,56 +6966,6 @@ Return a copy of the entity options.
 
 ---
 
-## PoliciesV2Entity
-
-```ts
-const policies_v2 = client.PoliciesV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
-
-#### `remove(match: object, ctrl?: object)`
-
-Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
-
-```ts
-const result = await client.PoliciesV2().remove({ id: 'policies_v2_id' })
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `PoliciesV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
 ## PolicyEntity
 
 ```ts
@@ -7615,23 +6994,23 @@ const policy = client.Policy()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `assignment_rules` | - | - | - | - |
-| `conditions` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `debrief` | - | - | - | - |
-| `description` | - | - | Yes | Yes |
-| `expressions` | - | - | - | - |
-| `follow_up` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `on_call_readiness` | - | - | - | - |
-| `policy_type` | - | - | - | - |
-| `post_mortem` | - | - | - | - |
-| `schedule` | - | - | - | - |
-| `status` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignment_rules` | - | - | - | - | - |
+| `conditions` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `debrief` | - | - | - | - | - |
+| `description` | - | - | Yes | Yes | - |
+| `expressions` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `on_call_readiness` | - | - | - | - | - |
+| `policy_type` | - | - | - | - | - |
+| `post_mortem` | - | - | - | - | - |
+| `schedule` | - | - | - | - | - |
+| `status` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -7667,6 +7046,14 @@ Load a single entity matching the given criteria. Resolves to the entity, whose 
 
 ```ts
 const result = await client.Policy().load({ id: 'policy_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.Policy().remove({ id: 'policy_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -8241,6 +7628,106 @@ Return a copy of the entity options.
 
 ---
 
+## ScheduleOverrideEntity
+
+```ts
+const schedule_override = client.ScheduleOverride()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `end_at` | `string` | Yes | End of the override |
+| `id` | `string` | Yes | Unique internal ID of the schedule override |
+| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | Yes | The schedule that this override applies to |
+| `start_at` | `string` | Yes | Start of the override |
+| `updated_at` | `string` | Yes |  |
+| `user` | `Record<string, any>` | Yes |  |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.ScheduleOverride().create({
+  end_at: 'example_end_at',
+  layer_id: 'example_layer_id',
+  rotation_id: 'example_rotation_id',
+  schedule_id: 'example_schedule_id',
+  start_at: 'example_start_at',
+  user: {},
+})
+```
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Resolves to an array of entities, one per record.
+
+```ts
+const results = await client.ScheduleOverride().list({ schedule_id: "example" })
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.ScheduleOverride().load({ id: 'schedule_override_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.ScheduleOverride().remove({ id: 'schedule_override_id' })
+```
+
+#### `update(data: object, ctrl?: object)`
+
+Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
+
+```ts
+const result = await client.ScheduleOverride().update({
+  id: 'schedule_override_id',
+  // Fields to update
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `ScheduleOverrideEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## ScheduleReplicaEntity
 
 ```ts
@@ -8296,6 +7783,14 @@ Load a single entity matching the given criteria. Resolves to the entity, whose 
 const result = await client.ScheduleReplica().load({ id: 'schedule_replica_id', schedule_id: 'schedule_id' })
 ```
 
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.ScheduleReplica().remove({ id: 'schedule_replica_id', schedule_id: 'schedule_id' })
+```
+
 ### Common Methods
 
 #### `data(data?: object)`
@@ -8347,18 +7842,18 @@ const schedule_sync_rule = client.ScheduleSyncRule()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `permanent_member_user_ids` | - | - | Yes | Yes |
-| `rotation_id` | - | - | - | - |
-| `schedule_id` | - | - | - | - |
-| `schedule_sync_target` | - | - | - | - |
-| `schedule_sync_target_id` | - | - | - | - |
-| `sync_type` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `permanent_member_user_ids` | - | - | Yes | Yes | - |
+| `rotation_id` | - | - | - | - | - |
+| `schedule_id` | - | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - | - |
+| `sync_type` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -8388,6 +7883,14 @@ Load a single entity matching the given criteria. Resolves to the entity, whose 
 
 ```ts
 const result = await client.ScheduleSyncRule().load({ id: 'schedule_sync_rule_id', schedule_id: 'schedule_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.ScheduleSyncRule().remove({ id: 'schedule_sync_rule_id', schedule_id: 'schedule_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -8527,148 +8030,6 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `ScheduleSyncTargetEntity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## SchedulesShowOverrideResultV2Entity
-
-```ts
-const schedules_show_override_result_v2 = client.SchedulesShowOverrideResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `string` | Yes |  |
-| `end_at` | `string` | Yes | End of the override |
-| `id` | `string` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | Yes | The schedule that this override applies to |
-| `start_at` | `string` | Yes | Start of the override |
-| `updated_at` | `string` | Yes |  |
-| `user` | `Record<string, any>` | Yes |  |
-
-### Operations
-
-#### `create(data: object, ctrl?: object)`
-
-Create a new entity with the given data. Resolves to the created entity.
-
-```ts
-const result = await client.SchedulesShowOverrideResultV2().create({
-  end_at: 'example_end_at',
-  layer_id: 'example_layer_id',
-  rotation_id: 'example_rotation_id',
-  schedule_id: 'example_schedule_id',
-  start_at: 'example_start_at',
-  user: {},
-})
-```
-
-#### `list(match: object, ctrl?: object)`
-
-List entities matching the given criteria. Resolves to an array of entities, one per record.
-
-```ts
-const results = await client.SchedulesShowOverrideResultV2().list({ schedule_id: "example" })
-```
-
-#### `load(match: object, ctrl?: object)`
-
-Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
-
-```ts
-const result = await client.SchedulesShowOverrideResultV2().load({ id: 'schedules_show_override_result_v2_id' })
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `SchedulesShowOverrideResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## SchedulesUpdateOverrideResultV2Entity
-
-```ts
-const schedules_update_override_result_v2 = client.SchedulesUpdateOverrideResultV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `string` | Yes |  |
-| `end_at` | `string` | Yes | End of the override |
-| `id` | `string` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | Yes | The schedule that this override applies to |
-| `start_at` | `string` | Yes | Start of the override |
-| `updated_at` | `string` | Yes |  |
-| `user` | `Record<string, any>` | Yes |  |
-
-### Operations
-
-#### `update(data: object, ctrl?: object)`
-
-Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
-
-```ts
-const result = await client.SchedulesUpdateOverrideResultV2().update({
-  id: 'id',
-  // Fields to update
-})
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `SchedulesUpdateOverrideResultV2Entity` instance with the same client and
 options.
 
 #### `client()`
@@ -8835,14 +8196,14 @@ const severity = client.Severity()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -8871,6 +8232,14 @@ Load a single entity matching the given criteria. Resolves to the entity, whose 
 
 ```ts
 const result = await client.Severity().load({ id: 'severity_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.Severity().remove({ id: 'severity_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -9063,10 +8432,10 @@ Return a copy of the entity options.
 
 ---
 
-## StatusPageComponentAvailabilityV2Entity
+## StatusPageComponentAvailabilityEntity
 
 ```ts
-const status_page_component_availability_v2 = client.StatusPageComponentAvailabilityV2()
+const status_page_component_availability = client.StatusPageComponentAvailability()
 ```
 
 ### Fields
@@ -9087,7 +8456,7 @@ const status_page_component_availability_v2 = client.StatusPageComponentAvailabi
 Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
 
 ```ts
-const result = await client.StatusPageComponentAvailabilityV2().load({ component_id: 'component_id', status_page_id: 'status_page_id', end_at: 'end_at', start_at: 'start_at' })
+const result = await client.StatusPageComponentAvailability().load({ component_id: 'component_id', status_page_id: 'status_page_id', end_at: 'end_at', start_at: 'start_at' })
 ```
 
 ### Common Methods
@@ -9104,7 +8473,7 @@ Get or set the entity match criteria. Works the same as `data()`.
 
 #### `make()`
 
-Create a new `StatusPageComponentAvailabilityV2Entity` instance with the same client and
+Create a new `StatusPageComponentAvailabilityEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -9270,10 +8639,10 @@ Return a copy of the entity options.
 
 ---
 
-## StatusPageLinkedResponseIncidentV1Entity
+## StatusPageLinkedResponseIncidentEntity
 
 ```ts
-const status_page_linked_response_incident_v1 = client.StatusPageLinkedResponseIncidentV1()
+const status_page_linked_response_incident = client.StatusPageLinkedResponseIncident()
 ```
 
 ### Fields
@@ -9290,7 +8659,7 @@ const status_page_linked_response_incident_v1 = client.StatusPageLinkedResponseI
 List entities matching the given criteria. Resolves to an array of entities, one per record.
 
 ```ts
-const results = await client.StatusPageLinkedResponseIncidentV1().list({ incident_id: "example", status_page_id: "example" })
+const results = await client.StatusPageLinkedResponseIncident().list({ incident_id: "example", status_page_id: "example" })
 ```
 
 ### Common Methods
@@ -9307,7 +8676,7 @@ Get or set the entity match criteria. Works the same as `data()`.
 
 #### `make()`
 
-Create a new `StatusPageLinkedResponseIncidentV1Entity` instance with the same client and
+Create a new `StatusPageLinkedResponseIncidentEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -9348,22 +8717,22 @@ const status_page_maintenance = client.StatusPageMaintenance()
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `affected_component_ids` | - | - | - | - |
-| `automate_maintenance_status` | - | - | Yes | - |
-| `component_maintenance_periods` | - | - | - | - |
-| `end_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `idempotency_key` | - | - | - | - |
-| `maintenance_status` | - | - | - | - |
-| `message` | - | - | - | - |
-| `name` | - | - | - | - |
-| `notify_subscribers` | - | - | - | - |
-| `published_at` | - | - | - | - |
-| `start_at` | - | - | - | - |
-| `status_page_id` | - | - | - | - |
-| `updates` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `affected_component_ids` | - | - | - | - | - |
+| `automate_maintenance_status` | - | - | Yes | - | - |
+| `component_maintenance_periods` | - | - | - | - | - |
+| `end_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `idempotency_key` | - | - | - | - | - |
+| `maintenance_status` | - | - | - | - | - |
+| `message` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `notify_subscribers` | - | - | - | - | - |
+| `published_at` | - | - | - | - | - |
+| `start_at` | - | - | - | - | - |
+| `status_page_id` | - | - | - | - | - |
+| `updates` | - | - | - | - | - |
 
 ### Operations
 
@@ -9399,6 +8768,14 @@ Load a single entity matching the given criteria. Resolves to the entity, whose 
 
 ```ts
 const result = await client.StatusPageMaintenance().load({ id: 'status_page_maintenance_id' })
+```
+
+#### `remove(match: object, ctrl?: object)`
+
+Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
+
+```ts
+const result = await client.StatusPageMaintenance().remove({ id: 'status_page_maintenance_id' })
 ```
 
 #### `update(data: object, ctrl?: object)`
@@ -9551,50 +8928,6 @@ Return a copy of the entity options.
 
 ---
 
-## StatusPagesV2Entity
-
-```ts
-const status_pages_v2 = client.StatusPagesV2()
-```
-
-### Operations
-
-#### `remove(match: object, ctrl?: object)`
-
-Remove the entity matching the given criteria. Resolves to the entity, marked as deleted.
-
-```ts
-const result = await client.StatusPagesV2().remove({ status_page_maintenance_id: 'status_page_maintenance_id' })
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `StatusPagesV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
 ## TeamEntity
 
 ```ts
@@ -9656,10 +8989,10 @@ Return a copy of the entity options.
 
 ---
 
-## TelemetryDataSourceV2Entity
+## TelemetryDataSourceEntity
 
 ```ts
-const telemetry_data_source_v2 = client.TelemetryDataSourceV2()
+const telemetry_data_source = client.TelemetryDataSource()
 ```
 
 ### Fields
@@ -9699,7 +9032,7 @@ const telemetry_data_source_v2 = client.TelemetryDataSourceV2()
 Update an existing entity. The data must include the entity `id`. Resolves to the updated entity.
 
 ```ts
-const result = await client.TelemetryDataSourceV2().update({
+const result = await client.TelemetryDataSource().update({
   id: 'id',
   // Fields to update
 })
@@ -9719,7 +9052,7 @@ Get or set the entity match criteria. Works the same as `data()`.
 
 #### `make()`
 
-Create a new `TelemetryDataSourceV2Entity` instance with the same client and
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -9753,37 +9086,7 @@ const user = client.User()
 | `seats` | `Record<string, any>` | Yes |  |
 | `slack_user_id` | `string` | No | Slack ID of the user |
 
-### Actions
-
-This entity exposes custom API actions in addition to the standard
-operations. Select one with `$action` in the call's argument; the
-remaining keys are sent as that action's payload.
-
-| Action | Route | Call |
-| --- | --- | --- |
-| `paging_provider` | `/v2/users/{user_id}/paging_provider` | `client.User().create({ $action: 'paging_provider', ... })` |
-
-An action returns that action's OWN response, which is not necessarily a
-User record — check the API definition for its shape.
-
-```ts
-const result = await client.User().create({
-  $action: 'paging_provider',
-  /* ...the action's own arguments */
-})
-```
-
 ### Operations
-
-#### `create(data: object, ctrl?: object)`
-
-Create a new entity with the given data. Resolves to the created entity.
-
-```ts
-const result = await client.User().create({
-  id: 'example_id',
-})
-```
 
 #### `list(match: object, ctrl?: object)`
 

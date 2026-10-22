@@ -147,7 +147,7 @@ describe("PolicyEntity", function()
     local setup = policy_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"create", "list", "update", "load"}) do
+    for _, _op in ipairs({"create", "list", "update", "load", "remove"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "policy." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
@@ -204,6 +204,25 @@ describe("PolicyEntity", function()
     local policy_ref01_data_dt0_load_result = helpers.to_map(type(policy_ref01_data_dt0_loaded) == 'table' and policy_ref01_data_dt0_loaded.data_get and policy_ref01_data_dt0_loaded:data_get() or policy_ref01_data_dt0_loaded)
     assert.is_not_nil(policy_ref01_data_dt0_load_result)
     assert.are.equal(policy_ref01_data_dt0_load_result["id"], policy_ref01_data["id"])
+
+    -- REMOVE
+    local policy_ref01_match_rm0 = {
+      id = policy_ref01_data["id"],
+    }
+    local _, err = policy_ref01_ent:remove(policy_ref01_match_rm0, nil)
+    assert.is_nil(err)
+
+    -- LIST
+    local policy_ref01_match_rt0 = {}
+
+    local policy_ref01_list_rt0_result, err = policy_ref01_ent:list(policy_ref01_match_rt0, nil)
+    assert.is_nil(err)
+    assert.is_table(policy_ref01_list_rt0_result)
+
+    local not_found_item = vs.select(
+      runner.entity_list_to_data(policy_ref01_list_rt0_result),
+      { id = policy_ref01_data["id"] })
+    assert.is_true(vs.isempty(not_found_item))
 
   end)
 end)

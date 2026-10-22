@@ -86,6 +86,11 @@
       "version": 2,
       "source": "openapi3"
     },
+    "DELETE /v2/status_page_maintenances/{status_page_maintenance_id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
     "PUT /v2/status_page_maintenances/{status_page_maintenance_id}": {
       "provenance": "operation-contract",
       "version": 2,

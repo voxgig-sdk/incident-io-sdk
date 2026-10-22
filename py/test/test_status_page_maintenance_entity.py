@@ -129,7 +129,7 @@ class TestStatusPageMaintenanceEntity:
         # multiple ops; skipping any one skips the whole flow (steps depend
         # on each other).
         _live = setup.get("live", False)
-        for _op in ["create", "list", "update", "load"]:
+        for _op in ["create", "list", "update", "load", "remove"]:
             _skip, _reason = runner.is_control_skipped("entityOp", "status_page_maintenance." + _op, "live" if _live else "unit")
             if _skip:
                 pytest.skip(_reason or "skipped via sdk-test-control.json")
@@ -178,6 +178,23 @@ class TestStatusPageMaintenanceEntity:
         status_page_maintenance_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(status_page_maintenance_ref01_data_dt0_loaded))
         assert status_page_maintenance_ref01_data_dt0_load_result is not None
         assert status_page_maintenance_ref01_data_dt0_load_result["id"] == status_page_maintenance_ref01_data["id"]
+
+        # REMOVE
+        status_page_maintenance_ref01_match_rm0 = {
+            "id": status_page_maintenance_ref01_data["id"],
+        }
+        status_page_maintenance_ref01_ent.remove(status_page_maintenance_ref01_match_rm0, None)
+
+        # LIST
+        status_page_maintenance_ref01_match_rt0 = {}
+
+        status_page_maintenance_ref01_list_rt0_result = status_page_maintenance_ref01_ent.list(status_page_maintenance_ref01_match_rt0, None)
+        assert isinstance(status_page_maintenance_ref01_list_rt0_result, list)
+
+        not_found_item = vs.select(
+            runner.entity_list_to_data(status_page_maintenance_ref01_list_rt0_result),
+            {"id": status_page_maintenance_ref01_data["id"]})
+        assert vs.isempty(not_found_item)
 
 
 

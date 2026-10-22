@@ -146,13 +146,6 @@ main: kit: entity: catalog_type_schema: {
       r: true
       t: "`$OBJECT`"
     }
-    semantic_type: {
-      h: "Semantic Type"
-      n: "semantic_type"
-      r: true
-      sh: "This type has been deprecated, and will always be empty."
-      t: "`$STRING`"
-    }
     source_repo_url: {
       h: "Source Repo Url"
       n: "source_repo_url"
@@ -226,6 +219,7 @@ main: kit: entity: catalog_type_schema: {
           m: "POST"
           o: "/v2/catalog_types/{id}/actions/update_schema"
           q: {
+            "$action": "v2"
             exist: [
               "catalog_type_id"
             ]

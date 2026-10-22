@@ -41,19 +41,6 @@ main: kit: entity: incident_role: {
       sh: "Human readable name of the incident role"
       t: "`$STRING`"
     }
-    required: {
-      h: "Required"
-      n: "required"
-      op: {
-        create: {
-          req: true
-          type: "`$BOOLEAN`"
-        }
-      }
-      r: false
-      sh: "DEPRECATED: this will always be false."
-      t: "`$BOOLEAN`"
-    }
     role_type: {
       h: "Role Type"
       n: "role_type"
@@ -103,6 +90,9 @@ main: kit: entity: incident_role: {
           }
           m: "POST"
           o: "/v1/incident_roles"
+          q: {
+            "$action": "v1"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -164,6 +154,9 @@ main: kit: entity: incident_role: {
           }
           m: "GET"
           o: "/v1/incident_roles"
+          q: {
+            "$action": "v1"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -232,6 +225,7 @@ main: kit: entity: incident_role: {
           m: "GET"
           o: "/v1/incident_roles/{id}"
           q: {
+            "$action": "v1"
             exist: [
               "id"
             ]
@@ -327,6 +321,7 @@ main: kit: entity: incident_role: {
           m: "DELETE"
           o: "/v1/incident_roles/{id}"
           q: {
+            "$action": "v1"
             exist: [
               "id"
             ]
@@ -421,6 +416,7 @@ main: kit: entity: incident_role: {
           m: "PUT"
           o: "/v1/incident_roles/{id}"
           q: {
+            "$action": "v1"
             exist: [
               "id"
             ]

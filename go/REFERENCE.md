@@ -84,10 +84,6 @@ Create a new `AlertTag` entity instance. Pass `nil` for no initial data.
 
 Create a new `AlertsAddTagsResultV2` entity instance. Pass `nil` for no initial data.
 
-#### `AlertsRemoveTagsResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `AlertsRemoveTagsResultV2` entity instance. Pass `nil` for no initial data.
-
 #### `AlertsSetTagsResultV2(data map[string]any) IncidentIoEntity`
 
 Create a new `AlertsSetTagsResultV2` entity instance. Pass `nil` for no initial data.
@@ -112,41 +108,13 @@ Create a new `ApiKey` entity instance. Pass `nil` for no initial data.
 
 Create a new `CallRoute` entity instance. Pass `nil` for no initial data.
 
-#### `CallRoutesCreateAllowedCallerResultV2(data map[string]any) IncidentIoEntity`
+#### `CallRouteAllowedCaller(data map[string]any) IncidentIoEntity`
 
-Create a new `CallRoutesCreateAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
+Create a new `CallRouteAllowedCaller` entity instance. Pass `nil` for no initial data.
 
-#### `CallRoutesCreateOptionResultV2(data map[string]any) IncidentIoEntity`
+#### `CallRouteOption(data map[string]any) IncidentIoEntity`
 
-Create a new `CallRoutesCreateOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesListAllowedCallersResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `CallRoutesListAllowedCallersResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesListOptionsResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `CallRoutesListOptionsResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesShowAllowedCallerResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `CallRoutesShowAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesShowOptionResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `CallRoutesShowOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesUpdateAllowedCallerResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesUpdateOptionResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `CallRoutesUpdateOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesV2(data map[string]any) IncidentIoEntity`
-
-Create a new `CallRoutesV2` entity instance. Pass `nil` for no initial data.
+Create a new `CallRouteOption` entity instance. Pass `nil` for no initial data.
 
 #### `CallSession(data map[string]any) IncidentIoEntity`
 
@@ -183,6 +151,10 @@ Create a new `CustomFieldOption` entity instance. Pass `nil` for no initial data
 #### `Escalation(data map[string]any) IncidentIoEntity`
 
 Create a new `Escalation` entity instance. Pass `nil` for no initial data.
+
+#### `EscalationPath(data map[string]any) IncidentIoEntity`
+
+Create a new `EscalationPath` entity instance. Pass `nil` for no initial data.
 
 #### `EscalationPathTemplate(data map[string]any) IncidentIoEntity`
 
@@ -316,41 +288,13 @@ Create a new `OnCallNotificationRulePublicV2` entity instance. Pass `nil` for no
 
 Create a new `PayConfig` entity instance. Pass `nil` for no initial data.
 
-#### `PayConfigsCreateOneOffRuleResultV2(data map[string]any) IncidentIoEntity`
+#### `PayConfigOneOffRule(data map[string]any) IncidentIoEntity`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
+Create a new `PayConfigOneOffRule` entity instance. Pass `nil` for no initial data.
 
-#### `PayConfigsCreateWeeklyRuleResultV2(data map[string]any) IncidentIoEntity`
+#### `PayConfigWeeklyRule(data map[string]any) IncidentIoEntity`
 
-Create a new `PayConfigsCreateWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsListOneOffRulesResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `PayConfigsListOneOffRulesResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsListWeeklyRulesResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `PayConfigsListWeeklyRulesResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsShowOneOffRuleResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `PayConfigsShowOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsShowWeeklyRuleResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsUpdateOneOffRuleResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsUpdateWeeklyRuleResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsV2(data map[string]any) IncidentIoEntity`
-
-Create a new `PayConfigsV2` entity instance. Pass `nil` for no initial data.
+Create a new `PayConfigWeeklyRule` entity instance. Pass `nil` for no initial data.
 
 #### `PayReport(data map[string]any) IncidentIoEntity`
 
@@ -367,10 +311,6 @@ Create a new `PayReportsUnpublishResultV2` entity instance. Pass `nil` for no in
 #### `PayReportsV2(data map[string]any) IncidentIoEntity`
 
 Create a new `PayReportsV2` entity instance. Pass `nil` for no initial data.
-
-#### `PoliciesV2(data map[string]any) IncidentIoEntity`
-
-Create a new `PoliciesV2` entity instance. Pass `nil` for no initial data.
 
 #### `Policy(data map[string]any) IncidentIoEntity`
 
@@ -404,6 +344,10 @@ Create a new `ScheduleEntriesListPayloadV2` entity instance. Pass `nil` for no i
 
 Create a new `ScheduleEntry` entity instance. Pass `nil` for no initial data.
 
+#### `ScheduleOverride(data map[string]any) IncidentIoEntity`
+
+Create a new `ScheduleOverride` entity instance. Pass `nil` for no initial data.
+
 #### `ScheduleReplica(data map[string]any) IncidentIoEntity`
 
 Create a new `ScheduleReplica` entity instance. Pass `nil` for no initial data.
@@ -415,14 +359,6 @@ Create a new `ScheduleSyncRule` entity instance. Pass `nil` for no initial data.
 #### `ScheduleSyncTarget(data map[string]any) IncidentIoEntity`
 
 Create a new `ScheduleSyncTarget` entity instance. Pass `nil` for no initial data.
-
-#### `SchedulesShowOverrideResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `SchedulesShowOverrideResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `SchedulesUpdateOverrideResultV2(data map[string]any) IncidentIoEntity`
-
-Create a new `SchedulesUpdateOverrideResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `Secret(data map[string]any) IncidentIoEntity`
 
@@ -440,9 +376,9 @@ Create a new `StatusPage` entity instance. Pass `nil` for no initial data.
 
 Create a new `StatusPageComponent` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPageComponentAvailabilityV2(data map[string]any) IncidentIoEntity`
+#### `StatusPageComponentAvailability(data map[string]any) IncidentIoEntity`
 
-Create a new `StatusPageComponentAvailabilityV2` entity instance. Pass `nil` for no initial data.
+Create a new `StatusPageComponentAvailability` entity instance. Pass `nil` for no initial data.
 
 #### `StatusPageIncident(data map[string]any) IncidentIoEntity`
 
@@ -452,9 +388,9 @@ Create a new `StatusPageIncident` entity instance. Pass `nil` for no initial dat
 
 Create a new `StatusPageIncidentUpdate` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPageLinkedResponseIncidentV1(data map[string]any) IncidentIoEntity`
+#### `StatusPageLinkedResponseIncident(data map[string]any) IncidentIoEntity`
 
-Create a new `StatusPageLinkedResponseIncidentV1` entity instance. Pass `nil` for no initial data.
+Create a new `StatusPageLinkedResponseIncident` entity instance. Pass `nil` for no initial data.
 
 #### `StatusPageMaintenance(data map[string]any) IncidentIoEntity`
 
@@ -468,17 +404,13 @@ Create a new `StatusPageMaintenanceUpdate` entity instance. Pass `nil` for no in
 
 Create a new `StatusPageStructure` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPagesV2(data map[string]any) IncidentIoEntity`
-
-Create a new `StatusPagesV2` entity instance. Pass `nil` for no initial data.
-
 #### `Team(data map[string]any) IncidentIoEntity`
 
 Create a new `Team` entity instance. Pass `nil` for no initial data.
 
-#### `TelemetryDataSourceV2(data map[string]any) IncidentIoEntity`
+#### `TelemetryDataSource(data map[string]any) IncidentIoEntity`
 
-Create a new `TelemetryDataSourceV2` entity instance. Pass `nil` for no initial data.
+Create a new `TelemetryDataSource` entity instance. Pass `nil` for no initial data.
 
 #### `User(data map[string]any) IncidentIoEntity`
 
@@ -544,30 +476,11 @@ fmt.Println(action.GetName()) // "action"
 | `completed_at` | `string` | No | When the action was completed |
 | `created_at` | `string` | Yes | When the action was created |
 | `creator` | `map[string]any` | Yes |  |
-| `description` | `string` | No | Description of the action |
-| `external_issue_reference` | `map[string]any` | No |  |
-| `follow_up` | `bool` | Yes | Whether an action is marked as follow-up |
+| `description` | `string` | Yes | Description of the action |
 | `id` | `string` | Yes | Unique identifier for the action |
 | `incident_id` | `string` | Yes | Unique identifier of the incident the action belongs to |
 | `status` | `string` | Yes | Status of the action |
 | `updated_at` | `string` | Yes | When the action was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `assignee` | - | - | - | - | - |
-| `assignee_id` | - | - | - | - | - |
-| `completed_at` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `creator` | - | - | - | - | - |
-| `description` | Yes | Yes | Yes | Yes | - |
-| `external_issue_reference` | - | - | - | - | - |
-| `follow_up` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `incident_id` | - | - | - | - | - |
-| `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -1042,24 +955,21 @@ fmt.Println(alertRoute.GetName()) // "alert_route"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `alert_sources` | `[]any` | Yes | Which alert sources should this alert route match? |
-| `channel_config` | `[]any` | Yes | The channel configuration for this alert route |
-| `condition_groups` | `[]any` | Yes | What condition groups must be true for this alert route to fire? |
-| `created_at` | `string` | No | The time of creation of this alert route |
-| `enabled` | `bool` | Yes | Whether this alert route is enabled or not |
+| `alert_sources` | `[]any` | Yes | Which alert sources this route matches |
+| `condition_groups` | `[]any` | Yes | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | `string` | No | When this alert route was created |
+| `enabled` | `bool` | Yes | Whether this alert route is enabled |
 | `escalation_config` | `map[string]any` | Yes |  |
-| `expressions` | `[]any` | Yes | The expressions used in this template |
+| `expressions` | `[]any` | Yes | The expressions used by bindings in this route |
 | `grouping_config` | `map[string]any` | Yes |  |
-| `id` | `string` | Yes | Unique identifier for this alert route config |
+| `id` | `string` | Yes | Unique identifier for this alert route |
 | `incident_config` | `map[string]any` | Yes |  |
-| `incident_template` | `map[string]any` | Yes |  |
 | `is_private` | `bool` | Yes | Whether this alert route is private. |
 | `message_config` | `map[string]any` | Yes |  |
-| `message_template` | `map[string]any` | No |  |
-| `name` | `string` | Yes | The name of this alert route config, for the user's reference |
+| `name` | `string` | Yes | The name of this alert route, for the user's reference |
 | `owning_team_ids` | `[]any` | No | IDs of teams that own this alert route |
-| `updated_at` | `string` | No | The time of last update of this alert route |
-| `version` | `int` | Yes | The version of this alert route config |
+| `updated_at` | `string` | No | When this alert route was last updated |
+| `version` | `int` | Yes | The version of this alert route |
 
 ### Operations
 
@@ -1068,7 +978,7 @@ fmt.Println(alertRoute.GetName()) // "alert_route"
 List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
 
 ```go
-results, err := client.AlertRoute(nil).List(map[string]any{"page_size": 1}, nil)
+results, err := client.AlertRoute(nil).List(nil, nil)
 if err != nil {
     panic(err)
 }
@@ -1096,14 +1006,12 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.AlertRoute(nil).Create(map[string]any{
     "alert_sources": []any{},
-    "channel_config": []any{},
     "condition_groups": []any{},
     "enabled": true,
     "escalation_config": map[string]any{},
     "expressions": []any{},
     "grouping_config": map[string]any{},
     "incident_config": map[string]any{},
-    "incident_template": map[string]any{},
     "is_private": true,
     "message_config": map[string]any{},
     "name": "example_name",
@@ -1387,8 +1295,39 @@ fmt.Println(alertTag.GetName()) // "alert_tag"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for the tag |
+| `alert_group_ids` | `[]any` | No | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `string` | Yes | The ID of the alert source this alert fired on |
+| `attributes` | `[]any` | Yes | Attribute values parsed from the alerts payload |
+| `created_at` | `string` | Yes | When this entry was created |
+| `deduplication_key` | `string` | Yes | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `string` | No | The description of the alert |
+| `id` | `string` | Yes | The ID of this alert |
 | `name` | `string` | Yes | The tag name |
+| `resolved_at` | `string` | No | When this alert was resolved |
+| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `string` | Yes | Statuses of an alert |
+| `tags` | `[]any` | No | Tags someone has applied to this alert |
+| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `string` | Yes | When this alert was last updated |
+
+### Field Usage by Operation
+
+| Field | list | create |
+| --- | --- | --- |
+| `alert_group_ids` | - | - |
+| `alert_source_id` | - | - |
+| `attributes` | - | - |
+| `created_at` | - | - |
+| `deduplication_key` | - | - |
+| `description` | - | - |
+| `id` | - | - |
+| `name` | - | - |
+| `resolved_at` | - | - |
+| `source_url` | - | - |
+| `status` | - | - |
+| `tags` | - | Yes |
+| `title` | - | - |
+| `updated_at` | - | - |
 
 ### Operations
 
@@ -1404,6 +1343,21 @@ if err != nil {
 for _, item := range results.([]any) {
     fmt.Println(item.(sdk.Entity).Data())
 }
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.AlertTag(nil).Create(map[string]any{
+    "alert_id": "example_alert_id",
+    "tags": []any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
 ```
 
 ### Common Methods
@@ -1513,98 +1467,6 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `AlertsAddTagsResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## AlertsRemoveTagsResultV2Entity
-
-```go
-alertsRemoveTagsResultV2 := client.AlertsRemoveTagsResultV2(nil)
-fmt.Println(alertsRemoveTagsResultV2.GetName()) // "alerts_remove_tags_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `alert_group_ids` | `[]any` | No | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | `string` | Yes | The ID of the alert source this alert fired on |
-| `attributes` | `[]any` | Yes | Attribute values parsed from the alerts payload |
-| `created_at` | `string` | Yes | When this entry was created |
-| `deduplication_key` | `string` | Yes | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | `string` | No | The description of the alert |
-| `id` | `string` | Yes | The ID of this alert |
-| `resolved_at` | `string` | No | When this alert was resolved |
-| `source_url` | `string` | No | If applicable, a link to the alert in the upstream system |
-| `status` | `string` | Yes | Statuses of an alert |
-| `tags` | `[]any` | No | Tags someone has applied to this alert |
-| `title` | `string` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | `string` | Yes | When this alert was last updated |
-
-### Field Usage by Operation
-
-| Field | create |
-| --- | --- |
-| `alert_group_ids` | - |
-| `alert_source_id` | - |
-| `attributes` | - |
-| `created_at` | - |
-| `deduplication_key` | - |
-| `description` | - |
-| `id` | - |
-| `resolved_at` | - |
-| `source_url` | - |
-| `status` | - |
-| `tags` | Yes |
-| `title` | - |
-| `updated_at` | - |
-
-### Operations
-
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
-
-```go
-result, err := client.AlertsRemoveTagsResultV2(nil).Create(map[string]any{
-    "alert_id": "example_alert_id",
-    "tags": []any{},
-}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `AlertsRemoveTagsResultV2Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -2304,31 +2166,86 @@ Return the entity name.
 
 ---
 
-## CallRoutesCreateAllowedCallerResultV2Entity
+## CallRouteAllowedCallerEntity
 
 ```go
-callRoutesCreateAllowedCallerResultV2 := client.CallRoutesCreateAllowedCallerResultV2(nil)
-fmt.Println(callRoutesCreateAllowedCallerResultV2.GetName()) // "call_routes_create_allowed_caller_result_v2"
+callRouteAllowedCaller := client.CallRouteAllowedCaller(nil)
+fmt.Println(callRouteAllowedCaller.GetName()) // "call_route_allowed_caller"
 ```
 
 ### Fields
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `string` | Yes | Unique identifier for this allowed caller |
 | `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number to allow, in international format |
+| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
 
 ### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
+
+```go
+results, err := client.CallRouteAllowedCaller(nil).List(map[string]any{"id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+for _, item := range results.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.CallRouteAllowedCaller(nil).Load(map[string]any{"id": "call_route_allowed_caller_id", "call_route_id": "call_route_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
 
 #### `Create(reqdata, ctrl map[string]any) (any, error)`
 
 Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
 
 ```go
-result, err := client.CallRoutesCreateAllowedCallerResultV2(nil).Create(map[string]any{
-    "call_route_id": "example_call_route_id",
+result, err := client.CallRouteAllowedCaller(nil).Create(map[string]any{
+    "id": "example_id",
     "phone_number": "example_phone_number",
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
+
+```go
+result, err := client.CallRouteAllowedCaller(nil).Update(map[string]any{
+    "id": "call_route_allowed_caller_id",
+    "call_route_id": "call_route_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.CallRouteAllowedCaller(nil).Remove(map[string]any{"id": "call_route_allowed_caller_id", "call_route_id": "call_route_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -2349,7 +2266,7 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 #### `Make() Entity`
 
-Create a new `CallRoutesCreateAllowedCallerResultV2Entity` instance with the same client and
+Create a new `CallRouteAllowedCallerEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -2367,11 +2284,11 @@ Return the entity name.
 
 ---
 
-## CallRoutesCreateOptionResultV2Entity
+## CallRouteOptionEntity
 
 ```go
-callRoutesCreateOptionResultV2 := client.CallRoutesCreateOptionResultV2(nil)
-fmt.Println(callRoutesCreateOptionResultV2.GetName()) // "call_routes_create_option_result_v2"
+callRouteOption := client.CallRouteOption(nil)
+fmt.Println(callRouteOption.GetName()) // "call_route_option"
 ```
 
 ### Fields
@@ -2379,18 +2296,45 @@ fmt.Println(callRoutesCreateOptionResultV2.GetName()) // "call_routes_create_opt
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `path` | `[]any` | Yes | Who to page when a caller chooses this option |
+| `id` | `string` | Yes | Unique identifier for this option |
+| `path` | `[]any` | Yes | Who we page when a caller chooses this option |
 | `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
 
 ### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
+
+```go
+results, err := client.CallRouteOption(nil).List(map[string]any{"id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+for _, item := range results.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.CallRouteOption(nil).Load(map[string]any{"id": "call_route_option_id", "call_route_id": "call_route_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
 
 #### `Create(reqdata, ctrl map[string]any) (any, error)`
 
 Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
 
 ```go
-result, err := client.CallRoutesCreateOptionResultV2(nil).Create(map[string]any{
-    "call_route_id": "example_call_route_id",
+result, err := client.CallRouteOption(nil).Create(map[string]any{
+    "id": "example_id",
     "digit": "example_digit",
     "path": []any{},
     "prompt": "example_prompt",
@@ -2401,313 +2345,14 @@ if err != nil {
 fmt.Println(result.(sdk.Entity).Data())
 ```
 
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `CallRoutesCreateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListAllowedCallersResultV2Entity
-
-```go
-callRoutesListAllowedCallersResultV2 := client.CallRoutesListAllowedCallersResultV2(nil)
-fmt.Println(callRoutesListAllowedCallersResultV2.GetName()) // "call_routes_list_allowed_callers_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `List(reqmatch, ctrl map[string]any) (any, error)`
-
-List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
-
-```go
-results, err := client.CallRoutesListAllowedCallersResultV2(nil).List(map[string]any{"call_route_id": "example"}, nil)
-if err != nil {
-    panic(err)
-}
-for _, item := range results.([]any) {
-    fmt.Println(item.(sdk.Entity).Data())
-}
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `CallRoutesListAllowedCallersResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListOptionsResultV2Entity
-
-```go
-callRoutesListOptionsResultV2 := client.CallRoutesListOptionsResultV2(nil)
-fmt.Println(callRoutesListOptionsResultV2.GetName()) // "call_routes_list_options_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `[]any` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `List(reqmatch, ctrl map[string]any) (any, error)`
-
-List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
-
-```go
-results, err := client.CallRoutesListOptionsResultV2(nil).List(map[string]any{"call_route_id": "example"}, nil)
-if err != nil {
-    panic(err)
-}
-for _, item := range results.([]any) {
-    fmt.Println(item.(sdk.Entity).Data())
-}
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `CallRoutesListOptionsResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowAllowedCallerResultV2Entity
-
-```go
-callRoutesShowAllowedCallerResultV2 := client.CallRoutesShowAllowedCallerResultV2(nil)
-fmt.Println(callRoutesShowAllowedCallerResultV2.GetName()) // "call_routes_show_allowed_caller_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `Load(reqmatch, ctrl map[string]any) (any, error)`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
-
-```go
-result, err := client.CallRoutesShowAllowedCallerResultV2(nil).Load(map[string]any{"id": "call_routes_show_allowed_caller_result_v2_id", "call_route_id": "call_route_id"}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `CallRoutesShowAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowOptionResultV2Entity
-
-```go
-callRoutesShowOptionResultV2 := client.CallRoutesShowOptionResultV2(nil)
-fmt.Println(callRoutesShowOptionResultV2.GetName()) // "call_routes_show_option_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `[]any` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `Load(reqmatch, ctrl map[string]any) (any, error)`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
-
-```go
-result, err := client.CallRoutesShowOptionResultV2(nil).Load(map[string]any{"id": "call_routes_show_option_result_v2_id", "call_route_id": "call_route_id"}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `CallRoutesShowOptionResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateAllowedCallerResultV2Entity
-
-```go
-callRoutesUpdateAllowedCallerResultV2 := client.CallRoutesUpdateAllowedCallerResultV2(nil)
-fmt.Println(callRoutesUpdateAllowedCallerResultV2.GetName()) // "call_routes_update_allowed_caller_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | Yes | Unique identifier for this allowed caller |
-| `name` | `string` | No | Label for whose number this is |
-| `phone_number` | `string` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
 
 Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
 
 ```go
-result, err := client.CallRoutesUpdateAllowedCallerResultV2(nil).Update(map[string]any{
+result, err := client.CallRouteOption(nil).Update(map[string]any{
+    "id": "call_route_option_id",
     "call_route_id": "call_route_id",
-    "id": "id",
     // Fields to update
 }, nil)
 if err != nil {
@@ -2715,126 +2360,13 @@ if err != nil {
 }
 fmt.Println(result.(sdk.Entity).Data())
 ```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateOptionResultV2Entity
-
-```go
-callRoutesUpdateOptionResultV2 := client.CallRoutesUpdateOptionResultV2(nil)
-fmt.Println(callRoutesUpdateOptionResultV2.GetName()) // "call_routes_update_option_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `string` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `string` | Yes | Unique identifier for this option |
-| `path` | `[]any` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `string` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `Update(reqdata, ctrl map[string]any) (any, error)`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
-
-```go
-result, err := client.CallRoutesUpdateOptionResultV2(nil).Update(map[string]any{
-    "call_route_id": "call_route_id",
-    "id": "id",
-    // Fields to update
-}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `CallRoutesUpdateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## CallRoutesV2Entity
-
-```go
-callRoutesV2 := client.CallRoutesV2(nil)
-fmt.Println(callRoutesV2.GetName()) // "call_routes_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
 
 #### `Remove(reqmatch, ctrl map[string]any) (any, error)`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
 
 ```go
-result, err := client.CallRoutesV2(nil).Remove(map[string]any{"id": "call_routes_v2_id", "call_route_id": "call_route_id"}, nil)
+result, err := client.CallRouteOption(nil).Remove(map[string]any{"id": "call_route_option_id", "call_route_id": "call_route_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -2855,7 +2387,7 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 #### `Make() Entity`
 
-Create a new `CallRoutesV2Entity` instance with the same client and
+Create a new `CallRouteOptionEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -3029,21 +2561,21 @@ fmt.Println(catalogEntry.GetName()) // "catalog_entry"
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `aliases` | - | Yes | - | - |
-| `archived_at` | - | - | - | - |
-| `attribute_values` | - | - | - | - |
-| `catalog_entry` | - | - | - | - |
-| `catalog_type` | - | - | - | - |
-| `catalog_type_id` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `external_id` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | Yes | - | - |
-| `update_attributes` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `aliases` | - | Yes | - | - | - |
+| `archived_at` | - | - | - | - | - |
+| `attribute_values` | - | - | - | - | - |
+| `catalog_entry` | - | - | - | - | - |
+| `catalog_type` | - | - | - | - | - |
+| `catalog_type_id` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `external_id` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | Yes | - | - | - |
+| `update_attributes` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -3052,7 +2584,7 @@ fmt.Println(catalogEntry.GetName()) // "catalog_entry"
 List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
 
 ```go
-results, err := client.CatalogEntry(nil).List(map[string]any{"catalog_type_id": "example"}, nil)
+results, err := client.CatalogEntry(nil).List(map[string]any{"catalog_type_id": "example", "page_size": 1}, nil)
 if err != nil {
     panic(err)
 }
@@ -3098,6 +2630,18 @@ result, err := client.CatalogEntry(nil).Update(map[string]any{
     "id": "catalog_entry_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.CatalogEntry(nil).Remove(map[string]any{"id": "catalog_entry_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -3232,7 +2776,6 @@ fmt.Println(catalogType.GetName()) // "catalog_type"
 | `registry_type` | `string` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `[]any` | No | If populated, the integrations required for this type |
 | `schema` | `map[string]any` | Yes |  |
-| `semantic_type` | `string` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | No | The url of the external repository where this type is managed |
 | `type_name` | `string` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | Yes | When this type was last updated |
@@ -3240,32 +2783,31 @@ fmt.Println(catalogType.GetName()) // "catalog_type"
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | Yes | Yes |
-| `categories` | - | - | Yes | Yes |
-| `color` | - | - | Yes | Yes |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `dynamic_resource_parameter` | - | - | - | - |
-| `engine_resource_type` | - | - | - | - |
-| `estimated_count` | - | - | - | - |
-| `icon` | - | - | Yes | Yes |
-| `id` | - | - | - | - |
-| `is_editable` | - | - | - | - |
-| `is_team_type` | - | - | - | - |
-| `last_synced_at` | - | - | - | - |
-| `name` | - | - | - | - |
-| `owning_team_ids` | - | - | - | - |
-| `ranked` | - | - | Yes | Yes |
-| `registry_type` | - | - | - | - |
-| `required_integrations` | - | - | - | - |
-| `schema` | - | - | - | - |
-| `semantic_type` | - | - | - | - |
-| `source_repo_url` | - | - | - | - |
-| `type_name` | - | - | Yes | - |
-| `updated_at` | - | - | - | - |
-| `use_name_as_identifier` | - | - | Yes | Yes |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | Yes | Yes | - |
+| `categories` | - | - | Yes | Yes | - |
+| `color` | - | - | Yes | Yes | - |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - | - |
+| `engine_resource_type` | - | - | - | - | - |
+| `estimated_count` | - | - | - | - | - |
+| `icon` | - | - | Yes | Yes | - |
+| `id` | - | - | - | - | - |
+| `is_editable` | - | - | - | - | - |
+| `is_team_type` | - | - | - | - | - |
+| `last_synced_at` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `owning_team_ids` | - | - | - | - | - |
+| `ranked` | - | - | Yes | Yes | - |
+| `registry_type` | - | - | - | - | - |
+| `required_integrations` | - | - | - | - | - |
+| `schema` | - | - | - | - | - |
+| `source_repo_url` | - | - | - | - | - |
+| `type_name` | - | - | Yes | - | - |
+| `updated_at` | - | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes | - |
 
 ### Operations
 
@@ -3319,6 +2861,18 @@ result, err := client.CatalogType(nil).Update(map[string]any{
     "id": "catalog_type_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.CatalogType(nil).Remove(map[string]any{"id": "catalog_type_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -3388,7 +2942,6 @@ fmt.Println(catalogTypeSchema.GetName()) // "catalog_type_schema"
 | `registry_type` | `string` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `[]any` | No | If populated, the integrations required for this type |
 | `schema` | `map[string]any` | Yes |  |
-| `semantic_type` | `string` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `string` | No | The url of the external repository where this type is managed |
 | `type_name` | `string` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `string` | Yes | When this type was last updated |
@@ -3466,13 +3019,6 @@ fmt.Println(customField.GetName()) // "custom_field"
 | `helptext_catalog_attribute_id` | `string` | No | Which catalog attribute provides helptext for the options |
 | `id` | `string` | Yes | Unique identifier for the custom field |
 | `name` | `string` | Yes | Human readable name for the custom field |
-| `options` | `[]any` | Yes | What options are available for this custom field, if this field has options |
-| `required` | `string` | No | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | `string` | No | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | `bool` | Yes | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | `bool` | Yes | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | `bool` | Yes | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | `bool` | No | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | `string` | Yes | When the action was last updated |
 
 ### Operations
@@ -3514,9 +3060,6 @@ result, err := client.CustomField(nil).Create(map[string]any{
     "filter_by": map[string]any{},
     "fixed_filter": map[string]any{},
     "name": "example_name",
-    "show_before_closure": true,
-    "show_before_creation": true,
-    "show_before_update": true,
 }, nil)
 if err != nil {
     panic(err)
@@ -3815,6 +3358,146 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `EscalationEntity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## EscalationPathEntity
+
+```go
+escalationPath := client.EscalationPath(nil)
+fmt.Println(escalationPath.GetName()) // "escalation_path"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `current_responders` | `[]any` | No | Users who are currently on-call for this escalation path |
+| `id` | `string` | Yes | Unique identifier for this escalation path. |
+| `kind` | `string` | Yes | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | `string` | Yes | The name of this escalation path, for the user's reference. |
+| `param_bindings` | `map[string]any` | No | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | `[]any` | Yes | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` | `map[string]any` | Yes |  |
+| `team_ids` | `[]any` | Yes | IDs of the teams that own this escalation path. |
+| `template_id` | `string` | No | For a templated path, the template it is built from. |
+| `working_hours` | `[]any` | No | The working hours for this escalation path. |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `current_responders` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `kind` | - | - | Yes | Yes | - |
+| `name` | - | - | - | - | - |
+| `param_bindings` | - | - | - | - | - |
+| `path` | - | - | - | - | - |
+| `repeat_config` | - | - | - | - | - |
+| `team_ids` | - | - | Yes | Yes | - |
+| `template_id` | - | - | - | - | - |
+| `working_hours` | - | - | - | - | - |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
+
+```go
+results, err := client.EscalationPath(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+for _, item := range results.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.EscalationPath(nil).Load(map[string]any{"id": "escalation_path_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.EscalationPath(nil).Create(map[string]any{
+    "name": "example_name",
+    "path": []any{},
+    "repeat_config": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
+
+```go
+result, err := client.EscalationPath(nil).Update(map[string]any{
+    "id": "escalation_path_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.EscalationPath(nil).Remove(map[string]any{"id": "escalation_path_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `EscalationPathEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -4505,12 +4188,8 @@ fmt.Println(incident.GetName()) // "incident"
 | `slack_channel_name_override` | `string` | No | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | `string` | No | URL to link to the slack channel |
 | `slack_team_id` | `string` | Yes | ID of the Slack team / workspace. |
-| `source_message_channel_id` | `string` | No | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | `string` | No | Timestamp of the source message, if this incident was created from one |
-| `status` | `string` | Yes | Current status of the incident |
 | `summary` | `string` | No | Detailed description of the incident |
 | `team_ids` | `[]any` | Yes | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | `[]any` | No | Incident lifecycle events and when they last occurred |
 | `updated_at` | `string` | Yes | When the incident was last updated |
 | `visibility` | `string` | Yes | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | `float64` | No | Amount of time spent on the incident in late hours |
@@ -4554,12 +4233,8 @@ fmt.Println(incident.GetName()) // "incident"
 | `slack_channel_name_override` | - | - | - |
 | `slack_channel_url` | - | - | - |
 | `slack_team_id` | - | - | Yes |
-| `source_message_channel_id` | - | - | - |
-| `source_message_timestamp` | - | - | - |
-| `status` | - | - | Yes |
 | `summary` | - | - | - |
 | `team_ids` | - | - | - |
-| `timestamps` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -5185,24 +4860,9 @@ fmt.Println(incidentRole.GetName()) // "incident_role"
 | `id` | `string` | Yes | Unique identifier for the role |
 | `instructions` | `string` | Yes | Provided to whoever is nominated for the role. |
 | `name` | `string` | Yes | Human readable name of the incident role |
-| `required` | `bool` | No | DEPRECATED: this will always be false. |
 | `role_type` | `string` | Yes | Type of incident role |
 | `shortform` | `string` | Yes | Short human readable name for Slack. |
 | `updated_at` | `string` | Yes | When the role was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
-| `description` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `instructions` | - | - | - | - | - |
-| `name` | - | - | - | - | - |
-| `required` | - | - | Yes | - | - |
-| `role_type` | - | - | - | - | - |
-| `shortform` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -5241,7 +4901,6 @@ result, err := client.IncidentRole(nil).Create(map[string]any{
     "description": "example_description",
     "instructions": "example_instructions",
     "name": "example_name",
-    "required": true,
     "shortform": "example_shortform",
 }, nil)
 if err != nil {
@@ -6834,11 +6493,11 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateOneOffRuleResultV2Entity
+## PayConfigOneOffRuleEntity
 
 ```go
-payConfigsCreateOneOffRuleResultV2 := client.PayConfigsCreateOneOffRuleResultV2(nil)
-fmt.Println(payConfigsCreateOneOffRuleResultV2.GetName()) // "pay_configs_create_one_off_rule_result_v2"
+payConfigOneOffRule := client.PayConfigOneOffRule(nil)
+fmt.Println(payConfigOneOffRule.GetName()) // "pay_config_one_off_rule"
 ```
 
 ### Fields
@@ -6846,19 +6505,46 @@ fmt.Println(payConfigsCreateOneOffRuleResultV2.GetName()) // "pay_configs_create
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_at` | `string` | Yes | When this rule stops applying |
+| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `name` | `string` | Yes | Human readable name for this rule |
 | `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | `string` | Yes | When this rule starts applying |
 
 ### Operations
 
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
+
+```go
+results, err := client.PayConfigOneOffRule(nil).List(map[string]any{"id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+for _, item := range results.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.PayConfigOneOffRule(nil).Load(map[string]any{"id": "pay_config_one_off_rule_id", "pay_config_id": "pay_config_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
 #### `Create(reqdata, ctrl map[string]any) (any, error)`
 
 Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
 
 ```go
-result, err := client.PayConfigsCreateOneOffRuleResultV2(nil).Create(map[string]any{
-    "pay_config_id": "example_pay_config_id",
+result, err := client.PayConfigOneOffRule(nil).Create(map[string]any{
+    "id": "example_id",
     "end_at": "example_end_at",
     "name": "example_name",
     "rate_cents": 1,
@@ -6870,6 +6556,34 @@ if err != nil {
 fmt.Println(result.(sdk.Entity).Data())
 ```
 
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
+
+```go
+result, err := client.PayConfigOneOffRule(nil).Update(map[string]any{
+    "id": "pay_config_one_off_rule_id",
+    "pay_config_id": "pay_config_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.PayConfigOneOffRule(nil).Remove(map[string]any{"id": "pay_config_one_off_rule_id", "pay_config_id": "pay_config_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
 ### Common Methods
 
 #### `Data(args ...any) any`
@@ -6884,7 +6598,7 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 #### `Make() Entity`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2Entity` instance with the same client and
+Create a new `PayConfigOneOffRuleEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -6902,11 +6616,11 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateWeeklyRuleResultV2Entity
+## PayConfigWeeklyRuleEntity
 
 ```go
-payConfigsCreateWeeklyRuleResultV2 := client.PayConfigsCreateWeeklyRuleResultV2(nil)
-fmt.Println(payConfigsCreateWeeklyRuleResultV2.GetName()) // "pay_configs_create_weekly_rule_result_v2"
+payConfigWeeklyRule := client.PayConfigWeeklyRule(nil)
+fmt.Println(payConfigWeeklyRule.GetName()) // "pay_config_weekly_rule"
 ```
 
 ### Fields
@@ -6914,19 +6628,46 @@ fmt.Println(payConfigsCreateWeeklyRuleResultV2.GetName()) // "pay_configs_create
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
+| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
 | `weekdays` | `[]any` | Yes | Days of the week this rule applies on |
 
 ### Operations
 
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
+
+```go
+results, err := client.PayConfigWeeklyRule(nil).List(map[string]any{"id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+for _, item := range results.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.PayConfigWeeklyRule(nil).Load(map[string]any{"id": "pay_config_weekly_rule_id", "pay_config_id": "pay_config_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
 #### `Create(reqdata, ctrl map[string]any) (any, error)`
 
 Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
 
 ```go
-result, err := client.PayConfigsCreateWeeklyRuleResultV2(nil).Create(map[string]any{
-    "pay_config_id": "example_pay_config_id",
+result, err := client.PayConfigWeeklyRule(nil).Create(map[string]any{
+    "id": "example_id",
     "end_time": "example_end_time",
     "rate_cents": 1,
     "start_time": "example_start_time",
@@ -6938,320 +6679,13 @@ if err != nil {
 fmt.Println(result.(sdk.Entity).Data())
 ```
 
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `PayConfigsCreateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListOneOffRulesResultV2Entity
-
-```go
-payConfigsListOneOffRulesResultV2 := client.PayConfigsListOneOffRulesResultV2(nil)
-fmt.Println(payConfigsListOneOffRulesResultV2.GetName()) // "pay_configs_list_one_off_rules_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `List(reqmatch, ctrl map[string]any) (any, error)`
-
-List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
-
-```go
-results, err := client.PayConfigsListOneOffRulesResultV2(nil).List(map[string]any{"pay_config_id": "example"}, nil)
-if err != nil {
-    panic(err)
-}
-for _, item := range results.([]any) {
-    fmt.Println(item.(sdk.Entity).Data())
-}
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `PayConfigsListOneOffRulesResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListWeeklyRulesResultV2Entity
-
-```go
-payConfigsListWeeklyRulesResultV2 := client.PayConfigsListWeeklyRulesResultV2(nil)
-fmt.Println(payConfigsListWeeklyRulesResultV2.GetName()) // "pay_configs_list_weekly_rules_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `[]any` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `List(reqmatch, ctrl map[string]any) (any, error)`
-
-List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
-
-```go
-results, err := client.PayConfigsListWeeklyRulesResultV2(nil).List(map[string]any{"pay_config_id": "example"}, nil)
-if err != nil {
-    panic(err)
-}
-for _, item := range results.([]any) {
-    fmt.Println(item.(sdk.Entity).Data())
-}
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `PayConfigsListWeeklyRulesResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowOneOffRuleResultV2Entity
-
-```go
-payConfigsShowOneOffRuleResultV2 := client.PayConfigsShowOneOffRuleResultV2(nil)
-fmt.Println(payConfigsShowOneOffRuleResultV2.GetName()) // "pay_configs_show_one_off_rule_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `Load(reqmatch, ctrl map[string]any) (any, error)`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
-
-```go
-result, err := client.PayConfigsShowOneOffRuleResultV2(nil).Load(map[string]any{"id": "pay_configs_show_one_off_rule_result_v2_id", "pay_config_id": "pay_config_id"}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `PayConfigsShowOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowWeeklyRuleResultV2Entity
-
-```go
-payConfigsShowWeeklyRuleResultV2 := client.PayConfigsShowWeeklyRuleResultV2(nil)
-fmt.Println(payConfigsShowWeeklyRuleResultV2.GetName()) // "pay_configs_show_weekly_rule_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `[]any` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `Load(reqmatch, ctrl map[string]any) (any, error)`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
-
-```go
-result, err := client.PayConfigsShowWeeklyRuleResultV2(nil).Load(map[string]any{"id": "pay_configs_show_weekly_rule_result_v2_id", "pay_config_id": "pay_config_id"}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateOneOffRuleResultV2Entity
-
-```go
-payConfigsUpdateOneOffRuleResultV2 := client.PayConfigsUpdateOneOffRuleResultV2(nil)
-fmt.Println(payConfigsUpdateOneOffRuleResultV2.GetName()) // "pay_configs_update_one_off_rule_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `string` | Yes | When this rule stops applying |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `string` | Yes | Human readable name for this rule |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `string` | Yes | When this rule starts applying |
-
-### Operations
-
 #### `Update(reqdata, ctrl map[string]any) (any, error)`
 
 Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
 
 ```go
-result, err := client.PayConfigsUpdateOneOffRuleResultV2(nil).Update(map[string]any{
-    "id": "id",
+result, err := client.PayConfigWeeklyRule(nil).Update(map[string]any{
+    "id": "pay_config_weekly_rule_id",
     "pay_config_id": "pay_config_id",
     // Fields to update
 }, nil)
@@ -7260,127 +6694,13 @@ if err != nil {
 }
 fmt.Println(result.(sdk.Entity).Data())
 ```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateWeeklyRuleResultV2Entity
-
-```go
-payConfigsUpdateWeeklyRuleResultV2 := client.PayConfigsUpdateWeeklyRuleResultV2(nil)
-fmt.Println(payConfigsUpdateWeeklyRuleResultV2.GetName()) // "pay_configs_update_weekly_rule_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `string` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `string` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `int` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `string` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `[]any` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `Update(reqdata, ctrl map[string]any) (any, error)`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
-
-```go
-result, err := client.PayConfigsUpdateWeeklyRuleResultV2(nil).Update(map[string]any{
-    "id": "id",
-    "pay_config_id": "pay_config_id",
-    // Fields to update
-}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## PayConfigsV2Entity
-
-```go
-payConfigsV2 := client.PayConfigsV2(nil)
-fmt.Println(payConfigsV2.GetName()) // "pay_configs_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
 
 #### `Remove(reqmatch, ctrl map[string]any) (any, error)`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
 
 ```go
-result, err := client.PayConfigsV2(nil).Remove(map[string]any{"id": "pay_configs_v2_id", "pay_config_id": "pay_config_id"}, nil)
+result, err := client.PayConfigWeeklyRule(nil).Remove(map[string]any{"id": "pay_config_weekly_rule_id", "pay_config_id": "pay_config_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -7401,7 +6721,7 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 #### `Make() Entity`
 
-Create a new `PayConfigsV2Entity` instance with the same client and
+Create a new `PayConfigWeeklyRuleEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -7775,65 +7095,6 @@ Return the entity name.
 
 ---
 
-## PoliciesV2Entity
-
-```go
-policiesV2 := client.PoliciesV2(nil)
-fmt.Println(policiesV2.GetName()) // "policies_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `string` | No |  |
-
-### Operations
-
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
-
-```go
-result, err := client.PoliciesV2(nil).Remove(map[string]any{"id": "policies_v2_id"}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `PoliciesV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
 ## PolicyEntity
 
 ```go
@@ -7863,23 +7124,23 @@ fmt.Println(policy.GetName()) // "policy"
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `assignment_rules` | - | - | - | - |
-| `conditions` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `debrief` | - | - | - | - |
-| `description` | - | - | Yes | Yes |
-| `expressions` | - | - | - | - |
-| `follow_up` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `on_call_readiness` | - | - | - | - |
-| `policy_type` | - | - | - | - |
-| `post_mortem` | - | - | - | - |
-| `schedule` | - | - | - | - |
-| `status` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignment_rules` | - | - | - | - | - |
+| `conditions` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `debrief` | - | - | - | - | - |
+| `description` | - | - | Yes | Yes | - |
+| `expressions` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `on_call_readiness` | - | - | - | - | - |
+| `policy_type` | - | - | - | - | - |
+| `post_mortem` | - | - | - | - | - |
+| `schedule` | - | - | - | - | - |
+| `status` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -7940,6 +7201,18 @@ result, err := client.Policy(nil).Update(map[string]any{
     "id": "policy_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.Policy(nil).Remove(map[string]any{"id": "policy_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -8608,6 +7881,133 @@ Return the entity name.
 
 ---
 
+## ScheduleOverrideEntity
+
+```go
+scheduleOverride := client.ScheduleOverride(nil)
+fmt.Println(scheduleOverride.GetName()) // "schedule_override"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `end_at` | `string` | Yes | End of the override |
+| `id` | `string` | Yes | Unique internal ID of the schedule override |
+| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
+| `schedule_id` | `string` | Yes | The schedule that this override applies to |
+| `start_at` | `string` | Yes | Start of the override |
+| `updated_at` | `string` | Yes |  |
+| `user` | `map[string]any` | Yes |  |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
+
+```go
+results, err := client.ScheduleOverride(nil).List(map[string]any{"schedule_id": "example"}, nil)
+if err != nil {
+    panic(err)
+}
+for _, item := range results.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.ScheduleOverride(nil).Load(map[string]any{"id": "schedule_override_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.ScheduleOverride(nil).Create(map[string]any{
+    "end_at": "example_end_at",
+    "layer_id": "example_layer_id",
+    "rotation_id": "example_rotation_id",
+    "schedule_id": "example_schedule_id",
+    "start_at": "example_start_at",
+    "user": map[string]any{},
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Update(reqdata, ctrl map[string]any) (any, error)`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
+
+```go
+result, err := client.ScheduleOverride(nil).Update(map[string]any{
+    "id": "schedule_override_id",
+    // Fields to update
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.ScheduleOverride(nil).Remove(map[string]any{"id": "schedule_override_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `ScheduleOverrideEntity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleReplicaEntity
 
 ```go
@@ -8678,6 +8078,18 @@ if err != nil {
 fmt.Println(result.(sdk.Entity).Data())
 ```
 
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.ScheduleReplica(nil).Remove(map[string]any{"id": "schedule_replica_id", "schedule_id": "schedule_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
 ### Common Methods
 
 #### `Data(args ...any) any`
@@ -8734,18 +8146,18 @@ fmt.Println(scheduleSyncRule.GetName()) // "schedule_sync_rule"
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `permanent_member_user_ids` | - | - | Yes | Yes |
-| `rotation_id` | - | - | - | - |
-| `schedule_id` | - | - | - | - |
-| `schedule_sync_target` | - | - | - | - |
-| `schedule_sync_target_id` | - | - | - | - |
-| `sync_type` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `permanent_member_user_ids` | - | - | Yes | Yes | - |
+| `rotation_id` | - | - | - | - | - |
+| `schedule_id` | - | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - | - |
+| `sync_type` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -8801,6 +8213,18 @@ result, err := client.ScheduleSyncRule(nil).Update(map[string]any{
     "schedule_id": "schedule_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.ScheduleSyncRule(nil).Remove(map[string]any{"id": "schedule_sync_rule_id", "schedule_id": "schedule_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -8959,176 +8383,6 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `ScheduleSyncTargetEntity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## SchedulesShowOverrideResultV2Entity
-
-```go
-schedulesShowOverrideResultV2 := client.SchedulesShowOverrideResultV2(nil)
-fmt.Println(schedulesShowOverrideResultV2.GetName()) // "schedules_show_override_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `string` | Yes |  |
-| `end_at` | `string` | Yes | End of the override |
-| `id` | `string` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | Yes | The schedule that this override applies to |
-| `start_at` | `string` | Yes | Start of the override |
-| `updated_at` | `string` | Yes |  |
-| `user` | `map[string]any` | Yes |  |
-
-### Operations
-
-#### `List(reqmatch, ctrl map[string]any) (any, error)`
-
-List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
-
-```go
-results, err := client.SchedulesShowOverrideResultV2(nil).List(map[string]any{"schedule_id": "example"}, nil)
-if err != nil {
-    panic(err)
-}
-for _, item := range results.([]any) {
-    fmt.Println(item.(sdk.Entity).Data())
-}
-```
-
-#### `Load(reqmatch, ctrl map[string]any) (any, error)`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
-
-```go
-result, err := client.SchedulesShowOverrideResultV2(nil).Load(map[string]any{"id": "schedules_show_override_result_v2_id"}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
-
-```go
-result, err := client.SchedulesShowOverrideResultV2(nil).Create(map[string]any{
-    "end_at": "example_end_at",
-    "layer_id": "example_layer_id",
-    "rotation_id": "example_rotation_id",
-    "schedule_id": "example_schedule_id",
-    "start_at": "example_start_at",
-    "user": map[string]any{},
-}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `SchedulesShowOverrideResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## SchedulesUpdateOverrideResultV2Entity
-
-```go
-schedulesUpdateOverrideResultV2 := client.SchedulesUpdateOverrideResultV2(nil)
-fmt.Println(schedulesUpdateOverrideResultV2.GetName()) // "schedules_update_override_result_v2"
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `string` | Yes |  |
-| `end_at` | `string` | Yes | End of the override |
-| `id` | `string` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `string` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `string` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `string` | Yes | The schedule that this override applies to |
-| `start_at` | `string` | Yes | Start of the override |
-| `updated_at` | `string` | Yes |  |
-| `user` | `map[string]any` | Yes |  |
-
-### Operations
-
-#### `Update(reqdata, ctrl map[string]any) (any, error)`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
-
-```go
-result, err := client.SchedulesUpdateOverrideResultV2(nil).Update(map[string]any{
-    "id": "id",
-    // Fields to update
-}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `SchedulesUpdateOverrideResultV2Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -9307,14 +8561,14 @@ fmt.Println(severity.GetName()) // "severity"
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -9368,6 +8622,18 @@ result, err := client.Severity(nil).Update(map[string]any{
     "id": "severity_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.Severity(nil).Remove(map[string]any{"id": "severity_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -9599,11 +8865,11 @@ Return the entity name.
 
 ---
 
-## StatusPageComponentAvailabilityV2Entity
+## StatusPageComponentAvailabilityEntity
 
 ```go
-statusPageComponentAvailabilityV2 := client.StatusPageComponentAvailabilityV2(nil)
-fmt.Println(statusPageComponentAvailabilityV2.GetName()) // "status_page_component_availability_v2"
+statusPageComponentAvailability := client.StatusPageComponentAvailability(nil)
+fmt.Println(statusPageComponentAvailability.GetName()) // "status_page_component_availability"
 ```
 
 ### Fields
@@ -9624,7 +8890,7 @@ fmt.Println(statusPageComponentAvailabilityV2.GetName()) // "status_page_compone
 Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
 
 ```go
-result, err := client.StatusPageComponentAvailabilityV2(nil).Load(map[string]any{"component_id": "component_id", "status_page_id": "status_page_id", "end_at": "end_at", "start_at": "start_at"}, nil)
+result, err := client.StatusPageComponentAvailability(nil).Load(map[string]any{"component_id": "component_id", "status_page_id": "status_page_id", "end_at": "end_at", "start_at": "start_at"}, nil)
 if err != nil {
     panic(err)
 }
@@ -9645,7 +8911,7 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 #### `Make() Entity`
 
-Create a new `StatusPageComponentAvailabilityV2Entity` instance with the same client and
+Create a new `StatusPageComponentAvailabilityEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -9847,11 +9113,11 @@ Return the entity name.
 
 ---
 
-## StatusPageLinkedResponseIncidentV1Entity
+## StatusPageLinkedResponseIncidentEntity
 
 ```go
-statusPageLinkedResponseIncidentV1 := client.StatusPageLinkedResponseIncidentV1(nil)
-fmt.Println(statusPageLinkedResponseIncidentV1.GetName()) // "status_page_linked_response_incident_v1"
+statusPageLinkedResponseIncident := client.StatusPageLinkedResponseIncident(nil)
+fmt.Println(statusPageLinkedResponseIncident.GetName()) // "status_page_linked_response_incident"
 ```
 
 ### Fields
@@ -9868,7 +9134,7 @@ fmt.Println(statusPageLinkedResponseIncidentV1.GetName()) // "status_page_linked
 List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
 
 ```go
-results, err := client.StatusPageLinkedResponseIncidentV1(nil).List(map[string]any{"incident_id": "example", "status_page_id": "example"}, nil)
+results, err := client.StatusPageLinkedResponseIncident(nil).List(map[string]any{"incident_id": "example", "status_page_id": "example"}, nil)
 if err != nil {
     panic(err)
 }
@@ -9891,7 +9157,7 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 #### `Make() Entity`
 
-Create a new `StatusPageLinkedResponseIncidentV1Entity` instance with the same client and
+Create a new `StatusPageLinkedResponseIncidentEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -9937,22 +9203,22 @@ fmt.Println(statusPageMaintenance.GetName()) // "status_page_maintenance"
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `affected_component_ids` | - | - | - | - |
-| `automate_maintenance_status` | - | - | Yes | - |
-| `component_maintenance_periods` | - | - | - | - |
-| `end_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `idempotency_key` | - | - | - | - |
-| `maintenance_status` | - | - | - | - |
-| `message` | - | - | - | - |
-| `name` | - | - | - | - |
-| `notify_subscribers` | - | - | - | - |
-| `published_at` | - | - | - | - |
-| `start_at` | - | - | - | - |
-| `status_page_id` | - | - | - | - |
-| `updates` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `affected_component_ids` | - | - | - | - | - |
+| `automate_maintenance_status` | - | - | Yes | - | - |
+| `component_maintenance_periods` | - | - | - | - | - |
+| `end_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `idempotency_key` | - | - | - | - | - |
+| `maintenance_status` | - | - | - | - | - |
+| `message` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `notify_subscribers` | - | - | - | - | - |
+| `published_at` | - | - | - | - | - |
+| `start_at` | - | - | - | - | - |
+| `status_page_id` | - | - | - | - | - |
+| `updates` | - | - | - | - | - |
 
 ### Operations
 
@@ -10013,6 +9279,18 @@ result, err := client.StatusPageMaintenance(nil).Update(map[string]any{
     "id": "status_page_maintenance_id",
     // Fields to update
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
+
+```go
+result, err := client.StatusPageMaintenance(nil).Remove(map[string]any{"id": "status_page_maintenance_id"}, nil)
 if err != nil {
     panic(err)
 }
@@ -10180,59 +9458,6 @@ Return the entity name.
 
 ---
 
-## StatusPagesV2Entity
-
-```go
-statusPagesV2 := client.StatusPagesV2(nil)
-fmt.Println(statusPagesV2.GetName()) // "status_pages_v2"
-```
-
-### Operations
-
-#### `Remove(reqmatch, ctrl map[string]any) (any, error)`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted; `err` is non-nil on failure.
-
-```go
-result, err := client.StatusPagesV2(nil).Remove(map[string]any{"status_page_maintenance_id": "status_page_maintenance_id"}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `StatusPagesV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
 ## TeamEntity
 
 ```go
@@ -10309,11 +9534,11 @@ Return the entity name.
 
 ---
 
-## TelemetryDataSourceV2Entity
+## TelemetryDataSourceEntity
 
 ```go
-telemetryDataSourceV2 := client.TelemetryDataSourceV2(nil)
-fmt.Println(telemetryDataSourceV2.GetName()) // "telemetry_data_source_v2"
+telemetryDataSource := client.TelemetryDataSource(nil)
+fmt.Println(telemetryDataSource.GetName()) // "telemetry_data_source"
 ```
 
 ### Fields
@@ -10353,7 +9578,7 @@ fmt.Println(telemetryDataSourceV2.GetName()) // "telemetry_data_source_v2"
 Update an existing entity. The data must include the entity `id`. Returns the updated entity; `err` is non-nil on failure.
 
 ```go
-result, err := client.TelemetryDataSourceV2(nil).Update(map[string]any{
+result, err := client.TelemetryDataSource(nil).Update(map[string]any{
     "id": "id",
     // Fields to update
 }, nil)
@@ -10377,7 +9602,7 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 #### `Make() Entity`
 
-Create a new `TelemetryDataSourceV2Entity` instance with the same client and
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -10438,20 +9663,6 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```go
 result, err := client.User(nil).Load(map[string]any{"id": "user_id"}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
-
-```go
-result, err := client.User(nil).Create(map[string]any{
-    "id": "example_id",
-}, nil)
 if err != nil {
     panic(err)
 }

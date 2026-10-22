@@ -141,7 +141,7 @@ class AlertRouteEntityTest < Minitest::Test
     end
     client = IncidentIoSDK.test(nil, { "feature" => { "validate" => { "active" => true } } })
     err = assert_raises(StandardError) do
-      client.AlertRoute(nil).list({ "after" => 1, "page_size" => 1 }, nil)
+      client.AlertRoute(nil).list({ "after" => 1 }, nil)
     end
     assert_equal "validate_failed", err.code
   end

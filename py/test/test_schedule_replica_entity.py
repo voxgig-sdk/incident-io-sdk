@@ -46,14 +46,19 @@ class TestScheduleReplicaEntity:
         # multiple ops; skipping any one skips the whole flow (steps depend
         # on each other).
         _live = setup.get("live", False)
-        for _op in ["load"]:
+        for _op in ["load", "remove", "list"]:
             _skip, _reason = runner.is_control_skipped("entityOp", "schedule_replica." + _op, "live" if _live else "unit")
             if _skip:
                 pytest.skip(_reason or "skipped via sdk-test-control.json")
                 return
         if setup["live"]:
-            runner.live_miss(LIVE_STRICT, "Live entity test blocked: " + "the flow loads a schedule_replica record it has no list to find")
+            for _live_key in ["schedule01"]:
+                if setup.get("synthetic_only") or setup["idmap"].get(_live_key) is None:
+                    runner.live_miss(LIVE_STRICT, f"Live entity test blocked: needs {_live_key} via INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID")
         client = setup["client"]
+        if setup["live"]:
+            runner.live_existing(setup, LIVE_STRICT, "schedule_replica",
+                                 lambda: client.ScheduleReplica(None).list({"schedule_id": setup["idmap"].get("schedule01")}, None))
 
         # Bootstrap entity data from existing test data.
         schedule_replica_ref01_data_raw = vs.items(helpers.to_map(

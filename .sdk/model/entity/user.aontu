@@ -74,64 +74,6 @@ main: kit: entity: user: {
 
   name: "user"
   op: {
-    create: {
-      name: "create"
-      points: [
-        {
-          bf: [
-            "preferred_escalation_provider"
-          ]
-          co: {
-            id: "POST /v2/users/{user_id}/paging_provider"
-            source: "openapi3"
-            version: 2
-          }
-          g: {
-            params: [
-              {
-                ex: "01FCNDV6P870EA6S7TK1DSYDG0"
-                k: "param"
-                n: "id"
-                or: "user_id"
-                r: true
-                t: "`$STRING`"
-              }
-            ]
-          }
-          m: "POST"
-          o: "/v2/users/{user_id}/paging_provider"
-          q: {
-            "$action": "paging_provider"
-            exist: [
-              "id"
-            ]
-          }
-          r: {
-            param: {
-              user_id: "id"
-            }
-          }
-          s: [
-            {
-              lit: "v2"
-            }
-            {
-              lit: "users"
-            }
-            {
-              var: "id"
-            }
-            {
-              lit: "paging_provider"
-            }
-          ]
-          t: {
-            req: "`reqdata`"
-            res: "`body`"
-          }
-        }
-      ]
-    }
     list: {
       name: "list"
       points: [

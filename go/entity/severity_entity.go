@@ -446,9 +446,43 @@ func (e *SeverityEntity) Patch(_ map[string]any, _ map[string]any) (any, error) 
 }
 
 
-func (e *SeverityEntity) Remove(_ map[string]any, _ map[string]any) (any, error) {
-	return core.UnsupportedOp("remove", e.name)
+
+func (e *SeverityEntity) Remove(reqmatch map[string]any, ctrl map[string]any) (any, error) {
+	utility := e.utility
+	ctx := utility.MakeContext(map[string]any{
+		"opname":   "remove",
+		"ctrl":     ctrl,
+		"match":    e.match,
+		"data":     e.data,
+		"reqmatch": reqmatch,
+	}, e.entctx)
+
+	return e.runOp(ctx, func() {
+		if ctx.Result != nil {
+			if ctx.Result.Resmatch != nil {
+				e.match = ctx.Result.Resmatch
+			}
+			if ctx.Result.Resdata != nil {
+				e.data = map[string]any{}
+				if data := core.ToMapAny(vs.Clone(ctx.Result.Resdata)); data != nil {
+					e.data = data
+				}
+			}
+		}
+	})
 }
+
+// RemoveTyped is the statically-typed variant of Remove: it takes an
+// SeverityRemoveMatch and returns an Severity. It delegates to the untyped
+// Remove (identical runtime) and converts at the typed boundary.
+func (e *SeverityEntity) RemoveTyped(reqmatch SeverityRemoveMatch, ctrl map[string]any) (Severity, error) {
+	res, err := e.Remove(asMap(reqmatch), ctrl)
+	if err != nil {
+		return Severity{}, err
+	}
+	return typedFrom[Severity](res), nil
+}
+
 
 
 func (e *SeverityEntity) runOp(ctx *core.Context, postDone func()) (out any, err error) {

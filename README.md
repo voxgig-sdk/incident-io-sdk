@@ -20,7 +20,7 @@ Full documentation for this SDK: [https://voxgig-sdk.github.io/incident-io-sdk/]
 
 ## Entities, not endpoints
 
-This SDK exposes the API as **111 semantic entities** that you
+This SDK exposes the API as **94 semantic entities** that you
 call directly, instead of assembling URL paths and query strings. See the [Entities](#entities) table below for the full list. Entities are
 **Capitalised** to mark them as the primary surface, each with the operations they
 support (`list`, `load`, `create`, `update`, `remove`):
@@ -46,22 +46,22 @@ network, and no credentials:
 // Shape: { entity: { <entity-name>: { <id>: <record> } } }
 const client = IncidentIoSDK.test({
   entity: {
-    incident_status: {
-      test01: { id: 'test01', category: 'example_category', description: 'example_description', name: 'example_name' },
+    escalation_path: {
+      test01: { id: 'test01', name: 'example_name', path: [], repeat_config: {} },
     },
   },
 })
-const incidentstatuss = await client.IncidentStatus().list()
-// incidentstatuss is an array of IncidentStatus entities, one per mock record
-console.log(incidentstatuss.map((incidentstatus) => incidentstatus.data()))
+const escalationpaths = await client.EscalationPath().list()
+// escalationpaths is an array of EscalationPath entities, one per mock record
+console.log(escalationpaths.map((escalationpath) => escalationpath.data()))
 ```
 
 ### Python
 
 ```python
 client = IncidentIoSDK.test()
-incidentstatuss = client.IncidentStatus().list()
-print([item.data_get() for item in incidentstatuss])
+escalationpaths = client.EscalationPath().list()
+print([item.data_get() for item in escalationpaths])
 ```
 
 ### PHP
@@ -69,16 +69,16 @@ print([item.data_get() for item in incidentstatuss])
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = IncidentIoSDK::test([
-    "entity" => ["incident_status" => ["test01" => ["id" => "test01"]]],
+    "entity" => ["escalation_path" => ["test01" => ["id" => "test01"]]],
 ]);
-$incidentstatuss = $client->IncidentStatus()->list();
+$escalationpaths = $client->EscalationPath()->list();
 ```
 
 ### Golang
 
 ```go
 client := sdk.Test()
-result, err := client.IncidentStatus(nil).List(
+result, err := client.EscalationPath(nil).List(
     nil, nil,
 )
 ```
@@ -88,16 +88,16 @@ result, err := client.IncidentStatus(nil).List(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = IncidentIoSDK.test({
-  "entity" => { "incident_status" => { "test01" => { "id" => "test01" } } },
+  "entity" => { "escalation_path" => { "test01" => { "id" => "test01" } } },
 })
-incidentstatuss = client.IncidentStatus.list()
+escalationpaths = client.EscalationPath.list()
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local results, err = client:IncidentStatus():list()
+local results, err = client:EscalationPath():list()
 ```
 
 ## Packages
@@ -130,12 +130,12 @@ for (const action of actions) {
   console.log(action.data())
 }
 
-// Load a specific callroutesshowallowedcallerresultv2 (returns the entity, a CallRoutesShowAllowedCallerResultV2Entity)
-const callroutesshowallowedcallerresultv2 = await client.CallRoutesShowAllowedCallerResultV2().load({
+// Load a specific callrouteallowedcaller (returns the entity, a CallRouteAllowedCallerEntity)
+const callrouteallowedcaller = await client.CallRouteAllowedCaller().load({
   call_route_id: 'example_call_route_id',
   id: 'example_id',
 })
-console.log(callroutesshowallowedcallerresultv2.data())
+console.log(callrouteallowedcaller.data())
 ```
 
 See the [TypeScript README](ts/README.md) for the full guide.
@@ -173,52 +173,45 @@ Then add it to your agent's MCP config (Claude Desktop, Cursor, etc.):
 
 ## Entities
 
-The API exposes 111 entities:
+The API exposes 94 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Action** | The Action entity (create, list, load, remove, update). | `/v1/actions` |
+| **Action** | The Action entity (create, list, load, remove, update). | `/v3/actions` |
 | **Alert** | The Alert entity (create, list, load). | `/v2/alerts` |
 | **AlertAttribute** | The AlertAttribute entity (create, list, load, remove, update). | `/v2/alert_attributes` |
 | **AlertNote** | The AlertNote entity (create, list, load, remove, update). | `/v1/alert_notes` |
-| **AlertRoute** | The AlertRoute entity (create, list, load, remove, update). | `/v2/alert_routes` |
+| **AlertRoute** | The AlertRoute entity (create, list, load, remove, update). | `/v3/alert_routes` |
 | **AlertSource** | The AlertSource entity (create, list, load, remove, update). | `/v2/alert_sources` |
 | **AlertSourcesV2** | The AlertSourcesV2 entity (create). | `/v2/alert_sources/actions/validate` |
-| **AlertTag** | The AlertTag entity (list). | `/v2/alert_tags` |
+| **AlertTag** | The AlertTag entity (create, list). | `/v2/alert_tags` |
 | **AlertsAddTagsResultV2** | The AlertsAddTagsResultV2 entity (create). | `/v2/alerts/{id}/actions/add_tags` |
-| **AlertsRemoveTagsResultV2** | The AlertsRemoveTagsResultV2 entity (create). | `/v2/alerts/{id}/actions/remove_tags` |
 | **AlertsSetTagsResultV2** | The AlertsSetTagsResultV2 entity (create). | `/v2/alerts/{id}/actions/set_tags` |
 | **AlertsTransitionIncidentAlertResultV2** | The AlertsTransitionIncidentAlertResultV2 entity (create, list). | `/v2/incident_alerts` |
 | **AnnouncementRule** | The AnnouncementRule entity (create, list, load, remove, update). | `/v2/announcement_rules` |
 | **AnnouncementTemplate** | The AnnouncementTemplate entity (create, list, load, remove, update). | `/v2/announcement_templates` |
 | **ApiKey** | The ApiKey entity (create, list, load, remove, update). | `/v1/api_keys` |
 | **CallRoute** | The CallRoute entity (list, load, update). | `/v2/call_routes` |
-| **CallRoutesCreateAllowedCallerResultV2** | The CallRoutesCreateAllowedCallerResultV2 entity (create). | `/v2/call_routes/{call_route_id}/allowed_callers` |
-| **CallRoutesCreateOptionResultV2** | The CallRoutesCreateOptionResultV2 entity (create). | `/v2/call_routes/{call_route_id}/options` |
-| **CallRoutesListAllowedCallersResultV2** | The CallRoutesListAllowedCallersResultV2 entity (list). | `/v2/call_routes/{call_route_id}/allowed_callers` |
-| **CallRoutesListOptionsResultV2** | The CallRoutesListOptionsResultV2 entity (list). | `/v2/call_routes/{call_route_id}/options` |
-| **CallRoutesShowAllowedCallerResultV2** | The CallRoutesShowAllowedCallerResultV2 entity (load). | `/v2/call_routes/{call_route_id}/allowed_callers/{id}` |
-| **CallRoutesShowOptionResultV2** | The CallRoutesShowOptionResultV2 entity (load). | `/v2/call_routes/{call_route_id}/options/{id}` |
-| **CallRoutesUpdateAllowedCallerResultV2** | The CallRoutesUpdateAllowedCallerResultV2 entity (update). | `/v2/call_routes/{call_route_id}/allowed_callers/{id}` |
-| **CallRoutesUpdateOptionResultV2** | The CallRoutesUpdateOptionResultV2 entity (update). | `/v2/call_routes/{call_route_id}/options/{id}` |
-| **CallRoutesV2** | The CallRoutesV2 entity (remove). | `/v2/call_routes/{call_route_id}/allowed_callers/{id}` |
+| **CallRouteAllowedCaller** | The CallRouteAllowedCaller entity (create, list, load, remove, update). | `/v2/call_routes/{call_route_id}/allowed_callers` |
+| **CallRouteOption** | The CallRouteOption entity (create, list, load, remove, update). | `/v2/call_routes/{call_route_id}/options` |
 | **CallSession** | The CallSession entity (list). | `/v2/call_sessions` |
 | **CallTranscriptEntry** | The CallTranscriptEntry entity (list). | `/v2/call_transcript_entries` |
-| **CatalogEntry** | The CatalogEntry entity (create, list, load, update). | `/v3/catalog_entries` |
-| **CatalogResource** | The CatalogResource entity (list). | `/v2/catalog_resources` |
-| **CatalogType** | The CatalogType entity (create, list, load, update). | `/v2/catalog_types` |
-| **CatalogTypeSchema** | The CatalogTypeSchema entity (create). | `/v2/catalog_types/{id}/actions/update_schema` |
-| **CustomField** | The CustomField entity (create, list, load, remove, update). | `/v1/custom_fields` |
+| **CatalogEntry** | The CatalogEntry entity (create, list, load, remove, update). | `/v3/catalog_entries` |
+| **CatalogResource** | The CatalogResource entity (list). | `/v3/catalog_resources` |
+| **CatalogType** | The CatalogType entity (create, list, load, remove, update). | `/v3/catalog_types` |
+| **CatalogTypeSchema** | The CatalogTypeSchema entity (create). | `/v3/catalog_types/{id}/actions/update_schema` |
+| **CustomField** | The CustomField entity (create, list, load, remove, update). | `/v2/custom_fields` |
 | **CustomFieldOption** | The CustomFieldOption entity (create, list, load, remove, update). | `/v1/custom_field_options` |
 | **Escalation** | The Escalation entity (create, list, load). | `/v2/escalations` |
+| **EscalationPath** | The EscalationPath entity (create, list, load, remove, update). | `/v2/escalation_paths` |
 | **EscalationPathTemplate** | The EscalationPathTemplate entity (create, list, load, remove, update). | `/v2/escalation_path_templates` |
 | **EscalationsCheckEscalationPermissionsResultV2** | The EscalationsCheckEscalationPermissionsResultV2 entity (create). | `/v2/escalations/{escalation_id}/actions/check_permissions` |
 | **EscalationsReassignEscalationResultV2** | The EscalationsReassignEscalationResultV2 entity (create). | `/v2/escalations/{escalation_id}/actions/reassign` |
-| **FollowUp** | The FollowUp entity (create, list, load, remove, update). | `/v2/follow_ups` |
+| **FollowUp** | The FollowUp entity (create, list, load, remove, update). | `/v3/follow_ups` |
 | **FollowUpsConnectExternalIssueResultV3** | The FollowUpsConnectExternalIssueResultV3 entity (create). | `/v3/follow_ups/{id}/actions/connect_external_issue` |
 | **FollowUpsCreateFromLinkResultV3** | The FollowUpsCreateFromLinkResultV3 entity (create). | `/v3/follow_ups/actions/create_from_link` |
 | **Identity** | The Identity entity (load). | `/v1/identity` |
-| **Incident** | The Incident entity (create, list, load). | `/v1/incidents` |
+| **Incident** | The Incident entity (create, list, load). | `/v2/incidents` |
 | **IncidentActivityLogEntry** | The IncidentActivityLogEntry entity (list). | `/v2/incident_activity_log_entries` |
 | **IncidentAttachment** | The IncidentAttachment entity (create, list, remove). | `/v1/incident_attachments` |
 | **IncidentForm** | The IncidentForm entity (create, list, load, remove, update). | `/v3/incident_forms` |
@@ -226,7 +219,7 @@ The API exposes 111 entities:
 | **IncidentParticipant** | The IncidentParticipant entity (load). | `/v2/incident_participants` |
 | **IncidentParticipantWorkload** | The IncidentParticipantWorkload entity (list). | `/v2/incident_participant_workloads` |
 | **IncidentRelationship** | The IncidentRelationship entity (list). | `/v1/incident_relationships` |
-| **IncidentRole** | The IncidentRole entity (create, list, load, remove, update). | `/v1/incident_roles` |
+| **IncidentRole** | The IncidentRole entity (create, list, load, remove, update). | `/v2/incident_roles` |
 | **IncidentStatus** | The IncidentStatus entity (create, list, load, remove, update). | `/v1/incident_statuses` |
 | **IncidentTeamMembership** | The IncidentTeamMembership entity (create). | `/v1/incident_team_memberships` |
 | **IncidentTeamMembershipsV1** | The IncidentTeamMembershipsV1 entity (create). | `/v1/incident_team_memberships/actions/revoke` |
@@ -244,21 +237,13 @@ The API exposes 111 entities:
 | **OnCallNotificationPause** | The OnCallNotificationPause entity (list, load). | `/v2/on_call_notification_pauses` |
 | **OnCallNotificationRulePublicV2** | The OnCallNotificationRulePublicV2 entity (list). | `/v2/users/{user_id}/notification_rules` |
 | **PayConfig** | The PayConfig entity (create, list, load, remove, update). | `/v2/pay_configs` |
-| **PayConfigsCreateOneOffRuleResultV2** | The PayConfigsCreateOneOffRuleResultV2 entity (create). | `/v2/pay_configs/{pay_config_id}/one_off_rules` |
-| **PayConfigsCreateWeeklyRuleResultV2** | The PayConfigsCreateWeeklyRuleResultV2 entity (create). | `/v2/pay_configs/{pay_config_id}/weekly_rules` |
-| **PayConfigsListOneOffRulesResultV2** | The PayConfigsListOneOffRulesResultV2 entity (list). | `/v2/pay_configs/{pay_config_id}/one_off_rules` |
-| **PayConfigsListWeeklyRulesResultV2** | The PayConfigsListWeeklyRulesResultV2 entity (list). | `/v2/pay_configs/{pay_config_id}/weekly_rules` |
-| **PayConfigsShowOneOffRuleResultV2** | The PayConfigsShowOneOffRuleResultV2 entity (load). | `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}` |
-| **PayConfigsShowWeeklyRuleResultV2** | The PayConfigsShowWeeklyRuleResultV2 entity (load). | `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}` |
-| **PayConfigsUpdateOneOffRuleResultV2** | The PayConfigsUpdateOneOffRuleResultV2 entity (update). | `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}` |
-| **PayConfigsUpdateWeeklyRuleResultV2** | The PayConfigsUpdateWeeklyRuleResultV2 entity (update). | `/v2/pay_configs/{pay_config_id}/weekly_rules/{id}` |
-| **PayConfigsV2** | The PayConfigsV2 entity (remove). | `/v2/pay_configs/{pay_config_id}/one_off_rules/{id}` |
+| **PayConfigOneOffRule** | The PayConfigOneOffRule entity (create, list, load, remove, update). | `/v2/pay_configs/{pay_config_id}/one_off_rules` |
+| **PayConfigWeeklyRule** | The PayConfigWeeklyRule entity (create, list, load, remove, update). | `/v2/pay_configs/{pay_config_id}/weekly_rules` |
 | **PayReport** | The PayReport entity (create, list, load, remove). | `/v2/pay_reports` |
 | **PayReportsPublishResultV2** | The PayReportsPublishResultV2 entity (create). | `/v2/pay_reports/{id}/actions/publish` |
 | **PayReportsUnpublishResultV2** | The PayReportsUnpublishResultV2 entity (create). | `/v2/pay_reports/{id}/actions/unpublish` |
 | **PayReportsV2** | The PayReportsV2 entity (load). | `/v2/pay_reports/{id}/download` |
-| **PoliciesV2** | The PoliciesV2 entity (remove). | `/v2/policies/{id}` |
-| **Policy** | The Policy entity (create, list, load, update). | `/v2/policies` |
+| **Policy** | The Policy entity (create, list, load, remove, update). | `/v2/policies` |
 | **PolicyFinding** | The PolicyFinding entity (list, load). | `/v2/policy_findings` |
 | **PolicyFindingsDismissResultV2** | The PolicyFindingsDismissResultV2 entity (create). | `/v2/policy_findings/{id}/actions/dismiss` |
 | **PolicyFindingsRestoreResultV2** | The PolicyFindingsRestoreResultV2 entity (create). | `/v2/policy_findings/{id}/actions/restore` |
@@ -266,26 +251,24 @@ The API exposes 111 entities:
 | **Schedule** | The Schedule entity (create, list, load, remove, update). | `/v2/schedules` |
 | **ScheduleEntriesListPayloadV2** | The ScheduleEntriesListPayloadV2 entity (create). | `/v2/schedules/{id}/actions/preview_entries` |
 | **ScheduleEntry** | The ScheduleEntry entity (load). | `/v2/schedule_entries` |
-| **ScheduleReplica** | The ScheduleReplica entity (create, list, load). | `/v2/schedules/{schedule_id}/replicas` |
-| **ScheduleSyncRule** | The ScheduleSyncRule entity (create, list, load, update). | `/v2/schedules/{schedule_id}/sync_rules` |
+| **ScheduleOverride** | The ScheduleOverride entity (create, list, load, remove, update). | `/v2/schedule_overrides` |
+| **ScheduleReplica** | The ScheduleReplica entity (create, list, load, remove). | `/v2/schedules/{schedule_id}/replicas` |
+| **ScheduleSyncRule** | The ScheduleSyncRule entity (create, list, load, remove, update). | `/v2/schedules/{schedule_id}/sync_rules` |
 | **ScheduleSyncTarget** | The ScheduleSyncTarget entity (create, list, load, remove, update). | `/v2/schedule_sync_targets` |
-| **SchedulesShowOverrideResultV2** | The SchedulesShowOverrideResultV2 entity (create, list, load). | `/v2/schedule_overrides` |
-| **SchedulesUpdateOverrideResultV2** | The SchedulesUpdateOverrideResultV2 entity (update). | `/v2/schedule_overrides/{id}` |
 | **Secret** | The Secret entity (create, list, load, remove, update). | `/v2/secrets` |
-| **Severity** | The Severity entity (create, list, load, update). | `/v1/severities` |
+| **Severity** | The Severity entity (create, list, load, remove, update). | `/v1/severities` |
 | **StatusPage** | The StatusPage entity (list, load). | `/v2/status_pages` |
 | **StatusPageComponent** | The StatusPageComponent entity (create, list, load, remove, update). | `/v2/status_page_components` |
-| **StatusPageComponentAvailabilityV2** | The StatusPageComponentAvailabilityV2 entity (load). | `/v2/status_pages/{status_page_id}/components/{component_id}/availability` |
+| **StatusPageComponentAvailability** | The StatusPageComponentAvailability entity (load). | `/v2/status_pages/{status_page_id}/components/{component_id}/availability` |
 | **StatusPageIncident** | The StatusPageIncident entity (create, list, load, update). | `/v2/status_page_incidents` |
 | **StatusPageIncidentUpdate** | The StatusPageIncidentUpdate entity (create). | `/v2/status_page_incident_updates` |
-| **StatusPageLinkedResponseIncidentV1** | The StatusPageLinkedResponseIncidentV1 entity (list). | `/v1/status-pages/{id}/incidents/{incident_id}/response-incidents` |
-| **StatusPageMaintenance** | The StatusPageMaintenance entity (create, list, load, update). | `/v2/status_page_maintenances` |
+| **StatusPageLinkedResponseIncident** | The StatusPageLinkedResponseIncident entity (list). | `/v1/status-pages/{id}/incidents/{incident_id}/response-incidents` |
+| **StatusPageMaintenance** | The StatusPageMaintenance entity (create, list, load, remove, update). | `/v2/status_page_maintenances` |
 | **StatusPageMaintenanceUpdate** | The StatusPageMaintenanceUpdate entity (create). | `/v2/status_page_maintenance_updates` |
 | **StatusPageStructure** | The StatusPageStructure entity (load). | `/v2/status_page_structures/{status_page_id}` |
-| **StatusPagesV2** | The StatusPagesV2 entity (remove). | `/v2/status_page_maintenances/{status_page_maintenance_id}` |
 | **Team** | The Team entity (list, load). | `/v3/teams` |
-| **TelemetryDataSourceV2** | The TelemetryDataSourceV2 entity (update). | `/v2/telemetry/data_sources/{id}` |
-| **User** | The User entity (create, list, load). | `/v2/users` |
+| **TelemetryDataSource** | The TelemetryDataSource entity (update). | `/v2/telemetry/data_sources/{id}` |
+| **User** | The User entity (list, load). | `/v2/users` |
 | **Workflow** | The Workflow entity (create, list, load, remove, update). | `/v2/workflows` |
 | **WorkflowRun** | The WorkflowRun entity (list, load). | `/v2/workflow_runs` |
 
@@ -351,14 +334,14 @@ for _, action := range actions.([]any) {
     fmt.Println(action.(sdk.Entity).Data())
 }
 
-// Load a specific callroutesshowallowedcallerresultv2 (returns the entity; err is non-nil on failure)
-callRoutesShowAllowedCallerResultV2, err := client.CallRoutesShowAllowedCallerResultV2(nil).Load(
+// Load a specific callrouteallowedcaller (returns the entity; err is non-nil on failure)
+callRouteAllowedCaller, err := client.CallRouteAllowedCaller(nil).Load(
     map[string]any{"call_route_id": "example_call_route_id", "id": "example_id"}, nil,
 )
 if err != nil {
     panic(err)
 }
-fmt.Println(callRoutesShowAllowedCallerResultV2.(sdk.Entity).Data())
+fmt.Println(callRouteAllowedCaller.(sdk.Entity).Data())
 ```
 
 ### Ruby

@@ -366,40 +366,9 @@ func (e *UserEntity) ListTyped(reqmatch UserListMatch, ctrl map[string]any) ([]U
 
 
 
-
-func (e *UserEntity) Create(reqdata map[string]any, ctrl map[string]any) (any, error) {
-	utility := e.utility
-	ctx := utility.MakeContext(map[string]any{
-		"opname":  "create",
-		"ctrl":    ctrl,
-		"match":   e.match,
-		"data":    e.data,
-		"reqdata": reqdata,
-	}, e.entctx)
-
-	return e.runOp(ctx, func() {
-		if ctx.Result != nil {
-			if ctx.Result.Resdata != nil {
-				e.data = map[string]any{}
-				if data := core.ToMapAny(vs.Clone(ctx.Result.Resdata)); data != nil {
-					e.data = data
-				}
-			}
-		}
-	})
+func (e *UserEntity) Create(_ map[string]any, _ map[string]any) (any, error) {
+	return core.UnsupportedOp("create", e.name)
 }
-
-// CreateTyped is the statically-typed variant of Create: it takes an
-// UserCreateData and returns an User. It delegates to the untyped
-// Create (identical runtime) and converts at the typed boundary.
-func (e *UserEntity) CreateTyped(reqdata UserCreateData, ctrl map[string]any) (User, error) {
-	res, err := e.Create(asMap(reqdata), ctrl)
-	if err != nil {
-		return User{}, err
-	}
-	return typedFrom[User](res), nil
-}
-
 
 
 func (e *UserEntity) Update(_ map[string]any, _ map[string]any) (any, error) {

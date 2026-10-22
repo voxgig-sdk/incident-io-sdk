@@ -141,7 +141,7 @@ class FollowUpEntityTest < Minitest::Test
     end
     client = IncidentIoSDK.test(nil, { "feature" => { "validate" => { "active" => true } } })
     err = assert_raises(StandardError) do
-      client.FollowUp(nil).list({ "assignee_team_id" => 1 }, nil)
+      client.FollowUp(nil).list({ "after" => 1 }, nil)
     end
     assert_equal "validate_failed", err.code
   end

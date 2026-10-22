@@ -54,6 +54,11 @@
       "version": 2,
       "source": "openapi3"
     },
+    "DELETE /v1/severities/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
     "PUT /v1/severities/{id}": {
       "provenance": "operation-contract",
       "version": 2,

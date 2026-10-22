@@ -1,0 +1,80 @@
+{
+  "existing": {
+    "schedule_override": {
+      "SCHEDULE_OVERRIDE00": {
+        "created_at": "s5a",
+        "end_at": "s5b",
+        "id": "SCHEDULE_OVERRIDE00",
+        "layer_id": "LAYER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "start_at": "s60",
+        "updated_at": "s61",
+        "user": {}
+      },
+      "SCHEDULE_OVERRIDE01": {
+        "created_at": "sb4",
+        "end_at": "sb5",
+        "id": "SCHEDULE_OVERRIDE01",
+        "layer_id": "LAYER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "start_at": "sba",
+        "updated_at": "sbb",
+        "user": {}
+      },
+      "SCHEDULE_OVERRIDE02": {
+        "created_at": "s10e",
+        "end_at": "s10f",
+        "id": "SCHEDULE_OVERRIDE02",
+        "layer_id": "LAYER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "start_at": "s114",
+        "updated_at": "s115",
+        "user": {}
+      }
+    }
+  },
+  "new": {
+    "schedule_override": {
+      "schedule_override_ref01": {
+        "created_at": "s168",
+        "end_at": "s169",
+        "layer_id": "LAYER01",
+        "rotation_id": "ROTATION01",
+        "schedule_id": "SCHEDULE01",
+        "start_at": "s16e",
+        "updated_at": "s16f",
+        "user": {}
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/schedule_overrides": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/schedule_overrides": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/schedule_overrides/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/schedule_overrides/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/schedule_overrides/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

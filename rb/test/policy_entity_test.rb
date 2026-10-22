@@ -150,7 +150,7 @@ class PolicyEntityTest < Minitest::Test
     setup = policy_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["create", "list", "update", "load"].each do |_op|
+    ["create", "list", "update", "load", "remove"].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "policy." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
@@ -203,6 +203,23 @@ class PolicyEntityTest < Minitest::Test
     policy_ref01_data_dt0_load_result = Helpers.to_map(policy_ref01_data_dt0_loaded.respond_to?(:data_get) ? policy_ref01_data_dt0_loaded.data_get : policy_ref01_data_dt0_loaded)
     assert !policy_ref01_data_dt0_load_result.nil?
     assert_equal policy_ref01_data_dt0_load_result["id"], policy_ref01_data["id"]
+
+    # REMOVE
+    policy_ref01_match_rm0 = {
+      "id" => policy_ref01_data["id"],
+    }
+    policy_ref01_ent.remove(policy_ref01_match_rm0, nil)
+
+    # LIST
+    policy_ref01_match_rt0 = {}
+
+    policy_ref01_list_rt0_result = policy_ref01_ent.list(policy_ref01_match_rt0, nil)
+    assert policy_ref01_list_rt0_result.is_a?(Array)
+
+    not_found_item = Vs.select(
+      Runner.entity_list_to_data(policy_ref01_list_rt0_result),
+      { "id" => policy_ref01_data["id"] })
+    assert Vs.isempty(not_found_item)
 
   end
 end

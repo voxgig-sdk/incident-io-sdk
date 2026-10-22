@@ -1,0 +1,100 @@
+# BasicEscalationPathFlow
+
+main: kit: flow: BasicEscalationPathFlow:
+{
+  entity: "escalation_path",
+  kind: "basic",
+  name: "BasicEscalationPathFlow",
+  step: [
+    {
+      i: {
+        ref: "escalation_path_ref01"
+      }
+
+      o: "create"
+    }
+
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "escalation_path_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "escalation_path_ref01",
+        srcdatavar: "escalation_path_ref01_data",
+        suffix: "_up0",
+        textfield: "kind"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-escalation_path_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "escalation_path_ref01",
+        srcdatavar: "escalation_path_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "escalation_path01"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-escalation_path_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "escalation_path_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "escalation_path01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "escalation_path_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicEscalationPathFlow"
+}

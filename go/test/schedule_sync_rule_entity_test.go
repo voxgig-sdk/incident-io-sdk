@@ -54,7 +54,7 @@ func TestScheduleSyncRuleEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"update", "load"} {
+		for _, _op := range []string{"update", "load", "remove", "list"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "schedule_sync_rule." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"

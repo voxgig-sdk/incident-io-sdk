@@ -43,40 +43,9 @@ main: kit: entity: action: {
     description: {
       h: "Description"
       n: "description"
-      op: {
-        create: {
-          req: true
-          type: "`$STRING`"
-        }
-        list: {
-          req: true
-          type: "`$STRING`"
-        }
-        load: {
-          req: true
-          type: "`$STRING`"
-        }
-        update: {
-          req: true
-          type: "`$STRING`"
-        }
-      }
-      r: false
+      r: true
       sh: "Description of the action"
       t: "`$STRING`"
-    }
-    external_issue_reference: {
-      h: "External Issue Reference"
-      n: "external_issue_reference"
-      r: false
-      t: "`$OBJECT`"
-    }
-    follow_up: {
-      h: "Follow Up"
-      n: "follow_up"
-      r: true
-      sh: "Whether an action is marked as follow-up"
-      t: "`$BOOLEAN`"
     }
     id: {
       h: "Id"
@@ -132,6 +101,9 @@ main: kit: entity: action: {
           }
           m: "POST"
           o: "/v2/actions"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -220,6 +192,9 @@ main: kit: entity: action: {
           }
           m: "GET"
           o: "/v1/actions"
+          q: {
+            "$action": "v1"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -265,6 +240,9 @@ main: kit: entity: action: {
           }
           m: "GET"
           o: "/v2/actions"
+          q: {
+            "$action": "v2"
+          }
           rs: {
             kind: "json"
             media: "application/json"
@@ -393,6 +371,7 @@ main: kit: entity: action: {
           m: "GET"
           o: "/v1/actions/{id}"
           q: {
+            "$action": "v1"
             exist: [
               "id"
             ]
@@ -438,6 +417,7 @@ main: kit: entity: action: {
           m: "GET"
           o: "/v2/actions/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]
@@ -533,6 +513,7 @@ main: kit: entity: action: {
           m: "DELETE"
           o: "/v2/actions/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]
@@ -625,6 +606,7 @@ main: kit: entity: action: {
           m: "PUT"
           o: "/v2/actions/{id}"
           q: {
+            "$action": "v2"
             exist: [
               "id"
             ]

@@ -7,6 +7,18 @@ main: kit: flow: BasicAlertTagFlow:
   name: "BasicAlertTagFlow",
   step: [
     {
+      i: {
+        ref: "alert_tag_ref01"
+      }
+
+      m: {
+        alert_id: "alert01"
+      }
+
+      o: "create"
+    }
+
+    {
       o: "list",
       v: [
         {

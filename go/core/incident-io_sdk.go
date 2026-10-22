@@ -444,14 +444,6 @@ func (sdk *IncidentIoSDK) AlertsAddTagsResultV2(data map[string]any) IncidentIoE
 }
 
 
-// AlertsRemoveTagsResultV2 returns a AlertsRemoveTagsResultV2 entity bound to this client.
-// Idiomatic usage: client.AlertsRemoveTagsResultV2(nil).List(nil, nil) or
-// client.AlertsRemoveTagsResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) AlertsRemoveTagsResultV2(data map[string]any) IncidentIoEntity {
-	return NewAlertsRemoveTagsResultV2EntityFunc(sdk, data)
-}
-
-
 // AlertsSetTagsResultV2 returns a AlertsSetTagsResultV2 entity bound to this client.
 // Idiomatic usage: client.AlertsSetTagsResultV2(nil).List(nil, nil) or
 // client.AlertsSetTagsResultV2(nil).Load(map[string]any{"id": ...}, nil).
@@ -500,75 +492,19 @@ func (sdk *IncidentIoSDK) CallRoute(data map[string]any) IncidentIoEntity {
 }
 
 
-// CallRoutesCreateAllowedCallerResultV2 returns a CallRoutesCreateAllowedCallerResultV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesCreateAllowedCallerResultV2(nil).List(nil, nil) or
-// client.CallRoutesCreateAllowedCallerResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesCreateAllowedCallerResultV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesCreateAllowedCallerResultV2EntityFunc(sdk, data)
+// CallRouteAllowedCaller returns a CallRouteAllowedCaller entity bound to this client.
+// Idiomatic usage: client.CallRouteAllowedCaller(nil).List(nil, nil) or
+// client.CallRouteAllowedCaller(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) CallRouteAllowedCaller(data map[string]any) IncidentIoEntity {
+	return NewCallRouteAllowedCallerEntityFunc(sdk, data)
 }
 
 
-// CallRoutesCreateOptionResultV2 returns a CallRoutesCreateOptionResultV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesCreateOptionResultV2(nil).List(nil, nil) or
-// client.CallRoutesCreateOptionResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesCreateOptionResultV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesCreateOptionResultV2EntityFunc(sdk, data)
-}
-
-
-// CallRoutesListAllowedCallersResultV2 returns a CallRoutesListAllowedCallersResultV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesListAllowedCallersResultV2(nil).List(nil, nil) or
-// client.CallRoutesListAllowedCallersResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesListAllowedCallersResultV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesListAllowedCallersResultV2EntityFunc(sdk, data)
-}
-
-
-// CallRoutesListOptionsResultV2 returns a CallRoutesListOptionsResultV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesListOptionsResultV2(nil).List(nil, nil) or
-// client.CallRoutesListOptionsResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesListOptionsResultV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesListOptionsResultV2EntityFunc(sdk, data)
-}
-
-
-// CallRoutesShowAllowedCallerResultV2 returns a CallRoutesShowAllowedCallerResultV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesShowAllowedCallerResultV2(nil).List(nil, nil) or
-// client.CallRoutesShowAllowedCallerResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesShowAllowedCallerResultV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesShowAllowedCallerResultV2EntityFunc(sdk, data)
-}
-
-
-// CallRoutesShowOptionResultV2 returns a CallRoutesShowOptionResultV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesShowOptionResultV2(nil).List(nil, nil) or
-// client.CallRoutesShowOptionResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesShowOptionResultV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesShowOptionResultV2EntityFunc(sdk, data)
-}
-
-
-// CallRoutesUpdateAllowedCallerResultV2 returns a CallRoutesUpdateAllowedCallerResultV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesUpdateAllowedCallerResultV2(nil).List(nil, nil) or
-// client.CallRoutesUpdateAllowedCallerResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesUpdateAllowedCallerResultV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesUpdateAllowedCallerResultV2EntityFunc(sdk, data)
-}
-
-
-// CallRoutesUpdateOptionResultV2 returns a CallRoutesUpdateOptionResultV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesUpdateOptionResultV2(nil).List(nil, nil) or
-// client.CallRoutesUpdateOptionResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesUpdateOptionResultV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesUpdateOptionResultV2EntityFunc(sdk, data)
-}
-
-
-// CallRoutesV2 returns a CallRoutesV2 entity bound to this client.
-// Idiomatic usage: client.CallRoutesV2(nil).List(nil, nil) or
-// client.CallRoutesV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) CallRoutesV2(data map[string]any) IncidentIoEntity {
-	return NewCallRoutesV2EntityFunc(sdk, data)
+// CallRouteOption returns a CallRouteOption entity bound to this client.
+// Idiomatic usage: client.CallRouteOption(nil).List(nil, nil) or
+// client.CallRouteOption(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) CallRouteOption(data map[string]any) IncidentIoEntity {
+	return NewCallRouteOptionEntityFunc(sdk, data)
 }
 
 
@@ -641,6 +577,14 @@ func (sdk *IncidentIoSDK) CustomFieldOption(data map[string]any) IncidentIoEntit
 // client.Escalation(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) Escalation(data map[string]any) IncidentIoEntity {
 	return NewEscalationEntityFunc(sdk, data)
+}
+
+
+// EscalationPath returns a EscalationPath entity bound to this client.
+// Idiomatic usage: client.EscalationPath(nil).List(nil, nil) or
+// client.EscalationPath(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) EscalationPath(data map[string]any) IncidentIoEntity {
+	return NewEscalationPathEntityFunc(sdk, data)
 }
 
 
@@ -908,75 +852,19 @@ func (sdk *IncidentIoSDK) PayConfig(data map[string]any) IncidentIoEntity {
 }
 
 
-// PayConfigsCreateOneOffRuleResultV2 returns a PayConfigsCreateOneOffRuleResultV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsCreateOneOffRuleResultV2(nil).List(nil, nil) or
-// client.PayConfigsCreateOneOffRuleResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsCreateOneOffRuleResultV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsCreateOneOffRuleResultV2EntityFunc(sdk, data)
+// PayConfigOneOffRule returns a PayConfigOneOffRule entity bound to this client.
+// Idiomatic usage: client.PayConfigOneOffRule(nil).List(nil, nil) or
+// client.PayConfigOneOffRule(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) PayConfigOneOffRule(data map[string]any) IncidentIoEntity {
+	return NewPayConfigOneOffRuleEntityFunc(sdk, data)
 }
 
 
-// PayConfigsCreateWeeklyRuleResultV2 returns a PayConfigsCreateWeeklyRuleResultV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsCreateWeeklyRuleResultV2(nil).List(nil, nil) or
-// client.PayConfigsCreateWeeklyRuleResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsCreateWeeklyRuleResultV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsCreateWeeklyRuleResultV2EntityFunc(sdk, data)
-}
-
-
-// PayConfigsListOneOffRulesResultV2 returns a PayConfigsListOneOffRulesResultV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsListOneOffRulesResultV2(nil).List(nil, nil) or
-// client.PayConfigsListOneOffRulesResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsListOneOffRulesResultV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsListOneOffRulesResultV2EntityFunc(sdk, data)
-}
-
-
-// PayConfigsListWeeklyRulesResultV2 returns a PayConfigsListWeeklyRulesResultV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsListWeeklyRulesResultV2(nil).List(nil, nil) or
-// client.PayConfigsListWeeklyRulesResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsListWeeklyRulesResultV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsListWeeklyRulesResultV2EntityFunc(sdk, data)
-}
-
-
-// PayConfigsShowOneOffRuleResultV2 returns a PayConfigsShowOneOffRuleResultV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsShowOneOffRuleResultV2(nil).List(nil, nil) or
-// client.PayConfigsShowOneOffRuleResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsShowOneOffRuleResultV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsShowOneOffRuleResultV2EntityFunc(sdk, data)
-}
-
-
-// PayConfigsShowWeeklyRuleResultV2 returns a PayConfigsShowWeeklyRuleResultV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsShowWeeklyRuleResultV2(nil).List(nil, nil) or
-// client.PayConfigsShowWeeklyRuleResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsShowWeeklyRuleResultV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsShowWeeklyRuleResultV2EntityFunc(sdk, data)
-}
-
-
-// PayConfigsUpdateOneOffRuleResultV2 returns a PayConfigsUpdateOneOffRuleResultV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsUpdateOneOffRuleResultV2(nil).List(nil, nil) or
-// client.PayConfigsUpdateOneOffRuleResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsUpdateOneOffRuleResultV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsUpdateOneOffRuleResultV2EntityFunc(sdk, data)
-}
-
-
-// PayConfigsUpdateWeeklyRuleResultV2 returns a PayConfigsUpdateWeeklyRuleResultV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsUpdateWeeklyRuleResultV2(nil).List(nil, nil) or
-// client.PayConfigsUpdateWeeklyRuleResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsUpdateWeeklyRuleResultV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsUpdateWeeklyRuleResultV2EntityFunc(sdk, data)
-}
-
-
-// PayConfigsV2 returns a PayConfigsV2 entity bound to this client.
-// Idiomatic usage: client.PayConfigsV2(nil).List(nil, nil) or
-// client.PayConfigsV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PayConfigsV2(data map[string]any) IncidentIoEntity {
-	return NewPayConfigsV2EntityFunc(sdk, data)
+// PayConfigWeeklyRule returns a PayConfigWeeklyRule entity bound to this client.
+// Idiomatic usage: client.PayConfigWeeklyRule(nil).List(nil, nil) or
+// client.PayConfigWeeklyRule(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) PayConfigWeeklyRule(data map[string]any) IncidentIoEntity {
+	return NewPayConfigWeeklyRuleEntityFunc(sdk, data)
 }
 
 
@@ -1009,14 +897,6 @@ func (sdk *IncidentIoSDK) PayReportsUnpublishResultV2(data map[string]any) Incid
 // client.PayReportsV2(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) PayReportsV2(data map[string]any) IncidentIoEntity {
 	return NewPayReportsV2EntityFunc(sdk, data)
-}
-
-
-// PoliciesV2 returns a PoliciesV2 entity bound to this client.
-// Idiomatic usage: client.PoliciesV2(nil).List(nil, nil) or
-// client.PoliciesV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) PoliciesV2(data map[string]any) IncidentIoEntity {
-	return NewPoliciesV2EntityFunc(sdk, data)
 }
 
 
@@ -1084,6 +964,14 @@ func (sdk *IncidentIoSDK) ScheduleEntry(data map[string]any) IncidentIoEntity {
 }
 
 
+// ScheduleOverride returns a ScheduleOverride entity bound to this client.
+// Idiomatic usage: client.ScheduleOverride(nil).List(nil, nil) or
+// client.ScheduleOverride(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) ScheduleOverride(data map[string]any) IncidentIoEntity {
+	return NewScheduleOverrideEntityFunc(sdk, data)
+}
+
+
 // ScheduleReplica returns a ScheduleReplica entity bound to this client.
 // Idiomatic usage: client.ScheduleReplica(nil).List(nil, nil) or
 // client.ScheduleReplica(nil).Load(map[string]any{"id": ...}, nil).
@@ -1105,22 +993,6 @@ func (sdk *IncidentIoSDK) ScheduleSyncRule(data map[string]any) IncidentIoEntity
 // client.ScheduleSyncTarget(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) ScheduleSyncTarget(data map[string]any) IncidentIoEntity {
 	return NewScheduleSyncTargetEntityFunc(sdk, data)
-}
-
-
-// SchedulesShowOverrideResultV2 returns a SchedulesShowOverrideResultV2 entity bound to this client.
-// Idiomatic usage: client.SchedulesShowOverrideResultV2(nil).List(nil, nil) or
-// client.SchedulesShowOverrideResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) SchedulesShowOverrideResultV2(data map[string]any) IncidentIoEntity {
-	return NewSchedulesShowOverrideResultV2EntityFunc(sdk, data)
-}
-
-
-// SchedulesUpdateOverrideResultV2 returns a SchedulesUpdateOverrideResultV2 entity bound to this client.
-// Idiomatic usage: client.SchedulesUpdateOverrideResultV2(nil).List(nil, nil) or
-// client.SchedulesUpdateOverrideResultV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) SchedulesUpdateOverrideResultV2(data map[string]any) IncidentIoEntity {
-	return NewSchedulesUpdateOverrideResultV2EntityFunc(sdk, data)
 }
 
 
@@ -1156,11 +1028,11 @@ func (sdk *IncidentIoSDK) StatusPageComponent(data map[string]any) IncidentIoEnt
 }
 
 
-// StatusPageComponentAvailabilityV2 returns a StatusPageComponentAvailabilityV2 entity bound to this client.
-// Idiomatic usage: client.StatusPageComponentAvailabilityV2(nil).List(nil, nil) or
-// client.StatusPageComponentAvailabilityV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) StatusPageComponentAvailabilityV2(data map[string]any) IncidentIoEntity {
-	return NewStatusPageComponentAvailabilityV2EntityFunc(sdk, data)
+// StatusPageComponentAvailability returns a StatusPageComponentAvailability entity bound to this client.
+// Idiomatic usage: client.StatusPageComponentAvailability(nil).List(nil, nil) or
+// client.StatusPageComponentAvailability(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPageComponentAvailability(data map[string]any) IncidentIoEntity {
+	return NewStatusPageComponentAvailabilityEntityFunc(sdk, data)
 }
 
 
@@ -1180,11 +1052,11 @@ func (sdk *IncidentIoSDK) StatusPageIncidentUpdate(data map[string]any) Incident
 }
 
 
-// StatusPageLinkedResponseIncidentV1 returns a StatusPageLinkedResponseIncidentV1 entity bound to this client.
-// Idiomatic usage: client.StatusPageLinkedResponseIncidentV1(nil).List(nil, nil) or
-// client.StatusPageLinkedResponseIncidentV1(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) StatusPageLinkedResponseIncidentV1(data map[string]any) IncidentIoEntity {
-	return NewStatusPageLinkedResponseIncidentV1EntityFunc(sdk, data)
+// StatusPageLinkedResponseIncident returns a StatusPageLinkedResponseIncident entity bound to this client.
+// Idiomatic usage: client.StatusPageLinkedResponseIncident(nil).List(nil, nil) or
+// client.StatusPageLinkedResponseIncident(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) StatusPageLinkedResponseIncident(data map[string]any) IncidentIoEntity {
+	return NewStatusPageLinkedResponseIncidentEntityFunc(sdk, data)
 }
 
 
@@ -1212,14 +1084,6 @@ func (sdk *IncidentIoSDK) StatusPageStructure(data map[string]any) IncidentIoEnt
 }
 
 
-// StatusPagesV2 returns a StatusPagesV2 entity bound to this client.
-// Idiomatic usage: client.StatusPagesV2(nil).List(nil, nil) or
-// client.StatusPagesV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) StatusPagesV2(data map[string]any) IncidentIoEntity {
-	return NewStatusPagesV2EntityFunc(sdk, data)
-}
-
-
 // Team returns a Team entity bound to this client.
 // Idiomatic usage: client.Team(nil).List(nil, nil) or
 // client.Team(nil).Load(map[string]any{"id": ...}, nil).
@@ -1228,11 +1092,11 @@ func (sdk *IncidentIoSDK) Team(data map[string]any) IncidentIoEntity {
 }
 
 
-// TelemetryDataSourceV2 returns a TelemetryDataSourceV2 entity bound to this client.
-// Idiomatic usage: client.TelemetryDataSourceV2(nil).List(nil, nil) or
-// client.TelemetryDataSourceV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) TelemetryDataSourceV2(data map[string]any) IncidentIoEntity {
-	return NewTelemetryDataSourceV2EntityFunc(sdk, data)
+// TelemetryDataSource returns a TelemetryDataSource entity bound to this client.
+// Idiomatic usage: client.TelemetryDataSource(nil).List(nil, nil) or
+// client.TelemetryDataSource(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) TelemetryDataSource(data map[string]any) IncidentIoEntity {
+	return NewTelemetryDataSourceEntityFunc(sdk, data)
 }
 
 

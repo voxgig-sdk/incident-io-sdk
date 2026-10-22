@@ -1,0 +1,67 @@
+{
+  "existing": {
+    "pay_config_weekly_rule": {
+      "PAY_CONFIG_WEEKLY_RULE00": {
+        "end_time": "s32",
+        "id": "PAY_CONFIG_WEEKLY_RULE00",
+        "rate_cents": 52,
+        "start_time": "s35",
+        "weekdays": [],
+        "pay_config_id": "PAY_CONFIG01"
+      },
+      "PAY_CONFIG_WEEKLY_RULE01": {
+        "end_time": "s64",
+        "id": "PAY_CONFIG_WEEKLY_RULE01",
+        "rate_cents": 102,
+        "start_time": "s67",
+        "weekdays": [],
+        "pay_config_id": "PAY_CONFIG01"
+      },
+      "PAY_CONFIG_WEEKLY_RULE02": {
+        "end_time": "s96",
+        "id": "PAY_CONFIG_WEEKLY_RULE02",
+        "rate_cents": 152,
+        "start_time": "s99",
+        "weekdays": [],
+        "pay_config_id": "PAY_CONFIG01"
+      }
+    }
+  },
+  "new": {
+    "pay_config_weekly_rule": {
+      "pay_config_weekly_rule_ref01": {
+        "end_time": "sc8",
+        "rate_cents": 202,
+        "start_time": "scb",
+        "weekdays": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/pay_configs/{pay_config_id}/weekly_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/pay_configs/{pay_config_id}/weekly_rules": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/pay_configs/{pay_config_id}/weekly_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v2/pay_configs/{pay_config_id}/weekly_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "PUT /v2/pay_configs/{pay_config_id}/weekly_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

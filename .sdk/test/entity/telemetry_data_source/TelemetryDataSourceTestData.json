@@ -53,5 +53,12 @@
         "version": "s199"
       }
     }
+  },
+  "requests": {
+    "PUT /v2/telemetry/data_sources/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
   }
 }

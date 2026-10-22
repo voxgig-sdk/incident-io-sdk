@@ -97,6 +97,16 @@
       "version": 2,
       "source": "openapi3"
     },
+    "DELETE /v2/catalog_entries/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "DELETE /v3/catalog_entries/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
     "PUT /v2/catalog_entries/{id}": {
       "provenance": "operation-contract",
       "version": 2,

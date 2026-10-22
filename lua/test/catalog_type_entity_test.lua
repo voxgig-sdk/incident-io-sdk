@@ -147,7 +147,7 @@ describe("CatalogTypeEntity", function()
     local setup = catalog_type_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"create", "list", "update", "load"}) do
+    for _, _op in ipairs({"create", "list", "update", "load", "remove"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "catalog_type." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
@@ -204,6 +204,25 @@ describe("CatalogTypeEntity", function()
     local catalog_type_ref01_data_dt0_load_result = helpers.to_map(type(catalog_type_ref01_data_dt0_loaded) == 'table' and catalog_type_ref01_data_dt0_loaded.data_get and catalog_type_ref01_data_dt0_loaded:data_get() or catalog_type_ref01_data_dt0_loaded)
     assert.is_not_nil(catalog_type_ref01_data_dt0_load_result)
     assert.are.equal(catalog_type_ref01_data_dt0_load_result["id"], catalog_type_ref01_data["id"])
+
+    -- REMOVE
+    local catalog_type_ref01_match_rm0 = {
+      id = catalog_type_ref01_data["id"],
+    }
+    local _, err = catalog_type_ref01_ent:remove(catalog_type_ref01_match_rm0, nil)
+    assert.is_nil(err)
+
+    -- LIST
+    local catalog_type_ref01_match_rt0 = {}
+
+    local catalog_type_ref01_list_rt0_result, err = catalog_type_ref01_ent:list(catalog_type_ref01_match_rt0, nil)
+    assert.is_nil(err)
+    assert.is_table(catalog_type_ref01_list_rt0_result)
+
+    local not_found_item = vs.select(
+      runner.entity_list_to_data(catalog_type_ref01_list_rt0_result),
+      { id = catalog_type_ref01_data["id"] })
+    assert.is_true(vs.isempty(not_found_item))
 
   end)
 end)

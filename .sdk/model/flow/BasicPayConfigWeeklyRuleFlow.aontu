@@ -1,0 +1,118 @@
+# BasicPayConfigWeeklyRuleFlow
+
+main: kit: flow: BasicPayConfigWeeklyRuleFlow:
+{
+  entity: "pay_config_weekly_rule",
+  kind: "basic",
+  name: "BasicPayConfigWeeklyRuleFlow",
+  step: [
+    {
+      i: {
+        ref: "pay_config_weekly_rule_ref01"
+      }
+
+      m: {
+        pay_config_id: "pay_config01"
+      }
+
+      o: "create"
+    }
+
+    {
+      m: {
+        pay_config_id: "pay_config01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "pay_config_weekly_rule_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      d: {
+        pay_config_id: "pay_config01"
+      }
+
+      i: {
+        ref: "pay_config_weekly_rule_ref01",
+        srcdatavar: "pay_config_weekly_rule_ref01_data",
+        suffix: "_up0",
+        textfield: "end_time"
+      }
+
+      o: "update",
+      s: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-pay_config_weekly_rule_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "pay_config_weekly_rule_ref01",
+        srcdatavar: "pay_config_weekly_rule_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "pay_config_weekly_rule01",
+        pay_config_id: "pay_config01"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-pay_config_weekly_rule_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "pay_config_weekly_rule_ref01",
+        suffix: "_rm0"
+      }
+
+      m: {
+        id: "pay_config_weekly_rule01",
+        pay_config_id: "pay_config01"
+      }
+
+      o: "remove"
+    }
+
+    {
+      i: {
+        suffix: "_rt0"
+      }
+
+      m: {
+        pay_config_id: "pay_config01"
+      }
+
+      o: "list",
+      v: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "pay_config_weekly_rule_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPayConfigWeeklyRuleFlow"
+}

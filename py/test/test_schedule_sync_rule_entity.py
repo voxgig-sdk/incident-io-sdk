@@ -46,7 +46,7 @@ class TestScheduleSyncRuleEntity:
         # multiple ops; skipping any one skips the whole flow (steps depend
         # on each other).
         _live = setup.get("live", False)
-        for _op in ["update", "load"]:
+        for _op in ["update", "load", "remove", "list"]:
             _skip, _reason = runner.is_control_skipped("entityOp", "schedule_sync_rule." + _op, "live" if _live else "unit")
             if _skip:
                 pytest.skip(_reason or "skipped via sdk-test-control.json")

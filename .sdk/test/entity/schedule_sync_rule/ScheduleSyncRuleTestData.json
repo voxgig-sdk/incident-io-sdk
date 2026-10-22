@@ -70,6 +70,11 @@
       "version": 2,
       "source": "openapi3"
     },
+    "DELETE /v2/schedules/{schedule_id}/sync_rules/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
     "PUT /v2/schedules/{schedule_id}/sync_rules/{id}": {
       "provenance": "operation-contract",
       "version": 2,

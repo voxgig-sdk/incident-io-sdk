@@ -78,10 +78,6 @@ Create a new `AlertTag` entity instance. Pass `nil` for no initial data.
 
 Create a new `AlertsAddTagsResultV2` entity instance. Pass `nil` for no initial data.
 
-#### `AlertsRemoveTagsResultV2(data = nil)`
-
-Create a new `AlertsRemoveTagsResultV2` entity instance. Pass `nil` for no initial data.
-
 #### `AlertsSetTagsResultV2(data = nil)`
 
 Create a new `AlertsSetTagsResultV2` entity instance. Pass `nil` for no initial data.
@@ -106,41 +102,13 @@ Create a new `ApiKey` entity instance. Pass `nil` for no initial data.
 
 Create a new `CallRoute` entity instance. Pass `nil` for no initial data.
 
-#### `CallRoutesCreateAllowedCallerResultV2(data = nil)`
+#### `CallRouteAllowedCaller(data = nil)`
 
-Create a new `CallRoutesCreateAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
+Create a new `CallRouteAllowedCaller` entity instance. Pass `nil` for no initial data.
 
-#### `CallRoutesCreateOptionResultV2(data = nil)`
+#### `CallRouteOption(data = nil)`
 
-Create a new `CallRoutesCreateOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesListAllowedCallersResultV2(data = nil)`
-
-Create a new `CallRoutesListAllowedCallersResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesListOptionsResultV2(data = nil)`
-
-Create a new `CallRoutesListOptionsResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesShowAllowedCallerResultV2(data = nil)`
-
-Create a new `CallRoutesShowAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesShowOptionResultV2(data = nil)`
-
-Create a new `CallRoutesShowOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesUpdateAllowedCallerResultV2(data = nil)`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesUpdateOptionResultV2(data = nil)`
-
-Create a new `CallRoutesUpdateOptionResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `CallRoutesV2(data = nil)`
-
-Create a new `CallRoutesV2` entity instance. Pass `nil` for no initial data.
+Create a new `CallRouteOption` entity instance. Pass `nil` for no initial data.
 
 #### `CallSession(data = nil)`
 
@@ -177,6 +145,10 @@ Create a new `CustomFieldOption` entity instance. Pass `nil` for no initial data
 #### `Escalation(data = nil)`
 
 Create a new `Escalation` entity instance. Pass `nil` for no initial data.
+
+#### `EscalationPath(data = nil)`
+
+Create a new `EscalationPath` entity instance. Pass `nil` for no initial data.
 
 #### `EscalationPathTemplate(data = nil)`
 
@@ -310,41 +282,13 @@ Create a new `OnCallNotificationRulePublicV2` entity instance. Pass `nil` for no
 
 Create a new `PayConfig` entity instance. Pass `nil` for no initial data.
 
-#### `PayConfigsCreateOneOffRuleResultV2(data = nil)`
+#### `PayConfigOneOffRule(data = nil)`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
+Create a new `PayConfigOneOffRule` entity instance. Pass `nil` for no initial data.
 
-#### `PayConfigsCreateWeeklyRuleResultV2(data = nil)`
+#### `PayConfigWeeklyRule(data = nil)`
 
-Create a new `PayConfigsCreateWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsListOneOffRulesResultV2(data = nil)`
-
-Create a new `PayConfigsListOneOffRulesResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsListWeeklyRulesResultV2(data = nil)`
-
-Create a new `PayConfigsListWeeklyRulesResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsShowOneOffRuleResultV2(data = nil)`
-
-Create a new `PayConfigsShowOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsShowWeeklyRuleResultV2(data = nil)`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsUpdateOneOffRuleResultV2(data = nil)`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsUpdateWeeklyRuleResultV2(data = nil)`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `PayConfigsV2(data = nil)`
-
-Create a new `PayConfigsV2` entity instance. Pass `nil` for no initial data.
+Create a new `PayConfigWeeklyRule` entity instance. Pass `nil` for no initial data.
 
 #### `PayReport(data = nil)`
 
@@ -361,10 +305,6 @@ Create a new `PayReportsUnpublishResultV2` entity instance. Pass `nil` for no in
 #### `PayReportsV2(data = nil)`
 
 Create a new `PayReportsV2` entity instance. Pass `nil` for no initial data.
-
-#### `PoliciesV2(data = nil)`
-
-Create a new `PoliciesV2` entity instance. Pass `nil` for no initial data.
 
 #### `Policy(data = nil)`
 
@@ -398,6 +338,10 @@ Create a new `ScheduleEntriesListPayloadV2` entity instance. Pass `nil` for no i
 
 Create a new `ScheduleEntry` entity instance. Pass `nil` for no initial data.
 
+#### `ScheduleOverride(data = nil)`
+
+Create a new `ScheduleOverride` entity instance. Pass `nil` for no initial data.
+
 #### `ScheduleReplica(data = nil)`
 
 Create a new `ScheduleReplica` entity instance. Pass `nil` for no initial data.
@@ -409,14 +353,6 @@ Create a new `ScheduleSyncRule` entity instance. Pass `nil` for no initial data.
 #### `ScheduleSyncTarget(data = nil)`
 
 Create a new `ScheduleSyncTarget` entity instance. Pass `nil` for no initial data.
-
-#### `SchedulesShowOverrideResultV2(data = nil)`
-
-Create a new `SchedulesShowOverrideResultV2` entity instance. Pass `nil` for no initial data.
-
-#### `SchedulesUpdateOverrideResultV2(data = nil)`
-
-Create a new `SchedulesUpdateOverrideResultV2` entity instance. Pass `nil` for no initial data.
 
 #### `Secret(data = nil)`
 
@@ -434,9 +370,9 @@ Create a new `StatusPage` entity instance. Pass `nil` for no initial data.
 
 Create a new `StatusPageComponent` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPageComponentAvailabilityV2(data = nil)`
+#### `StatusPageComponentAvailability(data = nil)`
 
-Create a new `StatusPageComponentAvailabilityV2` entity instance. Pass `nil` for no initial data.
+Create a new `StatusPageComponentAvailability` entity instance. Pass `nil` for no initial data.
 
 #### `StatusPageIncident(data = nil)`
 
@@ -446,9 +382,9 @@ Create a new `StatusPageIncident` entity instance. Pass `nil` for no initial dat
 
 Create a new `StatusPageIncidentUpdate` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPageLinkedResponseIncidentV1(data = nil)`
+#### `StatusPageLinkedResponseIncident(data = nil)`
 
-Create a new `StatusPageLinkedResponseIncidentV1` entity instance. Pass `nil` for no initial data.
+Create a new `StatusPageLinkedResponseIncident` entity instance. Pass `nil` for no initial data.
 
 #### `StatusPageMaintenance(data = nil)`
 
@@ -462,17 +398,13 @@ Create a new `StatusPageMaintenanceUpdate` entity instance. Pass `nil` for no in
 
 Create a new `StatusPageStructure` entity instance. Pass `nil` for no initial data.
 
-#### `StatusPagesV2(data = nil)`
-
-Create a new `StatusPagesV2` entity instance. Pass `nil` for no initial data.
-
 #### `Team(data = nil)`
 
 Create a new `Team` entity instance. Pass `nil` for no initial data.
 
-#### `TelemetryDataSourceV2(data = nil)`
+#### `TelemetryDataSource(data = nil)`
 
-Create a new `TelemetryDataSourceV2` entity instance. Pass `nil` for no initial data.
+Create a new `TelemetryDataSource` entity instance. Pass `nil` for no initial data.
 
 #### `User(data = nil)`
 
@@ -539,30 +471,11 @@ action = client.Action
 | `completed_at` | `String` | No | When the action was completed |
 | `created_at` | `String` | Yes | When the action was created |
 | `creator` | `Hash` | Yes |  |
-| `description` | `String` | No | Description of the action |
-| `external_issue_reference` | `Hash` | No |  |
-| `follow_up` | `Boolean` | Yes | Whether an action is marked as follow-up |
+| `description` | `String` | Yes | Description of the action |
 | `id` | `String` | Yes | Unique identifier for the action |
 | `incident_id` | `String` | Yes | Unique identifier of the incident the action belongs to |
 | `status` | `String` | Yes | Status of the action |
 | `updated_at` | `String` | Yes | When the action was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `assignee` | - | - | - | - | - |
-| `assignee_id` | - | - | - | - | - |
-| `completed_at` | - | - | - | - | - |
-| `created_at` | - | - | - | - | - |
-| `creator` | - | - | - | - | - |
-| `description` | Yes | Yes | Yes | Yes | - |
-| `external_issue_reference` | - | - | - | - | - |
-| `follow_up` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `incident_id` | - | - | - | - | - |
-| `status` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -949,24 +862,21 @@ alert_route = client.AlertRoute
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `alert_sources` | `Array` | Yes | Which alert sources should this alert route match? |
-| `channel_config` | `Array` | Yes | The channel configuration for this alert route |
-| `condition_groups` | `Array` | Yes | What condition groups must be true for this alert route to fire? |
-| `created_at` | `String` | No | The time of creation of this alert route |
-| `enabled` | `Boolean` | Yes | Whether this alert route is enabled or not |
+| `alert_sources` | `Array` | Yes | Which alert sources this route matches |
+| `condition_groups` | `Array` | Yes | Filter: the condition groups that must be true for this route to fire |
+| `created_at` | `String` | No | When this alert route was created |
+| `enabled` | `Boolean` | Yes | Whether this alert route is enabled |
 | `escalation_config` | `Hash` | Yes |  |
-| `expressions` | `Array` | Yes | The expressions used in this template |
+| `expressions` | `Array` | Yes | The expressions used by bindings in this route |
 | `grouping_config` | `Hash` | Yes |  |
-| `id` | `String` | Yes | Unique identifier for this alert route config |
+| `id` | `String` | Yes | Unique identifier for this alert route |
 | `incident_config` | `Hash` | Yes |  |
-| `incident_template` | `Hash` | Yes |  |
 | `is_private` | `Boolean` | Yes | Whether this alert route is private. |
 | `message_config` | `Hash` | Yes |  |
-| `message_template` | `Hash` | No |  |
-| `name` | `String` | Yes | The name of this alert route config, for the user's reference |
+| `name` | `String` | Yes | The name of this alert route, for the user's reference |
 | `owning_team_ids` | `Array` | No | IDs of teams that own this alert route |
-| `updated_at` | `String` | No | The time of last update of this alert route |
-| `version` | `Integer` | Yes | The version of this alert route config |
+| `updated_at` | `String` | No | When this alert route was last updated |
+| `version` | `Integer` | Yes | The version of this alert route |
 
 ### Operations
 
@@ -977,14 +887,12 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```ruby
 result = client.AlertRoute.create({
   "alert_sources" => [], # Array
-  "channel_config" => [], # Array
   "condition_groups" => [], # Array
   "enabled" => true, # Boolean
   "escalation_config" => {}, # Hash
   "expressions" => [], # Array
   "grouping_config" => {}, # Hash
   "incident_config" => {}, # Hash
-  "incident_template" => {}, # Hash
   "is_private" => true, # Boolean
   "message_config" => {}, # Hash
   "name" => "example_name", # String
@@ -996,7 +904,7 @@ result = client.AlertRoute.create({
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
 
 ```ruby
-results = client.AlertRoute.list({ "page_size" => 1 })
+results = client.AlertRoute.list
 results.each { |item| puts item.data_get }
 ```
 
@@ -1239,10 +1147,52 @@ alert_tag = client.AlertTag
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | `String` | Yes | Unique identifier for the tag |
+| `alert_group_ids` | `Array` | No | The IDs of every alert group this alert belongs to. |
+| `alert_source_id` | `String` | Yes | The ID of the alert source this alert fired on |
+| `attributes` | `Array` | Yes | Attribute values parsed from the alerts payload |
+| `created_at` | `String` | Yes | When this entry was created |
+| `deduplication_key` | `String` | Yes | A deduplication key which uniquely references this alert from your alert source. |
+| `description` | `String` | No | The description of the alert |
+| `id` | `String` | Yes | The ID of this alert |
 | `name` | `String` | Yes | The tag name |
+| `resolved_at` | `String` | No | When this alert was resolved |
+| `source_url` | `String` | No | If applicable, a link to the alert in the upstream system |
+| `status` | `String` | Yes | Statuses of an alert |
+| `tags` | `Array` | No | Tags someone has applied to this alert |
+| `title` | `String` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
+| `updated_at` | `String` | Yes | When this alert was last updated |
+
+### Field Usage by Operation
+
+| Field | list | create |
+| --- | --- | --- |
+| `alert_group_ids` | - | - |
+| `alert_source_id` | - | - |
+| `attributes` | - | - |
+| `created_at` | - | - |
+| `deduplication_key` | - | - |
+| `description` | - | - |
+| `id` | - | - |
+| `name` | - | - |
+| `resolved_at` | - | - |
+| `source_url` | - | - |
+| `status` | - | - |
+| `tags` | - | Yes |
+| `title` | - | - |
+| `updated_at` | - | - |
 
 ### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.AlertTag.create({
+  "alert_id" => "example_alert_id", # String
+  "tags" => [], # Array
+})
+```
 
 #### `list(reqmatch = nil, ctrl = nil) -> Array`
 
@@ -1359,91 +1309,6 @@ Set the entity match criteria.
 #### `make -> Entity`
 
 Create a new `AlertsAddTagsResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## AlertsRemoveTagsResultV2Entity
-
-```ruby
-alerts_remove_tags_result_v2 = client.AlertsRemoveTagsResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `alert_group_ids` | `Array` | No | The IDs of every alert group this alert belongs to. |
-| `alert_source_id` | `String` | Yes | The ID of the alert source this alert fired on |
-| `attributes` | `Array` | Yes | Attribute values parsed from the alerts payload |
-| `created_at` | `String` | Yes | When this entry was created |
-| `deduplication_key` | `String` | Yes | A deduplication key which uniquely references this alert from your alert source. |
-| `description` | `String` | No | The description of the alert |
-| `id` | `String` | Yes | The ID of this alert |
-| `resolved_at` | `String` | No | When this alert was resolved |
-| `source_url` | `String` | No | If applicable, a link to the alert in the upstream system |
-| `status` | `String` | Yes | Statuses of an alert |
-| `tags` | `Array` | No | Tags someone has applied to this alert |
-| `title` | `String` | Yes | The title of the alert, parsed from the alert payload according to the alert source configuration |
-| `updated_at` | `String` | Yes | When this alert was last updated |
-
-### Field Usage by Operation
-
-| Field | create |
-| --- | --- |
-| `alert_group_ids` | - |
-| `alert_source_id` | - |
-| `attributes` | - |
-| `created_at` | - |
-| `deduplication_key` | - |
-| `description` | - |
-| `id` | - |
-| `resolved_at` | - |
-| `source_url` | - |
-| `status` | - |
-| `tags` | Yes |
-| `title` | - |
-| `updated_at` | - |
-
-### Operations
-
-#### `create(reqdata, ctrl = nil) -> result`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```ruby
-result = client.AlertsRemoveTagsResultV2.create({
-  "alert_id" => "example_alert_id", # String
-  "tags" => [], # Array
-})
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `AlertsRemoveTagsResultV2Entity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -2028,18 +1893,19 @@ Return the entity name.
 
 ---
 
-## CallRoutesCreateAllowedCallerResultV2Entity
+## CallRouteAllowedCallerEntity
 
 ```ruby
-call_routes_create_allowed_caller_result_v2 = client.CallRoutesCreateAllowedCallerResultV2
+call_route_allowed_caller = client.CallRouteAllowedCaller
 ```
 
 ### Fields
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `id` | `String` | Yes | Unique identifier for this allowed caller |
 | `name` | `String` | No | Label for whose number this is |
-| `phone_number` | `String` | Yes | The number to allow, in international format |
+| `phone_number` | `String` | Yes | The number allowed to call this route, in international format |
 
 ### Operations
 
@@ -2048,458 +1914,47 @@ call_routes_create_allowed_caller_result_v2 = client.CallRoutesCreateAllowedCall
 Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```ruby
-result = client.CallRoutesCreateAllowedCallerResultV2.create({
-  "call_route_id" => "example_call_route_id", # String
+result = client.CallRouteAllowedCaller.create({
+  "id" => "example_id", # String
   "phone_number" => "example_phone_number", # String
 })
 ```
 
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `CallRoutesCreateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## CallRoutesCreateOptionResultV2Entity
-
-```ruby
-call_routes_create_option_result_v2 = client.CallRoutesCreateOptionResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `String` | Yes | The keypad digit a caller presses to choose this option |
-| `path` | `Array` | Yes | Who to page when a caller chooses this option |
-| `prompt` | `String` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `create(reqdata, ctrl = nil) -> result`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```ruby
-result = client.CallRoutesCreateOptionResultV2.create({
-  "call_route_id" => "example_call_route_id", # String
-  "digit" => "example_digit", # String
-  "path" => [], # Array
-  "prompt" => "example_prompt", # String
-})
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `CallRoutesCreateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListAllowedCallersResultV2Entity
-
-```ruby
-call_routes_list_allowed_callers_result_v2 = client.CallRoutesListAllowedCallersResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `String` | Yes | Unique identifier for this allowed caller |
-| `name` | `String` | No | Label for whose number this is |
-| `phone_number` | `String` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
 #### `list(reqmatch = nil, ctrl = nil) -> Array`
 
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
 
 ```ruby
-results = client.CallRoutesListAllowedCallersResultV2.list({ "call_route_id" => "example" })
+results = client.CallRouteAllowedCaller.list({ "id" => "example" })
 results.each { |item| puts item.data_get }
 ```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `CallRoutesListAllowedCallersResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## CallRoutesListOptionsResultV2Entity
-
-```ruby
-call_routes_list_options_result_v2 = client.CallRoutesListOptionsResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `String` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `String` | Yes | Unique identifier for this option |
-| `path` | `Array` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `String` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `list(reqmatch = nil, ctrl = nil) -> Array`
-
-List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
-
-```ruby
-results = client.CallRoutesListOptionsResultV2.list({ "call_route_id" => "example" })
-results.each { |item| puts item.data_get }
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `CallRoutesListOptionsResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowAllowedCallerResultV2Entity
-
-```ruby
-call_routes_show_allowed_caller_result_v2 = client.CallRoutesShowAllowedCallerResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `String` | Yes | Unique identifier for this allowed caller |
-| `name` | `String` | No | Label for whose number this is |
-| `phone_number` | `String` | Yes | The number allowed to call this route, in international format |
-
-### Operations
 
 #### `load(reqmatch, ctrl = nil) -> result`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
 
 ```ruby
-result = client.CallRoutesShowAllowedCallerResultV2.load({ "id" => "call_routes_show_allowed_caller_result_v2_id", "call_route_id" => "call_route_id" })
+result = client.CallRouteAllowedCaller.load({ "id" => "call_route_allowed_caller_id", "call_route_id" => "call_route_id" })
 ```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `CallRoutesShowAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## CallRoutesShowOptionResultV2Entity
-
-```ruby
-call_routes_show_option_result_v2 = client.CallRoutesShowOptionResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `String` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `String` | Yes | Unique identifier for this option |
-| `path` | `Array` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `String` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `load(reqmatch, ctrl = nil) -> result`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
-
-```ruby
-result = client.CallRoutesShowOptionResultV2.load({ "id" => "call_routes_show_option_result_v2_id", "call_route_id" => "call_route_id" })
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `CallRoutesShowOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateAllowedCallerResultV2Entity
-
-```ruby
-call_routes_update_allowed_caller_result_v2 = client.CallRoutesUpdateAllowedCallerResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `String` | Yes | Unique identifier for this allowed caller |
-| `name` | `String` | No | Label for whose number this is |
-| `phone_number` | `String` | Yes | The number allowed to call this route, in international format |
-
-### Operations
-
-#### `update(reqdata, ctrl = nil) -> result`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```ruby
-result = client.CallRoutesUpdateAllowedCallerResultV2.update({
-  "call_route_id" => "call_route_id",
-  "id" => "id",
-  # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `CallRoutesUpdateAllowedCallerResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## CallRoutesUpdateOptionResultV2Entity
-
-```ruby
-call_routes_update_option_result_v2 = client.CallRoutesUpdateOptionResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `digit` | `String` | Yes | The keypad digit a caller presses to choose this option |
-| `id` | `String` | Yes | Unique identifier for this option |
-| `path` | `Array` | Yes | Who we page when a caller chooses this option |
-| `prompt` | `String` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
-
-### Operations
-
-#### `update(reqdata, ctrl = nil) -> result`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```ruby
-result = client.CallRoutesUpdateOptionResultV2.update({
-  "call_route_id" => "call_route_id",
-  "id" => "id",
-  # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `CallRoutesUpdateOptionResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## CallRoutesV2Entity
-
-```ruby
-call_routes_v2 = client.CallRoutesV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `String` | No |  |
-
-### Operations
 
 #### `remove(reqmatch, ctrl = nil) -> result`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
 
 ```ruby
-result = client.CallRoutesV2.remove({ "id" => "call_routes_v2_id", "call_route_id" => "call_route_id" })
+result = client.CallRouteAllowedCaller.remove({ "id" => "call_route_allowed_caller_id", "call_route_id" => "call_route_id" })
+```
+
+#### `update(reqdata, ctrl = nil) -> result`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```ruby
+result = client.CallRouteAllowedCaller.update({
+  "id" => "call_route_allowed_caller_id",
+  "call_route_id" => "call_route_id",
+  # Fields to update
+})
 ```
 
 ### Common Methods
@@ -2522,7 +1977,104 @@ Set the entity match criteria.
 
 #### `make -> Entity`
 
-Create a new `CallRoutesV2Entity` instance with the same client and
+Create a new `CallRouteAllowedCallerEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## CallRouteOptionEntity
+
+```ruby
+call_route_option = client.CallRouteOption
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `digit` | `String` | Yes | The keypad digit a caller presses to choose this option |
+| `id` | `String` | Yes | Unique identifier for this option |
+| `path` | `Array` | Yes | Who we page when a caller chooses this option |
+| `prompt` | `String` | Yes | What we read out to offer this option, via text-to-speech in the route's language, exactly as written |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.CallRouteOption.create({
+  "id" => "example_id", # String
+  "digit" => "example_digit", # String
+  "path" => [], # Array
+  "prompt" => "example_prompt", # String
+})
+```
+
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
+
+```ruby
+results = client.CallRouteOption.list({ "id" => "example" })
+results.each { |item| puts item.data_get }
+```
+
+#### `load(reqmatch, ctrl = nil) -> result`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
+
+```ruby
+result = client.CallRouteOption.load({ "id" => "call_route_option_id", "call_route_id" => "call_route_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.CallRouteOption.remove({ "id" => "call_route_option_id", "call_route_id" => "call_route_id" })
+```
+
+#### `update(reqdata, ctrl = nil) -> result`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```ruby
+result = client.CallRouteOption.update({
+  "id" => "call_route_option_id",
+  "call_route_id" => "call_route_id",
+  # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `CallRouteOptionEntity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -2671,21 +2223,21 @@ catalog_entry = client.CatalogEntry
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `aliases` | - | Yes | - | - |
-| `archived_at` | - | - | - | - |
-| `attribute_values` | - | - | - | - |
-| `catalog_entry` | - | - | - | - |
-| `catalog_type` | - | - | - | - |
-| `catalog_type_id` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `external_id` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | Yes | - | - |
-| `update_attributes` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `aliases` | - | Yes | - | - | - |
+| `archived_at` | - | - | - | - | - |
+| `attribute_values` | - | - | - | - | - |
+| `catalog_entry` | - | - | - | - | - |
+| `catalog_type` | - | - | - | - | - |
+| `catalog_type_id` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `external_id` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | Yes | - | - | - |
+| `update_attributes` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -2706,7 +2258,7 @@ result = client.CatalogEntry.create({
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
 
 ```ruby
-results = client.CatalogEntry.list({ "catalog_type_id" => "example" })
+results = client.CatalogEntry.list({ "catalog_type_id" => "example", "page_size" => 1 })
 results.each { |item| puts item.data_get }
 ```
 
@@ -2716,6 +2268,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```ruby
 result = client.CatalogEntry.load({ "id" => "catalog_entry_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.CatalogEntry.remove({ "id" => "catalog_entry_id" })
 ```
 
 #### `update(reqdata, ctrl = nil) -> result`
@@ -2846,7 +2406,6 @@ catalog_type = client.CatalogType
 | `registry_type` | `String` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `Array` | No | If populated, the integrations required for this type |
 | `schema` | `Hash` | Yes |  |
-| `semantic_type` | `String` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `String` | No | The url of the external repository where this type is managed |
 | `type_name` | `String` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `String` | Yes | When this type was last updated |
@@ -2854,32 +2413,31 @@ catalog_type = client.CatalogType
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | Yes | Yes |
-| `categories` | - | - | Yes | Yes |
-| `color` | - | - | Yes | Yes |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `dynamic_resource_parameter` | - | - | - | - |
-| `engine_resource_type` | - | - | - | - |
-| `estimated_count` | - | - | - | - |
-| `icon` | - | - | Yes | Yes |
-| `id` | - | - | - | - |
-| `is_editable` | - | - | - | - |
-| `is_team_type` | - | - | - | - |
-| `last_synced_at` | - | - | - | - |
-| `name` | - | - | - | - |
-| `owning_team_ids` | - | - | - | - |
-| `ranked` | - | - | Yes | Yes |
-| `registry_type` | - | - | - | - |
-| `required_integrations` | - | - | - | - |
-| `schema` | - | - | - | - |
-| `semantic_type` | - | - | - | - |
-| `source_repo_url` | - | - | - | - |
-| `type_name` | - | - | Yes | - |
-| `updated_at` | - | - | - | - |
-| `use_name_as_identifier` | - | - | Yes | Yes |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | Yes | Yes | - |
+| `categories` | - | - | Yes | Yes | - |
+| `color` | - | - | Yes | Yes | - |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `dynamic_resource_parameter` | - | - | - | - | - |
+| `engine_resource_type` | - | - | - | - | - |
+| `estimated_count` | - | - | - | - | - |
+| `icon` | - | - | Yes | Yes | - |
+| `id` | - | - | - | - | - |
+| `is_editable` | - | - | - | - | - |
+| `is_team_type` | - | - | - | - | - |
+| `last_synced_at` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `owning_team_ids` | - | - | - | - | - |
+| `ranked` | - | - | Yes | Yes | - |
+| `registry_type` | - | - | - | - | - |
+| `required_integrations` | - | - | - | - | - |
+| `schema` | - | - | - | - | - |
+| `source_repo_url` | - | - | - | - | - |
+| `type_name` | - | - | Yes | - | - |
+| `updated_at` | - | - | - | - | - |
+| `use_name_as_identifier` | - | - | Yes | Yes | - |
 
 ### Operations
 
@@ -2909,6 +2467,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```ruby
 result = client.CatalogType.load({ "id" => "catalog_type_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.CatalogType.remove({ "id" => "catalog_type_id" })
 ```
 
 #### `update(reqdata, ctrl = nil) -> result`
@@ -2982,7 +2548,6 @@ catalog_type_schema = client.CatalogTypeSchema
 | `registry_type` | `String` | No | The registry resource this type is synced from, if any |
 | `required_integrations` | `Array` | No | If populated, the integrations required for this type |
 | `schema` | `Hash` | Yes |  |
-| `semantic_type` | `String` | Yes | This type has been deprecated, and will always be empty. |
 | `source_repo_url` | `String` | No | The url of the external repository where this type is managed |
 | `type_name` | `String` | Yes | The type name of this catalog type, to be used when defining attributes. |
 | `updated_at` | `String` | Yes | When this type was last updated |
@@ -3053,13 +2618,6 @@ custom_field = client.CustomField
 | `helptext_catalog_attribute_id` | `String` | No | Which catalog attribute provides helptext for the options |
 | `id` | `String` | Yes | Unique identifier for the custom field |
 | `name` | `String` | Yes | Human readable name for the custom field |
-| `options` | `Array` | Yes | What options are available for this custom field, if this field has options |
-| `required` | `String` | No | When this custom field must be set during the incident lifecycle. |
-| `required_v2` | `String` | No | When this custom field must be set during the incident lifecycle. |
-| `show_before_closure` | `Boolean` | Yes | Whether a custom field should be shown in the incident resolve modal. |
-| `show_before_creation` | `Boolean` | Yes | Whether a custom field should be shown in the incident creation modal. |
-| `show_before_update` | `Boolean` | Yes | Whether a custom field should be shown in the incident update modal. |
-| `show_in_announcement_post` | `Boolean` | No | Whether a custom field should be shown in the list of fields as part of the announcement post when set. |
 | `updated_at` | `String` | Yes | When the action was last updated |
 
 ### Operations
@@ -3075,9 +2633,6 @@ result = client.CustomField.create({
   "filter_by" => {}, # Hash
   "fixed_filter" => {}, # Hash
   "name" => "example_name", # String
-  "show_before_closure" => true, # Boolean
-  "show_before_creation" => true, # Boolean
-  "show_before_update" => true, # Boolean
 })
 ```
 
@@ -3347,6 +2902,122 @@ Set the entity match criteria.
 #### `make -> Entity`
 
 Create a new `EscalationEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
+## EscalationPathEntity
+
+```ruby
+escalation_path = client.EscalationPath
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `current_responders` | `Array` | No | Users who are currently on-call for this escalation path |
+| `id` | `String` | Yes | Unique identifier for this escalation path. |
+| `kind` | `String` | Yes | Whether this path carries its own nodes, or is built from an escalation path template. |
+| `name` | `String` | Yes | The name of this escalation path, for the user's reference. |
+| `param_bindings` | `Hash` | No | For a templated path, the values bound to the template's declared parameters, keyed by parameter name. |
+| `path` | `Array` | Yes | The nodes that form the levels and branches of this escalation path. |
+| `repeat_config` | `Hash` | Yes |  |
+| `team_ids` | `Array` | Yes | IDs of the teams that own this escalation path. |
+| `template_id` | `String` | No | For a templated path, the template it is built from. |
+| `working_hours` | `Array` | No | The working hours for this escalation path. |
+
+### Field Usage by Operation
+
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `current_responders` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `kind` | - | - | Yes | Yes | - |
+| `name` | - | - | - | - | - |
+| `param_bindings` | - | - | - | - | - |
+| `path` | - | - | - | - | - |
+| `repeat_config` | - | - | - | - | - |
+| `team_ids` | - | - | Yes | Yes | - |
+| `template_id` | - | - | - | - | - |
+| `working_hours` | - | - | - | - | - |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.EscalationPath.create({
+  "name" => "example_name", # String
+  "path" => [], # Array
+  "repeat_config" => {}, # Hash
+})
+```
+
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
+
+```ruby
+results = client.EscalationPath.list
+results.each { |item| puts item.data_get }
+```
+
+#### `load(reqmatch, ctrl = nil) -> result`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
+
+```ruby
+result = client.EscalationPath.load({ "id" => "escalation_path_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.EscalationPath.remove({ "id" => "escalation_path_id" })
+```
+
+#### `update(reqdata, ctrl = nil) -> result`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```ruby
+result = client.EscalationPath.update({
+  "id" => "escalation_path_id",
+  # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `EscalationPathEntity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -3945,12 +3616,8 @@ incident = client.Incident
 | `slack_channel_name_override` | `String` | No | Name of the Slack channel to create for this incident |
 | `slack_channel_url` | `String` | No | URL to link to the slack channel |
 | `slack_team_id` | `String` | Yes | ID of the Slack team / workspace. |
-| `source_message_channel_id` | `String` | No | Channel ID of the source message, if this incident was created from one |
-| `source_message_timestamp` | `String` | No | Timestamp of the source message, if this incident was created from one |
-| `status` | `String` | Yes | Current status of the incident |
 | `summary` | `String` | No | Detailed description of the incident |
 | `team_ids` | `Array` | Yes | IDs of the teams that own this incident, resolved from your team settings. |
-| `timestamps` | `Array` | No | Incident lifecycle events and when they last occurred |
 | `updated_at` | `String` | Yes | When the incident was last updated |
 | `visibility` | `String` | Yes | Whether the incident should be open to anyone in your Slack workspace (public), or invite-only (private). |
 | `workload_minutes_late` | `Float` | No | Amount of time spent on the incident in late hours |
@@ -3994,12 +3661,8 @@ incident = client.Incident
 | `slack_channel_name_override` | - | - | - |
 | `slack_channel_url` | - | - | - |
 | `slack_team_id` | - | - | Yes |
-| `source_message_channel_id` | - | - | - |
-| `source_message_timestamp` | - | - | - |
-| `status` | - | - | Yes |
 | `summary` | - | - | - |
 | `team_ids` | - | - | - |
-| `timestamps` | - | - | - |
 | `updated_at` | - | - | - |
 | `visibility` | - | - | - |
 | `workload_minutes_late` | - | - | - |
@@ -4531,24 +4194,9 @@ incident_role = client.IncidentRole
 | `id` | `String` | Yes | Unique identifier for the role |
 | `instructions` | `String` | Yes | Provided to whoever is nominated for the role. |
 | `name` | `String` | Yes | Human readable name of the incident role |
-| `required` | `Boolean` | No | DEPRECATED: this will always be false. |
 | `role_type` | `String` | Yes | Type of incident role |
 | `shortform` | `String` | Yes | Short human readable name for Slack. |
 | `updated_at` | `String` | Yes | When the role was last updated |
-
-### Field Usage by Operation
-
-| Field | load | list | create | update | remove |
-| --- | --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - | - |
-| `description` | - | - | - | - | - |
-| `id` | - | - | - | - | - |
-| `instructions` | - | - | - | - | - |
-| `name` | - | - | - | - | - |
-| `required` | - | - | Yes | - | - |
-| `role_type` | - | - | - | - | - |
-| `shortform` | - | - | - | - | - |
-| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -4561,7 +4209,6 @@ result = client.IncidentRole.create({
   "description" => "example_description", # String
   "instructions" => "example_instructions", # String
   "name" => "example_name", # String
-  "required" => true, # Boolean
   "shortform" => "example_shortform", # String
 })
 ```
@@ -5934,10 +5581,10 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateOneOffRuleResultV2Entity
+## PayConfigOneOffRuleEntity
 
 ```ruby
-pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleResultV2
+pay_config_one_off_rule = client.PayConfigOneOffRule
 ```
 
 ### Fields
@@ -5945,6 +5592,7 @@ pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleRes
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_at` | `String` | Yes | When this rule stops applying |
+| `id` | `String` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `name` | `String` | Yes | Human readable name for this rule |
 | `rate_cents` | `Integer` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_at` | `String` | Yes | When this rule starts applying |
@@ -5956,8 +5604,8 @@ pay_configs_create_one_off_rule_result_v2 = client.PayConfigsCreateOneOffRuleRes
 Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```ruby
-result = client.PayConfigsCreateOneOffRuleResultV2.create({
-  "pay_config_id" => "example_pay_config_id", # String
+result = client.PayConfigOneOffRule.create({
+  "id" => "example_id", # String
   "end_at" => "example_end_at", # String
   "name" => "example_name", # String
   "rate_cents" => 1, # Integer
@@ -5965,6 +5613,43 @@ result = client.PayConfigsCreateOneOffRuleResultV2.create({
 })
 ```
 
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
+
+```ruby
+results = client.PayConfigOneOffRule.list({ "id" => "example" })
+results.each { |item| puts item.data_get }
+```
+
+#### `load(reqmatch, ctrl = nil) -> result`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
+
+```ruby
+result = client.PayConfigOneOffRule.load({ "id" => "pay_config_one_off_rule_id", "pay_config_id" => "pay_config_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.PayConfigOneOffRule.remove({ "id" => "pay_config_one_off_rule_id", "pay_config_id" => "pay_config_id" })
+```
+
+#### `update(reqdata, ctrl = nil) -> result`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```ruby
+result = client.PayConfigOneOffRule.update({
+  "id" => "pay_config_one_off_rule_id",
+  "pay_config_id" => "pay_config_id",
+  # Fields to update
+})
+```
+
 ### Common Methods
 
 #### `data_get -> Hash`
@@ -5985,7 +5670,7 @@ Set the entity match criteria.
 
 #### `make -> Entity`
 
-Create a new `PayConfigsCreateOneOffRuleResultV2Entity` instance with the same client and
+Create a new `PayConfigOneOffRuleEntity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -5995,10 +5680,10 @@ Return the entity name.
 
 ---
 
-## PayConfigsCreateWeeklyRuleResultV2Entity
+## PayConfigWeeklyRuleEntity
 
 ```ruby
-pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRuleResultV2
+pay_config_weekly_rule = client.PayConfigWeeklyRule
 ```
 
 ### Fields
@@ -6006,6 +5691,7 @@ pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRuleResu
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `end_time` | `String` | Yes | Time of day this rule ends, in 24 hour format. |
+| `id` | `String` | Yes | Unique identifier for this rule, stable across edits to the config |
 | `rate_cents` | `Integer` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
 | `start_time` | `String` | Yes | Time of day this rule starts, in 24 hour format |
 | `weekdays` | `Array` | Yes | Days of the week this rule applies on |
@@ -6017,8 +5703,8 @@ pay_configs_create_weekly_rule_result_v2 = client.PayConfigsCreateWeeklyRuleResu
 Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```ruby
-result = client.PayConfigsCreateWeeklyRuleResultV2.create({
-  "pay_config_id" => "example_pay_config_id", # String
+result = client.PayConfigWeeklyRule.create({
+  "id" => "example_id", # String
   "end_time" => "example_end_time", # String
   "rate_cents" => 1, # Integer
   "start_time" => "example_start_time", # String
@@ -6026,402 +5712,41 @@ result = client.PayConfigsCreateWeeklyRuleResultV2.create({
 })
 ```
 
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `PayConfigsCreateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListOneOffRulesResultV2Entity
-
-```ruby
-pay_configs_list_one_off_rules_result_v2 = client.PayConfigsListOneOffRulesResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `String` | Yes | When this rule stops applying |
-| `id` | `String` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `String` | Yes | Human readable name for this rule |
-| `rate_cents` | `Integer` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `String` | Yes | When this rule starts applying |
-
-### Operations
-
 #### `list(reqmatch = nil, ctrl = nil) -> Array`
 
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
 
 ```ruby
-results = client.PayConfigsListOneOffRulesResultV2.list({ "pay_config_id" => "example" })
+results = client.PayConfigWeeklyRule.list({ "id" => "example" })
 results.each { |item| puts item.data_get }
 ```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `PayConfigsListOneOffRulesResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## PayConfigsListWeeklyRulesResultV2Entity
-
-```ruby
-pay_configs_list_weekly_rules_result_v2 = client.PayConfigsListWeeklyRulesResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `String` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `String` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `Integer` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `String` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `Array` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `list(reqmatch = nil, ctrl = nil) -> Array`
-
-List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
-
-```ruby
-results = client.PayConfigsListWeeklyRulesResultV2.list({ "pay_config_id" => "example" })
-results.each { |item| puts item.data_get }
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `PayConfigsListWeeklyRulesResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowOneOffRuleResultV2Entity
-
-```ruby
-pay_configs_show_one_off_rule_result_v2 = client.PayConfigsShowOneOffRuleResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `String` | Yes | When this rule stops applying |
-| `id` | `String` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `String` | Yes | Human readable name for this rule |
-| `rate_cents` | `Integer` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `String` | Yes | When this rule starts applying |
-
-### Operations
 
 #### `load(reqmatch, ctrl = nil) -> result`
 
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
 
 ```ruby
-result = client.PayConfigsShowOneOffRuleResultV2.load({ "id" => "pay_configs_show_one_off_rule_result_v2_id", "pay_config_id" => "pay_config_id" })
+result = client.PayConfigWeeklyRule.load({ "id" => "pay_config_weekly_rule_id", "pay_config_id" => "pay_config_id" })
 ```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `PayConfigsShowOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## PayConfigsShowWeeklyRuleResultV2Entity
-
-```ruby
-pay_configs_show_weekly_rule_result_v2 = client.PayConfigsShowWeeklyRuleResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `String` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `String` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `Integer` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `String` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `Array` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `load(reqmatch, ctrl = nil) -> result`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
-
-```ruby
-result = client.PayConfigsShowWeeklyRuleResultV2.load({ "id" => "pay_configs_show_weekly_rule_result_v2_id", "pay_config_id" => "pay_config_id" })
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `PayConfigsShowWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateOneOffRuleResultV2Entity
-
-```ruby
-pay_configs_update_one_off_rule_result_v2 = client.PayConfigsUpdateOneOffRuleResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_at` | `String` | Yes | When this rule stops applying |
-| `id` | `String` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `name` | `String` | Yes | Human readable name for this rule |
-| `rate_cents` | `Integer` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_at` | `String` | Yes | When this rule starts applying |
-
-### Operations
-
-#### `update(reqdata, ctrl = nil) -> result`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```ruby
-result = client.PayConfigsUpdateOneOffRuleResultV2.update({
-  "id" => "id",
-  "pay_config_id" => "pay_config_id",
-  # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `PayConfigsUpdateOneOffRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## PayConfigsUpdateWeeklyRuleResultV2Entity
-
-```ruby
-pay_configs_update_weekly_rule_result_v2 = client.PayConfigsUpdateWeeklyRuleResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `end_time` | `String` | Yes | Time of day this rule ends, in 24 hour format. |
-| `id` | `String` | Yes | Unique identifier for this rule, stable across edits to the config |
-| `rate_cents` | `Integer` | Yes | Rate paid while this rule applies, in the lowest denomination of the config's currency |
-| `start_time` | `String` | Yes | Time of day this rule starts, in 24 hour format |
-| `weekdays` | `Array` | Yes | Days of the week this rule applies on |
-
-### Operations
-
-#### `update(reqdata, ctrl = nil) -> result`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```ruby
-result = client.PayConfigsUpdateWeeklyRuleResultV2.update({
-  "id" => "id",
-  "pay_config_id" => "pay_config_id",
-  # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `PayConfigsUpdateWeeklyRuleResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## PayConfigsV2Entity
-
-```ruby
-pay_configs_v2 = client.PayConfigsV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `String` | No |  |
-
-### Operations
 
 #### `remove(reqmatch, ctrl = nil) -> result`
 
 Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
 
 ```ruby
-result = client.PayConfigsV2.remove({ "id" => "pay_configs_v2_id", "pay_config_id" => "pay_config_id" })
+result = client.PayConfigWeeklyRule.remove({ "id" => "pay_config_weekly_rule_id", "pay_config_id" => "pay_config_id" })
+```
+
+#### `update(reqdata, ctrl = nil) -> result`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```ruby
+result = client.PayConfigWeeklyRule.update({
+  "id" => "pay_config_weekly_rule_id",
+  "pay_config_id" => "pay_config_id",
+  # Fields to update
+})
 ```
 
 ### Common Methods
@@ -6444,7 +5769,7 @@ Set the entity match criteria.
 
 #### `make -> Entity`
 
-Create a new `PayConfigsV2Entity` instance with the same client and
+Create a new `PayConfigWeeklyRuleEntity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -6769,58 +6094,6 @@ Return the entity name.
 
 ---
 
-## PoliciesV2Entity
-
-```ruby
-policies_v2 = client.PoliciesV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `id` | `String` | No |  |
-
-### Operations
-
-#### `remove(reqmatch, ctrl = nil) -> result`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
-
-```ruby
-result = client.PoliciesV2.remove({ "id" => "policies_v2_id" })
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `PoliciesV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
 ## PolicyEntity
 
 ```ruby
@@ -6849,23 +6122,23 @@ policy = client.Policy
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `assignment_rules` | - | - | - | - |
-| `conditions` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `debrief` | - | - | - | - |
-| `description` | - | - | Yes | Yes |
-| `expressions` | - | - | - | - |
-| `follow_up` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `on_call_readiness` | - | - | - | - |
-| `policy_type` | - | - | - | - |
-| `post_mortem` | - | - | - | - |
-| `schedule` | - | - | - | - |
-| `status` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `assignment_rules` | - | - | - | - | - |
+| `conditions` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `debrief` | - | - | - | - | - |
+| `description` | - | - | Yes | Yes | - |
+| `expressions` | - | - | - | - | - |
+| `follow_up` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `on_call_readiness` | - | - | - | - | - |
+| `policy_type` | - | - | - | - | - |
+| `post_mortem` | - | - | - | - | - |
+| `schedule` | - | - | - | - | - |
+| `status` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -6902,6 +6175,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```ruby
 result = client.Policy.load({ "id" => "policy_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.Policy.remove({ "id" => "policy_id" })
 ```
 
 #### `update(reqdata, ctrl = nil) -> result`
@@ -7495,6 +6776,109 @@ Return the entity name.
 
 ---
 
+## ScheduleOverrideEntity
+
+```ruby
+schedule_override = client.ScheduleOverride
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `String` | Yes |  |
+| `end_at` | `String` | Yes | End of the override |
+| `id` | `String` | Yes | Unique internal ID of the schedule override |
+| `layer_id` | `String` | Yes | The layer on the rotation on the schedule that this override applies to |
+| `rotation_id` | `String` | Yes | The rotation on the schedule that this override applies to |
+| `schedule_id` | `String` | Yes | The schedule that this override applies to |
+| `start_at` | `String` | Yes | Start of the override |
+| `updated_at` | `String` | Yes |  |
+| `user` | `Hash` | Yes |  |
+
+### Operations
+
+#### `create(reqdata, ctrl = nil) -> result`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```ruby
+result = client.ScheduleOverride.create({
+  "end_at" => "example_end_at", # String
+  "layer_id" => "example_layer_id", # String
+  "rotation_id" => "example_rotation_id", # String
+  "schedule_id" => "example_schedule_id", # String
+  "start_at" => "example_start_at", # String
+  "user" => {}, # Hash
+})
+```
+
+#### `list(reqmatch = nil, ctrl = nil) -> Array`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
+
+```ruby
+results = client.ScheduleOverride.list({ "schedule_id" => "example" })
+results.each { |item| puts item.data_get }
+```
+
+#### `load(reqmatch, ctrl = nil) -> result`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
+
+```ruby
+result = client.ScheduleOverride.load({ "id" => "schedule_override_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.ScheduleOverride.remove({ "id" => "schedule_override_id" })
+```
+
+#### `update(reqdata, ctrl = nil) -> result`
+
+Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
+
+```ruby
+result = client.ScheduleOverride.update({
+  "id" => "schedule_override_id",
+  # Fields to update
+})
+```
+
+### Common Methods
+
+#### `data_get -> Hash`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get -> Hash`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make -> Entity`
+
+Create a new `ScheduleOverrideEntity` instance with the same client and
+options.
+
+#### `get_name -> String`
+
+Return the entity name.
+
+
+---
+
 ## ScheduleReplicaEntity
 
 ```ruby
@@ -7551,6 +6935,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 result = client.ScheduleReplica.load({ "id" => "schedule_replica_id", "schedule_id" => "schedule_id" })
 ```
 
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.ScheduleReplica.remove({ "id" => "schedule_replica_id", "schedule_id" => "schedule_id" })
+```
+
 ### Common Methods
 
 #### `data_get -> Hash`
@@ -7604,18 +6996,18 @@ schedule_sync_rule = client.ScheduleSyncRule
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `annotations` | - | - | - | - |
-| `created_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `permanent_member_user_ids` | - | - | Yes | Yes |
-| `rotation_id` | - | - | - | - |
-| `schedule_id` | - | - | - | - |
-| `schedule_sync_target` | - | - | - | - |
-| `schedule_sync_target_id` | - | - | - | - |
-| `sync_type` | - | - | - | - |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `annotations` | - | - | - | - | - |
+| `created_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `permanent_member_user_ids` | - | - | Yes | Yes | - |
+| `rotation_id` | - | - | - | - | - |
+| `schedule_id` | - | - | - | - | - |
+| `schedule_sync_target` | - | - | - | - | - |
+| `schedule_sync_target_id` | - | - | - | - | - |
+| `sync_type` | - | - | - | - | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -7646,6 +7038,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```ruby
 result = client.ScheduleSyncRule.load({ "id" => "schedule_sync_rule_id", "schedule_id" => "schedule_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.ScheduleSyncRule.remove({ "id" => "schedule_sync_rule_id", "schedule_id" => "schedule_id" })
 ```
 
 #### `update(reqdata, ctrl = nil) -> result`
@@ -7803,153 +7203,6 @@ Return the entity name.
 
 ---
 
-## SchedulesShowOverrideResultV2Entity
-
-```ruby
-schedules_show_override_result_v2 = client.SchedulesShowOverrideResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `String` | Yes |  |
-| `end_at` | `String` | Yes | End of the override |
-| `id` | `String` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `String` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `String` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `String` | Yes | The schedule that this override applies to |
-| `start_at` | `String` | Yes | Start of the override |
-| `updated_at` | `String` | Yes |  |
-| `user` | `Hash` | Yes |  |
-
-### Operations
-
-#### `create(reqdata, ctrl = nil) -> result`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```ruby
-result = client.SchedulesShowOverrideResultV2.create({
-  "end_at" => "example_end_at", # String
-  "layer_id" => "example_layer_id", # String
-  "rotation_id" => "example_rotation_id", # String
-  "schedule_id" => "example_schedule_id", # String
-  "start_at" => "example_start_at", # String
-  "user" => {}, # Hash
-})
-```
-
-#### `list(reqmatch = nil, ctrl = nil) -> Array`
-
-List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
-
-```ruby
-results = client.SchedulesShowOverrideResultV2.list({ "schedule_id" => "example" })
-results.each { |item| puts item.data_get }
-```
-
-#### `load(reqmatch, ctrl = nil) -> result`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
-
-```ruby
-result = client.SchedulesShowOverrideResultV2.load({ "id" => "schedules_show_override_result_v2_id" })
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `SchedulesShowOverrideResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## SchedulesUpdateOverrideResultV2Entity
-
-```ruby
-schedules_update_override_result_v2 = client.SchedulesUpdateOverrideResultV2
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `created_at` | `String` | Yes |  |
-| `end_at` | `String` | Yes | End of the override |
-| `id` | `String` | Yes | Unique internal ID of the schedule override |
-| `layer_id` | `String` | Yes | The layer on the rotation on the schedule that this override applies to |
-| `rotation_id` | `String` | Yes | The rotation on the schedule that this override applies to |
-| `schedule_id` | `String` | Yes | The schedule that this override applies to |
-| `start_at` | `String` | Yes | Start of the override |
-| `updated_at` | `String` | Yes |  |
-| `user` | `Hash` | Yes |  |
-
-### Operations
-
-#### `update(reqdata, ctrl = nil) -> result`
-
-Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
-
-```ruby
-result = client.SchedulesUpdateOverrideResultV2.update({
-  "id" => "id",
-  # Fields to update
-})
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `SchedulesUpdateOverrideResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
 ## SecretEntity
 
 ```ruby
@@ -8086,14 +7339,14 @@ severity = client.Severity
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `created_at` | - | - | - | - |
-| `description` | - | - | - | - |
-| `id` | - | - | - | - |
-| `name` | - | - | - | - |
-| `rank` | - | - | Yes | Yes |
-| `updated_at` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `created_at` | - | - | - | - | - |
+| `description` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `rank` | - | - | Yes | Yes | - |
+| `updated_at` | - | - | - | - | - |
 
 ### Operations
 
@@ -8123,6 +7376,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```ruby
 result = client.Severity.load({ "id" => "severity_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.Severity.remove({ "id" => "severity_id" })
 ```
 
 #### `update(reqdata, ctrl = nil) -> result`
@@ -8323,10 +7584,10 @@ Return the entity name.
 
 ---
 
-## StatusPageComponentAvailabilityV2Entity
+## StatusPageComponentAvailabilityEntity
 
 ```ruby
-status_page_component_availability_v2 = client.StatusPageComponentAvailabilityV2
+status_page_component_availability = client.StatusPageComponentAvailability
 ```
 
 ### Fields
@@ -8347,7 +7608,7 @@ status_page_component_availability_v2 = client.StatusPageComponentAvailabilityV2
 Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
 
 ```ruby
-result = client.StatusPageComponentAvailabilityV2.load({ "component_id" => "component_id", "status_page_id" => "status_page_id", "end_at" => "end_at", "start_at" => "start_at" })
+result = client.StatusPageComponentAvailability.load({ "component_id" => "component_id", "status_page_id" => "status_page_id", "end_at" => "end_at", "start_at" => "start_at" })
 ```
 
 ### Common Methods
@@ -8370,7 +7631,7 @@ Set the entity match criteria.
 
 #### `make -> Entity`
 
-Create a new `StatusPageComponentAvailabilityV2Entity` instance with the same client and
+Create a new `StatusPageComponentAvailabilityEntity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -8537,10 +7798,10 @@ Return the entity name.
 
 ---
 
-## StatusPageLinkedResponseIncidentV1Entity
+## StatusPageLinkedResponseIncidentEntity
 
 ```ruby
-status_page_linked_response_incident_v1 = client.StatusPageLinkedResponseIncidentV1
+status_page_linked_response_incident = client.StatusPageLinkedResponseIncident
 ```
 
 ### Fields
@@ -8557,7 +7818,7 @@ status_page_linked_response_incident_v1 = client.StatusPageLinkedResponseInciden
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
 
 ```ruby
-results = client.StatusPageLinkedResponseIncidentV1.list({ "incident_id" => "example", "status_page_id" => "example" })
+results = client.StatusPageLinkedResponseIncident.list({ "incident_id" => "example", "status_page_id" => "example" })
 results.each { |item| puts item.data_get }
 ```
 
@@ -8581,7 +7842,7 @@ Set the entity match criteria.
 
 #### `make -> Entity`
 
-Create a new `StatusPageLinkedResponseIncidentV1Entity` instance with the same client and
+Create a new `StatusPageLinkedResponseIncidentEntity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -8618,22 +7879,22 @@ status_page_maintenance = client.StatusPageMaintenance
 
 ### Field Usage by Operation
 
-| Field | load | list | create | update |
-| --- | --- | --- | --- | --- |
-| `affected_component_ids` | - | - | - | - |
-| `automate_maintenance_status` | - | - | Yes | - |
-| `component_maintenance_periods` | - | - | - | - |
-| `end_at` | - | - | - | - |
-| `id` | - | - | - | - |
-| `idempotency_key` | - | - | - | - |
-| `maintenance_status` | - | - | - | - |
-| `message` | - | - | - | - |
-| `name` | - | - | - | - |
-| `notify_subscribers` | - | - | - | - |
-| `published_at` | - | - | - | - |
-| `start_at` | - | - | - | - |
-| `status_page_id` | - | - | - | - |
-| `updates` | - | - | - | - |
+| Field | load | list | create | update | remove |
+| --- | --- | --- | --- | --- | --- |
+| `affected_component_ids` | - | - | - | - | - |
+| `automate_maintenance_status` | - | - | Yes | - | - |
+| `component_maintenance_periods` | - | - | - | - | - |
+| `end_at` | - | - | - | - | - |
+| `id` | - | - | - | - | - |
+| `idempotency_key` | - | - | - | - | - |
+| `maintenance_status` | - | - | - | - | - |
+| `message` | - | - | - | - | - |
+| `name` | - | - | - | - | - |
+| `notify_subscribers` | - | - | - | - | - |
+| `published_at` | - | - | - | - | - |
+| `start_at` | - | - | - | - | - |
+| `status_page_id` | - | - | - | - | - |
+| `updates` | - | - | - | - | - |
 
 ### Operations
 
@@ -8670,6 +7931,14 @@ Load a single entity matching the given criteria. Returns the entity, whose reco
 
 ```ruby
 result = client.StatusPageMaintenance.load({ "id" => "status_page_maintenance_id" })
+```
+
+#### `remove(reqmatch, ctrl = nil) -> result`
+
+Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
+
+```ruby
+result = client.StatusPageMaintenance.remove({ "id" => "status_page_maintenance_id" })
 ```
 
 #### `update(reqdata, ctrl = nil) -> result`
@@ -8828,52 +8097,6 @@ Return the entity name.
 
 ---
 
-## StatusPagesV2Entity
-
-```ruby
-status_pages_v2 = client.StatusPagesV2
-```
-
-### Operations
-
-#### `remove(reqmatch, ctrl = nil) -> result`
-
-Remove the entity matching the given criteria. Returns the entity, marked as deleted, and raises on error.
-
-```ruby
-result = client.StatusPagesV2.remove({ "status_page_maintenance_id" => "status_page_maintenance_id" })
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `StatusPagesV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
 ## TeamEntity
 
 ```ruby
@@ -8938,10 +8161,10 @@ Return the entity name.
 
 ---
 
-## TelemetryDataSourceV2Entity
+## TelemetryDataSourceEntity
 
 ```ruby
-telemetry_data_source_v2 = client.TelemetryDataSourceV2
+telemetry_data_source = client.TelemetryDataSource
 ```
 
 ### Fields
@@ -8981,7 +8204,7 @@ telemetry_data_source_v2 = client.TelemetryDataSourceV2
 Update an existing entity. The data must include the entity `id`. Returns the updated entity and raises on error.
 
 ```ruby
-result = client.TelemetryDataSourceV2.update({
+result = client.TelemetryDataSource.update({
   "id" => "id",
   # Fields to update
 })
@@ -9007,7 +8230,7 @@ Set the entity match criteria.
 
 #### `make -> Entity`
 
-Create a new `TelemetryDataSourceV2Entity` instance with the same client and
+Create a new `TelemetryDataSourceEntity` instance with the same client and
 options.
 
 #### `get_name -> String`
@@ -9038,16 +8261,6 @@ user = client.User
 | `slack_user_id` | `String` | No | Slack ID of the user |
 
 ### Operations
-
-#### `create(reqdata, ctrl = nil) -> result`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```ruby
-result = client.User.create({
-  "id" => "example_id", # String
-})
-```
 
 #### `list(reqmatch = nil, ctrl = nil) -> Array`
 

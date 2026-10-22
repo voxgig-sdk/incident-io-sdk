@@ -191,7 +191,7 @@ func TestPolicyEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create", "list", "update", "load"} {
+		for _, _op := range []string{"create", "list", "update", "load", "remove"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "policy." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -275,6 +275,32 @@ func TestPolicyEntity(t *testing.T) {
 		}
 		if policyRef01DataDt0LoadResult["id"] != policyRef01Data["id"] {
 			t.Fatal("expected load result id to match")
+		}
+
+		// REMOVE
+		policyRef01MatchRm0 := map[string]any{
+			"id": policyRef01Data["id"],
+		}
+		_, err = policyRef01Ent.Remove(policyRef01MatchRm0, nil)
+		if err != nil {
+			t.Fatalf("remove failed: %v", err)
+		}
+
+		// LIST
+		policyRef01MatchRt0 := map[string]any{}
+
+		policyRef01ListRt0Result, err := policyRef01Ent.List(policyRef01MatchRt0, nil)
+		if err != nil {
+			t.Fatalf("list failed: %v", err)
+		}
+		policyRef01ListRt0, policyRef01ListRt0Ok := policyRef01ListRt0Result.([]any)
+		if !policyRef01ListRt0Ok {
+			t.Fatalf("expected list result to be an array, got %T", policyRef01ListRt0Result)
+		}
+
+		notFoundItem := vs.Select(entityListToData(policyRef01ListRt0), map[string]any{"id": policyRef01Data["id"]})
+		if !vs.IsEmpty(notFoundItem) {
+			t.Fatal("expected removed entity to not be in list")
 		}
 
 	})

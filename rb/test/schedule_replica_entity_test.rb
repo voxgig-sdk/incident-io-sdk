@@ -34,7 +34,7 @@ class ScheduleReplicaEntityTest < Minitest::Test
     setup = schedule_replica_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["load"].each do |_op|
+    ["load", "remove", "list"].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "schedule_replica." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
@@ -42,9 +42,18 @@ class ScheduleReplicaEntityTest < Minitest::Test
       end
     end
     if setup[:live]
-      Runner.live_miss(LIVE_STRICT, "Live entity test blocked: " + "the flow loads a schedule_replica record it has no list to find")
+      ["schedule01"].each do |_live_key|
+        if setup[:synthetic_only] || setup[:idmap][_live_key].nil?
+          Runner.live_miss(LIVE_STRICT, "Live entity test blocked: needs #{_live_key} via INCIDENT_IO_TEST_SCHEDULE_REPLICA_ENTID")
+        end
+      end
     end
     client = setup[:client]
+    if setup[:live]
+      Runner.live_existing(setup, LIVE_STRICT, "schedule_replica") do
+        client.ScheduleReplica(nil).list({"schedule_id" => setup[:idmap]["schedule01"]}, nil)
+      end
+    end
 
     # Bootstrap entity data from existing test data.
     schedule_replica_ref01_data_raw = Vs.items(Helpers.to_map(

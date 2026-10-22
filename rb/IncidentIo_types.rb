@@ -26,13 +26,7 @@
 #   @return [Hash]
 #
 # @!attribute [rw] description
-#   @return [String, nil]
-#
-# @!attribute [rw] external_issue_reference
-#   @return [Hash, nil]
-#
-# @!attribute [rw] follow_up
-#   @return [Boolean]
+#   @return [String]
 #
 # @!attribute [rw] id
 #   @return [String]
@@ -52,8 +46,6 @@ Action = Struct.new(
   :created_at,
   :creator,
   :description,
-  :external_issue_reference,
-  :follow_up,
   :id,
   :incident_id,
   :status,
@@ -72,18 +64,30 @@ ActionLoadMatch = Struct.new(
 
 # Request payload for Action#list.
 #
+# @!attribute [rw] after
+#   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [Hash, nil]
+#
 # @!attribute [rw] incident_id
 #   @return [String, nil]
 #
 # @!attribute [rw] incident_mode
 #   @return [String, nil]
 #
-# @!attribute [rw] is_follow_up
-#   @return [Boolean, nil]
+# @!attribute [rw] page_size
+#   @return [Integer, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [Hash, nil]
 ActionListMatch = Struct.new(
+  :after,
+  :created_at,
   :incident_id,
   :incident_mode,
-  :is_follow_up,
+  :page_size,
+  :updated_at,
   keyword_init: true
 )
 
@@ -555,9 +559,6 @@ AlertNoteRemoveMatch = Struct.new(
 # @!attribute [rw] alert_sources
 #   @return [Array]
 #
-# @!attribute [rw] channel_config
-#   @return [Array]
-#
 # @!attribute [rw] condition_groups
 #   @return [Array]
 #
@@ -582,17 +583,11 @@ AlertNoteRemoveMatch = Struct.new(
 # @!attribute [rw] incident_config
 #   @return [Hash]
 #
-# @!attribute [rw] incident_template
-#   @return [Hash]
-#
 # @!attribute [rw] is_private
 #   @return [Boolean]
 #
 # @!attribute [rw] message_config
 #   @return [Hash]
-#
-# @!attribute [rw] message_template
-#   @return [Hash, nil]
 #
 # @!attribute [rw] name
 #   @return [String]
@@ -607,7 +602,6 @@ AlertNoteRemoveMatch = Struct.new(
 #   @return [Integer]
 AlertRoute = Struct.new(
   :alert_sources,
-  :channel_config,
   :condition_groups,
   :created_at,
   :enabled,
@@ -616,10 +610,8 @@ AlertRoute = Struct.new(
   :grouping_config,
   :id,
   :incident_config,
-  :incident_template,
   :is_private,
   :message_config,
-  :message_template,
   :name,
   :owning_team_ids,
   :updated_at,
@@ -642,7 +634,7 @@ AlertRouteLoadMatch = Struct.new(
 #   @return [String, nil]
 #
 # @!attribute [rw] page_size
-#   @return [Integer]
+#   @return [Integer, nil]
 AlertRouteListMatch = Struct.new(
   :after,
   :page_size,
@@ -654,14 +646,8 @@ AlertRouteListMatch = Struct.new(
 # @!attribute [rw] alert_sources
 #   @return [Array]
 #
-# @!attribute [rw] channel_config
-#   @return [Array]
-#
 # @!attribute [rw] condition_groups
 #   @return [Array]
-#
-# @!attribute [rw] created_at
-#   @return [String, nil]
 #
 # @!attribute [rw] enabled
 #   @return [Boolean]
@@ -678,43 +664,29 @@ AlertRouteListMatch = Struct.new(
 # @!attribute [rw] incident_config
 #   @return [Hash]
 #
-# @!attribute [rw] incident_template
-#   @return [Hash]
-#
 # @!attribute [rw] is_private
 #   @return [Boolean]
 #
 # @!attribute [rw] message_config
 #   @return [Hash]
 #
-# @!attribute [rw] message_template
-#   @return [Hash, nil]
-#
 # @!attribute [rw] name
 #   @return [String]
 #
 # @!attribute [rw] owning_team_ids
 #   @return [Array, nil]
-#
-# @!attribute [rw] updated_at
-#   @return [String, nil]
 AlertRouteCreateData = Struct.new(
   :alert_sources,
-  :channel_config,
   :condition_groups,
-  :created_at,
   :enabled,
   :escalation_config,
   :expressions,
   :grouping_config,
   :incident_config,
-  :incident_template,
   :is_private,
   :message_config,
-  :message_template,
   :name,
   :owning_team_ids,
-  :updated_at,
   keyword_init: true
 )
 
@@ -726,14 +698,8 @@ AlertRouteCreateData = Struct.new(
 # @!attribute [rw] alert_sources
 #   @return [Array, nil]
 #
-# @!attribute [rw] channel_config
-#   @return [Array, nil]
-#
 # @!attribute [rw] condition_groups
 #   @return [Array, nil]
-#
-# @!attribute [rw] created_at
-#   @return [String, nil]
 #
 # @!attribute [rw] enabled
 #   @return [Boolean, nil]
@@ -750,16 +716,10 @@ AlertRouteCreateData = Struct.new(
 # @!attribute [rw] incident_config
 #   @return [Hash, nil]
 #
-# @!attribute [rw] incident_template
-#   @return [Hash, nil]
-#
 # @!attribute [rw] is_private
 #   @return [Boolean, nil]
 #
 # @!attribute [rw] message_config
-#   @return [Hash, nil]
-#
-# @!attribute [rw] message_template
 #   @return [Hash, nil]
 #
 # @!attribute [rw] name
@@ -768,29 +728,21 @@ AlertRouteCreateData = Struct.new(
 # @!attribute [rw] owning_team_ids
 #   @return [Array, nil]
 #
-# @!attribute [rw] updated_at
-#   @return [String, nil]
-#
 # @!attribute [rw] version
 #   @return [Integer, nil]
 AlertRouteUpdateData = Struct.new(
   :id,
   :alert_sources,
-  :channel_config,
   :condition_groups,
-  :created_at,
   :enabled,
   :escalation_config,
   :expressions,
   :grouping_config,
   :incident_config,
-  :incident_template,
   :is_private,
   :message_config,
-  :message_template,
   :name,
   :owning_team_ids,
-  :updated_at,
   :version,
   keyword_init: true
 )
@@ -1138,14 +1090,62 @@ AlertSourcesV2CreateData = Struct.new(
 
 # AlertTag entity data model.
 #
+# @!attribute [rw] alert_group_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] alert_source_id
+#   @return [String]
+#
+# @!attribute [rw] attributes
+#   @return [Array]
+#
+# @!attribute [rw] created_at
+#   @return [String]
+#
+# @!attribute [rw] deduplication_key
+#   @return [String]
+#
+# @!attribute [rw] description
+#   @return [String, nil]
+#
 # @!attribute [rw] id
 #   @return [String]
 #
 # @!attribute [rw] name
 #   @return [String]
+#
+# @!attribute [rw] resolved_at
+#   @return [String, nil]
+#
+# @!attribute [rw] source_url
+#   @return [String, nil]
+#
+# @!attribute [rw] status
+#   @return [String]
+#
+# @!attribute [rw] tags
+#   @return [Array, nil]
+#
+# @!attribute [rw] title
+#   @return [String]
+#
+# @!attribute [rw] updated_at
+#   @return [String]
 AlertTag = Struct.new(
+  :alert_group_ids,
+  :alert_source_id,
+  :attributes,
+  :created_at,
+  :deduplication_key,
+  :description,
   :id,
   :name,
+  :resolved_at,
+  :source_url,
+  :status,
+  :tags,
+  :title,
+  :updated_at,
   keyword_init: true
 )
 
@@ -1163,6 +1163,19 @@ AlertTagListMatch = Struct.new(
   :after,
   :page_size,
   :search,
+  keyword_init: true
+)
+
+# Request payload for AlertTag#create.
+#
+# @!attribute [rw] alert_id
+#   @return [String]
+#
+# @!attribute [rw] tags
+#   @return [Array]
+AlertTagCreateData = Struct.new(
+  :alert_id,
+  :tags,
   keyword_init: true
 )
 
@@ -1231,76 +1244,6 @@ AlertsAddTagsResultV2 = Struct.new(
 # @!attribute [rw] tags
 #   @return [Array]
 AlertsAddTagsResultV2CreateData = Struct.new(
-  :alert_id,
-  :tags,
-  keyword_init: true
-)
-
-# AlertsRemoveTagsResultV2 entity data model.
-#
-# @!attribute [rw] alert_group_ids
-#   @return [Array, nil]
-#
-# @!attribute [rw] alert_source_id
-#   @return [String]
-#
-# @!attribute [rw] attributes
-#   @return [Array]
-#
-# @!attribute [rw] created_at
-#   @return [String]
-#
-# @!attribute [rw] deduplication_key
-#   @return [String]
-#
-# @!attribute [rw] description
-#   @return [String, nil]
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] resolved_at
-#   @return [String, nil]
-#
-# @!attribute [rw] source_url
-#   @return [String, nil]
-#
-# @!attribute [rw] status
-#   @return [String]
-#
-# @!attribute [rw] tags
-#   @return [Array, nil]
-#
-# @!attribute [rw] title
-#   @return [String]
-#
-# @!attribute [rw] updated_at
-#   @return [String]
-AlertsRemoveTagsResultV2 = Struct.new(
-  :alert_group_ids,
-  :alert_source_id,
-  :attributes,
-  :created_at,
-  :deduplication_key,
-  :description,
-  :id,
-  :resolved_at,
-  :source_url,
-  :status,
-  :tags,
-  :title,
-  :updated_at,
-  keyword_init: true
-)
-
-# Request payload for AlertsRemoveTagsResultV2#create.
-#
-# @!attribute [rw] alert_id
-#   @return [String]
-#
-# @!attribute [rw] tags
-#   @return [Array]
-AlertsRemoveTagsResultV2CreateData = Struct.new(
   :alert_id,
   :tags,
   keyword_init: true
@@ -2009,75 +1952,7 @@ CallRouteUpdateData = Struct.new(
   keyword_init: true
 )
 
-# CallRoutesCreateAllowedCallerResultV2 entity data model.
-#
-# @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] phone_number
-#   @return [String]
-CallRoutesCreateAllowedCallerResultV2 = Struct.new(
-  :name,
-  :phone_number,
-  keyword_init: true
-)
-
-# Request payload for CallRoutesCreateAllowedCallerResultV2#create.
-#
-# @!attribute [rw] call_route_id
-#   @return [String]
-#
-# @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] phone_number
-#   @return [String]
-CallRoutesCreateAllowedCallerResultV2CreateData = Struct.new(
-  :call_route_id,
-  :name,
-  :phone_number,
-  keyword_init: true
-)
-
-# CallRoutesCreateOptionResultV2 entity data model.
-#
-# @!attribute [rw] digit
-#   @return [String]
-#
-# @!attribute [rw] path
-#   @return [Array]
-#
-# @!attribute [rw] prompt
-#   @return [String]
-CallRoutesCreateOptionResultV2 = Struct.new(
-  :digit,
-  :path,
-  :prompt,
-  keyword_init: true
-)
-
-# Request payload for CallRoutesCreateOptionResultV2#create.
-#
-# @!attribute [rw] call_route_id
-#   @return [String]
-#
-# @!attribute [rw] digit
-#   @return [String]
-#
-# @!attribute [rw] path
-#   @return [Array]
-#
-# @!attribute [rw] prompt
-#   @return [String]
-CallRoutesCreateOptionResultV2CreateData = Struct.new(
-  :call_route_id,
-  :digit,
-  :path,
-  :prompt,
-  keyword_init: true
-)
-
-# CallRoutesListAllowedCallersResultV2 entity data model.
+# CallRouteAllowedCaller entity data model.
 #
 # @!attribute [rw] id
 #   @return [String]
@@ -2087,23 +1962,87 @@ CallRoutesCreateOptionResultV2CreateData = Struct.new(
 #
 # @!attribute [rw] phone_number
 #   @return [String]
-CallRoutesListAllowedCallersResultV2 = Struct.new(
+CallRouteAllowedCaller = Struct.new(
   :id,
   :name,
   :phone_number,
   keyword_init: true
 )
 
-# Request payload for CallRoutesListAllowedCallersResultV2#list.
+# Request payload for CallRouteAllowedCaller#load.
 #
 # @!attribute [rw] call_route_id
 #   @return [String]
-CallRoutesListAllowedCallersResultV2ListMatch = Struct.new(
+#
+# @!attribute [rw] id
+#   @return [String]
+CallRouteAllowedCallerLoadMatch = Struct.new(
   :call_route_id,
+  :id,
   keyword_init: true
 )
 
-# CallRoutesListOptionsResultV2 entity data model.
+# Request payload for CallRouteAllowedCaller#list.
+#
+# @!attribute [rw] id
+#   @return [String]
+CallRouteAllowedCallerListMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
+# Request payload for CallRouteAllowedCaller#create.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] phone_number
+#   @return [String]
+CallRouteAllowedCallerCreateData = Struct.new(
+  :id,
+  :name,
+  :phone_number,
+  keyword_init: true
+)
+
+# Request payload for CallRouteAllowedCaller#update.
+#
+# @!attribute [rw] call_route_id
+#   @return [String]
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] phone_number
+#   @return [String, nil]
+CallRouteAllowedCallerUpdateData = Struct.new(
+  :call_route_id,
+  :id,
+  :name,
+  :phone_number,
+  keyword_init: true
+)
+
+# Request payload for CallRouteAllowedCaller#remove.
+#
+# @!attribute [rw] call_route_id
+#   @return [String]
+#
+# @!attribute [rw] id
+#   @return [String]
+CallRouteAllowedCallerRemoveMatch = Struct.new(
+  :call_route_id,
+  :id,
+  keyword_init: true
+)
+
+# CallRouteOption entity data model.
 #
 # @!attribute [rw] digit
 #   @return [String]
@@ -2116,7 +2055,7 @@ CallRoutesListAllowedCallersResultV2ListMatch = Struct.new(
 #
 # @!attribute [rw] prompt
 #   @return [String]
-CallRoutesListOptionsResultV2 = Struct.new(
+CallRouteOption = Struct.new(
   :digit,
   :id,
   :path,
@@ -2124,51 +2063,34 @@ CallRoutesListOptionsResultV2 = Struct.new(
   keyword_init: true
 )
 
-# Request payload for CallRoutesListOptionsResultV2#list.
-#
-# @!attribute [rw] call_route_id
-#   @return [String]
-CallRoutesListOptionsResultV2ListMatch = Struct.new(
-  :call_route_id,
-  keyword_init: true
-)
-
-# CallRoutesShowAllowedCallerResultV2 entity data model.
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] phone_number
-#   @return [String]
-CallRoutesShowAllowedCallerResultV2 = Struct.new(
-  :id,
-  :name,
-  :phone_number,
-  keyword_init: true
-)
-
-# Request payload for CallRoutesShowAllowedCallerResultV2#load.
+# Request payload for CallRouteOption#load.
 #
 # @!attribute [rw] call_route_id
 #   @return [String]
 #
 # @!attribute [rw] id
 #   @return [String]
-CallRoutesShowAllowedCallerResultV2LoadMatch = Struct.new(
+CallRouteOptionLoadMatch = Struct.new(
   :call_route_id,
   :id,
   keyword_init: true
 )
 
-# CallRoutesShowOptionResultV2 entity data model.
+# Request payload for CallRouteOption#list.
+#
+# @!attribute [rw] id
+#   @return [String]
+CallRouteOptionListMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
+# Request payload for CallRouteOption#create.
+#
+# @!attribute [rw] id
+#   @return [String]
 #
 # @!attribute [rw] digit
-#   @return [String]
-#
-# @!attribute [rw] id
 #   @return [String]
 #
 # @!attribute [rw] path
@@ -2176,87 +2098,15 @@ CallRoutesShowAllowedCallerResultV2LoadMatch = Struct.new(
 #
 # @!attribute [rw] prompt
 #   @return [String]
-CallRoutesShowOptionResultV2 = Struct.new(
-  :digit,
+CallRouteOptionCreateData = Struct.new(
   :id,
+  :digit,
   :path,
   :prompt,
   keyword_init: true
 )
 
-# Request payload for CallRoutesShowOptionResultV2#load.
-#
-# @!attribute [rw] call_route_id
-#   @return [String]
-#
-# @!attribute [rw] id
-#   @return [String]
-CallRoutesShowOptionResultV2LoadMatch = Struct.new(
-  :call_route_id,
-  :id,
-  keyword_init: true
-)
-
-# CallRoutesUpdateAllowedCallerResultV2 entity data model.
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] phone_number
-#   @return [String]
-CallRoutesUpdateAllowedCallerResultV2 = Struct.new(
-  :id,
-  :name,
-  :phone_number,
-  keyword_init: true
-)
-
-# Request payload for CallRoutesUpdateAllowedCallerResultV2#update.
-#
-# @!attribute [rw] call_route_id
-#   @return [String]
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] name
-#   @return [String, nil]
-#
-# @!attribute [rw] phone_number
-#   @return [String, nil]
-CallRoutesUpdateAllowedCallerResultV2UpdateData = Struct.new(
-  :call_route_id,
-  :id,
-  :name,
-  :phone_number,
-  keyword_init: true
-)
-
-# CallRoutesUpdateOptionResultV2 entity data model.
-#
-# @!attribute [rw] digit
-#   @return [String]
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] path
-#   @return [Array]
-#
-# @!attribute [rw] prompt
-#   @return [String]
-CallRoutesUpdateOptionResultV2 = Struct.new(
-  :digit,
-  :id,
-  :path,
-  :prompt,
-  keyword_init: true
-)
-
-# Request payload for CallRoutesUpdateOptionResultV2#update.
+# Request payload for CallRouteOption#update.
 #
 # @!attribute [rw] call_route_id
 #   @return [String]
@@ -2272,7 +2122,7 @@ CallRoutesUpdateOptionResultV2 = Struct.new(
 #
 # @!attribute [rw] prompt
 #   @return [String, nil]
-CallRoutesUpdateOptionResultV2UpdateData = Struct.new(
+CallRouteOptionUpdateData = Struct.new(
   :call_route_id,
   :id,
   :digit,
@@ -2281,23 +2131,14 @@ CallRoutesUpdateOptionResultV2UpdateData = Struct.new(
   keyword_init: true
 )
 
-# CallRoutesV2 entity data model.
-#
-# @!attribute [rw] id
-#   @return [String, nil]
-CallRoutesV2 = Struct.new(
-  :id,
-  keyword_init: true
-)
-
-# Request payload for CallRoutesV2#remove.
+# Request payload for CallRouteOption#remove.
 #
 # @!attribute [rw] call_route_id
 #   @return [String]
 #
 # @!attribute [rw] id
 #   @return [String]
-CallRoutesV2RemoveMatch = Struct.new(
+CallRouteOptionRemoveMatch = Struct.new(
   :call_route_id,
   :id,
   keyword_init: true
@@ -2465,7 +2306,7 @@ CatalogEntryLoadMatch = Struct.new(
 #   @return [String, nil]
 #
 # @!attribute [rw] page_size
-#   @return [Integer, nil]
+#   @return [Integer]
 CatalogEntryListMatch = Struct.new(
   :after,
   :catalog_type_id,
@@ -2533,6 +2374,15 @@ CatalogEntryUpdateData = Struct.new(
   :name,
   :rank,
   :update_attributes,
+  keyword_init: true
+)
+
+# Request payload for CatalogEntry#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+CatalogEntryRemoveMatch = Struct.new(
+  :id,
   keyword_init: true
 )
 
@@ -2653,9 +2503,6 @@ CatalogResourceListMatch = Struct.new(
 # @!attribute [rw] schema
 #   @return [Hash]
 #
-# @!attribute [rw] semantic_type
-#   @return [String]
-#
 # @!attribute [rw] source_repo_url
 #   @return [String, nil]
 #
@@ -2687,7 +2534,6 @@ CatalogType = Struct.new(
   :registry_type,
   :required_integrations,
   :schema,
-  :semantic_type,
   :source_repo_url,
   :type_name,
   :updated_at,
@@ -2763,9 +2609,6 @@ CatalogTypeLoadMatch = Struct.new(
 # @!attribute [rw] schema
 #   @return [Hash, nil]
 #
-# @!attribute [rw] semantic_type
-#   @return [String, nil]
-#
 # @!attribute [rw] source_repo_url
 #   @return [String, nil]
 #
@@ -2797,7 +2640,6 @@ CatalogTypeListMatch = Struct.new(
   :registry_type,
   :required_integrations,
   :schema,
-  :semantic_type,
   :source_repo_url,
   :type_name,
   :updated_at,
@@ -2903,6 +2745,15 @@ CatalogTypeUpdateData = Struct.new(
   keyword_init: true
 )
 
+# Request payload for CatalogType#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+CatalogTypeRemoveMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
 # CatalogTypeSchema entity data model.
 #
 # @!attribute [rw] annotations
@@ -2965,9 +2816,6 @@ CatalogTypeUpdateData = Struct.new(
 # @!attribute [rw] schema
 #   @return [Hash]
 #
-# @!attribute [rw] semantic_type
-#   @return [String]
-#
 # @!attribute [rw] source_repo_url
 #   @return [String, nil]
 #
@@ -3003,7 +2851,6 @@ CatalogTypeSchema = Struct.new(
   :registry_type,
   :required_integrations,
   :schema,
-  :semantic_type,
   :source_repo_url,
   :type_name,
   :updated_at,
@@ -3061,27 +2908,6 @@ CatalogTypeSchemaCreateData = Struct.new(
 # @!attribute [rw] name
 #   @return [String]
 #
-# @!attribute [rw] options
-#   @return [Array]
-#
-# @!attribute [rw] required
-#   @return [String, nil]
-#
-# @!attribute [rw] required_v2
-#   @return [String, nil]
-#
-# @!attribute [rw] show_before_closure
-#   @return [Boolean]
-#
-# @!attribute [rw] show_before_creation
-#   @return [Boolean]
-#
-# @!attribute [rw] show_before_update
-#   @return [Boolean]
-#
-# @!attribute [rw] show_in_announcement_post
-#   @return [Boolean, nil]
-#
 # @!attribute [rw] updated_at
 #   @return [String]
 CustomField = Struct.new(
@@ -3095,13 +2921,6 @@ CustomField = Struct.new(
   :helptext_catalog_attribute_id,
   :id,
   :name,
-  :options,
-  :required,
-  :required_v2,
-  :show_before_closure,
-  :show_before_creation,
-  :show_before_update,
-  :show_in_announcement_post,
   :updated_at,
   keyword_init: true
 )
@@ -3147,27 +2966,6 @@ CustomFieldLoadMatch = Struct.new(
 # @!attribute [rw] name
 #   @return [String, nil]
 #
-# @!attribute [rw] options
-#   @return [Array, nil]
-#
-# @!attribute [rw] required
-#   @return [String, nil]
-#
-# @!attribute [rw] required_v2
-#   @return [String, nil]
-#
-# @!attribute [rw] show_before_closure
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] show_before_creation
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] show_before_update
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] show_in_announcement_post
-#   @return [Boolean, nil]
-#
 # @!attribute [rw] updated_at
 #   @return [String, nil]
 CustomFieldListMatch = Struct.new(
@@ -3181,13 +2979,6 @@ CustomFieldListMatch = Struct.new(
   :helptext_catalog_attribute_id,
   :id,
   :name,
-  :options,
-  :required,
-  :required_v2,
-  :show_before_closure,
-  :show_before_creation,
-  :show_before_update,
-  :show_in_announcement_post,
   :updated_at,
   keyword_init: true
 )
@@ -3217,24 +3008,6 @@ CustomFieldListMatch = Struct.new(
 #
 # @!attribute [rw] name
 #   @return [String]
-#
-# @!attribute [rw] required
-#   @return [String, nil]
-#
-# @!attribute [rw] required_v2
-#   @return [String, nil]
-#
-# @!attribute [rw] show_before_closure
-#   @return [Boolean]
-#
-# @!attribute [rw] show_before_creation
-#   @return [Boolean]
-#
-# @!attribute [rw] show_before_update
-#   @return [Boolean]
-#
-# @!attribute [rw] show_in_announcement_post
-#   @return [Boolean, nil]
 CustomFieldCreateData = Struct.new(
   :catalog_type_id,
   :description,
@@ -3244,12 +3017,6 @@ CustomFieldCreateData = Struct.new(
   :group_by_catalog_attribute_id,
   :helptext_catalog_attribute_id,
   :name,
-  :required,
-  :required_v2,
-  :show_before_closure,
-  :show_before_creation,
-  :show_before_update,
-  :show_in_announcement_post,
   keyword_init: true
 )
 
@@ -3275,24 +3042,6 @@ CustomFieldCreateData = Struct.new(
 #
 # @!attribute [rw] name
 #   @return [String, nil]
-#
-# @!attribute [rw] required
-#   @return [String, nil]
-#
-# @!attribute [rw] required_v2
-#   @return [String, nil]
-#
-# @!attribute [rw] show_before_closure
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] show_before_creation
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] show_before_update
-#   @return [Boolean, nil]
-#
-# @!attribute [rw] show_in_announcement_post
-#   @return [Boolean, nil]
 CustomFieldUpdateData = Struct.new(
   :id,
   :description,
@@ -3301,12 +3050,6 @@ CustomFieldUpdateData = Struct.new(
   :group_by_catalog_attribute_id,
   :helptext_catalog_attribute_id,
   :name,
-  :required,
-  :required_v2,
-  :show_before_closure,
-  :show_before_creation,
-  :show_before_update,
-  :show_in_announcement_post,
   keyword_init: true
 )
 
@@ -3550,6 +3293,160 @@ EscalationCreateData = Struct.new(
   :incident_id,
   :title,
   :user_ids,
+  keyword_init: true
+)
+
+# EscalationPath entity data model.
+#
+# @!attribute [rw] current_responders
+#   @return [Array, nil]
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] kind
+#   @return [String]
+#
+# @!attribute [rw] name
+#   @return [String]
+#
+# @!attribute [rw] param_bindings
+#   @return [Hash, nil]
+#
+# @!attribute [rw] path
+#   @return [Array]
+#
+# @!attribute [rw] repeat_config
+#   @return [Hash]
+#
+# @!attribute [rw] team_ids
+#   @return [Array]
+#
+# @!attribute [rw] template_id
+#   @return [String, nil]
+#
+# @!attribute [rw] working_hours
+#   @return [Array, nil]
+EscalationPath = Struct.new(
+  :current_responders,
+  :id,
+  :kind,
+  :name,
+  :param_bindings,
+  :path,
+  :repeat_config,
+  :team_ids,
+  :template_id,
+  :working_hours,
+  keyword_init: true
+)
+
+# Request payload for EscalationPath#load.
+#
+# @!attribute [rw] id
+#   @return [String]
+EscalationPathLoadMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
+# Request payload for EscalationPath#list.
+#
+# @!attribute [rw] after
+#   @return [String, nil]
+#
+# @!attribute [rw] page_size
+#   @return [Integer, nil]
+EscalationPathListMatch = Struct.new(
+  :after,
+  :page_size,
+  keyword_init: true
+)
+
+# Request payload for EscalationPath#create.
+#
+# @!attribute [rw] kind
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String]
+#
+# @!attribute [rw] param_bindings
+#   @return [Hash, nil]
+#
+# @!attribute [rw] path
+#   @return [Array]
+#
+# @!attribute [rw] repeat_config
+#   @return [Hash]
+#
+# @!attribute [rw] team_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] template_id
+#   @return [String, nil]
+#
+# @!attribute [rw] working_hours
+#   @return [Array, nil]
+EscalationPathCreateData = Struct.new(
+  :kind,
+  :name,
+  :param_bindings,
+  :path,
+  :repeat_config,
+  :team_ids,
+  :template_id,
+  :working_hours,
+  keyword_init: true
+)
+
+# Request payload for EscalationPath#update.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] kind
+#   @return [String, nil]
+#
+# @!attribute [rw] name
+#   @return [String, nil]
+#
+# @!attribute [rw] param_bindings
+#   @return [Hash, nil]
+#
+# @!attribute [rw] path
+#   @return [Array, nil]
+#
+# @!attribute [rw] repeat_config
+#   @return [Hash, nil]
+#
+# @!attribute [rw] team_ids
+#   @return [Array, nil]
+#
+# @!attribute [rw] template_id
+#   @return [String, nil]
+#
+# @!attribute [rw] working_hours
+#   @return [Array, nil]
+EscalationPathUpdateData = Struct.new(
+  :id,
+  :kind,
+  :name,
+  :param_bindings,
+  :path,
+  :repeat_config,
+  :team_ids,
+  :template_id,
+  :working_hours,
+  keyword_init: true
+)
+
+# Request payload for EscalationPath#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+EscalationPathRemoveMatch = Struct.new(
+  :id,
   keyword_init: true
 )
 
@@ -3875,18 +3772,34 @@ FollowUpLoadMatch = Struct.new(
 
 # Request payload for FollowUp#list.
 #
+# @!attribute [rw] after
+#   @return [String, nil]
+#
 # @!attribute [rw] assignee_team_id
 #   @return [String, nil]
+#
+# @!attribute [rw] created_at
+#   @return [Hash, nil]
 #
 # @!attribute [rw] incident_id
 #   @return [String, nil]
 #
 # @!attribute [rw] incident_mode
 #   @return [String, nil]
+#
+# @!attribute [rw] page_size
+#   @return [Integer, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [Hash, nil]
 FollowUpListMatch = Struct.new(
+  :after,
   :assignee_team_id,
+  :created_at,
   :incident_id,
   :incident_mode,
+  :page_size,
+  :updated_at,
   keyword_init: true
 )
 
@@ -4245,23 +4158,11 @@ IdentityLoadMatch = Struct.new(
 # @!attribute [rw] slack_team_id
 #   @return [String]
 #
-# @!attribute [rw] source_message_channel_id
-#   @return [String, nil]
-#
-# @!attribute [rw] source_message_timestamp
-#   @return [String, nil]
-#
-# @!attribute [rw] status
-#   @return [String]
-#
 # @!attribute [rw] summary
 #   @return [String, nil]
 #
 # @!attribute [rw] team_ids
 #   @return [Array]
-#
-# @!attribute [rw] timestamps
-#   @return [Array, nil]
 #
 # @!attribute [rw] updated_at
 #   @return [String]
@@ -4313,12 +4214,8 @@ Incident = Struct.new(
   :slack_channel_name_override,
   :slack_channel_url,
   :slack_team_id,
-  :source_message_channel_id,
-  :source_message_timestamp,
-  :status,
   :summary,
   :team_ids,
-  :timestamps,
   :updated_at,
   :visibility,
   :workload_minutes_late,
@@ -4342,15 +4239,55 @@ IncidentLoadMatch = Struct.new(
 # @!attribute [rw] after
 #   @return [String, nil]
 #
+# @!attribute [rw] created_at
+#   @return [Hash, nil]
+#
+# @!attribute [rw] custom_field
+#   @return [Hash, nil]
+#
+# @!attribute [rw] filter_mode
+#   @return [String, nil]
+#
+# @!attribute [rw] incident_role
+#   @return [Hash, nil]
+#
+# @!attribute [rw] incident_type
+#   @return [Hash, nil]
+#
+# @!attribute [rw] mode
+#   @return [Hash, nil]
+#
 # @!attribute [rw] page_size
 #   @return [Integer, nil]
 #
+# @!attribute [rw] severity
+#   @return [Hash, nil]
+#
+# @!attribute [rw] sort_by
+#   @return [String, nil]
+#
 # @!attribute [rw] status
-#   @return [Array, nil]
+#   @return [Hash, nil]
+#
+# @!attribute [rw] status_category
+#   @return [Hash, nil]
+#
+# @!attribute [rw] updated_at
+#   @return [Hash, nil]
 IncidentListMatch = Struct.new(
   :after,
+  :created_at,
+  :custom_field,
+  :filter_mode,
+  :incident_role,
+  :incident_type,
+  :mode,
   :page_size,
+  :severity,
+  :sort_by,
   :status,
+  :status_category,
+  :updated_at,
   keyword_init: true
 )
 
@@ -4392,15 +4329,6 @@ IncidentListMatch = Struct.new(
 # @!attribute [rw] slack_team_id
 #   @return [String, nil]
 #
-# @!attribute [rw] source_message_channel_id
-#   @return [String, nil]
-#
-# @!attribute [rw] source_message_timestamp
-#   @return [String, nil]
-#
-# @!attribute [rw] status
-#   @return [String, nil]
-#
 # @!attribute [rw] summary
 #   @return [String, nil]
 #
@@ -4419,9 +4347,6 @@ IncidentCreateData = Struct.new(
   :severity_id,
   :slack_channel_name_override,
   :slack_team_id,
-  :source_message_channel_id,
-  :source_message_timestamp,
-  :status,
   :summary,
   :visibility,
   keyword_init: true
@@ -4772,9 +4697,6 @@ IncidentRelationshipListMatch = Struct.new(
 # @!attribute [rw] name
 #   @return [String]
 #
-# @!attribute [rw] required
-#   @return [Boolean, nil]
-#
 # @!attribute [rw] role_type
 #   @return [String]
 #
@@ -4789,7 +4711,6 @@ IncidentRole = Struct.new(
   :id,
   :instructions,
   :name,
-  :required,
   :role_type,
   :shortform,
   :updated_at,
@@ -4822,9 +4743,6 @@ IncidentRoleLoadMatch = Struct.new(
 # @!attribute [rw] name
 #   @return [String, nil]
 #
-# @!attribute [rw] required
-#   @return [Boolean, nil]
-#
 # @!attribute [rw] role_type
 #   @return [String, nil]
 #
@@ -4839,7 +4757,6 @@ IncidentRoleListMatch = Struct.new(
   :id,
   :instructions,
   :name,
-  :required,
   :role_type,
   :shortform,
   :updated_at,
@@ -4857,16 +4774,12 @@ IncidentRoleListMatch = Struct.new(
 # @!attribute [rw] name
 #   @return [String]
 #
-# @!attribute [rw] required
-#   @return [Boolean]
-#
 # @!attribute [rw] shortform
 #   @return [String]
 IncidentRoleCreateData = Struct.new(
   :description,
   :instructions,
   :name,
-  :required,
   :shortform,
   keyword_init: true
 )
@@ -4885,9 +4798,6 @@ IncidentRoleCreateData = Struct.new(
 # @!attribute [rw] name
 #   @return [String, nil]
 #
-# @!attribute [rw] required
-#   @return [Boolean, nil]
-#
 # @!attribute [rw] shortform
 #   @return [String, nil]
 IncidentRoleUpdateData = Struct.new(
@@ -4895,7 +4805,6 @@ IncidentRoleUpdateData = Struct.new(
   :description,
   :instructions,
   :name,
-  :required,
   :shortform,
   keyword_init: true
 )
@@ -6218,99 +6127,7 @@ PayConfigRemoveMatch = Struct.new(
   keyword_init: true
 )
 
-# PayConfigsCreateOneOffRuleResultV2 entity data model.
-#
-# @!attribute [rw] end_at
-#   @return [String]
-#
-# @!attribute [rw] name
-#   @return [String]
-#
-# @!attribute [rw] rate_cents
-#   @return [Integer]
-#
-# @!attribute [rw] start_at
-#   @return [String]
-PayConfigsCreateOneOffRuleResultV2 = Struct.new(
-  :end_at,
-  :name,
-  :rate_cents,
-  :start_at,
-  keyword_init: true
-)
-
-# Request payload for PayConfigsCreateOneOffRuleResultV2#create.
-#
-# @!attribute [rw] pay_config_id
-#   @return [String]
-#
-# @!attribute [rw] end_at
-#   @return [String]
-#
-# @!attribute [rw] name
-#   @return [String]
-#
-# @!attribute [rw] rate_cents
-#   @return [Integer]
-#
-# @!attribute [rw] start_at
-#   @return [String]
-PayConfigsCreateOneOffRuleResultV2CreateData = Struct.new(
-  :pay_config_id,
-  :end_at,
-  :name,
-  :rate_cents,
-  :start_at,
-  keyword_init: true
-)
-
-# PayConfigsCreateWeeklyRuleResultV2 entity data model.
-#
-# @!attribute [rw] end_time
-#   @return [String]
-#
-# @!attribute [rw] rate_cents
-#   @return [Integer]
-#
-# @!attribute [rw] start_time
-#   @return [String]
-#
-# @!attribute [rw] weekdays
-#   @return [Array]
-PayConfigsCreateWeeklyRuleResultV2 = Struct.new(
-  :end_time,
-  :rate_cents,
-  :start_time,
-  :weekdays,
-  keyword_init: true
-)
-
-# Request payload for PayConfigsCreateWeeklyRuleResultV2#create.
-#
-# @!attribute [rw] pay_config_id
-#   @return [String]
-#
-# @!attribute [rw] end_time
-#   @return [String]
-#
-# @!attribute [rw] rate_cents
-#   @return [Integer]
-#
-# @!attribute [rw] start_time
-#   @return [String]
-#
-# @!attribute [rw] weekdays
-#   @return [Array]
-PayConfigsCreateWeeklyRuleResultV2CreateData = Struct.new(
-  :pay_config_id,
-  :end_time,
-  :rate_cents,
-  :start_time,
-  :weekdays,
-  keyword_init: true
-)
-
-# PayConfigsListOneOffRulesResultV2 entity data model.
+# PayConfigOneOffRule entity data model.
 #
 # @!attribute [rw] end_at
 #   @return [String]
@@ -6326,7 +6143,7 @@ PayConfigsCreateWeeklyRuleResultV2CreateData = Struct.new(
 #
 # @!attribute [rw] start_at
 #   @return [String]
-PayConfigsListOneOffRulesResultV2 = Struct.new(
+PayConfigOneOffRule = Struct.new(
   :end_at,
   :id,
   :name,
@@ -6335,55 +6152,34 @@ PayConfigsListOneOffRulesResultV2 = Struct.new(
   keyword_init: true
 )
 
-# Request payload for PayConfigsListOneOffRulesResultV2#list.
-#
-# @!attribute [rw] pay_config_id
-#   @return [String]
-PayConfigsListOneOffRulesResultV2ListMatch = Struct.new(
-  :pay_config_id,
-  keyword_init: true
-)
-
-# PayConfigsListWeeklyRulesResultV2 entity data model.
-#
-# @!attribute [rw] end_time
-#   @return [String]
+# Request payload for PayConfigOneOffRule#load.
 #
 # @!attribute [rw] id
 #   @return [String]
 #
-# @!attribute [rw] rate_cents
-#   @return [Integer]
-#
-# @!attribute [rw] start_time
-#   @return [String]
-#
-# @!attribute [rw] weekdays
-#   @return [Array]
-PayConfigsListWeeklyRulesResultV2 = Struct.new(
-  :end_time,
-  :id,
-  :rate_cents,
-  :start_time,
-  :weekdays,
-  keyword_init: true
-)
-
-# Request payload for PayConfigsListWeeklyRulesResultV2#list.
-#
 # @!attribute [rw] pay_config_id
 #   @return [String]
-PayConfigsListWeeklyRulesResultV2ListMatch = Struct.new(
+PayConfigOneOffRuleLoadMatch = Struct.new(
+  :id,
   :pay_config_id,
   keyword_init: true
 )
 
-# PayConfigsShowOneOffRuleResultV2 entity data model.
+# Request payload for PayConfigOneOffRule#list.
+#
+# @!attribute [rw] id
+#   @return [String]
+PayConfigOneOffRuleListMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
+# Request payload for PayConfigOneOffRule#create.
+#
+# @!attribute [rw] id
+#   @return [String]
 #
 # @!attribute [rw] end_at
-#   @return [String]
-#
-# @!attribute [rw] id
 #   @return [String]
 #
 # @!attribute [rw] name
@@ -6394,92 +6190,16 @@ PayConfigsListWeeklyRulesResultV2ListMatch = Struct.new(
 #
 # @!attribute [rw] start_at
 #   @return [String]
-PayConfigsShowOneOffRuleResultV2 = Struct.new(
-  :end_at,
+PayConfigOneOffRuleCreateData = Struct.new(
   :id,
+  :end_at,
   :name,
   :rate_cents,
   :start_at,
   keyword_init: true
 )
 
-# Request payload for PayConfigsShowOneOffRuleResultV2#load.
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] pay_config_id
-#   @return [String]
-PayConfigsShowOneOffRuleResultV2LoadMatch = Struct.new(
-  :id,
-  :pay_config_id,
-  keyword_init: true
-)
-
-# PayConfigsShowWeeklyRuleResultV2 entity data model.
-#
-# @!attribute [rw] end_time
-#   @return [String]
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] rate_cents
-#   @return [Integer]
-#
-# @!attribute [rw] start_time
-#   @return [String]
-#
-# @!attribute [rw] weekdays
-#   @return [Array]
-PayConfigsShowWeeklyRuleResultV2 = Struct.new(
-  :end_time,
-  :id,
-  :rate_cents,
-  :start_time,
-  :weekdays,
-  keyword_init: true
-)
-
-# Request payload for PayConfigsShowWeeklyRuleResultV2#load.
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] pay_config_id
-#   @return [String]
-PayConfigsShowWeeklyRuleResultV2LoadMatch = Struct.new(
-  :id,
-  :pay_config_id,
-  keyword_init: true
-)
-
-# PayConfigsUpdateOneOffRuleResultV2 entity data model.
-#
-# @!attribute [rw] end_at
-#   @return [String]
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] name
-#   @return [String]
-#
-# @!attribute [rw] rate_cents
-#   @return [Integer]
-#
-# @!attribute [rw] start_at
-#   @return [String]
-PayConfigsUpdateOneOffRuleResultV2 = Struct.new(
-  :end_at,
-  :id,
-  :name,
-  :rate_cents,
-  :start_at,
-  keyword_init: true
-)
-
-# Request payload for PayConfigsUpdateOneOffRuleResultV2#update.
+# Request payload for PayConfigOneOffRule#update.
 #
 # @!attribute [rw] id
 #   @return [String]
@@ -6498,7 +6218,7 @@ PayConfigsUpdateOneOffRuleResultV2 = Struct.new(
 #
 # @!attribute [rw] start_at
 #   @return [String, nil]
-PayConfigsUpdateOneOffRuleResultV2UpdateData = Struct.new(
+PayConfigOneOffRuleUpdateData = Struct.new(
   :id,
   :pay_config_id,
   :end_at,
@@ -6508,7 +6228,20 @@ PayConfigsUpdateOneOffRuleResultV2UpdateData = Struct.new(
   keyword_init: true
 )
 
-# PayConfigsUpdateWeeklyRuleResultV2 entity data model.
+# Request payload for PayConfigOneOffRule#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] pay_config_id
+#   @return [String]
+PayConfigOneOffRuleRemoveMatch = Struct.new(
+  :id,
+  :pay_config_id,
+  keyword_init: true
+)
+
+# PayConfigWeeklyRule entity data model.
 #
 # @!attribute [rw] end_time
 #   @return [String]
@@ -6524,7 +6257,7 @@ PayConfigsUpdateOneOffRuleResultV2UpdateData = Struct.new(
 #
 # @!attribute [rw] weekdays
 #   @return [Array]
-PayConfigsUpdateWeeklyRuleResultV2 = Struct.new(
+PayConfigWeeklyRule = Struct.new(
   :end_time,
   :id,
   :rate_cents,
@@ -6533,7 +6266,54 @@ PayConfigsUpdateWeeklyRuleResultV2 = Struct.new(
   keyword_init: true
 )
 
-# Request payload for PayConfigsUpdateWeeklyRuleResultV2#update.
+# Request payload for PayConfigWeeklyRule#load.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] pay_config_id
+#   @return [String]
+PayConfigWeeklyRuleLoadMatch = Struct.new(
+  :id,
+  :pay_config_id,
+  keyword_init: true
+)
+
+# Request payload for PayConfigWeeklyRule#list.
+#
+# @!attribute [rw] id
+#   @return [String]
+PayConfigWeeklyRuleListMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
+# Request payload for PayConfigWeeklyRule#create.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] end_time
+#   @return [String]
+#
+# @!attribute [rw] rate_cents
+#   @return [Integer]
+#
+# @!attribute [rw] start_time
+#   @return [String]
+#
+# @!attribute [rw] weekdays
+#   @return [Array]
+PayConfigWeeklyRuleCreateData = Struct.new(
+  :id,
+  :end_time,
+  :rate_cents,
+  :start_time,
+  :weekdays,
+  keyword_init: true
+)
+
+# Request payload for PayConfigWeeklyRule#update.
 #
 # @!attribute [rw] id
 #   @return [String]
@@ -6552,7 +6332,7 @@ PayConfigsUpdateWeeklyRuleResultV2 = Struct.new(
 #
 # @!attribute [rw] weekdays
 #   @return [Array, nil]
-PayConfigsUpdateWeeklyRuleResultV2UpdateData = Struct.new(
+PayConfigWeeklyRuleUpdateData = Struct.new(
   :id,
   :pay_config_id,
   :end_time,
@@ -6562,23 +6342,14 @@ PayConfigsUpdateWeeklyRuleResultV2UpdateData = Struct.new(
   keyword_init: true
 )
 
-# PayConfigsV2 entity data model.
-#
-# @!attribute [rw] id
-#   @return [String, nil]
-PayConfigsV2 = Struct.new(
-  :id,
-  keyword_init: true
-)
-
-# Request payload for PayConfigsV2#remove.
+# Request payload for PayConfigWeeklyRule#remove.
 #
 # @!attribute [rw] id
 #   @return [String]
 #
 # @!attribute [rw] pay_config_id
 #   @return [String]
-PayConfigsV2RemoveMatch = Struct.new(
+PayConfigWeeklyRuleRemoveMatch = Struct.new(
   :id,
   :pay_config_id,
   keyword_init: true
@@ -6930,24 +6701,6 @@ PayReportsV2LoadMatch = Struct.new(
   keyword_init: true
 )
 
-# PoliciesV2 entity data model.
-#
-# @!attribute [rw] id
-#   @return [String, nil]
-PoliciesV2 = Struct.new(
-  :id,
-  keyword_init: true
-)
-
-# Request payload for PoliciesV2#remove.
-#
-# @!attribute [rw] id
-#   @return [String]
-PoliciesV2RemoveMatch = Struct.new(
-  :id,
-  keyword_init: true
-)
-
 # Policy entity data model.
 #
 # @!attribute [rw] assignment_rules
@@ -7146,6 +6899,15 @@ PolicyUpdateData = Struct.new(
   :post_mortem,
   :schedule,
   :status,
+  keyword_init: true
+)
+
+# Request payload for Policy#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+PolicyRemoveMatch = Struct.new(
+  :id,
   keyword_init: true
 )
 
@@ -7818,6 +7580,148 @@ ScheduleEntryLoadMatch = Struct.new(
   keyword_init: true
 )
 
+# ScheduleOverride entity data model.
+#
+# @!attribute [rw] created_at
+#   @return [String]
+#
+# @!attribute [rw] end_at
+#   @return [String]
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] layer_id
+#   @return [String]
+#
+# @!attribute [rw] rotation_id
+#   @return [String]
+#
+# @!attribute [rw] schedule_id
+#   @return [String]
+#
+# @!attribute [rw] start_at
+#   @return [String]
+#
+# @!attribute [rw] updated_at
+#   @return [String]
+#
+# @!attribute [rw] user
+#   @return [Hash]
+ScheduleOverride = Struct.new(
+  :created_at,
+  :end_at,
+  :id,
+  :layer_id,
+  :rotation_id,
+  :schedule_id,
+  :start_at,
+  :updated_at,
+  :user,
+  keyword_init: true
+)
+
+# Request payload for ScheduleOverride#load.
+#
+# @!attribute [rw] id
+#   @return [String]
+ScheduleOverrideLoadMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
+# Request payload for ScheduleOverride#list.
+#
+# @!attribute [rw] after
+#   @return [String, nil]
+#
+# @!attribute [rw] layer_id
+#   @return [String, nil]
+#
+# @!attribute [rw] page_size
+#   @return [Integer, nil]
+#
+# @!attribute [rw] rotation_id
+#   @return [String, nil]
+#
+# @!attribute [rw] schedule_id
+#   @return [String]
+ScheduleOverrideListMatch = Struct.new(
+  :after,
+  :layer_id,
+  :page_size,
+  :rotation_id,
+  :schedule_id,
+  keyword_init: true
+)
+
+# Request payload for ScheduleOverride#create.
+#
+# @!attribute [rw] end_at
+#   @return [String]
+#
+# @!attribute [rw] layer_id
+#   @return [String]
+#
+# @!attribute [rw] rotation_id
+#   @return [String]
+#
+# @!attribute [rw] schedule_id
+#   @return [String]
+#
+# @!attribute [rw] start_at
+#   @return [String]
+#
+# @!attribute [rw] user
+#   @return [Hash]
+ScheduleOverrideCreateData = Struct.new(
+  :end_at,
+  :layer_id,
+  :rotation_id,
+  :schedule_id,
+  :start_at,
+  :user,
+  keyword_init: true
+)
+
+# Request payload for ScheduleOverride#update.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] end_at
+#   @return [String, nil]
+#
+# @!attribute [rw] layer_id
+#   @return [String, nil]
+#
+# @!attribute [rw] rotation_id
+#   @return [String, nil]
+#
+# @!attribute [rw] start_at
+#   @return [String, nil]
+#
+# @!attribute [rw] user
+#   @return [Hash, nil]
+ScheduleOverrideUpdateData = Struct.new(
+  :id,
+  :end_at,
+  :layer_id,
+  :rotation_id,
+  :start_at,
+  :user,
+  keyword_init: true
+)
+
+# Request payload for ScheduleOverride#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+ScheduleOverrideRemoveMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
 # ScheduleReplica entity data model.
 #
 # @!attribute [rw] created_at
@@ -7919,6 +7823,19 @@ ScheduleReplicaCreateData = Struct.new(
   :replica_provider,
   :replica_provider_id,
   :sources,
+  keyword_init: true
+)
+
+# Request payload for ScheduleReplica#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] schedule_id
+#   @return [String]
+ScheduleReplicaRemoveMatch = Struct.new(
+  :id,
+  :schedule_id,
   keyword_init: true
 )
 
@@ -8051,6 +7968,19 @@ ScheduleSyncRuleUpdateData = Struct.new(
   keyword_init: true
 )
 
+# Request payload for ScheduleSyncRule#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+#
+# @!attribute [rw] schedule_id
+#   @return [String]
+ScheduleSyncRuleRemoveMatch = Struct.new(
+  :id,
+  :schedule_id,
+  keyword_init: true
+)
+
 # ScheduleSyncTarget entity data model.
 #
 # @!attribute [rw] add_bot_to_group
@@ -8158,180 +8088,6 @@ ScheduleSyncTargetUpdateData = Struct.new(
 #   @return [String]
 ScheduleSyncTargetRemoveMatch = Struct.new(
   :id,
-  keyword_init: true
-)
-
-# SchedulesShowOverrideResultV2 entity data model.
-#
-# @!attribute [rw] created_at
-#   @return [String]
-#
-# @!attribute [rw] end_at
-#   @return [String]
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] layer_id
-#   @return [String]
-#
-# @!attribute [rw] rotation_id
-#   @return [String]
-#
-# @!attribute [rw] schedule_id
-#   @return [String]
-#
-# @!attribute [rw] start_at
-#   @return [String]
-#
-# @!attribute [rw] updated_at
-#   @return [String]
-#
-# @!attribute [rw] user
-#   @return [Hash]
-SchedulesShowOverrideResultV2 = Struct.new(
-  :created_at,
-  :end_at,
-  :id,
-  :layer_id,
-  :rotation_id,
-  :schedule_id,
-  :start_at,
-  :updated_at,
-  :user,
-  keyword_init: true
-)
-
-# Request payload for SchedulesShowOverrideResultV2#load.
-#
-# @!attribute [rw] id
-#   @return [String]
-SchedulesShowOverrideResultV2LoadMatch = Struct.new(
-  :id,
-  keyword_init: true
-)
-
-# Request payload for SchedulesShowOverrideResultV2#list.
-#
-# @!attribute [rw] after
-#   @return [String, nil]
-#
-# @!attribute [rw] layer_id
-#   @return [String, nil]
-#
-# @!attribute [rw] page_size
-#   @return [Integer, nil]
-#
-# @!attribute [rw] rotation_id
-#   @return [String, nil]
-#
-# @!attribute [rw] schedule_id
-#   @return [String]
-SchedulesShowOverrideResultV2ListMatch = Struct.new(
-  :after,
-  :layer_id,
-  :page_size,
-  :rotation_id,
-  :schedule_id,
-  keyword_init: true
-)
-
-# Request payload for SchedulesShowOverrideResultV2#create.
-#
-# @!attribute [rw] end_at
-#   @return [String]
-#
-# @!attribute [rw] layer_id
-#   @return [String]
-#
-# @!attribute [rw] rotation_id
-#   @return [String]
-#
-# @!attribute [rw] schedule_id
-#   @return [String]
-#
-# @!attribute [rw] start_at
-#   @return [String]
-#
-# @!attribute [rw] user
-#   @return [Hash]
-SchedulesShowOverrideResultV2CreateData = Struct.new(
-  :end_at,
-  :layer_id,
-  :rotation_id,
-  :schedule_id,
-  :start_at,
-  :user,
-  keyword_init: true
-)
-
-# SchedulesUpdateOverrideResultV2 entity data model.
-#
-# @!attribute [rw] created_at
-#   @return [String]
-#
-# @!attribute [rw] end_at
-#   @return [String]
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] layer_id
-#   @return [String]
-#
-# @!attribute [rw] rotation_id
-#   @return [String]
-#
-# @!attribute [rw] schedule_id
-#   @return [String]
-#
-# @!attribute [rw] start_at
-#   @return [String]
-#
-# @!attribute [rw] updated_at
-#   @return [String]
-#
-# @!attribute [rw] user
-#   @return [Hash]
-SchedulesUpdateOverrideResultV2 = Struct.new(
-  :created_at,
-  :end_at,
-  :id,
-  :layer_id,
-  :rotation_id,
-  :schedule_id,
-  :start_at,
-  :updated_at,
-  :user,
-  keyword_init: true
-)
-
-# Request payload for SchedulesUpdateOverrideResultV2#update.
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] end_at
-#   @return [String, nil]
-#
-# @!attribute [rw] layer_id
-#   @return [String, nil]
-#
-# @!attribute [rw] rotation_id
-#   @return [String, nil]
-#
-# @!attribute [rw] start_at
-#   @return [String, nil]
-#
-# @!attribute [rw] user
-#   @return [Hash, nil]
-SchedulesUpdateOverrideResultV2UpdateData = Struct.new(
-  :id,
-  :end_at,
-  :layer_id,
-  :rotation_id,
-  :start_at,
-  :user,
   keyword_init: true
 )
 
@@ -8566,6 +8322,15 @@ SeverityUpdateData = Struct.new(
   keyword_init: true
 )
 
+# Request payload for Severity#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+SeverityRemoveMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
 # StatusPage entity data model.
 #
 # @!attribute [rw] description
@@ -8699,7 +8464,7 @@ StatusPageComponentRemoveMatch = Struct.new(
   keyword_init: true
 )
 
-# StatusPageComponentAvailabilityV2 entity data model.
+# StatusPageComponentAvailability entity data model.
 #
 # @!attribute [rw] availability_percent
 #   @return [String, nil]
@@ -8718,7 +8483,7 @@ StatusPageComponentRemoveMatch = Struct.new(
 #
 # @!attribute [rw] status_page_id
 #   @return [String]
-StatusPageComponentAvailabilityV2 = Struct.new(
+StatusPageComponentAvailability = Struct.new(
   :availability_percent,
   :component_id,
   :data_available_since,
@@ -8728,7 +8493,7 @@ StatusPageComponentAvailabilityV2 = Struct.new(
   keyword_init: true
 )
 
-# Request payload for StatusPageComponentAvailabilityV2#load.
+# Request payload for StatusPageComponentAvailability#load.
 #
 # @!attribute [rw] component_id
 #   @return [String]
@@ -8741,7 +8506,7 @@ StatusPageComponentAvailabilityV2 = Struct.new(
 #
 # @!attribute [rw] start_at
 #   @return [String]
-StatusPageComponentAvailabilityV2LoadMatch = Struct.new(
+StatusPageComponentAvailabilityLoadMatch = Struct.new(
   :component_id,
   :status_page_id,
   :end_at,
@@ -8940,27 +8705,27 @@ StatusPageIncidentUpdateCreateData = Struct.new(
   keyword_init: true
 )
 
-# StatusPageLinkedResponseIncidentV1 entity data model.
+# StatusPageLinkedResponseIncident entity data model.
 #
 # @!attribute [rw] id
 #   @return [String]
 #
 # @!attribute [rw] linked_at
 #   @return [String]
-StatusPageLinkedResponseIncidentV1 = Struct.new(
+StatusPageLinkedResponseIncident = Struct.new(
   :id,
   :linked_at,
   keyword_init: true
 )
 
-# Request payload for StatusPageLinkedResponseIncidentV1#list.
+# Request payload for StatusPageLinkedResponseIncident#list.
 #
 # @!attribute [rw] incident_id
 #   @return [String]
 #
 # @!attribute [rw] status_page_id
 #   @return [String]
-StatusPageLinkedResponseIncidentV1ListMatch = Struct.new(
+StatusPageLinkedResponseIncidentListMatch = Struct.new(
   :incident_id,
   :status_page_id,
   keyword_init: true
@@ -9139,6 +8904,15 @@ StatusPageMaintenanceUpdateData = Struct.new(
   keyword_init: true
 )
 
+# Request payload for StatusPageMaintenance#remove.
+#
+# @!attribute [rw] id
+#   @return [String]
+StatusPageMaintenanceRemoveMatch = Struct.new(
+  :id,
+  keyword_init: true
+)
+
 # StatusPageMaintenanceUpdate entity data model.
 #
 # @!attribute [rw] component_statuses
@@ -9219,19 +8993,6 @@ StatusPageStructureLoadMatch = Struct.new(
   keyword_init: true
 )
 
-# StatusPagesV2 entity data model.
-class StatusPagesV2
-end
-
-# Request payload for StatusPagesV2#remove.
-#
-# @!attribute [rw] status_page_maintenance_id
-#   @return [String]
-StatusPagesV2RemoveMatch = Struct.new(
-  :status_page_maintenance_id,
-  keyword_init: true
-)
-
 # Team entity data model.
 #
 # @!attribute [rw] catalog_entry
@@ -9275,7 +9036,7 @@ TeamListMatch = Struct.new(
   keyword_init: true
 )
 
-# TelemetryDataSourceV2 entity data model.
+# TelemetryDataSource entity data model.
 #
 # @!attribute [rw] created_at
 #   @return [String]
@@ -9306,7 +9067,7 @@ TeamListMatch = Struct.new(
 #
 # @!attribute [rw] version
 #   @return [String, nil]
-TelemetryDataSourceV2 = Struct.new(
+TelemetryDataSource = Struct.new(
   :created_at,
   :datadog_config,
   :enabled,
@@ -9320,7 +9081,7 @@ TelemetryDataSourceV2 = Struct.new(
   keyword_init: true
 )
 
-# Request payload for TelemetryDataSourceV2#update.
+# Request payload for TelemetryDataSource#update.
 #
 # @!attribute [rw] id
 #   @return [String]
@@ -9333,7 +9094,7 @@ TelemetryDataSourceV2 = Struct.new(
 #
 # @!attribute [rw] name
 #   @return [String, nil]
-TelemetryDataSourceV2UpdateData = Struct.new(
+TelemetryDataSourceUpdateData = Struct.new(
   :id,
   :datadog_config,
   :grafana_config,
@@ -9413,19 +9174,6 @@ UserListMatch = Struct.new(
   :include_inactive,
   :page_size,
   :slack_user_id,
-  keyword_init: true
-)
-
-# Request payload for User#create.
-#
-# @!attribute [rw] id
-#   @return [String]
-#
-# @!attribute [rw] preferred_escalation_provider
-#   @return [Object, nil]
-UserCreateData = Struct.new(
-  :id,
-  :preferred_escalation_provider,
   keyword_init: true
 )
 

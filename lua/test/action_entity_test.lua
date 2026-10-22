@@ -139,7 +139,7 @@ describe("ActionEntity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:Action(nil):list({ ["incident_id"] = 1 }, nil)
+    local _, err = client:Action(nil):list({ ["after"] = 1 }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 

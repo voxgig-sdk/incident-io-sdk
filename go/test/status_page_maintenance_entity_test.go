@@ -191,7 +191,7 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create", "list", "update", "load"} {
+		for _, _op := range []string{"create", "list", "update", "load", "remove"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "status_page_maintenance." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -275,6 +275,32 @@ func TestStatusPageMaintenanceEntity(t *testing.T) {
 		}
 		if statusPageMaintenanceRef01DataDt0LoadResult["id"] != statusPageMaintenanceRef01Data["id"] {
 			t.Fatal("expected load result id to match")
+		}
+
+		// REMOVE
+		statusPageMaintenanceRef01MatchRm0 := map[string]any{
+			"id": statusPageMaintenanceRef01Data["id"],
+		}
+		_, err = statusPageMaintenanceRef01Ent.Remove(statusPageMaintenanceRef01MatchRm0, nil)
+		if err != nil {
+			t.Fatalf("remove failed: %v", err)
+		}
+
+		// LIST
+		statusPageMaintenanceRef01MatchRt0 := map[string]any{}
+
+		statusPageMaintenanceRef01ListRt0Result, err := statusPageMaintenanceRef01Ent.List(statusPageMaintenanceRef01MatchRt0, nil)
+		if err != nil {
+			t.Fatalf("list failed: %v", err)
+		}
+		statusPageMaintenanceRef01ListRt0, statusPageMaintenanceRef01ListRt0Ok := statusPageMaintenanceRef01ListRt0Result.([]any)
+		if !statusPageMaintenanceRef01ListRt0Ok {
+			t.Fatalf("expected list result to be an array, got %T", statusPageMaintenanceRef01ListRt0Result)
+		}
+
+		notFoundItem := vs.Select(entityListToData(statusPageMaintenanceRef01ListRt0), map[string]any{"id": statusPageMaintenanceRef01Data["id"]})
+		if !vs.IsEmpty(notFoundItem) {
+			t.Fatal("expected removed entity to not be in list")
 		}
 
 	})

@@ -4,9 +4,7 @@ export interface Action {
     completed_at?: string;
     created_at: string;
     creator: Record<string, any>;
-    description?: string;
-    external_issue_reference?: Record<string, any>;
-    follow_up: boolean;
+    description: string;
     id: string;
     incident_id: string;
     status: string;
@@ -14,25 +12,38 @@ export interface Action {
 }
 export interface ActionLoadMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface ActionListMatch {
+    after?: string;
+    created_at?: Record<string, any>;
     incident_id?: string;
     incident_mode?: string;
-    is_follow_up?: boolean;
+    page_size?: number;
+    updated_at?: Record<string, any>;
+    $action?: string;
+    [action: string]: any;
 }
 export interface ActionCreateData {
     assignee_id?: string;
     description: string;
     incident_id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface ActionUpdateData {
     id: string;
     assignee_id?: string;
     description?: string;
     status?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface ActionRemoveMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface Alert {
     alert_group_ids?: any[];
@@ -154,7 +165,6 @@ export interface AlertNoteRemoveMatch {
 }
 export interface AlertRoute {
     alert_sources: any[];
-    channel_config: any[];
     condition_groups: any[];
     created_at?: string;
     enabled: boolean;
@@ -163,10 +173,8 @@ export interface AlertRoute {
     grouping_config: Record<string, any>;
     id: string;
     incident_config: Record<string, any>;
-    incident_template: Record<string, any>;
     is_private: boolean;
     message_config: Record<string, any>;
-    message_template?: Record<string, any>;
     name: string;
     owning_team_ids?: any[];
     updated_at?: string;
@@ -174,51 +182,51 @@ export interface AlertRoute {
 }
 export interface AlertRouteLoadMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface AlertRouteListMatch {
     after?: string;
-    page_size: number;
+    page_size?: number;
+    $action?: string;
+    [action: string]: any;
 }
 export interface AlertRouteCreateData {
     alert_sources: any[];
-    channel_config: any[];
     condition_groups: any[];
-    created_at?: string;
     enabled: boolean;
     escalation_config: Record<string, any>;
     expressions: any[];
     grouping_config: Record<string, any>;
     incident_config: Record<string, any>;
-    incident_template: Record<string, any>;
     is_private: boolean;
     message_config: Record<string, any>;
-    message_template?: Record<string, any>;
     name: string;
     owning_team_ids?: any[];
-    updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface AlertRouteUpdateData {
     id: string;
     alert_sources?: any[];
-    channel_config?: any[];
     condition_groups?: any[];
-    created_at?: string;
     enabled?: boolean;
     escalation_config?: Record<string, any>;
     expressions?: any[];
     grouping_config?: Record<string, any>;
     incident_config?: Record<string, any>;
-    incident_template?: Record<string, any>;
     is_private?: boolean;
     message_config?: Record<string, any>;
-    message_template?: Record<string, any>;
     name?: string;
     owning_team_ids?: any[];
-    updated_at?: string;
     version?: number;
+    $action?: string;
+    [action: string]: any;
 }
 export interface AlertRouteRemoveMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface AlertSource {
     alert_events_url?: string;
@@ -310,13 +318,29 @@ export interface AlertSourcesV2CreateData {
     template: Record<string, any>;
 }
 export interface AlertTag {
+    alert_group_ids?: any[];
+    alert_source_id: string;
+    attributes: any[];
+    created_at: string;
+    deduplication_key: string;
+    description?: string;
     id: string;
     name: string;
+    resolved_at?: string;
+    source_url?: string;
+    status: string;
+    tags?: any[];
+    title: string;
+    updated_at: string;
 }
 export interface AlertTagListMatch {
     after?: string;
     page_size?: number;
     search?: string;
+}
+export interface AlertTagCreateData {
+    alert_id: string;
+    tags: any[];
 }
 export interface AlertsAddTagsResultV2 {
     alert_group_ids?: any[];
@@ -334,25 +358,6 @@ export interface AlertsAddTagsResultV2 {
     updated_at: string;
 }
 export interface AlertsAddTagsResultV2CreateData {
-    alert_id: string;
-    tags: any[];
-}
-export interface AlertsRemoveTagsResultV2 {
-    alert_group_ids?: any[];
-    alert_source_id: string;
-    attributes: any[];
-    created_at: string;
-    deduplication_key: string;
-    description?: string;
-    id: string;
-    resolved_at?: string;
-    source_url?: string;
-    status: string;
-    tags?: any[];
-    title: string;
-    updated_at: string;
-}
-export interface AlertsRemoveTagsResultV2CreateData {
     alert_id: string;
     tags: any[];
 }
@@ -554,90 +559,60 @@ export interface CallRouteUpdateData {
     responder_caller_id?: string;
     use_caller_allowlist?: boolean;
 }
-export interface CallRoutesCreateAllowedCallerResultV2 {
-    name?: string;
-    phone_number: string;
-}
-export interface CallRoutesCreateAllowedCallerResultV2CreateData {
-    call_route_id: string;
-    name?: string;
-    phone_number: string;
-}
-export interface CallRoutesCreateOptionResultV2 {
-    digit: string;
-    path: any[];
-    prompt: string;
-}
-export interface CallRoutesCreateOptionResultV2CreateData {
-    call_route_id: string;
-    digit: string;
-    path: any[];
-    prompt: string;
-}
-export interface CallRoutesListAllowedCallersResultV2 {
+export interface CallRouteAllowedCaller {
     id: string;
     name?: string;
     phone_number: string;
 }
-export interface CallRoutesListAllowedCallersResultV2ListMatch {
+export interface CallRouteAllowedCallerLoadMatch {
     call_route_id: string;
-}
-export interface CallRoutesListOptionsResultV2 {
-    digit: string;
     id: string;
-    path: any[];
-    prompt: string;
 }
-export interface CallRoutesListOptionsResultV2ListMatch {
-    call_route_id: string;
+export interface CallRouteAllowedCallerListMatch {
+    id: string;
 }
-export interface CallRoutesShowAllowedCallerResultV2 {
+export interface CallRouteAllowedCallerCreateData {
     id: string;
     name?: string;
     phone_number: string;
 }
-export interface CallRoutesShowAllowedCallerResultV2LoadMatch {
-    call_route_id: string;
-    id: string;
-}
-export interface CallRoutesShowOptionResultV2 {
-    digit: string;
-    id: string;
-    path: any[];
-    prompt: string;
-}
-export interface CallRoutesShowOptionResultV2LoadMatch {
-    call_route_id: string;
-    id: string;
-}
-export interface CallRoutesUpdateAllowedCallerResultV2 {
-    id: string;
-    name?: string;
-    phone_number: string;
-}
-export interface CallRoutesUpdateAllowedCallerResultV2UpdateData {
+export interface CallRouteAllowedCallerUpdateData {
     call_route_id: string;
     id: string;
     name?: string;
     phone_number?: string;
 }
-export interface CallRoutesUpdateOptionResultV2 {
+export interface CallRouteAllowedCallerRemoveMatch {
+    call_route_id: string;
+    id: string;
+}
+export interface CallRouteOption {
     digit: string;
     id: string;
     path: any[];
     prompt: string;
 }
-export interface CallRoutesUpdateOptionResultV2UpdateData {
+export interface CallRouteOptionLoadMatch {
+    call_route_id: string;
+    id: string;
+}
+export interface CallRouteOptionListMatch {
+    id: string;
+}
+export interface CallRouteOptionCreateData {
+    id: string;
+    digit: string;
+    path: any[];
+    prompt: string;
+}
+export interface CallRouteOptionUpdateData {
     call_route_id: string;
     id: string;
     digit?: string;
     path?: any[];
     prompt?: string;
 }
-export interface CallRoutesV2 {
-    id?: string;
-}
-export interface CallRoutesV2RemoveMatch {
+export interface CallRouteOptionRemoveMatch {
     call_route_id: string;
     id: string;
 }
@@ -682,12 +657,16 @@ export interface CatalogEntry {
 export interface CatalogEntryLoadMatch {
     id: string;
     expand?: boolean;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogEntryListMatch {
     after?: string;
     catalog_type_id: string;
     identifier?: string;
-    page_size?: number;
+    page_size: number;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogEntryCreateData {
     aliases?: any[];
@@ -696,6 +675,8 @@ export interface CatalogEntryCreateData {
     external_id?: string;
     name: string;
     rank?: number;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogEntryUpdateData {
     id: string;
@@ -705,6 +686,13 @@ export interface CatalogEntryUpdateData {
     name?: string;
     rank?: number;
     update_attributes?: any[];
+    $action?: string;
+    [action: string]: any;
+}
+export interface CatalogEntryRemoveMatch {
+    id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogResource {
     category: string;
@@ -721,6 +709,8 @@ export interface CatalogResourceListMatch {
     label?: string;
     type?: string;
     value_docstring?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogType {
     annotations: Record<string, any>;
@@ -742,7 +732,6 @@ export interface CatalogType {
     registry_type?: string;
     required_integrations?: any[];
     schema: Record<string, any>;
-    semantic_type: string;
     source_repo_url?: string;
     type_name: string;
     updated_at: string;
@@ -750,6 +739,8 @@ export interface CatalogType {
 }
 export interface CatalogTypeLoadMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogTypeListMatch {
     annotations?: Record<string, any>;
@@ -771,11 +762,12 @@ export interface CatalogTypeListMatch {
     registry_type?: string;
     required_integrations?: any[];
     schema?: Record<string, any>;
-    semantic_type?: string;
     source_repo_url?: string;
     type_name?: string;
     updated_at?: string;
     use_name_as_identifier?: boolean;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogTypeCreateData {
     annotations?: Record<string, any>;
@@ -789,6 +781,8 @@ export interface CatalogTypeCreateData {
     source_repo_url?: string;
     type_name?: string;
     use_name_as_identifier?: boolean;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogTypeUpdateData {
     id: string;
@@ -802,6 +796,13 @@ export interface CatalogTypeUpdateData {
     ranked?: boolean;
     source_repo_url?: string;
     use_name_as_identifier?: boolean;
+    $action?: string;
+    [action: string]: any;
+}
+export interface CatalogTypeRemoveMatch {
+    id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CatalogTypeSchema {
     annotations: Record<string, any>;
@@ -824,7 +825,6 @@ export interface CatalogTypeSchema {
     registry_type?: string;
     required_integrations?: any[];
     schema: Record<string, any>;
-    semantic_type: string;
     source_repo_url?: string;
     type_name: string;
     updated_at: string;
@@ -835,6 +835,8 @@ export interface CatalogTypeSchemaCreateData {
     catalog_type_id: string;
     attributes: any[];
     version: number;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CustomField {
     catalog_type_id?: string;
@@ -847,17 +849,12 @@ export interface CustomField {
     helptext_catalog_attribute_id?: string;
     id: string;
     name: string;
-    options: any[];
-    required?: string;
-    required_v2?: string;
-    show_before_closure: boolean;
-    show_before_creation: boolean;
-    show_before_update: boolean;
-    show_in_announcement_post?: boolean;
     updated_at: string;
 }
 export interface CustomFieldLoadMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CustomFieldListMatch {
     catalog_type_id?: string;
@@ -870,14 +867,9 @@ export interface CustomFieldListMatch {
     helptext_catalog_attribute_id?: string;
     id?: string;
     name?: string;
-    options?: any[];
-    required?: string;
-    required_v2?: string;
-    show_before_closure?: boolean;
-    show_before_creation?: boolean;
-    show_before_update?: boolean;
-    show_in_announcement_post?: boolean;
     updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CustomFieldCreateData {
     catalog_type_id?: string;
@@ -888,12 +880,8 @@ export interface CustomFieldCreateData {
     group_by_catalog_attribute_id?: string;
     helptext_catalog_attribute_id?: string;
     name: string;
-    required?: string;
-    required_v2?: string;
-    show_before_closure: boolean;
-    show_before_creation: boolean;
-    show_before_update: boolean;
-    show_in_announcement_post?: boolean;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CustomFieldUpdateData {
     id: string;
@@ -903,15 +891,13 @@ export interface CustomFieldUpdateData {
     group_by_catalog_attribute_id?: string;
     helptext_catalog_attribute_id?: string;
     name?: string;
-    required?: string;
-    required_v2?: string;
-    show_before_closure?: boolean;
-    show_before_creation?: boolean;
-    show_before_update?: boolean;
-    show_in_announcement_post?: boolean;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CustomFieldRemoveMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface CustomFieldOption {
     custom_field_id: string;
@@ -978,6 +964,49 @@ export interface EscalationCreateData {
     incident_id?: string;
     title: string;
     user_ids?: any[];
+}
+export interface EscalationPath {
+    current_responders?: any[];
+    id: string;
+    kind: string;
+    name: string;
+    param_bindings?: Record<string, any>;
+    path: any[];
+    repeat_config: Record<string, any>;
+    team_ids: any[];
+    template_id?: string;
+    working_hours?: any[];
+}
+export interface EscalationPathLoadMatch {
+    id: string;
+}
+export interface EscalationPathListMatch {
+    after?: string;
+    page_size?: number;
+}
+export interface EscalationPathCreateData {
+    kind?: string;
+    name: string;
+    param_bindings?: Record<string, any>;
+    path: any[];
+    repeat_config: Record<string, any>;
+    team_ids?: any[];
+    template_id?: string;
+    working_hours?: any[];
+}
+export interface EscalationPathUpdateData {
+    id: string;
+    kind?: string;
+    name?: string;
+    param_bindings?: Record<string, any>;
+    path?: any[];
+    repeat_config?: Record<string, any>;
+    team_ids?: any[];
+    template_id?: string;
+    working_hours?: any[];
+}
+export interface EscalationPathRemoveMatch {
+    id: string;
 }
 export interface EscalationPathTemplate {
     description?: string;
@@ -1067,11 +1096,19 @@ export interface FollowUp {
 }
 export interface FollowUpLoadMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface FollowUpListMatch {
+    after?: string;
     assignee_team_id?: string;
+    created_at?: Record<string, any>;
     incident_id?: string;
     incident_mode?: string;
+    page_size?: number;
+    updated_at?: Record<string, any>;
+    $action?: string;
+    [action: string]: any;
 }
 export interface FollowUpCreateData {
     assignee_id?: string;
@@ -1083,6 +1120,8 @@ export interface FollowUpCreateData {
     incident_id: string;
     labels?: any[];
     title: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface FollowUpUpdateData {
     id: string;
@@ -1094,9 +1133,13 @@ export interface FollowUpUpdateData {
     labels?: any[];
     status?: string;
     title?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface FollowUpRemoveMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface FollowUpsConnectExternalIssueResultV3 {
     assignee: Record<string, any>;
@@ -1177,12 +1220,8 @@ export interface Incident {
     slack_channel_name_override?: string;
     slack_channel_url?: string;
     slack_team_id: string;
-    source_message_channel_id?: string;
-    source_message_timestamp?: string;
-    status: string;
     summary?: string;
     team_ids: any[];
-    timestamps?: any[];
     updated_at: string;
     visibility: string;
     workload_minutes_late?: number;
@@ -1192,11 +1231,25 @@ export interface Incident {
 }
 export interface IncidentLoadMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface IncidentListMatch {
     after?: string;
+    created_at?: Record<string, any>;
+    custom_field?: Record<string, any>;
+    filter_mode?: string;
+    incident_role?: Record<string, any>;
+    incident_type?: Record<string, any>;
+    mode?: Record<string, any>;
     page_size?: number;
-    status?: any[];
+    severity?: Record<string, any>;
+    sort_by?: string;
+    status?: Record<string, any>;
+    status_category?: Record<string, any>;
+    updated_at?: Record<string, any>;
+    $action?: string;
+    [action: string]: any;
 }
 export interface IncidentCreateData {
     custom_field_entries?: any[];
@@ -1211,9 +1264,6 @@ export interface IncidentCreateData {
     severity_id?: string;
     slack_channel_name_override?: string;
     slack_team_id?: string;
-    source_message_channel_id?: string;
-    source_message_timestamp?: string;
-    status?: string;
     summary?: string;
     visibility: string;
     $action?: string;
@@ -1322,13 +1372,14 @@ export interface IncidentRole {
     id: string;
     instructions: string;
     name: string;
-    required?: boolean;
     role_type: string;
     shortform: string;
     updated_at: string;
 }
 export interface IncidentRoleLoadMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface IncidentRoleListMatch {
     created_at?: string;
@@ -1336,28 +1387,33 @@ export interface IncidentRoleListMatch {
     id?: string;
     instructions?: string;
     name?: string;
-    required?: boolean;
     role_type?: string;
     shortform?: string;
     updated_at?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface IncidentRoleCreateData {
     description: string;
     instructions: string;
     name: string;
-    required: boolean;
     shortform: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface IncidentRoleUpdateData {
     id: string;
     description?: string;
     instructions?: string;
     name?: string;
-    required?: boolean;
     shortform?: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface IncidentRoleRemoveMatch {
     id: string;
+    $action?: string;
+    [action: string]: any;
 }
 export interface IncidentStatus {
     category: string;
@@ -1729,82 +1785,28 @@ export interface PayConfigUpdateData {
 export interface PayConfigRemoveMatch {
     id: string;
 }
-export interface PayConfigsCreateOneOffRuleResultV2 {
-    end_at: string;
-    name: string;
-    rate_cents: number;
-    start_at: string;
-}
-export interface PayConfigsCreateOneOffRuleResultV2CreateData {
-    pay_config_id: string;
-    end_at: string;
-    name: string;
-    rate_cents: number;
-    start_at: string;
-}
-export interface PayConfigsCreateWeeklyRuleResultV2 {
-    end_time: string;
-    rate_cents: number;
-    start_time: string;
-    weekdays: any[];
-}
-export interface PayConfigsCreateWeeklyRuleResultV2CreateData {
-    pay_config_id: string;
-    end_time: string;
-    rate_cents: number;
-    start_time: string;
-    weekdays: any[];
-}
-export interface PayConfigsListOneOffRulesResultV2 {
+export interface PayConfigOneOffRule {
     end_at: string;
     id: string;
     name: string;
     rate_cents: number;
     start_at: string;
 }
-export interface PayConfigsListOneOffRulesResultV2ListMatch {
-    pay_config_id: string;
-}
-export interface PayConfigsListWeeklyRulesResultV2 {
-    end_time: string;
+export interface PayConfigOneOffRuleLoadMatch {
     id: string;
-    rate_cents: number;
-    start_time: string;
-    weekdays: any[];
-}
-export interface PayConfigsListWeeklyRulesResultV2ListMatch {
     pay_config_id: string;
 }
-export interface PayConfigsShowOneOffRuleResultV2 {
+export interface PayConfigOneOffRuleListMatch {
+    id: string;
+}
+export interface PayConfigOneOffRuleCreateData {
+    id: string;
     end_at: string;
-    id: string;
     name: string;
     rate_cents: number;
     start_at: string;
 }
-export interface PayConfigsShowOneOffRuleResultV2LoadMatch {
-    id: string;
-    pay_config_id: string;
-}
-export interface PayConfigsShowWeeklyRuleResultV2 {
-    end_time: string;
-    id: string;
-    rate_cents: number;
-    start_time: string;
-    weekdays: any[];
-}
-export interface PayConfigsShowWeeklyRuleResultV2LoadMatch {
-    id: string;
-    pay_config_id: string;
-}
-export interface PayConfigsUpdateOneOffRuleResultV2 {
-    end_at: string;
-    id: string;
-    name: string;
-    rate_cents: number;
-    start_at: string;
-}
-export interface PayConfigsUpdateOneOffRuleResultV2UpdateData {
+export interface PayConfigOneOffRuleUpdateData {
     id: string;
     pay_config_id: string;
     end_at?: string;
@@ -1812,14 +1814,32 @@ export interface PayConfigsUpdateOneOffRuleResultV2UpdateData {
     rate_cents?: number;
     start_at?: string;
 }
-export interface PayConfigsUpdateWeeklyRuleResultV2 {
+export interface PayConfigOneOffRuleRemoveMatch {
+    id: string;
+    pay_config_id: string;
+}
+export interface PayConfigWeeklyRule {
     end_time: string;
     id: string;
     rate_cents: number;
     start_time: string;
     weekdays: any[];
 }
-export interface PayConfigsUpdateWeeklyRuleResultV2UpdateData {
+export interface PayConfigWeeklyRuleLoadMatch {
+    id: string;
+    pay_config_id: string;
+}
+export interface PayConfigWeeklyRuleListMatch {
+    id: string;
+}
+export interface PayConfigWeeklyRuleCreateData {
+    id: string;
+    end_time: string;
+    rate_cents: number;
+    start_time: string;
+    weekdays: any[];
+}
+export interface PayConfigWeeklyRuleUpdateData {
     id: string;
     pay_config_id: string;
     end_time?: string;
@@ -1827,10 +1847,7 @@ export interface PayConfigsUpdateWeeklyRuleResultV2UpdateData {
     start_time?: string;
     weekdays?: any[];
 }
-export interface PayConfigsV2 {
-    id?: string;
-}
-export interface PayConfigsV2RemoveMatch {
+export interface PayConfigWeeklyRuleRemoveMatch {
     id: string;
     pay_config_id: string;
 }
@@ -1929,12 +1946,6 @@ export interface PayReportsV2 {
 export interface PayReportsV2LoadMatch {
     pay_report_id: string;
 }
-export interface PoliciesV2 {
-    id?: string;
-}
-export interface PoliciesV2RemoveMatch {
-    id: string;
-}
 export interface Policy {
     assignment_rules: Record<string, any>;
     conditions: any[];
@@ -1988,6 +1999,9 @@ export interface PolicyUpdateData {
     post_mortem?: Record<string, any>;
     schedule?: Record<string, any>;
     status?: string;
+}
+export interface PolicyRemoveMatch {
+    id: string;
 }
 export interface PolicyFinding {
     created_at: string;
@@ -2172,6 +2186,46 @@ export interface ScheduleEntryLoadMatch {
     entry_window_start?: string;
     schedule_id: string;
 }
+export interface ScheduleOverride {
+    created_at: string;
+    end_at: string;
+    id: string;
+    layer_id: string;
+    rotation_id: string;
+    schedule_id: string;
+    start_at: string;
+    updated_at: string;
+    user: Record<string, any>;
+}
+export interface ScheduleOverrideLoadMatch {
+    id: string;
+}
+export interface ScheduleOverrideListMatch {
+    after?: string;
+    layer_id?: string;
+    page_size?: number;
+    rotation_id?: string;
+    schedule_id: string;
+}
+export interface ScheduleOverrideCreateData {
+    end_at: string;
+    layer_id: string;
+    rotation_id: string;
+    schedule_id: string;
+    start_at: string;
+    user: Record<string, any>;
+}
+export interface ScheduleOverrideUpdateData {
+    id: string;
+    end_at?: string;
+    layer_id?: string;
+    rotation_id?: string;
+    start_at?: string;
+    user?: Record<string, any>;
+}
+export interface ScheduleOverrideRemoveMatch {
+    id: string;
+}
 export interface ScheduleReplica {
     created_at: string;
     id: string;
@@ -2200,6 +2254,10 @@ export interface ScheduleReplicaCreateData {
     replica_provider: string;
     replica_provider_id: string;
     sources: any[];
+}
+export interface ScheduleReplicaRemoveMatch {
+    id: string;
+    schedule_id: string;
 }
 export interface ScheduleSyncRule {
     annotations?: Record<string, any>;
@@ -2237,6 +2295,10 @@ export interface ScheduleSyncRuleUpdateData {
     permanent_member_user_ids?: any[];
     sync_type?: string;
 }
+export interface ScheduleSyncRuleRemoveMatch {
+    id: string;
+    schedule_id: string;
+}
 export interface ScheduleSyncTarget {
     add_bot_to_group: boolean;
     annotations?: Record<string, any>;
@@ -2268,54 +2330,6 @@ export interface ScheduleSyncTargetUpdateData {
 }
 export interface ScheduleSyncTargetRemoveMatch {
     id: string;
-}
-export interface SchedulesShowOverrideResultV2 {
-    created_at: string;
-    end_at: string;
-    id: string;
-    layer_id: string;
-    rotation_id: string;
-    schedule_id: string;
-    start_at: string;
-    updated_at: string;
-    user: Record<string, any>;
-}
-export interface SchedulesShowOverrideResultV2LoadMatch {
-    id: string;
-}
-export interface SchedulesShowOverrideResultV2ListMatch {
-    after?: string;
-    layer_id?: string;
-    page_size?: number;
-    rotation_id?: string;
-    schedule_id: string;
-}
-export interface SchedulesShowOverrideResultV2CreateData {
-    end_at: string;
-    layer_id: string;
-    rotation_id: string;
-    schedule_id: string;
-    start_at: string;
-    user: Record<string, any>;
-}
-export interface SchedulesUpdateOverrideResultV2 {
-    created_at: string;
-    end_at: string;
-    id: string;
-    layer_id: string;
-    rotation_id: string;
-    schedule_id: string;
-    start_at: string;
-    updated_at: string;
-    user: Record<string, any>;
-}
-export interface SchedulesUpdateOverrideResultV2UpdateData {
-    id: string;
-    end_at?: string;
-    layer_id?: string;
-    rotation_id?: string;
-    start_at?: string;
-    user?: Record<string, any>;
 }
 export interface Secret {
     created_at: string;
@@ -2385,6 +2399,9 @@ export interface SeverityUpdateData {
     name?: string;
     rank?: number;
 }
+export interface SeverityRemoveMatch {
+    id: string;
+}
 export interface StatusPage {
     description?: string;
     id: string;
@@ -2425,7 +2442,7 @@ export interface StatusPageComponentUpdateData {
 export interface StatusPageComponentRemoveMatch {
     id: string;
 }
-export interface StatusPageComponentAvailabilityV2 {
+export interface StatusPageComponentAvailability {
     availability_percent?: string;
     component_id: string;
     data_available_since: string;
@@ -2433,7 +2450,7 @@ export interface StatusPageComponentAvailabilityV2 {
     start_at: string;
     status_page_id: string;
 }
-export interface StatusPageComponentAvailabilityV2LoadMatch {
+export interface StatusPageComponentAvailabilityLoadMatch {
     component_id: string;
     status_page_id: string;
     end_at: string;
@@ -2492,11 +2509,11 @@ export interface StatusPageIncidentUpdateCreateData {
     notify_subscribers: boolean;
     status_page_incident_id: string;
 }
-export interface StatusPageLinkedResponseIncidentV1 {
+export interface StatusPageLinkedResponseIncident {
     id: string;
     linked_at: string;
 }
-export interface StatusPageLinkedResponseIncidentV1ListMatch {
+export interface StatusPageLinkedResponseIncidentListMatch {
     incident_id: string;
     status_page_id: string;
 }
@@ -2547,6 +2564,9 @@ export interface StatusPageMaintenanceUpdateData {
     name?: string;
     start_at?: string;
 }
+export interface StatusPageMaintenanceRemoveMatch {
+    id: string;
+}
 export interface StatusPageMaintenanceUpdate {
     component_statuses?: any[];
     maintenance_status?: string;
@@ -2570,11 +2590,6 @@ export interface StatusPageStructure {
 export interface StatusPageStructureLoadMatch {
     id: string;
 }
-export interface StatusPagesV2 {
-}
-export interface StatusPagesV2RemoveMatch {
-    status_page_maintenance_id: string;
-}
 export interface Team {
     catalog_entry: Record<string, any>;
     id: string;
@@ -2588,7 +2603,7 @@ export interface TeamListMatch {
     after?: string;
     page_size?: number;
 }
-export interface TelemetryDataSourceV2 {
+export interface TelemetryDataSource {
     created_at: string;
     datadog_config?: Record<string, any>;
     enabled: boolean;
@@ -2600,7 +2615,7 @@ export interface TelemetryDataSourceV2 {
     updated_at: string;
     version?: string;
 }
-export interface TelemetryDataSourceV2UpdateData {
+export interface TelemetryDataSourceUpdateData {
     id: string;
     datadog_config?: Record<string, any>;
     grafana_config?: Record<string, any>;
@@ -2626,12 +2641,6 @@ export interface UserListMatch {
     include_inactive?: boolean;
     page_size?: number;
     slack_user_id?: string;
-}
-export interface UserCreateData {
-    id: string;
-    preferred_escalation_provider?: any;
-    $action?: string;
-    [action: string]: any;
 }
 export interface Workflow {
     annotations?: Record<string, any>;

@@ -84,9 +84,6 @@ func init() {
 	core.NewAlertsAddTagsResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewAlertsAddTagsResultV2Entity(client, entopts)
 	}
-	core.NewAlertsRemoveTagsResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewAlertsRemoveTagsResultV2Entity(client, entopts)
-	}
 	core.NewAlertsSetTagsResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewAlertsSetTagsResultV2Entity(client, entopts)
 	}
@@ -105,32 +102,11 @@ func init() {
 	core.NewCallRouteEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewCallRouteEntity(client, entopts)
 	}
-	core.NewCallRoutesCreateAllowedCallerResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesCreateAllowedCallerResultV2Entity(client, entopts)
+	core.NewCallRouteAllowedCallerEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewCallRouteAllowedCallerEntity(client, entopts)
 	}
-	core.NewCallRoutesCreateOptionResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesCreateOptionResultV2Entity(client, entopts)
-	}
-	core.NewCallRoutesListAllowedCallersResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesListAllowedCallersResultV2Entity(client, entopts)
-	}
-	core.NewCallRoutesListOptionsResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesListOptionsResultV2Entity(client, entopts)
-	}
-	core.NewCallRoutesShowAllowedCallerResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesShowAllowedCallerResultV2Entity(client, entopts)
-	}
-	core.NewCallRoutesShowOptionResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesShowOptionResultV2Entity(client, entopts)
-	}
-	core.NewCallRoutesUpdateAllowedCallerResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesUpdateAllowedCallerResultV2Entity(client, entopts)
-	}
-	core.NewCallRoutesUpdateOptionResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesUpdateOptionResultV2Entity(client, entopts)
-	}
-	core.NewCallRoutesV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewCallRoutesV2Entity(client, entopts)
+	core.NewCallRouteOptionEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewCallRouteOptionEntity(client, entopts)
 	}
 	core.NewCallSessionEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewCallSessionEntity(client, entopts)
@@ -158,6 +134,9 @@ func init() {
 	}
 	core.NewEscalationEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewEscalationEntity(client, entopts)
+	}
+	core.NewEscalationPathEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewEscalationPathEntity(client, entopts)
 	}
 	core.NewEscalationPathTemplateEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewEscalationPathTemplateEntity(client, entopts)
@@ -258,32 +237,11 @@ func init() {
 	core.NewPayConfigEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewPayConfigEntity(client, entopts)
 	}
-	core.NewPayConfigsCreateOneOffRuleResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsCreateOneOffRuleResultV2Entity(client, entopts)
+	core.NewPayConfigOneOffRuleEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewPayConfigOneOffRuleEntity(client, entopts)
 	}
-	core.NewPayConfigsCreateWeeklyRuleResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsCreateWeeklyRuleResultV2Entity(client, entopts)
-	}
-	core.NewPayConfigsListOneOffRulesResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsListOneOffRulesResultV2Entity(client, entopts)
-	}
-	core.NewPayConfigsListWeeklyRulesResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsListWeeklyRulesResultV2Entity(client, entopts)
-	}
-	core.NewPayConfigsShowOneOffRuleResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsShowOneOffRuleResultV2Entity(client, entopts)
-	}
-	core.NewPayConfigsShowWeeklyRuleResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsShowWeeklyRuleResultV2Entity(client, entopts)
-	}
-	core.NewPayConfigsUpdateOneOffRuleResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsUpdateOneOffRuleResultV2Entity(client, entopts)
-	}
-	core.NewPayConfigsUpdateWeeklyRuleResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsUpdateWeeklyRuleResultV2Entity(client, entopts)
-	}
-	core.NewPayConfigsV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPayConfigsV2Entity(client, entopts)
+	core.NewPayConfigWeeklyRuleEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewPayConfigWeeklyRuleEntity(client, entopts)
 	}
 	core.NewPayReportEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewPayReportEntity(client, entopts)
@@ -296,9 +254,6 @@ func init() {
 	}
 	core.NewPayReportsV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewPayReportsV2Entity(client, entopts)
-	}
-	core.NewPoliciesV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewPoliciesV2Entity(client, entopts)
 	}
 	core.NewPolicyEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewPolicyEntity(client, entopts)
@@ -324,6 +279,9 @@ func init() {
 	core.NewScheduleEntryEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewScheduleEntryEntity(client, entopts)
 	}
+	core.NewScheduleOverrideEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewScheduleOverrideEntity(client, entopts)
+	}
 	core.NewScheduleReplicaEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewScheduleReplicaEntity(client, entopts)
 	}
@@ -332,12 +290,6 @@ func init() {
 	}
 	core.NewScheduleSyncTargetEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewScheduleSyncTargetEntity(client, entopts)
-	}
-	core.NewSchedulesShowOverrideResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewSchedulesShowOverrideResultV2Entity(client, entopts)
-	}
-	core.NewSchedulesUpdateOverrideResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewSchedulesUpdateOverrideResultV2Entity(client, entopts)
 	}
 	core.NewSecretEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewSecretEntity(client, entopts)
@@ -351,8 +303,8 @@ func init() {
 	core.NewStatusPageComponentEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewStatusPageComponentEntity(client, entopts)
 	}
-	core.NewStatusPageComponentAvailabilityV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewStatusPageComponentAvailabilityV2Entity(client, entopts)
+	core.NewStatusPageComponentAvailabilityEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPageComponentAvailabilityEntity(client, entopts)
 	}
 	core.NewStatusPageIncidentEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewStatusPageIncidentEntity(client, entopts)
@@ -360,8 +312,8 @@ func init() {
 	core.NewStatusPageIncidentUpdateEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewStatusPageIncidentUpdateEntity(client, entopts)
 	}
-	core.NewStatusPageLinkedResponseIncidentV1EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewStatusPageLinkedResponseIncidentV1Entity(client, entopts)
+	core.NewStatusPageLinkedResponseIncidentEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewStatusPageLinkedResponseIncidentEntity(client, entopts)
 	}
 	core.NewStatusPageMaintenanceEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewStatusPageMaintenanceEntity(client, entopts)
@@ -372,14 +324,11 @@ func init() {
 	core.NewStatusPageStructureEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewStatusPageStructureEntity(client, entopts)
 	}
-	core.NewStatusPagesV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewStatusPagesV2Entity(client, entopts)
-	}
 	core.NewTeamEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewTeamEntity(client, entopts)
 	}
-	core.NewTelemetryDataSourceV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewTelemetryDataSourceV2Entity(client, entopts)
+	core.NewTelemetryDataSourceEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewTelemetryDataSourceEntity(client, entopts)
 	}
 	core.NewUserEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewUserEntity(client, entopts)

@@ -51,11 +51,6 @@
     }
   },
   "requests": {
-    "POST /v2/users/{user_id}/paging_provider": {
-      "provenance": "operation-contract",
-      "version": 2,
-      "source": "openapi3"
-    },
     "GET /v2/users": {
       "provenance": "operation-contract",
       "version": 2,
