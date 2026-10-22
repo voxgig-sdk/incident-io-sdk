@@ -3440,27 +3440,6 @@ Return the entity name.
 escalations_v2 = client.EscalationsV2
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `response` | `String` | Yes | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `Hash` | Yes |  |
-
-### Operations
-
-#### `create(reqdata, ctrl = nil) -> result`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```ruby
-result = client.EscalationsV2.create({
-  "escalation_id" => "example_escalation_id", # String
-  "response" => "example_response", # String
-  "snooze_details" => {}, # Hash
-})
-```
-
 ### Common Methods
 
 #### `data_get -> Hash`

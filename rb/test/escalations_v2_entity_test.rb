@@ -18,47 +18,26 @@ class EscalationsV2EntityTest < Minitest::Test
     assert !ent.nil?
   end
 
-  def test_validate
-    cfg = IncidentIoConfig.shared_config
-    unless cfg["feature"].is_a?(Hash) && cfg["feature"].key?("validate")
-      skip("feature not present in this SDK: validate")
-    end
-    client = IncidentIoSDK.test(nil, { "feature" => { "validate" => { "active" => true } } })
-    err = assert_raises(StandardError) do
-      client.EscalationsV2(nil).create({ "escalation_id" => 1, "response" => "x", "snooze_details" => "x" }, nil)
-    end
-    assert_equal "validate_failed", err.code
-  end
-
   def test_basic_flow
     setup = escalations_v2_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["create"].each do |_op|
+    [].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "escalations_v2." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
         return
       end
     end
-    if setup[:live]
-      ["escalation01"].each do |_live_key|
-        if setup[:synthetic_only] || setup[:idmap][_live_key].nil?
-          Runner.live_miss(LIVE_STRICT, "Live entity test blocked: needs #{_live_key} via INCIDENT_IO_TEST_ESCALATIONS_V2_ENTID")
-        end
-      end
-    end
     client = setup[:client]
 
-    # CREATE
-    escalations_v2_ref01_ent = client.EscalationsV2(nil)
-    escalations_v2_ref01_data = Helpers.to_map(Vs.getprop(
-      Vs.getpath(setup[:data], "new.escalations_v2"), "escalations_v2_ref01"))
-    escalations_v2_ref01_data["escalation_id"] = setup[:idmap]["escalation01"]
-
-    escalations_v2_ref01_data_result = escalations_v2_ref01_ent.create(escalations_v2_ref01_data, nil)
-    escalations_v2_ref01_data = Helpers.to_map(escalations_v2_ref01_data_result.respond_to?(:data_get) ? escalations_v2_ref01_data_result.data_get : escalations_v2_ref01_data_result)
-    assert !escalations_v2_ref01_data.nil?
+    # Bootstrap entity data from existing test data.
+    escalations_v2_ref01_data_raw = Vs.items(Helpers.to_map(
+      Vs.getpath(setup[:data], "existing.escalations_v2")))
+    escalations_v2_ref01_data = nil
+    if escalations_v2_ref01_data_raw.length > 0
+      escalations_v2_ref01_data = Helpers.to_map(escalations_v2_ref01_data_raw[0][1])
+    end
 
   end
 end
@@ -77,7 +56,7 @@ def escalations_v2_basic_setup(extra)
 
   # Generate idmap via transform.
   idmap = Vs.transform(
-    ["escalations_v201", "escalations_v202", "escalations_v203", "escalation01", "escalation02", "escalation03"],
+    ["escalations_v201", "escalations_v202", "escalations_v203"],
     {
       "`$PACK`" => ["", {
         "`$KEY`" => "`$COPY`",

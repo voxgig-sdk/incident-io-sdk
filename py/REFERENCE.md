@@ -3426,27 +3426,6 @@ Return the entity name.
 escalations_v2 = client.EscalationsV2()
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `response` | `str` | Yes | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `dict` | Yes |  |
-
-### Operations
-
-#### `create(reqdata, ctrl=None) -> EscalationsV2Entity`
-
-Create a new entity with the given data. Returns the created entity and raises on error.
-
-```python
-result = client.EscalationsV2().create({
-    "escalation_id": "example_escalation_id",  # str
-    "response": "example_response",  # str
-    "snooze_details": {},  # dict
-})
-```
-
 ### Common Methods
 
 #### `data_get() -> dict`

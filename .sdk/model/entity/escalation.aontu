@@ -131,6 +131,111 @@ main: kit: entity: escalation: {
       name: "create"
       points: [
         {
+          co: {
+            id: "POST /v2/escalations/{id}/actions/cancel"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/escalations/{id}/actions/cancel"
+          q: {
+            "$action": "cancel"
+            exist: [
+              "id"
+            ]
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalations"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "cancel"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          bf: [
+            "response"
+            "snooze_details"
+          ]
+          co: {
+            id: "POST /v2/escalations/{escalation_id}/actions/respond"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "01G0J1EXE7AXZ2C93K61WBPYEH"
+                k: "param"
+                n: "id"
+                or: "escalation_id"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "POST"
+          o: "/v2/escalations/{escalation_id}/actions/respond"
+          q: {
+            "$action": "respond"
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              escalation_id: "id"
+            }
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "escalations"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "actions"
+            }
+            {
+              lit: "respond"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
           bf: [
             "description"
             "escalation_path_id"

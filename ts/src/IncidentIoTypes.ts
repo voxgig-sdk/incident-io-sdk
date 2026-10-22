@@ -1236,6 +1236,12 @@ export interface EscalationCreateData {
   incident_id?: string
   title: string
   user_ids?: any[]
+
+  // Selects a custom action instead of the plain create:
+  //   'cancel' | 'respond'
+  // The remaining keys are that action's own payload.
+  $action?: string
+  [action: string]: any
 }
 
 export interface EscalationPath {
@@ -1362,14 +1368,6 @@ export interface EscalationsReassignEscalationResultV2CreateData {
 }
 
 export interface EscalationsV2 {
-  response: string
-  snooze_details: Record<string, any>
-}
-
-export interface EscalationsV2CreateData {
-  escalation_id: string
-  response: string
-  snooze_details: Record<string, any>
 }
 
 export interface FollowUp {

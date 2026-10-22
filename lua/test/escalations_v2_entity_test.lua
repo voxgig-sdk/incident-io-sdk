@@ -22,47 +22,26 @@ describe("EscalationsV2Entity", function()
     assert.is_not_nil(ent)
   end)
 
-  it("should refuse an invalid request", function()
-    local config = require("config_shared")()
-    if type(config.feature) ~= "table" or config.feature.validate == nil then
-      pending("feature not present in this SDK: validate")
-      return
-    end
-    local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:EscalationsV2(nil):create({ ["escalation_id"] = 1, ["response"] = "x", ["snooze_details"] = "x" }, nil)
-    assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
-  end)
-
   it("should run basic flow", function()
     local setup = escalations_v2_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"create"}) do
+    for _, _op in ipairs({}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "escalations_v2." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
         return
       end
     end
-    if setup.live then
-      for _, _live_key in ipairs({"escalation01"}) do
-        if setup.synthetic_only or setup.idmap[_live_key] == nil then
-          runner.live_miss(pending, LIVE_STRICT, "Live entity test blocked: needs " .. _live_key .. " via INCIDENT_IO_TEST_ESCALATIONS_V2_ENTID")
-        end
-      end
-    end
     local client = setup.client
 
-    -- CREATE
-    local escalations_v2_ref01_ent = client:EscalationsV2(nil)
-    local escalations_v2_ref01_data = helpers.to_map(vs.getprop(
-      vs.getpath(setup.data, "new.escalations_v2"), "escalations_v2_ref01"))
-    escalations_v2_ref01_data["escalation_id"] = setup.idmap["escalation01"]
-
-    local escalations_v2_ref01_data_result, err = escalations_v2_ref01_ent:create(escalations_v2_ref01_data, nil)
-    assert.is_nil(err)
-    escalations_v2_ref01_data = helpers.to_map(type(escalations_v2_ref01_data_result) == 'table' and escalations_v2_ref01_data_result.data_get and escalations_v2_ref01_data_result:data_get() or escalations_v2_ref01_data_result)
-    assert.is_not_nil(escalations_v2_ref01_data)
+    -- Bootstrap entity data from existing test data.
+    local escalations_v2_ref01_data_raw = vs.items(helpers.to_map(
+      vs.getpath(setup.data, "existing.escalations_v2")))
+    local escalations_v2_ref01_data = nil
+    if #escalations_v2_ref01_data_raw > 0 then
+      escalations_v2_ref01_data = helpers.to_map(escalations_v2_ref01_data_raw[1][2])
+    end
 
   end)
 end)
@@ -87,7 +66,7 @@ function escalations_v2_basic_setup(extra)
 
   -- Generate idmap via transform.
   local idmap = vs.transform(
-    { "escalations_v201", "escalations_v202", "escalations_v203", "escalation01", "escalation02", "escalation03" },
+    { "escalations_v201", "escalations_v202", "escalations_v203" },
     {
       ["`$PACK`"] = { "", {
         ["`$KEY`"] = "`$COPY`",

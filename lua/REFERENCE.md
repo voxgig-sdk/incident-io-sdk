@@ -3413,27 +3413,6 @@ Return the entity name.
 local escalations_v2 = client:EscalationsV2(nil)
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `response` | `string` | Yes | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `table` | Yes |  |
-
-### Operations
-
-#### `create(reqdata, ctrl) -> any, err`
-
-Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
-
-```lua
-local result, err = client:EscalationsV2():create({
-  escalation_id = --[[ string ]],
-  response = --[[ string ]],
-  snooze_details = --[[ table ]],
-})
-```
-
 ### Common Methods
 
 #### `data_get() -> table`

@@ -41,29 +41,19 @@ describe('EscalationsV2Entity', async () => {
   })
 
 
-  test('validate', async (t) => {
-    if (null == (config as any).feature?.validate) {
-      t.skip('feature not present in this SDK: validate')
-      return
-    }
-    const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
-    await assert.rejects(client.EscalationsV2().create({"escalation_id":1,"response":"x","snooze_details":"x"} as any),
-      (err: any) => 'validate_failed' === err.code)
-  })
-
 
 
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE
-    for (const op of ['create']) {
+    for (const op of []) {
       if (!live && maybeSkipControl(t, 'entityOp', 'escalations_v2.' + op, live)) return
     }
 
     
     const setup = basicSetup()
     if (setup.live) {
-      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"response":{"a":true,"h":"Response","n":"response","r":true,"sh":"Whether to acknowledge, decline or snooze the escalation","t":"`$STRING`","key$":"response","index$":0},"snooze_details":{"a":true,"h":"Snooze Details","n":"snooze_details","r":true,"t":"`$OBJECT`","key$":"snooze_details","index$":1}},"name":"escalations_v2","op":{"create":{"input":"data","name":"create","points":[{"a":true,"bf":["response","snooze_details"],"co":{"id":"POST /v2/escalations/{escalation_id}/actions/respond","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01G0J1EXE7AXZ2C93K61WBPYEH","k":"param","n":"escalation_id","or":"escalation_id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"POST","o":"/v2/escalations/{escalation_id}/actions/respond","q":{"exist":["escalation_id"]},"r":{},"s":[{"lit":"v2"},{"lit":"escalations"},{"var":"escalation_id"},{"lit":"actions"},{"lit":"respond"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0},{"a":true,"co":{"id":"POST /v2/escalations/{id}/actions/cancel","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"01G0J1EXE7AXZ2C93K61WBPYEH","k":"param","n":"escalation_id","or":"id","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"POST","o":"/v2/escalations/{id}/actions/cancel","q":{"exist":["escalation_id"]},"r":{"param":{"id":"escalation_id"}},"s":[{"lit":"v2"},{"lit":"escalations"},{"var":"escalation_id"},{"lit":"actions"},{"lit":"cancel"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":1}],"key$":"create"}},"relations":{"ancestors":[["$.main.kit.entity.escalation"]]},"key$":"escalations_v2","name__orig":"escalations_v2","Name":"EscalationsV2","name_":"escalations_v2","name-":"escalations-v2","NAME":"ESCALATIONS_V2","index$":32}, {"active":true,"entity":"escalations_v2","key$":"BasicEscalationsV2Flow","kind":"basic","name":"BasicEscalationsV2Flow","param":{},"step":[{"a":true,"d":{},"i":{"ref":"escalations_v2_ref01"},"m":{"escalation_id":"escalation01"},"o":"create","s":[],"v":[],"index$":0}]}, 'EscalationsV2', {"POST /v2/escalations/{escalation_id}/actions/respond":{"protocol":"http","requestBody":{"content":{"application/json":{"example":{"response":"ack","snooze_details":{"reason":"Waiting for deployment to complete","snooze_until":"2025-01-01T12:00:00Z"}},"schema":{"example":{"response":"ack","snooze_details":{"reason":"Waiting for deployment to complete","snooze_until":"2025-01-01T12:00:00Z"}},"properties":{"response":{"description":"Whether to acknowledge, decline or snooze the escalation","enum":["ack","nack","snooze"],"example":"ack","type":"string","key$":"response"},"snooze_details":{"example":{"reason":"Waiting for deployment to complete","snooze_until":"2025-01-01T12:00:00Z"},"properties":{"reason":{"description":"Optional reason for snoozing the escalation","example":"Waiting for deployment to complete","type":"string"},"snooze_until":{"description":"The time at which the snooze should end","example":"2025-01-01T12:00:00Z","format":"date-time","type":"string"}},"required":["snooze_until"],"type":"object","x-ref":"#/components/schemas/EscalationRespondSnoozeDetailsPayloadV2","key$":"snooze_details"}},"required":["response"],"type":"object","x-ref":"#/components/schemas/EscalationsRespondEscalationPayloadV2","index$":1}}},"required":true},"parameters":[{"description":"The ID of the escalation","example":"01G0J1EXE7AXZ2C93K61WBPYEH","in":"path","name":"escalation_id","required":true,"schema":{"description":"The ID of the escalation","example":"01G0J1EXE7AXZ2C93K61WBPYEH","type":"string"},"index$":0}]},"POST /v2/escalations/{id}/actions/cancel":{"protocol":"http","parameters":[{"description":"Unique ID of the escalation","example":"01G0J1EXE7AXZ2C93K61WBPYEH","in":"path","name":"id","required":true,"schema":{"description":"Unique ID of the escalation","example":"01G0J1EXE7AXZ2C93K61WBPYEH","type":"string"},"index$":0}]}}, { strict: LIVE_STRICT, t })
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{},"name":"escalations_v2","op":{},"relations":{"ancestors":[]},"key$":"escalations_v2","name__orig":"escalations_v2","Name":"EscalationsV2","name_":"escalations_v2","name-":"escalations-v2","NAME":"ESCALATIONS_V2","index$":32}, {"active":true,"entity":"escalations_v2","key$":"BasicEscalationsV2Flow","kind":"basic","name":"BasicEscalationsV2Flow","param":{},"step":[]}, 'EscalationsV2', {}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -71,15 +61,7 @@ describe('EscalationsV2Entity', async () => {
     const isempty = struct.isempty
     const select = struct.select
 
-
-    // CREATE
-    const escalations_v2_ref01_ent = client.EscalationsV2()
-    let escalations_v2_ref01_data = setup.data.new.escalations_v2['escalations_v2_ref01']
-    escalations_v2_ref01_data['escalation_id'] = setup.idmap['escalation01']
-
-    escalations_v2_ref01_data = (await escalations_v2_ref01_ent.create(escalations_v2_ref01_data)).data()
-    assert(null != escalations_v2_ref01_data)
-
+    let escalations_v2_ref01_data = Object.values(setup.data.existing.escalations_v2)[0] as any
 
   })
 })
@@ -115,7 +97,7 @@ function basicSetup(extra?: any) {
   const transform = struct.transform
 
   let idmap = transform(
-    ['escalations_v201','escalations_v202','escalations_v203','escalation01','escalation02','escalation03'],
+    ['escalations_v201','escalations_v202','escalations_v203'],
     {
       '`$PACK`': ['', {
         '`$KEY`': '`$COPY`',

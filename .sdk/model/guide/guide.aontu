@@ -19,3 +19,4 @@ guide: entity: escalation: path: "/v2/escalations/{id}/actions/cancel": {
 }
 guide: entity: escalations_v2: path: "/v2/escalations/{escalation_id}/actions/respond": active: false
 guide: entity: escalations_v2: path: "/v2/escalations/{id}/actions/cancel": active: false
+guide: entity: escalations_v2: active: false

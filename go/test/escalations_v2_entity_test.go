@@ -31,19 +31,6 @@ func TestEscalationsV2Entity(t *testing.T) {
 		}
 	})
 
-	t.Run("validate", func(t *testing.T) {
-		if !fhHasFeature("validate") {
-			t.Skip("feature not present in this SDK: validate")
-		}
-		client := sdk.TestSDK(nil, map[string]any{
-			"feature": map[string]any{"validate": map[string]any{"active": true}},
-		})
-		_, err := client.EscalationsV2(nil).Create(map[string]any{"escalation_id": 1, "response": "x", "snooze_details": "x"}, nil)
-		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
-			t.Fatalf("expected validate_failed, got %v", err)
-		}
-	})
-
 	t.Run("basic", func(tt *testing.T) {
 		var t testing.TB = tt
 		setup := escalations_v2BasicSetup(nil)
@@ -53,7 +40,7 @@ func TestEscalationsV2Entity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"create"} {
+		for _, _op := range []string{} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "escalations_v2." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -62,30 +49,15 @@ func TestEscalationsV2Entity(t *testing.T) {
 				return
 			}
 		}
-		if setup.live {
-			for _, _liveKey := range []string{"escalation01"} {
-				if setup.syntheticOnly || setup.idmap[_liveKey] == nil {
-					liveMiss(t, escalations_v2EntityLiveStrict, "Live entity test blocked: needs %s via INCIDENT_IO_TEST_ESCALATIONS_V2_ENTID", _liveKey)
-				}
-			}
+		// Bootstrap entity data from existing test data (no create step in flow).
+		escalationsV2Ref01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.escalations_v2")))
+		var escalationsV2Ref01Data map[string]any
+		if len(escalationsV2Ref01DataRaw) > 0 {
+			escalationsV2Ref01Data = core.ToMapAny(escalationsV2Ref01DataRaw[0][1])
 		}
-		client := setup.client
-		_ = client
-
-		// CREATE
-		escalationsV2Ref01Ent := client.EscalationsV2(nil)
-		escalationsV2Ref01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath(setup.data, []any{"new", "escalations_v2"}), "escalations_v2_ref01"))
-		escalationsV2Ref01Data["escalation_id"] = setup.idmap["escalation01"]
-
-		escalationsV2Ref01DataResult, err := escalationsV2Ref01Ent.Create(escalationsV2Ref01Data, nil)
-		if err != nil {
-			t.Fatalf("create failed: %v", err)
-		}
-		escalationsV2Ref01Data = core.ToMapAny(entityData(escalationsV2Ref01DataResult))
-		if escalationsV2Ref01Data == nil {
-			t.Fatal("expected create result to be a map")
-		}
+		// Discard guards against Go's unused-var check when the flow's steps
+		// happen not to consume the bootstrap data (e.g. list-only flows).
+		_ = escalationsV2Ref01Data
 
 	})
 }
@@ -115,7 +87,7 @@ func escalations_v2BasicSetup(extra map[string]any) *entityTestSetup {
 
 	// Generate idmap via transform, matching TS pattern.
 	idmap, _ := vs.Transform(
-		[]any{"escalations_v201", "escalations_v202", "escalations_v203", "escalation01", "escalation02", "escalation03"},
+		[]any{"escalations_v201", "escalations_v202", "escalations_v203"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
 				"`$KEY`": "`$COPY`",

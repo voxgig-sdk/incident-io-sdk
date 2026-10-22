@@ -209,7 +209,7 @@ The API exposes 106 entities:
 | **EscalationPathTemplate** | The EscalationPathTemplate entity (create, list, load, remove, update). | `/v2/escalation_path_templates` |
 | **EscalationsCheckEscalationPermissionsResultV2** | The EscalationsCheckEscalationPermissionsResultV2 entity (create). | `/v2/escalations/{escalation_id}/actions/check_permissions` |
 | **EscalationsReassignEscalationResultV2** | The EscalationsReassignEscalationResultV2 entity (create). | `/v2/escalations/{escalation_id}/actions/reassign` |
-| **EscalationsV2** | The EscalationsV2 entity (create). | `/v2/escalations/{escalation_id}/actions/respond` |
+| **EscalationsV2** | The EscalationsV2 entity. | `` |
 | **FollowUp** | The FollowUp entity (create, list, load, remove, update). | `/v3/follow_ups` |
 | **FollowUpsConnectExternalIssueResultV2** | The FollowUpsConnectExternalIssueResultV2 entity (create). | `/v2/follow_ups/{id}/actions/connect_external_issue` |
 | **FollowUpsConnectExternalIssueResultV3** | The FollowUpsConnectExternalIssueResultV3 entity (create). | `/v3/follow_ups/{id}/actions/connect_external_issue` |

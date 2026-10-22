@@ -918,7 +918,7 @@ API path: `/v1/custom_field_options`
 
 Operations: Create, List, Load.
 
-API path: `/v2/escalations`
+API path: `/v2/escalations/{id}/actions/cancel`
 
 #### EscalationPath
 
@@ -986,12 +986,10 @@ API path: `/v2/escalations/{escalation_id}/actions/reassign`
 
 | Field | Description |
 | --- | --- |
-| `response` | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` |  |
 
-Operations: Create.
+Operations: .
 
-API path: `/v2/escalations/{escalation_id}/actions/respond`
+API path: ``
 
 #### FollowUp
 
@@ -3704,29 +3702,6 @@ escalations_reassign_escalation_result_v2 = client.EscalationsReassignEscalation
 ### EscalationsV2
 
 Create an instance: `escalations_v2 = client.EscalationsV2()`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `create(data)` | Create a new entity with the given data. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `response` | `str` | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `dict` |  |
-
-#### Example: Create
-
-```python
-escalations_v2 = client.EscalationsV2().create({
-    "escalation_id": "example_escalation_id",  # str
-    "response": "example_response",  # str
-    "snooze_details": {},  # dict
-})
-```
 
 
 ### FollowUp

@@ -4031,6 +4031,27 @@ const escalation = client.Escalation()
 | `updated_at` | - | - | - |
 | `user_ids` | - | - | - |
 
+### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with `$action` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+| `cancel` | `/v2/escalations/{id}/actions/cancel` | `client.Escalation().create({ $action: 'cancel', ... })` |
+| `respond` | `/v2/escalations/{escalation_id}/actions/respond` | `client.Escalation().create({ $action: 'respond', ... })` |
+
+An action returns that action's OWN response, which is not necessarily a
+Escalation record — check the API definition for its shape.
+
+```ts
+const result = await client.Escalation().create({
+  $action: 'cancel',
+  /* ...the action's own arguments */
+})
+```
+
 ### Operations
 
 #### `create(data: object, ctrl?: object)`
@@ -4426,27 +4447,6 @@ Return a copy of the entity options.
 
 ```ts
 const escalations_v2 = client.EscalationsV2()
-```
-
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `response` | `string` | Yes | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `Record<string, any>` | Yes |  |
-
-### Operations
-
-#### `create(data: object, ctrl?: object)`
-
-Create a new entity with the given data. Resolves to the created entity.
-
-```ts
-const result = await client.EscalationsV2().create({
-  escalation_id: 'example_escalation_id',
-  response: 'example_response',
-  snooze_details: {},
-})
 ```
 
 ### Common Methods

@@ -910,7 +910,7 @@ API path: `/v1/custom_field_options`
 
 Operations: Create, List, Load.
 
-API path: `/v2/escalations`
+API path: `/v2/escalations/{id}/actions/cancel`
 
 #### EscalationPath
 
@@ -978,12 +978,10 @@ API path: `/v2/escalations/{escalation_id}/actions/reassign`
 
 | Field | Description |
 | --- | --- |
-| `response` | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` |  |
 
-Operations: Create.
+Operations: .
 
-API path: `/v2/escalations/{escalation_id}/actions/respond`
+API path: ``
 
 #### FollowUp
 
@@ -3696,29 +3694,6 @@ local escalations_reassign_escalation_result_v2, err = client:EscalationsReassig
 ### EscalationsV2
 
 Create an instance: `local escalations_v2 = client:EscalationsV2(nil)`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `create(data)` | Create a new entity with the given data. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `response` | `string` | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `table` |  |
-
-#### Example: Create
-
-```lua
-local escalations_v2, err = client:EscalationsV2():create({
-  escalation_id = "example_escalation_id", -- string
-  response = "example_response", -- string
-  snooze_details = {}, -- table
-})
-```
 
 
 ### FollowUp

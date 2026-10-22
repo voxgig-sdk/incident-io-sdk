@@ -1412,14 +1412,7 @@ class EscalationsReassignEscalationResultV2CreateData(EscalationsReassignEscalat
 
 
 class EscalationsV2(TypedDict):
-    response: str
-    snooze_details: dict
-
-
-class EscalationsV2CreateData(TypedDict):
-    escalation_id: str
-    response: str
-    snooze_details: dict
+    pass
 
 
 class FollowUpRequired(TypedDict):

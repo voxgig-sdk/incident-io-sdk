@@ -1,44 +1,15 @@
 {
   "existing": {
     "escalations_v2": {
-      "ESCALATIONS_V200": {
-        "response": "s14",
-        "snooze_details": {},
-        "escalation_id": "ESCALATION01",
-        "id": "ESCALATIONS_V200"
-      },
-      "ESCALATIONS_V201": {
-        "response": "s28",
-        "snooze_details": {},
-        "escalation_id": "ESCALATION01",
-        "id": "ESCALATIONS_V201"
-      },
-      "ESCALATIONS_V202": {
-        "response": "s3c",
-        "snooze_details": {},
-        "escalation_id": "ESCALATION01",
-        "id": "ESCALATIONS_V202"
-      }
+      "ESCALATIONS_V200": {},
+      "ESCALATIONS_V201": {},
+      "ESCALATIONS_V202": {}
     }
   },
   "new": {
     "escalations_v2": {
-      "escalations_v2_ref01": {
-        "response": "s50",
-        "snooze_details": {}
-      }
+      "escalations_v2_ref01": {}
     }
   },
-  "requests": {
-    "POST /v2/escalations/{escalation_id}/actions/respond": {
-      "provenance": "operation-contract",
-      "version": 2,
-      "source": "openapi3"
-    },
-    "POST /v2/escalations/{id}/actions/cancel": {
-      "provenance": "operation-contract",
-      "version": 2,
-      "source": "openapi3"
-    }
-  }
+  "requests": {}
 }

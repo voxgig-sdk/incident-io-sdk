@@ -943,7 +943,7 @@ API path: `/v1/custom_field_options`
 
 Operations: Create, List, Load.
 
-API path: `/v2/escalations`
+API path: `/v2/escalations/{id}/actions/cancel`
 
 #### EscalationPath
 
@@ -1011,12 +1011,10 @@ API path: `/v2/escalations/{escalation_id}/actions/reassign`
 
 | Field | Description |
 | --- | --- |
-| `"response"` | Whether to acknowledge, decline or snooze the escalation |
-| `"snooze_details"` |  |
 
-Operations: Create.
+Operations: .
 
-API path: `/v2/escalations/{escalation_id}/actions/respond`
+API path: ``
 
 #### FollowUp
 
@@ -4085,33 +4083,6 @@ fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ### EscalationsV2
 
 Create an instance: `escalationsV2 := client.EscalationsV2(nil)`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `response` | `string` | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `map[string]any` |  |
-
-#### Example: Create
-
-```go
-result, err := client.EscalationsV2(nil).Create(map[string]any{
-    "escalation_id": "example_escalation_id",
-    "response": "example_response",
-    "snooze_details": map[string]any{},
-}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
-```
 
 
 ### FollowUp

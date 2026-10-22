@@ -1469,16 +1469,6 @@ class EscalationsReassignEscalationResultV2CreateData
 /** EscalationsV2 entity data model. */
 class EscalationsV2
 {
-    public string $response;
-    public array $snooze_details;
-}
-
-/** Request payload for EscalationsV2#create. */
-class EscalationsV2CreateData
-{
-    public string $escalation_id;
-    public string $response;
-    public array $snooze_details;
 }
 
 /** FollowUp entity data model. */

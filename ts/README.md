@@ -985,7 +985,7 @@ API path: `/v1/custom_field_options`
 
 Operations: create, list, load.
 
-API path: `/v2/escalations`
+API path: `/v2/escalations/{id}/actions/cancel`
 
 #### EscalationPath
 
@@ -1053,12 +1053,10 @@ API path: `/v2/escalations/{escalation_id}/actions/reassign`
 
 | Field | Description |
 | --- | --- |
-| `response` | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` |  |
 
-Operations: create.
+Operations: .
 
-API path: `/v2/escalations/{escalation_id}/actions/respond`
+API path: ``
 
 #### FollowUp
 
@@ -3771,29 +3769,6 @@ const escalations_reassign_escalation_result_v2 = await client.EscalationsReassi
 ### EscalationsV2
 
 Create an instance: `const escalations_v2 = client.EscalationsV2()`
-
-#### Operations
-
-| Method | Description |
-| --- | --- |
-| `create(data)` | Create a new entity with the given data. |
-
-#### Fields
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `response` | `string` | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `Record<string, any>` |  |
-
-#### Example: Create
-
-```ts
-const escalations_v2 = await client.EscalationsV2().create({
-  escalation_id: 'example_escalation_id',
-  response: 'example_response',
-  snooze_details: {},
-})
-```
 
 
 ### FollowUp

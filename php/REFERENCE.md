@@ -3415,27 +3415,6 @@ Return the entity name.
 $escalations_v2 = $client->EscalationsV2();
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `response` | `string` | Yes | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `array` | Yes |  |
-
-### Operations
-
-#### `create(array $reqdata, ?array $ctrl = null): mixed`
-
-Create a new entity with the given data. Returns the created entity and throws on error.
-
-```php
-$result = $client->EscalationsV2()->create([
-  "escalation_id" => null, // string
-  "response" => null, // string
-  "snooze_details" => null, // array
-]);
-```
-
 ### Common Methods
 
 #### `data_get(): array`

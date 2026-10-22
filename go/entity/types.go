@@ -1018,13 +1018,6 @@ type EscalationsReassignEscalationResultV2CreateData struct {
 type EscalationsV2 struct {
 }
 
-// EscalationsV2CreateData is the typed request payload for EscalationsV2.CreateTyped.
-type EscalationsV2CreateData struct {
-	EscalationId string `json:"escalation_id"`
-	Response string `json:"response"`
-	SnoozeDetails map[string]any `json:"snooze_details"`
-}
-
 // FollowUp is the typed data model for the follow_up entity.
 type FollowUp struct {
 }

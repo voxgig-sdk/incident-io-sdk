@@ -31,40 +31,25 @@ class TestEscalationsV2Entity:
         ent = testsdk.EscalationsV2(None)
         assert ent is not None
 
-    def test_should_refuse_an_invalid_request(self):
-        if "validate" not in (shared_config().get("feature") or {}):
-            pytest.skip("feature not present in this SDK: validate")
-        client = IncidentIoSDK.test(
-            None, {"feature": {"validate": {"active": True}}})
-        with pytest.raises(Exception) as err:
-            client.EscalationsV2(None).create({"escalation_id": 1, "response": "x", "snooze_details": "x"}, None)
-        assert "validate_failed" == getattr(err.value, "code", None)
-
     def test_should_run_basic_flow(self):
         setup = _escalations_v2_basic_setup(None)
         # Per-op sdk-test-control.json skip — basic test exercises a flow with
         # multiple ops; skipping any one skips the whole flow (steps depend
         # on each other).
         _live = setup.get("live", False)
-        for _op in ["create"]:
+        for _op in []:
             _skip, _reason = runner.is_control_skipped("entityOp", "escalations_v2." + _op, "live" if _live else "unit")
             if _skip:
                 pytest.skip(_reason or "skipped via sdk-test-control.json")
                 return
-        if setup["live"]:
-            for _live_key in ["escalation01"]:
-                if setup.get("synthetic_only") or setup["idmap"].get(_live_key) is None:
-                    runner.live_miss(LIVE_STRICT, f"Live entity test blocked: needs {_live_key} via INCIDENT_IO_TEST_ESCALATIONS_V2_ENTID")
         client = setup["client"]
 
-        # CREATE
-        escalations_v2_ref01_ent = client.EscalationsV2(None)
-        escalations_v2_ref01_data = helpers.to_map(vs.getprop(
-            vs.getpath(setup["data"], "new.escalations_v2"), "escalations_v2_ref01"))
-        escalations_v2_ref01_data["escalation_id"] = setup["idmap"]["escalation01"]
-
-        escalations_v2_ref01_data = helpers.to_map(runner.entity_data(escalations_v2_ref01_ent.create(escalations_v2_ref01_data, None)))
-        assert escalations_v2_ref01_data is not None
+        # Bootstrap entity data from existing test data.
+        escalations_v2_ref01_data_raw = vs.items(helpers.to_map(
+            vs.getpath(setup["data"], "existing.escalations_v2")))
+        escalations_v2_ref01_data = None
+        if len(escalations_v2_ref01_data_raw) > 0:
+            escalations_v2_ref01_data = helpers.to_map(escalations_v2_ref01_data_raw[0][1])
 
 
 
@@ -84,7 +69,7 @@ def _escalations_v2_basic_setup(extra):
 
     # Generate idmap via transform.
     idmap = vs.transform(
-        ["escalations_v201", "escalations_v202", "escalations_v203", "escalation01", "escalation02", "escalation03"],
+        ["escalations_v201", "escalations_v202", "escalations_v203"],
         {
             "`$PACK`": ["", {
                 "`$KEY`": "`$COPY`",

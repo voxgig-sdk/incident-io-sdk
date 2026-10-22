@@ -24,52 +24,27 @@ class EscalationsV2EntityTest extends TestCase
         $this->assertNotNull($ent);
     }
 
-    public function test_validate(): void
-    {
-        $cfg = IncidentIoConfig::shared_config();
-        if (!isset($cfg["feature"]["validate"])) {
-            $this->markTestSkipped('feature not present in this SDK: validate');
-        }
-        $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
-        $err = null;
-        try {
-            $client->EscalationsV2(null)->create(["escalation_id" => 1, "response" => 'x', "snooze_details" => 'x'], null);
-        } catch (\Throwable $e) {
-            $err = $e;
-        }
-        $this->assertSame('validate_failed', $err->sdk_code ?? null);
-    }
-
     public function test_basic_flow(): void
     {
         $setup = escalations_v2_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["create"] as $_op) {
+        foreach ([] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "escalations_v2." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
                 return;
             }
         }
-        if (!empty($setup["live"])) {
-            foreach (["escalation01"] as $_liveKey) {
-                if (!empty($setup["synthetic_only"]) || null === ($setup["idmap"][$_liveKey] ?? null)) {
-                    Runner::live_miss(self::LIVE_STRICT, "Live entity test blocked: needs " . $_liveKey . " via INCIDENT_IO_TEST_ESCALATIONS_V2_ENTID");
-                }
-            }
-        }
         $client = $setup["client"];
 
-        // CREATE
-        $escalations_v2_ref01_ent = $client->EscalationsV2(null);
-        $escalations_v2_ref01_data = Helpers::to_map(Vs::getprop(
-            Vs::getpath($setup["data"], "new.escalations_v2"), "escalations_v2_ref01"));
-        $escalations_v2_ref01_data["escalation_id"] = $setup["idmap"]["escalation01"];
-
-        $escalations_v2_ref01_data_result = $escalations_v2_ref01_ent->create($escalations_v2_ref01_data, null);
-        $escalations_v2_ref01_data = Helpers::to_map(is_object($escalations_v2_ref01_data_result) && method_exists($escalations_v2_ref01_data_result, 'data_get') ? $escalations_v2_ref01_data_result->data_get() : $escalations_v2_ref01_data_result);
-        $this->assertNotNull($escalations_v2_ref01_data);
+        // Bootstrap entity data from existing test data.
+        $escalations_v2_ref01_data_raw = Vs::items(Helpers::to_map(
+            Vs::getpath($setup["data"], "existing.escalations_v2")));
+        $escalations_v2_ref01_data = null;
+        if (count($escalations_v2_ref01_data_raw) > 0) {
+            $escalations_v2_ref01_data = Helpers::to_map($escalations_v2_ref01_data_raw[0][1]);
+        }
 
     }
 }
@@ -89,7 +64,7 @@ function escalations_v2_basic_setup($extra)
 
     // Generate idmap.
     $idmap = [];
-    foreach (["escalations_v201", "escalations_v202", "escalations_v203", "escalation01", "escalation02", "escalation03"] as $k) {
+    foreach (["escalations_v201", "escalations_v202", "escalations_v203"] as $k) {
         $idmap[$k] = strtoupper($k);
     }
 

@@ -75,6 +75,16 @@
     }
   },
   "requests": {
+    "POST /v2/escalations/{id}/actions/cancel": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "POST /v2/escalations/{escalation_id}/actions/respond": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
     "POST /v2/escalations": {
       "provenance": "operation-contract",
       "version": 2,

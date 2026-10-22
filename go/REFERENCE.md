@@ -3981,31 +3981,6 @@ escalationsV2 := client.EscalationsV2(nil)
 fmt.Println(escalationsV2.GetName()) // "escalations_v2"
 ```
 
-### Fields
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `response` | `string` | Yes | Whether to acknowledge, decline or snooze the escalation |
-| `snooze_details` | `map[string]any` | Yes |  |
-
-### Operations
-
-#### `Create(reqdata, ctrl map[string]any) (any, error)`
-
-Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
-
-```go
-result, err := client.EscalationsV2(nil).Create(map[string]any{
-    "escalation_id": "example_escalation_id",
-    "response": "example_response",
-    "snooze_details": map[string]any{},
-}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
-```
-
 ### Common Methods
 
 #### `Data(args ...any) any`

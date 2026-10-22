@@ -3785,34 +3785,8 @@ EscalationsReassignEscalationResultV2CreateData = Struct.new(
 )
 
 # EscalationsV2 entity data model.
-#
-# @!attribute [rw] response
-#   @return [String]
-#
-# @!attribute [rw] snooze_details
-#   @return [Hash]
-EscalationsV2 = Struct.new(
-  :response,
-  :snooze_details,
-  keyword_init: true
-)
-
-# Request payload for EscalationsV2#create.
-#
-# @!attribute [rw] escalation_id
-#   @return [String]
-#
-# @!attribute [rw] response
-#   @return [String]
-#
-# @!attribute [rw] snooze_details
-#   @return [Hash]
-EscalationsV2CreateData = Struct.new(
-  :escalation_id,
-  :response,
-  :snooze_details,
-  keyword_init: true
-)
+class EscalationsV2
+end
 
 # FollowUp entity data model.
 #

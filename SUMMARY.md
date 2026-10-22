@@ -598,7 +598,7 @@ Key fields to recognise:
 
 ### [Escalation](docs/api/escalation.html)
 
-Results: Created response.; OK response.
+Results: OK response.; Created response.
 
 SDK operations: `create`, `list`, `load`.
 
@@ -665,13 +665,7 @@ Key fields to recognise:
 
 ### [EscalationsV2](docs/api/escalations_v2.html)
 
-Results: OK response.
-
-SDK operations: `create`.
-
-Key fields to recognise:
-
-- `response`: Whether to acknowledge, decline or snooze the escalation
+SDK operations: .
 
 ### [FollowUp](docs/api/follow_up.html)
 
@@ -1727,6 +1721,8 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [CustomFieldOption](docs/api/custom_field_option.html) | `load` | `GET /v1/custom_field_options/{id}` | Required |
 | [CustomFieldOption](docs/api/custom_field_option.html) | `remove` | `DELETE /v1/custom_field_options/{id}` | Required |
 | [CustomFieldOption](docs/api/custom_field_option.html) | `update` | `PUT /v1/custom_field_options/{id}` | Required |
+| [Escalation](docs/api/escalation.html) | `create` | `POST /v2/escalations/{id}/actions/cancel` | Required |
+| [Escalation](docs/api/escalation.html) | `create` | `POST /v2/escalations/{escalation_id}/actions/respond` | Required |
 | [Escalation](docs/api/escalation.html) | `create` | `POST /v2/escalations` | Required |
 | [Escalation](docs/api/escalation.html) | `list` | `GET /v2/escalations` | Required |
 | [Escalation](docs/api/escalation.html) | `load` | `GET /v2/escalations/{id}` | Required |
@@ -1742,8 +1738,6 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 | [EscalationPathTemplate](docs/api/escalation_path_template.html) | `update` | `PUT /v2/escalation_path_templates/{id}` | Required |
 | [EscalationsCheckEscalationPermissionsResultV2](docs/api/escalations_check_escalation_permissions_result_v2.html) | `create` | `POST /v2/escalations/{escalation_id}/actions/check_permissions` | Required |
 | [EscalationsReassignEscalationResultV2](docs/api/escalations_reassign_escalation_result_v2.html) | `create` | `POST /v2/escalations/{escalation_id}/actions/reassign` | Required |
-| [EscalationsV2](docs/api/escalations_v2.html) | `create` | `POST /v2/escalations/{escalation_id}/actions/respond` | Required |
-| [EscalationsV2](docs/api/escalations_v2.html) | `create` | `POST /v2/escalations/{id}/actions/cancel` | Required |
 | [FollowUp](docs/api/follow_up.html) | `create` | `POST /v2/follow_ups` | Required |
 | [FollowUp](docs/api/follow_up.html) | `create` | `POST /v3/follow_ups` | Required |
 | [FollowUp](docs/api/follow_up.html) | `list` | `GET /v2/follow_ups` | Required |

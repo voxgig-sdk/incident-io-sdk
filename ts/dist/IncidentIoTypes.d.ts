@@ -994,6 +994,8 @@ export interface EscalationCreateData {
     incident_id?: string;
     title: string;
     user_ids?: any[];
+    $action?: string;
+    [action: string]: any;
 }
 export interface EscalationPath {
     current_responders?: any[];
@@ -1103,13 +1105,6 @@ export interface EscalationsReassignEscalationResultV2CreateData {
     user_ids?: any[];
 }
 export interface EscalationsV2 {
-    response: string;
-    snooze_details: Record<string, any>;
-}
-export interface EscalationsV2CreateData {
-    escalation_id: string;
-    response: string;
-    snooze_details: Record<string, any>;
 }
 export interface FollowUp {
     assignee: Record<string, any>;

@@ -10776,6 +10776,70 @@ const PLAN: any[] = [
     "accessor": "Escalation",
     "op": "create",
     "method": "POST",
+    "path": "/v2/escalations/{id}/actions/cancel",
+    "action": "cancel",
+    "args": [
+      {
+        "name": "id",
+        "wire": "id",
+        "value": "01G0J1EXE7AXZ2C93K61WBPYEH"
+      }
+    ],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 200,
+    "sample": null,
+    "idField": "id"
+  },
+  {
+    "entity": "escalation",
+    "accessor": "Escalation",
+    "op": "create",
+    "method": "POST",
+    "path": "/v2/escalations/{escalation_id}/actions/respond",
+    "action": "respond",
+    "args": [
+      {
+        "name": "id",
+        "wire": "escalation_id",
+        "value": "01G0J1EXE7AXZ2C93K61WBPYEH"
+      }
+    ],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 200,
+    "sample": null,
+    "idField": "id"
+  },
+  {
+    "entity": "escalation",
+    "accessor": "Escalation",
+    "op": "create",
+    "method": "POST",
     "path": "/v2/escalations",
     "args": [],
     "select": {},

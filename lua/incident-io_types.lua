@@ -1053,13 +1053,6 @@
 ---@field user_ids? table
 
 ---@class EscalationsV2
----@field response string
----@field snooze_details table
-
----@class EscalationsV2CreateData
----@field escalation_id string
----@field response string
----@field snooze_details table
 
 ---@class FollowUp
 ---@field assignee table
