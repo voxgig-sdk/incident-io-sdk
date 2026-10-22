@@ -65,6 +65,7 @@
        "incident_creator",
        "incident_editor",
        "manage_settings",
+       "glossary_entries_manage",
        "global_access",
        "catalog_viewer",
        "catalog_editor",
@@ -327,6 +328,7 @@
         "incident_creator",
         "incident_editor",
         "manage_settings",
+        "glossary_entries_manage",
         "global_access",
         "catalog_viewer",
         "catalog_editor",
@@ -745,6 +747,7 @@
         "incident_creator",
         "incident_editor",
         "manage_settings",
+        "glossary_entries_manage",
         "global_access",
         "catalog_viewer",
         "catalog_editor",
@@ -16674,6 +16677,7 @@
        "elasticsearch",
        "email",
        "expel",
+       "git_guardian",
        "github_issue",
        "google_cloud",
        "google_secops",
@@ -17054,6 +17058,7 @@
        "elasticsearch",
        "email",
        "expel",
+       "git_guardian",
        "github_issue",
        "google_cloud",
        "google_secops",
@@ -19038,6 +19043,7 @@
        "elasticsearch",
        "email",
        "expel",
+       "git_guardian",
        "github_issue",
        "google_cloud",
        "google_secops",
@@ -23034,6 +23040,85 @@
     ],
     "type": "object"
    },
+   "AuditLogExtensionConnectorCalledMetadataV4V2": {
+    "example": {
+     "access_source": "policy",
+     "approval_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+     "approved_by": "01FCNDV6P870EA6S7TK1DSYDG0",
+     "class": "write",
+     "incident_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+     "outcome": "requires_approval",
+     "reason": "requires_approval",
+     "source_kind": "mcp",
+     "surface": "chat",
+     "telemetry_query_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+     "write": "true"
+    },
+    "properties": {
+     "access_source": {
+      "description": "What decided: the connector's access policy, or a decision pinned on this tool (policy, override)",
+      "example": "policy",
+      "type": "string"
+     },
+     "approval_id": {
+      "description": "ID of the approval request this call executed, when a person's approval is what permitted it",
+      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "type": "string"
+     },
+     "approved_by": {
+      "description": "ID of the user who approved the approval request this call executed",
+      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "type": "string"
+     },
+     "class": {
+      "description": "What calling the tool does to the connected system, as the tool's own server describes it (read, write, destructive, unknown)",
+      "example": "write",
+      "type": "string"
+     },
+     "incident_id": {
+      "description": "The incident the call was made for, when incident-scoped",
+      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "type": "string"
+     },
+     "outcome": {
+      "description": "How the call ended (success, error, denied, requires_approval). A denied call was refused by the connector's access policy and a requires_approval call is waiting for a person's approval; neither reached the connected system",
+      "example": "requires_approval",
+      "type": "string"
+     },
+     "reason": {
+      "description": "Why the call was allowed, refused or made to wait (allowed, denied_by_rule, disabled, unknown_rule_type, rule_not_found, not_read, no_person_present, not_in_allow_list, requires_approval)",
+      "example": "requires_approval",
+      "type": "string"
+     },
+     "source_kind": {
+      "description": "The kind of connector that was called (mcp, http)",
+      "example": "mcp",
+      "type": "string"
+     },
+     "surface": {
+      "description": "The product surface the call ran from (chat, investigation, explore, mcp_client, verify), or internal for system paths with no surface",
+      "example": "chat",
+      "type": "string"
+     },
+     "telemetry_query_id": {
+      "description": "ID of our stored record of this call, absent for a call that was refused or is waiting for approval",
+      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "type": "string"
+     },
+     "write": {
+      "description": "Whether the call was permitted to change the connected system (true, false)",
+      "example": "true",
+      "type": "string"
+     }
+    },
+    "required": [
+     "surface",
+     "write",
+     "outcome",
+     "source_kind"
+    ],
+    "type": "object"
+   },
    "AuditLogExtensionPluginCreatedMetadataV2": {
     "example": {
      "provider": "github",
@@ -23898,6 +23983,54 @@
      "change_id": {
       "description": "Shared by every entry the same save produced, so the decision that changed and the access it reached can be read together",
       "example": "01JD8ZQK9X0000000000000000",
+      "type": "string"
+     },
+     "set_by": {
+      "description": "ID of the user who saved the policy, absent when staff tooling saved it",
+      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "type": "string"
+     }
+    },
+    "required": [
+     "before",
+     "after",
+     "change_id"
+    ],
+    "type": "object"
+   },
+   "AuditLogTelemetryDataSourceAccessPolicyChangedMetadataV2V2": {
+    "example": {
+     "after": "{\"read\":{\"enabled\":true,\"surfaces\":{\"chat\":{\"type\":\"deny\"}}}}",
+     "before": "{\"read\":{\"enabled\":true,\"surfaces\":{\"chat\":{\"type\":\"allow\"}}}}",
+     "change_id": "01JD8ZQK9X0000000000000000",
+     "notification_channels_after": "",
+     "notification_channels_before": "{\"slack_channels\":{\"array_value\":[{\"literal\":\"C0123456789\"}]}}",
+     "set_by": "01FCNDV6P870EA6S7TK1DSYDG0"
+    },
+    "properties": {
+     "after": {
+      "description": "The policy after the change, as JSON",
+      "example": "{\"read\":{\"enabled\":true,\"surfaces\":{\"chat\":{\"type\":\"deny\"}}}}",
+      "type": "string"
+     },
+     "before": {
+      "description": "The policy before the change, as JSON; empty when the connector had no access policy",
+      "example": "{\"read\":{\"enabled\":true,\"surfaces\":{\"chat\":{\"type\":\"allow\"}}}}",
+      "type": "string"
+     },
+     "change_id": {
+      "description": "Shared by every entry the same save produced, so the decision that changed and the access it reached can be read together",
+      "example": "01JD8ZQK9X0000000000000000",
+      "type": "string"
+     },
+     "notification_channels_after": {
+      "description": "The default notification channels after the change, as JSON; absent when they did not change, empty when there are none",
+      "example": "",
+      "type": "string"
+     },
+     "notification_channels_before": {
+      "description": "The default notification channels before the change, as JSON; absent when they did not change, empty when there were none",
+      "example": "{\"slack_channels\":{\"array_value\":[{\"literal\":\"C0123456789\"}]}}",
       "type": "string"
      },
      "set_by": {
@@ -28601,6 +28734,108 @@
      "version": {
       "description": "Which version the event is",
       "example": 3,
+      "format": "int64",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "action",
+     "occurred_at",
+     "version",
+     "actor",
+     "targets",
+     "context",
+     "metadata"
+    ],
+    "type": "object"
+   },
+   "AuditLogsExtensionConnectorCalledV4": {
+    "example": {
+     "action": "extension_connector.called",
+     "actor": {
+      "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "metadata": {
+       "user_base_role_slug": "admin",
+       "user_custom_role_slugs": "engineering,security"
+      },
+      "name": "John Doe",
+      "type": "user"
+     },
+     "context": {
+      "location": "1.2.3.4",
+      "user_agent": "Chrome/91.0.4472.114"
+     },
+     "metadata": {
+      "access_source": "policy",
+      "approval_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "approved_by": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "class": "write",
+      "incident_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "outcome": "requires_approval",
+      "reason": "requires_approval",
+      "source_kind": "mcp",
+      "surface": "chat",
+      "telemetry_query_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "write": "true"
+     },
+     "occurred_at": "2021-08-17T13:28:57.801578Z",
+     "targets": [
+      {
+       "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+       "name": "Acme Deploy",
+       "type": "extension_connector"
+      },
+      {
+       "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+       "name": "restart_service",
+       "type": "extension_connector_tool"
+      }
+     ],
+     "version": 4
+    },
+    "properties": {
+     "action": {
+      "description": "The type of log entry that this is",
+      "example": "extension_connector.called",
+      "type": "string"
+     },
+     "actor": {
+      "$ref": "#/components/schemas/AuditLogActorV2"
+     },
+     "context": {
+      "$ref": "#/components/schemas/AuditLogEntryContextV2"
+     },
+     "metadata": {
+      "$ref": "#/components/schemas/AuditLogExtensionConnectorCalledMetadataV4V2"
+     },
+     "occurred_at": {
+      "description": "When the entry occurred",
+      "example": "2021-08-17T13:28:57.801578Z",
+      "format": "date-time",
+      "type": "string"
+     },
+     "targets": {
+      "description": "The custom field that was created",
+      "example": [
+       {
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "name": "Acme Deploy",
+        "type": "extension_connector"
+       },
+       {
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "name": "restart_service",
+        "type": "extension_connector_tool"
+       }
+      ],
+      "items": {
+       "$ref": "#/components/schemas/AuditLogTargetV2"
+      },
+      "type": "array"
+     },
+     "version": {
+      "description": "Which version the event is",
+      "example": 4,
       "format": "int64",
       "type": "integer"
      }
@@ -40769,6 +41004,93 @@
      "version": {
       "description": "Which version the event is",
       "example": 1,
+      "format": "int64",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "action",
+     "occurred_at",
+     "version",
+     "actor",
+     "targets",
+     "context",
+     "metadata"
+    ],
+    "type": "object"
+   },
+   "AuditLogsTelemetryDataSourceAccessPolicyChangedV2": {
+    "example": {
+     "action": "telemetry_data_source.access_policy_changed",
+     "actor": {
+      "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "metadata": {
+       "user_base_role_slug": "admin",
+       "user_custom_role_slugs": "engineering,security"
+      },
+      "name": "John Doe",
+      "type": "user"
+     },
+     "context": {
+      "location": "1.2.3.4",
+      "user_agent": "Chrome/91.0.4472.114"
+     },
+     "metadata": {
+      "after": "{\"read\":{\"enabled\":true,\"surfaces\":{\"chat\":{\"type\":\"deny\"}}}}",
+      "before": "{\"read\":{\"enabled\":true,\"surfaces\":{\"chat\":{\"type\":\"allow\"}}}}",
+      "change_id": "01JD8ZQK9X0000000000000000",
+      "notification_channels_after": "",
+      "notification_channels_before": "{\"slack_channels\":{\"array_value\":[{\"literal\":\"C0123456789\"}]}}",
+      "set_by": "01FCNDV6P870EA6S7TK1DSYDG0"
+     },
+     "occurred_at": "2021-08-17T13:28:57.801578Z",
+     "targets": [
+      {
+       "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+       "name": "Grafana Cloud",
+       "type": "telemetry_data_source"
+      }
+     ],
+     "version": 2
+    },
+    "properties": {
+     "action": {
+      "description": "The type of log entry that this is",
+      "example": "telemetry_data_source.access_policy_changed",
+      "type": "string"
+     },
+     "actor": {
+      "$ref": "#/components/schemas/AuditLogActorV2"
+     },
+     "context": {
+      "$ref": "#/components/schemas/AuditLogEntryContextV2"
+     },
+     "metadata": {
+      "$ref": "#/components/schemas/AuditLogTelemetryDataSourceAccessPolicyChangedMetadataV2V2"
+     },
+     "occurred_at": {
+      "description": "When the entry occurred",
+      "example": "2021-08-17T13:28:57.801578Z",
+      "format": "date-time",
+      "type": "string"
+     },
+     "targets": {
+      "description": "The custom field that was created",
+      "example": [
+       {
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "name": "Grafana Cloud",
+        "type": "telemetry_data_source"
+       }
+      ],
+      "items": {
+       "$ref": "#/components/schemas/AuditLogTargetV2"
+      },
+      "type": "array"
+     },
+     "version": {
+      "description": "Which version the event is",
+      "example": 2,
       "format": "int64",
       "type": "integer"
      }
@@ -67256,6 +67578,7 @@
         "incident_creator",
         "incident_editor",
         "manage_settings",
+        "glossary_entries_manage",
         "global_access",
         "catalog_viewer",
         "catalog_editor",
@@ -84622,12 +84945,14 @@
     ],
     "type": "object"
    },
-   "ManagementMetaV2": {
+   "ManagedResourceV2": {
     "example": {
      "annotations": {
       "incident.io/terraform/version": "3.0.0"
      },
-     "managed_by": "dashboard",
+     "managed_by": "terraform",
+     "resource_id": "abc123",
+     "resource_type": "alert_route",
      "source_url": "https://github.com/my-company/infrastructure"
     },
     "properties": {
@@ -84649,7 +84974,157 @@
        "terraform",
        "external"
       ],
-      "example": "dashboard",
+      "example": "terraform",
+      "type": "string"
+     },
+     "resource_id": {
+      "description": "The ID of the resource that this relates to",
+      "example": "abc123",
+      "type": "string"
+     },
+     "resource_type": {
+      "enum": [
+       "alert_route",
+       "alert_source",
+       "api_key",
+       "incident_form",
+       "incident_template",
+       "escalation_path",
+       "escalation_path_template",
+       "policy",
+       "schedule",
+       "schedule_sync_target",
+       "schedule_sync_rule",
+       "secret",
+       "status_page_component",
+       "status_page_structure",
+       "team_grouping_preference",
+       "workflow"
+      ],
+      "example": "alert_route",
+      "type": "string",
+      "x-public-api-version": "v2"
+     },
+     "source_url": {
+      "description": "The url of the external repository where this resource is managed (if there is one)",
+      "example": "https://github.com/my-company/infrastructure",
+      "type": "string"
+     }
+    },
+    "required": [
+     "resource_type",
+     "resource_id",
+     "managed_by",
+     "annotations"
+    ],
+    "type": "object"
+   },
+   "ManagedResourcesCreateManagedResourcePayloadV2": {
+    "example": {
+     "annotations": {
+      "incident.io/terraform/version": "3.0.0"
+     },
+     "resource_id": "abc123",
+     "resource_type": "alert_route"
+    },
+    "properties": {
+     "annotations": {
+      "additionalProperties": {
+       "example": "abc123",
+       "type": "string"
+      },
+      "description": "Annotations that track metadata about this resource",
+      "example": {
+       "incident.io/terraform/version": "3.0.0"
+      },
+      "type": "object"
+     },
+     "resource_id": {
+      "description": "The ID of the resource that this relates to",
+      "example": "abc123",
+      "type": "string"
+     },
+     "resource_type": {
+      "description": "The type of the related resource",
+      "enum": [
+       "alert_route",
+       "alert_source",
+       "api_key",
+       "incident_form",
+       "incident_template",
+       "escalation_path",
+       "escalation_path_template",
+       "policy",
+       "schedule",
+       "schedule_sync_target",
+       "schedule_sync_rule",
+       "secret",
+       "status_page_component",
+       "status_page_structure",
+       "team_grouping_preference",
+       "workflow"
+      ],
+      "example": "alert_route",
+      "type": "string"
+     }
+    },
+    "required": [
+     "annotations",
+     "resource_type",
+     "resource_id"
+    ],
+    "type": "object"
+   },
+   "ManagedResourcesCreateManagedResourceResultV2": {
+    "example": {
+     "managed_resource": {
+      "annotations": {
+       "incident.io/terraform/version": "3.0.0"
+      },
+      "managed_by": "terraform",
+      "resource_id": "abc123",
+      "resource_type": "alert_route",
+      "source_url": "https://github.com/my-company/infrastructure"
+     }
+    },
+    "properties": {
+     "managed_resource": {
+      "$ref": "#/components/schemas/ManagedResourceV2"
+     }
+    },
+    "required": [
+     "managed_resource"
+    ],
+    "type": "object"
+   },
+   "ManagementMetaV2": {
+    "example": {
+     "annotations": {
+      "incident.io/terraform/version": "3.0.0"
+     },
+     "managed_by": "terraform",
+     "source_url": "https://github.com/my-company/infrastructure"
+    },
+    "properties": {
+     "annotations": {
+      "additionalProperties": {
+       "example": "abc123",
+       "type": "string"
+      },
+      "description": "Annotations that track metadata about this resource",
+      "example": {
+       "incident.io/terraform/version": "3.0.0"
+      },
+      "type": "object"
+     },
+     "managed_by": {
+      "description": "How is this resource managed",
+      "enum": [
+       "dashboard",
+       "terraform",
+       "external"
+      ],
+      "example": "terraform",
       "type": "string"
      },
      "source_url": {
@@ -84773,6 +85248,136 @@
      "method_type",
      "is_usable",
      "address"
+    ],
+    "type": "object"
+   },
+   "OnCallNotificationPauseV2": {
+    "description": "A window in which a user's on-call notifications are paused: while it's active, escalations skip the user instead of paging them.",
+    "example": {
+     "created_at": "2021-08-17T13:28:57.801578Z",
+     "ends_at": "2021-08-24T13:28:57.801578Z",
+     "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+     "reason": "Annual leave",
+     "starts_at": "2021-08-17T13:28:57.801578Z",
+     "updated_at": "2021-08-17T13:28:57.801578Z",
+     "user_id": "01FCNDV6P870EA6S7TK1DSYDG0"
+    },
+    "properties": {
+     "created_at": {
+      "example": "2021-08-17T13:28:57.801578Z",
+      "format": "date-time",
+      "type": "string"
+     },
+     "ends_at": {
+      "description": "When notifications resume",
+      "example": "2021-08-24T13:28:57.801578Z",
+      "format": "date-time",
+      "type": "string"
+     },
+     "id": {
+      "description": "Unique identifier for this notification pause",
+      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "type": "string"
+     },
+     "reason": {
+      "description": "Free text reason for why notifications are paused, shown to teammates",
+      "example": "Annual leave",
+      "maxLength": 500,
+      "type": "string"
+     },
+     "starts_at": {
+      "description": "When notifications stop being sent to the user",
+      "example": "2021-08-17T13:28:57.801578Z",
+      "format": "date-time",
+      "type": "string"
+     },
+     "updated_at": {
+      "example": "2021-08-17T13:28:57.801578Z",
+      "format": "date-time",
+      "type": "string"
+     },
+     "user_id": {
+      "description": "The user whose on-call notifications are paused in this time window",
+      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "user_id",
+     "starts_at",
+     "ends_at",
+     "created_at",
+     "updated_at"
+    ],
+    "type": "object"
+   },
+   "OnCallNotificationPausesListResultV2": {
+    "example": {
+     "on_call_notification_pauses": [
+      {
+       "created_at": "2021-08-17T13:28:57.801578Z",
+       "ends_at": "2021-08-24T13:28:57.801578Z",
+       "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+       "reason": "Annual leave",
+       "starts_at": "2021-08-17T13:28:57.801578Z",
+       "updated_at": "2021-08-17T13:28:57.801578Z",
+       "user_id": "01FCNDV6P870EA6S7TK1DSYDG0"
+      }
+     ],
+     "pagination_meta": {
+      "after": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "page_size": 25
+     }
+    },
+    "properties": {
+     "on_call_notification_pauses": {
+      "description": "Pauses ordered by when they start",
+      "example": [
+       {
+        "created_at": "2021-08-17T13:28:57.801578Z",
+        "ends_at": "2021-08-24T13:28:57.801578Z",
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "reason": "Annual leave",
+        "starts_at": "2021-08-17T13:28:57.801578Z",
+        "updated_at": "2021-08-17T13:28:57.801578Z",
+        "user_id": "01FCNDV6P870EA6S7TK1DSYDG0"
+       }
+      ],
+      "items": {
+       "$ref": "#/components/schemas/OnCallNotificationPauseV2"
+      },
+      "type": "array"
+     },
+     "pagination_meta": {
+      "$ref": "#/components/schemas/PaginationMetaResultV2"
+     }
+    },
+    "required": [
+     "on_call_notification_pauses",
+     "pagination_meta"
+    ],
+    "type": "object"
+   },
+   "OnCallNotificationPausesShowResultV2": {
+    "example": {
+     "on_call_notification_pause": {
+      "created_at": "2021-08-17T13:28:57.801578Z",
+      "ends_at": "2021-08-24T13:28:57.801578Z",
+      "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "reason": "Annual leave",
+      "starts_at": "2021-08-17T13:28:57.801578Z",
+      "updated_at": "2021-08-17T13:28:57.801578Z",
+      "user_id": "01FCNDV6P870EA6S7TK1DSYDG0"
+     }
+    },
+    "properties": {
+     "on_call_notification_pause": {
+      "$ref": "#/components/schemas/OnCallNotificationPauseV2"
+     }
+    },
+    "required": [
+     "on_call_notification_pause"
     ],
     "type": "object"
    },
@@ -98809,7 +99414,7 @@
       "annotations": {
        "incident.io/terraform/version": "3.0.0"
       },
-      "managed_by": "dashboard",
+      "managed_by": "terraform",
       "source_url": "https://github.com/my-company/infrastructure"
      },
      "name": "App"
@@ -98872,7 +99477,7 @@
        "annotations": {
         "incident.io/terraform/version": "3.0.0"
        },
-       "managed_by": "dashboard",
+       "managed_by": "terraform",
        "source_url": "https://github.com/my-company/infrastructure"
       },
       "name": "App"
@@ -98898,7 +99503,7 @@
         "annotations": {
          "incident.io/terraform/version": "3.0.0"
         },
-        "managed_by": "dashboard",
+        "managed_by": "terraform",
         "source_url": "https://github.com/my-company/infrastructure"
        },
        "name": "App"
@@ -98915,7 +99520,7 @@
          "annotations": {
           "incident.io/terraform/version": "3.0.0"
          },
-         "managed_by": "dashboard",
+         "managed_by": "terraform",
          "source_url": "https://github.com/my-company/infrastructure"
         },
         "name": "App"
@@ -98941,7 +99546,7 @@
        "annotations": {
         "incident.io/terraform/version": "3.0.0"
        },
-       "managed_by": "dashboard",
+       "managed_by": "terraform",
        "source_url": "https://github.com/my-company/infrastructure"
       },
       "name": "App"
@@ -98988,7 +99593,7 @@
        "annotations": {
         "incident.io/terraform/version": "3.0.0"
        },
-       "managed_by": "dashboard",
+       "managed_by": "terraform",
        "source_url": "https://github.com/my-company/infrastructure"
       },
       "name": "App"
@@ -100158,7 +100763,7 @@
       "type": "string"
      },
      "notify_subscribers": {
-      "description": "Whether to notify subscribers about this status page incident. This will not work if your status page has more than 1000 subscribers.",
+      "description": "Whether to notify subscribers about this status page incident. If your status page has more than 1000 subscribers, requests that set this to true are rejected. This limit applies only to the public API: publishing from the incident.io dashboard or Slack always notifies every subscriber.",
       "example": true,
       "type": "boolean"
      },
@@ -100263,7 +100868,7 @@
       "type": "string"
      },
      "notify_subscribers": {
-      "description": "Whether to notify subscribers about this incident update. This will not work if your status page has more than 1000 subscribers.",
+      "description": "Whether to notify subscribers about this incident update. If your status page has more than 1000 subscribers, requests that set this to true are rejected. This limit applies only to the public API: publishing from the incident.io dashboard or Slack always notifies every subscriber.",
       "example": true,
       "type": "boolean"
      },
@@ -100369,7 +100974,7 @@
       "type": "string"
      },
      "notify_subscribers": {
-      "description": "Whether to notify subscribers about this status page maintenance. This will not work if your status page has more than 1000 subscribers.",
+      "description": "Whether to notify subscribers about this status page maintenance. If your status page has more than 1000 subscribers, requests that set this to true are rejected. This limit applies only to the public API: publishing from the incident.io dashboard or Slack always notifies every subscriber.",
       "example": true,
       "type": "boolean"
      },
@@ -100482,7 +101087,7 @@
       "type": "string"
      },
      "notify_subscribers": {
-      "description": "Whether to notify subscribers about this status page maintenance update. This will not work if your status page has more than 1000 subscribers.",
+      "description": "Whether to notify subscribers about this status page maintenance update. If your status page has more than 1000 subscribers, requests that set this to true are rejected. This limit applies only to the public API: publishing from the incident.io dashboard or Slack always notifies every subscriber.",
       "example": true,
       "type": "boolean"
      },
@@ -101054,7 +101659,7 @@
       "annotations": {
        "incident.io/terraform/version": "3.0.0"
       },
-      "managed_by": "dashboard",
+      "managed_by": "terraform",
       "source_url": "https://github.com/my-company/infrastructure"
      }
     },
@@ -101421,7 +102026,8 @@
       "enum": [
        "complete",
        "pending",
-       "error"
+       "error",
+       "suspended"
       ],
       "example": "complete",
       "type": "string"
@@ -101509,7 +102115,8 @@
       "enum": [
        "complete",
        "pending",
-       "error"
+       "error",
+       "suspended"
       ],
       "example": "complete",
       "type": "string"
@@ -108924,7 +109531,7 @@
       "annotations": {
        "incident.io/terraform/version": "3.0.0"
       },
-      "managed_by": "dashboard",
+      "managed_by": "terraform",
       "source_url": "https://github.com/my-company/infrastructure"
      },
      "workflow": {
@@ -109669,7 +110276,7 @@
       "annotations": {
        "incident.io/terraform/version": "3.0.0"
       },
-      "managed_by": "dashboard",
+      "managed_by": "terraform",
       "source_url": "https://github.com/my-company/infrastructure"
      },
      "workflow": {
@@ -110494,7 +111101,7 @@
       "annotations": {
        "incident.io/terraform/version": "3.0.0"
       },
-      "managed_by": "dashboard",
+      "managed_by": "terraform",
       "source_url": "https://github.com/my-company/infrastructure"
      },
      "workflow": {
@@ -161958,6 +162565,614 @@
     ]
    }
   },
+  "/v2/managed_resources": {
+   "post": {
+    "description": "Create or update the management record for a resource. This replaces any annotations already stored on it.\n\nThe annotations set `managed_by`:\n- `incident.io/terraform/version` sets it to `terraform`.\n- `incident.io/is-managed-externally` sets it to `external`. If both keys are present, `external` wins.\n- Neither key sets it to `dashboard`.\n\nThis doesn't change the resource's configuration, but `managed_by` controls whether it can be edited in the dashboard. Returning a schedule to `dashboard` also returns its sync rules and targets.\n\nThe API key must have the update scope for the resource type, e.g. `schedules.update` for a schedule.",
+    "operationId": "Managed Resources V2#CreateManagedResource",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "example": {
+        "annotations": {
+         "incident.io/terraform/version": "3.0.0"
+        },
+        "resource_id": "abc123",
+        "resource_type": "alert_route"
+       },
+       "schema": {
+        "$ref": "#/components/schemas/ManagedResourcesCreateManagedResourcePayloadV2"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "example": {
+         "managed_resource": {
+          "annotations": {
+           "incident.io/terraform/version": "3.0.0"
+          },
+          "managed_by": "terraform",
+          "resource_id": "abc123",
+          "resource_type": "alert_route",
+          "source_url": "https://github.com/my-company/infrastructure"
+         }
+        },
+        "schema": {
+         "$ref": "#/components/schemas/ManagedResourcesCreateManagedResourceResultV2"
+        }
+       }
+      },
+      "description": "OK response."
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "invalid_request_error: There was a problem with the request, like a missing header or querying a resource that doesn't exist."
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "authentication_error: Authentication failed."
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "resource_forbidden: Access to this resource is forbidden for the authenticated user."
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "not_found: The referenced resource could not be found."
+     },
+     "405": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "method_not_allowed: The endpoint does not support this operation for the specified resource."
+     },
+     "406": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "not_acceptable: Requested a media type this endpoint does not support."
+     },
+     "408": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "request_timeout: The request took too long to process.\n\nclient_timeout: The request was cancelled by the client."
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "conflict: Request conflicted with current state of the resource, likely a concurrent update."
+     },
+     "412": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "precondition_failed: A required condition hasn't been met."
+     },
+     "413": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "payload_too_large: The request payload is too large."
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "validation_error: A required field was not provided, or the provided data was invalid."
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "too_many_requests: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.\n\nrate_limit_reached: The rate limit associated with this resource or API key has been exceeded. Try again later."
+     },
+     "500": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "api_error: Something went wrong and has been reported internally."
+     }
+    },
+    "summary": "CreateManagedResource Managed Resources V2",
+    "tags": [
+     "Managed Resources V2"
+    ],
+    "x-docs-display-name": "Create",
+    "x-docs-group-name": "Managed Resources V2",
+    "x-docs-resource-type": "ManagedResourceV2"
+   }
+  },
+  "/v2/on_call_notification_pauses": {
+   "get": {
+    "description": "List on-call notification pauses across the organisation. By default this returns pauses that are active now or scheduled for the future. Cancelled pauses are never returned, and pauses that were resumed early have ends_at set to when they were resumed.",
+    "operationId": "On-call Notification Pauses V2#List",
+    "parameters": [
+     {
+      "allowEmptyValue": true,
+      "description": "Only return pauses that end after this time. Defaults to now, so by default only active and upcoming pauses are returned.",
+      "example": "2021-08-17T00:00:00Z",
+      "in": "query",
+      "name": "from",
+      "schema": {
+       "description": "Only return pauses that end after this time. Defaults to now, so by default only active and upcoming pauses are returned.",
+       "example": "2021-08-17T00:00:00Z",
+       "format": "date-time",
+       "type": "string"
+      }
+     },
+     {
+      "allowEmptyValue": true,
+      "description": "Only return pauses that start before this time",
+      "example": "2021-08-24T00:00:00Z",
+      "in": "query",
+      "name": "to",
+      "schema": {
+       "description": "Only return pauses that start before this time",
+       "example": "2021-08-24T00:00:00Z",
+       "format": "date-time",
+       "type": "string"
+      }
+     },
+     {
+      "allowEmptyValue": true,
+      "description": "Integer number of records to return",
+      "example": 25,
+      "in": "query",
+      "name": "page_size",
+      "schema": {
+       "default": 25,
+       "description": "Integer number of records to return",
+       "example": 25,
+       "format": "int64",
+       "maximum": 250,
+       "minimum": 1,
+       "type": "integer"
+      }
+     },
+     {
+      "allowEmptyValue": true,
+      "description": "A pause's ID. This endpoint will return a list of pauses after this ID in relation to the API response order.",
+      "examples": {
+       "default": {
+        "summary": "default",
+        "value": "01FCNDV6P870EA6S7TK1DSYDG0"
+       }
+      },
+      "in": "query",
+      "name": "after",
+      "schema": {
+       "description": "A pause's ID. This endpoint will return a list of pauses after this ID in relation to the API response order.",
+       "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "example": {
+         "on_call_notification_pauses": [
+          {
+           "created_at": "2021-08-17T13:28:57.801578Z",
+           "ends_at": "2021-08-24T13:28:57.801578Z",
+           "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+           "reason": "Annual leave",
+           "starts_at": "2021-08-17T13:28:57.801578Z",
+           "updated_at": "2021-08-17T13:28:57.801578Z",
+           "user_id": "01FCNDV6P870EA6S7TK1DSYDG0"
+          }
+         ],
+         "pagination_meta": {
+          "after": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "page_size": 25
+         }
+        },
+        "schema": {
+         "$ref": "#/components/schemas/OnCallNotificationPausesListResultV2"
+        }
+       }
+      },
+      "description": "OK response."
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "invalid_request_error: There was a problem with the request, like a missing header or querying a resource that doesn't exist."
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "authentication_error: Authentication failed."
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "resource_forbidden: Access to this resource is forbidden for the authenticated user."
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "not_found: The referenced resource could not be found."
+     },
+     "405": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "method_not_allowed: The endpoint does not support this operation for the specified resource."
+     },
+     "406": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "not_acceptable: Requested a media type this endpoint does not support."
+     },
+     "408": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "request_timeout: The request took too long to process.\n\nclient_timeout: The request was cancelled by the client."
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "conflict: Request conflicted with current state of the resource, likely a concurrent update."
+     },
+     "412": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "precondition_failed: A required condition hasn't been met."
+     },
+     "413": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "payload_too_large: The request payload is too large."
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "validation_error: A required field was not provided, or the provided data was invalid."
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "too_many_requests: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.\n\nrate_limit_reached: The rate limit associated with this resource or API key has been exceeded. Try again later."
+     },
+     "500": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "api_error: Something went wrong and has been reported internally."
+     }
+    },
+    "summary": "List On-call Notification Pauses V2",
+    "tags": [
+     "On-call Notification Pauses V2"
+    ],
+    "x-docs-display-name": "List",
+    "x-docs-group-name": "On-call Notification Pauses V2",
+    "x-docs-resource-type": "OnCallNotificationPauseV2",
+    "x-mint": {
+     "content": "\ud83d\udd11 Requires the `notification_pauses.view` scope."
+    },
+    "x-rbac-scopes": [
+     "notification_pauses.view"
+    ]
+   }
+  },
+  "/v2/on_call_notification_pauses/{id}": {
+   "get": {
+    "description": "Show a single on-call notification pause. Cancelled pauses are not found.",
+    "operationId": "On-call Notification Pauses V2#Show",
+    "parameters": [
+     {
+      "description": "The pause's ID",
+      "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "description": "The pause's ID",
+       "example": "01FCNDV6P870EA6S7TK1DSYDG0",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "example": {
+         "on_call_notification_pause": {
+          "created_at": "2021-08-17T13:28:57.801578Z",
+          "ends_at": "2021-08-24T13:28:57.801578Z",
+          "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "reason": "Annual leave",
+          "starts_at": "2021-08-17T13:28:57.801578Z",
+          "updated_at": "2021-08-17T13:28:57.801578Z",
+          "user_id": "01FCNDV6P870EA6S7TK1DSYDG0"
+         }
+        },
+        "schema": {
+         "$ref": "#/components/schemas/OnCallNotificationPausesShowResultV2"
+        }
+       }
+      },
+      "description": "OK response."
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "invalid_request_error: There was a problem with the request, like a missing header or querying a resource that doesn't exist."
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "authentication_error: Authentication failed."
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "resource_forbidden: Access to this resource is forbidden for the authenticated user."
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "not_found: The referenced resource could not be found."
+     },
+     "405": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "method_not_allowed: The endpoint does not support this operation for the specified resource."
+     },
+     "406": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "not_acceptable: Requested a media type this endpoint does not support."
+     },
+     "408": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "request_timeout: The request took too long to process.\n\nclient_timeout: The request was cancelled by the client."
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "conflict: Request conflicted with current state of the resource, likely a concurrent update."
+     },
+     "412": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "precondition_failed: A required condition hasn't been met."
+     },
+     "413": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "payload_too_large: The request payload is too large."
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "validation_error: A required field was not provided, or the provided data was invalid."
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "too_many_requests: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.\n\nrate_limit_reached: The rate limit associated with this resource or API key has been exceeded. Try again later."
+     },
+     "500": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorResponse"
+        }
+       }
+      },
+      "description": "api_error: Something went wrong and has been reported internally."
+     }
+    },
+    "summary": "Show On-call Notification Pauses V2",
+    "tags": [
+     "On-call Notification Pauses V2"
+    ],
+    "x-docs-display-name": "Show",
+    "x-docs-group-name": "On-call Notification Pauses V2",
+    "x-docs-resource-type": "OnCallNotificationPauseV2",
+    "x-mint": {
+     "content": "\ud83d\udd11 Requires the `notification_pauses.view` scope."
+    },
+    "x-rbac-scopes": [
+     "notification_pauses.view"
+    ]
+   }
+  },
   "/v2/pay_configs": {
    "get": {
     "description": "List pay configs for this organisation.\n\nReturns published configs, and drafts created through the API, which belong to\nnobody and so are visible to everyone. A draft a person created in the\ndashboard stays private to them. Archived configs are never returned.",
@@ -178133,7 +179348,7 @@
             "annotations": {
              "incident.io/terraform/version": "3.0.0"
             },
-            "managed_by": "dashboard",
+            "managed_by": "terraform",
             "source_url": "https://github.com/my-company/infrastructure"
            },
            "name": "App"
@@ -178315,7 +179530,7 @@
            "annotations": {
             "incident.io/terraform/version": "3.0.0"
            },
-           "managed_by": "dashboard",
+           "managed_by": "terraform",
            "source_url": "https://github.com/my-company/infrastructure"
           },
           "name": "App"
@@ -178670,7 +179885,7 @@
            "annotations": {
             "incident.io/terraform/version": "3.0.0"
            },
-           "managed_by": "dashboard",
+           "managed_by": "terraform",
            "source_url": "https://github.com/my-company/infrastructure"
           },
           "name": "App"
@@ -178865,7 +180080,7 @@
            "annotations": {
             "incident.io/terraform/version": "3.0.0"
            },
-           "managed_by": "dashboard",
+           "managed_by": "terraform",
            "source_url": "https://github.com/my-company/infrastructure"
           },
           "name": "App"
@@ -181769,7 +182984,7 @@
           "annotations": {
            "incident.io/terraform/version": "3.0.0"
           },
-          "managed_by": "dashboard",
+          "managed_by": "terraform",
           "source_url": "https://github.com/my-company/infrastructure"
          }
         },
@@ -185071,7 +186286,7 @@
           "annotations": {
            "incident.io/terraform/version": "3.0.0"
           },
-          "managed_by": "dashboard",
+          "managed_by": "terraform",
           "source_url": "https://github.com/my-company/infrastructure"
          },
          "workflow": {
@@ -185688,7 +186903,7 @@
           "annotations": {
            "incident.io/terraform/version": "3.0.0"
           },
-          "managed_by": "dashboard",
+          "managed_by": "terraform",
           "source_url": "https://github.com/my-company/infrastructure"
          },
          "workflow": {
@@ -186343,7 +187558,7 @@
           "annotations": {
            "incident.io/terraform/version": "3.0.0"
           },
-          "managed_by": "dashboard",
+          "managed_by": "terraform",
           "source_url": "https://github.com/my-company/infrastructure"
          },
          "workflow": {
@@ -198968,6 +200183,14 @@
    "name": "MaintenanceWindows V1"
   },
   {
+   "description": "Record whether an incident.io resource is managed in the dashboard or by an external tool such as Terraform.\n",
+   "name": "Managed Resources V2"
+  },
+  {
+   "description": "View on-call notification pauses: windows in which a user's on-call notifications are paused, so escalations skip them instead of paging them.",
+   "name": "On-call Notification Pauses V2"
+  },
+  {
    "description": "Manage on-call pay configs: the rates that pay reports price on-call shifts against.",
    "name": "Pay Configs V2"
   },
@@ -201712,6 +202935,70 @@
         },
         "schema": {
          "$ref": "#/components/schemas/AuditLogsExtensionConnectorCalledV3"
+        }
+       }
+      },
+      "description": "OK response."
+     }
+    },
+    "tags": [
+     "Audit logs"
+    ]
+   }
+  },
+  "/x-audit-logs/extension_connector.called.4": {
+   "get": {
+    "description": "This entry is created for every call an agent makes to a tool on a connector, whether the tool reads from the connected system or changes it, for every call the connector's access policy refused, and for every call that requires a person's approval before it runs",
+    "operationId": "ExtensionConnectorCalledV4",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "example": {
+         "action": "extension_connector.called",
+         "actor": {
+          "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "metadata": {
+           "user_base_role_slug": "admin",
+           "user_custom_role_slugs": "engineering,security"
+          },
+          "name": "John Doe",
+          "type": "user"
+         },
+         "context": {
+          "location": "1.2.3.4",
+          "user_agent": "Chrome/91.0.4472.114"
+         },
+         "metadata": {
+          "access_source": "policy",
+          "approval_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "approved_by": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "class": "write",
+          "incident_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "outcome": "requires_approval",
+          "reason": "requires_approval",
+          "source_kind": "mcp",
+          "surface": "chat",
+          "telemetry_query_id": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "write": "true"
+         },
+         "occurred_at": "2021-08-17T13:28:57.801578Z",
+         "targets": [
+          {
+           "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+           "name": "Acme Deploy",
+           "type": "extension_connector"
+          },
+          {
+           "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+           "name": "restart_service",
+           "type": "extension_connector_tool"
+          }
+         ],
+         "version": 4
+        },
+        "schema": {
+         "$ref": "#/components/schemas/AuditLogsExtensionConnectorCalledV4"
         }
        }
       },
@@ -209146,6 +210433,60 @@
         },
         "schema": {
          "$ref": "#/components/schemas/AuditLogsTelemetryDataSourceAccessPolicyChangedV1"
+        }
+       }
+      },
+      "description": "OK response."
+     }
+    },
+    "tags": [
+     "Audit logs"
+    ]
+   }
+  },
+  "/x-audit-logs/telemetry_data_source.access_policy_changed.2": {
+   "get": {
+    "description": "This entry is created whenever a connector's access policy changes, which decides what each class of tool on it may do on each surface and where calls to its tools are announced",
+    "operationId": "TelemetryDataSourceAccessPolicyChangedV2",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "example": {
+         "action": "telemetry_data_source.access_policy_changed",
+         "actor": {
+          "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "metadata": {
+           "user_base_role_slug": "admin",
+           "user_custom_role_slugs": "engineering,security"
+          },
+          "name": "John Doe",
+          "type": "user"
+         },
+         "context": {
+          "location": "1.2.3.4",
+          "user_agent": "Chrome/91.0.4472.114"
+         },
+         "metadata": {
+          "after": "{\"read\":{\"enabled\":true,\"surfaces\":{\"chat\":{\"type\":\"deny\"}}}}",
+          "before": "{\"read\":{\"enabled\":true,\"surfaces\":{\"chat\":{\"type\":\"allow\"}}}}",
+          "change_id": "01JD8ZQK9X0000000000000000",
+          "notification_channels_after": "",
+          "notification_channels_before": "{\"slack_channels\":{\"array_value\":[{\"literal\":\"C0123456789\"}]}}",
+          "set_by": "01FCNDV6P870EA6S7TK1DSYDG0"
+         },
+         "occurred_at": "2021-08-17T13:28:57.801578Z",
+         "targets": [
+          {
+           "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+           "name": "Grafana Cloud",
+           "type": "telemetry_data_source"
+          }
+         ],
+         "version": 2
+        },
+        "schema": {
+         "$ref": "#/components/schemas/AuditLogsTelemetryDataSourceAccessPolicyChangedV2"
         }
        }
       },

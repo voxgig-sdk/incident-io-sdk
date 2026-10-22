@@ -6,10 +6,10 @@ one change: its six example API keys are replaced.
 | | |
 |---|---|
 | Source | https://api.incident.io/v1/openapiV3.json |
-| Fetched | 2026-10-08 |
-| Size | 6012937 bytes |
-| sha256 | `b310b33f6648778a46bbf0d620418c20003edd344137436dad3172a5f781e581` |
-| Version | 1.0.0 — 183 paths, 327 operations |
+| Fetched | 2026-10-22 |
+| Size | 6054698 bytes |
+| sha256 | `b7fac8fe66811e2496c84c9ada4fab410203f871d68aad4bfdb35ef41fb847df` |
+| Version | 1.0.0 — 186 paths, 330 operations |
 
 The six example keys (`"inc_0123456789abcdef…"`) look like live credentials to
 GitHub push protection, so each is replaced with `"inc_EXAMPLE_KEY_REDACTED"`.
