@@ -37,7 +37,7 @@ class TestPayReportsUnpublishResultV2Entity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.PayReportsUnpublishResultV2(None).create({"pay_report_id": 1, "created_at": "x", "end_date": "x", "id": "x", "name": "x", "overlapping_shifts": "x", "schedule_ids": "x", "start_date": "x", "status": "x", "unpaid_shifts": "x", "unpublish_reason": "x", "updated_at": "x"}, None)
+            client.PayReportsUnpublishResultV2(None).create({"pay_report_id": 1, "unpublish_reason": "x"}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

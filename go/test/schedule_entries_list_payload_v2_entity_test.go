@@ -38,7 +38,7 @@ func TestScheduleEntriesListPayloadV2Entity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.ScheduleEntriesListPayloadV2(nil).Create(map[string]any{"schedule_id": 1, "final": "x", "overrides": "x", "schedule": "x", "scheduled": "x"}, nil)
+		_, err := client.ScheduleEntriesListPayloadV2(nil).Create(map[string]any{"schedule_id": 1, "schedule": "x"}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

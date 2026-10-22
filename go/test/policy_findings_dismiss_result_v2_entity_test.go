@@ -38,7 +38,7 @@ func TestPolicyFindingsDismissResultV2Entity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.PolicyFindingsDismissResultV2(nil).Create(map[string]any{"policy_finding_id": 1, "created_at": "x", "debrief": "x", "dismissal": "x", "follow_up": "x", "id": "x", "last_checked_at": "x", "on_call_readiness": "x", "policy_id": "x", "policy_type": "x", "post_mortem": "x", "reason": "x", "responsible_users": "x", "schedule": "x", "shift_conflict": "x", "state": "x", "updated_at": "x", "vacation_conflict": "x"}, nil)
+		_, err := client.PolicyFindingsDismissResultV2(nil).Create(map[string]any{"policy_finding_id": 1, "reason": "x"}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

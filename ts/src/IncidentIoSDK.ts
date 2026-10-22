@@ -62,7 +62,9 @@ import { IncidentUpdateEntity } from './entity/IncidentUpdateEntity'
 import { IpAllowlistEntity } from './entity/IpAllowlistEntity'
 import { IpRangeEntity } from './entity/IpRangeEntity'
 import { MaintenanceWindowEntity } from './entity/MaintenanceWindowEntity'
+import { ManagedResourceEntity } from './entity/ManagedResourceEntity'
 import { OnCallNotificationMethodPublicV2Entity } from './entity/OnCallNotificationMethodPublicV2Entity'
+import { OnCallNotificationPauseEntity } from './entity/OnCallNotificationPauseEntity'
 import { OnCallNotificationRulePublicV2Entity } from './entity/OnCallNotificationRulePublicV2Entity'
 import { PayConfigEntity } from './entity/PayConfigEntity'
 import { PayConfigsCreateOneOffRuleResultV2Entity } from './entity/PayConfigsCreateOneOffRuleResultV2Entity'
@@ -126,6 +128,7 @@ import { allowed } from './utility/PrepareMethodUtility'
 
 
 import { BaseFeature } from './feature/base/BaseFeature'
+import * as sekreto from './feature/secrets/sekreto'
 
 
 
@@ -145,7 +148,8 @@ class IncidentIoSDK {
   _utility = new Utility()
   _features: Feature[]
   _rootctx: Context
-  
+  _secrets?: any
+
 
   constructor(options?: any) {
 
@@ -225,6 +229,10 @@ class IncidentIoSDK {
   }
 
   
+secrets() {
+  return this._secrets && this._secrets.sekreto()
+}
+
 
 
   async prepare(fetchargs?: any) {
@@ -277,6 +285,15 @@ class IncidentIoSDK {
     }
 
     
+if (null != this._secrets) {
+  try {
+    await this._secrets.resolve()
+  }
+  catch (err: any) {
+    return err instanceof Error ? err : new Error(String(err))
+  }
+}
+
 
     const authResult = prepareAuth(ctx)
     if (authResult instanceof Error) {
@@ -985,12 +1002,30 @@ class IncidentIoSDK {
   }
 
 
+  // Entity access: `client.ManagedResource().list()` / `client.ManagedResource().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  ManagedResource(entopts?: Record<string, any>) {
+    const self = this
+    return new ManagedResourceEntity(self, entopts)
+  }
+
+
   // Entity access: `client.OnCallNotificationMethodPublicV2().list()` / `client.OnCallNotificationMethodPublicV2().load({ id })`.
   // The argument is the entity OPTIONS object (passed to the entity
   // constructor as entopts), not initial entity data.
   OnCallNotificationMethodPublicV2(entopts?: Record<string, any>) {
     const self = this
     return new OnCallNotificationMethodPublicV2Entity(self, entopts)
+  }
+
+
+  // Entity access: `client.OnCallNotificationPause().list()` / `client.OnCallNotificationPause().load({ id })`.
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  OnCallNotificationPause(entopts?: Record<string, any>) {
+    const self = this
+    return new OnCallNotificationPauseEntity(self, entopts)
   }
 
 
@@ -1457,7 +1492,8 @@ const SDK = IncidentIoSDK
 export {
   stdutil,
   config,
-  
+  sekreto,
+
 
   BaseFeature,
   IncidentIoEntityBase,

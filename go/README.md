@@ -6,7 +6,7 @@ The Golang SDK for the IncidentIo API — an entity-oriented client using standa
 
 It exposes the API as capitalised, semantic **Entities** — e.g. `client.Action(nil)` — each with the same small set of operations (`List`, `Load`, `Create`, `Update`, `Remove`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
-> Also generated from this model: `go-mcp`, `js`, `lua`, `php`, `py`, `ts` — see
+> Also generated from this model: `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb`, `ts` — see
 > the [top-level README](../README.md).
 
 
@@ -71,14 +71,14 @@ func main() {
     fmt.Println(action.(sdk.Entity).Data())
 
     // Create a action.
-    created, err := client.Action(nil).Create(map[string]any{"assignee": map[string]any{}, "created_at": "example_created_at", "creator": map[string]any{}, "follow_up": true, "id": "example_id", "incident_id": "example_incident_id", "status": "example_status", "updated_at": "example_updated_at"}, nil)
+    created, err := client.Action(nil).Create(map[string]any{"description": "example_description", "incident_id": "example_incident_id"}, nil)
     if err != nil {
         panic(err)
     }
     fmt.Println(created.(sdk.Entity).Data())
 
     // Update a action.
-    updated, err := client.Action(nil).Update(map[string]any{"id": "example_id", "assignee": map[string]any{}, "assignee_id": "example_assignee_id"}, nil)
+    updated, err := client.Action(nil).Update(map[string]any{"id": "example_id", "assignee_id": "example_assignee_id", "description": "example_description"}, nil)
     if err != nil {
         panic(err)
     }
@@ -319,7 +319,9 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `IpAllowlist` | `(data map[string]any) IncidentIoEntity` | Create an IpAllowlist entity instance. |
 | `IpRange` | `(data map[string]any) IncidentIoEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow` | `(data map[string]any) IncidentIoEntity` | Create a MaintenanceWindow entity instance. |
+| `ManagedResource` | `(data map[string]any) IncidentIoEntity` | Create a ManagedResource entity instance. |
 | `OnCallNotificationMethodPublicV2` | `(data map[string]any) IncidentIoEntity` | Create an OnCallNotificationMethodPublicV2 entity instance. |
+| `OnCallNotificationPause` | `(data map[string]any) IncidentIoEntity` | Create an OnCallNotificationPause entity instance. |
 | `OnCallNotificationRulePublicV2` | `(data map[string]any) IncidentIoEntity` | Create an OnCallNotificationRulePublicV2 entity instance. |
 | `PayConfig` | `(data map[string]any) IncidentIoEntity` | Create a PayConfig entity instance. |
 | `PayConfigsCreateOneOffRuleResultV2` | `(data map[string]any) IncidentIoEntity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
@@ -1498,6 +1500,20 @@ Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/maintenance_windows`
 
+#### ManagedResource
+
+| Field | Description |
+| --- | --- |
+| `"annotations"` | Annotations that track metadata about this resource |
+| `"managed_by"` | How is this resource managed |
+| `"resource_id"` | The ID of the resource that this relates to |
+| `"resource_type"` | The type of the related resource |
+| `"source_url"` | The url of the external repository where this resource is managed (if there is one) |
+
+Operations: Create.
+
+API path: `/v2/managed_resources`
+
 #### OnCallNotificationMethodPublicV2
 
 | Field | Description |
@@ -1511,6 +1527,22 @@ API path: `/v1/maintenance_windows`
 Operations: List.
 
 API path: `/v2/users/{user_id}/notification_methods`
+
+#### OnCallNotificationPause
+
+| Field | Description |
+| --- | --- |
+| `"created_at"` |  |
+| `"ends_at"` | When notifications resume |
+| `"id"` | Unique identifier for this notification pause |
+| `"reason"` | Free text reason for why notifications are paused, shown to teammates |
+| `"starts_at"` | When notifications stop being sent to the user |
+| `"updated_at"` |  |
+| `"user_id"` | The user whose on-call notifications are paused in this time window |
+
+Operations: List, Load.
+
+API path: `/v2/on_call_notification_pauses`
 
 #### OnCallNotificationRulePublicV2
 
@@ -2385,14 +2417,8 @@ for _, item := range actions.([]any) {
 
 ```go
 result, err := client.Action(nil).Create(map[string]any{
-    "assignee": map[string]any{},
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "follow_up": true,
-    "id": "example_id",
+    "description": "example_description",
     "incident_id": "example_incident_id",
-    "status": "example_status",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -2527,9 +2553,7 @@ for _, item := range alertAttributes.([]any) {
 ```go
 result, err := client.AlertAttribute(nil).Create(map[string]any{
     "array": true,
-    "id": "example_id",
     "name": "example_name",
-    "required": true,
     "type": "example_type",
 }, nil)
 if err != nil {
@@ -2595,11 +2619,6 @@ for _, item := range alertNotes.([]any) {
 ```go
 result, err := client.AlertNote(nil).Create(map[string]any{
     "content": "example_content",
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "id": "example_id",
-    "images": []any{},
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -2679,13 +2698,11 @@ result, err := client.AlertRoute(nil).Create(map[string]any{
     "escalation_config": map[string]any{},
     "expressions": []any{},
     "grouping_config": map[string]any{},
-    "id": "example_id",
     "incident_config": map[string]any{},
     "incident_template": map[string]any{},
     "is_private": true,
     "message_config": map[string]any{},
     "name": "example_name",
-    "version": 1,
 }, nil)
 if err != nil {
     panic(err)
@@ -2762,7 +2779,6 @@ result, err := client.AlertSource(nil).Create(map[string]any{
     "email_options": map[string]any{},
     "heartbeat_options": map[string]any{},
     "http_custom_options": map[string]any{},
-    "id": "example_id",
     "jira_options": map[string]any{},
     "name": "example_name",
     "rate_limit_sharding": map[string]any{},
@@ -2872,14 +2888,7 @@ Create an instance: `alertsAddTagsResultV2 := client.AlertsAddTagsResultV2(nil)`
 ```go
 result, err := client.AlertsAddTagsResultV2(nil).Create(map[string]any{
     "alert_id": "example_alert_id",
-    "alert_source_id": "example_alert_source_id",
-    "attributes": []any{},
-    "created_at": "example_created_at",
-    "deduplication_key": "example_deduplication_key",
-    "id": "example_id",
-    "status": "example_status",
-    "title": "example_title",
-    "updated_at": "example_updated_at",
+    "tags": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -2921,14 +2930,7 @@ Create an instance: `alertsRemoveTagsResultV2 := client.AlertsRemoveTagsResultV2
 ```go
 result, err := client.AlertsRemoveTagsResultV2(nil).Create(map[string]any{
     "alert_id": "example_alert_id",
-    "alert_source_id": "example_alert_source_id",
-    "attributes": []any{},
-    "created_at": "example_created_at",
-    "deduplication_key": "example_deduplication_key",
-    "id": "example_id",
-    "status": "example_status",
-    "title": "example_title",
-    "updated_at": "example_updated_at",
+    "tags": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -2970,14 +2972,7 @@ Create an instance: `alertsSetTagsResultV2 := client.AlertsSetTagsResultV2(nil)`
 ```go
 result, err := client.AlertsSetTagsResultV2(nil).Create(map[string]any{
     "alert_id": "example_alert_id",
-    "alert_source_id": "example_alert_source_id",
-    "attributes": []any{},
-    "created_at": "example_created_at",
-    "deduplication_key": "example_deduplication_key",
-    "id": "example_id",
-    "status": "example_status",
-    "title": "example_title",
-    "updated_at": "example_updated_at",
+    "tags": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -3027,10 +3022,7 @@ for _, item := range alertsTransitionIncidentAlertResultV2s.([]any) {
 
 ```go
 result, err := client.AlertsTransitionIncidentAlertResultV2(nil).Create(map[string]any{
-    "alert": map[string]any{},
     "alert_id": "example_alert_id",
-    "id": "example_id",
-    "incident": map[string]any{},
     "incident_id": "example_incident_id",
     "state": "example_state",
 }, nil)
@@ -3101,16 +3093,9 @@ for _, item := range announcementRules.([]any) {
 ```go
 result, err := client.AnnouncementRule(nil).Create(map[string]any{
     "condition_groups": []any{},
-    "conditions_no_longer_apply_behaviour": "example_conditions_no_longer_apply_behaviour",
-    "created_at": "example_created_at",
-    "id": "example_id",
-    "microsoft_teams_channel_ids": []any{},
     "mode": "example_mode",
     "name": "example_name",
-    "owning_team_ids": []any{},
-    "slack_channel_ids": []any{},
     "update_sharing_mode": "example_update_sharing_mode",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -3171,12 +3156,7 @@ for _, item := range announcementTemplates.([]any) {
 
 ```go
 result, err := client.AnnouncementTemplate(nil).Create(map[string]any{
-    "actions": []any{},
-    "fields": []any{},
-    "id": "example_id",
-    "is_default": true,
     "name": "example_name",
-    "owning_team_ids": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -3243,16 +3223,10 @@ for _, item := range apiKeys.([]any) {
 
 ```go
 result, err := client.ApiKey(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "id": "example_id",
     "name": "example_name",
     "role_names": []any{},
-    "roles": []any{},
     "team_ids": []any{},
     "team_role_names": []any{},
-    "team_roles": []any{},
-    "token_last_issued_at": "example_token_last_issued_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -3687,13 +3661,8 @@ for _, item := range catalogEntrys.([]any) {
 ```go
 result, err := client.CatalogEntry(nil).Create(map[string]any{
     "attribute_values": map[string]any{},
-    "catalog_entry": map[string]any{},
-    "catalog_type": map[string]any{},
     "catalog_type_id": "example_catalog_type_id",
-    "created_at": "example_created_at",
-    "id": "example_id",
     "name": "example_name",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -3806,22 +3775,8 @@ for _, item := range catalogTypes.([]any) {
 
 ```go
 result, err := client.CatalogType(nil).Create(map[string]any{
-    "annotations": map[string]any{},
-    "categories": []any{},
-    "color": "example_color",
-    "created_at": "example_created_at",
     "description": "example_description",
-    "engine_resource_type": "example_engine_resource_type",
-    "icon": "example_icon",
-    "id": "example_id",
-    "is_editable": true,
     "name": "example_name",
-    "ranked": true,
-    "schema": map[string]any{},
-    "semantic_type": "example_semantic_type",
-    "type_name": "example_type_name",
-    "updated_at": "example_updated_at",
-    "use_name_as_identifier": true,
 }, nil)
 if err != nil {
     panic(err)
@@ -3876,23 +3831,7 @@ Create an instance: `catalogTypeSchema := client.CatalogTypeSchema(nil)`
 ```go
 result, err := client.CatalogTypeSchema(nil).Create(map[string]any{
     "catalog_type_id": "example_catalog_type_id",
-    "annotations": map[string]any{},
     "attributes": []any{},
-    "categories": []any{},
-    "color": "example_color",
-    "created_at": "example_created_at",
-    "description": "example_description",
-    "engine_resource_type": "example_engine_resource_type",
-    "icon": "example_icon",
-    "id": "example_id",
-    "is_editable": true,
-    "name": "example_name",
-    "ranked": true,
-    "schema": map[string]any{},
-    "semantic_type": "example_semantic_type",
-    "type_name": "example_type_name",
-    "updated_at": "example_updated_at",
-    "use_name_as_identifier": true,
     "version": 1,
 }, nil)
 if err != nil {
@@ -3966,18 +3905,14 @@ for _, item := range customFields.([]any) {
 
 ```go
 result, err := client.CustomField(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "description": "example_description",
     "field_type": "example_field_type",
     "filter_by": map[string]any{},
     "fixed_filter": map[string]any{},
-    "id": "example_id",
     "name": "example_name",
-    "options": []any{},
     "show_before_closure": true,
     "show_before_creation": true,
     "show_before_update": true,
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -4037,8 +3972,6 @@ for _, item := range customFieldOptions.([]any) {
 ```go
 result, err := client.CustomFieldOption(nil).Create(map[string]any{
     "custom_field_id": "example_custom_field_id",
-    "id": "example_id",
-    "sort_key": 1,
     "value": "example_value",
 }, nil)
 if err != nil {
@@ -4107,18 +4040,8 @@ for _, item := range escalations.([]any) {
 
 ```go
 result, err := client.Escalation(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "description": "example_description",
-    "events": []any{},
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
-    "priority": map[string]any{},
-    "related_alerts": []any{},
-    "related_incidents": []any{},
-    "status": "example_status",
     "title": "example_title",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -4182,11 +4105,7 @@ for _, item := range escalationPathTemplates.([]any) {
 
 ```go
 result, err := client.EscalationPathTemplate(nil).Create(map[string]any{
-    "expressions": []any{},
-    "has_historical_escalation_path_versions": true,
-    "id": "example_id",
     "name": "example_name",
-    "params": []any{},
     "path": []any{},
     "repeat_config": map[string]any{},
 }, nil)
@@ -4219,7 +4138,6 @@ Create an instance: `escalationsCheckEscalationPermissionsResultV2 := client.Esc
 ```go
 result, err := client.EscalationsCheckEscalationPermissionsResultV2(nil).Create(map[string]any{
     "escalation_id": "example_escalation_id",
-    "response_options": []any{},
     "user_ids": []any{},
 }, nil)
 if err != nil {
@@ -4328,19 +4246,8 @@ for _, item := range followUps.([]any) {
 
 ```go
 result, err := client.FollowUp(nil).Create(map[string]any{
-    "assignee": map[string]any{},
-    "assignee_team": map[string]any{},
-    "category": map[string]any{},
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "external_issue_reference": map[string]any{},
-    "id": "example_id",
     "incident_id": "example_incident_id",
-    "labels": []any{},
-    "priority": map[string]any{},
-    "status": "example_status",
     "title": "example_title",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -4386,20 +4293,7 @@ Create an instance: `followUpsConnectExternalIssueResultV3 := client.FollowUpsCo
 ```go
 result, err := client.FollowUpsConnectExternalIssueResultV3(nil).Create(map[string]any{
     "follow_up_id": "example_follow_up_id",
-    "assignee": map[string]any{},
-    "assignee_team": map[string]any{},
-    "category": map[string]any{},
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "external_issue_reference": map[string]any{},
-    "id": "example_id",
-    "incident_id": "example_incident_id",
-    "labels": []any{},
-    "priority": map[string]any{},
     "provider": "example_provider",
-    "status": "example_status",
-    "title": "example_title",
-    "updated_at": "example_updated_at",
     "url": "example_url",
 }, nil)
 if err != nil {
@@ -4559,25 +4453,7 @@ for _, item := range incidents.([]any) {
 
 ```go
 result, err := client.Incident(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "custom_field_entries": []any{},
-    "external_issue_reference": map[string]any{},
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
-    "incident_role_assignments": []any{},
-    "incident_status": map[string]any{},
-    "incident_type": map[string]any{},
-    "last_activity_at": "example_last_activity_at",
-    "mode": "example_mode",
-    "name": "example_name",
-    "reference": "example_reference",
-    "severity": map[string]any{},
-    "slack_channel_id": "example_slack_channel_id",
-    "slack_team_id": "example_slack_team_id",
-    "status": "example_status",
-    "team_ids": []any{},
-    "updated_at": "example_updated_at",
     "visibility": "example_visibility",
 }, nil)
 if err != nil {
@@ -4660,7 +4536,6 @@ for _, item := range incidentAttachments.([]any) {
 
 ```go
 result, err := client.IncidentAttachment(nil).Create(map[string]any{
-    "id": "example_id",
     "incident_id": "example_incident_id",
     "resource": map[string]any{},
 }, nil)
@@ -4724,11 +4599,8 @@ for _, item := range incidentForms.([]any) {
 
 ```go
 result, err := client.IncidentForm(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "expressions": []any{},
     "form_type": "example_form_type",
-    "id": "example_id",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -4915,14 +4787,11 @@ for _, item := range incidentRoles.([]any) {
 
 ```go
 result, err := client.IncidentRole(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "description": "example_description",
-    "id": "example_id",
     "instructions": "example_instructions",
     "name": "example_name",
-    "role_type": "example_role_type",
+    "required": true,
     "shortform": "example_shortform",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -4985,12 +4854,8 @@ for _, item := range incidentStatuss.([]any) {
 ```go
 result, err := client.IncidentStatus(nil).Create(map[string]any{
     "category": "example_category",
-    "created_at": "example_created_at",
     "description": "example_description",
-    "id": "example_id",
     "name": "example_name",
-    "rank": 1,
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -5113,11 +4978,8 @@ for _, item := range incidentTemplates.([]any) {
 
 ```go
 result, err := client.IncidentTemplate(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "id": "example_id",
     "name": "example_name",
     "template": map[string]any{},
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -5151,7 +5013,6 @@ Create an instance: `incidentTemplatesValidateResultV1 := client.IncidentTemplat
 result, err := client.IncidentTemplatesValidateResultV1(nil).Create(map[string]any{
     "name": "example_name",
     "template": map[string]any{},
-    "warnings": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -5204,14 +5065,10 @@ for _, item := range incidentTimelineItems.([]any) {
 
 ```go
 result, err := client.IncidentTimelineItem(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "incident_id": "example_incident_id",
     "timestamp": "example_timestamp",
     "title": "example_title",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -5356,13 +5213,8 @@ for _, item := range incidentUpdates.([]any) {
 
 ```go
 result, err := client.IncidentUpdate(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "incident_id": "example_incident_id",
-    "new_incident_status": map[string]any{},
-    "new_severity": map[string]any{},
-    "updater": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -5499,16 +5351,46 @@ for _, item := range maintenanceWindows.([]any) {
 ```go
 result, err := client.MaintenanceWindow(nil).Create(map[string]any{
     "alert_condition_groups": []any{},
-    "created_at": "example_created_at",
     "end_at": "example_end_at",
-    "id": "example_id",
     "lead": map[string]any{},
     "name": "example_name",
-    "reroute_on_end": true,
-    "resolve_on_end": true,
     "show_in_sidebar": true,
     "start_at": "example_start_at",
-    "updated_at": "example_updated_at",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
+```
+
+
+### ManagedResource
+
+Create an instance: `managedResource := client.ManagedResource(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotations` | `map[string]any` | Annotations that track metadata about this resource |
+| `managed_by` | `string` | How is this resource managed |
+| `resource_id` | `string` | The ID of the resource that this relates to |
+| `resource_type` | `string` | The type of the related resource |
+| `source_url` | `string` | The url of the external repository where this resource is managed (if there is one) |
+
+#### Example: Create
+
+```go
+result, err := client.ManagedResource(nil).Create(map[string]any{
+    "annotations": map[string]any{},
+    "resource_id": "example_resource_id",
+    "resource_type": "example_resource_type",
 }, nil)
 if err != nil {
     panic(err)
@@ -5546,6 +5428,53 @@ if err != nil {
 }
 // A []any of entities, one per record.
 for _, item := range onCallNotificationMethodPublicV2s.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+
+### OnCallNotificationPause
+
+Create an instance: `onCallNotificationPause := client.OnCallNotificationPause(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `List(match, ctrl)` | List entities matching the criteria. |
+| `Load(match, ctrl)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `ends_at` | `string` | When notifications resume |
+| `id` | `string` | Unique identifier for this notification pause |
+| `reason` | `string` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `string` | When notifications stop being sent to the user |
+| `updated_at` | `string` |  |
+| `user_id` | `string` | The user whose on-call notifications are paused in this time window |
+
+#### Example: Load
+
+```go
+onCallNotificationPause, err := client.OnCallNotificationPause(nil).Load(map[string]any{"id": "on_call_notification_pause_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(onCallNotificationPause.(sdk.Entity).Data()) // the loaded entity's record
+```
+
+#### Example: List
+
+```go
+onCallNotificationPauses, err := client.OnCallNotificationPause(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+// A []any of entities, one per record.
+for _, item := range onCallNotificationPauses.([]any) {
     fmt.Println(item.(sdk.Entity).Data())
 }
 ```
@@ -5645,15 +5574,10 @@ for _, item := range payConfigs.([]any) {
 ```go
 result, err := client.PayConfig(nil).Create(map[string]any{
     "base_rate_cents": 1,
-    "created_at": "example_created_at",
     "currency": "example_currency",
-    "id": "example_id",
     "name": "example_name",
-    "one_off_rules": []any{},
     "rate_time_unit": "example_rate_time_unit",
     "timezone": "example_timezone",
-    "updated_at": "example_updated_at",
-    "weekly_rules": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -5987,17 +5911,11 @@ for _, item := range payReports.([]any) {
 
 ```go
 result, err := client.PayReport(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "end_date": "example_end_date",
-    "id": "example_id",
     "name": "example_name",
-    "overlapping_shifts": "example_overlapping_shifts",
     "pay_config_expression": map[string]any{},
     "schedule_ids": []any{},
     "start_date": "example_start_date",
-    "status": "example_status",
-    "unpaid_shifts": "example_unpaid_shifts",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6045,17 +5963,7 @@ Create an instance: `payReportsPublishResultV2 := client.PayReportsPublishResult
 result, err := client.PayReportsPublishResultV2(nil).Create(map[string]any{
     "pay_report_id": "example_pay_report_id",
     "cc_emails": []any{},
-    "created_at": "example_created_at",
-    "end_date": "example_end_date",
-    "id": "example_id",
-    "name": "example_name",
-    "overlapping_shifts": "example_overlapping_shifts",
-    "schedule_ids": []any{},
     "send_user_breakdowns": "example_send_user_breakdowns",
-    "start_date": "example_start_date",
-    "status": "example_status",
-    "unpaid_shifts": "example_unpaid_shifts",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6101,17 +6009,7 @@ Create an instance: `payReportsUnpublishResultV2 := client.PayReportsUnpublishRe
 ```go
 result, err := client.PayReportsUnpublishResultV2(nil).Create(map[string]any{
     "pay_report_id": "example_pay_report_id",
-    "created_at": "example_created_at",
-    "end_date": "example_end_date",
-    "id": "example_id",
-    "name": "example_name",
-    "overlapping_shifts": "example_overlapping_shifts",
-    "schedule_ids": []any{},
-    "start_date": "example_start_date",
-    "status": "example_status",
-    "unpaid_shifts": "example_unpaid_shifts",
     "unpublish_reason": "example_unpublish_reason",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6220,16 +6118,13 @@ for _, item := range policys.([]any) {
 result, err := client.Policy(nil).Create(map[string]any{
     "assignment_rules": map[string]any{},
     "conditions": []any{},
-    "created_at": "example_created_at",
     "debrief": map[string]any{},
+    "description": "example_description",
     "follow_up": map[string]any{},
-    "id": "example_id",
     "name": "example_name",
     "policy_type": "example_policy_type",
     "post_mortem": map[string]any{},
     "schedule": map[string]any{},
-    "status": "example_status",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6335,23 +6230,7 @@ Create an instance: `policyFindingsDismissResultV2 := client.PolicyFindingsDismi
 ```go
 result, err := client.PolicyFindingsDismissResultV2(nil).Create(map[string]any{
     "policy_finding_id": "example_policy_finding_id",
-    "created_at": "example_created_at",
-    "debrief": map[string]any{},
-    "dismissal": map[string]any{},
-    "follow_up": map[string]any{},
-    "id": "example_id",
-    "last_checked_at": "example_last_checked_at",
-    "on_call_readiness": map[string]any{},
-    "policy_id": "example_policy_id",
-    "policy_type": "example_policy_type",
-    "post_mortem": map[string]any{},
     "reason": "example_reason",
-    "responsible_users": []any{},
-    "schedule": map[string]any{},
-    "shift_conflict": map[string]any{},
-    "state": "example_state",
-    "updated_at": "example_updated_at",
-    "vacation_conflict": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -6531,16 +6410,7 @@ for _, item := range schedules.([]any) {
 
 ```go
 result, err := client.Schedule(nil).Create(map[string]any{
-    "annotations": map[string]any{},
-    "config": map[string]any{},
-    "created_at": "example_created_at",
     "holidays_public_config": map[string]any{},
-    "id": "example_id",
-    "name": "example_name",
-    "permalink": "example_permalink",
-    "team_ids": []any{},
-    "timezone": "example_timezone",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6575,10 +6445,7 @@ Create an instance: `scheduleEntriesListPayloadV2 := client.ScheduleEntriesListP
 ```go
 result, err := client.ScheduleEntriesListPayloadV2(nil).Create(map[string]any{
     "schedule_id": "example_schedule_id",
-    "final": []any{},
-    "overrides": []any{},
     "schedule": map[string]any{},
-    "scheduled": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -6672,14 +6539,10 @@ for _, item := range scheduleReplicas.([]any) {
 ```go
 result, err := client.ScheduleReplica(nil).Create(map[string]any{
     "id": "example_id",
-    "created_at": "example_created_at",
     "replica_fallback_user_id": "example_replica_fallback_user_id",
     "replica_provider": "example_replica_provider",
     "replica_provider_id": "example_replica_provider_id",
-    "schedule_id": "example_schedule_id",
     "sources": []any{},
-    "updated_at": "example_updated_at",
-    "user_statuses": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -6744,13 +6607,8 @@ for _, item := range scheduleSyncRules.([]any) {
 ```go
 result, err := client.ScheduleSyncRule(nil).Create(map[string]any{
     "id": "example_id",
-    "created_at": "example_created_at",
-    "permanent_member_user_ids": []any{},
-    "schedule_id": "example_schedule_id",
-    "schedule_sync_target": map[string]any{},
     "schedule_sync_target_id": "example_schedule_sync_target_id",
     "sync_type": "example_sync_type",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6815,13 +6673,7 @@ for _, item := range scheduleSyncTargets.([]any) {
 ```go
 result, err := client.ScheduleSyncTarget(nil).Create(map[string]any{
     "add_bot_to_group": true,
-    "created_at": "example_created_at",
-    "id": "example_id",
-    "linked_schedules": []any{},
     "new_slack_user_group": map[string]any{},
-    "slack_team_id": "example_slack_team_id",
-    "slack_user_group_id": "example_slack_user_group_id",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6883,14 +6735,11 @@ for _, item := range schedulesShowOverrideResultV2s.([]any) {
 
 ```go
 result, err := client.SchedulesShowOverrideResultV2(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "end_at": "example_end_at",
-    "id": "example_id",
     "layer_id": "example_layer_id",
     "rotation_id": "example_rotation_id",
     "schedule_id": "example_schedule_id",
     "start_at": "example_start_at",
-    "updated_at": "example_updated_at",
     "user": map[string]any{},
 }, nil)
 if err != nil {
@@ -6982,14 +6831,8 @@ for _, item := range secrets.([]any) {
 
 ```go
 result, err := client.Secret(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "id": "example_id",
     "name": "example_name",
-    "secret": map[string]any{},
-    "updated_at": "example_updated_at",
     "value": "example_value",
-    "version": 1,
-    "versions": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -7049,12 +6892,8 @@ for _, item := range severitys.([]any) {
 
 ```go
 result, err := client.Severity(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "description": "example_description",
-    "id": "example_id",
     "name": "example_name",
-    "rank": 1,
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -7157,8 +6996,6 @@ for _, item := range statusPageComponents.([]any) {
 
 ```go
 result, err := client.StatusPageComponent(nil).Create(map[string]any{
-    "id": "example_id",
-    "management_meta": map[string]any{},
     "name": "example_name",
 }, nil)
 if err != nil {
@@ -7256,16 +7093,12 @@ for _, item := range statusPageIncidents.([]any) {
 
 ```go
 result, err := client.StatusPageIncident(nil).Create(map[string]any{
-    "component_impacts": []any{},
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "incident_status": "example_incident_status",
     "message": "example_message",
     "name": "example_name",
     "notify_subscribers": true,
-    "published_at": "example_published_at",
     "status_page_id": "example_status_page_id",
-    "updates": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -7400,19 +7233,14 @@ for _, item := range statusPageMaintenances.([]any) {
 ```go
 result, err := client.StatusPageMaintenance(nil).Create(map[string]any{
     "affected_component_ids": []any{},
-    "automate_maintenance_status": true,
-    "component_maintenance_periods": []any{},
     "end_at": "example_end_at",
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "maintenance_status": "example_maintenance_status",
     "message": "example_message",
     "name": "example_name",
     "notify_subscribers": true,
-    "published_at": "example_published_at",
     "start_at": "example_start_at",
     "status_page_id": "example_status_page_id",
-    "updates": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -7621,12 +7449,6 @@ for _, item := range users.([]any) {
 ```go
 result, err := client.User(nil).Create(map[string]any{
     "id": "example_id",
-    "base_role": map[string]any{},
-    "custom_roles": []any{},
-    "is_active": true,
-    "name": "example_name",
-    "role": "example_role",
-    "seats": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -7711,16 +7533,12 @@ result, err := client.Workflow(nil).Create(map[string]any{
     "continue_on_step_error": true,
     "delay": map[string]any{},
     "expressions": []any{},
-    "id": "example_id",
-    "management_meta": map[string]any{},
     "name": "example_name",
     "once_for": []any{},
     "runs_on_incident_modes": []any{},
     "runs_on_incidents": "example_runs_on_incidents",
     "steps": []any{},
     "trigger": "example_trigger",
-    "version": 1,
-    "workflow": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -7784,7 +7602,7 @@ for _, item := range workflowRuns.([]any) {
 
 ## Features
 
-This SDK ships 8 optional features. Each is **inactive until you
+This SDK ships 9 optional features. Each is **inactive until you
 switch it on**, so an SDK you have not configured behaves exactly as if none of
 them existed — no retries, no cache, no logging, no measurable overhead.
 
@@ -7799,10 +7617,11 @@ above:
 | [`paging`](#paging) | Paging |
 | [`ratelimit`](#ratelimit) | Rate limiting |
 | [`retry`](#retry) | Retry |
+| [`secrets`](#secrets) | Secrets |
 | [`test`](#test) | Test transport |
 | [`timeout`](#timeout) | Timeout |
 
-> **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
+> **Order matters for `ratelimit`, `retry`, `secrets`, `timeout`.** These wrap the
 > transport, so each one wraps whatever is already installed: the order you
 > activate them in IS the nesting order. Activating them as an ordered list
 > rather than a map is what fixes that order.
@@ -7893,6 +7712,24 @@ Set `feature.retry.active` to enable it, then override any of the options above.
 transport features decides what it sees. A feature activated later wraps one
 activated earlier.
 
+### secrets
+
+Secrets.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+Set `feature.secrets.active` to enable it, then override any of the options above.
+
+`secrets` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
 ### test
 
 Test transport.
@@ -7963,6 +7800,7 @@ The SDK ships with built-in features:
 - **PagingFeature**: Paging
 - **RatelimitFeature**: Rate limiting
 - **RetryFeature**: Retry
+- **SecretsFeature**: Secrets
 - **TestFeature**: Test transport
 - **TimeoutFeature**: Timeout
 

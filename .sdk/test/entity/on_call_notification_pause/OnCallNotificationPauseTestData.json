@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "on_call_notification_pause": {
+      "ON_CALL_NOTIFICATION_PAUSE00": {
+        "created_at": "s46",
+        "ends_at": "s47",
+        "id": "ON_CALL_NOTIFICATION_PAUSE00",
+        "reason": "s49",
+        "starts_at": "s4a",
+        "updated_at": "s4b",
+        "user_id": "USER01"
+      },
+      "ON_CALL_NOTIFICATION_PAUSE01": {
+        "created_at": "s8c",
+        "ends_at": "s8d",
+        "id": "ON_CALL_NOTIFICATION_PAUSE01",
+        "reason": "s8f",
+        "starts_at": "s90",
+        "updated_at": "s91",
+        "user_id": "USER01"
+      },
+      "ON_CALL_NOTIFICATION_PAUSE02": {
+        "created_at": "sd2",
+        "ends_at": "sd3",
+        "id": "ON_CALL_NOTIFICATION_PAUSE02",
+        "reason": "sd5",
+        "starts_at": "sd6",
+        "updated_at": "sd7",
+        "user_id": "USER01"
+      }
+    }
+  },
+  "new": {
+    "on_call_notification_pause": {
+      "on_call_notification_pause_ref01": {
+        "created_at": "s118",
+        "ends_at": "s119",
+        "reason": "s11b",
+        "starts_at": "s11c",
+        "updated_at": "s11d",
+        "user_id": "USER01"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/on_call_notification_pauses": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v2/on_call_notification_pauses/{id}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

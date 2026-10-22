@@ -70,10 +70,10 @@ except Exception as err:
 
 ```python
 # Create — returns the ENTITY (call data_get() for the record)
-created = client.Action().create({"assignee": {}, "created_at": "example_created_at", "creator": {}, "follow_up": True, "id": "example_id", "incident_id": "example_incident_id", "status": "example_status", "updated_at": "example_updated_at"})
+created = client.Action().create({"description": "example_description", "incident_id": "example_incident_id"})
 
 # Update — the created entity's record holds its id
-client.Action().update({"id": created.data_get()["id"], "assignee": {}, "assignee_id": "example_assignee_id"})
+client.Action().update({"id": created.data_get()["id"], "assignee_id": "example_assignee_id", "description": "example_description"})
 
 # Remove
 client.Action().remove({"id": created.data_get()["id"]})
@@ -295,7 +295,9 @@ Creates a test-mode client with mock transport. Both arguments may be `None`.
 | `IpAllowlist` | `(data) -> IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `IpRange` | `(data) -> IpRangeEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow` | `(data) -> MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
+| `ManagedResource` | `(data) -> ManagedResourceEntity` | Create a ManagedResource entity instance. |
 | `OnCallNotificationMethodPublicV2` | `(data) -> OnCallNotificationMethodPublicV2Entity` | Create an OnCallNotificationMethodPublicV2 entity instance. |
+| `OnCallNotificationPause` | `(data) -> OnCallNotificationPauseEntity` | Create an OnCallNotificationPause entity instance. |
 | `OnCallNotificationRulePublicV2` | `(data) -> OnCallNotificationRulePublicV2Entity` | Create an OnCallNotificationRulePublicV2 entity instance. |
 | `PayConfig` | `(data) -> PayConfigEntity` | Create a PayConfig entity instance. |
 | `PayConfigsCreateOneOffRuleResultV2` | `(data) -> PayConfigsCreateOneOffRuleResultV2Entity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
@@ -1473,6 +1475,20 @@ Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/maintenance_windows`
 
+#### ManagedResource
+
+| Field | Description |
+| --- | --- |
+| `annotations` | Annotations that track metadata about this resource |
+| `managed_by` | How is this resource managed |
+| `resource_id` | The ID of the resource that this relates to |
+| `resource_type` | The type of the related resource |
+| `source_url` | The url of the external repository where this resource is managed (if there is one) |
+
+Operations: Create.
+
+API path: `/v2/managed_resources`
+
 #### OnCallNotificationMethodPublicV2
 
 | Field | Description |
@@ -1486,6 +1502,22 @@ API path: `/v1/maintenance_windows`
 Operations: List.
 
 API path: `/v2/users/{user_id}/notification_methods`
+
+#### OnCallNotificationPause
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `ends_at` | When notifications resume |
+| `id` | Unique identifier for this notification pause |
+| `reason` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | When notifications stop being sent to the user |
+| `updated_at` |  |
+| `user_id` | The user whose on-call notifications are paused in this time window |
+
+Operations: List, Load.
+
+API path: `/v2/on_call_notification_pauses`
 
 #### OnCallNotificationRulePublicV2
 
@@ -2349,14 +2381,8 @@ actions = client.Action().list()
 
 ```python
 action = client.Action().create({
-    "assignee": {},  # dict
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "follow_up": True,  # bool
-    "id": "example_id",  # str
+    "description": "example_description",  # str
     "incident_id": "example_incident_id",  # str
-    "status": "example_status",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -2461,9 +2487,7 @@ alert_attributes = client.AlertAttribute().list()
 ```python
 alert_attribute = client.AlertAttribute().create({
     "array": True,  # bool
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "required": True,  # bool
     "type": "example_type",  # str
 })
 ```
@@ -2514,11 +2538,6 @@ alert_notes = client.AlertNote().list()
 ```python
 alert_note = client.AlertNote().create({
     "content": "example_content",  # str
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "id": "example_id",  # str
-    "images": [],  # list
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -2583,13 +2602,11 @@ alert_route = client.AlertRoute().create({
     "escalation_config": {},  # dict
     "expressions": [],  # list
     "grouping_config": {},  # dict
-    "id": "example_id",  # str
     "incident_config": {},  # dict
     "incident_template": {},  # dict
     "is_private": True,  # bool
     "message_config": {},  # dict
     "name": "example_name",  # str
-    "version": 1,  # int
 })
 ```
 
@@ -2651,7 +2668,6 @@ alert_source = client.AlertSource().create({
     "email_options": {},  # dict
     "heartbeat_options": {},  # dict
     "http_custom_options": {},  # dict
-    "id": "example_id",  # str
     "jira_options": {},  # dict
     "name": "example_name",  # str
     "rate_limit_sharding": {},  # dict
@@ -2746,14 +2762,7 @@ Create an instance: `alerts_add_tags_result_v2 = client.AlertsAddTagsResultV2()`
 ```python
 alerts_add_tags_result_v2 = client.AlertsAddTagsResultV2().create({
     "alert_id": "example_alert_id",  # str
-    "alert_source_id": "example_alert_source_id",  # str
-    "attributes": [],  # list
-    "created_at": "example_created_at",  # str
-    "deduplication_key": "example_deduplication_key",  # str
-    "id": "example_id",  # str
-    "status": "example_status",  # str
-    "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
+    "tags": [],  # list
 })
 ```
 
@@ -2791,14 +2800,7 @@ Create an instance: `alerts_remove_tags_result_v2 = client.AlertsRemoveTagsResul
 ```python
 alerts_remove_tags_result_v2 = client.AlertsRemoveTagsResultV2().create({
     "alert_id": "example_alert_id",  # str
-    "alert_source_id": "example_alert_source_id",  # str
-    "attributes": [],  # list
-    "created_at": "example_created_at",  # str
-    "deduplication_key": "example_deduplication_key",  # str
-    "id": "example_id",  # str
-    "status": "example_status",  # str
-    "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
+    "tags": [],  # list
 })
 ```
 
@@ -2836,14 +2838,7 @@ Create an instance: `alerts_set_tags_result_v2 = client.AlertsSetTagsResultV2()`
 ```python
 alerts_set_tags_result_v2 = client.AlertsSetTagsResultV2().create({
     "alert_id": "example_alert_id",  # str
-    "alert_source_id": "example_alert_source_id",  # str
-    "attributes": [],  # list
-    "created_at": "example_created_at",  # str
-    "deduplication_key": "example_deduplication_key",  # str
-    "id": "example_id",  # str
-    "status": "example_status",  # str
-    "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
+    "tags": [],  # list
 })
 ```
 
@@ -2882,10 +2877,7 @@ alerts_transition_incident_alert_result_v2s = client.AlertsTransitionIncidentAle
 
 ```python
 alerts_transition_incident_alert_result_v2 = client.AlertsTransitionIncidentAlertResultV2().create({
-    "alert": {},  # dict
     "alert_id": "example_alert_id",  # str
-    "id": "example_id",  # str
-    "incident": {},  # dict
     "incident_id": "example_incident_id",  # str
     "state": "example_state",  # str
 })
@@ -2941,16 +2933,9 @@ announcement_rules = client.AnnouncementRule().list()
 ```python
 announcement_rule = client.AnnouncementRule().create({
     "condition_groups": [],  # list
-    "conditions_no_longer_apply_behaviour": "example_conditions_no_longer_apply_behaviour",  # str
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
-    "microsoft_teams_channel_ids": [],  # list
     "mode": "example_mode",  # str
     "name": "example_name",  # str
-    "owning_team_ids": [],  # list
-    "slack_channel_ids": [],  # list
     "update_sharing_mode": "example_update_sharing_mode",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -2996,12 +2981,7 @@ announcement_templates = client.AnnouncementTemplate().list()
 
 ```python
 announcement_template = client.AnnouncementTemplate().create({
-    "actions": [],  # list
-    "fields": [],  # list
-    "id": "example_id",  # str
-    "is_default": True,  # bool
     "name": "example_name",  # str
-    "owning_team_ids": [],  # list
 })
 ```
 
@@ -3053,16 +3033,10 @@ api_keys = client.ApiKey().list()
 
 ```python
 api_key = client.ApiKey().create({
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "id": "example_id",  # str
     "name": "example_name",  # str
     "role_names": [],  # list
-    "roles": [],  # list
     "team_ids": [],  # list
     "team_role_names": [],  # list
-    "team_roles": [],  # list
-    "token_last_issued_at": "example_token_last_issued_at",  # str
 })
 ```
 
@@ -3427,13 +3401,8 @@ catalog_entrys = client.CatalogEntry().list({"catalog_type_id": "example"})
 ```python
 catalog_entry = client.CatalogEntry().create({
     "attribute_values": {},  # dict
-    "catalog_entry": {},  # dict
-    "catalog_type": {},  # dict
     "catalog_type_id": "example_catalog_type_id",  # str
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -3524,22 +3493,8 @@ catalog_types = client.CatalogType().list()
 
 ```python
 catalog_type = client.CatalogType().create({
-    "annotations": {},  # dict
-    "categories": [],  # list
-    "color": "example_color",  # str
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
-    "engine_resource_type": "example_engine_resource_type",  # str
-    "icon": "example_icon",  # str
-    "id": "example_id",  # str
-    "is_editable": True,  # bool
     "name": "example_name",  # str
-    "ranked": True,  # bool
-    "schema": {},  # dict
-    "semantic_type": "example_semantic_type",  # str
-    "type_name": "example_type_name",  # str
-    "updated_at": "example_updated_at",  # str
-    "use_name_as_identifier": True,  # bool
 })
 ```
 
@@ -3590,23 +3545,7 @@ Create an instance: `catalog_type_schema = client.CatalogTypeSchema()`
 ```python
 catalog_type_schema = client.CatalogTypeSchema().create({
     "catalog_type_id": "example_catalog_type_id",  # str
-    "annotations": {},  # dict
     "attributes": [],  # list
-    "categories": [],  # list
-    "color": "example_color",  # str
-    "created_at": "example_created_at",  # str
-    "description": "example_description",  # str
-    "engine_resource_type": "example_engine_resource_type",  # str
-    "icon": "example_icon",  # str
-    "id": "example_id",  # str
-    "is_editable": True,  # bool
-    "name": "example_name",  # str
-    "ranked": True,  # bool
-    "schema": {},  # dict
-    "semantic_type": "example_semantic_type",  # str
-    "type_name": "example_type_name",  # str
-    "updated_at": "example_updated_at",  # str
-    "use_name_as_identifier": True,  # bool
     "version": 1,  # int
 })
 ```
@@ -3665,18 +3604,14 @@ custom_fields = client.CustomField().list()
 
 ```python
 custom_field = client.CustomField().create({
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
     "field_type": "example_field_type",  # str
     "filter_by": {},  # dict
     "fixed_filter": {},  # dict
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "options": [],  # list
     "show_before_closure": True,  # bool
     "show_before_creation": True,  # bool
     "show_before_update": True,  # bool
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -3721,8 +3656,6 @@ custom_field_options = client.CustomFieldOption().list({"custom_field_id": "exam
 ```python
 custom_field_option = client.CustomFieldOption().create({
     "custom_field_id": "example_custom_field_id",  # str
-    "id": "example_id",  # str
-    "sort_key": 1,  # int
     "value": "example_value",  # str
 })
 ```
@@ -3776,18 +3709,8 @@ escalations = client.Escalation().list()
 
 ```python
 escalation = client.Escalation().create({
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "description": "example_description",  # str
-    "events": [],  # list
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
-    "priority": {},  # dict
-    "related_alerts": [],  # list
-    "related_incidents": [],  # list
-    "status": "example_status",  # str
     "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -3836,11 +3759,7 @@ escalation_path_templates = client.EscalationPathTemplate().list()
 
 ```python
 escalation_path_template = client.EscalationPathTemplate().create({
-    "expressions": [],  # list
-    "has_historical_escalation_path_versions": True,  # bool
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "params": [],  # list
     "path": [],  # list
     "repeat_config": {},  # dict
 })
@@ -3869,7 +3788,6 @@ Create an instance: `escalations_check_escalation_permissions_result_v2 = client
 ```python
 escalations_check_escalation_permissions_result_v2 = client.EscalationsCheckEscalationPermissionsResultV2().create({
     "escalation_id": "example_escalation_id",  # str
-    "response_options": [],  # list
     "user_ids": [],  # list
 })
 ```
@@ -3959,19 +3877,8 @@ follow_ups = client.FollowUp().list()
 
 ```python
 follow_up = client.FollowUp().create({
-    "assignee": {},  # dict
-    "assignee_team": {},  # dict
-    "category": {},  # dict
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "external_issue_reference": {},  # dict
-    "id": "example_id",  # str
     "incident_id": "example_incident_id",  # str
-    "labels": [],  # list
-    "priority": {},  # dict
-    "status": "example_status",  # str
     "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -4013,20 +3920,7 @@ Create an instance: `follow_ups_connect_external_issue_result_v3 = client.Follow
 ```python
 follow_ups_connect_external_issue_result_v3 = client.FollowUpsConnectExternalIssueResultV3().create({
     "follow_up_id": "example_follow_up_id",  # str
-    "assignee": {},  # dict
-    "assignee_team": {},  # dict
-    "category": {},  # dict
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "external_issue_reference": {},  # dict
-    "id": "example_id",  # str
-    "incident_id": "example_incident_id",  # str
-    "labels": [],  # list
-    "priority": {},  # dict
     "provider": "example_provider",  # str
-    "status": "example_status",  # str
-    "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
     "url": "example_url",  # str
 })
 ```
@@ -4163,25 +4057,7 @@ incidents = client.Incident().list()
 
 ```python
 incident = client.Incident().create({
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "custom_field_entries": [],  # list
-    "external_issue_reference": {},  # dict
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
-    "incident_role_assignments": [],  # list
-    "incident_status": {},  # dict
-    "incident_type": {},  # dict
-    "last_activity_at": "example_last_activity_at",  # str
-    "mode": "example_mode",  # str
-    "name": "example_name",  # str
-    "reference": "example_reference",  # str
-    "severity": {},  # dict
-    "slack_channel_id": "example_slack_channel_id",  # str
-    "slack_team_id": "example_slack_team_id",  # str
-    "status": "example_status",  # str
-    "team_ids": [],  # list
-    "updated_at": "example_updated_at",  # str
     "visibility": "example_visibility",  # str
 })
 ```
@@ -4246,7 +4122,6 @@ incident_attachments = client.IncidentAttachment().list()
 
 ```python
 incident_attachment = client.IncidentAttachment().create({
-    "id": "example_id",  # str
     "incident_id": "example_incident_id",  # str
     "resource": {},  # dict
 })
@@ -4295,11 +4170,8 @@ incident_forms = client.IncidentForm().list()
 
 ```python
 incident_form = client.IncidentForm().create({
-    "created_at": "example_created_at",  # str
     "expressions": [],  # list
     "form_type": "example_form_type",  # str
-    "id": "example_id",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -4449,14 +4321,11 @@ incident_roles = client.IncidentRole().list()
 
 ```python
 incident_role = client.IncidentRole().create({
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
-    "id": "example_id",  # str
     "instructions": "example_instructions",  # str
     "name": "example_name",  # str
-    "role_type": "example_role_type",  # str
+    "required": True,  # bool
     "shortform": "example_shortform",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -4504,12 +4373,8 @@ incident_statuss = client.IncidentStatus().list()
 ```python
 incident_status = client.IncidentStatus().create({
     "category": "example_category",  # str
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "rank": 1,  # int
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -4609,11 +4474,8 @@ incident_templates = client.IncidentTemplate().list()
 
 ```python
 incident_template = client.IncidentTemplate().create({
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
     "template": {},  # dict
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -4643,7 +4505,6 @@ Create an instance: `incident_templates_validate_result_v1 = client.IncidentTemp
 incident_templates_validate_result_v1 = client.IncidentTemplatesValidateResultV1().create({
     "name": "example_name",  # str
     "template": {},  # dict
-    "warnings": [],  # list
 })
 ```
 
@@ -4685,14 +4546,10 @@ incident_timeline_items = client.IncidentTimelineItem().list({"incident_id": "ex
 
 ```python
 incident_timeline_item = client.IncidentTimelineItem().create({
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
     "incident_id": "example_incident_id",  # str
     "timestamp": "example_timestamp",  # str
     "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -4804,13 +4661,8 @@ incident_updates = client.IncidentUpdate().list()
 
 ```python
 incident_update = client.IncidentUpdate().create({
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
     "incident_id": "example_incident_id",  # str
-    "new_incident_status": {},  # dict
-    "new_severity": {},  # dict
-    "updater": {},  # dict
 })
 ```
 
@@ -4921,16 +4773,42 @@ maintenance_windows = client.MaintenanceWindow().list()
 ```python
 maintenance_window = client.MaintenanceWindow().create({
     "alert_condition_groups": [],  # list
-    "created_at": "example_created_at",  # str
     "end_at": "example_end_at",  # str
-    "id": "example_id",  # str
     "lead": {},  # dict
     "name": "example_name",  # str
-    "reroute_on_end": True,  # bool
-    "resolve_on_end": True,  # bool
     "show_in_sidebar": True,  # bool
     "start_at": "example_start_at",  # str
-    "updated_at": "example_updated_at",  # str
+})
+```
+
+
+### ManagedResource
+
+Create an instance: `managed_resource = client.ManagedResource()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotations` | `dict` | Annotations that track metadata about this resource |
+| `managed_by` | `str` | How is this resource managed |
+| `resource_id` | `str` | The ID of the resource that this relates to |
+| `resource_type` | `str` | The type of the related resource |
+| `source_url` | `str` | The url of the external repository where this resource is managed (if there is one) |
+
+#### Example: Create
+
+```python
+managed_resource = client.ManagedResource().create({
+    "annotations": {},  # dict
+    "resource_id": "example_resource_id",  # str
+    "resource_type": "example_resource_type",  # str
 })
 ```
 
@@ -4959,6 +4837,42 @@ Create an instance: `on_call_notification_method_public_v2 = client.OnCallNotifi
 
 ```python
 on_call_notification_method_public_v2s = client.OnCallNotificationMethodPublicV2().list({"user_id": "example"})
+```
+
+
+### OnCallNotificationPause
+
+Create an instance: `on_call_notification_pause = client.OnCallNotificationPause()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list()` | List entities, optionally matching the given criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `str` |  |
+| `ends_at` | `str` | When notifications resume |
+| `id` | `str` | Unique identifier for this notification pause |
+| `reason` | `str` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `str` | When notifications stop being sent to the user |
+| `updated_at` | `str` |  |
+| `user_id` | `str` | The user whose on-call notifications are paused in this time window |
+
+#### Example: Load
+
+```python
+on_call_notification_pause = client.OnCallNotificationPause().load({"id": "on_call_notification_pause_id"})
+```
+
+#### Example: List
+
+```python
+on_call_notification_pauses = client.OnCallNotificationPause().list()
 ```
 
 
@@ -5038,15 +4952,10 @@ pay_configs = client.PayConfig().list()
 ```python
 pay_config = client.PayConfig().create({
     "base_rate_cents": 1,  # int
-    "created_at": "example_created_at",  # str
     "currency": "example_currency",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "one_off_rules": [],  # list
     "rate_time_unit": "example_rate_time_unit",  # str
     "timezone": "example_timezone",  # str
-    "updated_at": "example_updated_at",  # str
-    "weekly_rules": [],  # list
 })
 ```
 
@@ -5335,17 +5244,11 @@ pay_reports = client.PayReport().list()
 
 ```python
 pay_report = client.PayReport().create({
-    "created_at": "example_created_at",  # str
     "end_date": "example_end_date",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "overlapping_shifts": "example_overlapping_shifts",  # str
     "pay_config_expression": {},  # dict
     "schedule_ids": [],  # list
     "start_date": "example_start_date",  # str
-    "status": "example_status",  # str
-    "unpaid_shifts": "example_unpaid_shifts",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5389,17 +5292,7 @@ Create an instance: `pay_reports_publish_result_v2 = client.PayReportsPublishRes
 pay_reports_publish_result_v2 = client.PayReportsPublishResultV2().create({
     "pay_report_id": "example_pay_report_id",  # str
     "cc_emails": [],  # list
-    "created_at": "example_created_at",  # str
-    "end_date": "example_end_date",  # str
-    "id": "example_id",  # str
-    "name": "example_name",  # str
-    "overlapping_shifts": "example_overlapping_shifts",  # str
-    "schedule_ids": [],  # list
     "send_user_breakdowns": "example_send_user_breakdowns",  # str
-    "start_date": "example_start_date",  # str
-    "status": "example_status",  # str
-    "unpaid_shifts": "example_unpaid_shifts",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5441,17 +5334,7 @@ Create an instance: `pay_reports_unpublish_result_v2 = client.PayReportsUnpublis
 ```python
 pay_reports_unpublish_result_v2 = client.PayReportsUnpublishResultV2().create({
     "pay_report_id": "example_pay_report_id",  # str
-    "created_at": "example_created_at",  # str
-    "end_date": "example_end_date",  # str
-    "id": "example_id",  # str
-    "name": "example_name",  # str
-    "overlapping_shifts": "example_overlapping_shifts",  # str
-    "schedule_ids": [],  # list
-    "start_date": "example_start_date",  # str
-    "status": "example_status",  # str
-    "unpaid_shifts": "example_unpaid_shifts",  # str
     "unpublish_reason": "example_unpublish_reason",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5541,16 +5424,13 @@ policys = client.Policy().list()
 policy = client.Policy().create({
     "assignment_rules": {},  # dict
     "conditions": [],  # list
-    "created_at": "example_created_at",  # str
     "debrief": {},  # dict
+    "description": "example_description",  # str
     "follow_up": {},  # dict
-    "id": "example_id",  # str
     "name": "example_name",  # str
     "policy_type": "example_policy_type",  # str
     "post_mortem": {},  # dict
     "schedule": {},  # dict
-    "status": "example_status",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5641,23 +5521,7 @@ Create an instance: `policy_findings_dismiss_result_v2 = client.PolicyFindingsDi
 ```python
 policy_findings_dismiss_result_v2 = client.PolicyFindingsDismissResultV2().create({
     "policy_finding_id": "example_policy_finding_id",  # str
-    "created_at": "example_created_at",  # str
-    "debrief": {},  # dict
-    "dismissal": {},  # dict
-    "follow_up": {},  # dict
-    "id": "example_id",  # str
-    "last_checked_at": "example_last_checked_at",  # str
-    "on_call_readiness": {},  # dict
-    "policy_id": "example_policy_id",  # str
-    "policy_type": "example_policy_type",  # str
-    "post_mortem": {},  # dict
     "reason": "example_reason",  # str
-    "responsible_users": [],  # list
-    "schedule": {},  # dict
-    "shift_conflict": {},  # dict
-    "state": "example_state",  # str
-    "updated_at": "example_updated_at",  # str
-    "vacation_conflict": {},  # dict
 })
 ```
 
@@ -5807,16 +5671,7 @@ schedules = client.Schedule().list()
 
 ```python
 schedule = client.Schedule().create({
-    "annotations": {},  # dict
-    "config": {},  # dict
-    "created_at": "example_created_at",  # str
     "holidays_public_config": {},  # dict
-    "id": "example_id",  # str
-    "name": "example_name",  # str
-    "permalink": "example_permalink",  # str
-    "team_ids": [],  # list
-    "timezone": "example_timezone",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5847,10 +5702,7 @@ Create an instance: `schedule_entries_list_payload_v2 = client.ScheduleEntriesLi
 ```python
 schedule_entries_list_payload_v2 = client.ScheduleEntriesListPayloadV2().create({
     "schedule_id": "example_schedule_id",  # str
-    "final": [],  # list
-    "overrides": [],  # list
     "schedule": {},  # dict
-    "scheduled": [],  # list
 })
 ```
 
@@ -5925,14 +5777,10 @@ schedule_replicas = client.ScheduleReplica().list({"id": "example"})
 ```python
 schedule_replica = client.ScheduleReplica().create({
     "id": "example_id",  # str
-    "created_at": "example_created_at",  # str
     "replica_fallback_user_id": "example_replica_fallback_user_id",  # str
     "replica_provider": "example_replica_provider",  # str
     "replica_provider_id": "example_replica_provider_id",  # str
-    "schedule_id": "example_schedule_id",  # str
     "sources": [],  # list
-    "updated_at": "example_updated_at",  # str
-    "user_statuses": [],  # list
 })
 ```
 
@@ -5982,13 +5830,8 @@ schedule_sync_rules = client.ScheduleSyncRule().list({"id": "example"})
 ```python
 schedule_sync_rule = client.ScheduleSyncRule().create({
     "id": "example_id",  # str
-    "created_at": "example_created_at",  # str
-    "permanent_member_user_ids": [],  # list
-    "schedule_id": "example_schedule_id",  # str
-    "schedule_sync_target": {},  # dict
     "schedule_sync_target_id": "example_schedule_sync_target_id",  # str
     "sync_type": "example_sync_type",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -6038,13 +5881,7 @@ schedule_sync_targets = client.ScheduleSyncTarget().list()
 ```python
 schedule_sync_target = client.ScheduleSyncTarget().create({
     "add_bot_to_group": True,  # bool
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
-    "linked_schedules": [],  # list
     "new_slack_user_group": {},  # dict
-    "slack_team_id": "example_slack_team_id",  # str
-    "slack_user_group_id": "example_slack_user_group_id",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -6091,14 +5928,11 @@ schedules_show_override_result_v2s = client.SchedulesShowOverrideResultV2().list
 
 ```python
 schedules_show_override_result_v2 = client.SchedulesShowOverrideResultV2().create({
-    "created_at": "example_created_at",  # str
     "end_at": "example_end_at",  # str
-    "id": "example_id",  # str
     "layer_id": "example_layer_id",  # str
     "rotation_id": "example_rotation_id",  # str
     "schedule_id": "example_schedule_id",  # str
     "start_at": "example_start_at",  # str
-    "updated_at": "example_updated_at",  # str
     "user": {},  # dict
 })
 ```
@@ -6175,14 +6009,8 @@ secrets = client.Secret().list()
 
 ```python
 secret = client.Secret().create({
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "secret": {},  # dict
-    "updated_at": "example_updated_at",  # str
     "value": "example_value",  # str
-    "version": 1,  # int
-    "versions": [],  # list
 })
 ```
 
@@ -6227,12 +6055,8 @@ severitys = client.Severity().list()
 
 ```python
 severity = client.Severity().create({
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "rank": 1,  # int
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -6309,8 +6133,6 @@ status_page_components = client.StatusPageComponent().list()
 
 ```python
 status_page_component = client.StatusPageComponent().create({
-    "id": "example_id",  # str
-    "management_meta": {},  # dict
     "name": "example_name",  # str
 })
 ```
@@ -6389,16 +6211,12 @@ status_page_incidents = client.StatusPageIncident().list({"status_page_id": "exa
 
 ```python
 status_page_incident = client.StatusPageIncident().create({
-    "component_impacts": [],  # list
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
     "incident_status": "example_incident_status",  # str
     "message": "example_message",  # str
     "name": "example_name",  # str
     "notify_subscribers": True,  # bool
-    "published_at": "example_published_at",  # str
     "status_page_id": "example_status_page_id",  # str
-    "updates": [],  # list
 })
 ```
 
@@ -6507,19 +6325,14 @@ status_page_maintenances = client.StatusPageMaintenance().list({"status_page_id"
 ```python
 status_page_maintenance = client.StatusPageMaintenance().create({
     "affected_component_ids": [],  # list
-    "automate_maintenance_status": True,  # bool
-    "component_maintenance_periods": [],  # list
     "end_at": "example_end_at",  # str
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
     "maintenance_status": "example_maintenance_status",  # str
     "message": "example_message",  # str
     "name": "example_name",  # str
     "notify_subscribers": True,  # bool
-    "published_at": "example_published_at",  # str
     "start_at": "example_start_at",  # str
     "status_page_id": "example_status_page_id",  # str
-    "updates": [],  # list
 })
 ```
 
@@ -6694,12 +6507,6 @@ users = client.User().list()
 ```python
 user = client.User().create({
     "id": "example_id",  # str
-    "base_role": {},  # dict
-    "custom_roles": [],  # list
-    "is_active": True,  # bool
-    "name": "example_name",  # str
-    "role": "example_role",  # str
-    "seats": {},  # dict
 })
 ```
 
@@ -6769,16 +6576,12 @@ workflow = client.Workflow().create({
     "continue_on_step_error": True,  # bool
     "delay": {},  # dict
     "expressions": [],  # list
-    "id": "example_id",  # str
-    "management_meta": {},  # dict
     "name": "example_name",  # str
     "once_for": [],  # list
     "runs_on_incident_modes": [],  # list
     "runs_on_incidents": "example_runs_on_incidents",  # str
     "steps": [],  # list
     "trigger": "example_trigger",  # str
-    "version": 1,  # int
-    "workflow": {},  # dict
 })
 ```
 
@@ -6827,7 +6630,7 @@ workflow_runs = client.WorkflowRun().list()
 
 ## Features
 
-This SDK ships 8 optional features. Each is **inactive until you
+This SDK ships 9 optional features. Each is **inactive until you
 switch it on**, so an SDK you have not configured behaves exactly as if none of
 them existed — no retries, no cache, no logging, no measurable overhead.
 
@@ -6842,10 +6645,11 @@ above:
 | [`paging`](#paging) | Paging |
 | [`ratelimit`](#ratelimit) | Rate limiting |
 | [`retry`](#retry) | Retry |
+| [`secrets`](#secrets) | Secrets |
 | [`test`](#test) | Test transport |
 | [`timeout`](#timeout) | Timeout |
 
-> **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
+> **Order matters for `ratelimit`, `retry`, `secrets`, `timeout`.** These wrap the
 > transport, so each one wraps whatever is already installed: the order you
 > activate them in IS the nesting order. Activating them as an ordered list
 > rather than a map is what fixes that order.
@@ -6936,6 +6740,24 @@ Set `feature.retry.active` to enable it, then override any of the options above.
 transport features decides what it sees. A feature activated later wraps one
 activated earlier.
 
+### secrets
+
+Secrets.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+Set `feature.secrets.active` to enable it, then override any of the options above.
+
+`secrets` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
 ### test
 
 Test transport.
@@ -7006,6 +6828,7 @@ The SDK ships with built-in features:
 - **PagingFeature**: Paging
 - **RatelimitFeature**: Rate limiting
 - **RetryFeature**: Retry
+- **SecretsFeature**: Secrets
 - **TestFeature**: Test transport
 - **TimeoutFeature**: Timeout
 

@@ -157,6 +157,7 @@ function IncidentIoSDK.new(options)
   -- feature: paging
   -- feature: ratelimit
   -- feature: retry
+  -- feature: secrets
   -- feature: test
   -- feature: timeout
 
@@ -1290,6 +1291,20 @@ function IncidentIoSDK:MaintenanceWindow(data)
 end
 
 
+-- Idiomatic facade: client:ManagedResource():list() / client:ManagedResource():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:ManagedResource(data)
+  local EntityMod = require("entity.managed_resource_entity")
+  if data == nil then
+    if self._managed_resource == nil then
+      self._managed_resource = EntityMod.new(self, nil)
+    end
+    return self._managed_resource
+  end
+  return EntityMod.new(self, data)
+end
+
+
 -- Idiomatic facade: client:OnCallNotificationMethodPublicV2():list() / client:OnCallNotificationMethodPublicV2():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:OnCallNotificationMethodPublicV2(data)
@@ -1299,6 +1314,20 @@ function IncidentIoSDK:OnCallNotificationMethodPublicV2(data)
       self._on_call_notification_method_public_v2 = EntityMod.new(self, nil)
     end
     return self._on_call_notification_method_public_v2
+  end
+  return EntityMod.new(self, data)
+end
+
+
+-- Idiomatic facade: client:OnCallNotificationPause():list() / client:OnCallNotificationPause():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function IncidentIoSDK:OnCallNotificationPause(data)
+  local EntityMod = require("entity.on_call_notification_pause_entity")
+  if data == nil then
+    if self._on_call_notification_pause == nil then
+      self._on_call_notification_pause = EntityMod.new(self, nil)
+    end
+    return self._on_call_notification_pause
   end
   return EntityMod.new(self, data)
 end

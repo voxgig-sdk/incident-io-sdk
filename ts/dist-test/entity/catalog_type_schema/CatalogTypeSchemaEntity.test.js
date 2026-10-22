@@ -60,7 +60,7 @@ const utility_1 = require("../../utility");
             return;
         }
         const client = __1.IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } });
-        await node_assert_1.default.rejects(client.CatalogTypeSchema().create({ "catalog_type_id": 1, "annotations": "x", "attributes": "x", "categories": "x", "color": "x", "created_at": "x", "description": "x", "engine_resource_type": "x", "icon": "x", "id": "x", "is_editable": true, "name": "x", "ranked": true, "schema": "x", "semantic_type": "x", "type_name": "x", "updated_at": "x", "use_name_as_identifier": true, "version": 1 }), (err) => 'validate_failed' === err.code);
+        await node_assert_1.default.rejects(client.CatalogTypeSchema().create({ "catalog_type_id": 1, "attributes": "x", "version": 1 }), (err) => 'validate_failed' === err.code);
     });
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE;

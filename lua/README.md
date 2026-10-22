@@ -68,11 +68,11 @@ print(rec["id"])
 
 ```lua
 -- Create
-local created, err = client:Action():create({ assignee = {}, created_at = "example_created_at", creator = {}, follow_up = true, id = "example_id", incident_id = "example_incident_id", status = "example_status", updated_at = "example_updated_at" })
+local created, err = client:Action():create({ description = "example_description", incident_id = "example_incident_id" })
 if err then error(err) end
 
 -- Update
-client:Action():update({ id = created:data_get()["id"], assignee = {}, assignee_id = "example_assignee_id" })
+client:Action():update({ id = created:data_get()["id"], assignee_id = "example_assignee_id", description = "example_description" })
 
 -- Remove
 client:Action():remove({ id = created:data_get()["id"] })
@@ -286,7 +286,9 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `IpAllowlist` | `(data) -> IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `IpRange` | `(data) -> IpRangeEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow` | `(data) -> MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
+| `ManagedResource` | `(data) -> ManagedResourceEntity` | Create a ManagedResource entity instance. |
 | `OnCallNotificationMethodPublicV2` | `(data) -> OnCallNotificationMethodPublicV2Entity` | Create an OnCallNotificationMethodPublicV2 entity instance. |
+| `OnCallNotificationPause` | `(data) -> OnCallNotificationPauseEntity` | Create an OnCallNotificationPause entity instance. |
 | `OnCallNotificationRulePublicV2` | `(data) -> OnCallNotificationRulePublicV2Entity` | Create an OnCallNotificationRulePublicV2 entity instance. |
 | `PayConfig` | `(data) -> PayConfigEntity` | Create a PayConfig entity instance. |
 | `PayConfigsCreateOneOffRuleResultV2` | `(data) -> PayConfigsCreateOneOffRuleResultV2Entity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
@@ -1465,6 +1467,20 @@ Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/maintenance_windows`
 
+#### ManagedResource
+
+| Field | Description |
+| --- | --- |
+| `annotations` | Annotations that track metadata about this resource |
+| `managed_by` | How is this resource managed |
+| `resource_id` | The ID of the resource that this relates to |
+| `resource_type` | The type of the related resource |
+| `source_url` | The url of the external repository where this resource is managed (if there is one) |
+
+Operations: Create.
+
+API path: `/v2/managed_resources`
+
 #### OnCallNotificationMethodPublicV2
 
 | Field | Description |
@@ -1478,6 +1494,22 @@ API path: `/v1/maintenance_windows`
 Operations: List.
 
 API path: `/v2/users/{user_id}/notification_methods`
+
+#### OnCallNotificationPause
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `ends_at` | When notifications resume |
+| `id` | Unique identifier for this notification pause |
+| `reason` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | When notifications stop being sent to the user |
+| `updated_at` |  |
+| `user_id` | The user whose on-call notifications are paused in this time window |
+
+Operations: List, Load.
+
+API path: `/v2/on_call_notification_pauses`
 
 #### OnCallNotificationRulePublicV2
 
@@ -2341,14 +2373,8 @@ local actions, err = client:Action():list()
 
 ```lua
 local action, err = client:Action():create({
-  assignee = {}, -- table
-  created_at = "example_created_at", -- string
-  creator = {}, -- table
-  follow_up = true, -- boolean
-  id = "example_id", -- string
+  description = "example_description", -- string
   incident_id = "example_incident_id", -- string
-  status = "example_status", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -2453,9 +2479,7 @@ local alert_attributes, err = client:AlertAttribute():list()
 ```lua
 local alert_attribute, err = client:AlertAttribute():create({
   array = true, -- boolean
-  id = "example_id", -- string
   name = "example_name", -- string
-  required = true, -- boolean
   type = "example_type", -- string
 })
 ```
@@ -2506,11 +2530,6 @@ local alert_notes, err = client:AlertNote():list()
 ```lua
 local alert_note, err = client:AlertNote():create({
   content = "example_content", -- string
-  created_at = "example_created_at", -- string
-  creator = {}, -- table
-  id = "example_id", -- string
-  images = {}, -- table
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -2575,13 +2594,11 @@ local alert_route, err = client:AlertRoute():create({
   escalation_config = {}, -- table
   expressions = {}, -- table
   grouping_config = {}, -- table
-  id = "example_id", -- string
   incident_config = {}, -- table
   incident_template = {}, -- table
   is_private = true, -- boolean
   message_config = {}, -- table
   name = "example_name", -- string
-  version = 1, -- number
 })
 ```
 
@@ -2643,7 +2660,6 @@ local alert_source, err = client:AlertSource():create({
   email_options = {}, -- table
   heartbeat_options = {}, -- table
   http_custom_options = {}, -- table
-  id = "example_id", -- string
   jira_options = {}, -- table
   name = "example_name", -- string
   rate_limit_sharding = {}, -- table
@@ -2738,14 +2754,7 @@ Create an instance: `local alerts_add_tags_result_v2 = client:AlertsAddTagsResul
 ```lua
 local alerts_add_tags_result_v2, err = client:AlertsAddTagsResultV2():create({
   alert_id = "example_alert_id", -- string
-  alert_source_id = "example_alert_source_id", -- string
-  attributes = {}, -- table
-  created_at = "example_created_at", -- string
-  deduplication_key = "example_deduplication_key", -- string
-  id = "example_id", -- string
-  status = "example_status", -- string
-  title = "example_title", -- string
-  updated_at = "example_updated_at", -- string
+  tags = {}, -- table
 })
 ```
 
@@ -2783,14 +2792,7 @@ Create an instance: `local alerts_remove_tags_result_v2 = client:AlertsRemoveTag
 ```lua
 local alerts_remove_tags_result_v2, err = client:AlertsRemoveTagsResultV2():create({
   alert_id = "example_alert_id", -- string
-  alert_source_id = "example_alert_source_id", -- string
-  attributes = {}, -- table
-  created_at = "example_created_at", -- string
-  deduplication_key = "example_deduplication_key", -- string
-  id = "example_id", -- string
-  status = "example_status", -- string
-  title = "example_title", -- string
-  updated_at = "example_updated_at", -- string
+  tags = {}, -- table
 })
 ```
 
@@ -2828,14 +2830,7 @@ Create an instance: `local alerts_set_tags_result_v2 = client:AlertsSetTagsResul
 ```lua
 local alerts_set_tags_result_v2, err = client:AlertsSetTagsResultV2():create({
   alert_id = "example_alert_id", -- string
-  alert_source_id = "example_alert_source_id", -- string
-  attributes = {}, -- table
-  created_at = "example_created_at", -- string
-  deduplication_key = "example_deduplication_key", -- string
-  id = "example_id", -- string
-  status = "example_status", -- string
-  title = "example_title", -- string
-  updated_at = "example_updated_at", -- string
+  tags = {}, -- table
 })
 ```
 
@@ -2874,10 +2869,7 @@ local alerts_transition_incident_alert_result_v2s, err = client:AlertsTransition
 
 ```lua
 local alerts_transition_incident_alert_result_v2, err = client:AlertsTransitionIncidentAlertResultV2():create({
-  alert = {}, -- table
   alert_id = "example_alert_id", -- string
-  id = "example_id", -- string
-  incident = {}, -- table
   incident_id = "example_incident_id", -- string
   state = "example_state", -- string
 })
@@ -2933,16 +2925,9 @@ local announcement_rules, err = client:AnnouncementRule():list()
 ```lua
 local announcement_rule, err = client:AnnouncementRule():create({
   condition_groups = {}, -- table
-  conditions_no_longer_apply_behaviour = "example_conditions_no_longer_apply_behaviour", -- string
-  created_at = "example_created_at", -- string
-  id = "example_id", -- string
-  microsoft_teams_channel_ids = {}, -- table
   mode = "example_mode", -- string
   name = "example_name", -- string
-  owning_team_ids = {}, -- table
-  slack_channel_ids = {}, -- table
   update_sharing_mode = "example_update_sharing_mode", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -2988,12 +2973,7 @@ local announcement_templates, err = client:AnnouncementTemplate():list()
 
 ```lua
 local announcement_template, err = client:AnnouncementTemplate():create({
-  actions = {}, -- table
-  fields = {}, -- table
-  id = "example_id", -- string
-  is_default = true, -- boolean
   name = "example_name", -- string
-  owning_team_ids = {}, -- table
 })
 ```
 
@@ -3045,16 +3025,10 @@ local api_keys, err = client:ApiKey():list()
 
 ```lua
 local api_key, err = client:ApiKey():create({
-  created_at = "example_created_at", -- string
-  creator = {}, -- table
-  id = "example_id", -- string
   name = "example_name", -- string
   role_names = {}, -- table
-  roles = {}, -- table
   team_ids = {}, -- table
   team_role_names = {}, -- table
-  team_roles = {}, -- table
-  token_last_issued_at = "example_token_last_issued_at", -- string
 })
 ```
 
@@ -3419,13 +3393,8 @@ local catalog_entrys, err = client:CatalogEntry():list({ catalog_type_id = "exam
 ```lua
 local catalog_entry, err = client:CatalogEntry():create({
   attribute_values = {}, -- table
-  catalog_entry = {}, -- table
-  catalog_type = {}, -- table
   catalog_type_id = "example_catalog_type_id", -- string
-  created_at = "example_created_at", -- string
-  id = "example_id", -- string
   name = "example_name", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -3516,22 +3485,8 @@ local catalog_types, err = client:CatalogType():list()
 
 ```lua
 local catalog_type, err = client:CatalogType():create({
-  annotations = {}, -- table
-  categories = {}, -- table
-  color = "example_color", -- string
-  created_at = "example_created_at", -- string
   description = "example_description", -- string
-  engine_resource_type = "example_engine_resource_type", -- string
-  icon = "example_icon", -- string
-  id = "example_id", -- string
-  is_editable = true, -- boolean
   name = "example_name", -- string
-  ranked = true, -- boolean
-  schema = {}, -- table
-  semantic_type = "example_semantic_type", -- string
-  type_name = "example_type_name", -- string
-  updated_at = "example_updated_at", -- string
-  use_name_as_identifier = true, -- boolean
 })
 ```
 
@@ -3582,23 +3537,7 @@ Create an instance: `local catalog_type_schema = client:CatalogTypeSchema(nil)`
 ```lua
 local catalog_type_schema, err = client:CatalogTypeSchema():create({
   catalog_type_id = "example_catalog_type_id", -- string
-  annotations = {}, -- table
   attributes = {}, -- table
-  categories = {}, -- table
-  color = "example_color", -- string
-  created_at = "example_created_at", -- string
-  description = "example_description", -- string
-  engine_resource_type = "example_engine_resource_type", -- string
-  icon = "example_icon", -- string
-  id = "example_id", -- string
-  is_editable = true, -- boolean
-  name = "example_name", -- string
-  ranked = true, -- boolean
-  schema = {}, -- table
-  semantic_type = "example_semantic_type", -- string
-  type_name = "example_type_name", -- string
-  updated_at = "example_updated_at", -- string
-  use_name_as_identifier = true, -- boolean
   version = 1, -- number
 })
 ```
@@ -3657,18 +3596,14 @@ local custom_fields, err = client:CustomField():list()
 
 ```lua
 local custom_field, err = client:CustomField():create({
-  created_at = "example_created_at", -- string
   description = "example_description", -- string
   field_type = "example_field_type", -- string
   filter_by = {}, -- table
   fixed_filter = {}, -- table
-  id = "example_id", -- string
   name = "example_name", -- string
-  options = {}, -- table
   show_before_closure = true, -- boolean
   show_before_creation = true, -- boolean
   show_before_update = true, -- boolean
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -3713,8 +3648,6 @@ local custom_field_options, err = client:CustomFieldOption():list({ custom_field
 ```lua
 local custom_field_option, err = client:CustomFieldOption():create({
   custom_field_id = "example_custom_field_id", -- string
-  id = "example_id", -- string
-  sort_key = 1, -- number
   value = "example_value", -- string
 })
 ```
@@ -3768,18 +3701,8 @@ local escalations, err = client:Escalation():list()
 
 ```lua
 local escalation, err = client:Escalation():create({
-  created_at = "example_created_at", -- string
-  creator = {}, -- table
-  description = "example_description", -- string
-  events = {}, -- table
-  id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
-  priority = {}, -- table
-  related_alerts = {}, -- table
-  related_incidents = {}, -- table
-  status = "example_status", -- string
   title = "example_title", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -3828,11 +3751,7 @@ local escalation_path_templates, err = client:EscalationPathTemplate():list()
 
 ```lua
 local escalation_path_template, err = client:EscalationPathTemplate():create({
-  expressions = {}, -- table
-  has_historical_escalation_path_versions = true, -- boolean
-  id = "example_id", -- string
   name = "example_name", -- string
-  params = {}, -- table
   path = {}, -- table
   repeat_config = {}, -- table
 })
@@ -3861,7 +3780,6 @@ Create an instance: `local escalations_check_escalation_permissions_result_v2 = 
 ```lua
 local escalations_check_escalation_permissions_result_v2, err = client:EscalationsCheckEscalationPermissionsResultV2():create({
   escalation_id = "example_escalation_id", -- string
-  response_options = {}, -- table
   user_ids = {}, -- table
 })
 ```
@@ -3951,19 +3869,8 @@ local follow_ups, err = client:FollowUp():list()
 
 ```lua
 local follow_up, err = client:FollowUp():create({
-  assignee = {}, -- table
-  assignee_team = {}, -- table
-  category = {}, -- table
-  created_at = "example_created_at", -- string
-  creator = {}, -- table
-  external_issue_reference = {}, -- table
-  id = "example_id", -- string
   incident_id = "example_incident_id", -- string
-  labels = {}, -- table
-  priority = {}, -- table
-  status = "example_status", -- string
   title = "example_title", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -4005,20 +3912,7 @@ Create an instance: `local follow_ups_connect_external_issue_result_v3 = client:
 ```lua
 local follow_ups_connect_external_issue_result_v3, err = client:FollowUpsConnectExternalIssueResultV3():create({
   follow_up_id = "example_follow_up_id", -- string
-  assignee = {}, -- table
-  assignee_team = {}, -- table
-  category = {}, -- table
-  created_at = "example_created_at", -- string
-  creator = {}, -- table
-  external_issue_reference = {}, -- table
-  id = "example_id", -- string
-  incident_id = "example_incident_id", -- string
-  labels = {}, -- table
-  priority = {}, -- table
   provider = "example_provider", -- string
-  status = "example_status", -- string
-  title = "example_title", -- string
-  updated_at = "example_updated_at", -- string
   url = "example_url", -- string
 })
 ```
@@ -4155,25 +4049,7 @@ local incidents, err = client:Incident():list()
 
 ```lua
 local incident, err = client:Incident():create({
-  created_at = "example_created_at", -- string
-  creator = {}, -- table
-  custom_field_entries = {}, -- table
-  external_issue_reference = {}, -- table
-  id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
-  incident_role_assignments = {}, -- table
-  incident_status = {}, -- table
-  incident_type = {}, -- table
-  last_activity_at = "example_last_activity_at", -- string
-  mode = "example_mode", -- string
-  name = "example_name", -- string
-  reference = "example_reference", -- string
-  severity = {}, -- table
-  slack_channel_id = "example_slack_channel_id", -- string
-  slack_team_id = "example_slack_team_id", -- string
-  status = "example_status", -- string
-  team_ids = {}, -- table
-  updated_at = "example_updated_at", -- string
   visibility = "example_visibility", -- string
 })
 ```
@@ -4238,7 +4114,6 @@ local incident_attachments, err = client:IncidentAttachment():list()
 
 ```lua
 local incident_attachment, err = client:IncidentAttachment():create({
-  id = "example_id", -- string
   incident_id = "example_incident_id", -- string
   resource = {}, -- table
 })
@@ -4287,11 +4162,8 @@ local incident_forms, err = client:IncidentForm():list()
 
 ```lua
 local incident_form, err = client:IncidentForm():create({
-  created_at = "example_created_at", -- string
   expressions = {}, -- table
   form_type = "example_form_type", -- string
-  id = "example_id", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -4441,14 +4313,11 @@ local incident_roles, err = client:IncidentRole():list()
 
 ```lua
 local incident_role, err = client:IncidentRole():create({
-  created_at = "example_created_at", -- string
   description = "example_description", -- string
-  id = "example_id", -- string
   instructions = "example_instructions", -- string
   name = "example_name", -- string
-  role_type = "example_role_type", -- string
+  required = true, -- boolean
   shortform = "example_shortform", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -4496,12 +4365,8 @@ local incident_statuss, err = client:IncidentStatus():list()
 ```lua
 local incident_status, err = client:IncidentStatus():create({
   category = "example_category", -- string
-  created_at = "example_created_at", -- string
   description = "example_description", -- string
-  id = "example_id", -- string
   name = "example_name", -- string
-  rank = 1, -- number
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -4601,11 +4466,8 @@ local incident_templates, err = client:IncidentTemplate():list()
 
 ```lua
 local incident_template, err = client:IncidentTemplate():create({
-  created_at = "example_created_at", -- string
-  id = "example_id", -- string
   name = "example_name", -- string
   template = {}, -- table
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -4635,7 +4497,6 @@ Create an instance: `local incident_templates_validate_result_v1 = client:Incide
 local incident_templates_validate_result_v1, err = client:IncidentTemplatesValidateResultV1():create({
   name = "example_name", -- string
   template = {}, -- table
-  warnings = {}, -- table
 })
 ```
 
@@ -4677,14 +4538,10 @@ local incident_timeline_items, err = client:IncidentTimelineItem():list({ incide
 
 ```lua
 local incident_timeline_item, err = client:IncidentTimelineItem():create({
-  created_at = "example_created_at", -- string
-  creator = {}, -- table
-  id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
   incident_id = "example_incident_id", -- string
   timestamp = "example_timestamp", -- string
   title = "example_title", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -4796,13 +4653,8 @@ local incident_updates, err = client:IncidentUpdate():list()
 
 ```lua
 local incident_update, err = client:IncidentUpdate():create({
-  created_at = "example_created_at", -- string
-  id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
   incident_id = "example_incident_id", -- string
-  new_incident_status = {}, -- table
-  new_severity = {}, -- table
-  updater = {}, -- table
 })
 ```
 
@@ -4913,16 +4765,42 @@ local maintenance_windows, err = client:MaintenanceWindow():list()
 ```lua
 local maintenance_window, err = client:MaintenanceWindow():create({
   alert_condition_groups = {}, -- table
-  created_at = "example_created_at", -- string
   end_at = "example_end_at", -- string
-  id = "example_id", -- string
   lead = {}, -- table
   name = "example_name", -- string
-  reroute_on_end = true, -- boolean
-  resolve_on_end = true, -- boolean
   show_in_sidebar = true, -- boolean
   start_at = "example_start_at", -- string
-  updated_at = "example_updated_at", -- string
+})
+```
+
+
+### ManagedResource
+
+Create an instance: `local managed_resource = client:ManagedResource(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotations` | `table` | Annotations that track metadata about this resource |
+| `managed_by` | `string` | How is this resource managed |
+| `resource_id` | `string` | The ID of the resource that this relates to |
+| `resource_type` | `string` | The type of the related resource |
+| `source_url` | `string` | The url of the external repository where this resource is managed (if there is one) |
+
+#### Example: Create
+
+```lua
+local managed_resource, err = client:ManagedResource():create({
+  annotations = {}, -- table
+  resource_id = "example_resource_id", -- string
+  resource_type = "example_resource_type", -- string
 })
 ```
 
@@ -4951,6 +4829,42 @@ Create an instance: `local on_call_notification_method_public_v2 = client:OnCall
 
 ```lua
 local on_call_notification_method_public_v2s, err = client:OnCallNotificationMethodPublicV2():list({ user_id = "example" })
+```
+
+
+### OnCallNotificationPause
+
+Create an instance: `local on_call_notification_pause = client:OnCallNotificationPause(nil)`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `ends_at` | `string` | When notifications resume |
+| `id` | `string` | Unique identifier for this notification pause |
+| `reason` | `string` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `string` | When notifications stop being sent to the user |
+| `updated_at` | `string` |  |
+| `user_id` | `string` | The user whose on-call notifications are paused in this time window |
+
+#### Example: Load
+
+```lua
+local on_call_notification_pause, err = client:OnCallNotificationPause():load({ id = "on_call_notification_pause_id" })
+```
+
+#### Example: List
+
+```lua
+local on_call_notification_pauses, err = client:OnCallNotificationPause():list()
 ```
 
 
@@ -5030,15 +4944,10 @@ local pay_configs, err = client:PayConfig():list()
 ```lua
 local pay_config, err = client:PayConfig():create({
   base_rate_cents = 1, -- number
-  created_at = "example_created_at", -- string
   currency = "example_currency", -- string
-  id = "example_id", -- string
   name = "example_name", -- string
-  one_off_rules = {}, -- table
   rate_time_unit = "example_rate_time_unit", -- string
   timezone = "example_timezone", -- string
-  updated_at = "example_updated_at", -- string
-  weekly_rules = {}, -- table
 })
 ```
 
@@ -5327,17 +5236,11 @@ local pay_reports, err = client:PayReport():list()
 
 ```lua
 local pay_report, err = client:PayReport():create({
-  created_at = "example_created_at", -- string
   end_date = "example_end_date", -- string
-  id = "example_id", -- string
   name = "example_name", -- string
-  overlapping_shifts = "example_overlapping_shifts", -- string
   pay_config_expression = {}, -- table
   schedule_ids = {}, -- table
   start_date = "example_start_date", -- string
-  status = "example_status", -- string
-  unpaid_shifts = "example_unpaid_shifts", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -5381,17 +5284,7 @@ Create an instance: `local pay_reports_publish_result_v2 = client:PayReportsPubl
 local pay_reports_publish_result_v2, err = client:PayReportsPublishResultV2():create({
   pay_report_id = "example_pay_report_id", -- string
   cc_emails = {}, -- table
-  created_at = "example_created_at", -- string
-  end_date = "example_end_date", -- string
-  id = "example_id", -- string
-  name = "example_name", -- string
-  overlapping_shifts = "example_overlapping_shifts", -- string
-  schedule_ids = {}, -- table
   send_user_breakdowns = "example_send_user_breakdowns", -- string
-  start_date = "example_start_date", -- string
-  status = "example_status", -- string
-  unpaid_shifts = "example_unpaid_shifts", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -5433,17 +5326,7 @@ Create an instance: `local pay_reports_unpublish_result_v2 = client:PayReportsUn
 ```lua
 local pay_reports_unpublish_result_v2, err = client:PayReportsUnpublishResultV2():create({
   pay_report_id = "example_pay_report_id", -- string
-  created_at = "example_created_at", -- string
-  end_date = "example_end_date", -- string
-  id = "example_id", -- string
-  name = "example_name", -- string
-  overlapping_shifts = "example_overlapping_shifts", -- string
-  schedule_ids = {}, -- table
-  start_date = "example_start_date", -- string
-  status = "example_status", -- string
-  unpaid_shifts = "example_unpaid_shifts", -- string
   unpublish_reason = "example_unpublish_reason", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -5533,16 +5416,13 @@ local policys, err = client:Policy():list()
 local policy, err = client:Policy():create({
   assignment_rules = {}, -- table
   conditions = {}, -- table
-  created_at = "example_created_at", -- string
   debrief = {}, -- table
+  description = "example_description", -- string
   follow_up = {}, -- table
-  id = "example_id", -- string
   name = "example_name", -- string
   policy_type = "example_policy_type", -- string
   post_mortem = {}, -- table
   schedule = {}, -- table
-  status = "example_status", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -5633,23 +5513,7 @@ Create an instance: `local policy_findings_dismiss_result_v2 = client:PolicyFind
 ```lua
 local policy_findings_dismiss_result_v2, err = client:PolicyFindingsDismissResultV2():create({
   policy_finding_id = "example_policy_finding_id", -- string
-  created_at = "example_created_at", -- string
-  debrief = {}, -- table
-  dismissal = {}, -- table
-  follow_up = {}, -- table
-  id = "example_id", -- string
-  last_checked_at = "example_last_checked_at", -- string
-  on_call_readiness = {}, -- table
-  policy_id = "example_policy_id", -- string
-  policy_type = "example_policy_type", -- string
-  post_mortem = {}, -- table
   reason = "example_reason", -- string
-  responsible_users = {}, -- table
-  schedule = {}, -- table
-  shift_conflict = {}, -- table
-  state = "example_state", -- string
-  updated_at = "example_updated_at", -- string
-  vacation_conflict = {}, -- table
 })
 ```
 
@@ -5799,16 +5663,7 @@ local schedules, err = client:Schedule():list()
 
 ```lua
 local schedule, err = client:Schedule():create({
-  annotations = {}, -- table
-  config = {}, -- table
-  created_at = "example_created_at", -- string
   holidays_public_config = {}, -- table
-  id = "example_id", -- string
-  name = "example_name", -- string
-  permalink = "example_permalink", -- string
-  team_ids = {}, -- table
-  timezone = "example_timezone", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -5839,10 +5694,7 @@ Create an instance: `local schedule_entries_list_payload_v2 = client:ScheduleEnt
 ```lua
 local schedule_entries_list_payload_v2, err = client:ScheduleEntriesListPayloadV2():create({
   schedule_id = "example_schedule_id", -- string
-  final = {}, -- table
-  overrides = {}, -- table
   schedule = {}, -- table
-  scheduled = {}, -- table
 })
 ```
 
@@ -5917,14 +5769,10 @@ local schedule_replicas, err = client:ScheduleReplica():list({ id = "example" })
 ```lua
 local schedule_replica, err = client:ScheduleReplica():create({
   id = "example_id", -- string
-  created_at = "example_created_at", -- string
   replica_fallback_user_id = "example_replica_fallback_user_id", -- string
   replica_provider = "example_replica_provider", -- string
   replica_provider_id = "example_replica_provider_id", -- string
-  schedule_id = "example_schedule_id", -- string
   sources = {}, -- table
-  updated_at = "example_updated_at", -- string
-  user_statuses = {}, -- table
 })
 ```
 
@@ -5974,13 +5822,8 @@ local schedule_sync_rules, err = client:ScheduleSyncRule():list({ id = "example"
 ```lua
 local schedule_sync_rule, err = client:ScheduleSyncRule():create({
   id = "example_id", -- string
-  created_at = "example_created_at", -- string
-  permanent_member_user_ids = {}, -- table
-  schedule_id = "example_schedule_id", -- string
-  schedule_sync_target = {}, -- table
   schedule_sync_target_id = "example_schedule_sync_target_id", -- string
   sync_type = "example_sync_type", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -6030,13 +5873,7 @@ local schedule_sync_targets, err = client:ScheduleSyncTarget():list()
 ```lua
 local schedule_sync_target, err = client:ScheduleSyncTarget():create({
   add_bot_to_group = true, -- boolean
-  created_at = "example_created_at", -- string
-  id = "example_id", -- string
-  linked_schedules = {}, -- table
   new_slack_user_group = {}, -- table
-  slack_team_id = "example_slack_team_id", -- string
-  slack_user_group_id = "example_slack_user_group_id", -- string
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -6083,14 +5920,11 @@ local schedules_show_override_result_v2s, err = client:SchedulesShowOverrideResu
 
 ```lua
 local schedules_show_override_result_v2, err = client:SchedulesShowOverrideResultV2():create({
-  created_at = "example_created_at", -- string
   end_at = "example_end_at", -- string
-  id = "example_id", -- string
   layer_id = "example_layer_id", -- string
   rotation_id = "example_rotation_id", -- string
   schedule_id = "example_schedule_id", -- string
   start_at = "example_start_at", -- string
-  updated_at = "example_updated_at", -- string
   user = {}, -- table
 })
 ```
@@ -6167,14 +6001,8 @@ local secrets, err = client:Secret():list()
 
 ```lua
 local secret, err = client:Secret():create({
-  created_at = "example_created_at", -- string
-  id = "example_id", -- string
   name = "example_name", -- string
-  secret = {}, -- table
-  updated_at = "example_updated_at", -- string
   value = "example_value", -- string
-  version = 1, -- number
-  versions = {}, -- table
 })
 ```
 
@@ -6219,12 +6047,8 @@ local severitys, err = client:Severity():list()
 
 ```lua
 local severity, err = client:Severity():create({
-  created_at = "example_created_at", -- string
   description = "example_description", -- string
-  id = "example_id", -- string
   name = "example_name", -- string
-  rank = 1, -- number
-  updated_at = "example_updated_at", -- string
 })
 ```
 
@@ -6301,8 +6125,6 @@ local status_page_components, err = client:StatusPageComponent():list()
 
 ```lua
 local status_page_component, err = client:StatusPageComponent():create({
-  id = "example_id", -- string
-  management_meta = {}, -- table
   name = "example_name", -- string
 })
 ```
@@ -6381,16 +6203,12 @@ local status_page_incidents, err = client:StatusPageIncident():list({ status_pag
 
 ```lua
 local status_page_incident, err = client:StatusPageIncident():create({
-  component_impacts = {}, -- table
-  id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
   incident_status = "example_incident_status", -- string
   message = "example_message", -- string
   name = "example_name", -- string
   notify_subscribers = true, -- boolean
-  published_at = "example_published_at", -- string
   status_page_id = "example_status_page_id", -- string
-  updates = {}, -- table
 })
 ```
 
@@ -6499,19 +6317,14 @@ local status_page_maintenances, err = client:StatusPageMaintenance():list({ stat
 ```lua
 local status_page_maintenance, err = client:StatusPageMaintenance():create({
   affected_component_ids = {}, -- table
-  automate_maintenance_status = true, -- boolean
-  component_maintenance_periods = {}, -- table
   end_at = "example_end_at", -- string
-  id = "example_id", -- string
   idempotency_key = "example_idempotency_key", -- string
   maintenance_status = "example_maintenance_status", -- string
   message = "example_message", -- string
   name = "example_name", -- string
   notify_subscribers = true, -- boolean
-  published_at = "example_published_at", -- string
   start_at = "example_start_at", -- string
   status_page_id = "example_status_page_id", -- string
-  updates = {}, -- table
 })
 ```
 
@@ -6686,12 +6499,6 @@ local users, err = client:User():list()
 ```lua
 local user, err = client:User():create({
   id = "example_id", -- string
-  base_role = {}, -- table
-  custom_roles = {}, -- table
-  is_active = true, -- boolean
-  name = "example_name", -- string
-  role = "example_role", -- string
-  seats = {}, -- table
 })
 ```
 
@@ -6761,16 +6568,12 @@ local workflow, err = client:Workflow():create({
   continue_on_step_error = true, -- boolean
   delay = {}, -- table
   expressions = {}, -- table
-  id = "example_id", -- string
-  management_meta = {}, -- table
   name = "example_name", -- string
   once_for = {}, -- table
   runs_on_incident_modes = {}, -- table
   runs_on_incidents = "example_runs_on_incidents", -- string
   steps = {}, -- table
   trigger = "example_trigger", -- string
-  version = 1, -- number
-  workflow = {}, -- table
 })
 ```
 
@@ -6819,7 +6622,7 @@ local workflow_runs, err = client:WorkflowRun():list()
 
 ## Features
 
-This SDK ships 8 optional features. Each is **inactive until you
+This SDK ships 9 optional features. Each is **inactive until you
 switch it on**, so an SDK you have not configured behaves exactly as if none of
 them existed — no retries, no cache, no logging, no measurable overhead.
 
@@ -6834,10 +6637,11 @@ above:
 | [`paging`](#paging) | Paging |
 | [`ratelimit`](#ratelimit) | Rate limiting |
 | [`retry`](#retry) | Retry |
+| [`secrets`](#secrets) | Secrets |
 | [`test`](#test) | Test transport |
 | [`timeout`](#timeout) | Timeout |
 
-> **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
+> **Order matters for `ratelimit`, `retry`, `secrets`, `timeout`.** These wrap the
 > transport, so each one wraps whatever is already installed: the order you
 > activate them in IS the nesting order. Activating them as an ordered list
 > rather than a map is what fixes that order.
@@ -6928,6 +6732,24 @@ Set `feature.retry.active` to enable it, then override any of the options above.
 transport features decides what it sees. A feature activated later wraps one
 activated earlier.
 
+### secrets
+
+Secrets.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+Set `feature.secrets.active` to enable it, then override any of the options above.
+
+`secrets` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
 ### test
 
 Test transport.
@@ -6998,6 +6820,7 @@ The SDK ships with built-in features:
 - **PagingFeature**: Paging
 - **RatelimitFeature**: Rate limiting
 - **RetryFeature**: Retry
+- **SecretsFeature**: Secrets
 - **TestFeature**: Test transport
 - **TimeoutFeature**: Timeout
 

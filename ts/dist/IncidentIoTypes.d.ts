@@ -21,32 +21,15 @@ export interface ActionListMatch {
     is_follow_up?: boolean;
 }
 export interface ActionCreateData {
-    assignee: Record<string, any>;
     assignee_id?: string;
-    completed_at?: string;
-    created_at: string;
-    creator: Record<string, any>;
-    description?: string;
-    external_issue_reference?: Record<string, any>;
-    follow_up: boolean;
-    id: string;
+    description: string;
     incident_id: string;
-    status: string;
-    updated_at: string;
 }
 export interface ActionUpdateData {
     id: string;
-    assignee?: Record<string, any>;
     assignee_id?: string;
-    completed_at?: string;
-    created_at?: string;
-    creator?: Record<string, any>;
     description?: string;
-    external_issue_reference?: Record<string, any>;
-    follow_up?: boolean;
-    incident_id?: string;
     status?: string;
-    updated_at?: string;
 }
 export interface ActionRemoveMatch {
     id: string;
@@ -122,9 +105,8 @@ export interface AlertAttributeListMatch {
 export interface AlertAttributeCreateData {
     array: boolean;
     emoji?: string;
-    id: string;
     name: string;
-    required: boolean;
+    required?: boolean;
     type: string;
 }
 export interface AlertAttributeUpdateData {
@@ -162,23 +144,10 @@ export interface AlertNoteCreateData {
     alert_group_id?: string;
     alert_id?: string;
     content: string;
-    created_at: string;
-    creator: Record<string, any>;
-    id: string;
-    images: any[];
-    last_edited_at?: string;
-    updated_at: string;
 }
 export interface AlertNoteUpdateData {
     id: string;
-    alert_group_id?: string;
-    alert_id?: string;
     content?: string;
-    created_at?: string;
-    creator?: Record<string, any>;
-    images?: any[];
-    last_edited_at?: string;
-    updated_at?: string;
 }
 export interface AlertNoteRemoveMatch {
     id: string;
@@ -219,7 +188,6 @@ export interface AlertRouteCreateData {
     escalation_config: Record<string, any>;
     expressions: any[];
     grouping_config: Record<string, any>;
-    id: string;
     incident_config: Record<string, any>;
     incident_template: Record<string, any>;
     is_private: boolean;
@@ -228,7 +196,6 @@ export interface AlertRouteCreateData {
     name: string;
     owning_team_ids?: any[];
     updated_at?: string;
-    version: number;
 }
 export interface AlertRouteUpdateData {
     id: string;
@@ -297,28 +264,23 @@ export interface AlertSourceListMatch {
     template?: Record<string, any>;
 }
 export interface AlertSourceCreateData {
-    alert_events_url?: string;
     auto_resolve_incident_alerts?: boolean;
     auto_resolve_timeout_minutes?: number;
     azure_devops_options: Record<string, any>;
-    disabled?: boolean;
     email_options: Record<string, any>;
     filter_condition_groups?: any[];
     fixed_team_id?: string;
     heartbeat_options: Record<string, any>;
     http_custom_options: Record<string, any>;
-    id: string;
     jira_options: Record<string, any>;
     name: string;
     owning_team_ids?: any[];
     rate_limit_sharding: Record<string, any>;
-    secret_token?: string;
     source_type: string;
     template: Record<string, any>;
 }
 export interface AlertSourceUpdateData {
     id: string;
-    alert_events_url?: string;
     auto_resolve_incident_alerts?: boolean;
     auto_resolve_timeout_minutes?: number;
     azure_devops_options?: Record<string, any>;
@@ -332,8 +294,6 @@ export interface AlertSourceUpdateData {
     name?: string;
     owning_team_ids?: any[];
     rate_limit_sharding?: Record<string, any>;
-    secret_token?: string;
-    source_type?: string;
     template?: Record<string, any>;
 }
 export interface AlertSourceRemoveMatch {
@@ -375,19 +335,7 @@ export interface AlertsAddTagsResultV2 {
 }
 export interface AlertsAddTagsResultV2CreateData {
     alert_id: string;
-    alert_group_ids?: any[];
-    alert_source_id: string;
-    attributes: any[];
-    created_at: string;
-    deduplication_key: string;
-    description?: string;
-    id: string;
-    resolved_at?: string;
-    source_url?: string;
-    status: string;
-    tags?: any[];
-    title: string;
-    updated_at: string;
+    tags: any[];
 }
 export interface AlertsRemoveTagsResultV2 {
     alert_group_ids?: any[];
@@ -406,19 +354,7 @@ export interface AlertsRemoveTagsResultV2 {
 }
 export interface AlertsRemoveTagsResultV2CreateData {
     alert_id: string;
-    alert_group_ids?: any[];
-    alert_source_id: string;
-    attributes: any[];
-    created_at: string;
-    deduplication_key: string;
-    description?: string;
-    id: string;
-    resolved_at?: string;
-    source_url?: string;
-    status: string;
-    tags?: any[];
-    title: string;
-    updated_at: string;
+    tags: any[];
 }
 export interface AlertsSetTagsResultV2 {
     alert_group_ids?: any[];
@@ -437,19 +373,7 @@ export interface AlertsSetTagsResultV2 {
 }
 export interface AlertsSetTagsResultV2CreateData {
     alert_id: string;
-    alert_group_ids?: any[];
-    alert_source_id: string;
-    attributes: any[];
-    created_at: string;
-    deduplication_key: string;
-    description?: string;
-    id: string;
-    resolved_at?: string;
-    source_url?: string;
-    status: string;
-    tags?: any[];
-    title: string;
-    updated_at: string;
+    tags: any[];
 }
 export interface AlertsTransitionIncidentAlertResultV2 {
     alert: Record<string, any>;
@@ -468,11 +392,7 @@ export interface AlertsTransitionIncidentAlertResultV2ListMatch {
     page_size: number;
 }
 export interface AlertsTransitionIncidentAlertResultV2CreateData {
-    alert: Record<string, any>;
     alert_id: string;
-    alert_route_id?: string;
-    id: string;
-    incident: Record<string, any>;
     incident_id: string;
     re_relate?: boolean;
     state: string;
@@ -501,24 +421,20 @@ export interface AnnouncementRuleListMatch {
 }
 export interface AnnouncementRuleCreateData {
     condition_groups: any[];
-    conditions_no_longer_apply_behaviour: string;
-    created_at: string;
-    id: string;
-    microsoft_teams_channel_ids: any[];
+    conditions_no_longer_apply_behaviour?: string;
+    microsoft_teams_channel_ids?: any[];
     mode: string;
     name: string;
-    owning_team_ids: any[];
+    owning_team_ids?: any[];
     private_incident_scope?: string;
-    slack_channel_ids: any[];
+    slack_channel_ids?: any[];
     template_id?: string;
     update_sharing_mode: string;
-    updated_at: string;
 }
 export interface AnnouncementRuleUpdateData {
     id: string;
     condition_groups?: any[];
     conditions_no_longer_apply_behaviour?: string;
-    created_at?: string;
     microsoft_teams_channel_ids?: any[];
     mode?: string;
     name?: string;
@@ -527,7 +443,6 @@ export interface AnnouncementRuleUpdateData {
     slack_channel_ids?: any[];
     template_id?: string;
     update_sharing_mode?: string;
-    updated_at?: string;
 }
 export interface AnnouncementRuleRemoveMatch {
     id: string;
@@ -552,18 +467,15 @@ export interface AnnouncementTemplateListMatch {
     owning_team_ids?: any[];
 }
 export interface AnnouncementTemplateCreateData {
-    actions: any[];
-    fields: any[];
-    id: string;
-    is_default: boolean;
+    actions?: any[];
+    fields?: any[];
     name: string;
-    owning_team_ids: any[];
+    owning_team_ids?: any[];
 }
 export interface AnnouncementTemplateUpdateData {
     id: string;
     actions?: any[];
     fields?: any[];
-    is_default?: boolean;
     name?: string;
     owning_team_ids?: any[];
 }
@@ -593,33 +505,20 @@ export interface ApiKeyListMatch {
 }
 export interface ApiKeyCreateData {
     comments?: string;
-    created_at: string;
-    creator: Record<string, any>;
-    id: string;
-    last_used_at?: string;
     name: string;
     role_names: any[];
-    roles: any[];
     team_ids: any[];
     team_role_names: any[];
-    team_roles: any[];
-    token_last_issued_at: string;
     $action?: string;
     [action: string]: any;
 }
 export interface ApiKeyUpdateData {
     id: string;
     comments?: string;
-    created_at?: string;
-    creator?: Record<string, any>;
-    last_used_at?: string;
     name?: string;
     role_names?: any[];
-    roles?: any[];
     team_ids?: any[];
     team_role_names?: any[];
-    team_roles?: any[];
-    token_last_issued_at?: string;
 }
 export interface ApiKeyRemoveMatch {
     id: string;
@@ -649,18 +548,10 @@ export interface CallRouteListMatch {
 }
 export interface CallRouteUpdateData {
     id: string;
-    allowed_callers?: any[];
-    country_code?: string;
-    created_at?: string;
-    current_state?: string;
     custom_language?: string;
     name?: string;
-    options?: any[];
     path?: any[];
-    phone_number?: string;
-    phone_number_type?: string;
     responder_caller_id?: string;
-    updated_at?: string;
     use_caller_allowlist?: boolean;
 }
 export interface CallRoutesCreateAllowedCallerResultV2 {
@@ -800,33 +691,20 @@ export interface CatalogEntryListMatch {
 }
 export interface CatalogEntryCreateData {
     aliases?: any[];
-    archived_at?: string;
     attribute_values: Record<string, any>;
-    catalog_entry: Record<string, any>;
-    catalog_type: Record<string, any>;
     catalog_type_id: string;
-    created_at: string;
     external_id?: string;
-    id: string;
     name: string;
     rank?: number;
-    update_attributes?: any[];
-    updated_at: string;
 }
 export interface CatalogEntryUpdateData {
     id: string;
     aliases?: any[];
-    archived_at?: string;
     attribute_values?: Record<string, any>;
-    catalog_entry?: Record<string, any>;
-    catalog_type?: Record<string, any>;
-    catalog_type_id?: string;
-    created_at?: string;
     external_id?: string;
     name?: string;
     rank?: number;
     update_attributes?: any[];
-    updated_at?: string;
 }
 export interface CatalogResource {
     category: string;
@@ -900,55 +778,29 @@ export interface CatalogTypeListMatch {
     use_name_as_identifier?: boolean;
 }
 export interface CatalogTypeCreateData {
-    annotations: Record<string, any>;
-    categories: any[];
-    color: string;
-    created_at: string;
+    annotations?: Record<string, any>;
+    categories?: any[];
+    color?: string;
     description: string;
-    dynamic_resource_parameter?: string;
-    engine_resource_type: string;
-    estimated_count?: number;
-    icon: string;
-    id: string;
-    is_editable: boolean;
-    is_team_type?: boolean;
-    last_synced_at?: string;
+    icon?: string;
     name: string;
     owning_team_ids?: any[];
-    ranked: boolean;
-    registry_type?: string;
-    required_integrations?: any[];
-    schema: Record<string, any>;
-    semantic_type: string;
+    ranked?: boolean;
     source_repo_url?: string;
-    type_name: string;
-    updated_at: string;
-    use_name_as_identifier: boolean;
+    type_name?: string;
+    use_name_as_identifier?: boolean;
 }
 export interface CatalogTypeUpdateData {
     id: string;
     annotations?: Record<string, any>;
     categories?: any[];
     color?: string;
-    created_at?: string;
     description?: string;
-    dynamic_resource_parameter?: string;
-    engine_resource_type?: string;
-    estimated_count?: number;
     icon?: string;
-    is_editable?: boolean;
-    is_team_type?: boolean;
-    last_synced_at?: string;
     name?: string;
     owning_team_ids?: any[];
     ranked?: boolean;
-    registry_type?: string;
-    required_integrations?: any[];
-    schema?: Record<string, any>;
-    semantic_type?: string;
     source_repo_url?: string;
-    type_name?: string;
-    updated_at?: string;
     use_name_as_identifier?: boolean;
 }
 export interface CatalogTypeSchema {
@@ -981,31 +833,7 @@ export interface CatalogTypeSchema {
 }
 export interface CatalogTypeSchemaCreateData {
     catalog_type_id: string;
-    annotations: Record<string, any>;
     attributes: any[];
-    categories: any[];
-    color: string;
-    created_at: string;
-    description: string;
-    dynamic_resource_parameter?: string;
-    engine_resource_type: string;
-    estimated_count?: number;
-    icon: string;
-    id: string;
-    is_editable: boolean;
-    is_team_type?: boolean;
-    last_synced_at?: string;
-    name: string;
-    owning_team_ids?: any[];
-    ranked: boolean;
-    registry_type?: string;
-    required_integrations?: any[];
-    schema: Record<string, any>;
-    semantic_type: string;
-    source_repo_url?: string;
-    type_name: string;
-    updated_at: string;
-    use_name_as_identifier: boolean;
     version: number;
 }
 export interface CustomField {
@@ -1053,43 +881,34 @@ export interface CustomFieldListMatch {
 }
 export interface CustomFieldCreateData {
     catalog_type_id?: string;
-    created_at: string;
     description: string;
     field_type: string;
     filter_by: Record<string, any>;
     fixed_filter: Record<string, any>;
     group_by_catalog_attribute_id?: string;
     helptext_catalog_attribute_id?: string;
-    id: string;
     name: string;
-    options: any[];
     required?: string;
     required_v2?: string;
     show_before_closure: boolean;
     show_before_creation: boolean;
     show_before_update: boolean;
     show_in_announcement_post?: boolean;
-    updated_at: string;
 }
 export interface CustomFieldUpdateData {
     id: string;
-    catalog_type_id?: string;
-    created_at?: string;
     description?: string;
-    field_type?: string;
     filter_by?: Record<string, any>;
     fixed_filter?: Record<string, any>;
     group_by_catalog_attribute_id?: string;
     helptext_catalog_attribute_id?: string;
     name?: string;
-    options?: any[];
     required?: string;
     required_v2?: string;
     show_before_closure?: boolean;
     show_before_creation?: boolean;
     show_before_update?: boolean;
     show_in_announcement_post?: boolean;
-    updated_at?: string;
 }
 export interface CustomFieldRemoveMatch {
     id: string;
@@ -1110,13 +929,11 @@ export interface CustomFieldOptionListMatch {
 }
 export interface CustomFieldOptionCreateData {
     custom_field_id: string;
-    id: string;
-    sort_key: number;
+    sort_key?: number;
     value: string;
 }
 export interface CustomFieldOptionUpdateData {
     id: string;
-    custom_field_id?: string;
     sort_key?: number;
     value?: string;
 }
@@ -1155,20 +972,11 @@ export interface EscalationListMatch {
     updated_at?: Record<string, any>;
 }
 export interface EscalationCreateData {
-    created_at: string;
-    creator: Record<string, any>;
-    description: string;
+    description?: string;
     escalation_path_id?: string;
-    events: any[];
-    id: string;
     idempotency_key: string;
     incident_id?: string;
-    priority: Record<string, any>;
-    related_alerts: any[];
-    related_incidents: any[];
-    status: string;
     title: string;
-    updated_at: string;
     user_ids?: any[];
 }
 export interface EscalationPathTemplate {
@@ -1192,11 +1000,9 @@ export interface EscalationPathTemplateListMatch {
 }
 export interface EscalationPathTemplateCreateData {
     description?: string;
-    expressions: any[];
-    has_historical_escalation_path_versions: boolean;
-    id: string;
+    expressions?: any[];
     name: string;
-    params: any[];
+    params?: any[];
     path: any[];
     repeat_config: Record<string, any>;
     working_hours?: any[];
@@ -1205,7 +1011,6 @@ export interface EscalationPathTemplateUpdateData {
     id: string;
     description?: string;
     expressions?: any[];
-    has_historical_escalation_path_versions?: boolean;
     name?: string;
     params?: any[];
     path?: any[];
@@ -1221,7 +1026,6 @@ export interface EscalationsCheckEscalationPermissionsResultV2 {
 }
 export interface EscalationsCheckEscalationPermissionsResultV2CreateData {
     escalation_id: string;
-    response_options: any[];
     user_ids: any[];
 }
 export interface EscalationsReassignEscalationResultV2 {
@@ -1270,48 +1074,26 @@ export interface FollowUpListMatch {
     incident_mode?: string;
 }
 export interface FollowUpCreateData {
-    assignee: Record<string, any>;
     assignee_id?: string;
-    assignee_team: Record<string, any>;
     assignee_team_id?: string;
-    category: Record<string, any>;
-    completed_at?: string;
-    created_at: string;
-    creator: Record<string, any>;
     description?: string;
-    external_issue_reference: Record<string, any>;
     external_issue_reference_id?: string;
     follow_up_category_id?: string;
     follow_up_priority_option_id?: string;
-    id: string;
     incident_id: string;
-    labels: any[];
-    priority: Record<string, any>;
-    status: string;
+    labels?: any[];
     title: string;
-    updated_at: string;
 }
 export interface FollowUpUpdateData {
     id: string;
-    assignee?: Record<string, any>;
     assignee_id?: string;
-    assignee_team?: Record<string, any>;
     assignee_team_id?: string;
-    category?: Record<string, any>;
-    completed_at?: string;
-    created_at?: string;
-    creator?: Record<string, any>;
     description?: string;
-    external_issue_reference?: Record<string, any>;
-    external_issue_reference_id?: string;
     follow_up_category_id?: string;
     follow_up_priority_option_id?: string;
-    incident_id?: string;
     labels?: any[];
-    priority?: Record<string, any>;
     status?: string;
     title?: string;
-    updated_at?: string;
 }
 export interface FollowUpRemoveMatch {
     id: string;
@@ -1337,22 +1119,7 @@ export interface FollowUpsConnectExternalIssueResultV3 {
 }
 export interface FollowUpsConnectExternalIssueResultV3CreateData {
     follow_up_id: string;
-    assignee: Record<string, any>;
-    assignee_team: Record<string, any>;
-    category: Record<string, any>;
-    completed_at?: string;
-    created_at: string;
-    creator: Record<string, any>;
-    description?: string;
-    external_issue_reference: Record<string, any>;
-    id: string;
-    incident_id: string;
-    labels: any[];
-    priority: Record<string, any>;
     provider: string;
-    status: string;
-    title: string;
-    updated_at: string;
     url: string;
 }
 export interface FollowUpsCreateFromLinkResultV3 {
@@ -1432,50 +1199,23 @@ export interface IncidentListMatch {
     status?: any[];
 }
 export interface IncidentCreateData {
-    call_url?: string;
-    created_at: string;
-    creator: Record<string, any>;
-    custom_field_entries: any[];
-    debriefs?: any[];
-    duration_metrics?: any[];
-    external_issue_reference: Record<string, any>;
-    has_debrief?: boolean;
-    id: string;
+    custom_field_entries?: any[];
     idempotency_key: string;
-    incident_role_assignments: any[];
-    incident_status: Record<string, any>;
+    incident_role_assignments?: any[];
     incident_status_id?: string;
     incident_timestamp_values?: any[];
-    incident_type: Record<string, any>;
     incident_type_id?: string;
-    last_activity_at: string;
-    mode: string;
-    ms_teams_channel_url?: string;
-    name: string;
-    permalink?: string;
-    postmortem_document_ids?: any[];
-    postmortem_document_url?: string;
-    reference: string;
+    mode?: string;
+    name?: string;
     retrospective_incident_options?: Record<string, any>;
-    severity: Record<string, any>;
     severity_id?: string;
-    slack_channel_id: string;
-    slack_channel_name?: string;
     slack_channel_name_override?: string;
-    slack_channel_url?: string;
-    slack_team_id: string;
+    slack_team_id?: string;
     source_message_channel_id?: string;
     source_message_timestamp?: string;
-    status: string;
+    status?: string;
     summary?: string;
-    team_ids: any[];
-    timestamps?: any[];
-    updated_at: string;
     visibility: string;
-    workload_minutes_late?: number;
-    workload_minutes_sleeping?: number;
-    workload_minutes_total?: number;
-    workload_minutes_working?: number;
     $action?: string;
     [action: string]: any;
 }
@@ -1505,7 +1245,6 @@ export interface IncidentAttachmentListMatch {
     resource_type?: string;
 }
 export interface IncidentAttachmentCreateData {
-    id: string;
     incident_id: string;
     resource: Record<string, any>;
 }
@@ -1529,22 +1268,17 @@ export interface IncidentFormListMatch {
     page_size?: number;
 }
 export interface IncidentFormCreateData {
-    created_at: string;
     expressions: any[];
     form_type: string;
-    id: string;
     incident_type_id?: string;
     lifecycle_elements?: any[];
-    updated_at: string;
 }
 export interface IncidentFormUpdateData {
     id: string;
-    created_at?: string;
     expressions?: any[];
     form_type?: string;
     incident_type_id?: string;
     lifecycle_elements?: any[];
-    updated_at?: string;
 }
 export interface IncidentFormRemoveMatch {
     id: string;
@@ -1608,26 +1342,19 @@ export interface IncidentRoleListMatch {
     updated_at?: string;
 }
 export interface IncidentRoleCreateData {
-    created_at: string;
     description: string;
-    id: string;
     instructions: string;
     name: string;
-    required?: boolean;
-    role_type: string;
+    required: boolean;
     shortform: string;
-    updated_at: string;
 }
 export interface IncidentRoleUpdateData {
     id: string;
-    created_at?: string;
     description?: string;
     instructions?: string;
     name?: string;
     required?: boolean;
-    role_type?: string;
     shortform?: string;
-    updated_at?: string;
 }
 export interface IncidentRoleRemoveMatch {
     id: string;
@@ -1655,21 +1382,15 @@ export interface IncidentStatusListMatch {
 }
 export interface IncidentStatusCreateData {
     category: string;
-    created_at: string;
     description: string;
-    id: string;
     name: string;
-    rank: number;
-    updated_at: string;
+    rank?: number;
 }
 export interface IncidentStatusUpdateData {
     id: string;
-    category?: string;
-    created_at?: string;
     description?: string;
     name?: string;
     rank?: number;
-    updated_at?: string;
 }
 export interface IncidentStatusRemoveMatch {
     id: string;
@@ -1706,20 +1427,15 @@ export interface IncidentTemplateListMatch {
     page_size?: number;
 }
 export interface IncidentTemplateCreateData {
-    created_at: string;
     expressions?: any[];
-    id: string;
     name: string;
     template: Record<string, any>;
-    updated_at: string;
 }
 export interface IncidentTemplateUpdateData {
     id: string;
-    created_at?: string;
     expressions?: any[];
     name?: string;
     template?: Record<string, any>;
-    updated_at?: string;
 }
 export interface IncidentTemplateRemoveMatch {
     id: string;
@@ -1734,7 +1450,6 @@ export interface IncidentTemplatesValidateResultV1CreateData {
     expressions?: any[];
     name: string;
     template: Record<string, any>;
-    warnings: any[];
 }
 export interface IncidentTimelineItem {
     activity_log_id?: string;
@@ -1754,28 +1469,17 @@ export interface IncidentTimelineItemListMatch {
     page_size?: number;
 }
 export interface IncidentTimelineItemCreateData {
-    activity_log_id?: string;
-    created_at: string;
-    creator: Record<string, any>;
     description?: string;
-    id: string;
     idempotency_key: string;
     incident_id: string;
     timestamp: string;
     title: string;
-    updated_at: string;
 }
 export interface IncidentTimelineItemUpdateData {
     id: string;
-    activity_log_id?: string;
-    created_at?: string;
-    creator?: Record<string, any>;
     description?: string;
-    idempotency_key?: string;
-    incident_id?: string;
     timestamp?: string;
     title?: string;
-    updated_at?: string;
 }
 export interface IncidentTimestamp {
     id: string;
@@ -1834,17 +1538,11 @@ export interface IncidentUpdateListMatch {
     page_size?: number;
 }
 export interface IncidentUpdateCreateData {
-    created_at: string;
-    id: string;
     idempotency_key: string;
     incident_id: string;
-    merged_into_incident_id?: string;
     message?: string;
-    new_incident_status: Record<string, any>;
-    new_severity: Record<string, any>;
     to_incident_status_id?: string;
     to_severity_id?: string;
-    updater: Record<string, any>;
 }
 export interface IpAllowlist {
     allowlist: any[];
@@ -1861,7 +1559,6 @@ export interface IpAllowlistLoadMatch {
 export interface IpAllowlistUpdateData {
     allowlist?: any[];
     enabled?: boolean;
-    updated_at?: string;
     version?: number;
 }
 export interface IpRange {
@@ -1903,11 +1600,8 @@ export interface MaintenanceWindowListMatch {
 }
 export interface MaintenanceWindowCreateData {
     alert_condition_groups: any[];
-    archived_at?: string;
-    created_at: string;
     end_at: string;
     escalation_targets?: any[];
-    id: string;
     incident_id?: string;
     lead: Record<string, any>;
     name: string;
@@ -1916,17 +1610,14 @@ export interface MaintenanceWindowCreateData {
     notify_end_minutes_before?: number;
     notify_start_minutes_before?: number;
     owning_team_ids?: any[];
-    reroute_on_end: boolean;
-    resolve_on_end: boolean;
+    reroute_on_end?: boolean;
+    resolve_on_end?: boolean;
     show_in_sidebar: boolean;
     start_at: string;
-    updated_at: string;
 }
 export interface MaintenanceWindowUpdateData {
     id: string;
     alert_condition_groups?: any[];
-    archived_at?: string;
-    created_at?: string;
     end_at?: string;
     escalation_targets?: any[];
     incident_id?: string;
@@ -1941,11 +1632,22 @@ export interface MaintenanceWindowUpdateData {
     resolve_on_end?: boolean;
     show_in_sidebar?: boolean;
     start_at?: string;
-    updated_at?: string;
 }
 export interface MaintenanceWindowRemoveMatch {
     id: string;
     force?: boolean;
+}
+export interface ManagedResource {
+    annotations: Record<string, any>;
+    managed_by: string;
+    resource_id: string;
+    resource_type: string;
+    source_url?: string;
+}
+export interface ManagedResourceCreateData {
+    annotations: Record<string, any>;
+    resource_id: string;
+    resource_type: string;
 }
 export interface OnCallNotificationMethodPublicV2 {
     address: string;
@@ -1956,6 +1658,24 @@ export interface OnCallNotificationMethodPublicV2 {
 }
 export interface OnCallNotificationMethodPublicV2ListMatch {
     user_id: string;
+}
+export interface OnCallNotificationPause {
+    created_at: string;
+    ends_at: string;
+    id: string;
+    reason?: string;
+    starts_at: string;
+    updated_at: string;
+    user_id: string;
+}
+export interface OnCallNotificationPauseLoadMatch {
+    id: string;
+}
+export interface OnCallNotificationPauseListMatch {
+    after?: string;
+    from?: string;
+    page_size?: number;
+    to?: string;
 }
 export interface OnCallNotificationRulePublicV2 {
     app: Record<string, any>;
@@ -1991,29 +1711,20 @@ export interface PayConfigListMatch {
 }
 export interface PayConfigCreateData {
     base_rate_cents: number;
-    created_at: string;
     currency: string;
-    id: string;
     name: string;
-    one_off_rules: any[];
-    published_at?: string;
+    one_off_rules?: any[];
     rate_time_unit: string;
     timezone: string;
-    updated_at: string;
-    weekly_rules: any[];
+    weekly_rules?: any[];
 }
 export interface PayConfigUpdateData {
     id: string;
     base_rate_cents?: number;
-    created_at?: string;
     currency?: string;
     name?: string;
-    one_off_rules?: any[];
-    published_at?: string;
     rate_time_unit?: string;
     timezone?: string;
-    updated_at?: string;
-    weekly_rules?: any[];
 }
 export interface PayConfigRemoveMatch {
     id: string;
@@ -2152,25 +1863,15 @@ export interface PayReportListMatch {
     page_size?: number;
 }
 export interface PayReportCreateData {
-    created_at: string;
-    creator?: Record<string, any>;
     end_date: string;
-    error_code?: string;
-    error_message?: string;
-    id: string;
     name: string;
-    overlapping_shifts: string;
+    overlapping_shifts?: string;
     pay_config_expression: Record<string, any>;
     pay_config_id?: string;
-    published_at?: string;
     rotation_filters?: any[];
     schedule_ids: any[];
     start_date: string;
-    status: string;
-    total_duration_seconds?: number;
-    total_pay_by_currency?: Record<string, any>;
-    unpaid_shifts: string;
-    updated_at: string;
+    unpaid_shifts?: string;
 }
 export interface PayReportRemoveMatch {
     id: string;
@@ -2198,23 +1899,7 @@ export interface PayReportsPublishResultV2 {
 export interface PayReportsPublishResultV2CreateData {
     pay_report_id: string;
     cc_emails: any[];
-    created_at: string;
-    creator?: Record<string, any>;
-    end_date: string;
-    error_code?: string;
-    error_message?: string;
-    id: string;
-    name: string;
-    overlapping_shifts: string;
-    published_at?: string;
-    schedule_ids: any[];
     send_user_breakdowns: string;
-    start_date: string;
-    status: string;
-    total_duration_seconds?: number;
-    total_pay_by_currency?: Record<string, any>;
-    unpaid_shifts: string;
-    updated_at: string;
 }
 export interface PayReportsUnpublishResultV2 {
     created_at: string;
@@ -2237,23 +1922,7 @@ export interface PayReportsUnpublishResultV2 {
 }
 export interface PayReportsUnpublishResultV2CreateData {
     pay_report_id: string;
-    created_at: string;
-    creator?: Record<string, any>;
-    end_date: string;
-    error_code?: string;
-    error_message?: string;
-    id: string;
-    name: string;
-    overlapping_shifts: string;
-    published_at?: string;
-    schedule_ids: any[];
-    start_date: string;
-    status: string;
-    total_duration_seconds?: number;
-    total_pay_by_currency?: Record<string, any>;
-    unpaid_shifts: string;
     unpublish_reason: string;
-    updated_at: string;
 }
 export interface PayReportsV2 {
 }
@@ -2294,25 +1963,21 @@ export interface PolicyListMatch {
 export interface PolicyCreateData {
     assignment_rules: Record<string, any>;
     conditions: any[];
-    created_at: string;
     debrief: Record<string, any>;
-    description?: string;
+    description: string;
     expressions?: any[];
     follow_up: Record<string, any>;
-    id: string;
     name: string;
     on_call_readiness?: Record<string, any>;
     policy_type: string;
     post_mortem: Record<string, any>;
     schedule: Record<string, any>;
-    status: string;
-    updated_at: string;
+    status?: string;
 }
 export interface PolicyUpdateData {
     id: string;
     assignment_rules?: Record<string, any>;
     conditions?: any[];
-    created_at?: string;
     debrief?: Record<string, any>;
     description?: string;
     expressions?: any[];
@@ -2323,7 +1988,6 @@ export interface PolicyUpdateData {
     post_mortem?: Record<string, any>;
     schedule?: Record<string, any>;
     status?: string;
-    updated_at?: string;
 }
 export interface PolicyFinding {
     created_at: string;
@@ -2376,25 +2040,7 @@ export interface PolicyFindingsDismissResultV2 {
 }
 export interface PolicyFindingsDismissResultV2CreateData {
     policy_finding_id: string;
-    created_at: string;
-    days?: number;
-    debrief: Record<string, any>;
-    dismissal: Record<string, any>;
-    due_at?: string;
-    follow_up: Record<string, any>;
-    id: string;
-    last_checked_at: string;
-    on_call_readiness: Record<string, any>;
-    policy_id: string;
-    policy_type: string;
-    post_mortem: Record<string, any>;
     reason: string;
-    responsible_users: any[];
-    schedule: Record<string, any>;
-    shift_conflict: Record<string, any>;
-    state: string;
-    updated_at: string;
-    vacation_conflict: Record<string, any>;
 }
 export interface PolicyFindingsRestoreResultV2 {
     created_at: string;
@@ -2460,15 +2106,7 @@ export interface PostmortemDocumentListMatch {
 }
 export interface PostmortemDocumentUpdateData {
     id: string;
-    created_at?: string;
-    document_url?: string;
-    editors?: any[];
-    exported_urls?: any[];
-    incident_id?: string;
     status?: string;
-    title?: string;
-    type?: string;
-    updated_at?: string;
 }
 export interface Schedule {
     annotations: Record<string, any>;
@@ -2492,32 +2130,21 @@ export interface ScheduleListMatch {
     page_size?: number;
 }
 export interface ScheduleCreateData {
-    annotations: Record<string, any>;
-    config: Record<string, any>;
-    created_at: string;
-    current_shifts?: any[];
+    annotations?: Record<string, any>;
+    config?: Record<string, any>;
     holidays_public_config: Record<string, any>;
-    id: string;
-    name: string;
-    next_shifts?: any[];
-    permalink: string;
-    team_ids: any[];
-    timezone: string;
-    updated_at: string;
+    name?: string;
+    team_ids?: any[];
+    timezone?: string;
 }
 export interface ScheduleUpdateData {
     id: string;
     annotations?: Record<string, any>;
     config?: Record<string, any>;
-    created_at?: string;
-    current_shifts?: any[];
     holidays_public_config?: Record<string, any>;
     name?: string;
-    next_shifts?: any[];
-    permalink?: string;
     team_ids?: any[];
     timezone?: string;
-    updated_at?: string;
 }
 export interface ScheduleRemoveMatch {
     id: string;
@@ -2534,10 +2161,7 @@ export interface ScheduleEntriesListPayloadV2CreateData {
     schedule_id: string;
     entry_window_end?: string;
     entry_window_start?: string;
-    final: any[];
-    overrides: any[];
     schedule: Record<string, any>;
-    scheduled: any[];
 }
 export interface ScheduleEntry {
     pagination_meta: Record<string, any>;
@@ -2571,17 +2195,11 @@ export interface ScheduleReplicaListMatch {
 }
 export interface ScheduleReplicaCreateData {
     id: string;
-    created_at: string;
-    last_sync_error?: string;
-    last_synced_at?: string;
     mirror_window_days?: number;
     replica_fallback_user_id: string;
     replica_provider: string;
     replica_provider_id: string;
-    schedule_id: string;
     sources: any[];
-    updated_at: string;
-    user_statuses: any[];
 }
 export interface ScheduleSyncRule {
     annotations?: Record<string, any>;
@@ -2607,26 +2225,17 @@ export interface ScheduleSyncRuleListMatch {
 export interface ScheduleSyncRuleCreateData {
     id: string;
     annotations?: Record<string, any>;
-    created_at: string;
-    permanent_member_user_ids: any[];
+    permanent_member_user_ids?: any[];
     rotation_id?: string;
-    schedule_id: string;
-    schedule_sync_target: Record<string, any>;
     schedule_sync_target_id: string;
     sync_type: string;
-    updated_at: string;
 }
 export interface ScheduleSyncRuleUpdateData {
     id: string;
     schedule_id: string;
     annotations?: Record<string, any>;
-    created_at?: string;
     permanent_member_user_ids?: any[];
-    rotation_id?: string;
-    schedule_sync_target?: Record<string, any>;
-    schedule_sync_target_id?: string;
     sync_type?: string;
-    updated_at?: string;
 }
 export interface ScheduleSyncTarget {
     add_bot_to_group: boolean;
@@ -2649,24 +2258,13 @@ export interface ScheduleSyncTargetListMatch {
 export interface ScheduleSyncTargetCreateData {
     add_bot_to_group: boolean;
     annotations?: Record<string, any>;
-    created_at: string;
-    id: string;
-    linked_schedules: any[];
     new_slack_user_group: Record<string, any>;
-    slack_team_id: string;
-    slack_user_group_id: string;
-    updated_at: string;
+    slack_user_group_id?: string;
 }
 export interface ScheduleSyncTargetUpdateData {
     id: string;
     add_bot_to_group?: boolean;
     annotations?: Record<string, any>;
-    created_at?: string;
-    linked_schedules?: any[];
-    new_slack_user_group?: Record<string, any>;
-    slack_team_id?: string;
-    slack_user_group_id?: string;
-    updated_at?: string;
 }
 export interface ScheduleSyncTargetRemoveMatch {
     id: string;
@@ -2693,14 +2291,11 @@ export interface SchedulesShowOverrideResultV2ListMatch {
     schedule_id: string;
 }
 export interface SchedulesShowOverrideResultV2CreateData {
-    created_at: string;
     end_at: string;
-    id: string;
     layer_id: string;
     rotation_id: string;
     schedule_id: string;
     start_at: string;
-    updated_at: string;
     user: Record<string, any>;
 }
 export interface SchedulesUpdateOverrideResultV2 {
@@ -2716,13 +2311,10 @@ export interface SchedulesUpdateOverrideResultV2 {
 }
 export interface SchedulesUpdateOverrideResultV2UpdateData {
     id: string;
-    created_at?: string;
     end_at?: string;
     layer_id?: string;
     rotation_id?: string;
-    schedule_id?: string;
     start_at?: string;
-    updated_at?: string;
     user?: Record<string, any>;
 }
 export interface Secret {
@@ -2747,32 +2339,18 @@ export interface SecretListMatch {
     team_id?: any[];
 }
 export interface SecretCreateData {
-    created_at: string;
     description?: string;
-    id: string;
-    last_four_chars?: string;
     name: string;
     owning_team_ids?: any[];
-    secret: Record<string, any>;
-    updated_at: string;
     value: string;
-    version: number;
-    versions: any[];
     $action?: string;
     [action: string]: any;
 }
 export interface SecretUpdateData {
     id: string;
-    created_at?: string;
     description?: string;
-    last_four_chars?: string;
     name?: string;
     owning_team_ids?: any[];
-    secret?: Record<string, any>;
-    updated_at?: string;
-    value?: string;
-    version?: number;
-    versions?: any[];
 }
 export interface SecretRemoveMatch {
     id: string;
@@ -2797,20 +2375,15 @@ export interface SeverityListMatch {
     updated_at?: string;
 }
 export interface SeverityCreateData {
-    created_at: string;
     description: string;
-    id: string;
     name: string;
-    rank: number;
-    updated_at: string;
+    rank?: number;
 }
 export interface SeverityUpdateData {
     id: string;
-    created_at?: string;
     description?: string;
     name?: string;
     rank?: number;
-    updated_at?: string;
 }
 export interface StatusPage {
     description?: string;
@@ -2842,14 +2415,11 @@ export interface StatusPageComponentListMatch {
 }
 export interface StatusPageComponentCreateData {
     description?: string;
-    id: string;
-    management_meta: Record<string, any>;
     name: string;
 }
 export interface StatusPageComponentUpdateData {
     id: string;
     description?: string;
-    management_meta?: Record<string, any>;
     name?: string;
 }
 export interface StatusPageComponentRemoveMatch {
@@ -2896,30 +2466,17 @@ export interface StatusPageIncidentListMatch {
     sub_page_id?: string;
 }
 export interface StatusPageIncidentCreateData {
-    component_impacts: any[];
     component_statuses?: any[];
-    id: string;
     idempotency_key: string;
     incident_status: string;
     message: string;
     name: string;
     notify_subscribers: boolean;
-    published_at: string;
     status_page_id: string;
-    updates: any[];
 }
 export interface StatusPageIncidentUpdateData {
     id: string;
-    component_impacts?: any[];
-    component_statuses?: any[];
-    idempotency_key?: string;
-    incident_status?: string;
-    message?: string;
     name?: string;
-    notify_subscribers?: boolean;
-    published_at?: string;
-    status_page_id?: string;
-    updates?: any[];
 }
 export interface StatusPageIncidentUpdate {
     component_statuses?: any[];
@@ -2974,35 +2531,21 @@ export interface StatusPageMaintenanceListMatch {
 }
 export interface StatusPageMaintenanceCreateData {
     affected_component_ids: any[];
-    automate_maintenance_status: boolean;
-    component_maintenance_periods: any[];
+    automate_maintenance_status?: boolean;
     end_at: string;
-    id: string;
     idempotency_key: string;
     maintenance_status: string;
     message: string;
     name: string;
     notify_subscribers: boolean;
-    published_at: string;
     start_at: string;
     status_page_id: string;
-    updates: any[];
 }
 export interface StatusPageMaintenanceUpdateData {
     id: string;
-    affected_component_ids?: any[];
-    automate_maintenance_status?: boolean;
-    component_maintenance_periods?: any[];
     end_at?: string;
-    idempotency_key?: string;
-    maintenance_status?: string;
-    message?: string;
     name?: string;
-    notify_subscribers?: boolean;
-    published_at?: string;
     start_at?: string;
-    status_page_id?: string;
-    updates?: any[];
 }
 export interface StatusPageMaintenanceUpdate {
     component_statuses?: any[];
@@ -3059,15 +2602,9 @@ export interface TelemetryDataSourceV2 {
 }
 export interface TelemetryDataSourceV2UpdateData {
     id: string;
-    created_at?: string;
     datadog_config?: Record<string, any>;
-    enabled?: boolean;
     grafana_config?: Record<string, any>;
     name?: string;
-    provider?: string;
-    source_type?: string;
-    updated_at?: string;
-    version?: string;
 }
 export interface User {
     base_role: Record<string, any>;
@@ -3092,14 +2629,7 @@ export interface UserListMatch {
 }
 export interface UserCreateData {
     id: string;
-    base_role: Record<string, any>;
-    custom_roles: any[];
-    email?: string;
-    is_active: boolean;
-    name: string;
-    role: string;
-    seats: Record<string, any>;
-    slack_user_id?: string;
+    preferred_escalation_provider?: any;
     $action?: string;
     [action: string]: any;
 }
@@ -3172,24 +2702,18 @@ export interface WorkflowCreateData {
     expressions: any[];
     folder?: string;
     form_fields?: any[];
-    id: string;
     include_private_escalations?: boolean;
     include_private_incidents?: boolean;
-    management_meta: Record<string, any>;
     name: string;
     once_for: any[];
     owning_team_ids?: any[];
     private_incident_scope?: string;
-    runs_from?: string;
     runs_on_incident_modes: any[];
     runs_on_incidents: string;
     shortform?: string;
-    skip_step_upgrades?: boolean;
     state?: string;
     steps: any[];
     trigger: string;
-    version: number;
-    workflow: Record<string, any>;
 }
 export interface WorkflowUpdateData {
     id: string;
@@ -3203,21 +2727,16 @@ export interface WorkflowUpdateData {
     form_fields?: any[];
     include_private_escalations?: boolean;
     include_private_incidents?: boolean;
-    management_meta?: Record<string, any>;
     name?: string;
     once_for?: any[];
     owning_team_ids?: any[];
     private_incident_scope?: string;
-    runs_from?: string;
     runs_on_incident_modes?: any[];
     runs_on_incidents?: string;
     shortform?: string;
     skip_step_upgrades?: boolean;
     state?: string;
     steps?: any[];
-    trigger?: string;
-    version?: number;
-    workflow?: Record<string, any>;
 }
 export interface WorkflowRemoveMatch {
     id: string;

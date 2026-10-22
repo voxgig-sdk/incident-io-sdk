@@ -60,7 +60,9 @@ import { IncidentUpdateEntity } from './entity/IncidentUpdateEntity';
 import { IpAllowlistEntity } from './entity/IpAllowlistEntity';
 import { IpRangeEntity } from './entity/IpRangeEntity';
 import { MaintenanceWindowEntity } from './entity/MaintenanceWindowEntity';
+import { ManagedResourceEntity } from './entity/ManagedResourceEntity';
 import { OnCallNotificationMethodPublicV2Entity } from './entity/OnCallNotificationMethodPublicV2Entity';
+import { OnCallNotificationPauseEntity } from './entity/OnCallNotificationPauseEntity';
 import { OnCallNotificationRulePublicV2Entity } from './entity/OnCallNotificationRulePublicV2Entity';
 import { PayConfigEntity } from './entity/PayConfigEntity';
 import { PayConfigsCreateOneOffRuleResultV2Entity } from './entity/PayConfigsCreateOneOffRuleResultV2Entity';
@@ -114,6 +116,7 @@ import { config } from './Config';
 import { IncidentIoEntityBase } from './IncidentIoEntityBase';
 import { Utility } from './utility/Utility';
 import { BaseFeature } from './feature/base/BaseFeature';
+import * as sekreto from './feature/secrets/sekreto';
 declare const stdutil: Utility;
 type DirectResult = {
     ok: false;
@@ -134,9 +137,11 @@ declare class IncidentIoSDK {
     _utility: Utility;
     _features: Feature[];
     _rootctx: Context;
+    _secrets?: any;
     constructor(options?: any);
     options(): any;
     utility(): any;
+    secrets(): any;
     prepare(fetchargs?: any): Promise<any>;
     direct(fetchargs?: any): Promise<DirectResult>;
     _rawRequest(fetchargs?: any): Promise<DirectResult>;
@@ -203,7 +208,9 @@ declare class IncidentIoSDK {
     IpAllowlist(entopts?: Record<string, any>): IpAllowlistEntity;
     IpRange(entopts?: Record<string, any>): IpRangeEntity;
     MaintenanceWindow(entopts?: Record<string, any>): MaintenanceWindowEntity;
+    ManagedResource(entopts?: Record<string, any>): ManagedResourceEntity;
     OnCallNotificationMethodPublicV2(entopts?: Record<string, any>): OnCallNotificationMethodPublicV2Entity;
+    OnCallNotificationPause(entopts?: Record<string, any>): OnCallNotificationPauseEntity;
     OnCallNotificationRulePublicV2(entopts?: Record<string, any>): OnCallNotificationRulePublicV2Entity;
     PayConfig(entopts?: Record<string, any>): PayConfigEntity;
     PayConfigsCreateOneOffRuleResultV2(entopts?: Record<string, any>): PayConfigsCreateOneOffRuleResultV2Entity;
@@ -259,5 +266,5 @@ declare class IncidentIoSDK {
     [inspect.custom](): string;
 }
 declare const SDK: typeof IncidentIoSDK;
-export { stdutil, config, BaseFeature, IncidentIoEntityBase, IncidentIoSDK, SDK, };
+export { stdutil, config, sekreto, BaseFeature, IncidentIoEntityBase, IncidentIoSDK, SDK, };
 export type { DirectResult };

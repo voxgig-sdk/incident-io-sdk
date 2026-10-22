@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>incident.io | incident.io</title><link rel="stylesheet" href="assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="index.html">incident.io<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/incident-io-sdk">voxgig-sdk/incident-io-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details open><summary>Overview</summary><a aria-current="page" href="index.html">incident.io</a></details>
+<details><summary>API</summary><a href="api/index.html">API overview</a>
+<a href="api/action.html">Action</a>
+<a href="api/alert.html">Alert</a>
+<a href="api/alert_attribute.html">AlertAttribute</a>
+<a href="api/alert_note.html">AlertNote</a>
+<a href="api/alert_route.html">AlertRoute</a>
+<a href="api/alert_source.html">AlertSource</a>
+<a href="api/alert_sources_v2.html">AlertSourcesV2</a>
+<a href="api/alert_tag.html">AlertTag</a>
+<a href="api/alerts_add_tags_result_v2.html">AlertsAddTagsResultV2</a>
+<a href="api/alerts_remove_tags_result_v2.html">AlertsRemoveTagsResultV2</a>
+<a href="api/alerts_set_tags_result_v2.html">AlertsSetTagsResultV2</a>
+<a href="api/alerts_transition_incident_alert_result_v2.html">AlertsTransitionIncidentAlertResultV2</a>
+<a href="api/announcement_rule.html">AnnouncementRule</a>
+<a href="api/announcement_template.html">AnnouncementTemplate</a>
+<a href="api/api_key.html">ApiKey</a>
+<a href="api/call_route.html">CallRoute</a>
+<a href="api/call_routes_create_allowed_caller_result_v2.html">CallRoutesCreateAllowedCallerResultV2</a>
+<a href="api/call_routes_create_option_result_v2.html">CallRoutesCreateOptionResultV2</a>
+<a href="api/call_routes_list_allowed_callers_result_v2.html">CallRoutesListAllowedCallersResultV2</a>
+<a href="api/call_routes_list_options_result_v2.html">CallRoutesListOptionsResultV2</a>
+<a href="api/call_routes_show_allowed_caller_result_v2.html">CallRoutesShowAllowedCallerResultV2</a>
+<a href="api/call_routes_show_option_result_v2.html">CallRoutesShowOptionResultV2</a>
+<a href="api/call_routes_update_allowed_caller_result_v2.html">CallRoutesUpdateAllowedCallerResultV2</a>
+<a href="api/call_routes_update_option_result_v2.html">CallRoutesUpdateOptionResultV2</a>
+<a href="api/call_routes_v2.html">CallRoutesV2</a>
+<a href="api/call_session.html">CallSession</a>
+<a href="api/call_transcript_entry.html">CallTranscriptEntry</a>
+<a href="api/catalog_entry.html">CatalogEntry</a>
+<a href="api/catalog_resource.html">CatalogResource</a>
+<a href="api/catalog_type.html">CatalogType</a>
+<a href="api/catalog_type_schema.html">CatalogTypeSchema</a>
+<a href="api/custom_field.html">CustomField</a>
+<a href="api/custom_field_option.html">CustomFieldOption</a>
+<a href="api/escalation.html">Escalation</a>
+<a href="api/escalation_path_template.html">EscalationPathTemplate</a>
+<a href="api/escalations_check_escalation_permissions_result_v2.html">EscalationsCheckEscalationPermissionsResultV2</a>
+<a href="api/escalations_reassign_escalation_result_v2.html">EscalationsReassignEscalationResultV2</a>
+<a href="api/follow_up.html">FollowUp</a>
+<a href="api/follow_ups_connect_external_issue_result_v3.html">FollowUpsConnectExternalIssueResultV3</a>
+<a href="api/follow_ups_create_from_link_result_v3.html">FollowUpsCreateFromLinkResultV3</a>
+<a href="api/identity.html">Identity</a>
+<a href="api/incident.html">Incident</a>
+<a href="api/incident_activity_log_entry.html">IncidentActivityLogEntry</a>
+<a href="api/incident_attachment.html">IncidentAttachment</a>
+<a href="api/incident_form.html">IncidentForm</a>
+<a href="api/incident_membership.html">IncidentMembership</a>
+<a href="api/incident_participant.html">IncidentParticipant</a>
+<a href="api/incident_participant_workload.html">IncidentParticipantWorkload</a>
+<a href="api/incident_relationship.html">IncidentRelationship</a>
+<a href="api/incident_role.html">IncidentRole</a>
+<a href="api/incident_status.html">IncidentStatus</a>
+<a href="api/incident_team_membership.html">IncidentTeamMembership</a>
+<a href="api/incident_team_memberships_v1.html">IncidentTeamMembershipsV1</a>
+<a href="api/incident_template.html">IncidentTemplate</a>
+<a href="api/incident_templates_validate_result_v1.html">IncidentTemplatesValidateResultV1</a>
+<a href="api/incident_timeline_item.html">IncidentTimelineItem</a>
+<a href="api/incident_timestamp.html">IncidentTimestamp</a>
+<a href="api/incident_type.html">IncidentType</a>
+<a href="api/incident_update.html">IncidentUpdate</a>
+<a href="api/ip_allowlist.html">IpAllowlist</a>
+<a href="api/ip_range.html">IpRange</a>
+<a href="api/maintenance_window.html">MaintenanceWindow</a>
+<a href="api/managed_resource.html">ManagedResource</a>
+<a href="api/on_call_notification_method_public_v2.html">OnCallNotificationMethodPublicV2</a>
+<a href="api/on_call_notification_pause.html">OnCallNotificationPause</a>
+<a href="api/on_call_notification_rule_public_v2.html">OnCallNotificationRulePublicV2</a>
+<a href="api/pay_config.html">PayConfig</a>
+<a href="api/pay_configs_create_one_off_rule_result_v2.html">PayConfigsCreateOneOffRuleResultV2</a>
+<a href="api/pay_configs_create_weekly_rule_result_v2.html">PayConfigsCreateWeeklyRuleResultV2</a>
+<a href="api/pay_configs_list_one_off_rules_result_v2.html">PayConfigsListOneOffRulesResultV2</a>
+<a href="api/pay_configs_list_weekly_rules_result_v2.html">PayConfigsListWeeklyRulesResultV2</a>
+<a href="api/pay_configs_show_one_off_rule_result_v2.html">PayConfigsShowOneOffRuleResultV2</a>
+<a href="api/pay_configs_show_weekly_rule_result_v2.html">PayConfigsShowWeeklyRuleResultV2</a>
+<a href="api/pay_configs_update_one_off_rule_result_v2.html">PayConfigsUpdateOneOffRuleResultV2</a>
+<a href="api/pay_configs_update_weekly_rule_result_v2.html">PayConfigsUpdateWeeklyRuleResultV2</a>
+<a href="api/pay_configs_v2.html">PayConfigsV2</a>
+<a href="api/pay_report.html">PayReport</a>
+<a href="api/pay_reports_publish_result_v2.html">PayReportsPublishResultV2</a>
+<a href="api/pay_reports_unpublish_result_v2.html">PayReportsUnpublishResultV2</a>
+<a href="api/pay_reports_v2.html">PayReportsV2</a>
+<a href="api/policies_v2.html">PoliciesV2</a>
+<a href="api/policy.html">Policy</a>
+<a href="api/policy_finding.html">PolicyFinding</a>
+<a href="api/policy_findings_dismiss_result_v2.html">PolicyFindingsDismissResultV2</a>
+<a href="api/policy_findings_restore_result_v2.html">PolicyFindingsRestoreResultV2</a>
+<a href="api/postmortem_document.html">PostmortemDocument</a>
+<a href="api/schedule.html">Schedule</a>
+<a href="api/schedule_entries_list_payload_v2.html">ScheduleEntriesListPayloadV2</a>
+<a href="api/schedule_entry.html">ScheduleEntry</a>
+<a href="api/schedule_replica.html">ScheduleReplica</a>
+<a href="api/schedule_sync_rule.html">ScheduleSyncRule</a>
+<a href="api/schedule_sync_target.html">ScheduleSyncTarget</a>
+<a href="api/schedules_show_override_result_v2.html">SchedulesShowOverrideResultV2</a>
+<a href="api/schedules_update_override_result_v2.html">SchedulesUpdateOverrideResultV2</a>
+<a href="api/secret.html">Secret</a>
+<a href="api/severity.html">Severity</a>
+<a href="api/status_page.html">StatusPage</a>
+<a href="api/status_page_component.html">StatusPageComponent</a>
+<a href="api/status_page_component_availability_v2.html">StatusPageComponentAvailabilityV2</a>
+<a href="api/status_page_incident.html">StatusPageIncident</a>
+<a href="api/status_page_incident_update.html">StatusPageIncidentUpdate</a>
+<a href="api/status_page_linked_response_incident_v1.html">StatusPageLinkedResponseIncidentV1</a>
+<a href="api/status_page_maintenance.html">StatusPageMaintenance</a>
+<a href="api/status_page_maintenance_update.html">StatusPageMaintenanceUpdate</a>
+<a href="api/status_page_structure.html">StatusPageStructure</a>
+<a href="api/status_pages_v2.html">StatusPagesV2</a>
+<a href="api/team.html">Team</a>
+<a href="api/telemetry_data_source_v2.html">TelemetryDataSourceV2</a>
+<a href="api/user.html">User</a>
+<a href="api/workflow.html">Workflow</a>
+<a href="api/workflow_run.html">WorkflowRun</a></details>
+<details><summary>Guides</summary><a href="guides/authentication.html">Authentication</a>
+<a href="guides/first-call.html">Make your first API call</a>
+<a href="guides/errors.html">Handle errors</a>
+<a href="guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="sdks/go.html">Golang</a>
+<a href="sdks/lua.html">Lua</a>
+<a href="sdks/php.html">PHP</a>
+<a href="sdks/py.html">Python</a>
+<a href="sdks/rb.html">Ruby</a>
+<a href="sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="tools/go-cli.html">Go CLI</a>
+<a href="tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="features/debug.html">Debug capture</a>
+<a href="features/idempotency.html">Idempotency</a>
+<a href="features/metrics.html">Metrics</a>
+<a href="features/paging.html">Paging</a>
+<a href="features/ratelimit.html">Rate limiting</a>
+<a href="features/retry.html">Retry</a>
+<a href="features/secrets.html">Secrets</a>
+<a href="features/test.html">Test transport</a>
+<a href="features/timeout.html">Timeout</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>Overview</div><h1 id="incidentio">incident.io</h1>
+<blockquote>
+<p>This is the API reference for incident.io.</p>
+<p>It documents available API endpoints, provides examples of how to use it, and
+instructions around things like authentication and error handling.</p>
+<p>The API is hosted at:</p>
+<ul>
+<li>https://api.incident.io/</li>
+</ul>
+<p>And you will need to create an API key via your <a href="https://app.incident.io/settings/api-keys">incident.io
+dashboard</a> to make requests.</p>
+<h1 id="making-requests">Making requests</h1>
+<p>Here are the key concepts required to make requests to the incident.io API.</p>
+<h2 id="authentication">Authentication</h2>
+<p>For all requests made to the incident.io API, you'll need an API key.</p>
+<p>To create an API key, head to the incident dashboard and visit <a href="https://app.incident.io/settings/api-keys">API
+keys</a>. When you create the key, you'll be able to choose what actions it
+can take for your account: choose carefully, as those roles can only be set
+when you first create the key. We'll only show you the token once, so make sure
+you store it somewhere safe.</p>
+<p>API keys are global to your incident.io account, and can be managed by anyone
+who has the right permissions. We display the user that created the API key,
+and the API key will remain valid if that user becomes deactivated.</p>
+<p>Once you have the key, you should make requests to the API that set the
+<code>Authorization</code> request header using a &quot;Bearer&quot; authentication scheme:</p>
+<pre><code>Authorization: Bearer &amp;lt;YOUR_API_KEY&amp;gt;
+</code></pre>
+<h2 id="rate-limits">Rate Limits</h2>
+<p>The incident.io API enforces rate limits to ensure consistent performance for all users.</p>
+<p>The default rate limit is 1200 requests/minute per API key. This limit applies to most endpoints across the API.</p>
+<p>Limits are token buckets that refill continuously rather than resetting on a fixed window boundary. The default
+bucket holds 1200 requests and refills at 20 per second, so you can burst up to the full bucket and then sustain
+20 requests/second indefinitely. There is no boundary at which your quota resets to full in one step.</p>
+<p>Some endpoints have lower rate limits, particularly those that interact with external third-party systems that impose
+their own limitations. These specific limits vary by endpoint.</p>
+<h3 id="rate-limit-headers">Rate limit headers</h3>
+<p>Responses to requests authenticated with an API key carry your current allowance, so you can pace yourself rather
+than waiting to be throttled:</p>
+<pre><code>X-RateLimit-Limit: 60, 1200;window=60, 60;window=60
+X-RateLimit-Remaining: 59
+X-RateLimit-Used: 1
+X-RateLimit-Reset: 1785173199
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X-RateLimit-Limit</code></td>
+<td>The quota that binds this request, followed by every limit that applied and the window it applies over</td>
+</tr>
+<tr>
+<td><code>X-RateLimit-Remaining</code></td>
+<td>Requests you can make right now against the binding limit</td>
+</tr>
+<tr>
+<td><code>X-RateLimit-Used</code></td>
+<td>Requests you have spent against it</td>
+</tr>
+<tr>
+<td><code>X-RateLimit-Reset</code></td>
+<td>Unix timestamp (seconds) at which that limit will be back to full</td>
+</tr>
+</tbody>
+</table>
+<p>More than one limit can apply to a request: your API key's overall limit, and for some endpoints a lower limit of
+their own. <code>X-RateLimit-Limit</code> lists all of them, each with its window, so <code>1200;window=60</code> means 1200 requests per
+minute. Because our limits refill continuously rather than resetting on a boundary, that window is what tells you
+the rate you can sustain: 1200 per 60 seconds is 20 requests/second indefinitely.</p>
+<p><code>Remaining</code>, <code>Used</code> and <code>Reset</code> describe whichever limit has the least allowance left, since that is the one you
+will hit first.</p>
+<p><code>X-RateLimit-Remaining</code> may lag by a small number of requests under high concurrency, and can move by more than the
+requests you made, because limits scoped to your whole organisation are shared with your other API keys.</p>
+<p>Headers are omitted rather than guessed if we cannot determine your allowance for a request.</p>
+<h3 id="exceeding-a-rate-limit">Exceeding a rate limit</h3>
+<p>When you exceed a rate limit the API responds with <code>429 Too Many Requests</code> and a <code>Retry-After</code> header giving the
+number of seconds to wait:</p>
+<pre><code>X-RateLimit-Limit: 1200, 1200;window=60
+X-RateLimit-Remaining: 0
+X-RateLimit-Used: 1200
+X-RateLimit-Reset: 1785173199
+Retry-After: 1
+</code></pre>
+<p>Prefer <code>Retry-After</code> over <code>X-RateLimit-Reset</code> when deciding how long to back off. <code>Retry-After</code> is when a single
+request will succeed; <code>X-RateLimit-Reset</code> is the later point at which your whole allowance has returned. It is a
+duration rather than a timestamp, so it does not depend on your clock agreeing with ours.</p>
+<p>The 429 also carries a JSON body with the same information:</p>
+<pre><code class="language-json">&amp;#123;
+  &amp;quot;type&amp;quot;: &amp;quot;too_many_requests&amp;quot;,
+  &amp;quot;status&amp;quot;: 429,
+  &amp;quot;request_id&amp;quot;: &amp;quot;b839a403-7704-41c1-bf6a-39a2d68caefa&amp;quot;,
+  &amp;quot;rate_limit&amp;quot;: &amp;#123;
+      &amp;quot;name&amp;quot;: &amp;quot;api_key_name&amp;quot;,
+      &amp;quot;limit&amp;quot;: 1200,
+      &amp;quot;remaining&amp;quot;: 0,
+      &amp;quot;retry_after&amp;quot;: &amp;quot;2025-04-17T11:17:18Z&amp;quot;
+  &amp;#125;,
+  &amp;quot;errors&amp;quot;: [
+      &amp;#123;
+          &amp;quot;code&amp;quot;: &amp;quot;too_many_requests&amp;quot;,
+          &amp;quot;message&amp;quot;: &amp;quot;Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.&amp;quot;
+      &amp;#125;
+  ]
+&amp;#125;
+</code></pre>
+<p>The response includes:</p>
+<ul>
+<li>The name of the API key (<code>name</code>)</li>
+<li>The bucket limit (<code>limit</code>)</li>
+<li>The number of requests remaining (<code>remaining</code>)</li>
+<li>When you can retry requests (<code>retry_after</code>), as an RFC3339 timestamp</li>
+</ul>
+<h2 id="errors">Errors</h2>
+<p>We use standard HTTP response codes to indicate the status or failure of API
+requests.</p>
+<p>The API response body will be JSON, and contain more detailed information on the
+nature of the error.</p>
+<p>An example error when a request is made without an API key:</p>
+<pre><code class="language-json">&amp;#123;
+&amp;quot;type&amp;quot;: &amp;quot;authentication_error&amp;quot;,
+&amp;quot;status&amp;quot;: 401,
+&amp;quot;request_id&amp;quot;: &amp;quot;8e3cc412-b49d-4957-9073-2c19d2c61804&amp;quot;,
+&amp;quot;errors&amp;quot;: [
+  &amp;#123;
+    &amp;quot;code&amp;quot;: &amp;quot;missing_authorization_material&amp;quot;,
+    &amp;quot;message&amp;quot;: &amp;quot;No authorization material provided in request&amp;quot;
+  &amp;#125;
+]
+&amp;#125;
+</code></pre>
+<p>Note that the error:</p>
+<ul>
+<li>Contains the HTTP status (<code>401</code>)</li>
+<li>References the type of error (<code>authentication_error</code>)</li>
+<li>Includes a <code>request_id</code> that can be provided to incident.io support to help
+debug questions with your API request</li>
+<li>Provides a list of individual errors, which go into detail about why the error
+occurred</li>
+</ul>
+<p>The most common error will be a 422 Validation Error, which is returned when the
+request was rejected due to failing validations.</p>
+<p>These errors look like this:</p>
+<pre><code class="language-json">&amp;#123;
+&amp;quot;type&amp;quot;: &amp;quot;validation_error&amp;quot;,
+&amp;quot;status&amp;quot;: 422,
+&amp;quot;request_id&amp;quot;: &amp;quot;631766c4-4afd-4803-997c-cd700928fa4b&amp;quot;,
+&amp;quot;errors&amp;quot;: [
+  &amp;#123;
+    &amp;quot;code&amp;quot;: &amp;quot;is_required&amp;quot;,
+    &amp;quot;message&amp;quot;: &amp;quot;A severity is required to open an incident&amp;quot;,
+    &amp;quot;source&amp;quot;: &amp;#123;
+      &amp;quot;field&amp;quot;: &amp;quot;severity_id&amp;quot;
+    &amp;#125;
+  &amp;#125;
+]
+&amp;#125;
+</code></pre>
+<p>This error is caused by not providing a severity identifier, which should be at
+the <code>severity_id</code> field of the request payload. Errors like these can be mapped to
+forms, should you be integrating with the API from a user-interface.</p>
+<h2 id="compatibility">Compatibility</h2>
+<p>We won't make breaking changes to existing API services or endpoints, but will
+expect integrators to upgrade themselves to the latest API endpoints within 3
+months of us deprecating the old service.</p>
+<p>We will make changes that are considered backwards compatible, which include:</p>
+<ul>
+<li>Adding new API endpoints and services</li>
+<li>Adding new properties to responses from existing API endpoints</li>
+<li>Reordering properties returned from existing API endpoints</li>
+<li>Adding optional request parameters to existing API endpoints</li>
+<li>Altering the format or length of IDs</li>
+<li>Adding new values to enums</li>
+</ul>
+<p>It is important that clients are robust to these changes, to ensure reliable
+integrations.</p>
+<p>As an example, if you are generating a client using an openapi-generator, ensure
+the generated client is configured to support unknown enum values, often
+configured via the <code>enumUnknownDefaultCase</code> parameter.</p>
+<p>When breaking changes are unavoidable, we'll create a new service version on a
+separate path, and run them in parallel.</p>
+<p>For example:</p>
+<ul>
+<li>https://api.incident.io/v1/incidents</li>
+<li>https://api.incident.io/v2/incidents</li>
+</ul>
+<p>For any questions, email support@incident.io.</p>
+</blockquote>
+</main></div>
+<script src="assets/search.js" defer></script></body></html>

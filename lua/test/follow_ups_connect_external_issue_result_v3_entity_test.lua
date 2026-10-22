@@ -29,7 +29,7 @@ describe("FollowUpsConnectExternalIssueResultV3Entity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:FollowUpsConnectExternalIssueResultV3(nil):create({ ["follow_up_id"] = 1, ["assignee"] = "x", ["assignee_team"] = "x", ["category"] = "x", ["created_at"] = "x", ["creator"] = "x", ["external_issue_reference"] = "x", ["id"] = "x", ["incident_id"] = "x", ["labels"] = "x", ["priority"] = "x", ["provider"] = "x", ["status"] = "x", ["title"] = "x", ["updated_at"] = "x", ["url"] = "x" }, nil)
+    local _, err = client:FollowUpsConnectExternalIssueResultV3(nil):create({ ["follow_up_id"] = 1, ["provider"] = "x", ["url"] = "x" }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 

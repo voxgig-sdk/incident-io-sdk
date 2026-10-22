@@ -33,7 +33,7 @@ class AlertsSetTagsResultV2EntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->AlertsSetTagsResultV2(null)->create(["alert_id" => 1, "alert_source_id" => 'x', "attributes" => 'x', "created_at" => 'x', "deduplication_key" => 'x', "id" => 'x', "status" => 'x', "title" => 'x', "updated_at" => 'x'], null);
+            $client->AlertsSetTagsResultV2(null)->create(["alert_id" => 1, "tags" => 'x'], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

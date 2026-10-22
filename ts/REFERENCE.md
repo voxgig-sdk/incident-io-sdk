@@ -793,6 +793,18 @@ Create a new `MaintenanceWindow` entity instance.
 
 **Returns:** `MaintenanceWindowEntity` instance.
 
+#### `ManagedResource(data?: object)`
+
+Create a new `ManagedResource` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `ManagedResourceEntity` instance.
+
 #### `OnCallNotificationMethodPublicV2(data?: object)`
 
 Create a new `OnCallNotificationMethodPublicV2` entity instance.
@@ -804,6 +816,18 @@ Create a new `OnCallNotificationMethodPublicV2` entity instance.
 | `data` | `object` | Initial entity data. |
 
 **Returns:** `OnCallNotificationMethodPublicV2Entity` instance.
+
+#### `OnCallNotificationPause(data?: object)`
+
+Create a new `OnCallNotificationPause` entity instance.
+
+**Parameters:**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `object` | Initial entity data. |
+
+**Returns:** `OnCallNotificationPauseEntity` instance.
 
 #### `OnCallNotificationRulePublicV2(data?: object)`
 
@@ -1462,14 +1486,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.Action().create({
-  assignee: {},
-  created_at: 'example_created_at',
-  creator: {},
-  follow_up: true,
-  id: 'example_id',
+  description: 'example_description',
   incident_id: 'example_incident_id',
-  status: 'example_status',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -1680,9 +1698,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.AlertAttribute().create({
   array: true,
-  id: 'example_id',
   name: 'example_name',
-  required: true,
   type: 'example_type',
 })
 ```
@@ -1779,11 +1795,6 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.AlertNote().create({
   content: 'example_content',
-  created_at: 'example_created_at',
-  creator: {},
-  id: 'example_id',
-  images: [],
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -1894,13 +1905,11 @@ const result = await client.AlertRoute().create({
   escalation_config: {},
   expressions: [],
   grouping_config: {},
-  id: 'example_id',
   incident_config: {},
   incident_template: {},
   is_private: true,
   message_config: {},
   name: 'example_name',
-  version: 1,
 })
 ```
 
@@ -2008,7 +2017,6 @@ const result = await client.AlertSource().create({
   email_options: {},
   heartbeat_options: {},
   http_custom_options: {},
-  id: 'example_id',
   jira_options: {},
   name: 'example_name',
   rate_limit_sharding: {},
@@ -2237,14 +2245,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.AlertsAddTagsResultV2().create({
   alert_id: 'example_alert_id',
-  alert_source_id: 'example_alert_source_id',
-  attributes: [],
-  created_at: 'example_created_at',
-  deduplication_key: 'example_deduplication_key',
-  id: 'example_id',
-  status: 'example_status',
-  title: 'example_title',
-  updated_at: 'example_updated_at',
+  tags: [],
 })
 ```
 
@@ -2327,14 +2328,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.AlertsRemoveTagsResultV2().create({
   alert_id: 'example_alert_id',
-  alert_source_id: 'example_alert_source_id',
-  attributes: [],
-  created_at: 'example_created_at',
-  deduplication_key: 'example_deduplication_key',
-  id: 'example_id',
-  status: 'example_status',
-  title: 'example_title',
-  updated_at: 'example_updated_at',
+  tags: [],
 })
 ```
 
@@ -2417,14 +2411,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.AlertsSetTagsResultV2().create({
   alert_id: 'example_alert_id',
-  alert_source_id: 'example_alert_source_id',
-  attributes: [],
-  created_at: 'example_created_at',
-  deduplication_key: 'example_deduplication_key',
-  id: 'example_id',
-  status: 'example_status',
-  title: 'example_title',
-  updated_at: 'example_updated_at',
+  tags: [],
 })
 ```
 
@@ -2483,10 +2470,7 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.AlertsTransitionIncidentAlertResultV2().create({
-  alert: {},
   alert_id: 'example_alert_id',
-  id: 'example_id',
-  incident: {},
   incident_id: 'example_incident_id',
   state: 'example_state',
 })
@@ -2579,16 +2563,9 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.AnnouncementRule().create({
   condition_groups: [],
-  conditions_no_longer_apply_behaviour: 'example_conditions_no_longer_apply_behaviour',
-  created_at: 'example_created_at',
-  id: 'example_id',
-  microsoft_teams_channel_ids: [],
   mode: 'example_mode',
   name: 'example_name',
-  owning_team_ids: [],
-  slack_channel_ids: [],
   update_sharing_mode: 'example_update_sharing_mode',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -2691,12 +2668,7 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.AnnouncementTemplate().create({
-  actions: [],
-  fields: [],
-  id: 'example_id',
-  is_default: true,
   name: 'example_name',
-  owning_team_ids: [],
 })
 ```
 
@@ -2814,16 +2786,10 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.ApiKey().create({
-  created_at: 'example_created_at',
-  creator: {},
-  id: 'example_id',
   name: 'example_name',
   role_names: [],
-  roles: [],
   team_ids: [],
   team_role_names: [],
-  team_roles: [],
-  token_last_issued_at: 'example_token_last_issued_at',
 })
 ```
 
@@ -3614,13 +3580,8 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.CatalogEntry().create({
   attribute_values: {},
-  catalog_entry: {},
-  catalog_type: {},
   catalog_type_id: 'example_catalog_type_id',
-  created_at: 'example_created_at',
-  id: 'example_id',
   name: 'example_name',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -3806,22 +3767,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.CatalogType().create({
-  annotations: {},
-  categories: [],
-  color: 'example_color',
-  created_at: 'example_created_at',
   description: 'example_description',
-  engine_resource_type: 'example_engine_resource_type',
-  icon: 'example_icon',
-  id: 'example_id',
-  is_editable: true,
   name: 'example_name',
-  ranked: true,
-  schema: {},
-  semantic_type: 'example_semantic_type',
-  type_name: 'example_type_name',
-  updated_at: 'example_updated_at',
-  use_name_as_identifier: true,
 })
 ```
 
@@ -3926,23 +3873,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.CatalogTypeSchema().create({
   catalog_type_id: 'example_catalog_type_id',
-  annotations: {},
   attributes: [],
-  categories: [],
-  color: 'example_color',
-  created_at: 'example_created_at',
-  description: 'example_description',
-  engine_resource_type: 'example_engine_resource_type',
-  icon: 'example_icon',
-  id: 'example_id',
-  is_editable: true,
-  name: 'example_name',
-  ranked: true,
-  schema: {},
-  semantic_type: 'example_semantic_type',
-  type_name: 'example_type_name',
-  updated_at: 'example_updated_at',
-  use_name_as_identifier: true,
   version: 1,
 })
 ```
@@ -4012,18 +3943,14 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.CustomField().create({
-  created_at: 'example_created_at',
   description: 'example_description',
   field_type: 'example_field_type',
   filter_by: {},
   fixed_filter: {},
-  id: 'example_id',
   name: 'example_name',
-  options: [],
   show_before_closure: true,
   show_before_creation: true,
   show_before_update: true,
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4123,8 +4050,6 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.CustomFieldOption().create({
   custom_field_id: 'example_custom_field_id',
-  id: 'example_id',
-  sort_key: 1,
   value: 'example_value',
 })
 ```
@@ -4246,18 +4171,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.Escalation().create({
-  created_at: 'example_created_at',
-  creator: {},
-  description: 'example_description',
-  events: [],
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
-  priority: {},
-  related_alerts: [],
-  related_incidents: [],
-  status: 'example_status',
   title: 'example_title',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4347,11 +4262,7 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.EscalationPathTemplate().create({
-  expressions: [],
-  has_historical_escalation_path_versions: true,
-  id: 'example_id',
   name: 'example_name',
-  params: [],
   path: [],
   repeat_config: {},
 })
@@ -4442,7 +4353,6 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.EscalationsCheckEscalationPermissionsResultV2().create({
   escalation_id: 'example_escalation_id',
-  response_options: [],
   user_ids: [],
 })
 ```
@@ -4595,19 +4505,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.FollowUp().create({
-  assignee: {},
-  assignee_team: {},
-  category: {},
-  created_at: 'example_created_at',
-  creator: {},
-  external_issue_reference: {},
-  id: 'example_id',
   incident_id: 'example_incident_id',
-  labels: [],
-  priority: {},
-  status: 'example_status',
   title: 'example_title',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4711,20 +4610,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.FollowUpsConnectExternalIssueResultV3().create({
   follow_up_id: 'example_follow_up_id',
-  assignee: {},
-  assignee_team: {},
-  category: {},
-  created_at: 'example_created_at',
-  creator: {},
-  external_issue_reference: {},
-  id: 'example_id',
-  incident_id: 'example_incident_id',
-  labels: [],
-  priority: {},
   provider: 'example_provider',
-  status: 'example_status',
-  title: 'example_title',
-  updated_at: 'example_updated_at',
   url: 'example_url',
 })
 ```
@@ -4997,25 +4883,7 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.Incident().create({
-  created_at: 'example_created_at',
-  creator: {},
-  custom_field_entries: [],
-  external_issue_reference: {},
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
-  incident_role_assignments: [],
-  incident_status: {},
-  incident_type: {},
-  last_activity_at: 'example_last_activity_at',
-  mode: 'example_mode',
-  name: 'example_name',
-  reference: 'example_reference',
-  severity: {},
-  slack_channel_id: 'example_slack_channel_id',
-  slack_team_id: 'example_slack_team_id',
-  status: 'example_status',
-  team_ids: [],
-  updated_at: 'example_updated_at',
   visibility: 'example_visibility',
 })
 ```
@@ -5142,7 +5010,6 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.IncidentAttachment().create({
-  id: 'example_id',
   incident_id: 'example_incident_id',
   resource: {},
 })
@@ -5218,11 +5085,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.IncidentForm().create({
-  created_at: 'example_created_at',
   expressions: [],
   form_type: 'example_form_type',
-  id: 'example_id',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5540,14 +5404,11 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.IncidentRole().create({
-  created_at: 'example_created_at',
   description: 'example_description',
-  id: 'example_id',
   instructions: 'example_instructions',
   name: 'example_name',
-  role_type: 'example_role_type',
+  required: true,
   shortform: 'example_shortform',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5653,12 +5514,8 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.IncidentStatus().create({
   category: 'example_category',
-  created_at: 'example_created_at',
   description: 'example_description',
-  id: 'example_id',
   name: 'example_name',
-  rank: 1,
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5858,11 +5715,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.IncidentTemplate().create({
-  created_at: 'example_created_at',
-  id: 'example_id',
   name: 'example_name',
   template: {},
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5954,7 +5808,6 @@ Create a new entity with the given data. Resolves to the created entity.
 const result = await client.IncidentTemplatesValidateResultV1().create({
   name: 'example_name',
   template: {},
-  warnings: [],
 })
 ```
 
@@ -6030,14 +5883,10 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.IncidentTimelineItem().create({
-  created_at: 'example_created_at',
-  creator: {},
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
   incident_id: 'example_incident_id',
   timestamp: 'example_timestamp',
   title: 'example_title',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -6244,13 +6093,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.IncidentUpdate().create({
-  created_at: 'example_created_at',
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
   incident_id: 'example_incident_id',
-  new_incident_status: {},
-  new_severity: {},
-  updater: {},
 })
 ```
 
@@ -6467,16 +6311,11 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.MaintenanceWindow().create({
   alert_condition_groups: [],
-  created_at: 'example_created_at',
   end_at: 'example_end_at',
-  id: 'example_id',
   lead: {},
   name: 'example_name',
-  reroute_on_end: true,
-  resolve_on_end: true,
   show_in_sidebar: true,
   start_at: 'example_start_at',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -6543,6 +6382,64 @@ Return a copy of the entity options.
 
 ---
 
+## ManagedResourceEntity
+
+```ts
+const managed_resource = client.ManagedResource()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotations` | `Record<string, any>` | Yes | Annotations that track metadata about this resource |
+| `managed_by` | `string` | Yes | How is this resource managed |
+| `resource_id` | `string` | Yes | The ID of the resource that this relates to |
+| `resource_type` | `string` | Yes | The type of the related resource |
+| `source_url` | `string` | No | The url of the external repository where this resource is managed (if there is one) |
+
+### Operations
+
+#### `create(data: object, ctrl?: object)`
+
+Create a new entity with the given data. Resolves to the created entity.
+
+```ts
+const result = await client.ManagedResource().create({
+  annotations: {},
+  resource_id: 'example_resource_id',
+  resource_type: 'example_resource_type',
+})
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `ManagedResourceEntity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
 ## OnCallNotificationMethodPublicV2Entity
 
 ```ts
@@ -6584,6 +6481,70 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `OnCallNotificationMethodPublicV2Entity` instance with the same client and
+options.
+
+#### `client()`
+
+Return the parent `IncidentIoSDK` instance.
+
+#### `entopts()`
+
+Return a copy of the entity options.
+
+
+---
+
+## OnCallNotificationPauseEntity
+
+```ts
+const on_call_notification_pause = client.OnCallNotificationPause()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `ends_at` | `string` | Yes | When notifications resume |
+| `id` | `string` | Yes | Unique identifier for this notification pause |
+| `reason` | `string` | No | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `string` | Yes | When notifications stop being sent to the user |
+| `updated_at` | `string` | Yes |  |
+| `user_id` | `string` | Yes | The user whose on-call notifications are paused in this time window |
+
+### Operations
+
+#### `list(match: object, ctrl?: object)`
+
+List entities matching the given criteria. Resolves to an array of entities, one per record.
+
+```ts
+const results = await client.OnCallNotificationPause().list()
+```
+
+#### `load(match: object, ctrl?: object)`
+
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
+
+```ts
+const result = await client.OnCallNotificationPause().load({ id: 'on_call_notification_pause_id' })
+```
+
+### Common Methods
+
+#### `data(data?: object)`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `match(match?: object)`
+
+Get or set the entity match criteria. Works the same as `data()`.
+
+#### `make()`
+
+Create a new `OnCallNotificationPauseEntity` instance with the same client and
 options.
 
 #### `client()`
@@ -6700,15 +6661,10 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.PayConfig().create({
   base_rate_cents: 1,
-  created_at: 'example_created_at',
   currency: 'example_currency',
-  id: 'example_id',
   name: 'example_name',
-  one_off_rules: [],
   rate_time_unit: 'example_rate_time_unit',
   timezone: 'example_timezone',
-  updated_at: 'example_updated_at',
-  weekly_rules: [],
 })
 ```
 
@@ -7337,17 +7293,11 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.PayReport().create({
-  created_at: 'example_created_at',
   end_date: 'example_end_date',
-  id: 'example_id',
   name: 'example_name',
-  overlapping_shifts: 'example_overlapping_shifts',
   pay_config_expression: {},
   schedule_ids: [],
   start_date: 'example_start_date',
-  status: 'example_status',
-  unpaid_shifts: 'example_unpaid_shifts',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -7442,17 +7392,7 @@ Create a new entity with the given data. Resolves to the created entity.
 const result = await client.PayReportsPublishResultV2().create({
   pay_report_id: 'example_pay_report_id',
   cc_emails: [],
-  created_at: 'example_created_at',
-  end_date: 'example_end_date',
-  id: 'example_id',
-  name: 'example_name',
-  overlapping_shifts: 'example_overlapping_shifts',
-  schedule_ids: [],
   send_user_breakdowns: 'example_send_user_breakdowns',
-  start_date: 'example_start_date',
-  status: 'example_status',
-  unpaid_shifts: 'example_unpaid_shifts',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -7521,17 +7461,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.PayReportsUnpublishResultV2().create({
   pay_report_id: 'example_pay_report_id',
-  created_at: 'example_created_at',
-  end_date: 'example_end_date',
-  id: 'example_id',
-  name: 'example_name',
-  overlapping_shifts: 'example_overlapping_shifts',
-  schedule_ids: [],
-  start_date: 'example_start_date',
-  status: 'example_status',
-  unpaid_shifts: 'example_unpaid_shifts',
   unpublish_reason: 'example_unpublish_reason',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -7713,16 +7643,13 @@ Create a new entity with the given data. Resolves to the created entity.
 const result = await client.Policy().create({
   assignment_rules: {},
   conditions: [],
-  created_at: 'example_created_at',
   debrief: {},
+  description: 'example_description',
   follow_up: {},
-  id: 'example_id',
   name: 'example_name',
   policy_type: 'example_policy_type',
   post_mortem: {},
   schedule: {},
-  status: 'example_status',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -7895,23 +7822,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.PolicyFindingsDismissResultV2().create({
   policy_finding_id: 'example_policy_finding_id',
-  created_at: 'example_created_at',
-  debrief: {},
-  dismissal: {},
-  follow_up: {},
-  id: 'example_id',
-  last_checked_at: 'example_last_checked_at',
-  on_call_readiness: {},
-  policy_id: 'example_policy_id',
-  policy_type: 'example_policy_type',
-  post_mortem: {},
   reason: 'example_reason',
-  responsible_users: [],
-  schedule: {},
-  shift_conflict: {},
-  state: 'example_state',
-  updated_at: 'example_updated_at',
-  vacation_conflict: {},
 })
 ```
 
@@ -8154,16 +8065,7 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.Schedule().create({
-  annotations: {},
-  config: {},
-  created_at: 'example_created_at',
   holidays_public_config: {},
-  id: 'example_id',
-  name: 'example_name',
-  permalink: 'example_permalink',
-  team_ids: [],
-  timezone: 'example_timezone',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -8256,10 +8158,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.ScheduleEntriesListPayloadV2().create({
   schedule_id: 'example_schedule_id',
-  final: [],
-  overrides: [],
   schedule: {},
-  scheduled: [],
 })
 ```
 
@@ -8374,14 +8273,10 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.ScheduleReplica().create({
   id: 'example_id',
-  created_at: 'example_created_at',
   replica_fallback_user_id: 'example_replica_fallback_user_id',
   replica_provider: 'example_replica_provider',
   replica_provider_id: 'example_replica_provider_id',
-  schedule_id: 'example_schedule_id',
   sources: [],
-  updated_at: 'example_updated_at',
-  user_statuses: [],
 })
 ```
 
@@ -8474,13 +8369,8 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.ScheduleSyncRule().create({
   id: 'example_id',
-  created_at: 'example_created_at',
-  permanent_member_user_ids: [],
-  schedule_id: 'example_schedule_id',
-  schedule_sync_target: {},
   schedule_sync_target_id: 'example_schedule_sync_target_id',
   sync_type: 'example_sync_type',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -8583,13 +8473,7 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.ScheduleSyncTarget().create({
   add_bot_to_group: true,
-  created_at: 'example_created_at',
-  id: 'example_id',
-  linked_schedules: [],
   new_slack_user_group: {},
-  slack_team_id: 'example_slack_team_id',
-  slack_user_group_id: 'example_slack_user_group_id',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -8684,14 +8568,11 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.SchedulesShowOverrideResultV2().create({
-  created_at: 'example_created_at',
   end_at: 'example_end_at',
-  id: 'example_id',
   layer_id: 'example_layer_id',
   rotation_id: 'example_rotation_id',
   schedule_id: 'example_schedule_id',
   start_at: 'example_start_at',
-  updated_at: 'example_updated_at',
   user: {},
 })
 ```
@@ -8867,14 +8748,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.Secret().create({
-  created_at: 'example_created_at',
-  id: 'example_id',
   name: 'example_name',
-  secret: {},
-  updated_at: 'example_updated_at',
   value: 'example_value',
-  version: 1,
-  versions: [],
 })
 ```
 
@@ -8977,12 +8852,8 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.Severity().create({
-  created_at: 'example_created_at',
   description: 'example_description',
-  id: 'example_id',
   name: 'example_name',
-  rank: 1,
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -9125,8 +8996,6 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.StatusPageComponent().create({
-  id: 'example_id',
-  management_meta: {},
   name: 'example_name',
 })
 ```
@@ -9279,16 +9148,12 @@ Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.StatusPageIncident().create({
-  component_impacts: [],
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
   incident_status: 'example_incident_status',
   message: 'example_message',
   name: 'example_name',
   notify_subscribers: true,
-  published_at: 'example_published_at',
   status_page_id: 'example_status_page_id',
-  updates: [],
 })
 ```
 
@@ -9509,19 +9374,14 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.StatusPageMaintenance().create({
   affected_component_ids: [],
-  automate_maintenance_status: true,
-  component_maintenance_periods: [],
   end_at: 'example_end_at',
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
   maintenance_status: 'example_maintenance_status',
   message: 'example_message',
   name: 'example_name',
   notify_subscribers: true,
-  published_at: 'example_published_at',
   start_at: 'example_start_at',
   status_page_id: 'example_status_page_id',
-  updates: [],
 })
 ```
 
@@ -9922,12 +9782,6 @@ Create a new entity with the given data. Resolves to the created entity.
 ```ts
 const result = await client.User().create({
   id: 'example_id',
-  base_role: {},
-  custom_roles: [],
-  is_active: true,
-  name: 'example_name',
-  role: 'example_role',
-  seats: {},
 })
 ```
 
@@ -10055,16 +9909,12 @@ const result = await client.Workflow().create({
   continue_on_step_error: true,
   delay: {},
   expressions: [],
-  id: 'example_id',
-  management_meta: {},
   name: 'example_name',
   once_for: [],
   runs_on_incident_modes: [],
   runs_on_incidents: 'example_runs_on_incidents',
   steps: [],
   trigger: 'example_trigger',
-  version: 1,
-  workflow: {},
 })
 ```
 
@@ -10212,6 +10062,7 @@ Return a copy of the entity options.
 | `paging` | 0.0.1 | Paging |
 | `ratelimit` | 0.0.1 | Rate limiting |
 | `retry` | 0.0.1 | Retry |
+| `secrets` | 0.1.0 | Secrets |
 | `test` | 0.0.1 | Test transport |
 | `timeout` | 0.0.1 | Timeout |
 
@@ -10227,6 +10078,7 @@ const client = new IncidentIoSDK({
     paging: { active: true },
     ratelimit: { active: true },
     retry: { active: true },
+    secrets: { active: true },
     test: { active: true },
     timeout: { active: true },
   }
@@ -10245,7 +10097,7 @@ transport, and the order you list them in is the order they nest.
 
 #### Ordering
 
-`ratelimit`, `retry`, `timeout` wrap the transport. Each
+`ratelimit`, `retry`, `secrets`, `timeout` wrap the transport. Each
 wraps whatever is already installed, so **activation order is nesting order**:
 a feature activated later sits OUTSIDE one activated earlier, and sees the call
 first.
@@ -10439,6 +10291,31 @@ another when you do not.
 **Usage**
 
 Set `feature.retry.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Wraps the transport: its place in the activation order decides what it
+  sees. See [Ordering](#ordering) above.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `secrets`
+
+Secrets.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+**Usage**
+
+Set `feature.secrets.active` to true in the client options, and override any option above in the same entry. Every option keeps
 its default unless you name it.
 
 **Considerations**

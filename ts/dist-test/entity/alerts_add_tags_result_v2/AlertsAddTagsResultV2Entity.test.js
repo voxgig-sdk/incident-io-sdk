@@ -60,7 +60,7 @@ const utility_1 = require("../../utility");
             return;
         }
         const client = __1.IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } });
-        await node_assert_1.default.rejects(client.AlertsAddTagsResultV2().create({ "alert_id": 1, "alert_source_id": "x", "attributes": "x", "created_at": "x", "deduplication_key": "x", "id": "x", "status": "x", "title": "x", "updated_at": "x" }), (err) => 'validate_failed' === err.code);
+        await node_assert_1.default.rejects(client.AlertsAddTagsResultV2().create({ "alert_id": 1, "tags": "x" }), (err) => 'validate_failed' === err.code);
     });
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE;

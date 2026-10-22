@@ -29,7 +29,7 @@ describe("IncidentTemplatesValidateResultV1Entity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:IncidentTemplatesValidateResultV1(nil):create({ ["name"] = 1, ["template"] = "x", ["warnings"] = "x" }, nil)
+    local _, err = client:IncidentTemplatesValidateResultV1(nil):create({ ["name"] = 1, ["template"] = "x" }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 

@@ -173,6 +173,24 @@ class IncidentActivityLogEntryEntityTest extends TestCase
         $this->assertSame(2, $client->_cost["total"]["attempts"]);
     }
 
+    public function test_validate_list_response(): void
+    {
+        $cfg = IncidentIoConfig::shared_config();
+        if (!isset($cfg["feature"]["validate"])) {
+            $this->markTestSkipped('feature not present in this SDK: validate');
+        }
+        $opts = ["feature" => ["validate" => ["active" => true, "request" => false, "response" => true]]];
+        $listed = IncidentIoSDK::test(['entity' => ['incident_activity_log_entry' => ['v1' => ['created_at' => 'x', 'incident_id' => 'x', 'occurred_at' => 'x', 'title' => 'x', 'type' => 'x']]]], $opts)->IncidentActivityLogEntry(null)->list(null, null);
+        $this->assertSame(['v1'], array_map(fn($ent) => $ent->data_get()['id'] ?? null, $listed));
+        $err = null;
+        try {
+            IncidentIoSDK::test(['entity' => ['incident_activity_log_entry' => ['v1' => ['created_at' => 1, 'incident_id' => 'x', 'occurred_at' => 'x', 'title' => 'x', 'type' => 'x']]]], $opts)->IncidentActivityLogEntry(null)->list(null, null);
+        } catch (\Throwable $e) {
+            $err = $e;
+        }
+        $this->assertSame('validate_failed', $err->sdk_code ?? null);
+    }
+
     public function test_validate(): void
     {
         $cfg = IncidentIoConfig::shared_config();

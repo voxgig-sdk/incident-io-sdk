@@ -38,7 +38,7 @@ func TestIncidentTemplatesValidateResultV1Entity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.IncidentTemplatesValidateResultV1(nil).Create(map[string]any{"name": 1, "template": "x", "warnings": "x"}, nil)
+		_, err := client.IncidentTemplatesValidateResultV1(nil).Create(map[string]any{"name": 1, "template": "x"}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

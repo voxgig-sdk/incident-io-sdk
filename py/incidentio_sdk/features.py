@@ -7,6 +7,7 @@ from incidentio_sdk.feature.metrics_feature import IncidentIoMetricsFeature
 from incidentio_sdk.feature.paging_feature import IncidentIoPagingFeature
 from incidentio_sdk.feature.ratelimit_feature import IncidentIoRatelimitFeature
 from incidentio_sdk.feature.retry_feature import IncidentIoRetryFeature
+from incidentio_sdk.feature.secrets_feature import IncidentIoSecretsFeature
 from incidentio_sdk.feature.test_feature import IncidentIoTestFeature
 from incidentio_sdk.feature.timeout_feature import IncidentIoTimeoutFeature
 
@@ -19,6 +20,7 @@ _FEATURES = {
     "paging": lambda: IncidentIoPagingFeature(),
     "ratelimit": lambda: IncidentIoRatelimitFeature(),
     "retry": lambda: IncidentIoRetryFeature(),
+    "secrets": lambda: IncidentIoSecretsFeature(),
     "test": lambda: IncidentIoTestFeature(),
     "timeout": lambda: IncidentIoTimeoutFeature(),
 }

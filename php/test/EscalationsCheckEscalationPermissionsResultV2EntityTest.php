@@ -33,7 +33,7 @@ class EscalationsCheckEscalationPermissionsResultV2EntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->EscalationsCheckEscalationPermissionsResultV2(null)->create(["escalation_id" => 1, "response_options" => 'x', "user_ids" => 'x'], null);
+            $client->EscalationsCheckEscalationPermissionsResultV2(null)->create(["escalation_id" => 1, "user_ids" => 'x'], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

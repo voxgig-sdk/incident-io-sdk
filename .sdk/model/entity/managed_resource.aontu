@@ -1,0 +1,86 @@
+# Entity: managed_resource
+
+main: kit: entity: managed_resource: {
+
+  alias: field: {}
+
+  fields: {
+    annotations: {
+      h: "Annotations"
+      n: "annotations"
+      r: true
+      sh: "Annotations that track metadata about this resource"
+      t: "`$OBJECT`"
+    }
+    managed_by: {
+      h: "Managed By"
+      n: "managed_by"
+      r: true
+      sh: "How is this resource managed"
+      t: "`$STRING`"
+    }
+    resource_id: {
+      h: "Resource Id"
+      n: "resource_id"
+      r: true
+      sh: "The ID of the resource that this relates to"
+      t: "`$STRING`"
+    }
+    resource_type: {
+      h: "Resource Type"
+      n: "resource_type"
+      r: true
+      sh: "The type of the related resource"
+      t: "`$STRING`"
+    }
+    source_url: {
+      h: "Source Url"
+      n: "source_url"
+      r: false
+      sh: "The url of the external repository where this resource is managed (if there is one)"
+      t: "`$STRING`"
+    }
+  }
+
+  name: "managed_resource"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          bf: [
+            "annotations"
+            "resource_id"
+            "resource_type"
+          ]
+          co: {
+            id: "POST /v2/managed_resources"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/v2/managed_resources"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "managed_resources"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.managed_resource`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

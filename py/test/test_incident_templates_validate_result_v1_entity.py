@@ -37,7 +37,7 @@ class TestIncidentTemplatesValidateResultV1Entity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.IncidentTemplatesValidateResultV1(None).create({"name": 1, "template": "x", "warnings": "x"}, None)
+            client.IncidentTemplatesValidateResultV1(None).create({"name": 1, "template": "x"}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

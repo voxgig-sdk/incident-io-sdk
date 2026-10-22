@@ -11290,6 +11290,44 @@ const PLAN: any[] = [
     "idField": "id"
   },
   {
+    "entity": "managed_resource",
+    "accessor": "ManagedResource",
+    "op": "create",
+    "method": "POST",
+    "path": "/v2/managed_resources",
+    "args": [],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 200,
+    "sample": {
+      "managed_resource": {
+        "annotations": {
+          "incident.io/terraform/version": "3.0.0"
+        },
+        "managed_by": "terraform",
+        "resource_id": "abc123",
+        "resource_type": "alert_route",
+        "source_url": "https://github.com/my-company/infrastructure"
+      }
+    },
+    "idField": "id"
+  },
+  {
     "entity": "on_call_notification_method_public_v2",
     "accessor": "OnCallNotificationMethodPublicV2",
     "op": "list",
@@ -11333,6 +11371,121 @@ const PLAN: any[] = [
           }
         }
       ]
+    },
+    "idField": "id"
+  },
+  {
+    "entity": "on_call_notification_pause",
+    "accessor": "OnCallNotificationPause",
+    "op": "list",
+    "method": "GET",
+    "path": "/v2/on_call_notification_pauses",
+    "args": [],
+    "select": {
+      "after": "01FCNDV6P870EA6S7TK1DSYDG0",
+      "from": "2021-08-17T00:00:00Z",
+      "page_size": 25,
+      "to": "2021-08-24T00:00:00Z"
+    },
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [
+      "from",
+      "to",
+      "page_size",
+      "after"
+    ],
+    "queryArgs": [
+      {
+        "name": "after",
+        "wire": "after"
+      },
+      {
+        "name": "from",
+        "wire": "from"
+      },
+      {
+        "name": "page_size",
+        "wire": "page_size"
+      },
+      {
+        "name": "to",
+        "wire": "to"
+      }
+    ],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 200,
+    "sample": {
+      "on_call_notification_pauses": [
+        {
+          "created_at": "2021-08-17T13:28:57.801578Z",
+          "ends_at": "2021-08-24T13:28:57.801578Z",
+          "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+          "reason": "Annual leave",
+          "starts_at": "2021-08-17T13:28:57.801578Z",
+          "updated_at": "2021-08-17T13:28:57.801578Z",
+          "user_id": "01FCNDV6P870EA6S7TK1DSYDG0"
+        }
+      ],
+      "pagination_meta": {
+        "after": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "page_size": 25
+      }
+    },
+    "idField": "id"
+  },
+  {
+    "entity": "on_call_notification_pause",
+    "accessor": "OnCallNotificationPause",
+    "op": "load",
+    "method": "GET",
+    "path": "/v2/on_call_notification_pauses/{id}",
+    "args": [
+      {
+        "name": "id",
+        "wire": "id",
+        "value": "01FCNDV6P870EA6S7TK1DSYDG0"
+      }
+    ],
+    "select": {},
+    "headers": [],
+    "cookies": [],
+    "responseMedia": [
+      "application/json"
+    ],
+    "query": [],
+    "queryArgs": [],
+    "auth": [
+      [
+        {
+          "in": "header",
+          "name": "authorization",
+          "scheme": "bearer"
+        }
+      ]
+    ],
+    "status": 200,
+    "sample": {
+      "on_call_notification_pause": {
+        "created_at": "2021-08-17T13:28:57.801578Z",
+        "ends_at": "2021-08-24T13:28:57.801578Z",
+        "id": "01FCNDV6P870EA6S7TK1DSYDG0",
+        "reason": "Annual leave",
+        "starts_at": "2021-08-17T13:28:57.801578Z",
+        "updated_at": "2021-08-17T13:28:57.801578Z",
+        "user_id": "01FCNDV6P870EA6S7TK1DSYDG0"
+      }
     },
     "idField": "id"
   },
@@ -16947,7 +17100,7 @@ const PLAN: any[] = [
           "annotations": {
             "incident.io/terraform/version": "3.0.0"
           },
-          "managed_by": "dashboard",
+          "managed_by": "terraform",
           "source_url": "https://github.com/my-company/infrastructure"
         },
         "name": "App"
@@ -16989,7 +17142,7 @@ const PLAN: any[] = [
             "annotations": {
               "incident.io/terraform/version": "3.0.0"
             },
-            "managed_by": "dashboard",
+            "managed_by": "terraform",
             "source_url": "https://github.com/my-company/infrastructure"
           },
           "name": "App"
@@ -17037,7 +17190,7 @@ const PLAN: any[] = [
           "annotations": {
             "incident.io/terraform/version": "3.0.0"
           },
-          "managed_by": "dashboard",
+          "managed_by": "terraform",
           "source_url": "https://github.com/my-company/infrastructure"
         },
         "name": "App"
@@ -17115,7 +17268,7 @@ const PLAN: any[] = [
           "annotations": {
             "incident.io/terraform/version": "3.0.0"
           },
-          "managed_by": "dashboard",
+          "managed_by": "terraform",
           "source_url": "https://github.com/my-company/infrastructure"
         },
         "name": "App"
@@ -18014,7 +18167,7 @@ const PLAN: any[] = [
         "annotations": {
           "incident.io/terraform/version": "3.0.0"
         },
-        "managed_by": "dashboard",
+        "managed_by": "terraform",
         "source_url": "https://github.com/my-company/infrastructure"
       }
     },
@@ -18432,7 +18585,7 @@ const PLAN: any[] = [
         "annotations": {
           "incident.io/terraform/version": "3.0.0"
         },
-        "managed_by": "dashboard",
+        "managed_by": "terraform",
         "source_url": "https://github.com/my-company/infrastructure"
       },
       "workflow": {
@@ -18830,7 +18983,7 @@ const PLAN: any[] = [
         "annotations": {
           "incident.io/terraform/version": "3.0.0"
         },
-        "managed_by": "dashboard",
+        "managed_by": "terraform",
         "source_url": "https://github.com/my-company/infrastructure"
       },
       "workflow": {
@@ -19081,7 +19234,7 @@ const PLAN: any[] = [
         "annotations": {
           "incident.io/terraform/version": "3.0.0"
         },
-        "managed_by": "dashboard",
+        "managed_by": "terraform",
         "source_url": "https://github.com/my-company/infrastructure"
       },
       "workflow": {

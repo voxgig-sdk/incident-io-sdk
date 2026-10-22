@@ -296,9 +296,17 @@ Create a new `IpRange` entity instance. Pass `nil` for no initial data.
 
 Create a new `MaintenanceWindow` entity instance. Pass `nil` for no initial data.
 
+#### `ManagedResource(data map[string]any) IncidentIoEntity`
+
+Create a new `ManagedResource` entity instance. Pass `nil` for no initial data.
+
 #### `OnCallNotificationMethodPublicV2(data map[string]any) IncidentIoEntity`
 
 Create a new `OnCallNotificationMethodPublicV2` entity instance. Pass `nil` for no initial data.
+
+#### `OnCallNotificationPause(data map[string]any) IncidentIoEntity`
+
+Create a new `OnCallNotificationPause` entity instance. Pass `nil` for no initial data.
 
 #### `OnCallNotificationRulePublicV2(data map[string]any) IncidentIoEntity`
 
@@ -595,14 +603,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.Action(nil).Create(map[string]any{
-    "assignee": map[string]any{},
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "follow_up": true,
-    "id": "example_id",
+    "description": "example_description",
     "incident_id": "example_incident_id",
-    "status": "example_status",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -839,9 +841,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.AlertAttribute(nil).Create(map[string]any{
     "array": true,
-    "id": "example_id",
     "name": "example_name",
-    "required": true,
     "type": "example_type",
 }, nil)
 if err != nil {
@@ -965,11 +965,6 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.AlertNote(nil).Create(map[string]any{
     "content": "example_content",
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "id": "example_id",
-    "images": []any{},
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -1107,13 +1102,11 @@ result, err := client.AlertRoute(nil).Create(map[string]any{
     "escalation_config": map[string]any{},
     "expressions": []any{},
     "grouping_config": map[string]any{},
-    "id": "example_id",
     "incident_config": map[string]any{},
     "incident_template": map[string]any{},
     "is_private": true,
     "message_config": map[string]any{},
     "name": "example_name",
-    "version": 1,
 }, nil)
 if err != nil {
     panic(err)
@@ -1248,7 +1241,6 @@ result, err := client.AlertSource(nil).Create(map[string]any{
     "email_options": map[string]any{},
     "heartbeat_options": map[string]any{},
     "http_custom_options": map[string]any{},
-    "id": "example_id",
     "jira_options": map[string]any{},
     "name": "example_name",
     "rate_limit_sharding": map[string]any{},
@@ -1498,14 +1490,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.AlertsAddTagsResultV2(nil).Create(map[string]any{
     "alert_id": "example_alert_id",
-    "alert_source_id": "example_alert_source_id",
-    "attributes": []any{},
-    "created_at": "example_created_at",
-    "deduplication_key": "example_deduplication_key",
-    "id": "example_id",
-    "status": "example_status",
-    "title": "example_title",
-    "updated_at": "example_updated_at",
+    "tags": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1597,14 +1582,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.AlertsRemoveTagsResultV2(nil).Create(map[string]any{
     "alert_id": "example_alert_id",
-    "alert_source_id": "example_alert_source_id",
-    "attributes": []any{},
-    "created_at": "example_created_at",
-    "deduplication_key": "example_deduplication_key",
-    "id": "example_id",
-    "status": "example_status",
-    "title": "example_title",
-    "updated_at": "example_updated_at",
+    "tags": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1696,14 +1674,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.AlertsSetTagsResultV2(nil).Create(map[string]any{
     "alert_id": "example_alert_id",
-    "alert_source_id": "example_alert_source_id",
-    "attributes": []any{},
-    "created_at": "example_created_at",
-    "deduplication_key": "example_deduplication_key",
-    "id": "example_id",
-    "status": "example_status",
-    "title": "example_title",
-    "updated_at": "example_updated_at",
+    "tags": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -1785,10 +1756,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.AlertsTransitionIncidentAlertResultV2(nil).Create(map[string]any{
-    "alert": map[string]any{},
     "alert_id": "example_alert_id",
-    "id": "example_id",
-    "incident": map[string]any{},
     "incident_id": "example_incident_id",
     "state": "example_state",
 }, nil)
@@ -1908,16 +1876,9 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.AnnouncementRule(nil).Create(map[string]any{
     "condition_groups": []any{},
-    "conditions_no_longer_apply_behaviour": "example_conditions_no_longer_apply_behaviour",
-    "created_at": "example_created_at",
-    "id": "example_id",
-    "microsoft_teams_channel_ids": []any{},
     "mode": "example_mode",
     "name": "example_name",
-    "owning_team_ids": []any{},
-    "slack_channel_ids": []any{},
     "update_sharing_mode": "example_update_sharing_mode",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -2047,12 +2008,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.AnnouncementTemplate(nil).Create(map[string]any{
-    "actions": []any{},
-    "fields": []any{},
-    "id": "example_id",
-    "is_default": true,
     "name": "example_name",
-    "owning_team_ids": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -2177,16 +2133,10 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.ApiKey(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "id": "example_id",
     "name": "example_name",
     "role_names": []any{},
-    "roles": []any{},
     "team_ids": []any{},
     "team_role_names": []any{},
-    "team_roles": []any{},
-    "token_last_issued_at": "example_token_last_issued_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -3130,13 +3080,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.CatalogEntry(nil).Create(map[string]any{
     "attribute_values": map[string]any{},
-    "catalog_entry": map[string]any{},
-    "catalog_type": map[string]any{},
     "catalog_type_id": "example_catalog_type_id",
-    "created_at": "example_created_at",
-    "id": "example_id",
     "name": "example_name",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -3356,22 +3301,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.CatalogType(nil).Create(map[string]any{
-    "annotations": map[string]any{},
-    "categories": []any{},
-    "color": "example_color",
-    "created_at": "example_created_at",
     "description": "example_description",
-    "engine_resource_type": "example_engine_resource_type",
-    "icon": "example_icon",
-    "id": "example_id",
-    "is_editable": true,
     "name": "example_name",
-    "ranked": true,
-    "schema": map[string]any{},
-    "semantic_type": "example_semantic_type",
-    "type_name": "example_type_name",
-    "updated_at": "example_updated_at",
-    "use_name_as_identifier": true,
 }, nil)
 if err != nil {
     panic(err)
@@ -3473,23 +3404,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.CatalogTypeSchema(nil).Create(map[string]any{
     "catalog_type_id": "example_catalog_type_id",
-    "annotations": map[string]any{},
     "attributes": []any{},
-    "categories": []any{},
-    "color": "example_color",
-    "created_at": "example_created_at",
-    "description": "example_description",
-    "engine_resource_type": "example_engine_resource_type",
-    "icon": "example_icon",
-    "id": "example_id",
-    "is_editable": true,
-    "name": "example_name",
-    "ranked": true,
-    "schema": map[string]any{},
-    "semantic_type": "example_semantic_type",
-    "type_name": "example_type_name",
-    "updated_at": "example_updated_at",
-    "use_name_as_identifier": true,
     "version": 1,
 }, nil)
 if err != nil {
@@ -3594,18 +3509,14 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.CustomField(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "description": "example_description",
     "field_type": "example_field_type",
     "filter_by": map[string]any{},
     "fixed_filter": map[string]any{},
-    "id": "example_id",
     "name": "example_name",
-    "options": []any{},
     "show_before_closure": true,
     "show_before_creation": true,
     "show_before_update": true,
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -3732,8 +3643,6 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.CustomFieldOption(nil).Create(map[string]any{
     "custom_field_id": "example_custom_field_id",
-    "id": "example_id",
-    "sort_key": 1,
     "value": "example_value",
 }, nil)
 if err != nil {
@@ -3882,18 +3791,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.Escalation(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "description": "example_description",
-    "events": []any{},
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
-    "priority": map[string]any{},
-    "related_alerts": []any{},
-    "related_incidents": []any{},
-    "status": "example_status",
     "title": "example_title",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -4002,11 +3901,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.EscalationPathTemplate(nil).Create(map[string]any{
-    "expressions": []any{},
-    "has_historical_escalation_path_versions": true,
-    "id": "example_id",
     "name": "example_name",
-    "params": []any{},
     "path": []any{},
     "repeat_config": map[string]any{},
 }, nil)
@@ -4098,7 +3993,6 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.EscalationsCheckEscalationPermissionsResultV2(nil).Create(map[string]any{
     "escalation_id": "example_escalation_id",
-    "response_options": []any{},
     "user_ids": []any{},
 }, nil)
 if err != nil {
@@ -4295,19 +4189,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.FollowUp(nil).Create(map[string]any{
-    "assignee": map[string]any{},
-    "assignee_team": map[string]any{},
-    "category": map[string]any{},
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "external_issue_reference": map[string]any{},
-    "id": "example_id",
     "incident_id": "example_incident_id",
-    "labels": []any{},
-    "priority": map[string]any{},
-    "status": "example_status",
     "title": "example_title",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -4412,20 +4295,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.FollowUpsConnectExternalIssueResultV3(nil).Create(map[string]any{
     "follow_up_id": "example_follow_up_id",
-    "assignee": map[string]any{},
-    "assignee_team": map[string]any{},
-    "category": map[string]any{},
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "external_issue_reference": map[string]any{},
-    "id": "example_id",
-    "incident_id": "example_incident_id",
-    "labels": []any{},
-    "priority": map[string]any{},
     "provider": "example_provider",
-    "status": "example_status",
-    "title": "example_title",
-    "updated_at": "example_updated_at",
     "url": "example_url",
 }, nil)
 if err != nil {
@@ -4731,25 +4601,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.Incident(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "custom_field_entries": []any{},
-    "external_issue_reference": map[string]any{},
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
-    "incident_role_assignments": []any{},
-    "incident_status": map[string]any{},
-    "incident_type": map[string]any{},
-    "last_activity_at": "example_last_activity_at",
-    "mode": "example_mode",
-    "name": "example_name",
-    "reference": "example_reference",
-    "severity": map[string]any{},
-    "slack_channel_id": "example_slack_channel_id",
-    "slack_team_id": "example_slack_team_id",
-    "status": "example_status",
-    "team_ids": []any{},
-    "updated_at": "example_updated_at",
     "visibility": "example_visibility",
 }, nil)
 if err != nil {
@@ -4894,7 +4746,6 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.IncidentAttachment(nil).Create(map[string]any{
-    "id": "example_id",
     "incident_id": "example_incident_id",
     "resource": map[string]any{},
 }, nil)
@@ -5001,11 +4852,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.IncidentForm(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "expressions": []any{},
     "form_type": "example_form_type",
-    "id": "example_id",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -5390,14 +5238,11 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.IncidentRole(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "description": "example_description",
-    "id": "example_id",
     "instructions": "example_instructions",
     "name": "example_name",
-    "role_type": "example_role_type",
+    "required": true,
     "shortform": "example_shortform",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -5530,12 +5375,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.IncidentStatus(nil).Create(map[string]any{
     "category": "example_category",
-    "created_at": "example_created_at",
     "description": "example_description",
-    "id": "example_id",
     "name": "example_name",
-    "rank": 1,
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -5780,11 +5621,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.IncidentTemplate(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "id": "example_id",
     "name": "example_name",
     "template": map[string]any{},
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -5877,7 +5715,6 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 result, err := client.IncidentTemplatesValidateResultV1(nil).Create(map[string]any{
     "name": "example_name",
     "template": map[string]any{},
-    "warnings": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -5976,14 +5813,10 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.IncidentTimelineItem(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "creator": map[string]any{},
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "incident_id": "example_incident_id",
     "timestamp": "example_timestamp",
     "title": "example_title",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6239,13 +6072,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.IncidentUpdate(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "incident_id": "example_incident_id",
-    "new_incident_status": map[string]any{},
-    "new_severity": map[string]any{},
-    "updater": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -6513,16 +6341,11 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.MaintenanceWindow(nil).Create(map[string]any{
     "alert_condition_groups": []any{},
-    "created_at": "example_created_at",
     "end_at": "example_end_at",
-    "id": "example_id",
     "lead": map[string]any{},
     "name": "example_name",
-    "reroute_on_end": true,
-    "resolve_on_end": true,
     "show_in_sidebar": true,
     "start_at": "example_start_at",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -6589,6 +6412,73 @@ Return the entity name.
 
 ---
 
+## ManagedResourceEntity
+
+```go
+managedResource := client.ManagedResource(nil)
+fmt.Println(managedResource.GetName()) // "managed_resource"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotations` | `map[string]any` | Yes | Annotations that track metadata about this resource |
+| `managed_by` | `string` | Yes | How is this resource managed |
+| `resource_id` | `string` | Yes | The ID of the resource that this relates to |
+| `resource_type` | `string` | Yes | The type of the related resource |
+| `source_url` | `string` | No | The url of the external repository where this resource is managed (if there is one) |
+
+### Operations
+
+#### `Create(reqdata, ctrl map[string]any) (any, error)`
+
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
+
+```go
+result, err := client.ManagedResource(nil).Create(map[string]any{
+    "annotations": map[string]any{},
+    "resource_id": "example_resource_id",
+    "resource_type": "example_resource_type",
+}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `ManagedResourceEntity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
 ## OnCallNotificationMethodPublicV2Entity
 
 ```go
@@ -6637,6 +6527,85 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `OnCallNotificationMethodPublicV2Entity` instance with the same client and
+options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
+
+#### `GetName() string`
+
+Return the entity name.
+
+
+---
+
+## OnCallNotificationPauseEntity
+
+```go
+onCallNotificationPause := client.OnCallNotificationPause(nil)
+fmt.Println(onCallNotificationPause.GetName()) // "on_call_notification_pause"
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `ends_at` | `string` | Yes | When notifications resume |
+| `id` | `string` | Yes | Unique identifier for this notification pause |
+| `reason` | `string` | No | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `string` | Yes | When notifications stop being sent to the user |
+| `updated_at` | `string` | Yes |  |
+| `user_id` | `string` | Yes | The user whose on-call notifications are paused in this time window |
+
+### Operations
+
+#### `List(reqmatch, ctrl map[string]any) (any, error)`
+
+List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
+
+```go
+results, err := client.OnCallNotificationPause(nil).List(nil, nil)
+if err != nil {
+    panic(err)
+}
+for _, item := range results.([]any) {
+    fmt.Println(item.(sdk.Entity).Data())
+}
+```
+
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
+
+```go
+result, err := client.OnCallNotificationPause(nil).Load(map[string]any{"id": "on_call_notification_pause_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result.(sdk.Entity).Data())
+```
+
+### Common Methods
+
+#### `Data(args ...any) any`
+
+Get or set the entity data. When called with data, sets the entity's
+internal data and returns the current data. When called without
+arguments, returns a copy of the current data.
+
+#### `Match(args ...any) any`
+
+Get or set the entity match criteria. Works the same as `Data()`.
+
+#### `Make() Entity`
+
+Create a new `OnCallNotificationPauseEntity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
@@ -6795,15 +6764,10 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.PayConfig(nil).Create(map[string]any{
     "base_rate_cents": 1,
-    "created_at": "example_created_at",
     "currency": "example_currency",
-    "id": "example_id",
     "name": "example_name",
-    "one_off_rules": []any{},
     "rate_time_unit": "example_rate_time_unit",
     "timezone": "example_timezone",
-    "updated_at": "example_updated_at",
-    "weekly_rules": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -7544,17 +7508,11 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.PayReport(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "end_date": "example_end_date",
-    "id": "example_id",
     "name": "example_name",
-    "overlapping_shifts": "example_overlapping_shifts",
     "pay_config_expression": map[string]any{},
     "schedule_ids": []any{},
     "start_date": "example_start_date",
-    "status": "example_status",
-    "unpaid_shifts": "example_unpaid_shifts",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -7646,17 +7604,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 result, err := client.PayReportsPublishResultV2(nil).Create(map[string]any{
     "pay_report_id": "example_pay_report_id",
     "cc_emails": []any{},
-    "created_at": "example_created_at",
-    "end_date": "example_end_date",
-    "id": "example_id",
-    "name": "example_name",
-    "overlapping_shifts": "example_overlapping_shifts",
-    "schedule_ids": []any{},
     "send_user_breakdowns": "example_send_user_breakdowns",
-    "start_date": "example_start_date",
-    "status": "example_status",
-    "unpaid_shifts": "example_unpaid_shifts",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -7734,17 +7682,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.PayReportsUnpublishResultV2(nil).Create(map[string]any{
     "pay_report_id": "example_pay_report_id",
-    "created_at": "example_created_at",
-    "end_date": "example_end_date",
-    "id": "example_id",
-    "name": "example_name",
-    "overlapping_shifts": "example_overlapping_shifts",
-    "schedule_ids": []any{},
-    "start_date": "example_start_date",
-    "status": "example_status",
-    "unpaid_shifts": "example_unpaid_shifts",
     "unpublish_reason": "example_unpublish_reason",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -7979,16 +7917,13 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 result, err := client.Policy(nil).Create(map[string]any{
     "assignment_rules": map[string]any{},
     "conditions": []any{},
-    "created_at": "example_created_at",
     "debrief": map[string]any{},
+    "description": "example_description",
     "follow_up": map[string]any{},
-    "id": "example_id",
     "name": "example_name",
     "policy_type": "example_policy_type",
     "post_mortem": map[string]any{},
     "schedule": map[string]any{},
-    "status": "example_status",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -8173,23 +8108,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.PolicyFindingsDismissResultV2(nil).Create(map[string]any{
     "policy_finding_id": "example_policy_finding_id",
-    "created_at": "example_created_at",
-    "debrief": map[string]any{},
-    "dismissal": map[string]any{},
-    "follow_up": map[string]any{},
-    "id": "example_id",
-    "last_checked_at": "example_last_checked_at",
-    "on_call_readiness": map[string]any{},
-    "policy_id": "example_policy_id",
-    "policy_type": "example_policy_type",
-    "post_mortem": map[string]any{},
     "reason": "example_reason",
-    "responsible_users": []any{},
-    "schedule": map[string]any{},
-    "shift_conflict": map[string]any{},
-    "state": "example_state",
-    "updated_at": "example_updated_at",
-    "vacation_conflict": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -8495,16 +8414,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.Schedule(nil).Create(map[string]any{
-    "annotations": map[string]any{},
-    "config": map[string]any{},
-    "created_at": "example_created_at",
     "holidays_public_config": map[string]any{},
-    "id": "example_id",
-    "name": "example_name",
-    "permalink": "example_permalink",
-    "team_ids": []any{},
-    "timezone": "example_timezone",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -8598,10 +8508,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.ScheduleEntriesListPayloadV2(nil).Create(map[string]any{
     "schedule_id": "example_schedule_id",
-    "final": []any{},
-    "overrides": []any{},
     "schedule": map[string]any{},
-    "scheduled": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -8760,14 +8667,10 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.ScheduleReplica(nil).Create(map[string]any{
     "id": "example_id",
-    "created_at": "example_created_at",
     "replica_fallback_user_id": "example_replica_fallback_user_id",
     "replica_provider": "example_replica_provider",
     "replica_provider_id": "example_replica_provider_id",
-    "schedule_id": "example_schedule_id",
     "sources": []any{},
-    "updated_at": "example_updated_at",
-    "user_statuses": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -8879,13 +8782,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.ScheduleSyncRule(nil).Create(map[string]any{
     "id": "example_id",
-    "created_at": "example_created_at",
-    "permanent_member_user_ids": []any{},
-    "schedule_id": "example_schedule_id",
-    "schedule_sync_target": map[string]any{},
     "schedule_sync_target_id": "example_schedule_sync_target_id",
     "sync_type": "example_sync_type",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -9011,13 +8909,7 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.ScheduleSyncTarget(nil).Create(map[string]any{
     "add_bot_to_group": true,
-    "created_at": "example_created_at",
-    "id": "example_id",
-    "linked_schedules": []any{},
     "new_slack_user_group": map[string]any{},
-    "slack_team_id": "example_slack_team_id",
-    "slack_user_group_id": "example_slack_user_group_id",
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -9139,14 +9031,11 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.SchedulesShowOverrideResultV2(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "end_at": "example_end_at",
-    "id": "example_id",
     "layer_id": "example_layer_id",
     "rotation_id": "example_rotation_id",
     "schedule_id": "example_schedule_id",
     "start_at": "example_start_at",
-    "updated_at": "example_updated_at",
     "user": map[string]any{},
 }, nil)
 if err != nil {
@@ -9330,14 +9219,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.Secret(nil).Create(map[string]any{
-    "created_at": "example_created_at",
-    "id": "example_id",
     "name": "example_name",
-    "secret": map[string]any{},
-    "updated_at": "example_updated_at",
     "value": "example_value",
-    "version": 1,
-    "versions": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -9467,12 +9350,8 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.Severity(nil).Create(map[string]any{
-    "created_at": "example_created_at",
     "description": "example_description",
-    "id": "example_id",
     "name": "example_name",
-    "rank": 1,
-    "updated_at": "example_updated_at",
 }, nil)
 if err != nil {
     panic(err)
@@ -9653,8 +9532,6 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.StatusPageComponent(nil).Create(map[string]any{
-    "id": "example_id",
-    "management_meta": map[string]any{},
     "name": "example_name",
 }, nil)
 if err != nil {
@@ -9843,16 +9720,12 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 
 ```go
 result, err := client.StatusPageIncident(nil).Create(map[string]any{
-    "component_impacts": []any{},
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "incident_status": "example_incident_status",
     "message": "example_message",
     "name": "example_name",
     "notify_subscribers": true,
-    "published_at": "example_published_at",
     "status_page_id": "example_status_page_id",
-    "updates": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -10116,19 +9989,14 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.StatusPageMaintenance(nil).Create(map[string]any{
     "affected_component_ids": []any{},
-    "automate_maintenance_status": true,
-    "component_maintenance_periods": []any{},
     "end_at": "example_end_at",
-    "id": "example_id",
     "idempotency_key": "example_idempotency_key",
     "maintenance_status": "example_maintenance_status",
     "message": "example_message",
     "name": "example_name",
     "notify_subscribers": true,
-    "published_at": "example_published_at",
     "start_at": "example_start_at",
     "status_page_id": "example_status_page_id",
-    "updates": []any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -10583,12 +10451,6 @@ Create a new entity with the given data. Returns the created entity; `err` is no
 ```go
 result, err := client.User(nil).Create(map[string]any{
     "id": "example_id",
-    "base_role": map[string]any{},
-    "custom_roles": []any{},
-    "is_active": true,
-    "name": "example_name",
-    "role": "example_role",
-    "seats": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -10735,16 +10597,12 @@ result, err := client.Workflow(nil).Create(map[string]any{
     "continue_on_step_error": true,
     "delay": map[string]any{},
     "expressions": []any{},
-    "id": "example_id",
-    "management_meta": map[string]any{},
     "name": "example_name",
     "once_for": []any{},
     "runs_on_incident_modes": []any{},
     "runs_on_incidents": "example_runs_on_incidents",
     "steps": []any{},
     "trigger": "example_trigger",
-    "version": 1,
-    "workflow": map[string]any{},
 }, nil)
 if err != nil {
     panic(err)
@@ -10907,6 +10765,7 @@ Return the entity name.
 | `paging` | 0.0.1 | Paging |
 | `ratelimit` | 0.0.1 | Rate limiting |
 | `retry` | 0.0.1 | Retry |
+| `secrets` | 0.1.0 | Secrets |
 | `test` | 0.0.1 | Test transport |
 | `timeout` | 0.0.1 | Timeout |
 
@@ -10922,6 +10781,7 @@ client := sdk.NewIncidentIoSDK(map[string]any{
         "paging": map[string]any{"active": true},
         "ratelimit": map[string]any{"active": true},
         "retry": map[string]any{"active": true},
+        "secrets": map[string]any{"active": true},
         "test": map[string]any{"active": true},
         "timeout": map[string]any{"active": true},
     },
@@ -10940,7 +10800,7 @@ transport, and the order you list them in is the order they nest.
 
 #### Ordering
 
-`ratelimit`, `retry`, `timeout` wrap the transport. Each
+`ratelimit`, `retry`, `secrets`, `timeout` wrap the transport. Each
 wraps whatever is already installed, so **activation order is nesting order**:
 a feature activated later sits OUTSIDE one activated earlier, and sees the call
 first.
@@ -11134,6 +10994,31 @@ another when you do not.
 **Usage**
 
 Set `feature.retry.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Wraps the transport: its place in the activation order decides what it
+  sees. See [Ordering](#ordering) above.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `secrets`
+
+Secrets.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+**Usage**
+
+Set `feature.secrets.active` to true in the client options, and override any option above in the same entry. Every option keeps
 its default unless you name it.
 
 **Considerations**

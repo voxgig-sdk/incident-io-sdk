@@ -47,7 +47,7 @@ describe('IncidentTemplatesValidateResultV1Entity', async () => {
       return
     }
     const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
-    await assert.rejects(client.IncidentTemplatesValidateResultV1().create({"name":1,"template":"x","warnings":"x"} as any),
+    await assert.rejects(client.IncidentTemplatesValidateResultV1().create({"name":1,"template":"x"} as any),
       (err: any) => 'validate_failed' === err.code)
   })
 

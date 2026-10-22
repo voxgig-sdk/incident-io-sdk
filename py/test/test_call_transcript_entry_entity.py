@@ -114,6 +114,16 @@ class TestCallTranscriptEntryEntity:
         assert client.CallTranscriptEntry(None).list(None, {"throw": False}) is None
         assert fired < hook.unexpected
 
+    def test_should_validate_each_listed_record(self):
+        if "validate" not in (shared_config().get("feature") or {}):
+            pytest.skip("feature not present in this SDK: validate")
+        opts = {"feature": {"validate": {"active": True, "request": False, "response": True}}}
+        listed = IncidentIoSDK.test({"entity": {"call_transcript_entry": {"v1": {"content": "x", "medium": "x", "participant_name": "x", "timestamp": "x"}}}}, opts).CallTranscriptEntry(None).list(None, None)
+        assert ["v1"] == [ent.data_get().get("id") for ent in listed]
+        with pytest.raises(Exception) as err:
+            IncidentIoSDK.test({"entity": {"call_transcript_entry": {"v1": {"content": 1, "medium": "x", "participant_name": "x", "timestamp": "x"}}}}, opts).CallTranscriptEntry(None).list(None, None)
+        assert "validate_failed" == getattr(err.value, "code", None)
+
     def test_should_refuse_an_invalid_request(self):
         if "validate" not in (shared_config().get("feature") or {}):
             pytest.skip("feature not present in this SDK: validate")

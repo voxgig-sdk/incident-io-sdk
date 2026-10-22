@@ -1,7 +1,40 @@
 "use strict";
 // IncidentIo Ts SDK
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SDK = exports.IncidentIoSDK = exports.IncidentIoEntityBase = exports.BaseFeature = exports.config = exports.stdutil = void 0;
+exports.SDK = exports.IncidentIoSDK = exports.IncidentIoEntityBase = exports.BaseFeature = exports.sekreto = exports.config = exports.stdutil = void 0;
 const ActionEntity_1 = require("./entity/ActionEntity");
 const AlertEntity_1 = require("./entity/AlertEntity");
 const AlertAttributeEntity_1 = require("./entity/AlertAttributeEntity");
@@ -64,7 +97,9 @@ const IncidentUpdateEntity_1 = require("./entity/IncidentUpdateEntity");
 const IpAllowlistEntity_1 = require("./entity/IpAllowlistEntity");
 const IpRangeEntity_1 = require("./entity/IpRangeEntity");
 const MaintenanceWindowEntity_1 = require("./entity/MaintenanceWindowEntity");
+const ManagedResourceEntity_1 = require("./entity/ManagedResourceEntity");
 const OnCallNotificationMethodPublicV2Entity_1 = require("./entity/OnCallNotificationMethodPublicV2Entity");
+const OnCallNotificationPauseEntity_1 = require("./entity/OnCallNotificationPauseEntity");
 const OnCallNotificationRulePublicV2Entity_1 = require("./entity/OnCallNotificationRulePublicV2Entity");
 const PayConfigEntity_1 = require("./entity/PayConfigEntity");
 const PayConfigsCreateOneOffRuleResultV2Entity_1 = require("./entity/PayConfigsCreateOneOffRuleResultV2Entity");
@@ -122,6 +157,8 @@ const MakeRequestUtility_1 = require("./utility/MakeRequestUtility");
 const PrepareMethodUtility_1 = require("./utility/PrepareMethodUtility");
 const BaseFeature_1 = require("./feature/base/BaseFeature");
 Object.defineProperty(exports, "BaseFeature", { enumerable: true, get: function () { return BaseFeature_1.BaseFeature; } });
+const sekreto = __importStar(require("./feature/secrets/sekreto"));
+exports.sekreto = sekreto;
 const stdutil = new Utility_1.Utility();
 exports.stdutil = stdutil;
 class IncidentIoSDK {
@@ -130,6 +167,7 @@ class IncidentIoSDK {
     _utility = new Utility_1.Utility();
     _features;
     _rootctx;
+    _secrets;
     constructor(options) {
         this._rootctx = this._utility.makeContext({
             client: this,
@@ -189,6 +227,9 @@ class IncidentIoSDK {
     utility() {
         return this._utility.struct.clone(this._utility);
     }
+    secrets() {
+        return this._secrets && this._secrets.sekreto();
+    }
     async prepare(fetchargs) {
         const utility = this._utility;
         const struct = utility.struct;
@@ -222,6 +263,14 @@ class IncidentIoSDK {
             const uheaders = fetchargs.headers;
             for (let key in uheaders) {
                 spec.headers[key] = uheaders[key];
+            }
+        }
+        if (null != this._secrets) {
+            try {
+                await this._secrets.resolve();
+            }
+            catch (err) {
+                return err instanceof Error ? err : new Error(String(err));
             }
         }
         const authResult = prepareAuth(ctx);
@@ -780,12 +829,26 @@ class IncidentIoSDK {
         const self = this;
         return new MaintenanceWindowEntity_1.MaintenanceWindowEntity(self, entopts);
     }
+    // Entity access: `client.ManagedResource().list()` / `client.ManagedResource().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    ManagedResource(entopts) {
+        const self = this;
+        return new ManagedResourceEntity_1.ManagedResourceEntity(self, entopts);
+    }
     // Entity access: `client.OnCallNotificationMethodPublicV2().list()` / `client.OnCallNotificationMethodPublicV2().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity
     // constructor as entopts), not initial entity data.
     OnCallNotificationMethodPublicV2(entopts) {
         const self = this;
         return new OnCallNotificationMethodPublicV2Entity_1.OnCallNotificationMethodPublicV2Entity(self, entopts);
+    }
+    // Entity access: `client.OnCallNotificationPause().list()` / `client.OnCallNotificationPause().load({ id })`.
+    // The argument is the entity OPTIONS object (passed to the entity
+    // constructor as entopts), not initial entity data.
+    OnCallNotificationPause(entopts) {
+        const self = this;
+        return new OnCallNotificationPauseEntity_1.OnCallNotificationPauseEntity(self, entopts);
     }
     // Entity access: `client.OnCallNotificationRulePublicV2().list()` / `client.OnCallNotificationRulePublicV2().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity

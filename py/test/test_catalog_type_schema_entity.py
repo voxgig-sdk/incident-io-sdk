@@ -37,7 +37,7 @@ class TestCatalogTypeSchemaEntity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.CatalogTypeSchema(None).create({"catalog_type_id": 1, "annotations": "x", "attributes": "x", "categories": "x", "color": "x", "created_at": "x", "description": "x", "engine_resource_type": "x", "icon": "x", "id": "x", "is_editable": True, "name": "x", "ranked": True, "schema": "x", "semantic_type": "x", "type_name": "x", "updated_at": "x", "use_name_as_identifier": True, "version": 1}, None)
+            client.CatalogTypeSchema(None).create({"catalog_type_id": 1, "attributes": "x", "version": 1}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

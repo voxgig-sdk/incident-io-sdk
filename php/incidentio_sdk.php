@@ -1491,6 +1491,24 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
+    private $_managed_resource = null;
+
+    // Canonical facade: $client->ManagedResource()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->managed_resource()
+    // resolves here too.
+    public function ManagedResource($data = null)
+    {
+        require_once __DIR__ . '/entity/managed_resource_entity.php';
+        if ($data === null) {
+            if ($this->_managed_resource === null) {
+                $this->_managed_resource = new ManagedResourceEntity($this, null);
+            }
+            return $this->_managed_resource;
+        }
+        return new ManagedResourceEntity($this, $data);
+    }
+
+
     private $_on_call_notification_method_public_v2 = null;
 
     // Canonical facade: $client->OnCallNotificationMethodPublicV2()->list() / ->load(["id" => ...]).
@@ -1506,6 +1524,24 @@ class IncidentIoSDK implements \JsonSerializable
             return $this->_on_call_notification_method_public_v2;
         }
         return new OnCallNotificationMethodPublicV2Entity($this, $data);
+    }
+
+
+    private $_on_call_notification_pause = null;
+
+    // Canonical facade: $client->OnCallNotificationPause()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->on_call_notification_pause()
+    // resolves here too.
+    public function OnCallNotificationPause($data = null)
+    {
+        require_once __DIR__ . '/entity/on_call_notification_pause_entity.php';
+        if ($data === null) {
+            if ($this->_on_call_notification_pause === null) {
+                $this->_on_call_notification_pause = new OnCallNotificationPauseEntity($this, null);
+            }
+            return $this->_on_call_notification_pause;
+        }
+        return new OnCallNotificationPauseEntity($this, $data);
     }
 
 

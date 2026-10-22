@@ -29,32 +29,15 @@
 ---@field is_follow_up? boolean
 
 ---@class ActionCreateData
----@field assignee table
 ---@field assignee_id? string
----@field completed_at? string
----@field created_at string
----@field creator table
----@field description? string
----@field external_issue_reference? table
----@field follow_up boolean
----@field id string
+---@field description string
 ---@field incident_id string
----@field status string
----@field updated_at string
 
 ---@class ActionUpdateData
 ---@field id string
----@field assignee? table
 ---@field assignee_id? string
----@field completed_at? string
----@field created_at? string
----@field creator? table
 ---@field description? string
----@field external_issue_reference? table
----@field follow_up? boolean
----@field incident_id? string
 ---@field status? string
----@field updated_at? string
 
 ---@class ActionRemoveMatch
 ---@field id string
@@ -128,9 +111,8 @@
 ---@class AlertAttributeCreateData
 ---@field array boolean
 ---@field emoji? string
----@field id string
 ---@field name string
----@field required boolean
+---@field required? boolean
 ---@field type string
 
 ---@class AlertAttributeUpdateData
@@ -168,23 +150,10 @@
 ---@field alert_group_id? string
 ---@field alert_id? string
 ---@field content string
----@field created_at string
----@field creator table
----@field id string
----@field images table
----@field last_edited_at? string
----@field updated_at string
 
 ---@class AlertNoteUpdateData
 ---@field id string
----@field alert_group_id? string
----@field alert_id? string
 ---@field content? string
----@field created_at? string
----@field creator? table
----@field images? table
----@field last_edited_at? string
----@field updated_at? string
 
 ---@class AlertNoteRemoveMatch
 ---@field id string
@@ -225,7 +194,6 @@
 ---@field escalation_config table
 ---@field expressions table
 ---@field grouping_config table
----@field id string
 ---@field incident_config table
 ---@field incident_template table
 ---@field is_private boolean
@@ -234,7 +202,6 @@
 ---@field name string
 ---@field owning_team_ids? table
 ---@field updated_at? string
----@field version number
 
 ---@class AlertRouteUpdateData
 ---@field id string
@@ -303,28 +270,23 @@
 ---@field template? table
 
 ---@class AlertSourceCreateData
----@field alert_events_url? string
 ---@field auto_resolve_incident_alerts? boolean
 ---@field auto_resolve_timeout_minutes? number
 ---@field azure_devops_options table
----@field disabled? boolean
 ---@field email_options table
 ---@field filter_condition_groups? table
 ---@field fixed_team_id? string
 ---@field heartbeat_options table
 ---@field http_custom_options table
----@field id string
 ---@field jira_options table
 ---@field name string
 ---@field owning_team_ids? table
 ---@field rate_limit_sharding table
----@field secret_token? string
 ---@field source_type string
 ---@field template table
 
 ---@class AlertSourceUpdateData
 ---@field id string
----@field alert_events_url? string
 ---@field auto_resolve_incident_alerts? boolean
 ---@field auto_resolve_timeout_minutes? number
 ---@field azure_devops_options? table
@@ -338,8 +300,6 @@
 ---@field name? string
 ---@field owning_team_ids? table
 ---@field rate_limit_sharding? table
----@field secret_token? string
----@field source_type? string
 ---@field template? table
 
 ---@class AlertSourceRemoveMatch
@@ -381,19 +341,7 @@
 
 ---@class AlertsAddTagsResultV2CreateData
 ---@field alert_id string
----@field alert_group_ids? table
----@field alert_source_id string
----@field attributes table
----@field created_at string
----@field deduplication_key string
----@field description? string
----@field id string
----@field resolved_at? string
----@field source_url? string
----@field status string
----@field tags? table
----@field title string
----@field updated_at string
+---@field tags table
 
 ---@class AlertsRemoveTagsResultV2
 ---@field alert_group_ids? table
@@ -412,19 +360,7 @@
 
 ---@class AlertsRemoveTagsResultV2CreateData
 ---@field alert_id string
----@field alert_group_ids? table
----@field alert_source_id string
----@field attributes table
----@field created_at string
----@field deduplication_key string
----@field description? string
----@field id string
----@field resolved_at? string
----@field source_url? string
----@field status string
----@field tags? table
----@field title string
----@field updated_at string
+---@field tags table
 
 ---@class AlertsSetTagsResultV2
 ---@field alert_group_ids? table
@@ -443,19 +379,7 @@
 
 ---@class AlertsSetTagsResultV2CreateData
 ---@field alert_id string
----@field alert_group_ids? table
----@field alert_source_id string
----@field attributes table
----@field created_at string
----@field deduplication_key string
----@field description? string
----@field id string
----@field resolved_at? string
----@field source_url? string
----@field status string
----@field tags? table
----@field title string
----@field updated_at string
+---@field tags table
 
 ---@class AlertsTransitionIncidentAlertResultV2
 ---@field alert table
@@ -474,11 +398,7 @@
 ---@field page_size number
 
 ---@class AlertsTransitionIncidentAlertResultV2CreateData
----@field alert table
 ---@field alert_id string
----@field alert_route_id? string
----@field id string
----@field incident table
 ---@field incident_id string
 ---@field re_relate? boolean
 ---@field state string
@@ -507,24 +427,20 @@
 
 ---@class AnnouncementRuleCreateData
 ---@field condition_groups table
----@field conditions_no_longer_apply_behaviour string
----@field created_at string
----@field id string
----@field microsoft_teams_channel_ids table
+---@field conditions_no_longer_apply_behaviour? string
+---@field microsoft_teams_channel_ids? table
 ---@field mode string
 ---@field name string
----@field owning_team_ids table
+---@field owning_team_ids? table
 ---@field private_incident_scope? string
----@field slack_channel_ids table
+---@field slack_channel_ids? table
 ---@field template_id? string
 ---@field update_sharing_mode string
----@field updated_at string
 
 ---@class AnnouncementRuleUpdateData
 ---@field id string
 ---@field condition_groups? table
 ---@field conditions_no_longer_apply_behaviour? string
----@field created_at? string
 ---@field microsoft_teams_channel_ids? table
 ---@field mode? string
 ---@field name? string
@@ -533,7 +449,6 @@
 ---@field slack_channel_ids? table
 ---@field template_id? string
 ---@field update_sharing_mode? string
----@field updated_at? string
 
 ---@class AnnouncementRuleRemoveMatch
 ---@field id string
@@ -558,18 +473,15 @@
 ---@field owning_team_ids? table
 
 ---@class AnnouncementTemplateCreateData
----@field actions table
----@field fields table
----@field id string
----@field is_default boolean
+---@field actions? table
+---@field fields? table
 ---@field name string
----@field owning_team_ids table
+---@field owning_team_ids? table
 
 ---@class AnnouncementTemplateUpdateData
 ---@field id string
 ---@field actions? table
 ---@field fields? table
----@field is_default? boolean
 ---@field name? string
 ---@field owning_team_ids? table
 
@@ -599,31 +511,18 @@
 
 ---@class ApiKeyCreateData
 ---@field comments? string
----@field created_at string
----@field creator table
----@field id string
----@field last_used_at? string
 ---@field name string
 ---@field role_names table
----@field roles table
 ---@field team_ids table
 ---@field team_role_names table
----@field team_roles table
----@field token_last_issued_at string
 
 ---@class ApiKeyUpdateData
 ---@field id string
 ---@field comments? string
----@field created_at? string
----@field creator? table
----@field last_used_at? string
 ---@field name? string
 ---@field role_names? table
----@field roles? table
 ---@field team_ids? table
 ---@field team_role_names? table
----@field team_roles? table
----@field token_last_issued_at? string
 
 ---@class ApiKeyRemoveMatch
 ---@field id string
@@ -653,18 +552,10 @@
 
 ---@class CallRouteUpdateData
 ---@field id string
----@field allowed_callers? table
----@field country_code? string
----@field created_at? string
----@field current_state? string
 ---@field custom_language? string
 ---@field name? string
----@field options? table
 ---@field path? table
----@field phone_number? string
----@field phone_number_type? string
 ---@field responder_caller_id? string
----@field updated_at? string
 ---@field use_caller_allowlist? boolean
 
 ---@class CallRoutesCreateAllowedCallerResultV2
@@ -804,33 +695,20 @@
 
 ---@class CatalogEntryCreateData
 ---@field aliases? table
----@field archived_at? string
 ---@field attribute_values table
----@field catalog_entry table
----@field catalog_type table
 ---@field catalog_type_id string
----@field created_at string
 ---@field external_id? string
----@field id string
 ---@field name string
 ---@field rank? number
----@field update_attributes? table
----@field updated_at string
 
 ---@class CatalogEntryUpdateData
 ---@field id string
 ---@field aliases? table
----@field archived_at? string
 ---@field attribute_values? table
----@field catalog_entry? table
----@field catalog_type? table
----@field catalog_type_id? string
----@field created_at? string
 ---@field external_id? string
 ---@field name? string
 ---@field rank? number
 ---@field update_attributes? table
----@field updated_at? string
 
 ---@class CatalogResource
 ---@field category string
@@ -904,55 +782,29 @@
 ---@field use_name_as_identifier? boolean
 
 ---@class CatalogTypeCreateData
----@field annotations table
----@field categories table
----@field color string
----@field created_at string
+---@field annotations? table
+---@field categories? table
+---@field color? string
 ---@field description string
----@field dynamic_resource_parameter? string
----@field engine_resource_type string
----@field estimated_count? number
----@field icon string
----@field id string
----@field is_editable boolean
----@field is_team_type? boolean
----@field last_synced_at? string
+---@field icon? string
 ---@field name string
 ---@field owning_team_ids? table
----@field ranked boolean
----@field registry_type? string
----@field required_integrations? table
----@field schema table
----@field semantic_type string
+---@field ranked? boolean
 ---@field source_repo_url? string
----@field type_name string
----@field updated_at string
----@field use_name_as_identifier boolean
+---@field type_name? string
+---@field use_name_as_identifier? boolean
 
 ---@class CatalogTypeUpdateData
 ---@field id string
 ---@field annotations? table
 ---@field categories? table
 ---@field color? string
----@field created_at? string
 ---@field description? string
----@field dynamic_resource_parameter? string
----@field engine_resource_type? string
----@field estimated_count? number
 ---@field icon? string
----@field is_editable? boolean
----@field is_team_type? boolean
----@field last_synced_at? string
 ---@field name? string
 ---@field owning_team_ids? table
 ---@field ranked? boolean
----@field registry_type? string
----@field required_integrations? table
----@field schema? table
----@field semantic_type? string
 ---@field source_repo_url? string
----@field type_name? string
----@field updated_at? string
 ---@field use_name_as_identifier? boolean
 
 ---@class CatalogTypeSchema
@@ -985,31 +837,7 @@
 
 ---@class CatalogTypeSchemaCreateData
 ---@field catalog_type_id string
----@field annotations table
 ---@field attributes table
----@field categories table
----@field color string
----@field created_at string
----@field description string
----@field dynamic_resource_parameter? string
----@field engine_resource_type string
----@field estimated_count? number
----@field icon string
----@field id string
----@field is_editable boolean
----@field is_team_type? boolean
----@field last_synced_at? string
----@field name string
----@field owning_team_ids? table
----@field ranked boolean
----@field registry_type? string
----@field required_integrations? table
----@field schema table
----@field semantic_type string
----@field source_repo_url? string
----@field type_name string
----@field updated_at string
----@field use_name_as_identifier boolean
 ---@field version number
 
 ---@class CustomField
@@ -1057,43 +885,34 @@
 
 ---@class CustomFieldCreateData
 ---@field catalog_type_id? string
----@field created_at string
 ---@field description string
 ---@field field_type string
 ---@field filter_by table
 ---@field fixed_filter table
 ---@field group_by_catalog_attribute_id? string
 ---@field helptext_catalog_attribute_id? string
----@field id string
 ---@field name string
----@field options table
 ---@field required? string
 ---@field required_v2? string
 ---@field show_before_closure boolean
 ---@field show_before_creation boolean
 ---@field show_before_update boolean
 ---@field show_in_announcement_post? boolean
----@field updated_at string
 
 ---@class CustomFieldUpdateData
 ---@field id string
----@field catalog_type_id? string
----@field created_at? string
 ---@field description? string
----@field field_type? string
 ---@field filter_by? table
 ---@field fixed_filter? table
 ---@field group_by_catalog_attribute_id? string
 ---@field helptext_catalog_attribute_id? string
 ---@field name? string
----@field options? table
 ---@field required? string
 ---@field required_v2? string
 ---@field show_before_closure? boolean
 ---@field show_before_creation? boolean
 ---@field show_before_update? boolean
 ---@field show_in_announcement_post? boolean
----@field updated_at? string
 
 ---@class CustomFieldRemoveMatch
 ---@field id string
@@ -1114,13 +933,11 @@
 
 ---@class CustomFieldOptionCreateData
 ---@field custom_field_id string
----@field id string
----@field sort_key number
+---@field sort_key? number
 ---@field value string
 
 ---@class CustomFieldOptionUpdateData
 ---@field id string
----@field custom_field_id? string
 ---@field sort_key? number
 ---@field value? string
 
@@ -1159,20 +976,11 @@
 ---@field updated_at? table
 
 ---@class EscalationCreateData
----@field created_at string
----@field creator table
----@field description string
+---@field description? string
 ---@field escalation_path_id? string
----@field events table
----@field id string
 ---@field idempotency_key string
 ---@field incident_id? string
----@field priority table
----@field related_alerts table
----@field related_incidents table
----@field status string
 ---@field title string
----@field updated_at string
 ---@field user_ids? table
 
 ---@class EscalationPathTemplate
@@ -1196,11 +1004,9 @@
 
 ---@class EscalationPathTemplateCreateData
 ---@field description? string
----@field expressions table
----@field has_historical_escalation_path_versions boolean
----@field id string
+---@field expressions? table
 ---@field name string
----@field params table
+---@field params? table
 ---@field path table
 ---@field repeat_config table
 ---@field working_hours? table
@@ -1209,7 +1015,6 @@
 ---@field id string
 ---@field description? string
 ---@field expressions? table
----@field has_historical_escalation_path_versions? boolean
 ---@field name? string
 ---@field params? table
 ---@field path? table
@@ -1225,7 +1030,6 @@
 
 ---@class EscalationsCheckEscalationPermissionsResultV2CreateData
 ---@field escalation_id string
----@field response_options table
 ---@field user_ids table
 
 ---@class EscalationsReassignEscalationResultV2
@@ -1274,48 +1078,26 @@
 ---@field incident_mode? string
 
 ---@class FollowUpCreateData
----@field assignee table
 ---@field assignee_id? string
----@field assignee_team table
 ---@field assignee_team_id? string
----@field category table
----@field completed_at? string
----@field created_at string
----@field creator table
 ---@field description? string
----@field external_issue_reference table
 ---@field external_issue_reference_id? string
 ---@field follow_up_category_id? string
 ---@field follow_up_priority_option_id? string
----@field id string
 ---@field incident_id string
----@field labels table
----@field priority table
----@field status string
+---@field labels? table
 ---@field title string
----@field updated_at string
 
 ---@class FollowUpUpdateData
 ---@field id string
----@field assignee? table
 ---@field assignee_id? string
----@field assignee_team? table
 ---@field assignee_team_id? string
----@field category? table
----@field completed_at? string
----@field created_at? string
----@field creator? table
 ---@field description? string
----@field external_issue_reference? table
----@field external_issue_reference_id? string
 ---@field follow_up_category_id? string
 ---@field follow_up_priority_option_id? string
----@field incident_id? string
 ---@field labels? table
----@field priority? table
 ---@field status? string
 ---@field title? string
----@field updated_at? string
 
 ---@class FollowUpRemoveMatch
 ---@field id string
@@ -1341,22 +1123,7 @@
 
 ---@class FollowUpsConnectExternalIssueResultV3CreateData
 ---@field follow_up_id string
----@field assignee table
----@field assignee_team table
----@field category table
----@field completed_at? string
----@field created_at string
----@field creator table
----@field description? string
----@field external_issue_reference table
----@field id string
----@field incident_id string
----@field labels table
----@field priority table
 ---@field provider string
----@field status string
----@field title string
----@field updated_at string
 ---@field url string
 
 ---@class FollowUpsCreateFromLinkResultV3
@@ -1436,50 +1203,23 @@
 ---@field status? table
 
 ---@class IncidentCreateData
----@field call_url? string
----@field created_at string
----@field creator table
----@field custom_field_entries table
----@field debriefs? table
----@field duration_metrics? table
----@field external_issue_reference table
----@field has_debrief? boolean
----@field id string
+---@field custom_field_entries? table
 ---@field idempotency_key string
----@field incident_role_assignments table
----@field incident_status table
+---@field incident_role_assignments? table
 ---@field incident_status_id? string
 ---@field incident_timestamp_values? table
----@field incident_type table
 ---@field incident_type_id? string
----@field last_activity_at string
----@field mode string
----@field ms_teams_channel_url? string
----@field name string
----@field permalink? string
----@field postmortem_document_ids? table
----@field postmortem_document_url? string
----@field reference string
+---@field mode? string
+---@field name? string
 ---@field retrospective_incident_options? table
----@field severity table
 ---@field severity_id? string
----@field slack_channel_id string
----@field slack_channel_name? string
 ---@field slack_channel_name_override? string
----@field slack_channel_url? string
----@field slack_team_id string
+---@field slack_team_id? string
 ---@field source_message_channel_id? string
 ---@field source_message_timestamp? string
----@field status string
+---@field status? string
 ---@field summary? string
----@field team_ids table
----@field timestamps? table
----@field updated_at string
 ---@field visibility string
----@field workload_minutes_late? number
----@field workload_minutes_sleeping? number
----@field workload_minutes_total? number
----@field workload_minutes_working? number
 
 ---@class IncidentActivityLogEntry
 ---@field content? table
@@ -1507,7 +1247,6 @@
 ---@field resource_type? string
 
 ---@class IncidentAttachmentCreateData
----@field id string
 ---@field incident_id string
 ---@field resource table
 
@@ -1531,22 +1270,17 @@
 ---@field page_size? number
 
 ---@class IncidentFormCreateData
----@field created_at string
 ---@field expressions table
 ---@field form_type string
----@field id string
 ---@field incident_type_id? string
 ---@field lifecycle_elements? table
----@field updated_at string
 
 ---@class IncidentFormUpdateData
 ---@field id string
----@field created_at? string
 ---@field expressions? table
 ---@field form_type? string
 ---@field incident_type_id? string
 ---@field lifecycle_elements? table
----@field updated_at? string
 
 ---@class IncidentFormRemoveMatch
 ---@field id string
@@ -1610,26 +1344,19 @@
 ---@field updated_at? string
 
 ---@class IncidentRoleCreateData
----@field created_at string
 ---@field description string
----@field id string
 ---@field instructions string
 ---@field name string
----@field required? boolean
----@field role_type string
+---@field required boolean
 ---@field shortform string
----@field updated_at string
 
 ---@class IncidentRoleUpdateData
 ---@field id string
----@field created_at? string
 ---@field description? string
 ---@field instructions? string
 ---@field name? string
 ---@field required? boolean
----@field role_type? string
 ---@field shortform? string
----@field updated_at? string
 
 ---@class IncidentRoleRemoveMatch
 ---@field id string
@@ -1657,21 +1384,15 @@
 
 ---@class IncidentStatusCreateData
 ---@field category string
----@field created_at string
 ---@field description string
----@field id string
 ---@field name string
----@field rank number
----@field updated_at string
+---@field rank? number
 
 ---@class IncidentStatusUpdateData
 ---@field id string
----@field category? string
----@field created_at? string
 ---@field description? string
 ---@field name? string
 ---@field rank? number
----@field updated_at? string
 
 ---@class IncidentStatusRemoveMatch
 ---@field id string
@@ -1708,20 +1429,15 @@
 ---@field page_size? number
 
 ---@class IncidentTemplateCreateData
----@field created_at string
 ---@field expressions? table
----@field id string
 ---@field name string
 ---@field template table
----@field updated_at string
 
 ---@class IncidentTemplateUpdateData
 ---@field id string
----@field created_at? string
 ---@field expressions? table
 ---@field name? string
 ---@field template? table
----@field updated_at? string
 
 ---@class IncidentTemplateRemoveMatch
 ---@field id string
@@ -1736,7 +1452,6 @@
 ---@field expressions? table
 ---@field name string
 ---@field template table
----@field warnings table
 
 ---@class IncidentTimelineItem
 ---@field activity_log_id? string
@@ -1756,28 +1471,17 @@
 ---@field page_size? number
 
 ---@class IncidentTimelineItemCreateData
----@field activity_log_id? string
----@field created_at string
----@field creator table
 ---@field description? string
----@field id string
 ---@field idempotency_key string
 ---@field incident_id string
 ---@field timestamp string
 ---@field title string
----@field updated_at string
 
 ---@class IncidentTimelineItemUpdateData
 ---@field id string
----@field activity_log_id? string
----@field created_at? string
----@field creator? table
 ---@field description? string
----@field idempotency_key? string
----@field incident_id? string
 ---@field timestamp? string
 ---@field title? string
----@field updated_at? string
 
 ---@class IncidentTimestamp
 ---@field id string
@@ -1836,17 +1540,11 @@
 ---@field page_size? number
 
 ---@class IncidentUpdateCreateData
----@field created_at string
----@field id string
 ---@field idempotency_key string
 ---@field incident_id string
----@field merged_into_incident_id? string
 ---@field message? string
----@field new_incident_status table
----@field new_severity table
 ---@field to_incident_status_id? string
 ---@field to_severity_id? string
----@field updater table
 
 ---@class IpAllowlist
 ---@field allowlist table
@@ -1863,7 +1561,6 @@
 ---@class IpAllowlistUpdateData
 ---@field allowlist? table
 ---@field enabled? boolean
----@field updated_at? string
 ---@field version? number
 
 ---@class IpRange
@@ -1905,11 +1602,8 @@
 
 ---@class MaintenanceWindowCreateData
 ---@field alert_condition_groups table
----@field archived_at? string
----@field created_at string
 ---@field end_at string
 ---@field escalation_targets? table
----@field id string
 ---@field incident_id? string
 ---@field lead table
 ---@field name string
@@ -1918,17 +1612,14 @@
 ---@field notify_end_minutes_before? number
 ---@field notify_start_minutes_before? number
 ---@field owning_team_ids? table
----@field reroute_on_end boolean
----@field resolve_on_end boolean
+---@field reroute_on_end? boolean
+---@field resolve_on_end? boolean
 ---@field show_in_sidebar boolean
 ---@field start_at string
----@field updated_at string
 
 ---@class MaintenanceWindowUpdateData
 ---@field id string
 ---@field alert_condition_groups? table
----@field archived_at? string
----@field created_at? string
 ---@field end_at? string
 ---@field escalation_targets? table
 ---@field incident_id? string
@@ -1943,11 +1634,22 @@
 ---@field resolve_on_end? boolean
 ---@field show_in_sidebar? boolean
 ---@field start_at? string
----@field updated_at? string
 
 ---@class MaintenanceWindowRemoveMatch
 ---@field id string
 ---@field force? boolean
+
+---@class ManagedResource
+---@field annotations table
+---@field managed_by string
+---@field resource_id string
+---@field resource_type string
+---@field source_url? string
+
+---@class ManagedResourceCreateData
+---@field annotations table
+---@field resource_id string
+---@field resource_type string
 
 ---@class OnCallNotificationMethodPublicV2
 ---@field address string
@@ -1958,6 +1660,24 @@
 
 ---@class OnCallNotificationMethodPublicV2ListMatch
 ---@field user_id string
+
+---@class OnCallNotificationPause
+---@field created_at string
+---@field ends_at string
+---@field id string
+---@field reason? string
+---@field starts_at string
+---@field updated_at string
+---@field user_id string
+
+---@class OnCallNotificationPauseLoadMatch
+---@field id string
+
+---@class OnCallNotificationPauseListMatch
+---@field after? string
+---@field from? string
+---@field page_size? number
+---@field to? string
 
 ---@class OnCallNotificationRulePublicV2
 ---@field app table
@@ -1993,29 +1713,20 @@
 
 ---@class PayConfigCreateData
 ---@field base_rate_cents number
----@field created_at string
 ---@field currency string
----@field id string
 ---@field name string
----@field one_off_rules table
----@field published_at? string
+---@field one_off_rules? table
 ---@field rate_time_unit string
 ---@field timezone string
----@field updated_at string
----@field weekly_rules table
+---@field weekly_rules? table
 
 ---@class PayConfigUpdateData
 ---@field id string
 ---@field base_rate_cents? number
----@field created_at? string
 ---@field currency? string
 ---@field name? string
----@field one_off_rules? table
----@field published_at? string
 ---@field rate_time_unit? string
 ---@field timezone? string
----@field updated_at? string
----@field weekly_rules? table
 
 ---@class PayConfigRemoveMatch
 ---@field id string
@@ -2154,25 +1865,15 @@
 ---@field page_size? number
 
 ---@class PayReportCreateData
----@field created_at string
----@field creator? table
 ---@field end_date string
----@field error_code? string
----@field error_message? string
----@field id string
 ---@field name string
----@field overlapping_shifts string
+---@field overlapping_shifts? string
 ---@field pay_config_expression table
 ---@field pay_config_id? string
----@field published_at? string
 ---@field rotation_filters? table
 ---@field schedule_ids table
 ---@field start_date string
----@field status string
----@field total_duration_seconds? number
----@field total_pay_by_currency? table
----@field unpaid_shifts string
----@field updated_at string
+---@field unpaid_shifts? string
 
 ---@class PayReportRemoveMatch
 ---@field id string
@@ -2200,23 +1901,7 @@
 ---@class PayReportsPublishResultV2CreateData
 ---@field pay_report_id string
 ---@field cc_emails table
----@field created_at string
----@field creator? table
----@field end_date string
----@field error_code? string
----@field error_message? string
----@field id string
----@field name string
----@field overlapping_shifts string
----@field published_at? string
----@field schedule_ids table
 ---@field send_user_breakdowns string
----@field start_date string
----@field status string
----@field total_duration_seconds? number
----@field total_pay_by_currency? table
----@field unpaid_shifts string
----@field updated_at string
 
 ---@class PayReportsUnpublishResultV2
 ---@field created_at string
@@ -2239,23 +1924,7 @@
 
 ---@class PayReportsUnpublishResultV2CreateData
 ---@field pay_report_id string
----@field created_at string
----@field creator? table
----@field end_date string
----@field error_code? string
----@field error_message? string
----@field id string
----@field name string
----@field overlapping_shifts string
----@field published_at? string
----@field schedule_ids table
----@field start_date string
----@field status string
----@field total_duration_seconds? number
----@field total_pay_by_currency? table
----@field unpaid_shifts string
 ---@field unpublish_reason string
----@field updated_at string
 
 ---@class PayReportsV2
 
@@ -2296,25 +1965,21 @@
 ---@class PolicyCreateData
 ---@field assignment_rules table
 ---@field conditions table
----@field created_at string
 ---@field debrief table
----@field description? string
+---@field description string
 ---@field expressions? table
 ---@field follow_up table
----@field id string
 ---@field name string
 ---@field on_call_readiness? table
 ---@field policy_type string
 ---@field post_mortem table
 ---@field schedule table
----@field status string
----@field updated_at string
+---@field status? string
 
 ---@class PolicyUpdateData
 ---@field id string
 ---@field assignment_rules? table
 ---@field conditions? table
----@field created_at? string
 ---@field debrief? table
 ---@field description? string
 ---@field expressions? table
@@ -2325,7 +1990,6 @@
 ---@field post_mortem? table
 ---@field schedule? table
 ---@field status? string
----@field updated_at? string
 
 ---@class PolicyFinding
 ---@field created_at string
@@ -2378,25 +2042,7 @@
 
 ---@class PolicyFindingsDismissResultV2CreateData
 ---@field policy_finding_id string
----@field created_at string
----@field days? number
----@field debrief table
----@field dismissal table
----@field due_at? string
----@field follow_up table
----@field id string
----@field last_checked_at string
----@field on_call_readiness table
----@field policy_id string
----@field policy_type string
----@field post_mortem table
 ---@field reason string
----@field responsible_users table
----@field schedule table
----@field shift_conflict table
----@field state string
----@field updated_at string
----@field vacation_conflict table
 
 ---@class PolicyFindingsRestoreResultV2
 ---@field created_at string
@@ -2462,15 +2108,7 @@
 
 ---@class PostmortemDocumentUpdateData
 ---@field id string
----@field created_at? string
----@field document_url? string
----@field editors? table
----@field exported_urls? table
----@field incident_id? string
 ---@field status? string
----@field title? string
----@field type? string
----@field updated_at? string
 
 ---@class Schedule
 ---@field annotations table
@@ -2494,32 +2132,21 @@
 ---@field page_size? number
 
 ---@class ScheduleCreateData
----@field annotations table
----@field config table
----@field created_at string
----@field current_shifts? table
+---@field annotations? table
+---@field config? table
 ---@field holidays_public_config table
----@field id string
----@field name string
----@field next_shifts? table
----@field permalink string
----@field team_ids table
----@field timezone string
----@field updated_at string
+---@field name? string
+---@field team_ids? table
+---@field timezone? string
 
 ---@class ScheduleUpdateData
 ---@field id string
 ---@field annotations? table
 ---@field config? table
----@field created_at? string
----@field current_shifts? table
 ---@field holidays_public_config? table
 ---@field name? string
----@field next_shifts? table
----@field permalink? string
 ---@field team_ids? table
 ---@field timezone? string
----@field updated_at? string
 
 ---@class ScheduleRemoveMatch
 ---@field id string
@@ -2536,10 +2163,7 @@
 ---@field schedule_id string
 ---@field entry_window_end? string
 ---@field entry_window_start? string
----@field final table
----@field overrides table
 ---@field schedule table
----@field scheduled table
 
 ---@class ScheduleEntry
 ---@field pagination_meta table
@@ -2573,17 +2197,11 @@
 
 ---@class ScheduleReplicaCreateData
 ---@field id string
----@field created_at string
----@field last_sync_error? string
----@field last_synced_at? string
 ---@field mirror_window_days? number
 ---@field replica_fallback_user_id string
 ---@field replica_provider string
 ---@field replica_provider_id string
----@field schedule_id string
 ---@field sources table
----@field updated_at string
----@field user_statuses table
 
 ---@class ScheduleSyncRule
 ---@field annotations? table
@@ -2609,26 +2227,17 @@
 ---@class ScheduleSyncRuleCreateData
 ---@field id string
 ---@field annotations? table
----@field created_at string
----@field permanent_member_user_ids table
+---@field permanent_member_user_ids? table
 ---@field rotation_id? string
----@field schedule_id string
----@field schedule_sync_target table
 ---@field schedule_sync_target_id string
 ---@field sync_type string
----@field updated_at string
 
 ---@class ScheduleSyncRuleUpdateData
 ---@field id string
 ---@field schedule_id string
 ---@field annotations? table
----@field created_at? string
 ---@field permanent_member_user_ids? table
----@field rotation_id? string
----@field schedule_sync_target? table
----@field schedule_sync_target_id? string
 ---@field sync_type? string
----@field updated_at? string
 
 ---@class ScheduleSyncTarget
 ---@field add_bot_to_group boolean
@@ -2651,24 +2260,13 @@
 ---@class ScheduleSyncTargetCreateData
 ---@field add_bot_to_group boolean
 ---@field annotations? table
----@field created_at string
----@field id string
----@field linked_schedules table
 ---@field new_slack_user_group table
----@field slack_team_id string
----@field slack_user_group_id string
----@field updated_at string
+---@field slack_user_group_id? string
 
 ---@class ScheduleSyncTargetUpdateData
 ---@field id string
 ---@field add_bot_to_group? boolean
 ---@field annotations? table
----@field created_at? string
----@field linked_schedules? table
----@field new_slack_user_group? table
----@field slack_team_id? string
----@field slack_user_group_id? string
----@field updated_at? string
 
 ---@class ScheduleSyncTargetRemoveMatch
 ---@field id string
@@ -2695,14 +2293,11 @@
 ---@field schedule_id string
 
 ---@class SchedulesShowOverrideResultV2CreateData
----@field created_at string
 ---@field end_at string
----@field id string
 ---@field layer_id string
 ---@field rotation_id string
 ---@field schedule_id string
 ---@field start_at string
----@field updated_at string
 ---@field user table
 
 ---@class SchedulesUpdateOverrideResultV2
@@ -2718,13 +2313,10 @@
 
 ---@class SchedulesUpdateOverrideResultV2UpdateData
 ---@field id string
----@field created_at? string
 ---@field end_at? string
 ---@field layer_id? string
 ---@field rotation_id? string
----@field schedule_id? string
 ---@field start_at? string
----@field updated_at? string
 ---@field user? table
 
 ---@class Secret
@@ -2749,30 +2341,16 @@
 ---@field team_id? table
 
 ---@class SecretCreateData
----@field created_at string
 ---@field description? string
----@field id string
----@field last_four_chars? string
 ---@field name string
 ---@field owning_team_ids? table
----@field secret table
----@field updated_at string
 ---@field value string
----@field version number
----@field versions table
 
 ---@class SecretUpdateData
 ---@field id string
----@field created_at? string
 ---@field description? string
----@field last_four_chars? string
 ---@field name? string
 ---@field owning_team_ids? table
----@field secret? table
----@field updated_at? string
----@field value? string
----@field version? number
----@field versions? table
 
 ---@class SecretRemoveMatch
 ---@field id string
@@ -2797,20 +2375,15 @@
 ---@field updated_at? string
 
 ---@class SeverityCreateData
----@field created_at string
 ---@field description string
----@field id string
 ---@field name string
----@field rank number
----@field updated_at string
+---@field rank? number
 
 ---@class SeverityUpdateData
 ---@field id string
----@field created_at? string
 ---@field description? string
 ---@field name? string
 ---@field rank? number
----@field updated_at? string
 
 ---@class StatusPage
 ---@field description? string
@@ -2842,14 +2415,11 @@
 
 ---@class StatusPageComponentCreateData
 ---@field description? string
----@field id string
----@field management_meta table
 ---@field name string
 
 ---@class StatusPageComponentUpdateData
 ---@field id string
 ---@field description? string
----@field management_meta? table
 ---@field name? string
 
 ---@class StatusPageComponentRemoveMatch
@@ -2896,30 +2466,17 @@
 ---@field sub_page_id? string
 
 ---@class StatusPageIncidentCreateData
----@field component_impacts table
 ---@field component_statuses? table
----@field id string
 ---@field idempotency_key string
 ---@field incident_status string
 ---@field message string
 ---@field name string
 ---@field notify_subscribers boolean
----@field published_at string
 ---@field status_page_id string
----@field updates table
 
 ---@class StatusPageIncidentUpdateData
 ---@field id string
----@field component_impacts? table
----@field component_statuses? table
----@field idempotency_key? string
----@field incident_status? string
----@field message? string
 ---@field name? string
----@field notify_subscribers? boolean
----@field published_at? string
----@field status_page_id? string
----@field updates? table
 
 ---@class StatusPageIncidentUpdate
 ---@field component_statuses? table
@@ -2974,35 +2531,21 @@
 
 ---@class StatusPageMaintenanceCreateData
 ---@field affected_component_ids table
----@field automate_maintenance_status boolean
----@field component_maintenance_periods table
+---@field automate_maintenance_status? boolean
 ---@field end_at string
----@field id string
 ---@field idempotency_key string
 ---@field maintenance_status string
 ---@field message string
 ---@field name string
 ---@field notify_subscribers boolean
----@field published_at string
 ---@field start_at string
 ---@field status_page_id string
----@field updates table
 
 ---@class StatusPageMaintenanceUpdateData
 ---@field id string
----@field affected_component_ids? table
----@field automate_maintenance_status? boolean
----@field component_maintenance_periods? table
 ---@field end_at? string
----@field idempotency_key? string
----@field maintenance_status? string
----@field message? string
 ---@field name? string
----@field notify_subscribers? boolean
----@field published_at? string
 ---@field start_at? string
----@field status_page_id? string
----@field updates? table
 
 ---@class StatusPageMaintenanceUpdate
 ---@field component_statuses? table
@@ -3059,15 +2602,9 @@
 
 ---@class TelemetryDataSourceV2UpdateData
 ---@field id string
----@field created_at? string
 ---@field datadog_config? table
----@field enabled? boolean
 ---@field grafana_config? table
 ---@field name? string
----@field provider? string
----@field source_type? string
----@field updated_at? string
----@field version? string
 
 ---@class User
 ---@field base_role table
@@ -3092,14 +2629,7 @@
 
 ---@class UserCreateData
 ---@field id string
----@field base_role table
----@field custom_roles table
----@field email? string
----@field is_active boolean
----@field name string
----@field role string
----@field seats table
----@field slack_user_id? string
+---@field preferred_escalation_provider? any
 
 ---@class Workflow
 ---@field annotations? table
@@ -3170,24 +2700,18 @@
 ---@field expressions table
 ---@field folder? string
 ---@field form_fields? table
----@field id string
 ---@field include_private_escalations? boolean
 ---@field include_private_incidents? boolean
----@field management_meta table
 ---@field name string
 ---@field once_for table
 ---@field owning_team_ids? table
 ---@field private_incident_scope? string
----@field runs_from? string
 ---@field runs_on_incident_modes table
 ---@field runs_on_incidents string
 ---@field shortform? string
----@field skip_step_upgrades? boolean
 ---@field state? string
 ---@field steps table
 ---@field trigger string
----@field version number
----@field workflow table
 
 ---@class WorkflowUpdateData
 ---@field id string
@@ -3201,21 +2725,16 @@
 ---@field form_fields? table
 ---@field include_private_escalations? boolean
 ---@field include_private_incidents? boolean
----@field management_meta? table
 ---@field name? string
 ---@field once_for? table
 ---@field owning_team_ids? table
 ---@field private_incident_scope? string
----@field runs_from? string
 ---@field runs_on_incident_modes? table
 ---@field runs_on_incidents? string
 ---@field shortform? string
 ---@field skip_step_upgrades? boolean
 ---@field state? string
 ---@field steps? table
----@field trigger? string
----@field version? number
----@field workflow? table
 
 ---@class WorkflowRemoveMatch
 ---@field id string

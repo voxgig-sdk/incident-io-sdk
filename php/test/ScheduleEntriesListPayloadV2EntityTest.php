@@ -33,7 +33,7 @@ class ScheduleEntriesListPayloadV2EntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->ScheduleEntriesListPayloadV2(null)->create(["schedule_id" => 1, "final" => 'x', "overrides" => 'x', "schedule" => 'x', "scheduled" => 'x'], null);
+            $client->ScheduleEntriesListPayloadV2(null)->create(["schedule_id" => 1, "schedule" => 'x'], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

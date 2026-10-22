@@ -47,7 +47,7 @@ describe('AlertsRemoveTagsResultV2Entity', async () => {
       return
     }
     const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
-    await assert.rejects(client.AlertsRemoveTagsResultV2().create({"alert_id":1,"alert_source_id":"x","attributes":"x","created_at":"x","deduplication_key":"x","id":"x","status":"x","title":"x","updated_at":"x"} as any),
+    await assert.rejects(client.AlertsRemoveTagsResultV2().create({"alert_id":1,"tags":"x"} as any),
       (err: any) => 'validate_failed' === err.code)
   })
 

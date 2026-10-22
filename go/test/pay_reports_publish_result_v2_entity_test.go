@@ -38,7 +38,7 @@ func TestPayReportsPublishResultV2Entity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.PayReportsPublishResultV2(nil).Create(map[string]any{"pay_report_id": 1, "cc_emails": "x", "created_at": "x", "end_date": "x", "id": "x", "name": "x", "overlapping_shifts": "x", "schedule_ids": "x", "send_user_breakdowns": "x", "start_date": "x", "status": "x", "unpaid_shifts": "x", "updated_at": "x"}, nil)
+		_, err := client.PayReportsPublishResultV2(nil).Create(map[string]any{"pay_report_id": 1, "cc_emails": "x", "send_user_breakdowns": "x"}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

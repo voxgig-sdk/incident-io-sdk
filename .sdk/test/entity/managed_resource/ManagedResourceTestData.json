@@ -1,0 +1,48 @@
+{
+  "existing": {
+    "managed_resource": {
+      "MANAGED_RESOURCE00": {
+        "annotations": {},
+        "managed_by": "s33",
+        "resource_id": "RESOURCE01",
+        "resource_type": "s35",
+        "source_url": "s36",
+        "id": "MANAGED_RESOURCE00"
+      },
+      "MANAGED_RESOURCE01": {
+        "annotations": {},
+        "managed_by": "s65",
+        "resource_id": "RESOURCE01",
+        "resource_type": "s67",
+        "source_url": "s68",
+        "id": "MANAGED_RESOURCE01"
+      },
+      "MANAGED_RESOURCE02": {
+        "annotations": {},
+        "managed_by": "s97",
+        "resource_id": "RESOURCE01",
+        "resource_type": "s99",
+        "source_url": "s9a",
+        "id": "MANAGED_RESOURCE02"
+      }
+    }
+  },
+  "new": {
+    "managed_resource": {
+      "managed_resource_ref01": {
+        "annotations": {},
+        "managed_by": "sc9",
+        "resource_id": "RESOURCE01",
+        "resource_type": "scb",
+        "source_url": "scc"
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/managed_resources": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

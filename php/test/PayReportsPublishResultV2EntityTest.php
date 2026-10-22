@@ -33,7 +33,7 @@ class PayReportsPublishResultV2EntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->PayReportsPublishResultV2(null)->create(["pay_report_id" => 1, "cc_emails" => 'x', "created_at" => 'x', "end_date" => 'x', "id" => 'x', "name" => 'x', "overlapping_shifts" => 'x', "schedule_ids" => 'x', "send_user_breakdowns" => 'x', "start_date" => 'x', "status" => 'x', "unpaid_shifts" => 'x', "updated_at" => 'x'], null);
+            $client->PayReportsPublishResultV2(null)->create(["pay_report_id" => 1, "cc_emails" => 'x', "send_user_breakdowns" => 'x'], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

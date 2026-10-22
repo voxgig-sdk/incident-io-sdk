@@ -60,7 +60,7 @@ const utility_1 = require("../../utility");
             return;
         }
         const client = __1.IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } });
-        await node_assert_1.default.rejects(client.FollowUpsConnectExternalIssueResultV3().create({ "follow_up_id": 1, "assignee": "x", "assignee_team": "x", "category": "x", "created_at": "x", "creator": "x", "external_issue_reference": "x", "id": "x", "incident_id": "x", "labels": "x", "priority": "x", "provider": "x", "status": "x", "title": "x", "updated_at": "x", "url": "x" }), (err) => 'validate_failed' === err.code);
+        await node_assert_1.default.rejects(client.FollowUpsConnectExternalIssueResultV3().create({ "follow_up_id": 1, "provider": "x", "url": "x" }), (err) => 'validate_failed' === err.code);
     });
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE;

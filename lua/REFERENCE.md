@@ -289,9 +289,17 @@ Create a new `IpRange` entity instance. Pass `nil` for no initial data.
 
 Create a new `MaintenanceWindow` entity instance. Pass `nil` for no initial data.
 
+#### `ManagedResource(data)`
+
+Create a new `ManagedResource` entity instance. Pass `nil` for no initial data.
+
 #### `OnCallNotificationMethodPublicV2(data)`
 
 Create a new `OnCallNotificationMethodPublicV2` entity instance. Pass `nil` for no initial data.
+
+#### `OnCallNotificationPause(data)`
+
+Create a new `OnCallNotificationPause` entity instance. Pass `nil` for no initial data.
 
 #### `OnCallNotificationRulePublicV2(data)`
 
@@ -561,14 +569,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:Action():create({
-  assignee = --[[ table ]],
-  created_at = --[[ string ]],
-  creator = --[[ table ]],
-  follow_up = --[[ boolean ]],
-  id = --[[ string ]],
+  description = --[[ string ]],
   incident_id = --[[ string ]],
-  status = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -763,9 +765,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:AlertAttribute():create({
   array = --[[ boolean ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  required = --[[ boolean ]],
   type = --[[ string ]],
 })
 ```
@@ -864,11 +864,6 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:AlertNote():create({
   content = --[[ string ]],
-  created_at = --[[ string ]],
-  creator = --[[ table ]],
-  id = --[[ string ]],
-  images = --[[ table ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -981,13 +976,11 @@ local result, err = client:AlertRoute():create({
   escalation_config = --[[ table ]],
   expressions = --[[ table ]],
   grouping_config = --[[ table ]],
-  id = --[[ string ]],
   incident_config = --[[ table ]],
   incident_template = --[[ table ]],
   is_private = --[[ boolean ]],
   message_config = --[[ table ]],
   name = --[[ string ]],
-  version = --[[ number ]],
 })
 ```
 
@@ -1097,7 +1090,6 @@ local result, err = client:AlertSource():create({
   email_options = --[[ table ]],
   heartbeat_options = --[[ table ]],
   http_custom_options = --[[ table ]],
-  id = --[[ string ]],
   jira_options = --[[ table ]],
   name = --[[ string ]],
   rate_limit_sharding = --[[ table ]],
@@ -1332,14 +1324,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:AlertsAddTagsResultV2():create({
   alert_id = --[[ string ]],
-  alert_source_id = --[[ string ]],
-  attributes = --[[ table ]],
-  created_at = --[[ string ]],
-  deduplication_key = --[[ string ]],
-  id = --[[ string ]],
-  status = --[[ string ]],
-  title = --[[ string ]],
-  updated_at = --[[ string ]],
+  tags = --[[ table ]],
 })
 ```
 
@@ -1424,14 +1409,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:AlertsRemoveTagsResultV2():create({
   alert_id = --[[ string ]],
-  alert_source_id = --[[ string ]],
-  attributes = --[[ table ]],
-  created_at = --[[ string ]],
-  deduplication_key = --[[ string ]],
-  id = --[[ string ]],
-  status = --[[ string ]],
-  title = --[[ string ]],
-  updated_at = --[[ string ]],
+  tags = --[[ table ]],
 })
 ```
 
@@ -1516,14 +1494,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:AlertsSetTagsResultV2():create({
   alert_id = --[[ string ]],
-  alert_source_id = --[[ string ]],
-  attributes = --[[ table ]],
-  created_at = --[[ string ]],
-  deduplication_key = --[[ string ]],
-  id = --[[ string ]],
-  status = --[[ string ]],
-  title = --[[ string ]],
-  updated_at = --[[ string ]],
+  tags = --[[ table ]],
 })
 ```
 
@@ -1584,10 +1555,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:AlertsTransitionIncidentAlertResultV2():create({
-  alert = --[[ table ]],
   alert_id = --[[ string ]],
-  id = --[[ string ]],
-  incident = --[[ table ]],
   incident_id = --[[ string ]],
   state = --[[ string ]],
 })
@@ -1682,16 +1650,9 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:AnnouncementRule():create({
   condition_groups = --[[ table ]],
-  conditions_no_longer_apply_behaviour = --[[ string ]],
-  created_at = --[[ string ]],
-  id = --[[ string ]],
-  microsoft_teams_channel_ids = --[[ table ]],
   mode = --[[ string ]],
   name = --[[ string ]],
-  owning_team_ids = --[[ table ]],
-  slack_channel_ids = --[[ table ]],
   update_sharing_mode = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -1796,12 +1757,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:AnnouncementTemplate():create({
-  actions = --[[ table ]],
-  fields = --[[ table ]],
-  id = --[[ string ]],
-  is_default = --[[ boolean ]],
   name = --[[ string ]],
-  owning_team_ids = --[[ table ]],
 })
 ```
 
@@ -1901,16 +1857,10 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:ApiKey():create({
-  created_at = --[[ string ]],
-  creator = --[[ table ]],
-  id = --[[ string ]],
   name = --[[ string ]],
   role_names = --[[ table ]],
-  roles = --[[ table ]],
   team_ids = --[[ table ]],
   team_role_names = --[[ table ]],
-  team_roles = --[[ table ]],
-  token_last_issued_at = --[[ string ]],
 })
 ```
 
@@ -2727,13 +2677,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:CatalogEntry():create({
   attribute_values = --[[ table ]],
-  catalog_entry = --[[ table ]],
-  catalog_type = --[[ table ]],
   catalog_type_id = --[[ string ]],
-  created_at = --[[ string ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -2923,22 +2868,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:CatalogType():create({
-  annotations = --[[ table ]],
-  categories = --[[ table ]],
-  color = --[[ string ]],
-  created_at = --[[ string ]],
   description = --[[ string ]],
-  engine_resource_type = --[[ string ]],
-  icon = --[[ string ]],
-  id = --[[ string ]],
-  is_editable = --[[ boolean ]],
   name = --[[ string ]],
-  ranked = --[[ boolean ]],
-  schema = --[[ table ]],
-  semantic_type = --[[ string ]],
-  type_name = --[[ string ]],
-  updated_at = --[[ string ]],
-  use_name_as_identifier = --[[ boolean ]],
 })
 ```
 
@@ -3045,23 +2976,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:CatalogTypeSchema():create({
   catalog_type_id = --[[ string ]],
-  annotations = --[[ table ]],
   attributes = --[[ table ]],
-  categories = --[[ table ]],
-  color = --[[ string ]],
-  created_at = --[[ string ]],
-  description = --[[ string ]],
-  engine_resource_type = --[[ string ]],
-  icon = --[[ string ]],
-  id = --[[ string ]],
-  is_editable = --[[ boolean ]],
-  name = --[[ string ]],
-  ranked = --[[ boolean ]],
-  schema = --[[ table ]],
-  semantic_type = --[[ string ]],
-  type_name = --[[ string ]],
-  updated_at = --[[ string ]],
-  use_name_as_identifier = --[[ boolean ]],
   version = --[[ number ]],
 })
 ```
@@ -3133,18 +3048,14 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:CustomField():create({
-  created_at = --[[ string ]],
   description = --[[ string ]],
   field_type = --[[ string ]],
   filter_by = --[[ table ]],
   fixed_filter = --[[ table ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  options = --[[ table ]],
   show_before_closure = --[[ boolean ]],
   show_before_creation = --[[ boolean ]],
   show_before_update = --[[ boolean ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -3246,8 +3157,6 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:CustomFieldOption():create({
   custom_field_id = --[[ string ]],
-  id = --[[ string ]],
-  sort_key = --[[ number ]],
   value = --[[ string ]],
 })
 ```
@@ -3371,18 +3280,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:Escalation():create({
-  created_at = --[[ string ]],
-  creator = --[[ table ]],
-  description = --[[ string ]],
-  events = --[[ table ]],
-  id = --[[ string ]],
   idempotency_key = --[[ string ]],
-  priority = --[[ table ]],
-  related_alerts = --[[ table ]],
-  related_incidents = --[[ table ]],
-  status = --[[ string ]],
   title = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -3474,11 +3373,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:EscalationPathTemplate():create({
-  expressions = --[[ table ]],
-  has_historical_escalation_path_versions = --[[ boolean ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  params = --[[ table ]],
   path = --[[ table ]],
   repeat_config = --[[ table ]],
 })
@@ -3571,7 +3466,6 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:EscalationsCheckEscalationPermissionsResultV2():create({
   escalation_id = --[[ string ]],
-  response_options = --[[ table ]],
   user_ids = --[[ table ]],
 })
 ```
@@ -3728,19 +3622,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:FollowUp():create({
-  assignee = --[[ table ]],
-  assignee_team = --[[ table ]],
-  category = --[[ table ]],
-  created_at = --[[ string ]],
-  creator = --[[ table ]],
-  external_issue_reference = --[[ table ]],
-  id = --[[ string ]],
   incident_id = --[[ string ]],
-  labels = --[[ table ]],
-  priority = --[[ table ]],
-  status = --[[ string ]],
   title = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -3846,20 +3729,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:FollowUpsConnectExternalIssueResultV3():create({
   follow_up_id = --[[ string ]],
-  assignee = --[[ table ]],
-  assignee_team = --[[ table ]],
-  category = --[[ table ]],
-  created_at = --[[ string ]],
-  creator = --[[ table ]],
-  external_issue_reference = --[[ table ]],
-  id = --[[ string ]],
-  incident_id = --[[ string ]],
-  labels = --[[ table ]],
-  priority = --[[ table ]],
   provider = --[[ string ]],
-  status = --[[ string ]],
-  title = --[[ string ]],
-  updated_at = --[[ string ]],
   url = --[[ string ]],
 })
 ```
@@ -4118,25 +3988,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:Incident():create({
-  created_at = --[[ string ]],
-  creator = --[[ table ]],
-  custom_field_entries = --[[ table ]],
-  external_issue_reference = --[[ table ]],
-  id = --[[ string ]],
   idempotency_key = --[[ string ]],
-  incident_role_assignments = --[[ table ]],
-  incident_status = --[[ table ]],
-  incident_type = --[[ table ]],
-  last_activity_at = --[[ string ]],
-  mode = --[[ string ]],
-  name = --[[ string ]],
-  reference = --[[ string ]],
-  severity = --[[ table ]],
-  slack_channel_id = --[[ string ]],
-  slack_team_id = --[[ string ]],
-  status = --[[ string ]],
-  team_ids = --[[ table ]],
-  updated_at = --[[ string ]],
   visibility = --[[ string ]],
 })
 ```
@@ -4267,7 +4119,6 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:IncidentAttachment():create({
-  id = --[[ string ]],
   incident_id = --[[ string ]],
   resource = --[[ table ]],
 })
@@ -4345,11 +4196,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:IncidentForm():create({
-  created_at = --[[ string ]],
   expressions = --[[ table ]],
   form_type = --[[ string ]],
-  id = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -4677,14 +4525,11 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:IncidentRole():create({
-  created_at = --[[ string ]],
   description = --[[ string ]],
-  id = --[[ string ]],
   instructions = --[[ string ]],
   name = --[[ string ]],
-  role_type = --[[ string ]],
+  required = --[[ boolean ]],
   shortform = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -4792,12 +4637,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:IncidentStatus():create({
   category = --[[ string ]],
-  created_at = --[[ string ]],
   description = --[[ string ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  rank = --[[ number ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -5003,11 +4844,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:IncidentTemplate():create({
-  created_at = --[[ string ]],
-  id = --[[ string ]],
   name = --[[ string ]],
   template = --[[ table ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -5101,7 +4939,6 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 local result, err = client:IncidentTemplatesValidateResultV1():create({
   name = --[[ string ]],
   template = --[[ table ]],
-  warnings = --[[ table ]],
 })
 ```
 
@@ -5179,14 +5016,10 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:IncidentTimelineItem():create({
-  created_at = --[[ string ]],
-  creator = --[[ table ]],
-  id = --[[ string ]],
   idempotency_key = --[[ string ]],
   incident_id = --[[ string ]],
   timestamp = --[[ string ]],
   title = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -5399,13 +5232,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:IncidentUpdate():create({
-  created_at = --[[ string ]],
-  id = --[[ string ]],
   idempotency_key = --[[ string ]],
   incident_id = --[[ string ]],
-  new_incident_status = --[[ table ]],
-  new_severity = --[[ table ]],
-  updater = --[[ table ]],
 })
 ```
 
@@ -5628,16 +5456,11 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:MaintenanceWindow():create({
   alert_condition_groups = --[[ table ]],
-  created_at = --[[ string ]],
   end_at = --[[ string ]],
-  id = --[[ string ]],
   lead = --[[ table ]],
   name = --[[ string ]],
-  reroute_on_end = --[[ boolean ]],
-  resolve_on_end = --[[ boolean ]],
   show_in_sidebar = --[[ boolean ]],
   start_at = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -5706,6 +5529,66 @@ Return the entity name.
 
 ---
 
+## ManagedResourceEntity
+
+```lua
+local managed_resource = client:ManagedResource(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotations` | `table` | Yes | Annotations that track metadata about this resource |
+| `managed_by` | `string` | Yes | How is this resource managed |
+| `resource_id` | `string` | Yes | The ID of the resource that this relates to |
+| `resource_type` | `string` | Yes | The type of the related resource |
+| `source_url` | `string` | No | The url of the external repository where this resource is managed (if there is one) |
+
+### Operations
+
+#### `create(reqdata, ctrl) -> any, err`
+
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
+
+```lua
+local result, err = client:ManagedResource():create({
+  annotations = --[[ table ]],
+  resource_id = --[[ string ]],
+  resource_type = --[[ string ]],
+})
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ManagedResourceEntity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
 ## OnCallNotificationMethodPublicV2Entity
 
 ```lua
@@ -5753,6 +5636,72 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `OnCallNotificationMethodPublicV2Entity` instance with the same client and
+options.
+
+#### `get_name() -> string`
+
+Return the entity name.
+
+
+---
+
+## OnCallNotificationPauseEntity
+
+```lua
+local on_call_notification_pause = client:OnCallNotificationPause(nil)
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `ends_at` | `string` | Yes | When notifications resume |
+| `id` | `string` | Yes | Unique identifier for this notification pause |
+| `reason` | `string` | No | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `string` | Yes | When notifications stop being sent to the user |
+| `updated_at` | `string` | Yes |  |
+| `user_id` | `string` | Yes | The user whose on-call notifications are paused in this time window |
+
+### Operations
+
+#### `list(reqmatch, ctrl) -> any, err`
+
+List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
+
+```lua
+local results, err = client:OnCallNotificationPause():list()
+```
+
+#### `load(reqmatch, ctrl) -> any, err`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
+
+```lua
+local result, err = client:OnCallNotificationPause():load({ id = "on_call_notification_pause_id" })
+```
+
+### Common Methods
+
+#### `data_get() -> table`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> table`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `OnCallNotificationPauseEntity` instance with the same client and
 options.
 
 #### `get_name() -> string`
@@ -5867,15 +5816,10 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:PayConfig():create({
   base_rate_cents = --[[ number ]],
-  created_at = --[[ string ]],
   currency = --[[ string ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  one_off_rules = --[[ table ]],
   rate_time_unit = --[[ string ]],
   timezone = --[[ string ]],
-  updated_at = --[[ string ]],
-  weekly_rules = --[[ table ]],
 })
 ```
 
@@ -6524,17 +6468,11 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:PayReport():create({
-  created_at = --[[ string ]],
   end_date = --[[ string ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  overlapping_shifts = --[[ string ]],
   pay_config_expression = --[[ table ]],
   schedule_ids = --[[ table ]],
   start_date = --[[ string ]],
-  status = --[[ string ]],
-  unpaid_shifts = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -6631,17 +6569,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 local result, err = client:PayReportsPublishResultV2():create({
   pay_report_id = --[[ string ]],
   cc_emails = --[[ table ]],
-  created_at = --[[ string ]],
-  end_date = --[[ string ]],
-  id = --[[ string ]],
-  name = --[[ string ]],
-  overlapping_shifts = --[[ string ]],
-  schedule_ids = --[[ table ]],
   send_user_breakdowns = --[[ string ]],
-  start_date = --[[ string ]],
-  status = --[[ string ]],
-  unpaid_shifts = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -6712,17 +6640,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:PayReportsUnpublishResultV2():create({
   pay_report_id = --[[ string ]],
-  created_at = --[[ string ]],
-  end_date = --[[ string ]],
-  id = --[[ string ]],
-  name = --[[ string ]],
-  overlapping_shifts = --[[ string ]],
-  schedule_ids = --[[ table ]],
-  start_date = --[[ string ]],
-  status = --[[ string ]],
-  unpaid_shifts = --[[ string ]],
   unpublish_reason = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -6910,16 +6828,13 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 local result, err = client:Policy():create({
   assignment_rules = --[[ table ]],
   conditions = --[[ table ]],
-  created_at = --[[ string ]],
   debrief = --[[ table ]],
+  description = --[[ string ]],
   follow_up = --[[ table ]],
-  id = --[[ string ]],
   name = --[[ string ]],
   policy_type = --[[ string ]],
   post_mortem = --[[ table ]],
   schedule = --[[ table ]],
-  status = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -7096,23 +7011,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:PolicyFindingsDismissResultV2():create({
   policy_finding_id = --[[ string ]],
-  created_at = --[[ string ]],
-  debrief = --[[ table ]],
-  dismissal = --[[ table ]],
-  follow_up = --[[ table ]],
-  id = --[[ string ]],
-  last_checked_at = --[[ string ]],
-  on_call_readiness = --[[ table ]],
-  policy_id = --[[ string ]],
-  policy_type = --[[ string ]],
-  post_mortem = --[[ table ]],
   reason = --[[ string ]],
-  responsible_users = --[[ table ]],
-  schedule = --[[ table ]],
-  shift_conflict = --[[ table ]],
-  state = --[[ string ]],
-  updated_at = --[[ string ]],
-  vacation_conflict = --[[ table ]],
 })
 ```
 
@@ -7361,16 +7260,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:Schedule():create({
-  annotations = --[[ table ]],
-  config = --[[ table ]],
-  created_at = --[[ string ]],
   holidays_public_config = --[[ table ]],
-  id = --[[ string ]],
-  name = --[[ string ]],
-  permalink = --[[ string ]],
-  team_ids = --[[ table ]],
-  timezone = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -7465,10 +7355,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:ScheduleEntriesListPayloadV2():create({
   schedule_id = --[[ string ]],
-  final = --[[ table ]],
-  overrides = --[[ table ]],
   schedule = --[[ table ]],
-  scheduled = --[[ table ]],
 })
 ```
 
@@ -7587,14 +7474,10 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:ScheduleReplica():create({
   id = --[[ string ]],
-  created_at = --[[ string ]],
   replica_fallback_user_id = --[[ string ]],
   replica_provider = --[[ string ]],
   replica_provider_id = --[[ string ]],
-  schedule_id = --[[ string ]],
   sources = --[[ table ]],
-  updated_at = --[[ string ]],
-  user_statuses = --[[ table ]],
 })
 ```
 
@@ -7689,13 +7572,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:ScheduleSyncRule():create({
   id = --[[ string ]],
-  created_at = --[[ string ]],
-  permanent_member_user_ids = --[[ table ]],
-  schedule_id = --[[ string ]],
-  schedule_sync_target = --[[ table ]],
   schedule_sync_target_id = --[[ string ]],
   sync_type = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -7800,13 +7678,7 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:ScheduleSyncTarget():create({
   add_bot_to_group = --[[ boolean ]],
-  created_at = --[[ string ]],
-  id = --[[ string ]],
-  linked_schedules = --[[ table ]],
   new_slack_user_group = --[[ table ]],
-  slack_team_id = --[[ string ]],
-  slack_user_group_id = --[[ string ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -7903,14 +7775,11 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:SchedulesShowOverrideResultV2():create({
-  created_at = --[[ string ]],
   end_at = --[[ string ]],
-  id = --[[ string ]],
   layer_id = --[[ string ]],
   rotation_id = --[[ string ]],
   schedule_id = --[[ string ]],
   start_at = --[[ string ]],
-  updated_at = --[[ string ]],
   user = --[[ table ]],
 })
 ```
@@ -8070,14 +7939,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:Secret():create({
-  created_at = --[[ string ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  secret = --[[ table ]],
-  updated_at = --[[ string ]],
   value = --[[ string ]],
-  version = --[[ number ]],
-  versions = --[[ table ]],
 })
 ```
 
@@ -8182,12 +8045,8 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:Severity():create({
-  created_at = --[[ string ]],
   description = --[[ string ]],
-  id = --[[ string ]],
   name = --[[ string ]],
-  rank = --[[ number ]],
-  updated_at = --[[ string ]],
 })
 ```
 
@@ -8334,8 +8193,6 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:StatusPageComponent():create({
-  id = --[[ string ]],
-  management_meta = --[[ table ]],
   name = --[[ string ]],
 })
 ```
@@ -8492,16 +8349,12 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 
 ```lua
 local result, err = client:StatusPageIncident():create({
-  component_impacts = --[[ table ]],
-  id = --[[ string ]],
   idempotency_key = --[[ string ]],
   incident_status = --[[ string ]],
   message = --[[ string ]],
   name = --[[ string ]],
   notify_subscribers = --[[ boolean ]],
-  published_at = --[[ string ]],
   status_page_id = --[[ string ]],
-  updates = --[[ table ]],
 })
 ```
 
@@ -8728,19 +8581,14 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:StatusPageMaintenance():create({
   affected_component_ids = --[[ table ]],
-  automate_maintenance_status = --[[ boolean ]],
-  component_maintenance_periods = --[[ table ]],
   end_at = --[[ string ]],
-  id = --[[ string ]],
   idempotency_key = --[[ string ]],
   maintenance_status = --[[ string ]],
   message = --[[ string ]],
   name = --[[ string ]],
   notify_subscribers = --[[ boolean ]],
-  published_at = --[[ string ]],
   start_at = --[[ string ]],
   status_page_id = --[[ string ]],
-  updates = --[[ table ]],
 })
 ```
 
@@ -9133,12 +8981,6 @@ Create a new entity with the given data. Returns the created entity, or `nil` an
 ```lua
 local result, err = client:User():create({
   id = --[[ string ]],
-  base_role = --[[ table ]],
-  custom_roles = --[[ table ]],
-  is_active = --[[ boolean ]],
-  name = --[[ string ]],
-  role = --[[ string ]],
-  seats = --[[ table ]],
 })
 ```
 
@@ -9268,16 +9110,12 @@ local result, err = client:Workflow():create({
   continue_on_step_error = --[[ boolean ]],
   delay = --[[ table ]],
   expressions = --[[ table ]],
-  id = --[[ string ]],
-  management_meta = --[[ table ]],
   name = --[[ string ]],
   once_for = --[[ table ]],
   runs_on_incident_modes = --[[ table ]],
   runs_on_incidents = --[[ string ]],
   steps = --[[ table ]],
   trigger = --[[ string ]],
-  version = --[[ number ]],
-  workflow = --[[ table ]],
 })
 ```
 
@@ -9429,6 +9267,7 @@ Return the entity name.
 | `paging` | 0.0.1 | Paging |
 | `ratelimit` | 0.0.1 | Rate limiting |
 | `retry` | 0.0.1 | Retry |
+| `secrets` | 0.1.0 | Secrets |
 | `test` | 0.0.1 | Test transport |
 | `timeout` | 0.0.1 | Timeout |
 
@@ -9444,6 +9283,7 @@ local client = sdk.new({
     paging = { active = true },
     ratelimit = { active = true },
     retry = { active = true },
+    secrets = { active = true },
     test = { active = true },
     timeout = { active = true },
   },
@@ -9462,7 +9302,7 @@ transport, and the order you list them in is the order they nest.
 
 #### Ordering
 
-`ratelimit`, `retry`, `timeout` wrap the transport. Each
+`ratelimit`, `retry`, `secrets`, `timeout` wrap the transport. Each
 wraps whatever is already installed, so **activation order is nesting order**:
 a feature activated later sits OUTSIDE one activated earlier, and sees the call
 first.
@@ -9656,6 +9496,31 @@ another when you do not.
 **Usage**
 
 Set `feature.retry.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Wraps the transport: its place in the activation order decides what it
+  sees. See [Ordering](#ordering) above.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `secrets`
+
+Secrets.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+**Usage**
+
+Set `feature.secrets.active` to true in the client options, and override any option above in the same entry. Every option keeps
 its default unless you name it.
 
 **Considerations**

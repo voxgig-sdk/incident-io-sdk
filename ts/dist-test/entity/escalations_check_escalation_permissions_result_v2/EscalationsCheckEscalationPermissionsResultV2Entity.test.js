@@ -60,7 +60,7 @@ const utility_1 = require("../../utility");
             return;
         }
         const client = __1.IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } });
-        await node_assert_1.default.rejects(client.EscalationsCheckEscalationPermissionsResultV2().create({ "escalation_id": 1, "response_options": "x", "user_ids": "x" }), (err) => 'validate_failed' === err.code);
+        await node_assert_1.default.rejects(client.EscalationsCheckEscalationPermissionsResultV2().create({ "escalation_id": 1, "user_ids": "x" }), (err) => 'validate_failed' === err.code);
     });
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.INCIDENT_IO_TEST_LIVE;

@@ -58,3 +58,6 @@ main: kit: target: py: publish: registry: package: 'voxgig-sdk-incident-io-sdk'
 main: kit: target: lua: publish: registry: package: 'voxgig-sdk-incident-io-sdk'
 main: kit: target: php: publish: registry: package: 'voxgig-sdk/incident-io-sdk'
 
+# --- cedar: secrets active (written by cedar-regen.sh, do not hand-edit)
+main: kit: feature: secrets: active: true
+# --- end cedar: secrets active

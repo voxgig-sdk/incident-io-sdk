@@ -38,7 +38,7 @@ func TestFollowUpsConnectExternalIssueResultV3Entity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.FollowUpsConnectExternalIssueResultV3(nil).Create(map[string]any{"follow_up_id": 1, "assignee": "x", "assignee_team": "x", "category": "x", "created_at": "x", "creator": "x", "external_issue_reference": "x", "id": "x", "incident_id": "x", "labels": "x", "priority": "x", "provider": "x", "status": "x", "title": "x", "updated_at": "x", "url": "x"}, nil)
+		_, err := client.FollowUpsConnectExternalIssueResultV3(nil).Create(map[string]any{"follow_up_id": 1, "provider": "x", "url": "x"}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

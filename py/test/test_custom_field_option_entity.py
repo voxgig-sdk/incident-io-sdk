@@ -114,6 +114,16 @@ class TestCustomFieldOptionEntity:
         assert client.CustomFieldOption(None).list(None, {"throw": False}) is None
         assert fired < hook.unexpected
 
+    def test_should_validate_each_listed_record(self):
+        if "validate" not in (shared_config().get("feature") or {}):
+            pytest.skip("feature not present in this SDK: validate")
+        opts = {"feature": {"validate": {"active": True, "request": False, "response": True}}}
+        listed = IncidentIoSDK.test({"entity": {"custom_field_option": {"v1": {"custom_field_id": "x", "sort_key": 1, "value": "x"}}}}, opts).CustomFieldOption(None).list(None, None)
+        assert ["v1"] == [ent.data_get().get("id") for ent in listed]
+        with pytest.raises(Exception) as err:
+            IncidentIoSDK.test({"entity": {"custom_field_option": {"v1": {"custom_field_id": 1, "sort_key": 1, "value": "x"}}}}, opts).CustomFieldOption(None).list(None, None)
+        assert "validate_failed" == getattr(err.value, "code", None)
+
     def test_should_refuse_an_invalid_request(self):
         if "validate" not in (shared_config().get("feature") or {}):
             pytest.skip("feature not present in this SDK: validate")

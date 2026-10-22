@@ -1,0 +1,44 @@
+# BasicOnCallNotificationPauseFlow
+
+main: kit: flow: BasicOnCallNotificationPauseFlow:
+{
+  entity: "on_call_notification_pause",
+  kind: "basic",
+  name: "BasicOnCallNotificationPauseFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "on_call_notification_pause_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      i: {
+        ref: "on_call_notification_pause_ref01",
+        srcdatavar: "on_call_notification_pause_ref01_data",
+        suffix: "_dt0"
+      }
+
+      m: {
+        id: "on_call_notification_pause01"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-on_call_notification_pause_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicOnCallNotificationPauseFlow"
+}

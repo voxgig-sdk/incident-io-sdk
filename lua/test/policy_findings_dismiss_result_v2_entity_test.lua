@@ -29,7 +29,7 @@ describe("PolicyFindingsDismissResultV2Entity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:PolicyFindingsDismissResultV2(nil):create({ ["policy_finding_id"] = 1, ["created_at"] = "x", ["debrief"] = "x", ["dismissal"] = "x", ["follow_up"] = "x", ["id"] = "x", ["last_checked_at"] = "x", ["on_call_readiness"] = "x", ["policy_id"] = "x", ["policy_type"] = "x", ["post_mortem"] = "x", ["reason"] = "x", ["responsible_users"] = "x", ["schedule"] = "x", ["shift_conflict"] = "x", ["state"] = "x", ["updated_at"] = "x", ["vacation_conflict"] = "x" }, nil)
+    local _, err = client:PolicyFindingsDismissResultV2(nil):create({ ["policy_finding_id"] = 1, ["reason"] = "x" }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 

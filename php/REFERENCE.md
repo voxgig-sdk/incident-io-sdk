@@ -290,9 +290,17 @@ Create a new `IpRangeEntity` instance. Pass `null` for no initial data.
 
 Create a new `MaintenanceWindowEntity` instance. Pass `null` for no initial data.
 
+#### `ManagedResource($data = null)`
+
+Create a new `ManagedResourceEntity` instance. Pass `null` for no initial data.
+
 #### `OnCallNotificationMethodPublicV2($data = null)`
 
 Create a new `OnCallNotificationMethodPublicV2Entity` instance. Pass `null` for no initial data.
+
+#### `OnCallNotificationPause($data = null)`
+
+Create a new `OnCallNotificationPauseEntity` instance. Pass `null` for no initial data.
 
 #### `OnCallNotificationRulePublicV2($data = null)`
 
@@ -563,14 +571,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->Action()->create([
-  "assignee" => null, // array
-  "created_at" => null, // string
-  "creator" => null, // array
-  "follow_up" => null, // bool
-  "id" => null, // string
+  "description" => null, // string
   "incident_id" => null, // string
-  "status" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -765,9 +767,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->AlertAttribute()->create([
   "array" => null, // bool
-  "id" => null, // string
   "name" => null, // string
-  "required" => null, // bool
   "type" => null, // string
 ]);
 ```
@@ -866,11 +866,6 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->AlertNote()->create([
   "content" => null, // string
-  "created_at" => null, // string
-  "creator" => null, // array
-  "id" => null, // string
-  "images" => null, // array
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -983,13 +978,11 @@ $result = $client->AlertRoute()->create([
   "escalation_config" => null, // array
   "expressions" => null, // array
   "grouping_config" => null, // array
-  "id" => null, // string
   "incident_config" => null, // array
   "incident_template" => null, // array
   "is_private" => null, // bool
   "message_config" => null, // array
   "name" => null, // string
-  "version" => null, // int
 ]);
 ```
 
@@ -1099,7 +1092,6 @@ $result = $client->AlertSource()->create([
   "email_options" => null, // array
   "heartbeat_options" => null, // array
   "http_custom_options" => null, // array
-  "id" => null, // string
   "jira_options" => null, // array
   "name" => null, // string
   "rate_limit_sharding" => null, // array
@@ -1334,14 +1326,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->AlertsAddTagsResultV2()->create([
   "alert_id" => null, // string
-  "alert_source_id" => null, // string
-  "attributes" => null, // array
-  "created_at" => null, // string
-  "deduplication_key" => null, // string
-  "id" => null, // string
-  "status" => null, // string
-  "title" => null, // string
-  "updated_at" => null, // string
+  "tags" => null, // array
 ]);
 ```
 
@@ -1426,14 +1411,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->AlertsRemoveTagsResultV2()->create([
   "alert_id" => null, // string
-  "alert_source_id" => null, // string
-  "attributes" => null, // array
-  "created_at" => null, // string
-  "deduplication_key" => null, // string
-  "id" => null, // string
-  "status" => null, // string
-  "title" => null, // string
-  "updated_at" => null, // string
+  "tags" => null, // array
 ]);
 ```
 
@@ -1518,14 +1496,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->AlertsSetTagsResultV2()->create([
   "alert_id" => null, // string
-  "alert_source_id" => null, // string
-  "attributes" => null, // array
-  "created_at" => null, // string
-  "deduplication_key" => null, // string
-  "id" => null, // string
-  "status" => null, // string
-  "title" => null, // string
-  "updated_at" => null, // string
+  "tags" => null, // array
 ]);
 ```
 
@@ -1586,10 +1557,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->AlertsTransitionIncidentAlertResultV2()->create([
-  "alert" => null, // array
   "alert_id" => null, // string
-  "id" => null, // string
-  "incident" => null, // array
   "incident_id" => null, // string
   "state" => null, // string
 ]);
@@ -1684,16 +1652,9 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->AnnouncementRule()->create([
   "condition_groups" => null, // array
-  "conditions_no_longer_apply_behaviour" => null, // string
-  "created_at" => null, // string
-  "id" => null, // string
-  "microsoft_teams_channel_ids" => null, // array
   "mode" => null, // string
   "name" => null, // string
-  "owning_team_ids" => null, // array
-  "slack_channel_ids" => null, // array
   "update_sharing_mode" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -1798,12 +1759,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->AnnouncementTemplate()->create([
-  "actions" => null, // array
-  "fields" => null, // array
-  "id" => null, // string
-  "is_default" => null, // bool
   "name" => null, // string
-  "owning_team_ids" => null, // array
 ]);
 ```
 
@@ -1903,16 +1859,10 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->ApiKey()->create([
-  "created_at" => null, // string
-  "creator" => null, // array
-  "id" => null, // string
   "name" => null, // string
   "role_names" => null, // array
-  "roles" => null, // array
   "team_ids" => null, // array
   "team_role_names" => null, // array
-  "team_roles" => null, // array
-  "token_last_issued_at" => null, // string
 ]);
 ```
 
@@ -2729,13 +2679,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->CatalogEntry()->create([
   "attribute_values" => null, // array
-  "catalog_entry" => null, // array
-  "catalog_type" => null, // array
   "catalog_type_id" => null, // string
-  "created_at" => null, // string
-  "id" => null, // string
   "name" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -2925,22 +2870,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->CatalogType()->create([
-  "annotations" => null, // array
-  "categories" => null, // array
-  "color" => null, // string
-  "created_at" => null, // string
   "description" => null, // string
-  "engine_resource_type" => null, // string
-  "icon" => null, // string
-  "id" => null, // string
-  "is_editable" => null, // bool
   "name" => null, // string
-  "ranked" => null, // bool
-  "schema" => null, // array
-  "semantic_type" => null, // string
-  "type_name" => null, // string
-  "updated_at" => null, // string
-  "use_name_as_identifier" => null, // bool
 ]);
 ```
 
@@ -3047,23 +2978,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->CatalogTypeSchema()->create([
   "catalog_type_id" => null, // string
-  "annotations" => null, // array
   "attributes" => null, // array
-  "categories" => null, // array
-  "color" => null, // string
-  "created_at" => null, // string
-  "description" => null, // string
-  "engine_resource_type" => null, // string
-  "icon" => null, // string
-  "id" => null, // string
-  "is_editable" => null, // bool
-  "name" => null, // string
-  "ranked" => null, // bool
-  "schema" => null, // array
-  "semantic_type" => null, // string
-  "type_name" => null, // string
-  "updated_at" => null, // string
-  "use_name_as_identifier" => null, // bool
   "version" => null, // int
 ]);
 ```
@@ -3135,18 +3050,14 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->CustomField()->create([
-  "created_at" => null, // string
   "description" => null, // string
   "field_type" => null, // string
   "filter_by" => null, // array
   "fixed_filter" => null, // array
-  "id" => null, // string
   "name" => null, // string
-  "options" => null, // array
   "show_before_closure" => null, // bool
   "show_before_creation" => null, // bool
   "show_before_update" => null, // bool
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -3248,8 +3159,6 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->CustomFieldOption()->create([
   "custom_field_id" => null, // string
-  "id" => null, // string
-  "sort_key" => null, // int
   "value" => null, // string
 ]);
 ```
@@ -3373,18 +3282,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->Escalation()->create([
-  "created_at" => null, // string
-  "creator" => null, // array
-  "description" => null, // string
-  "events" => null, // array
-  "id" => null, // string
   "idempotency_key" => null, // string
-  "priority" => null, // array
-  "related_alerts" => null, // array
-  "related_incidents" => null, // array
-  "status" => null, // string
   "title" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -3476,11 +3375,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->EscalationPathTemplate()->create([
-  "expressions" => null, // array
-  "has_historical_escalation_path_versions" => null, // bool
-  "id" => null, // string
   "name" => null, // string
-  "params" => null, // array
   "path" => null, // array
   "repeat_config" => null, // array
 ]);
@@ -3573,7 +3468,6 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->EscalationsCheckEscalationPermissionsResultV2()->create([
   "escalation_id" => null, // string
-  "response_options" => null, // array
   "user_ids" => null, // array
 ]);
 ```
@@ -3730,19 +3624,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->FollowUp()->create([
-  "assignee" => null, // array
-  "assignee_team" => null, // array
-  "category" => null, // array
-  "created_at" => null, // string
-  "creator" => null, // array
-  "external_issue_reference" => null, // array
-  "id" => null, // string
   "incident_id" => null, // string
-  "labels" => null, // array
-  "priority" => null, // array
-  "status" => null, // string
   "title" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -3848,20 +3731,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->FollowUpsConnectExternalIssueResultV3()->create([
   "follow_up_id" => null, // string
-  "assignee" => null, // array
-  "assignee_team" => null, // array
-  "category" => null, // array
-  "created_at" => null, // string
-  "creator" => null, // array
-  "external_issue_reference" => null, // array
-  "id" => null, // string
-  "incident_id" => null, // string
-  "labels" => null, // array
-  "priority" => null, // array
   "provider" => null, // string
-  "status" => null, // string
-  "title" => null, // string
-  "updated_at" => null, // string
   "url" => null, // string
 ]);
 ```
@@ -4120,25 +3990,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->Incident()->create([
-  "created_at" => null, // string
-  "creator" => null, // array
-  "custom_field_entries" => null, // array
-  "external_issue_reference" => null, // array
-  "id" => null, // string
   "idempotency_key" => null, // string
-  "incident_role_assignments" => null, // array
-  "incident_status" => null, // array
-  "incident_type" => null, // array
-  "last_activity_at" => null, // string
-  "mode" => null, // string
-  "name" => null, // string
-  "reference" => null, // string
-  "severity" => null, // array
-  "slack_channel_id" => null, // string
-  "slack_team_id" => null, // string
-  "status" => null, // string
-  "team_ids" => null, // array
-  "updated_at" => null, // string
   "visibility" => null, // string
 ]);
 ```
@@ -4269,7 +4121,6 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->IncidentAttachment()->create([
-  "id" => null, // string
   "incident_id" => null, // string
   "resource" => null, // array
 ]);
@@ -4347,11 +4198,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->IncidentForm()->create([
-  "created_at" => null, // string
   "expressions" => null, // array
   "form_type" => null, // string
-  "id" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -4679,14 +4527,11 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->IncidentRole()->create([
-  "created_at" => null, // string
   "description" => null, // string
-  "id" => null, // string
   "instructions" => null, // string
   "name" => null, // string
-  "role_type" => null, // string
+  "required" => null, // bool
   "shortform" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -4794,12 +4639,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->IncidentStatus()->create([
   "category" => null, // string
-  "created_at" => null, // string
   "description" => null, // string
-  "id" => null, // string
   "name" => null, // string
-  "rank" => null, // int
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -5005,11 +4846,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->IncidentTemplate()->create([
-  "created_at" => null, // string
-  "id" => null, // string
   "name" => null, // string
   "template" => null, // array
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -5103,7 +4941,6 @@ Create a new entity with the given data. Returns the created entity and throws o
 $result = $client->IncidentTemplatesValidateResultV1()->create([
   "name" => null, // string
   "template" => null, // array
-  "warnings" => null, // array
 ]);
 ```
 
@@ -5181,14 +5018,10 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->IncidentTimelineItem()->create([
-  "created_at" => null, // string
-  "creator" => null, // array
-  "id" => null, // string
   "idempotency_key" => null, // string
   "incident_id" => null, // string
   "timestamp" => null, // string
   "title" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -5401,13 +5234,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->IncidentUpdate()->create([
-  "created_at" => null, // string
-  "id" => null, // string
   "idempotency_key" => null, // string
   "incident_id" => null, // string
-  "new_incident_status" => null, // array
-  "new_severity" => null, // array
-  "updater" => null, // array
 ]);
 ```
 
@@ -5630,16 +5458,11 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->MaintenanceWindow()->create([
   "alert_condition_groups" => null, // array
-  "created_at" => null, // string
   "end_at" => null, // string
-  "id" => null, // string
   "lead" => null, // array
   "name" => null, // string
-  "reroute_on_end" => null, // bool
-  "resolve_on_end" => null, // bool
   "show_in_sidebar" => null, // bool
   "start_at" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -5708,6 +5531,66 @@ Return the entity name.
 
 ---
 
+## ManagedResourceEntity
+
+```php
+$managed_resource = $client->ManagedResource();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotations` | `array` | Yes | Annotations that track metadata about this resource |
+| `managed_by` | `string` | Yes | How is this resource managed |
+| `resource_id` | `string` | Yes | The ID of the resource that this relates to |
+| `resource_type` | `string` | Yes | The type of the related resource |
+| `source_url` | `string` | No | The url of the external repository where this resource is managed (if there is one) |
+
+### Operations
+
+#### `create(array $reqdata, ?array $ctrl = null): mixed`
+
+Create a new entity with the given data. Returns the created entity and throws on error.
+
+```php
+$result = $client->ManagedResource()->create([
+  "annotations" => null, // array
+  "resource_id" => null, // string
+  "resource_type" => null, // string
+]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): ManagedResourceEntity`
+
+Create a new `ManagedResourceEntity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
 ## OnCallNotificationMethodPublicV2Entity
 
 ```php
@@ -5755,6 +5638,72 @@ Set the entity match criteria.
 #### `make(): OnCallNotificationMethodPublicV2Entity`
 
 Create a new `OnCallNotificationMethodPublicV2Entity` instance with the same client and
+options.
+
+#### `get_name(): string`
+
+Return the entity name.
+
+
+---
+
+## OnCallNotificationPauseEntity
+
+```php
+$on_call_notification_pause = $client->OnCallNotificationPause();
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `string` | Yes |  |
+| `ends_at` | `string` | Yes | When notifications resume |
+| `id` | `string` | Yes | Unique identifier for this notification pause |
+| `reason` | `string` | No | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `string` | Yes | When notifications stop being sent to the user |
+| `updated_at` | `string` | Yes |  |
+| `user_id` | `string` | Yes | The user whose on-call notifications are paused in this time window |
+
+### Operations
+
+#### `list(?array $reqmatch = null, ?array $ctrl = null): mixed`
+
+List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
+
+```php
+$results = $client->OnCallNotificationPause()->list();
+```
+
+#### `load(array $reqmatch, ?array $ctrl = null): mixed`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
+
+```php
+$result = $client->OnCallNotificationPause()->load(["id" => "on_call_notification_pause_id"]);
+```
+
+### Common Methods
+
+#### `data_get(): array`
+
+Get the entity data. Returns a copy of the current data.
+
+#### `data_set($data): void`
+
+Set the entity data.
+
+#### `match_get(): array`
+
+Get the entity match criteria.
+
+#### `match_set($match): void`
+
+Set the entity match criteria.
+
+#### `make(): OnCallNotificationPauseEntity`
+
+Create a new `OnCallNotificationPauseEntity` instance with the same client and
 options.
 
 #### `get_name(): string`
@@ -5869,15 +5818,10 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->PayConfig()->create([
   "base_rate_cents" => null, // int
-  "created_at" => null, // string
   "currency" => null, // string
-  "id" => null, // string
   "name" => null, // string
-  "one_off_rules" => null, // array
   "rate_time_unit" => null, // string
   "timezone" => null, // string
-  "updated_at" => null, // string
-  "weekly_rules" => null, // array
 ]);
 ```
 
@@ -6526,17 +6470,11 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->PayReport()->create([
-  "created_at" => null, // string
   "end_date" => null, // string
-  "id" => null, // string
   "name" => null, // string
-  "overlapping_shifts" => null, // string
   "pay_config_expression" => null, // array
   "schedule_ids" => null, // array
   "start_date" => null, // string
-  "status" => null, // string
-  "unpaid_shifts" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -6633,17 +6571,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 $result = $client->PayReportsPublishResultV2()->create([
   "pay_report_id" => null, // string
   "cc_emails" => null, // array
-  "created_at" => null, // string
-  "end_date" => null, // string
-  "id" => null, // string
-  "name" => null, // string
-  "overlapping_shifts" => null, // string
-  "schedule_ids" => null, // array
   "send_user_breakdowns" => null, // string
-  "start_date" => null, // string
-  "status" => null, // string
-  "unpaid_shifts" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -6714,17 +6642,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->PayReportsUnpublishResultV2()->create([
   "pay_report_id" => null, // string
-  "created_at" => null, // string
-  "end_date" => null, // string
-  "id" => null, // string
-  "name" => null, // string
-  "overlapping_shifts" => null, // string
-  "schedule_ids" => null, // array
-  "start_date" => null, // string
-  "status" => null, // string
-  "unpaid_shifts" => null, // string
   "unpublish_reason" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -6912,16 +6830,13 @@ Create a new entity with the given data. Returns the created entity and throws o
 $result = $client->Policy()->create([
   "assignment_rules" => null, // array
   "conditions" => null, // array
-  "created_at" => null, // string
   "debrief" => null, // array
+  "description" => null, // string
   "follow_up" => null, // array
-  "id" => null, // string
   "name" => null, // string
   "policy_type" => null, // string
   "post_mortem" => null, // array
   "schedule" => null, // array
-  "status" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -7098,23 +7013,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->PolicyFindingsDismissResultV2()->create([
   "policy_finding_id" => null, // string
-  "created_at" => null, // string
-  "debrief" => null, // array
-  "dismissal" => null, // array
-  "follow_up" => null, // array
-  "id" => null, // string
-  "last_checked_at" => null, // string
-  "on_call_readiness" => null, // array
-  "policy_id" => null, // string
-  "policy_type" => null, // string
-  "post_mortem" => null, // array
   "reason" => null, // string
-  "responsible_users" => null, // array
-  "schedule" => null, // array
-  "shift_conflict" => null, // array
-  "state" => null, // string
-  "updated_at" => null, // string
-  "vacation_conflict" => null, // array
 ]);
 ```
 
@@ -7363,16 +7262,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->Schedule()->create([
-  "annotations" => null, // array
-  "config" => null, // array
-  "created_at" => null, // string
   "holidays_public_config" => null, // array
-  "id" => null, // string
-  "name" => null, // string
-  "permalink" => null, // string
-  "team_ids" => null, // array
-  "timezone" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -7467,10 +7357,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->ScheduleEntriesListPayloadV2()->create([
   "schedule_id" => null, // string
-  "final" => null, // array
-  "overrides" => null, // array
   "schedule" => null, // array
-  "scheduled" => null, // array
 ]);
 ```
 
@@ -7589,14 +7476,10 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->ScheduleReplica()->create([
   "id" => null, // string
-  "created_at" => null, // string
   "replica_fallback_user_id" => null, // string
   "replica_provider" => null, // string
   "replica_provider_id" => null, // string
-  "schedule_id" => null, // string
   "sources" => null, // array
-  "updated_at" => null, // string
-  "user_statuses" => null, // array
 ]);
 ```
 
@@ -7691,13 +7574,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->ScheduleSyncRule()->create([
   "id" => null, // string
-  "created_at" => null, // string
-  "permanent_member_user_ids" => null, // array
-  "schedule_id" => null, // string
-  "schedule_sync_target" => null, // array
   "schedule_sync_target_id" => null, // string
   "sync_type" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -7802,13 +7680,7 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->ScheduleSyncTarget()->create([
   "add_bot_to_group" => null, // bool
-  "created_at" => null, // string
-  "id" => null, // string
-  "linked_schedules" => null, // array
   "new_slack_user_group" => null, // array
-  "slack_team_id" => null, // string
-  "slack_user_group_id" => null, // string
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -7905,14 +7777,11 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->SchedulesShowOverrideResultV2()->create([
-  "created_at" => null, // string
   "end_at" => null, // string
-  "id" => null, // string
   "layer_id" => null, // string
   "rotation_id" => null, // string
   "schedule_id" => null, // string
   "start_at" => null, // string
-  "updated_at" => null, // string
   "user" => null, // array
 ]);
 ```
@@ -8072,14 +7941,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->Secret()->create([
-  "created_at" => null, // string
-  "id" => null, // string
   "name" => null, // string
-  "secret" => null, // array
-  "updated_at" => null, // string
   "value" => null, // string
-  "version" => null, // int
-  "versions" => null, // array
 ]);
 ```
 
@@ -8184,12 +8047,8 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->Severity()->create([
-  "created_at" => null, // string
   "description" => null, // string
-  "id" => null, // string
   "name" => null, // string
-  "rank" => null, // int
-  "updated_at" => null, // string
 ]);
 ```
 
@@ -8336,8 +8195,6 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->StatusPageComponent()->create([
-  "id" => null, // string
-  "management_meta" => null, // array
   "name" => null, // string
 ]);
 ```
@@ -8494,16 +8351,12 @@ Create a new entity with the given data. Returns the created entity and throws o
 
 ```php
 $result = $client->StatusPageIncident()->create([
-  "component_impacts" => null, // array
-  "id" => null, // string
   "idempotency_key" => null, // string
   "incident_status" => null, // string
   "message" => null, // string
   "name" => null, // string
   "notify_subscribers" => null, // bool
-  "published_at" => null, // string
   "status_page_id" => null, // string
-  "updates" => null, // array
 ]);
 ```
 
@@ -8730,19 +8583,14 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->StatusPageMaintenance()->create([
   "affected_component_ids" => null, // array
-  "automate_maintenance_status" => null, // bool
-  "component_maintenance_periods" => null, // array
   "end_at" => null, // string
-  "id" => null, // string
   "idempotency_key" => null, // string
   "maintenance_status" => null, // string
   "message" => null, // string
   "name" => null, // string
   "notify_subscribers" => null, // bool
-  "published_at" => null, // string
   "start_at" => null, // string
   "status_page_id" => null, // string
-  "updates" => null, // array
 ]);
 ```
 
@@ -9135,12 +8983,6 @@ Create a new entity with the given data. Returns the created entity and throws o
 ```php
 $result = $client->User()->create([
   "id" => null, // string
-  "base_role" => null, // array
-  "custom_roles" => null, // array
-  "is_active" => null, // bool
-  "name" => null, // string
-  "role" => null, // string
-  "seats" => null, // array
 ]);
 ```
 
@@ -9270,16 +9112,12 @@ $result = $client->Workflow()->create([
   "continue_on_step_error" => null, // bool
   "delay" => null, // array
   "expressions" => null, // array
-  "id" => null, // string
-  "management_meta" => null, // array
   "name" => null, // string
   "once_for" => null, // array
   "runs_on_incident_modes" => null, // array
   "runs_on_incidents" => null, // string
   "steps" => null, // array
   "trigger" => null, // string
-  "version" => null, // int
-  "workflow" => null, // array
 ]);
 ```
 
@@ -9431,6 +9269,7 @@ Return the entity name.
 | `paging` | 0.0.1 | Paging |
 | `ratelimit` | 0.0.1 | Rate limiting |
 | `retry` | 0.0.1 | Retry |
+| `secrets` | 0.1.0 | Secrets |
 | `test` | 0.0.1 | Test transport |
 | `timeout` | 0.0.1 | Timeout |
 
@@ -9446,6 +9285,7 @@ $client = new IncidentIoSDK([
     "paging" => ["active" => true],
     "ratelimit" => ["active" => true],
     "retry" => ["active" => true],
+    "secrets" => ["active" => true],
     "test" => ["active" => true],
     "timeout" => ["active" => true],
   ],
@@ -9464,7 +9304,7 @@ transport, and the order you list them in is the order they nest.
 
 #### Ordering
 
-`ratelimit`, `retry`, `timeout` wrap the transport. Each
+`ratelimit`, `retry`, `secrets`, `timeout` wrap the transport. Each
 wraps whatever is already installed, so **activation order is nesting order**:
 a feature activated later sits OUTSIDE one activated earlier, and sees the call
 first.
@@ -9658,6 +9498,31 @@ another when you do not.
 **Usage**
 
 Set `feature.retry.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Wraps the transport: its place in the activation order decides what it
+  sees. See [Ordering](#ordering) above.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `secrets`
+
+Secrets.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+**Usage**
+
+Set `feature.secrets.active` to true in the client options, and override any option above in the same entry. Every option keeps
 its default unless you name it.
 
 **Considerations**

@@ -114,6 +114,16 @@ class TestCatalogResourceEntity:
         assert client.CatalogResource(None).list(None, {"throw": False}) is None
         assert fired < hook.unexpected
 
+    def test_should_validate_each_listed_record(self):
+        if "validate" not in (shared_config().get("feature") or {}):
+            pytest.skip("feature not present in this SDK: validate")
+        opts = {"feature": {"validate": {"active": True, "request": False, "response": True}}}
+        listed = IncidentIoSDK.test({"entity": {"catalog_resource": {"v1": {"category": "x", "description": "x", "engine_resource_type": "x", "label": "x", "type": "x", "value_docstring": "x"}}}}, opts).CatalogResource(None).list(None, None)
+        assert ["v1"] == [ent.data_get().get("id") for ent in listed]
+        with pytest.raises(Exception) as err:
+            IncidentIoSDK.test({"entity": {"catalog_resource": {"v1": {"category": 1, "description": "x", "engine_resource_type": "x", "label": "x", "type": "x", "value_docstring": "x"}}}}, opts).CatalogResource(None).list(None, None)
+        assert "validate_failed" == getattr(err.value, "code", None)
+
     def test_should_refuse_an_invalid_request(self):
         if "validate" not in (shared_config().get("feature") or {}):
             pytest.skip("feature not present in this SDK: validate")

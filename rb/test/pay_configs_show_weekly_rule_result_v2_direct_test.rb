@@ -1,0 +1,126 @@
+# PayConfigsShowWeeklyRuleResultV2 direct test
+
+require "minitest/autorun"
+require "json"
+require_relative "../IncidentIo_sdk"
+require_relative "runner"
+
+class PayConfigsShowWeeklyRuleResultV2DirectTest < Minitest::Test
+  # main.kit.test.live.strict is true (the default is true): a live
+  # request that fails, or a live test missing an input it needs,
+  # fails the test.
+  # An account with no record for a test to read skips it either way.
+  LIVE_STRICT = true
+
+  def live_ok(result)
+    status = Helpers.to_int(result["status"])
+    result["err"].nil? && result["ok"] && status >= 200 && status < 300
+  end
+
+  def test_direct_load_pay_configs_show_weekly_rule_result_v2
+    setup = pay_configs_show_weekly_rule_result_v2_direct_setup({ "id" => "direct01" })
+    _should_skip, _reason = Runner.is_control_skipped("direct", "direct-load-pay_configs_show_weekly_rule_result_v2", setup[:live] ? "live" : "unit")
+    if _should_skip
+      skip(_reason || "skipped via sdk-test-control.json")
+      return
+    end
+    client = setup[:client]
+
+    params = {}
+    query = {}
+    if setup[:live]
+      params["id"] = "01G0J1EXE7AXZ2C93K61WBPYEH"
+      params["pay_config_id"] = "01G0J1EXE7AXZ2C93K61WBPYEH"
+    else
+      params["id"] = "direct01"
+      params["pay_config_id"] = "direct02"
+    end
+
+    result = client.direct({
+      "path" => "v2/pay_configs/{pay_config_id}/weekly_rules/{id}",
+      "method" => "GET",
+      "params" => params,
+      "query" => query,
+    })
+    if setup[:live]
+      unless live_ok(result)
+        Runner.live_miss(LIVE_STRICT, "Live load failed: " + Runner.live_describe(result))
+      end
+      if result["data"].nil?
+        Runner.live_miss(LIVE_STRICT, "Live load returned no data: " + Runner.live_describe(result))
+      end
+      assert !result["data"].nil?
+    else
+      assert_nil result["err"]
+      assert result["ok"]
+      assert_equal 200, Helpers.to_int(result["status"])
+      assert !result["data"].nil?
+      if result["data"].is_a?(Hash)
+        assert_equal "direct01", result["data"]["id"]
+      end
+      assert_equal 1, setup[:calls].length
+    end
+  end
+
+end
+
+
+def pay_configs_show_weekly_rule_result_v2_direct_setup(mockres)
+  Runner.load_env_local
+
+  calls = []
+
+  env = Runner.env_override({
+    "INCIDENT_IO_TEST_PAY_CONFIGS_SHOW_WEEKLY_RULE_RESULT_V2_ENTID" => {},
+    "INCIDENT_IO_TEST_LIVE" => "FALSE",
+    "INCIDENT_IO_APIKEY" => "",
+  })
+
+  live = env["INCIDENT_IO_TEST_LIVE"] == "TRUE"
+
+  if live
+    # Merged so the generated fields win: sdk-test-control.json's
+    # test.client.options adds to the live client, it does not redirect it.
+    merged_opts = Runner.live_client_options.merge({
+      "apikey" => env["INCIDENT_IO_APIKEY"],
+    })
+    client = IncidentIoSDK.new(merged_opts)
+    idmap = env["INCIDENT_IO_TEST_PAY_CONFIGS_SHOW_WEEKLY_RULE_RESULT_V2_ENTID"]
+    return {
+      client: client,
+      calls: calls,
+      live: true,
+      idmap: idmap.is_a?(Hash) ? idmap : {},
+    }
+  end
+
+  mock_fetch = ->(url, init) {
+    calls.push({ "url" => url, "init" => init })
+    return {
+      "status" => 200,
+      "statusText" => "OK",
+      "headers" => {},
+      "json" => ->() {
+        if !mockres.nil?
+          return mockres
+        end
+        return { "id" => "direct01" }
+      },
+      "body" => "mock",
+    }, nil
+  }
+
+  client = IncidentIoSDK.new({
+    "base" => "http://localhost:8080",
+    "system" => {
+      "fetch" => mock_fetch,
+    },
+  })
+
+  {
+    client: client,
+    calls: calls,
+    live: false,
+    idmap: {},
+  }
+end

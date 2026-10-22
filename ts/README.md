@@ -9,7 +9,7 @@ The API is exposed as capitalised, semantic **Entities** — e.g.
 instead of raw URL paths and query parameters. This keeps the surface
 predictable and low-friction for both humans and AI agents.
 
-> Also generated from this model: `go`, `go-mcp`, `js`, `lua`, `php`, `py` — see
+> Also generated from this model: `go`, `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb` — see
 > the [top-level README](../README.md).
 
 
@@ -75,21 +75,15 @@ try {
 ```ts
 // Create — returns the created Action ENTITY (.data() for the record)
 const created = await client.Action().create({
-  assignee: {},
-  created_at: 'example_created_at',
-  creator: {},
-  follow_up: true,
-  id: 'example_id',
+  description: 'example_description',
   incident_id: 'example_incident_id',
-  status: 'example_status',
-  updated_at: 'example_updated_at',
 })
 
 // Update — the id comes off the returned entity's data()
 const updated = await client.Action().update({
   id: created.data().id!,
-  assignee: {},
   assignee_id: 'example_assignee_id',
+  description: 'example_description',
 })
 
 // Remove
@@ -336,7 +330,9 @@ new IncidentIoSDK(options?: {
 | `IpAllowlist(data?)` | `IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `IpRange(data?)` | `IpRangeEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow(data?)` | `MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
+| `ManagedResource(data?)` | `ManagedResourceEntity` | Create a ManagedResource entity instance. |
 | `OnCallNotificationMethodPublicV2(data?)` | `OnCallNotificationMethodPublicV2Entity` | Create an OnCallNotificationMethodPublicV2 entity instance. |
+| `OnCallNotificationPause(data?)` | `OnCallNotificationPauseEntity` | Create an OnCallNotificationPause entity instance. |
 | `OnCallNotificationRulePublicV2(data?)` | `OnCallNotificationRulePublicV2Entity` | Create an OnCallNotificationRulePublicV2 entity instance. |
 | `PayConfig(data?)` | `PayConfigEntity` | Create a PayConfig entity instance. |
 | `PayConfigsCreateOneOffRuleResultV2(data?)` | `PayConfigsCreateOneOffRuleResultV2Entity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
@@ -1546,6 +1542,20 @@ Operations: create, list, load, remove, update.
 
 API path: `/v1/maintenance_windows`
 
+#### ManagedResource
+
+| Field | Description |
+| --- | --- |
+| `annotations` | Annotations that track metadata about this resource |
+| `managed_by` | How is this resource managed |
+| `resource_id` | The ID of the resource that this relates to |
+| `resource_type` | The type of the related resource |
+| `source_url` | The url of the external repository where this resource is managed (if there is one) |
+
+Operations: create.
+
+API path: `/v2/managed_resources`
+
 #### OnCallNotificationMethodPublicV2
 
 | Field | Description |
@@ -1559,6 +1569,22 @@ API path: `/v1/maintenance_windows`
 Operations: list.
 
 API path: `/v2/users/{user_id}/notification_methods`
+
+#### OnCallNotificationPause
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `ends_at` | When notifications resume |
+| `id` | Unique identifier for this notification pause |
+| `reason` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | When notifications stop being sent to the user |
+| `updated_at` |  |
+| `user_id` | The user whose on-call notifications are paused in this time window |
+
+Operations: list, load.
+
+API path: `/v2/on_call_notification_pauses`
 
 #### OnCallNotificationRulePublicV2
 
@@ -2422,14 +2448,8 @@ const actions = await client.Action().list()
 
 ```ts
 const action = await client.Action().create({
-  assignee: {},
-  created_at: 'example_created_at',
-  creator: {},
-  follow_up: true,
-  id: 'example_id',
+  description: 'example_description',
   incident_id: 'example_incident_id',
-  status: 'example_status',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -2534,9 +2554,7 @@ const alert_attributes = await client.AlertAttribute().list()
 ```ts
 const alert_attribute = await client.AlertAttribute().create({
   array: true,
-  id: 'example_id',
   name: 'example_name',
-  required: true,
   type: 'example_type',
 })
 ```
@@ -2587,11 +2605,6 @@ const alert_notes = await client.AlertNote().list()
 ```ts
 const alert_note = await client.AlertNote().create({
   content: 'example_content',
-  created_at: 'example_created_at',
-  creator: {},
-  id: 'example_id',
-  images: [],
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -2656,13 +2669,11 @@ const alert_route = await client.AlertRoute().create({
   escalation_config: {},
   expressions: [],
   grouping_config: {},
-  id: 'example_id',
   incident_config: {},
   incident_template: {},
   is_private: true,
   message_config: {},
   name: 'example_name',
-  version: 1,
 })
 ```
 
@@ -2724,7 +2735,6 @@ const alert_source = await client.AlertSource().create({
   email_options: {},
   heartbeat_options: {},
   http_custom_options: {},
-  id: 'example_id',
   jira_options: {},
   name: 'example_name',
   rate_limit_sharding: {},
@@ -2819,14 +2829,7 @@ Create an instance: `const alerts_add_tags_result_v2 = client.AlertsAddTagsResul
 ```ts
 const alerts_add_tags_result_v2 = await client.AlertsAddTagsResultV2().create({
   alert_id: 'example_alert_id',
-  alert_source_id: 'example_alert_source_id',
-  attributes: [],
-  created_at: 'example_created_at',
-  deduplication_key: 'example_deduplication_key',
-  id: 'example_id',
-  status: 'example_status',
-  title: 'example_title',
-  updated_at: 'example_updated_at',
+  tags: [],
 })
 ```
 
@@ -2864,14 +2867,7 @@ Create an instance: `const alerts_remove_tags_result_v2 = client.AlertsRemoveTag
 ```ts
 const alerts_remove_tags_result_v2 = await client.AlertsRemoveTagsResultV2().create({
   alert_id: 'example_alert_id',
-  alert_source_id: 'example_alert_source_id',
-  attributes: [],
-  created_at: 'example_created_at',
-  deduplication_key: 'example_deduplication_key',
-  id: 'example_id',
-  status: 'example_status',
-  title: 'example_title',
-  updated_at: 'example_updated_at',
+  tags: [],
 })
 ```
 
@@ -2909,14 +2905,7 @@ Create an instance: `const alerts_set_tags_result_v2 = client.AlertsSetTagsResul
 ```ts
 const alerts_set_tags_result_v2 = await client.AlertsSetTagsResultV2().create({
   alert_id: 'example_alert_id',
-  alert_source_id: 'example_alert_source_id',
-  attributes: [],
-  created_at: 'example_created_at',
-  deduplication_key: 'example_deduplication_key',
-  id: 'example_id',
-  status: 'example_status',
-  title: 'example_title',
-  updated_at: 'example_updated_at',
+  tags: [],
 })
 ```
 
@@ -2955,10 +2944,7 @@ const alerts_transition_incident_alert_result_v2s = await client.AlertsTransitio
 
 ```ts
 const alerts_transition_incident_alert_result_v2 = await client.AlertsTransitionIncidentAlertResultV2().create({
-  alert: {},
   alert_id: 'example_alert_id',
-  id: 'example_id',
-  incident: {},
   incident_id: 'example_incident_id',
   state: 'example_state',
 })
@@ -3014,16 +3000,9 @@ const announcement_rules = await client.AnnouncementRule().list()
 ```ts
 const announcement_rule = await client.AnnouncementRule().create({
   condition_groups: [],
-  conditions_no_longer_apply_behaviour: 'example_conditions_no_longer_apply_behaviour',
-  created_at: 'example_created_at',
-  id: 'example_id',
-  microsoft_teams_channel_ids: [],
   mode: 'example_mode',
   name: 'example_name',
-  owning_team_ids: [],
-  slack_channel_ids: [],
   update_sharing_mode: 'example_update_sharing_mode',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -3069,12 +3048,7 @@ const announcement_templates = await client.AnnouncementTemplate().list()
 
 ```ts
 const announcement_template = await client.AnnouncementTemplate().create({
-  actions: [],
-  fields: [],
-  id: 'example_id',
-  is_default: true,
   name: 'example_name',
-  owning_team_ids: [],
 })
 ```
 
@@ -3126,16 +3100,10 @@ const api_keys = await client.ApiKey().list()
 
 ```ts
 const api_key = await client.ApiKey().create({
-  created_at: 'example_created_at',
-  creator: {},
-  id: 'example_id',
   name: 'example_name',
   role_names: [],
-  roles: [],
   team_ids: [],
   team_role_names: [],
-  team_roles: [],
-  token_last_issued_at: 'example_token_last_issued_at',
 })
 ```
 
@@ -3500,13 +3468,8 @@ const catalog_entrys = await client.CatalogEntry().list({ catalog_type_id: "exam
 ```ts
 const catalog_entry = await client.CatalogEntry().create({
   attribute_values: {},
-  catalog_entry: {},
-  catalog_type: {},
   catalog_type_id: 'example_catalog_type_id',
-  created_at: 'example_created_at',
-  id: 'example_id',
   name: 'example_name',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -3597,22 +3560,8 @@ const catalog_types = await client.CatalogType().list()
 
 ```ts
 const catalog_type = await client.CatalogType().create({
-  annotations: {},
-  categories: [],
-  color: 'example_color',
-  created_at: 'example_created_at',
   description: 'example_description',
-  engine_resource_type: 'example_engine_resource_type',
-  icon: 'example_icon',
-  id: 'example_id',
-  is_editable: true,
   name: 'example_name',
-  ranked: true,
-  schema: {},
-  semantic_type: 'example_semantic_type',
-  type_name: 'example_type_name',
-  updated_at: 'example_updated_at',
-  use_name_as_identifier: true,
 })
 ```
 
@@ -3663,23 +3612,7 @@ Create an instance: `const catalog_type_schema = client.CatalogTypeSchema()`
 ```ts
 const catalog_type_schema = await client.CatalogTypeSchema().create({
   catalog_type_id: 'example_catalog_type_id',
-  annotations: {},
   attributes: [],
-  categories: [],
-  color: 'example_color',
-  created_at: 'example_created_at',
-  description: 'example_description',
-  engine_resource_type: 'example_engine_resource_type',
-  icon: 'example_icon',
-  id: 'example_id',
-  is_editable: true,
-  name: 'example_name',
-  ranked: true,
-  schema: {},
-  semantic_type: 'example_semantic_type',
-  type_name: 'example_type_name',
-  updated_at: 'example_updated_at',
-  use_name_as_identifier: true,
   version: 1,
 })
 ```
@@ -3738,18 +3671,14 @@ const custom_fields = await client.CustomField().list()
 
 ```ts
 const custom_field = await client.CustomField().create({
-  created_at: 'example_created_at',
   description: 'example_description',
   field_type: 'example_field_type',
   filter_by: {},
   fixed_filter: {},
-  id: 'example_id',
   name: 'example_name',
-  options: [],
   show_before_closure: true,
   show_before_creation: true,
   show_before_update: true,
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -3794,8 +3723,6 @@ const custom_field_options = await client.CustomFieldOption().list({ custom_fiel
 ```ts
 const custom_field_option = await client.CustomFieldOption().create({
   custom_field_id: 'example_custom_field_id',
-  id: 'example_id',
-  sort_key: 1,
   value: 'example_value',
 })
 ```
@@ -3849,18 +3776,8 @@ const escalations = await client.Escalation().list()
 
 ```ts
 const escalation = await client.Escalation().create({
-  created_at: 'example_created_at',
-  creator: {},
-  description: 'example_description',
-  events: [],
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
-  priority: {},
-  related_alerts: [],
-  related_incidents: [],
-  status: 'example_status',
   title: 'example_title',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -3909,11 +3826,7 @@ const escalation_path_templates = await client.EscalationPathTemplate().list()
 
 ```ts
 const escalation_path_template = await client.EscalationPathTemplate().create({
-  expressions: [],
-  has_historical_escalation_path_versions: true,
-  id: 'example_id',
   name: 'example_name',
-  params: [],
   path: [],
   repeat_config: {},
 })
@@ -3942,7 +3855,6 @@ Create an instance: `const escalations_check_escalation_permissions_result_v2 = 
 ```ts
 const escalations_check_escalation_permissions_result_v2 = await client.EscalationsCheckEscalationPermissionsResultV2().create({
   escalation_id: 'example_escalation_id',
-  response_options: [],
   user_ids: [],
 })
 ```
@@ -4032,19 +3944,8 @@ const follow_ups = await client.FollowUp().list()
 
 ```ts
 const follow_up = await client.FollowUp().create({
-  assignee: {},
-  assignee_team: {},
-  category: {},
-  created_at: 'example_created_at',
-  creator: {},
-  external_issue_reference: {},
-  id: 'example_id',
   incident_id: 'example_incident_id',
-  labels: [],
-  priority: {},
-  status: 'example_status',
   title: 'example_title',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4086,20 +3987,7 @@ Create an instance: `const follow_ups_connect_external_issue_result_v3 = client.
 ```ts
 const follow_ups_connect_external_issue_result_v3 = await client.FollowUpsConnectExternalIssueResultV3().create({
   follow_up_id: 'example_follow_up_id',
-  assignee: {},
-  assignee_team: {},
-  category: {},
-  created_at: 'example_created_at',
-  creator: {},
-  external_issue_reference: {},
-  id: 'example_id',
-  incident_id: 'example_incident_id',
-  labels: [],
-  priority: {},
   provider: 'example_provider',
-  status: 'example_status',
-  title: 'example_title',
-  updated_at: 'example_updated_at',
   url: 'example_url',
 })
 ```
@@ -4236,25 +4124,7 @@ const incidents = await client.Incident().list()
 
 ```ts
 const incident = await client.Incident().create({
-  created_at: 'example_created_at',
-  creator: {},
-  custom_field_entries: [],
-  external_issue_reference: {},
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
-  incident_role_assignments: [],
-  incident_status: {},
-  incident_type: {},
-  last_activity_at: 'example_last_activity_at',
-  mode: 'example_mode',
-  name: 'example_name',
-  reference: 'example_reference',
-  severity: {},
-  slack_channel_id: 'example_slack_channel_id',
-  slack_team_id: 'example_slack_team_id',
-  status: 'example_status',
-  team_ids: [],
-  updated_at: 'example_updated_at',
   visibility: 'example_visibility',
 })
 ```
@@ -4319,7 +4189,6 @@ const incident_attachments = await client.IncidentAttachment().list()
 
 ```ts
 const incident_attachment = await client.IncidentAttachment().create({
-  id: 'example_id',
   incident_id: 'example_incident_id',
   resource: {},
 })
@@ -4368,11 +4237,8 @@ const incident_forms = await client.IncidentForm().list()
 
 ```ts
 const incident_form = await client.IncidentForm().create({
-  created_at: 'example_created_at',
   expressions: [],
   form_type: 'example_form_type',
-  id: 'example_id',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4522,14 +4388,11 @@ const incident_roles = await client.IncidentRole().list()
 
 ```ts
 const incident_role = await client.IncidentRole().create({
-  created_at: 'example_created_at',
   description: 'example_description',
-  id: 'example_id',
   instructions: 'example_instructions',
   name: 'example_name',
-  role_type: 'example_role_type',
+  required: true,
   shortform: 'example_shortform',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4577,12 +4440,8 @@ const incident_statuss = await client.IncidentStatus().list()
 ```ts
 const incident_status = await client.IncidentStatus().create({
   category: 'example_category',
-  created_at: 'example_created_at',
   description: 'example_description',
-  id: 'example_id',
   name: 'example_name',
-  rank: 1,
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4682,11 +4541,8 @@ const incident_templates = await client.IncidentTemplate().list()
 
 ```ts
 const incident_template = await client.IncidentTemplate().create({
-  created_at: 'example_created_at',
-  id: 'example_id',
   name: 'example_name',
   template: {},
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4716,7 +4572,6 @@ Create an instance: `const incident_templates_validate_result_v1 = client.Incide
 const incident_templates_validate_result_v1 = await client.IncidentTemplatesValidateResultV1().create({
   name: 'example_name',
   template: {},
-  warnings: [],
 })
 ```
 
@@ -4758,14 +4613,10 @@ const incident_timeline_items = await client.IncidentTimelineItem().list({ incid
 
 ```ts
 const incident_timeline_item = await client.IncidentTimelineItem().create({
-  created_at: 'example_created_at',
-  creator: {},
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
   incident_id: 'example_incident_id',
   timestamp: 'example_timestamp',
   title: 'example_title',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -4877,13 +4728,8 @@ const incident_updates = await client.IncidentUpdate().list()
 
 ```ts
 const incident_update = await client.IncidentUpdate().create({
-  created_at: 'example_created_at',
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
   incident_id: 'example_incident_id',
-  new_incident_status: {},
-  new_severity: {},
-  updater: {},
 })
 ```
 
@@ -4994,16 +4840,42 @@ const maintenance_windows = await client.MaintenanceWindow().list()
 ```ts
 const maintenance_window = await client.MaintenanceWindow().create({
   alert_condition_groups: [],
-  created_at: 'example_created_at',
   end_at: 'example_end_at',
-  id: 'example_id',
   lead: {},
   name: 'example_name',
-  reroute_on_end: true,
-  resolve_on_end: true,
   show_in_sidebar: true,
   start_at: 'example_start_at',
-  updated_at: 'example_updated_at',
+})
+```
+
+
+### ManagedResource
+
+Create an instance: `const managed_resource = client.ManagedResource()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotations` | `Record<string, any>` | Annotations that track metadata about this resource |
+| `managed_by` | `string` | How is this resource managed |
+| `resource_id` | `string` | The ID of the resource that this relates to |
+| `resource_type` | `string` | The type of the related resource |
+| `source_url` | `string` | The url of the external repository where this resource is managed (if there is one) |
+
+#### Example: Create
+
+```ts
+const managed_resource = await client.ManagedResource().create({
+  annotations: {},
+  resource_id: 'example_resource_id',
+  resource_type: 'example_resource_type',
 })
 ```
 
@@ -5032,6 +4904,42 @@ Create an instance: `const on_call_notification_method_public_v2 = client.OnCall
 
 ```ts
 const on_call_notification_method_public_v2s = await client.OnCallNotificationMethodPublicV2().list({ user_id: "example" })
+```
+
+
+### OnCallNotificationPause
+
+Create an instance: `const on_call_notification_pause = client.OnCallNotificationPause()`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `ends_at` | `string` | When notifications resume |
+| `id` | `string` | Unique identifier for this notification pause |
+| `reason` | `string` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `string` | When notifications stop being sent to the user |
+| `updated_at` | `string` |  |
+| `user_id` | `string` | The user whose on-call notifications are paused in this time window |
+
+#### Example: Load
+
+```ts
+const on_call_notification_pause = await client.OnCallNotificationPause().load({ id: 'on_call_notification_pause_id' })
+```
+
+#### Example: List
+
+```ts
+const on_call_notification_pauses = await client.OnCallNotificationPause().list()
 ```
 
 
@@ -5111,15 +5019,10 @@ const pay_configs = await client.PayConfig().list()
 ```ts
 const pay_config = await client.PayConfig().create({
   base_rate_cents: 1,
-  created_at: 'example_created_at',
   currency: 'example_currency',
-  id: 'example_id',
   name: 'example_name',
-  one_off_rules: [],
   rate_time_unit: 'example_rate_time_unit',
   timezone: 'example_timezone',
-  updated_at: 'example_updated_at',
-  weekly_rules: [],
 })
 ```
 
@@ -5408,17 +5311,11 @@ const pay_reports = await client.PayReport().list()
 
 ```ts
 const pay_report = await client.PayReport().create({
-  created_at: 'example_created_at',
   end_date: 'example_end_date',
-  id: 'example_id',
   name: 'example_name',
-  overlapping_shifts: 'example_overlapping_shifts',
   pay_config_expression: {},
   schedule_ids: [],
   start_date: 'example_start_date',
-  status: 'example_status',
-  unpaid_shifts: 'example_unpaid_shifts',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5462,17 +5359,7 @@ Create an instance: `const pay_reports_publish_result_v2 = client.PayReportsPubl
 const pay_reports_publish_result_v2 = await client.PayReportsPublishResultV2().create({
   pay_report_id: 'example_pay_report_id',
   cc_emails: [],
-  created_at: 'example_created_at',
-  end_date: 'example_end_date',
-  id: 'example_id',
-  name: 'example_name',
-  overlapping_shifts: 'example_overlapping_shifts',
-  schedule_ids: [],
   send_user_breakdowns: 'example_send_user_breakdowns',
-  start_date: 'example_start_date',
-  status: 'example_status',
-  unpaid_shifts: 'example_unpaid_shifts',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5514,17 +5401,7 @@ Create an instance: `const pay_reports_unpublish_result_v2 = client.PayReportsUn
 ```ts
 const pay_reports_unpublish_result_v2 = await client.PayReportsUnpublishResultV2().create({
   pay_report_id: 'example_pay_report_id',
-  created_at: 'example_created_at',
-  end_date: 'example_end_date',
-  id: 'example_id',
-  name: 'example_name',
-  overlapping_shifts: 'example_overlapping_shifts',
-  schedule_ids: [],
-  start_date: 'example_start_date',
-  status: 'example_status',
-  unpaid_shifts: 'example_unpaid_shifts',
   unpublish_reason: 'example_unpublish_reason',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5614,16 +5491,13 @@ const policys = await client.Policy().list()
 const policy = await client.Policy().create({
   assignment_rules: {},
   conditions: [],
-  created_at: 'example_created_at',
   debrief: {},
+  description: 'example_description',
   follow_up: {},
-  id: 'example_id',
   name: 'example_name',
   policy_type: 'example_policy_type',
   post_mortem: {},
   schedule: {},
-  status: 'example_status',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5714,23 +5588,7 @@ Create an instance: `const policy_findings_dismiss_result_v2 = client.PolicyFind
 ```ts
 const policy_findings_dismiss_result_v2 = await client.PolicyFindingsDismissResultV2().create({
   policy_finding_id: 'example_policy_finding_id',
-  created_at: 'example_created_at',
-  debrief: {},
-  dismissal: {},
-  follow_up: {},
-  id: 'example_id',
-  last_checked_at: 'example_last_checked_at',
-  on_call_readiness: {},
-  policy_id: 'example_policy_id',
-  policy_type: 'example_policy_type',
-  post_mortem: {},
   reason: 'example_reason',
-  responsible_users: [],
-  schedule: {},
-  shift_conflict: {},
-  state: 'example_state',
-  updated_at: 'example_updated_at',
-  vacation_conflict: {},
 })
 ```
 
@@ -5880,16 +5738,7 @@ const schedules = await client.Schedule().list()
 
 ```ts
 const schedule = await client.Schedule().create({
-  annotations: {},
-  config: {},
-  created_at: 'example_created_at',
   holidays_public_config: {},
-  id: 'example_id',
-  name: 'example_name',
-  permalink: 'example_permalink',
-  team_ids: [],
-  timezone: 'example_timezone',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -5920,10 +5769,7 @@ Create an instance: `const schedule_entries_list_payload_v2 = client.ScheduleEnt
 ```ts
 const schedule_entries_list_payload_v2 = await client.ScheduleEntriesListPayloadV2().create({
   schedule_id: 'example_schedule_id',
-  final: [],
-  overrides: [],
   schedule: {},
-  scheduled: [],
 })
 ```
 
@@ -5998,14 +5844,10 @@ const schedule_replicas = await client.ScheduleReplica().list({ id: "example" })
 ```ts
 const schedule_replica = await client.ScheduleReplica().create({
   id: 'example_id',
-  created_at: 'example_created_at',
   replica_fallback_user_id: 'example_replica_fallback_user_id',
   replica_provider: 'example_replica_provider',
   replica_provider_id: 'example_replica_provider_id',
-  schedule_id: 'example_schedule_id',
   sources: [],
-  updated_at: 'example_updated_at',
-  user_statuses: [],
 })
 ```
 
@@ -6055,13 +5897,8 @@ const schedule_sync_rules = await client.ScheduleSyncRule().list({ id: "example"
 ```ts
 const schedule_sync_rule = await client.ScheduleSyncRule().create({
   id: 'example_id',
-  created_at: 'example_created_at',
-  permanent_member_user_ids: [],
-  schedule_id: 'example_schedule_id',
-  schedule_sync_target: {},
   schedule_sync_target_id: 'example_schedule_sync_target_id',
   sync_type: 'example_sync_type',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -6111,13 +5948,7 @@ const schedule_sync_targets = await client.ScheduleSyncTarget().list()
 ```ts
 const schedule_sync_target = await client.ScheduleSyncTarget().create({
   add_bot_to_group: true,
-  created_at: 'example_created_at',
-  id: 'example_id',
-  linked_schedules: [],
   new_slack_user_group: {},
-  slack_team_id: 'example_slack_team_id',
-  slack_user_group_id: 'example_slack_user_group_id',
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -6164,14 +5995,11 @@ const schedules_show_override_result_v2s = await client.SchedulesShowOverrideRes
 
 ```ts
 const schedules_show_override_result_v2 = await client.SchedulesShowOverrideResultV2().create({
-  created_at: 'example_created_at',
   end_at: 'example_end_at',
-  id: 'example_id',
   layer_id: 'example_layer_id',
   rotation_id: 'example_rotation_id',
   schedule_id: 'example_schedule_id',
   start_at: 'example_start_at',
-  updated_at: 'example_updated_at',
   user: {},
 })
 ```
@@ -6248,14 +6076,8 @@ const secrets = await client.Secret().list()
 
 ```ts
 const secret = await client.Secret().create({
-  created_at: 'example_created_at',
-  id: 'example_id',
   name: 'example_name',
-  secret: {},
-  updated_at: 'example_updated_at',
   value: 'example_value',
-  version: 1,
-  versions: [],
 })
 ```
 
@@ -6300,12 +6122,8 @@ const severitys = await client.Severity().list()
 
 ```ts
 const severity = await client.Severity().create({
-  created_at: 'example_created_at',
   description: 'example_description',
-  id: 'example_id',
   name: 'example_name',
-  rank: 1,
-  updated_at: 'example_updated_at',
 })
 ```
 
@@ -6382,8 +6200,6 @@ const status_page_components = await client.StatusPageComponent().list()
 
 ```ts
 const status_page_component = await client.StatusPageComponent().create({
-  id: 'example_id',
-  management_meta: {},
   name: 'example_name',
 })
 ```
@@ -6462,16 +6278,12 @@ const status_page_incidents = await client.StatusPageIncident().list({ status_pa
 
 ```ts
 const status_page_incident = await client.StatusPageIncident().create({
-  component_impacts: [],
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
   incident_status: 'example_incident_status',
   message: 'example_message',
   name: 'example_name',
   notify_subscribers: true,
-  published_at: 'example_published_at',
   status_page_id: 'example_status_page_id',
-  updates: [],
 })
 ```
 
@@ -6580,19 +6392,14 @@ const status_page_maintenances = await client.StatusPageMaintenance().list({ sta
 ```ts
 const status_page_maintenance = await client.StatusPageMaintenance().create({
   affected_component_ids: [],
-  automate_maintenance_status: true,
-  component_maintenance_periods: [],
   end_at: 'example_end_at',
-  id: 'example_id',
   idempotency_key: 'example_idempotency_key',
   maintenance_status: 'example_maintenance_status',
   message: 'example_message',
   name: 'example_name',
   notify_subscribers: true,
-  published_at: 'example_published_at',
   start_at: 'example_start_at',
   status_page_id: 'example_status_page_id',
-  updates: [],
 })
 ```
 
@@ -6767,12 +6574,6 @@ const users = await client.User().list()
 ```ts
 const user = await client.User().create({
   id: 'example_id',
-  base_role: {},
-  custom_roles: [],
-  is_active: true,
-  name: 'example_name',
-  role: 'example_role',
-  seats: {},
 })
 ```
 
@@ -6842,16 +6643,12 @@ const workflow = await client.Workflow().create({
   continue_on_step_error: true,
   delay: {},
   expressions: [],
-  id: 'example_id',
-  management_meta: {},
   name: 'example_name',
   once_for: [],
   runs_on_incident_modes: [],
   runs_on_incidents: 'example_runs_on_incidents',
   steps: [],
   trigger: 'example_trigger',
-  version: 1,
-  workflow: {},
 })
 ```
 
@@ -6900,7 +6697,7 @@ const workflow_runs = await client.WorkflowRun().list()
 
 ## Features
 
-This SDK ships 8 optional features. Each is **inactive until you
+This SDK ships 9 optional features. Each is **inactive until you
 switch it on**, so an SDK you have not configured behaves exactly as if none of
 them existed — no retries, no cache, no logging, no measurable overhead.
 
@@ -6915,10 +6712,11 @@ above:
 | [`paging`](#paging) | Paging |
 | [`ratelimit`](#ratelimit) | Rate limiting |
 | [`retry`](#retry) | Retry |
+| [`secrets`](#secrets) | Secrets |
 | [`test`](#test) | Test transport |
 | [`timeout`](#timeout) | Timeout |
 
-> **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
+> **Order matters for `ratelimit`, `retry`, `secrets`, `timeout`.** These wrap the
 > transport, so each one wraps whatever is already installed: the order you
 > activate them in IS the nesting order. Activating them as an ordered list
 > rather than a map is what fixes that order.
@@ -7009,6 +6807,24 @@ Set `feature.retry.active` to enable it, then override any of the options above.
 transport features decides what it sees. A feature activated later wraps one
 activated earlier.
 
+### secrets
+
+Secrets.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+Set `feature.secrets.active` to enable it, then override any of the options above.
+
+`secrets` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
 ### test
 
 Test transport.
@@ -7079,6 +6895,7 @@ The SDK ships with built-in features:
 - **PagingFeature**: Paging
 - **RatelimitFeature**: Rate limiting
 - **RetryFeature**: Retry
+- **SecretsFeature**: Secrets
 - **TestFeature**: Test transport
 - **TimeoutFeature**: Timeout
 

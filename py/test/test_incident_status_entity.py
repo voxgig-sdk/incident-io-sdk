@@ -114,6 +114,16 @@ class TestIncidentStatusEntity:
         assert client.IncidentStatus(None).list(None, {"throw": False}) is None
         assert fired < hook.unexpected
 
+    def test_should_validate_each_listed_record(self):
+        if "validate" not in (shared_config().get("feature") or {}):
+            pytest.skip("feature not present in this SDK: validate")
+        opts = {"feature": {"validate": {"active": True, "request": False, "response": True}}}
+        listed = IncidentIoSDK.test({"entity": {"incident_status": {"v1": {"category": "x", "created_at": "x", "description": "x", "name": "x", "rank": 1, "updated_at": "x"}}}}, opts).IncidentStatus(None).list(None, None)
+        assert ["v1"] == [ent.data_get().get("id") for ent in listed]
+        with pytest.raises(Exception) as err:
+            IncidentIoSDK.test({"entity": {"incident_status": {"v1": {"category": 1, "created_at": "x", "description": "x", "name": "x", "rank": 1, "updated_at": "x"}}}}, opts).IncidentStatus(None).list(None, None)
+        assert "validate_failed" == getattr(err.value, "code", None)
+
     def test_should_refuse_an_invalid_request(self):
         if "validate" not in (shared_config().get("feature") or {}):
             pytest.skip("feature not present in this SDK: validate")

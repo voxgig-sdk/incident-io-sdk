@@ -38,7 +38,7 @@ func TestCatalogTypeSchemaEntity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.CatalogTypeSchema(nil).Create(map[string]any{"catalog_type_id": 1, "annotations": "x", "attributes": "x", "categories": "x", "color": "x", "created_at": "x", "description": "x", "engine_resource_type": "x", "icon": "x", "id": "x", "is_editable": true, "name": "x", "ranked": true, "schema": "x", "semantic_type": "x", "type_name": "x", "updated_at": "x", "use_name_as_identifier": true, "version": 1}, nil)
+		_, err := client.CatalogTypeSchema(nil).Create(map[string]any{"catalog_type_id": 1, "attributes": "x", "version": 1}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

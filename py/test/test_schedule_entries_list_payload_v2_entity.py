@@ -37,7 +37,7 @@ class TestScheduleEntriesListPayloadV2Entity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.ScheduleEntriesListPayloadV2(None).create({"schedule_id": 1, "final": "x", "overrides": "x", "schedule": "x", "scheduled": "x"}, None)
+            client.ScheduleEntriesListPayloadV2(None).create({"schedule_id": 1, "schedule": "x"}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

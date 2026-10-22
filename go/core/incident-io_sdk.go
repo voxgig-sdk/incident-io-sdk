@@ -868,11 +868,27 @@ func (sdk *IncidentIoSDK) MaintenanceWindow(data map[string]any) IncidentIoEntit
 }
 
 
+// ManagedResource returns a ManagedResource entity bound to this client.
+// Idiomatic usage: client.ManagedResource(nil).List(nil, nil) or
+// client.ManagedResource(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) ManagedResource(data map[string]any) IncidentIoEntity {
+	return NewManagedResourceEntityFunc(sdk, data)
+}
+
+
 // OnCallNotificationMethodPublicV2 returns a OnCallNotificationMethodPublicV2 entity bound to this client.
 // Idiomatic usage: client.OnCallNotificationMethodPublicV2(nil).List(nil, nil) or
 // client.OnCallNotificationMethodPublicV2(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *IncidentIoSDK) OnCallNotificationMethodPublicV2(data map[string]any) IncidentIoEntity {
 	return NewOnCallNotificationMethodPublicV2EntityFunc(sdk, data)
+}
+
+
+// OnCallNotificationPause returns a OnCallNotificationPause entity bound to this client.
+// Idiomatic usage: client.OnCallNotificationPause(nil).List(nil, nil) or
+// client.OnCallNotificationPause(nil).Load(map[string]any{"id": ...}, nil).
+func (sdk *IncidentIoSDK) OnCallNotificationPause(data map[string]any) IncidentIoEntity {
+	return NewOnCallNotificationPauseEntityFunc(sdk, data)
 }
 
 

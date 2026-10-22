@@ -33,7 +33,7 @@ class IncidentTemplatesValidateResultV1EntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->IncidentTemplatesValidateResultV1(null)->create(["name" => 1, "template" => 'x', "warnings" => 'x'], null);
+            $client->IncidentTemplatesValidateResultV1(null)->create(["name" => 1, "template" => 'x'], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

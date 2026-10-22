@@ -38,7 +38,7 @@ func TestAlertsSetTagsResultV2Entity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.AlertsSetTagsResultV2(nil).Create(map[string]any{"alert_id": 1, "alert_source_id": "x", "attributes": "x", "created_at": "x", "deduplication_key": "x", "id": "x", "status": "x", "title": "x", "updated_at": "x"}, nil)
+		_, err := client.AlertsSetTagsResultV2(nil).Create(map[string]any{"alert_id": 1, "tags": "x"}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

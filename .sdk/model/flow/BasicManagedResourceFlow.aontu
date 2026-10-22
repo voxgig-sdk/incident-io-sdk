@@ -1,0 +1,18 @@
+# BasicManagedResourceFlow
+
+main: kit: flow: BasicManagedResourceFlow:
+{
+  entity: "managed_resource",
+  kind: "basic",
+  name: "BasicManagedResourceFlow",
+  step: [
+    {
+      i: {
+        ref: "managed_resource_ref01"
+      }
+
+      o: "create"
+    }
+  ],
+  "key$": "BasicManagedResourceFlow"
+}

@@ -37,7 +37,7 @@ class TestFollowUpsConnectExternalIssueResultV3Entity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.FollowUpsConnectExternalIssueResultV3(None).create({"follow_up_id": 1, "assignee": "x", "assignee_team": "x", "category": "x", "created_at": "x", "creator": "x", "external_issue_reference": "x", "id": "x", "incident_id": "x", "labels": "x", "priority": "x", "provider": "x", "status": "x", "title": "x", "updated_at": "x", "url": "x"}, None)
+            client.FollowUpsConnectExternalIssueResultV3(None).create({"follow_up_id": 1, "provider": "x", "url": "x"}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

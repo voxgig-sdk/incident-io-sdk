@@ -29,7 +29,7 @@ describe("EscalationsCheckEscalationPermissionsResultV2Entity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:EscalationsCheckEscalationPermissionsResultV2(nil):create({ ["escalation_id"] = 1, ["response_options"] = "x", ["user_ids"] = "x" }, nil)
+    local _, err = client:EscalationsCheckEscalationPermissionsResultV2(nil):create({ ["escalation_id"] = 1, ["user_ids"] = "x" }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 

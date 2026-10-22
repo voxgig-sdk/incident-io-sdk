@@ -47,7 +47,7 @@ describe('CatalogTypeSchemaEntity', async () => {
       return
     }
     const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
-    await assert.rejects(client.CatalogTypeSchema().create({"catalog_type_id":1,"annotations":"x","attributes":"x","categories":"x","color":"x","created_at":"x","description":"x","engine_resource_type":"x","icon":"x","id":"x","is_editable":true,"name":"x","ranked":true,"schema":"x","semantic_type":"x","type_name":"x","updated_at":"x","use_name_as_identifier":true,"version":1} as any),
+    await assert.rejects(client.CatalogTypeSchema().create({"catalog_type_id":1,"attributes":"x","version":1} as any),
       (err: any) => 'validate_failed' === err.code)
   })
 

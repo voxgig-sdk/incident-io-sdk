@@ -37,7 +37,7 @@ class TestPolicyFindingsDismissResultV2Entity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.PolicyFindingsDismissResultV2(None).create({"policy_finding_id": 1, "created_at": "x", "debrief": "x", "dismissal": "x", "follow_up": "x", "id": "x", "last_checked_at": "x", "on_call_readiness": "x", "policy_id": "x", "policy_type": "x", "post_mortem": "x", "reason": "x", "responsible_users": "x", "schedule": "x", "shift_conflict": "x", "state": "x", "updated_at": "x", "vacation_conflict": "x"}, None)
+            client.PolicyFindingsDismissResultV2(None).create({"policy_finding_id": 1, "reason": "x"}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

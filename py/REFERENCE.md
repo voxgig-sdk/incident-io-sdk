@@ -290,9 +290,17 @@ Create a new `IpRangeEntity` instance. Pass `None` for no initial data.
 
 Create a new `MaintenanceWindowEntity` instance. Pass `None` for no initial data.
 
+#### `ManagedResource(data=None)`
+
+Create a new `ManagedResourceEntity` instance. Pass `None` for no initial data.
+
 #### `OnCallNotificationMethodPublicV2(data=None)`
 
 Create a new `OnCallNotificationMethodPublicV2Entity` instance. Pass `None` for no initial data.
+
+#### `OnCallNotificationPause(data=None)`
+
+Create a new `OnCallNotificationPauseEntity` instance. Pass `None` for no initial data.
 
 #### `OnCallNotificationRulePublicV2(data=None)`
 
@@ -558,14 +566,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.Action().create({
-    "assignee": {},  # dict
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "follow_up": True,  # bool
-    "id": "example_id",  # str
+    "description": "example_description",  # str
     "incident_id": "example_incident_id",  # str
-    "status": "example_status",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -762,9 +764,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.AlertAttribute().create({
     "array": True,  # bool
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "required": True,  # bool
     "type": "example_type",  # str
 })
 ```
@@ -864,11 +864,6 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.AlertNote().create({
     "content": "example_content",  # str
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "id": "example_id",  # str
-    "images": [],  # list
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -982,13 +977,11 @@ result = client.AlertRoute().create({
     "escalation_config": {},  # dict
     "expressions": [],  # list
     "grouping_config": {},  # dict
-    "id": "example_id",  # str
     "incident_config": {},  # dict
     "incident_template": {},  # dict
     "is_private": True,  # bool
     "message_config": {},  # dict
     "name": "example_name",  # str
-    "version": 1,  # int
 })
 ```
 
@@ -1099,7 +1092,6 @@ result = client.AlertSource().create({
     "email_options": {},  # dict
     "heartbeat_options": {},  # dict
     "http_custom_options": {},  # dict
-    "id": "example_id",  # str
     "jira_options": {},  # dict
     "name": "example_name",  # str
     "rate_limit_sharding": {},  # dict
@@ -1335,14 +1327,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.AlertsAddTagsResultV2().create({
     "alert_id": "example_alert_id",  # str
-    "alert_source_id": "example_alert_source_id",  # str
-    "attributes": [],  # list
-    "created_at": "example_created_at",  # str
-    "deduplication_key": "example_deduplication_key",  # str
-    "id": "example_id",  # str
-    "status": "example_status",  # str
-    "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
+    "tags": [],  # list
 })
 ```
 
@@ -1426,14 +1411,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.AlertsRemoveTagsResultV2().create({
     "alert_id": "example_alert_id",  # str
-    "alert_source_id": "example_alert_source_id",  # str
-    "attributes": [],  # list
-    "created_at": "example_created_at",  # str
-    "deduplication_key": "example_deduplication_key",  # str
-    "id": "example_id",  # str
-    "status": "example_status",  # str
-    "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
+    "tags": [],  # list
 })
 ```
 
@@ -1517,14 +1495,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.AlertsSetTagsResultV2().create({
     "alert_id": "example_alert_id",  # str
-    "alert_source_id": "example_alert_source_id",  # str
-    "attributes": [],  # list
-    "created_at": "example_created_at",  # str
-    "deduplication_key": "example_deduplication_key",  # str
-    "id": "example_id",  # str
-    "status": "example_status",  # str
-    "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
+    "tags": [],  # list
 })
 ```
 
@@ -1584,10 +1555,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.AlertsTransitionIncidentAlertResultV2().create({
-    "alert": {},  # dict
     "alert_id": "example_alert_id",  # str
-    "id": "example_id",  # str
-    "incident": {},  # dict
     "incident_id": "example_incident_id",  # str
     "state": "example_state",  # str
 })
@@ -1683,16 +1651,9 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.AnnouncementRule().create({
     "condition_groups": [],  # list
-    "conditions_no_longer_apply_behaviour": "example_conditions_no_longer_apply_behaviour",  # str
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
-    "microsoft_teams_channel_ids": [],  # list
     "mode": "example_mode",  # str
     "name": "example_name",  # str
-    "owning_team_ids": [],  # list
-    "slack_channel_ids": [],  # list
     "update_sharing_mode": "example_update_sharing_mode",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -1798,12 +1759,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.AnnouncementTemplate().create({
-    "actions": [],  # list
-    "fields": [],  # list
-    "id": "example_id",  # str
-    "is_default": True,  # bool
     "name": "example_name",  # str
-    "owning_team_ids": [],  # list
 })
 ```
 
@@ -1904,16 +1860,10 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.ApiKey().create({
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "id": "example_id",  # str
     "name": "example_name",  # str
     "role_names": [],  # list
-    "roles": [],  # list
     "team_ids": [],  # list
     "team_role_names": [],  # list
-    "team_roles": [],  # list
-    "token_last_issued_at": "example_token_last_issued_at",  # str
 })
 ```
 
@@ -2729,13 +2679,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.CatalogEntry().create({
     "attribute_values": {},  # dict
-    "catalog_entry": {},  # dict
-    "catalog_type": {},  # dict
     "catalog_type_id": "example_catalog_type_id",  # str
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -2927,22 +2872,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.CatalogType().create({
-    "annotations": {},  # dict
-    "categories": [],  # list
-    "color": "example_color",  # str
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
-    "engine_resource_type": "example_engine_resource_type",  # str
-    "icon": "example_icon",  # str
-    "id": "example_id",  # str
-    "is_editable": True,  # bool
     "name": "example_name",  # str
-    "ranked": True,  # bool
-    "schema": {},  # dict
-    "semantic_type": "example_semantic_type",  # str
-    "type_name": "example_type_name",  # str
-    "updated_at": "example_updated_at",  # str
-    "use_name_as_identifier": True,  # bool
 })
 ```
 
@@ -3050,23 +2981,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.CatalogTypeSchema().create({
     "catalog_type_id": "example_catalog_type_id",  # str
-    "annotations": {},  # dict
     "attributes": [],  # list
-    "categories": [],  # list
-    "color": "example_color",  # str
-    "created_at": "example_created_at",  # str
-    "description": "example_description",  # str
-    "engine_resource_type": "example_engine_resource_type",  # str
-    "icon": "example_icon",  # str
-    "id": "example_id",  # str
-    "is_editable": True,  # bool
-    "name": "example_name",  # str
-    "ranked": True,  # bool
-    "schema": {},  # dict
-    "semantic_type": "example_semantic_type",  # str
-    "type_name": "example_type_name",  # str
-    "updated_at": "example_updated_at",  # str
-    "use_name_as_identifier": True,  # bool
     "version": 1,  # int
 })
 ```
@@ -3137,18 +3052,14 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.CustomField().create({
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
     "field_type": "example_field_type",  # str
     "filter_by": {},  # dict
     "fixed_filter": {},  # dict
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "options": [],  # list
     "show_before_closure": True,  # bool
     "show_before_creation": True,  # bool
     "show_before_update": True,  # bool
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -3251,8 +3162,6 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.CustomFieldOption().create({
     "custom_field_id": "example_custom_field_id",  # str
-    "id": "example_id",  # str
-    "sort_key": 1,  # int
     "value": "example_value",  # str
 })
 ```
@@ -3377,18 +3286,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.Escalation().create({
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "description": "example_description",  # str
-    "events": [],  # list
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
-    "priority": {},  # dict
-    "related_alerts": [],  # list
-    "related_incidents": [],  # list
-    "status": "example_status",  # str
     "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -3481,11 +3380,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.EscalationPathTemplate().create({
-    "expressions": [],  # list
-    "has_historical_escalation_path_versions": True,  # bool
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "params": [],  # list
     "path": [],  # list
     "repeat_config": {},  # dict
 })
@@ -3579,7 +3474,6 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.EscalationsCheckEscalationPermissionsResultV2().create({
     "escalation_id": "example_escalation_id",  # str
-    "response_options": [],  # list
     "user_ids": [],  # list
 })
 ```
@@ -3734,19 +3628,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.FollowUp().create({
-    "assignee": {},  # dict
-    "assignee_team": {},  # dict
-    "category": {},  # dict
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "external_issue_reference": {},  # dict
-    "id": "example_id",  # str
     "incident_id": "example_incident_id",  # str
-    "labels": [],  # list
-    "priority": {},  # dict
-    "status": "example_status",  # str
     "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -3853,20 +3736,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.FollowUpsConnectExternalIssueResultV3().create({
     "follow_up_id": "example_follow_up_id",  # str
-    "assignee": {},  # dict
-    "assignee_team": {},  # dict
-    "category": {},  # dict
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "external_issue_reference": {},  # dict
-    "id": "example_id",  # str
-    "incident_id": "example_incident_id",  # str
-    "labels": [],  # list
-    "priority": {},  # dict
     "provider": "example_provider",  # str
-    "status": "example_status",  # str
-    "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
     "url": "example_url",  # str
 })
 ```
@@ -4122,25 +3992,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.Incident().create({
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "custom_field_entries": [],  # list
-    "external_issue_reference": {},  # dict
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
-    "incident_role_assignments": [],  # list
-    "incident_status": {},  # dict
-    "incident_type": {},  # dict
-    "last_activity_at": "example_last_activity_at",  # str
-    "mode": "example_mode",  # str
-    "name": "example_name",  # str
-    "reference": "example_reference",  # str
-    "severity": {},  # dict
-    "slack_channel_id": "example_slack_channel_id",  # str
-    "slack_team_id": "example_slack_team_id",  # str
-    "status": "example_status",  # str
-    "team_ids": [],  # list
-    "updated_at": "example_updated_at",  # str
     "visibility": "example_visibility",  # str
 })
 ```
@@ -4273,7 +4125,6 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.IncidentAttachment().create({
-    "id": "example_id",  # str
     "incident_id": "example_incident_id",  # str
     "resource": {},  # dict
 })
@@ -4352,11 +4203,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.IncidentForm().create({
-    "created_at": "example_created_at",  # str
     "expressions": [],  # list
     "form_type": "example_form_type",  # str
-    "id": "example_id",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -4685,14 +4533,11 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.IncidentRole().create({
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
-    "id": "example_id",  # str
     "instructions": "example_instructions",  # str
     "name": "example_name",  # str
-    "role_type": "example_role_type",  # str
+    "required": True,  # bool
     "shortform": "example_shortform",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -4801,12 +4646,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.IncidentStatus().create({
     "category": "example_category",  # str
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "rank": 1,  # int
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5011,11 +4852,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.IncidentTemplate().create({
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
     "template": {},  # dict
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5110,7 +4948,6 @@ Create a new entity with the given data. Returns the created entity and raises o
 result = client.IncidentTemplatesValidateResultV1().create({
     "name": "example_name",  # str
     "template": {},  # dict
-    "warnings": [],  # list
 })
 ```
 
@@ -5187,14 +5024,10 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.IncidentTimelineItem().create({
-    "created_at": "example_created_at",  # str
-    "creator": {},  # dict
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
     "incident_id": "example_incident_id",  # str
     "timestamp": "example_timestamp",  # str
     "title": "example_title",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5410,13 +5243,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.IncidentUpdate().create({
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
     "incident_id": "example_incident_id",  # str
-    "new_incident_status": {},  # dict
-    "new_severity": {},  # dict
-    "updater": {},  # dict
 })
 ```
 
@@ -5640,16 +5468,11 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.MaintenanceWindow().create({
     "alert_condition_groups": [],  # list
-    "created_at": "example_created_at",  # str
     "end_at": "example_end_at",  # str
-    "id": "example_id",  # str
     "lead": {},  # dict
     "name": "example_name",  # str
-    "reroute_on_end": True,  # bool
-    "resolve_on_end": True,  # bool
     "show_in_sidebar": True,  # bool
     "start_at": "example_start_at",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -5719,6 +5542,65 @@ Return the entity name.
 
 ---
 
+## ManagedResourceEntity
+
+```python
+managed_resource = client.ManagedResource()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `annotations` | `dict` | Yes | Annotations that track metadata about this resource |
+| `managed_by` | `str` | Yes | How is this resource managed |
+| `resource_id` | `str` | Yes | The ID of the resource that this relates to |
+| `resource_type` | `str` | Yes | The type of the related resource |
+| `source_url` | `str` | No | The url of the external repository where this resource is managed (if there is one) |
+
+### Operations
+
+#### `create(reqdata, ctrl=None) -> ManagedResourceEntity`
+
+Create a new entity with the given data. Returns the created entity and raises on error.
+
+```python
+result = client.ManagedResource().create({
+    "annotations": {},  # dict
+    "resource_id": "example_resource_id",  # str
+    "resource_type": "example_resource_type",  # str
+})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `ManagedResourceEntity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
 ## OnCallNotificationMethodPublicV2Entity
 
 ```python
@@ -5768,6 +5650,73 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `OnCallNotificationMethodPublicV2Entity` instance with the same options.
+
+#### `get_name() -> str`
+
+Return the entity name.
+
+
+---
+
+## OnCallNotificationPauseEntity
+
+```python
+on_call_notification_pause = client.OnCallNotificationPause()
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `created_at` | `str` | Yes |  |
+| `ends_at` | `str` | Yes | When notifications resume |
+| `id` | `str` | Yes | Unique identifier for this notification pause |
+| `reason` | `str` | No | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `str` | Yes | When notifications stop being sent to the user |
+| `updated_at` | `str` | Yes |  |
+| `user_id` | `str` | Yes | The user whose on-call notifications are paused in this time window |
+
+### Operations
+
+#### `list(reqmatch=None, ctrl=None) -> list[OnCallNotificationPauseEntity]`
+
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
+
+```python
+results = client.OnCallNotificationPause().list()
+for on_call_notification_pause in results:
+    print(on_call_notification_pause.data_get())
+```
+
+#### `load(reqmatch, ctrl=None) -> OnCallNotificationPauseEntity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
+
+```python
+result = client.OnCallNotificationPause().load({"id": "on_call_notification_pause_id"})
+```
+
+### Common Methods
+
+#### `data_get() -> dict`
+
+Get the entity data.
+
+#### `data_set(data)`
+
+Set the entity data.
+
+#### `match_get() -> dict`
+
+Get the entity match criteria.
+
+#### `match_set(match)`
+
+Set the entity match criteria.
+
+#### `make() -> Entity`
+
+Create a new `OnCallNotificationPauseEntity` instance with the same options.
 
 #### `get_name() -> str`
 
@@ -5882,15 +5831,10 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.PayConfig().create({
     "base_rate_cents": 1,  # int
-    "created_at": "example_created_at",  # str
     "currency": "example_currency",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "one_off_rules": [],  # list
     "rate_time_unit": "example_rate_time_unit",  # str
     "timezone": "example_timezone",  # str
-    "updated_at": "example_updated_at",  # str
-    "weekly_rules": [],  # list
 })
 ```
 
@@ -6535,17 +6479,11 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.PayReport().create({
-    "created_at": "example_created_at",  # str
     "end_date": "example_end_date",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "overlapping_shifts": "example_overlapping_shifts",  # str
     "pay_config_expression": {},  # dict
     "schedule_ids": [],  # list
     "start_date": "example_start_date",  # str
-    "status": "example_status",  # str
-    "unpaid_shifts": "example_unpaid_shifts",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -6643,17 +6581,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 result = client.PayReportsPublishResultV2().create({
     "pay_report_id": "example_pay_report_id",  # str
     "cc_emails": [],  # list
-    "created_at": "example_created_at",  # str
-    "end_date": "example_end_date",  # str
-    "id": "example_id",  # str
-    "name": "example_name",  # str
-    "overlapping_shifts": "example_overlapping_shifts",  # str
-    "schedule_ids": [],  # list
     "send_user_breakdowns": "example_send_user_breakdowns",  # str
-    "start_date": "example_start_date",  # str
-    "status": "example_status",  # str
-    "unpaid_shifts": "example_unpaid_shifts",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -6723,17 +6651,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.PayReportsUnpublishResultV2().create({
     "pay_report_id": "example_pay_report_id",  # str
-    "created_at": "example_created_at",  # str
-    "end_date": "example_end_date",  # str
-    "id": "example_id",  # str
-    "name": "example_name",  # str
-    "overlapping_shifts": "example_overlapping_shifts",  # str
-    "schedule_ids": [],  # list
-    "start_date": "example_start_date",  # str
-    "status": "example_status",  # str
-    "unpaid_shifts": "example_unpaid_shifts",  # str
     "unpublish_reason": "example_unpublish_reason",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -6918,16 +6836,13 @@ Create a new entity with the given data. Returns the created entity and raises o
 result = client.Policy().create({
     "assignment_rules": {},  # dict
     "conditions": [],  # list
-    "created_at": "example_created_at",  # str
     "debrief": {},  # dict
+    "description": "example_description",  # str
     "follow_up": {},  # dict
-    "id": "example_id",  # str
     "name": "example_name",  # str
     "policy_type": "example_policy_type",  # str
     "post_mortem": {},  # dict
     "schedule": {},  # dict
-    "status": "example_status",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -7106,23 +7021,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.PolicyFindingsDismissResultV2().create({
     "policy_finding_id": "example_policy_finding_id",  # str
-    "created_at": "example_created_at",  # str
-    "debrief": {},  # dict
-    "dismissal": {},  # dict
-    "follow_up": {},  # dict
-    "id": "example_id",  # str
-    "last_checked_at": "example_last_checked_at",  # str
-    "on_call_readiness": {},  # dict
-    "policy_id": "example_policy_id",  # str
-    "policy_type": "example_policy_type",  # str
-    "post_mortem": {},  # dict
     "reason": "example_reason",  # str
-    "responsible_users": [],  # list
-    "schedule": {},  # dict
-    "shift_conflict": {},  # dict
-    "state": "example_state",  # str
-    "updated_at": "example_updated_at",  # str
-    "vacation_conflict": {},  # dict
 })
 ```
 
@@ -7370,16 +7269,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.Schedule().create({
-    "annotations": {},  # dict
-    "config": {},  # dict
-    "created_at": "example_created_at",  # str
     "holidays_public_config": {},  # dict
-    "id": "example_id",  # str
-    "name": "example_name",  # str
-    "permalink": "example_permalink",  # str
-    "team_ids": [],  # list
-    "timezone": "example_timezone",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -7475,10 +7365,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.ScheduleEntriesListPayloadV2().create({
     "schedule_id": "example_schedule_id",  # str
-    "final": [],  # list
-    "overrides": [],  # list
     "schedule": {},  # dict
-    "scheduled": [],  # list
 })
 ```
 
@@ -7595,14 +7482,10 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.ScheduleReplica().create({
     "id": "example_id",  # str
-    "created_at": "example_created_at",  # str
     "replica_fallback_user_id": "example_replica_fallback_user_id",  # str
     "replica_provider": "example_replica_provider",  # str
     "replica_provider_id": "example_replica_provider_id",  # str
-    "schedule_id": "example_schedule_id",  # str
     "sources": [],  # list
-    "updated_at": "example_updated_at",  # str
-    "user_statuses": [],  # list
 })
 ```
 
@@ -7698,13 +7581,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.ScheduleSyncRule().create({
     "id": "example_id",  # str
-    "created_at": "example_created_at",  # str
-    "permanent_member_user_ids": [],  # list
-    "schedule_id": "example_schedule_id",  # str
-    "schedule_sync_target": {},  # dict
     "schedule_sync_target_id": "example_schedule_sync_target_id",  # str
     "sync_type": "example_sync_type",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -7810,13 +7688,7 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.ScheduleSyncTarget().create({
     "add_bot_to_group": True,  # bool
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
-    "linked_schedules": [],  # list
     "new_slack_user_group": {},  # dict
-    "slack_team_id": "example_slack_team_id",  # str
-    "slack_user_group_id": "example_slack_user_group_id",  # str
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -7914,14 +7786,11 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.SchedulesShowOverrideResultV2().create({
-    "created_at": "example_created_at",  # str
     "end_at": "example_end_at",  # str
-    "id": "example_id",  # str
     "layer_id": "example_layer_id",  # str
     "rotation_id": "example_rotation_id",  # str
     "schedule_id": "example_schedule_id",  # str
     "start_at": "example_start_at",  # str
-    "updated_at": "example_updated_at",  # str
     "user": {},  # dict
 })
 ```
@@ -8081,14 +7950,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.Secret().create({
-    "created_at": "example_created_at",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "secret": {},  # dict
-    "updated_at": "example_updated_at",  # str
     "value": "example_value",  # str
-    "version": 1,  # int
-    "versions": [],  # list
 })
 ```
 
@@ -8194,12 +8057,8 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.Severity().create({
-    "created_at": "example_created_at",  # str
     "description": "example_description",  # str
-    "id": "example_id",  # str
     "name": "example_name",  # str
-    "rank": 1,  # int
-    "updated_at": "example_updated_at",  # str
 })
 ```
 
@@ -8348,8 +8207,6 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.StatusPageComponent().create({
-    "id": "example_id",  # str
-    "management_meta": {},  # dict
     "name": "example_name",  # str
 })
 ```
@@ -8506,16 +8363,12 @@ Create a new entity with the given data. Returns the created entity and raises o
 
 ```python
 result = client.StatusPageIncident().create({
-    "component_impacts": [],  # list
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
     "incident_status": "example_incident_status",  # str
     "message": "example_message",  # str
     "name": "example_name",  # str
     "notify_subscribers": True,  # bool
-    "published_at": "example_published_at",  # str
     "status_page_id": "example_status_page_id",  # str
-    "updates": [],  # list
 })
 ```
 
@@ -8743,19 +8596,14 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.StatusPageMaintenance().create({
     "affected_component_ids": [],  # list
-    "automate_maintenance_status": True,  # bool
-    "component_maintenance_periods": [],  # list
     "end_at": "example_end_at",  # str
-    "id": "example_id",  # str
     "idempotency_key": "example_idempotency_key",  # str
     "maintenance_status": "example_maintenance_status",  # str
     "message": "example_message",  # str
     "name": "example_name",  # str
     "notify_subscribers": True,  # bool
-    "published_at": "example_published_at",  # str
     "start_at": "example_start_at",  # str
     "status_page_id": "example_status_page_id",  # str
-    "updates": [],  # list
 })
 ```
 
@@ -9146,12 +8994,6 @@ Create a new entity with the given data. Returns the created entity and raises o
 ```python
 result = client.User().create({
     "id": "example_id",  # str
-    "base_role": {},  # dict
-    "custom_roles": [],  # list
-    "is_active": True,  # bool
-    "name": "example_name",  # str
-    "role": "example_role",  # str
-    "seats": {},  # dict
 })
 ```
 
@@ -9282,16 +9124,12 @@ result = client.Workflow().create({
     "continue_on_step_error": True,  # bool
     "delay": {},  # dict
     "expressions": [],  # list
-    "id": "example_id",  # str
-    "management_meta": {},  # dict
     "name": "example_name",  # str
     "once_for": [],  # list
     "runs_on_incident_modes": [],  # list
     "runs_on_incidents": "example_runs_on_incidents",  # str
     "steps": [],  # list
     "trigger": "example_trigger",  # str
-    "version": 1,  # int
-    "workflow": {},  # dict
 })
 ```
 
@@ -9445,6 +9283,7 @@ Return the entity name.
 | `paging` | 0.0.1 | Paging |
 | `ratelimit` | 0.0.1 | Rate limiting |
 | `retry` | 0.0.1 | Retry |
+| `secrets` | 0.1.0 | Secrets |
 | `test` | 0.0.1 | Test transport |
 | `timeout` | 0.0.1 | Timeout |
 
@@ -9460,6 +9299,7 @@ client = IncidentIoSDK({
         "paging": {"active": True},
         "ratelimit": {"active": True},
         "retry": {"active": True},
+        "secrets": {"active": True},
         "test": {"active": True},
         "timeout": {"active": True},
     },
@@ -9478,7 +9318,7 @@ transport, and the order you list them in is the order they nest.
 
 #### Ordering
 
-`ratelimit`, `retry`, `timeout` wrap the transport. Each
+`ratelimit`, `retry`, `secrets`, `timeout` wrap the transport. Each
 wraps whatever is already installed, so **activation order is nesting order**:
 a feature activated later sits OUTSIDE one activated earlier, and sees the call
 first.
@@ -9672,6 +9512,31 @@ another when you do not.
 **Usage**
 
 Set `feature.retry.active` to true in the client options, and override any option above in the same entry. Every option keeps
+its default unless you name it.
+
+**Considerations**
+
+- Wraps the transport: its place in the activation order decides what it
+  sees. See [Ordering](#ordering) above.
+- Inactive by default: leaving it out costs nothing at runtime.
+
+#### `secrets`
+
+Secrets.
+
+**Configuration**
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+**Usage**
+
+Set `feature.secrets.active` to true in the client options, and override any option above in the same entry. Every option keeps
 its default unless you name it.
 
 **Considerations**

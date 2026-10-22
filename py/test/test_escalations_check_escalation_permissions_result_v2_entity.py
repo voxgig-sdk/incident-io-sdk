@@ -37,7 +37,7 @@ class TestEscalationsCheckEscalationPermissionsResultV2Entity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.EscalationsCheckEscalationPermissionsResultV2(None).create({"escalation_id": 1, "response_options": "x", "user_ids": "x"}, None)
+            client.EscalationsCheckEscalationPermissionsResultV2(None).create({"escalation_id": 1, "user_ids": "x"}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

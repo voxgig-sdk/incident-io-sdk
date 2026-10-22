@@ -37,7 +37,7 @@ class TestAlertsAddTagsResultV2Entity:
         client = IncidentIoSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.AlertsAddTagsResultV2(None).create({"alert_id": 1, "alert_source_id": "x", "attributes": "x", "created_at": "x", "deduplication_key": "x", "id": "x", "status": "x", "title": "x", "updated_at": "x"}, None)
+            client.AlertsAddTagsResultV2(None).create({"alert_id": 1, "tags": "x"}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):

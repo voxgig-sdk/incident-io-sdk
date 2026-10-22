@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PHP | incident.io</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">incident.io<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/incident-io-sdk">voxgig-sdk/incident-io-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">incident.io</a></details>
+<details><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/action.html">Action</a>
+<a href="../api/alert.html">Alert</a>
+<a href="../api/alert_attribute.html">AlertAttribute</a>
+<a href="../api/alert_note.html">AlertNote</a>
+<a href="../api/alert_route.html">AlertRoute</a>
+<a href="../api/alert_source.html">AlertSource</a>
+<a href="../api/alert_sources_v2.html">AlertSourcesV2</a>
+<a href="../api/alert_tag.html">AlertTag</a>
+<a href="../api/alerts_add_tags_result_v2.html">AlertsAddTagsResultV2</a>
+<a href="../api/alerts_remove_tags_result_v2.html">AlertsRemoveTagsResultV2</a>
+<a href="../api/alerts_set_tags_result_v2.html">AlertsSetTagsResultV2</a>
+<a href="../api/alerts_transition_incident_alert_result_v2.html">AlertsTransitionIncidentAlertResultV2</a>
+<a href="../api/announcement_rule.html">AnnouncementRule</a>
+<a href="../api/announcement_template.html">AnnouncementTemplate</a>
+<a href="../api/api_key.html">ApiKey</a>
+<a href="../api/call_route.html">CallRoute</a>
+<a href="../api/call_routes_create_allowed_caller_result_v2.html">CallRoutesCreateAllowedCallerResultV2</a>
+<a href="../api/call_routes_create_option_result_v2.html">CallRoutesCreateOptionResultV2</a>
+<a href="../api/call_routes_list_allowed_callers_result_v2.html">CallRoutesListAllowedCallersResultV2</a>
+<a href="../api/call_routes_list_options_result_v2.html">CallRoutesListOptionsResultV2</a>
+<a href="../api/call_routes_show_allowed_caller_result_v2.html">CallRoutesShowAllowedCallerResultV2</a>
+<a href="../api/call_routes_show_option_result_v2.html">CallRoutesShowOptionResultV2</a>
+<a href="../api/call_routes_update_allowed_caller_result_v2.html">CallRoutesUpdateAllowedCallerResultV2</a>
+<a href="../api/call_routes_update_option_result_v2.html">CallRoutesUpdateOptionResultV2</a>
+<a href="../api/call_routes_v2.html">CallRoutesV2</a>
+<a href="../api/call_session.html">CallSession</a>
+<a href="../api/call_transcript_entry.html">CallTranscriptEntry</a>
+<a href="../api/catalog_entry.html">CatalogEntry</a>
+<a href="../api/catalog_resource.html">CatalogResource</a>
+<a href="../api/catalog_type.html">CatalogType</a>
+<a href="../api/catalog_type_schema.html">CatalogTypeSchema</a>
+<a href="../api/custom_field.html">CustomField</a>
+<a href="../api/custom_field_option.html">CustomFieldOption</a>
+<a href="../api/escalation.html">Escalation</a>
+<a href="../api/escalation_path_template.html">EscalationPathTemplate</a>
+<a href="../api/escalations_check_escalation_permissions_result_v2.html">EscalationsCheckEscalationPermissionsResultV2</a>
+<a href="../api/escalations_reassign_escalation_result_v2.html">EscalationsReassignEscalationResultV2</a>
+<a href="../api/follow_up.html">FollowUp</a>
+<a href="../api/follow_ups_connect_external_issue_result_v3.html">FollowUpsConnectExternalIssueResultV3</a>
+<a href="../api/follow_ups_create_from_link_result_v3.html">FollowUpsCreateFromLinkResultV3</a>
+<a href="../api/identity.html">Identity</a>
+<a href="../api/incident.html">Incident</a>
+<a href="../api/incident_activity_log_entry.html">IncidentActivityLogEntry</a>
+<a href="../api/incident_attachment.html">IncidentAttachment</a>
+<a href="../api/incident_form.html">IncidentForm</a>
+<a href="../api/incident_membership.html">IncidentMembership</a>
+<a href="../api/incident_participant.html">IncidentParticipant</a>
+<a href="../api/incident_participant_workload.html">IncidentParticipantWorkload</a>
+<a href="../api/incident_relationship.html">IncidentRelationship</a>
+<a href="../api/incident_role.html">IncidentRole</a>
+<a href="../api/incident_status.html">IncidentStatus</a>
+<a href="../api/incident_team_membership.html">IncidentTeamMembership</a>
+<a href="../api/incident_team_memberships_v1.html">IncidentTeamMembershipsV1</a>
+<a href="../api/incident_template.html">IncidentTemplate</a>
+<a href="../api/incident_templates_validate_result_v1.html">IncidentTemplatesValidateResultV1</a>
+<a href="../api/incident_timeline_item.html">IncidentTimelineItem</a>
+<a href="../api/incident_timestamp.html">IncidentTimestamp</a>
+<a href="../api/incident_type.html">IncidentType</a>
+<a href="../api/incident_update.html">IncidentUpdate</a>
+<a href="../api/ip_allowlist.html">IpAllowlist</a>
+<a href="../api/ip_range.html">IpRange</a>
+<a href="../api/maintenance_window.html">MaintenanceWindow</a>
+<a href="../api/managed_resource.html">ManagedResource</a>
+<a href="../api/on_call_notification_method_public_v2.html">OnCallNotificationMethodPublicV2</a>
+<a href="../api/on_call_notification_pause.html">OnCallNotificationPause</a>
+<a href="../api/on_call_notification_rule_public_v2.html">OnCallNotificationRulePublicV2</a>
+<a href="../api/pay_config.html">PayConfig</a>
+<a href="../api/pay_configs_create_one_off_rule_result_v2.html">PayConfigsCreateOneOffRuleResultV2</a>
+<a href="../api/pay_configs_create_weekly_rule_result_v2.html">PayConfigsCreateWeeklyRuleResultV2</a>
+<a href="../api/pay_configs_list_one_off_rules_result_v2.html">PayConfigsListOneOffRulesResultV2</a>
+<a href="../api/pay_configs_list_weekly_rules_result_v2.html">PayConfigsListWeeklyRulesResultV2</a>
+<a href="../api/pay_configs_show_one_off_rule_result_v2.html">PayConfigsShowOneOffRuleResultV2</a>
+<a href="../api/pay_configs_show_weekly_rule_result_v2.html">PayConfigsShowWeeklyRuleResultV2</a>
+<a href="../api/pay_configs_update_one_off_rule_result_v2.html">PayConfigsUpdateOneOffRuleResultV2</a>
+<a href="../api/pay_configs_update_weekly_rule_result_v2.html">PayConfigsUpdateWeeklyRuleResultV2</a>
+<a href="../api/pay_configs_v2.html">PayConfigsV2</a>
+<a href="../api/pay_report.html">PayReport</a>
+<a href="../api/pay_reports_publish_result_v2.html">PayReportsPublishResultV2</a>
+<a href="../api/pay_reports_unpublish_result_v2.html">PayReportsUnpublishResultV2</a>
+<a href="../api/pay_reports_v2.html">PayReportsV2</a>
+<a href="../api/policies_v2.html">PoliciesV2</a>
+<a href="../api/policy.html">Policy</a>
+<a href="../api/policy_finding.html">PolicyFinding</a>
+<a href="../api/policy_findings_dismiss_result_v2.html">PolicyFindingsDismissResultV2</a>
+<a href="../api/policy_findings_restore_result_v2.html">PolicyFindingsRestoreResultV2</a>
+<a href="../api/postmortem_document.html">PostmortemDocument</a>
+<a href="../api/schedule.html">Schedule</a>
+<a href="../api/schedule_entries_list_payload_v2.html">ScheduleEntriesListPayloadV2</a>
+<a href="../api/schedule_entry.html">ScheduleEntry</a>
+<a href="../api/schedule_replica.html">ScheduleReplica</a>
+<a href="../api/schedule_sync_rule.html">ScheduleSyncRule</a>
+<a href="../api/schedule_sync_target.html">ScheduleSyncTarget</a>
+<a href="../api/schedules_show_override_result_v2.html">SchedulesShowOverrideResultV2</a>
+<a href="../api/schedules_update_override_result_v2.html">SchedulesUpdateOverrideResultV2</a>
+<a href="../api/secret.html">Secret</a>
+<a href="../api/severity.html">Severity</a>
+<a href="../api/status_page.html">StatusPage</a>
+<a href="../api/status_page_component.html">StatusPageComponent</a>
+<a href="../api/status_page_component_availability_v2.html">StatusPageComponentAvailabilityV2</a>
+<a href="../api/status_page_incident.html">StatusPageIncident</a>
+<a href="../api/status_page_incident_update.html">StatusPageIncidentUpdate</a>
+<a href="../api/status_page_linked_response_incident_v1.html">StatusPageLinkedResponseIncidentV1</a>
+<a href="../api/status_page_maintenance.html">StatusPageMaintenance</a>
+<a href="../api/status_page_maintenance_update.html">StatusPageMaintenanceUpdate</a>
+<a href="../api/status_page_structure.html">StatusPageStructure</a>
+<a href="../api/status_pages_v2.html">StatusPagesV2</a>
+<a href="../api/team.html">Team</a>
+<a href="../api/telemetry_data_source_v2.html">TelemetryDataSourceV2</a>
+<a href="../api/user.html">User</a>
+<a href="../api/workflow.html">Workflow</a>
+<a href="../api/workflow_run.html">WorkflowRun</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details open><summary>SDKs</summary><a href="../sdks/go.html">Golang</a>
+<a href="../sdks/lua.html">Lua</a>
+<a aria-current="page" href="../sdks/php.html">PHP</a>
+<a href="../sdks/py.html">Python</a>
+<a href="../sdks/rb.html">Ruby</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Tools</summary><a href="../tools/go-cli.html">Go CLI</a>
+<a href="../tools/go-mcp.html">Go MCP server</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Debug capture</a>
+<a href="../features/idempotency.html">Idempotency</a>
+<a href="../features/metrics.html">Metrics</a>
+<a href="../features/paging.html">Paging</a>
+<a href="../features/ratelimit.html">Rate limiting</a>
+<a href="../features/retry.html">Retry</a>
+<a href="../features/secrets.html">Secrets</a>
+<a href="../features/test.html">Test transport</a>
+<a href="../features/timeout.html">Timeout</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>SDKs</div><h1 id="php">PHP</h1>
+<p>PHP</p>
+<h2 id="install">Install</h2>
+<p>Not published. Build from the php directory.</p>
+<h2 id="package">Package</h2>
+<p><code>voxgig-sdk/incident-io-sdk</code></p>
+<h2 id="api-reference">API reference</h2>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Operations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../api/action.html">Action</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/alert.html">Alert</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/alert_attribute.html">AlertAttribute</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/alert_note.html">AlertNote</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/alert_route.html">AlertRoute</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/alert_source.html">AlertSource</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/alert_sources_v2.html">AlertSourcesV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/alert_tag.html">AlertTag</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/alerts_add_tags_result_v2.html">AlertsAddTagsResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/alerts_remove_tags_result_v2.html">AlertsRemoveTagsResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/alerts_set_tags_result_v2.html">AlertsSetTagsResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/alerts_transition_incident_alert_result_v2.html">AlertsTransitionIncidentAlertResultV2</a></td>
+<td><code>create</code>, <code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/announcement_rule.html">AnnouncementRule</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/announcement_template.html">AnnouncementTemplate</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/api_key.html">ApiKey</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_route.html">CallRoute</a></td>
+<td><code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_create_allowed_caller_result_v2.html">CallRoutesCreateAllowedCallerResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_create_option_result_v2.html">CallRoutesCreateOptionResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_list_allowed_callers_result_v2.html">CallRoutesListAllowedCallersResultV2</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_list_options_result_v2.html">CallRoutesListOptionsResultV2</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_show_allowed_caller_result_v2.html">CallRoutesShowAllowedCallerResultV2</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_show_option_result_v2.html">CallRoutesShowOptionResultV2</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_update_allowed_caller_result_v2.html">CallRoutesUpdateAllowedCallerResultV2</a></td>
+<td><code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_update_option_result_v2.html">CallRoutesUpdateOptionResultV2</a></td>
+<td><code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_routes_v2.html">CallRoutesV2</a></td>
+<td><code>remove</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_session.html">CallSession</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/call_transcript_entry.html">CallTranscriptEntry</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/catalog_entry.html">CatalogEntry</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/catalog_resource.html">CatalogResource</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/catalog_type.html">CatalogType</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/catalog_type_schema.html">CatalogTypeSchema</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/custom_field.html">CustomField</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/custom_field_option.html">CustomFieldOption</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/escalation.html">Escalation</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/escalation_path_template.html">EscalationPathTemplate</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/escalations_check_escalation_permissions_result_v2.html">EscalationsCheckEscalationPermissionsResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/escalations_reassign_escalation_result_v2.html">EscalationsReassignEscalationResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/follow_up.html">FollowUp</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/follow_ups_connect_external_issue_result_v3.html">FollowUpsConnectExternalIssueResultV3</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/follow_ups_create_from_link_result_v3.html">FollowUpsCreateFromLinkResultV3</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/identity.html">Identity</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident.html">Incident</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_activity_log_entry.html">IncidentActivityLogEntry</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_attachment.html">IncidentAttachment</a></td>
+<td><code>create</code>, <code>list</code>, <code>remove</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_form.html">IncidentForm</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_membership.html">IncidentMembership</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_participant.html">IncidentParticipant</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_participant_workload.html">IncidentParticipantWorkload</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_relationship.html">IncidentRelationship</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_role.html">IncidentRole</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_status.html">IncidentStatus</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_team_membership.html">IncidentTeamMembership</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_team_memberships_v1.html">IncidentTeamMembershipsV1</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_template.html">IncidentTemplate</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_templates_validate_result_v1.html">IncidentTemplatesValidateResultV1</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_timeline_item.html">IncidentTimelineItem</a></td>
+<td><code>create</code>, <code>list</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_timestamp.html">IncidentTimestamp</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_type.html">IncidentType</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/incident_update.html">IncidentUpdate</a></td>
+<td><code>create</code>, <code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/ip_allowlist.html">IpAllowlist</a></td>
+<td><code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/ip_range.html">IpRange</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/maintenance_window.html">MaintenanceWindow</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/managed_resource.html">ManagedResource</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/on_call_notification_method_public_v2.html">OnCallNotificationMethodPublicV2</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/on_call_notification_pause.html">OnCallNotificationPause</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/on_call_notification_rule_public_v2.html">OnCallNotificationRulePublicV2</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_config.html">PayConfig</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_create_one_off_rule_result_v2.html">PayConfigsCreateOneOffRuleResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_create_weekly_rule_result_v2.html">PayConfigsCreateWeeklyRuleResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_list_one_off_rules_result_v2.html">PayConfigsListOneOffRulesResultV2</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_list_weekly_rules_result_v2.html">PayConfigsListWeeklyRulesResultV2</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_show_one_off_rule_result_v2.html">PayConfigsShowOneOffRuleResultV2</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_show_weekly_rule_result_v2.html">PayConfigsShowWeeklyRuleResultV2</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_update_one_off_rule_result_v2.html">PayConfigsUpdateOneOffRuleResultV2</a></td>
+<td><code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_update_weekly_rule_result_v2.html">PayConfigsUpdateWeeklyRuleResultV2</a></td>
+<td><code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_configs_v2.html">PayConfigsV2</a></td>
+<td><code>remove</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_report.html">PayReport</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_reports_publish_result_v2.html">PayReportsPublishResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_reports_unpublish_result_v2.html">PayReportsUnpublishResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/pay_reports_v2.html">PayReportsV2</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/policies_v2.html">PoliciesV2</a></td>
+<td><code>remove</code></td>
+</tr>
+<tr>
+<td><a href="../api/policy.html">Policy</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/policy_finding.html">PolicyFinding</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/policy_findings_dismiss_result_v2.html">PolicyFindingsDismissResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/policy_findings_restore_result_v2.html">PolicyFindingsRestoreResultV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/postmortem_document.html">PostmortemDocument</a></td>
+<td><code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/schedule.html">Schedule</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/schedule_entries_list_payload_v2.html">ScheduleEntriesListPayloadV2</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/schedule_entry.html">ScheduleEntry</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/schedule_replica.html">ScheduleReplica</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/schedule_sync_rule.html">ScheduleSyncRule</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/schedule_sync_target.html">ScheduleSyncTarget</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/schedules_show_override_result_v2.html">SchedulesShowOverrideResultV2</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/schedules_update_override_result_v2.html">SchedulesUpdateOverrideResultV2</a></td>
+<td><code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/secret.html">Secret</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/severity.html">Severity</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page.html">StatusPage</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page_component.html">StatusPageComponent</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page_component_availability_v2.html">StatusPageComponentAvailabilityV2</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page_incident.html">StatusPageIncident</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page_incident_update.html">StatusPageIncidentUpdate</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page_linked_response_incident_v1.html">StatusPageLinkedResponseIncidentV1</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page_maintenance.html">StatusPageMaintenance</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page_maintenance_update.html">StatusPageMaintenanceUpdate</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_page_structure.html">StatusPageStructure</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/status_pages_v2.html">StatusPagesV2</a></td>
+<td><code>remove</code></td>
+</tr>
+<tr>
+<td><a href="../api/team.html">Team</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/telemetry_data_source_v2.html">TelemetryDataSourceV2</a></td>
+<td><code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/user.html">User</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/workflow.html">Workflow</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/workflow_run.html">WorkflowRun</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration">Configuration</h2>
+<p>Set the server URL and credentials for your environment. Enable only the features your application needs.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><a href="../features/debug.html">Debug capture</a></li>
+<li><a href="../features/idempotency.html">Idempotency</a></li>
+<li><a href="../features/metrics.html">Metrics</a></li>
+<li><a href="../features/paging.html">Paging</a></li>
+<li><a href="../features/ratelimit.html">Rate limiting</a></li>
+<li><a href="../features/retry.html">Retry</a></li>
+<li><a href="../features/secrets.html">Secrets</a></li>
+<li><a href="../features/test.html">Test transport</a></li>
+<li><a href="../features/timeout.html">Timeout</a></li>
+</ul>
+<h2 id="set-up-the-client">Set up the client</h2>
+<p>This setup fragment reads credentials from the environment. Use the API operation reference to supply input for each call.</p>
+<pre><code class="language-php">&lt;?php
+require_once 'incident-io_sdk.php';
+$client = new IncidentIoSDK([&quot;apikey&quot; =&gt; getenv(&quot;INCIDENT_IO_APIKEY&quot;)]);
+</code></pre>
+<h2 id="client-defaults">Client defaults</h2>
+<pre><code class="language-json">{
+  &quot;base&quot;: &quot;https://api.incident.io&quot;,
+  &quot;auth&quot;: {
+    &quot;prefix&quot;: &quot;Bearer&quot;
+  },
+  &quot;headers&quot;: {
+    &quot;content-type&quot;: &quot;application/json&quot;
+  },
+  &quot;entity&quot;: {
+    &quot;action&quot;: {},
+    &quot;alert&quot;: {},
+    &quot;alert_attribute&quot;: {},
+    &quot;alert_note&quot;: {},
+    &quot;alert_route&quot;: {},
+    &quot;alert_source&quot;: {},
+    &quot;alert_sources_v2&quot;: {},
+    &quot;alert_tag&quot;: {},
+    &quot;alerts_add_tags_result_v2&quot;: {},
+    &quot;alerts_remove_tags_result_v2&quot;: {},
+    &quot;alerts_set_tags_result_v2&quot;: {},
+    &quot;alerts_transition_incident_alert_result_v2&quot;: {},
+    &quot;announcement_rule&quot;: {},
+    &quot;announcement_template&quot;: {},
+    &quot;api_key&quot;: {},
+    &quot;call_route&quot;: {},
+    &quot;call_routes_create_allowed_caller_result_v2&quot;: {},
+    &quot;call_routes_create_option_result_v2&quot;: {},
+    &quot;call_routes_list_allowed_callers_result_v2&quot;: {},
+    &quot;call_routes_list_options_result_v2&quot;: {},
+    &quot;call_routes_show_allowed_caller_result_v2&quot;: {},
+    &quot;call_routes_show_option_result_v2&quot;: {},
+    &quot;call_routes_update_allowed_caller_result_v2&quot;: {},
+    &quot;call_routes_update_option_result_v2&quot;: {},
+    &quot;call_routes_v2&quot;: {},
+    &quot;call_session&quot;: {},
+    &quot;call_transcript_entry&quot;: {},
+    &quot;catalog_entry&quot;: {},
+    &quot;catalog_resource&quot;: {},
+    &quot;catalog_type&quot;: {},
+    &quot;catalog_type_schema&quot;: {},
+    &quot;custom_field&quot;: {},
+    &quot;custom_field_option&quot;: {},
+    &quot;escalation&quot;: {},
+    &quot;escalation_path_template&quot;: {},
+    &quot;escalations_check_escalation_permissions_result_v2&quot;: {},
+    &quot;escalations_reassign_escalation_result_v2&quot;: {},
+    &quot;follow_up&quot;: {},
+    &quot;follow_ups_connect_external_issue_result_v3&quot;: {},
+    &quot;follow_ups_create_from_link_result_v3&quot;: {},
+    &quot;identity&quot;: {},
+    &quot;incident&quot;: {},
+    &quot;incident_activity_log_entry&quot;: {},
+    &quot;incident_attachment&quot;: {},
+    &quot;incident_form&quot;: {},
+    &quot;incident_membership&quot;: {},
+    &quot;incident_participant&quot;: {},
+    &quot;incident_participant_workload&quot;: {},
+    &quot;incident_relationship&quot;: {},
+    &quot;incident_role&quot;: {},
+    &quot;incident_status&quot;: {},
+    &quot;incident_team_membership&quot;: {},
+    &quot;incident_team_memberships_v1&quot;: {},
+    &quot;incident_template&quot;: {},
+    &quot;incident_templates_validate_result_v1&quot;: {},
+    &quot;incident_timeline_item&quot;: {},
+    &quot;incident_timestamp&quot;: {},
+    &quot;incident_type&quot;: {},
+    &quot;incident_update&quot;: {},
+    &quot;ip_allowlist&quot;: {},
+    &quot;ip_range&quot;: {},
+    &quot;maintenance_window&quot;: {},
+    &quot;managed_resource&quot;: {},
+    &quot;on_call_notification_method_public_v2&quot;: {},
+    &quot;on_call_notification_pause&quot;: {},
+    &quot;on_call_notification_rule_public_v2&quot;: {},
+    &quot;pay_config&quot;: {},
+    &quot;pay_configs_create_one_off_rule_result_v2&quot;: {},
+    &quot;pay_configs_create_weekly_rule_result_v2&quot;: {},
+    &quot;pay_configs_list_one_off_rules_result_v2&quot;: {},
+    &quot;pay_configs_list_weekly_rules_result_v2&quot;: {},
+    &quot;pay_configs_show_one_off_rule_result_v2&quot;: {},
+    &quot;pay_configs_show_weekly_rule_result_v2&quot;: {},
+    &quot;pay_configs_update_one_off_rule_result_v2&quot;: {},
+    &quot;pay_configs_update_weekly_rule_result_v2&quot;: {},
+    &quot;pay_configs_v2&quot;: {},
+    &quot;pay_report&quot;: {},
+    &quot;pay_reports_publish_result_v2&quot;: {},
+    &quot;pay_reports_unpublish_result_v2&quot;: {},
+    &quot;pay_reports_v2&quot;: {},
+    &quot;policies_v2&quot;: {},
+    &quot;policy&quot;: {},
+    &quot;policy_finding&quot;: {},
+    &quot;policy_findings_dismiss_result_v2&quot;: {},
+    &quot;policy_findings_restore_result_v2&quot;: {},
+    &quot;postmortem_document&quot;: {},
+    &quot;schedule&quot;: {},
+    &quot;schedule_entries_list_payload_v2&quot;: {},
+    &quot;schedule_entry&quot;: {},
+    &quot;schedule_replica&quot;: {},
+    &quot;schedule_sync_rule&quot;: {},
+    &quot;schedule_sync_target&quot;: {},
+    &quot;schedules_show_override_result_v2&quot;: {},
+    &quot;schedules_update_override_result_v2&quot;: {},
+    &quot;secret&quot;: {},
+    &quot;severity&quot;: {},
+    &quot;status_page&quot;: {},
+    &quot;status_page_component&quot;: {},
+    &quot;status_page_component_availability_v2&quot;: {},
+    &quot;status_page_incident&quot;: {},
+    &quot;status_page_incident_update&quot;: {},
+    &quot;status_page_linked_response_incident_v1&quot;: {},
+    &quot;status_page_maintenance&quot;: {},
+    &quot;status_page_maintenance_update&quot;: {},
+    &quot;status_page_structure&quot;: {},
+    &quot;status_pages_v2&quot;: {},
+    &quot;team&quot;: {},
+    &quot;telemetry_data_source_v2&quot;: {},
+    &quot;user&quot;: {},
+    &quot;workflow&quot;: {},
+    &quot;workflow_run&quot;: {}
+  }
+}
+</code></pre>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

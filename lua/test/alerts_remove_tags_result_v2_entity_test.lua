@@ -29,7 +29,7 @@ describe("AlertsRemoveTagsResultV2Entity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:AlertsRemoveTagsResultV2(nil):create({ ["alert_id"] = 1, ["alert_source_id"] = "x", ["attributes"] = "x", ["created_at"] = "x", ["deduplication_key"] = "x", ["id"] = "x", ["status"] = "x", ["title"] = "x", ["updated_at"] = "x" }, nil)
+    local _, err = client:AlertsRemoveTagsResultV2(nil):create({ ["alert_id"] = 1, ["tags"] = "x" }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 

@@ -116,6 +116,10 @@ class IncidentIoSDK:
     def get_root_ctx(self):
         return self._rootctx
 
+    def secrets(self):
+        _s = getattr(self, "_secrets", None)
+        return None if _s is None else _s.sekreto()
+
     def prepare(self, fetchargs=None):
         utility = self._utility
 
@@ -130,6 +134,9 @@ class IncidentIoSDK:
             "opname": "prepare",
             "ctrl": ctrl,
         }, self._rootctx)
+
+        if getattr(self, "_secrets", None) is not None:
+            self._secrets.resolve()
 
         options = self.options
 
@@ -713,10 +720,22 @@ class IncidentIoSDK:
         return MaintenanceWindowEntity(self, data)
 
 
+    def ManagedResource(self, data=None) -> "ManagedResourceEntity":
+        """Entity factory: client.ManagedResource().list() / client.ManagedResource().load({"id": ...})."""
+        from incidentio_sdk.entity.managed_resource_entity import ManagedResourceEntity
+        return ManagedResourceEntity(self, data)
+
+
     def OnCallNotificationMethodPublicV2(self, data=None) -> "OnCallNotificationMethodPublicV2Entity":
         """Entity factory: client.OnCallNotificationMethodPublicV2().list() / client.OnCallNotificationMethodPublicV2().load({"id": ...})."""
         from incidentio_sdk.entity.on_call_notification_method_public_v2_entity import OnCallNotificationMethodPublicV2Entity
         return OnCallNotificationMethodPublicV2Entity(self, data)
+
+
+    def OnCallNotificationPause(self, data=None) -> "OnCallNotificationPauseEntity":
+        """Entity factory: client.OnCallNotificationPause().list() / client.OnCallNotificationPause().load({"id": ...})."""
+        from incidentio_sdk.entity.on_call_notification_pause_entity import OnCallNotificationPauseEntity
+        return OnCallNotificationPauseEntity(self, data)
 
 
     def OnCallNotificationRulePublicV2(self, data=None) -> "OnCallNotificationRulePublicV2Entity":
@@ -1084,7 +1103,9 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.ip_allowlist_entity import IpAllowlistEntity
     from incidentio_sdk.entity.ip_range_entity import IpRangeEntity
     from incidentio_sdk.entity.maintenance_window_entity import MaintenanceWindowEntity
+    from incidentio_sdk.entity.managed_resource_entity import ManagedResourceEntity
     from incidentio_sdk.entity.on_call_notification_method_public_v2_entity import OnCallNotificationMethodPublicV2Entity
+    from incidentio_sdk.entity.on_call_notification_pause_entity import OnCallNotificationPauseEntity
     from incidentio_sdk.entity.on_call_notification_rule_public_v2_entity import OnCallNotificationRulePublicV2Entity
     from incidentio_sdk.entity.pay_config_entity import PayConfigEntity
     from incidentio_sdk.entity.pay_configs_create_one_off_rule_result_v2_entity import PayConfigsCreateOneOffRuleResultV2Entity

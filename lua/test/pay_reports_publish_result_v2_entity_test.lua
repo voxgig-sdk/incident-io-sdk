@@ -29,7 +29,7 @@ describe("PayReportsPublishResultV2Entity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:PayReportsPublishResultV2(nil):create({ ["pay_report_id"] = 1, ["cc_emails"] = "x", ["created_at"] = "x", ["end_date"] = "x", ["id"] = "x", ["name"] = "x", ["overlapping_shifts"] = "x", ["schedule_ids"] = "x", ["send_user_breakdowns"] = "x", ["start_date"] = "x", ["status"] = "x", ["unpaid_shifts"] = "x", ["updated_at"] = "x" }, nil)
+    local _, err = client:PayReportsPublishResultV2(nil):create({ ["pay_report_id"] = 1, ["cc_emails"] = "x", ["send_user_breakdowns"] = "x" }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 

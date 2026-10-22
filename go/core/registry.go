@@ -16,6 +16,8 @@ var NewRatelimitFeatureFunc func() Feature
 
 var NewRetryFeatureFunc func() Feature
 
+var NewSecretsFeatureFunc func() Feature
+
 var NewTestFeatureFunc func() Feature
 
 var NewTimeoutFeatureFunc func() Feature
@@ -144,7 +146,11 @@ var NewIpRangeEntityFunc func(client *IncidentIoSDK, entopts map[string]any) Inc
 
 var NewMaintenanceWindowEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
+var NewManagedResourceEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
 var NewOnCallNotificationMethodPublicV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
+
+var NewOnCallNotificationPauseEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewOnCallNotificationRulePublicV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 

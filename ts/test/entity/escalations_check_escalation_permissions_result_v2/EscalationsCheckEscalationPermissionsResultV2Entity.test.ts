@@ -47,7 +47,7 @@ describe('EscalationsCheckEscalationPermissionsResultV2Entity', async () => {
       return
     }
     const client = IncidentIoSDK.test(undefined, { feature: { validate: { active: true } } })
-    await assert.rejects(client.EscalationsCheckEscalationPermissionsResultV2().create({"escalation_id":1,"response_options":"x","user_ids":"x"} as any),
+    await assert.rejects(client.EscalationsCheckEscalationPermissionsResultV2().create({"escalation_id":1,"user_ids":"x"} as any),
       (err: any) => 'validate_failed' === err.code)
   })
 

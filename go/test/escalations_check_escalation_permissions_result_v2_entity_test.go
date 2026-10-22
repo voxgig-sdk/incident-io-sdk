@@ -38,7 +38,7 @@ func TestEscalationsCheckEscalationPermissionsResultV2Entity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.EscalationsCheckEscalationPermissionsResultV2(nil).Create(map[string]any{"escalation_id": 1, "response_options": "x", "user_ids": "x"}, nil)
+		_, err := client.EscalationsCheckEscalationPermissionsResultV2(nil).Create(map[string]any{"escalation_id": 1, "user_ids": "x"}, nil)
 		if sdkerr, ok := err.(*core.IncidentIoError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}

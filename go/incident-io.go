@@ -48,6 +48,9 @@ func init() {
 	core.NewRetryFeatureFunc = func() core.Feature {
 		return feature.NewRetryFeature()
 	}
+	core.NewSecretsFeatureFunc = func() core.Feature {
+		return feature.NewSecretsFeature()
+	}
 	core.NewTestFeatureFunc = func() core.Feature {
 		return feature.NewTestFeature()
 	}
@@ -240,8 +243,14 @@ func init() {
 	core.NewMaintenanceWindowEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewMaintenanceWindowEntity(client, entopts)
 	}
+	core.NewManagedResourceEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewManagedResourceEntity(client, entopts)
+	}
 	core.NewOnCallNotificationMethodPublicV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewOnCallNotificationMethodPublicV2Entity(client, entopts)
+	}
+	core.NewOnCallNotificationPauseEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
+		return entity.NewOnCallNotificationPauseEntity(client, entopts)
 	}
 	core.NewOnCallNotificationRulePublicV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewOnCallNotificationRulePublicV2Entity(client, entopts)
@@ -407,5 +416,6 @@ var NewMetricsFeature = feature.NewMetricsFeature
 var NewPagingFeature = feature.NewPagingFeature
 var NewRatelimitFeature = feature.NewRatelimitFeature
 var NewRetryFeature = feature.NewRetryFeature
+var NewSecretsFeature = feature.NewSecretsFeature
 var NewTestFeature = feature.NewTestFeature
 var NewTimeoutFeature = feature.NewTimeoutFeature

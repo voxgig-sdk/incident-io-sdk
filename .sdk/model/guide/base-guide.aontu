@@ -4,9 +4,9 @@
 #   guide.aontu
 
 guide: {
-  metrics: count: entity: 126
-  metrics: count: path: 183
-  metrics: count: method: 327
+  metrics: count: entity: 128
+  metrics: count: path: 186
+  metrics: count: method: 330
 
   entity: action: {
     path: "/v1/actions": {
@@ -888,10 +888,28 @@ guide: {
     }
   }
 
+  entity: managed_resource: {
+    path: "/v2/managed_resources": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.managed_resource`")|top
+    }
+  }
+
   entity: on_call_notification_method_public_v2: {
     path: "/v2/users/{user_id}/notification_methods": {
       op: list: method: *GET
       op: list: transform: res: *("`body.notification_methods`")|top
+    }
+  }
+
+  entity: on_call_notification_pause: {
+    path: "/v2/on_call_notification_pauses": {
+      op: list: method: *GET
+      op: list: transform: res: *("`body.on_call_notification_pauses`")|top
+    }
+    path: "/v2/on_call_notification_pauses/{id}": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.on_call_notification_pause`")|top
     }
   }
 

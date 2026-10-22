@@ -33,7 +33,7 @@ class PolicyFindingsDismissResultV2EntityTest extends TestCase
         $client = IncidentIoSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->PolicyFindingsDismissResultV2(null)->create(["policy_finding_id" => 1, "created_at" => 'x', "debrief" => 'x', "dismissal" => 'x', "follow_up" => 'x', "id" => 'x', "last_checked_at" => 'x', "on_call_readiness" => 'x', "policy_id" => 'x', "policy_type" => 'x', "post_mortem" => 'x', "reason" => 'x', "responsible_users" => 'x', "schedule" => 'x', "shift_conflict" => 'x', "state" => 'x', "updated_at" => 'x', "vacation_conflict" => 'x'], null);
+            $client->PolicyFindingsDismissResultV2(null)->create(["policy_finding_id" => 1, "reason" => 'x'], null);
         } catch (\Throwable $e) {
             $err = $e;
         }

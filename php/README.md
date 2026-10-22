@@ -71,10 +71,10 @@ try {
 
 ```php
 // create() returns the ENTITY — call data_get() for the created Action record.
-$created = $client->Action()->create(["assignee" => [], "created_at" => "example_created_at", "creator" => [], "follow_up" => true, "id" => "example_id", "incident_id" => "example_incident_id", "status" => "example_status", "updated_at" => "example_updated_at"]);
+$created = $client->Action()->create(["description" => "example_description", "incident_id" => "example_incident_id"]);
 
 // Update — index the record via data_get() ($created->data_get()["id"]).
-$client->Action()->update(["id" => $created->data_get()["id"], "assignee" => [], "assignee_id" => "example_assignee_id"]);
+$client->Action()->update(["id" => $created->data_get()["id"], "assignee_id" => "example_assignee_id", "description" => "example_description"]);
 
 // Remove
 $client->Action()->remove(["id" => $created->data_get()["id"]]);
@@ -309,7 +309,9 @@ Creates a test-mode client with mock transport. Both arguments may be `null`.
 | `IpAllowlist` | `($data): IpAllowlistEntity` | Create an IpAllowlist entity instance. |
 | `IpRange` | `($data): IpRangeEntity` | Create an IpRange entity instance. |
 | `MaintenanceWindow` | `($data): MaintenanceWindowEntity` | Create a MaintenanceWindow entity instance. |
+| `ManagedResource` | `($data): ManagedResourceEntity` | Create a ManagedResource entity instance. |
 | `OnCallNotificationMethodPublicV2` | `($data): OnCallNotificationMethodPublicV2Entity` | Create an OnCallNotificationMethodPublicV2 entity instance. |
+| `OnCallNotificationPause` | `($data): OnCallNotificationPauseEntity` | Create an OnCallNotificationPause entity instance. |
 | `OnCallNotificationRulePublicV2` | `($data): OnCallNotificationRulePublicV2Entity` | Create an OnCallNotificationRulePublicV2 entity instance. |
 | `PayConfig` | `($data): PayConfigEntity` | Create a PayConfig entity instance. |
 | `PayConfigsCreateOneOffRuleResultV2` | `($data): PayConfigsCreateOneOffRuleResultV2Entity` | Create a PayConfigsCreateOneOffRuleResultV2 entity instance. |
@@ -1487,6 +1489,20 @@ Operations: Create, List, Load, Remove, Update.
 
 API path: `/v1/maintenance_windows`
 
+#### ManagedResource
+
+| Field | Description |
+| --- | --- |
+| `annotations` | Annotations that track metadata about this resource |
+| `managed_by` | How is this resource managed |
+| `resource_id` | The ID of the resource that this relates to |
+| `resource_type` | The type of the related resource |
+| `source_url` | The url of the external repository where this resource is managed (if there is one) |
+
+Operations: Create.
+
+API path: `/v2/managed_resources`
+
 #### OnCallNotificationMethodPublicV2
 
 | Field | Description |
@@ -1500,6 +1516,22 @@ API path: `/v1/maintenance_windows`
 Operations: List.
 
 API path: `/v2/users/{user_id}/notification_methods`
+
+#### OnCallNotificationPause
+
+| Field | Description |
+| --- | --- |
+| `created_at` |  |
+| `ends_at` | When notifications resume |
+| `id` | Unique identifier for this notification pause |
+| `reason` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | When notifications stop being sent to the user |
+| `updated_at` |  |
+| `user_id` | The user whose on-call notifications are paused in this time window |
+
+Operations: List, Load.
+
+API path: `/v2/on_call_notification_pauses`
 
 #### OnCallNotificationRulePublicV2
 
@@ -2365,14 +2397,8 @@ $actions = $client->Action()->list();
 
 ```php
 $action = $client->Action()->create([
-    "assignee" => null, // array
-    "created_at" => null, // string
-    "creator" => null, // array
-    "follow_up" => null, // bool
-    "id" => null, // string
+    "description" => null, // string
     "incident_id" => null, // string
-    "status" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -2481,9 +2507,7 @@ $alert_attributes = $client->AlertAttribute()->list();
 ```php
 $alert_attribute = $client->AlertAttribute()->create([
     "array" => null, // bool
-    "id" => null, // string
     "name" => null, // string
-    "required" => null, // bool
     "type" => null, // string
 ]);
 ```
@@ -2536,11 +2560,6 @@ $alert_notes = $client->AlertNote()->list();
 ```php
 $alert_note = $client->AlertNote()->create([
     "content" => null, // string
-    "created_at" => null, // string
-    "creator" => null, // array
-    "id" => null, // string
-    "images" => null, // array
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -2607,13 +2626,11 @@ $alert_route = $client->AlertRoute()->create([
     "escalation_config" => null, // array
     "expressions" => null, // array
     "grouping_config" => null, // array
-    "id" => null, // string
     "incident_config" => null, // array
     "incident_template" => null, // array
     "is_private" => null, // bool
     "message_config" => null, // array
     "name" => null, // string
-    "version" => null, // int
 ]);
 ```
 
@@ -2677,7 +2694,6 @@ $alert_source = $client->AlertSource()->create([
     "email_options" => null, // array
     "heartbeat_options" => null, // array
     "http_custom_options" => null, // array
-    "id" => null, // string
     "jira_options" => null, // array
     "name" => null, // string
     "rate_limit_sharding" => null, // array
@@ -2773,14 +2789,7 @@ Create an instance: `$alerts_add_tags_result_v2 = $client->AlertsAddTagsResultV2
 ```php
 $alerts_add_tags_result_v2 = $client->AlertsAddTagsResultV2()->create([
     "alert_id" => null, // string
-    "alert_source_id" => null, // string
-    "attributes" => null, // array
-    "created_at" => null, // string
-    "deduplication_key" => null, // string
-    "id" => null, // string
-    "status" => null, // string
-    "title" => null, // string
-    "updated_at" => null, // string
+    "tags" => null, // array
 ]);
 ```
 
@@ -2818,14 +2827,7 @@ Create an instance: `$alerts_remove_tags_result_v2 = $client->AlertsRemoveTagsRe
 ```php
 $alerts_remove_tags_result_v2 = $client->AlertsRemoveTagsResultV2()->create([
     "alert_id" => null, // string
-    "alert_source_id" => null, // string
-    "attributes" => null, // array
-    "created_at" => null, // string
-    "deduplication_key" => null, // string
-    "id" => null, // string
-    "status" => null, // string
-    "title" => null, // string
-    "updated_at" => null, // string
+    "tags" => null, // array
 ]);
 ```
 
@@ -2863,14 +2865,7 @@ Create an instance: `$alerts_set_tags_result_v2 = $client->AlertsSetTagsResultV2
 ```php
 $alerts_set_tags_result_v2 = $client->AlertsSetTagsResultV2()->create([
     "alert_id" => null, // string
-    "alert_source_id" => null, // string
-    "attributes" => null, // array
-    "created_at" => null, // string
-    "deduplication_key" => null, // string
-    "id" => null, // string
-    "status" => null, // string
-    "title" => null, // string
-    "updated_at" => null, // string
+    "tags" => null, // array
 ]);
 ```
 
@@ -2910,10 +2905,7 @@ $alerts_transition_incident_alert_result_v2s = $client->AlertsTransitionIncident
 
 ```php
 $alerts_transition_incident_alert_result_v2 = $client->AlertsTransitionIncidentAlertResultV2()->create([
-    "alert" => null, // array
     "alert_id" => null, // string
-    "id" => null, // string
-    "incident" => null, // array
     "incident_id" => null, // string
     "state" => null, // string
 ]);
@@ -2971,16 +2963,9 @@ $announcement_rules = $client->AnnouncementRule()->list();
 ```php
 $announcement_rule = $client->AnnouncementRule()->create([
     "condition_groups" => null, // array
-    "conditions_no_longer_apply_behaviour" => null, // string
-    "created_at" => null, // string
-    "id" => null, // string
-    "microsoft_teams_channel_ids" => null, // array
     "mode" => null, // string
     "name" => null, // string
-    "owning_team_ids" => null, // array
-    "slack_channel_ids" => null, // array
     "update_sharing_mode" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -3028,12 +3013,7 @@ $announcement_templates = $client->AnnouncementTemplate()->list();
 
 ```php
 $announcement_template = $client->AnnouncementTemplate()->create([
-    "actions" => null, // array
-    "fields" => null, // array
-    "id" => null, // string
-    "is_default" => null, // bool
     "name" => null, // string
-    "owning_team_ids" => null, // array
 ]);
 ```
 
@@ -3087,16 +3067,10 @@ $api_keys = $client->ApiKey()->list();
 
 ```php
 $api_key = $client->ApiKey()->create([
-    "created_at" => null, // string
-    "creator" => null, // array
-    "id" => null, // string
     "name" => null, // string
     "role_names" => null, // array
-    "roles" => null, // array
     "team_ids" => null, // array
     "team_role_names" => null, // array
-    "team_roles" => null, // array
-    "token_last_issued_at" => null, // string
 ]);
 ```
 
@@ -3471,13 +3445,8 @@ $catalog_entrys = $client->CatalogEntry()->list(["catalog_type_id" => "example"]
 ```php
 $catalog_entry = $client->CatalogEntry()->create([
     "attribute_values" => null, // array
-    "catalog_entry" => null, // array
-    "catalog_type" => null, // array
     "catalog_type_id" => null, // string
-    "created_at" => null, // string
-    "id" => null, // string
     "name" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -3571,22 +3540,8 @@ $catalog_types = $client->CatalogType()->list();
 
 ```php
 $catalog_type = $client->CatalogType()->create([
-    "annotations" => null, // array
-    "categories" => null, // array
-    "color" => null, // string
-    "created_at" => null, // string
     "description" => null, // string
-    "engine_resource_type" => null, // string
-    "icon" => null, // string
-    "id" => null, // string
-    "is_editable" => null, // bool
     "name" => null, // string
-    "ranked" => null, // bool
-    "schema" => null, // array
-    "semantic_type" => null, // string
-    "type_name" => null, // string
-    "updated_at" => null, // string
-    "use_name_as_identifier" => null, // bool
 ]);
 ```
 
@@ -3637,23 +3592,7 @@ Create an instance: `$catalog_type_schema = $client->CatalogTypeSchema();`
 ```php
 $catalog_type_schema = $client->CatalogTypeSchema()->create([
     "catalog_type_id" => null, // string
-    "annotations" => null, // array
     "attributes" => null, // array
-    "categories" => null, // array
-    "color" => null, // string
-    "created_at" => null, // string
-    "description" => null, // string
-    "engine_resource_type" => null, // string
-    "icon" => null, // string
-    "id" => null, // string
-    "is_editable" => null, // bool
-    "name" => null, // string
-    "ranked" => null, // bool
-    "schema" => null, // array
-    "semantic_type" => null, // string
-    "type_name" => null, // string
-    "updated_at" => null, // string
-    "use_name_as_identifier" => null, // bool
     "version" => null, // int
 ]);
 ```
@@ -3714,18 +3653,14 @@ $custom_fields = $client->CustomField()->list();
 
 ```php
 $custom_field = $client->CustomField()->create([
-    "created_at" => null, // string
     "description" => null, // string
     "field_type" => null, // string
     "filter_by" => null, // array
     "fixed_filter" => null, // array
-    "id" => null, // string
     "name" => null, // string
-    "options" => null, // array
     "show_before_closure" => null, // bool
     "show_before_creation" => null, // bool
     "show_before_update" => null, // bool
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -3772,8 +3707,6 @@ $custom_field_options = $client->CustomFieldOption()->list(["custom_field_id" =>
 ```php
 $custom_field_option = $client->CustomFieldOption()->create([
     "custom_field_id" => null, // string
-    "id" => null, // string
-    "sort_key" => null, // int
     "value" => null, // string
 ]);
 ```
@@ -3829,18 +3762,8 @@ $escalations = $client->Escalation()->list();
 
 ```php
 $escalation = $client->Escalation()->create([
-    "created_at" => null, // string
-    "creator" => null, // array
-    "description" => null, // string
-    "events" => null, // array
-    "id" => null, // string
     "idempotency_key" => null, // string
-    "priority" => null, // array
-    "related_alerts" => null, // array
-    "related_incidents" => null, // array
-    "status" => null, // string
     "title" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -3891,11 +3814,7 @@ $escalation_path_templates = $client->EscalationPathTemplate()->list();
 
 ```php
 $escalation_path_template = $client->EscalationPathTemplate()->create([
-    "expressions" => null, // array
-    "has_historical_escalation_path_versions" => null, // bool
-    "id" => null, // string
     "name" => null, // string
-    "params" => null, // array
     "path" => null, // array
     "repeat_config" => null, // array
 ]);
@@ -3924,7 +3843,6 @@ Create an instance: `$escalations_check_escalation_permissions_result_v2 = $clie
 ```php
 $escalations_check_escalation_permissions_result_v2 = $client->EscalationsCheckEscalationPermissionsResultV2()->create([
     "escalation_id" => null, // string
-    "response_options" => null, // array
     "user_ids" => null, // array
 ]);
 ```
@@ -4016,19 +3934,8 @@ $follow_ups = $client->FollowUp()->list();
 
 ```php
 $follow_up = $client->FollowUp()->create([
-    "assignee" => null, // array
-    "assignee_team" => null, // array
-    "category" => null, // array
-    "created_at" => null, // string
-    "creator" => null, // array
-    "external_issue_reference" => null, // array
-    "id" => null, // string
     "incident_id" => null, // string
-    "labels" => null, // array
-    "priority" => null, // array
-    "status" => null, // string
     "title" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -4070,20 +3977,7 @@ Create an instance: `$follow_ups_connect_external_issue_result_v3 = $client->Fol
 ```php
 $follow_ups_connect_external_issue_result_v3 = $client->FollowUpsConnectExternalIssueResultV3()->create([
     "follow_up_id" => null, // string
-    "assignee" => null, // array
-    "assignee_team" => null, // array
-    "category" => null, // array
-    "created_at" => null, // string
-    "creator" => null, // array
-    "external_issue_reference" => null, // array
-    "id" => null, // string
-    "incident_id" => null, // string
-    "labels" => null, // array
-    "priority" => null, // array
     "provider" => null, // string
-    "status" => null, // string
-    "title" => null, // string
-    "updated_at" => null, // string
     "url" => null, // string
 ]);
 ```
@@ -4223,25 +4117,7 @@ $incidents = $client->Incident()->list();
 
 ```php
 $incident = $client->Incident()->create([
-    "created_at" => null, // string
-    "creator" => null, // array
-    "custom_field_entries" => null, // array
-    "external_issue_reference" => null, // array
-    "id" => null, // string
     "idempotency_key" => null, // string
-    "incident_role_assignments" => null, // array
-    "incident_status" => null, // array
-    "incident_type" => null, // array
-    "last_activity_at" => null, // string
-    "mode" => null, // string
-    "name" => null, // string
-    "reference" => null, // string
-    "severity" => null, // array
-    "slack_channel_id" => null, // string
-    "slack_team_id" => null, // string
-    "status" => null, // string
-    "team_ids" => null, // array
-    "updated_at" => null, // string
     "visibility" => null, // string
 ]);
 ```
@@ -4308,7 +4184,6 @@ $incident_attachments = $client->IncidentAttachment()->list();
 
 ```php
 $incident_attachment = $client->IncidentAttachment()->create([
-    "id" => null, // string
     "incident_id" => null, // string
     "resource" => null, // array
 ]);
@@ -4359,11 +4234,8 @@ $incident_forms = $client->IncidentForm()->list();
 
 ```php
 $incident_form = $client->IncidentForm()->create([
-    "created_at" => null, // string
     "expressions" => null, // array
     "form_type" => null, // string
-    "id" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -4518,14 +4390,11 @@ $incident_roles = $client->IncidentRole()->list();
 
 ```php
 $incident_role = $client->IncidentRole()->create([
-    "created_at" => null, // string
     "description" => null, // string
-    "id" => null, // string
     "instructions" => null, // string
     "name" => null, // string
-    "role_type" => null, // string
+    "required" => null, // bool
     "shortform" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -4575,12 +4444,8 @@ $incident_statuss = $client->IncidentStatus()->list();
 ```php
 $incident_status = $client->IncidentStatus()->create([
     "category" => null, // string
-    "created_at" => null, // string
     "description" => null, // string
-    "id" => null, // string
     "name" => null, // string
-    "rank" => null, // int
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -4682,11 +4547,8 @@ $incident_templates = $client->IncidentTemplate()->list();
 
 ```php
 $incident_template = $client->IncidentTemplate()->create([
-    "created_at" => null, // string
-    "id" => null, // string
     "name" => null, // string
     "template" => null, // array
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -4716,7 +4578,6 @@ Create an instance: `$incident_templates_validate_result_v1 = $client->IncidentT
 $incident_templates_validate_result_v1 = $client->IncidentTemplatesValidateResultV1()->create([
     "name" => null, // string
     "template" => null, // array
-    "warnings" => null, // array
 ]);
 ```
 
@@ -4759,14 +4620,10 @@ $incident_timeline_items = $client->IncidentTimelineItem()->list(["incident_id" 
 
 ```php
 $incident_timeline_item = $client->IncidentTimelineItem()->create([
-    "created_at" => null, // string
-    "creator" => null, // array
-    "id" => null, // string
     "idempotency_key" => null, // string
     "incident_id" => null, // string
     "timestamp" => null, // string
     "title" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -4883,13 +4740,8 @@ $incident_updates = $client->IncidentUpdate()->list();
 
 ```php
 $incident_update = $client->IncidentUpdate()->create([
-    "created_at" => null, // string
-    "id" => null, // string
     "idempotency_key" => null, // string
     "incident_id" => null, // string
-    "new_incident_status" => null, // array
-    "new_severity" => null, // array
-    "updater" => null, // array
 ]);
 ```
 
@@ -5004,16 +4856,42 @@ $maintenance_windows = $client->MaintenanceWindow()->list();
 ```php
 $maintenance_window = $client->MaintenanceWindow()->create([
     "alert_condition_groups" => null, // array
-    "created_at" => null, // string
     "end_at" => null, // string
-    "id" => null, // string
     "lead" => null, // array
     "name" => null, // string
-    "reroute_on_end" => null, // bool
-    "resolve_on_end" => null, // bool
     "show_in_sidebar" => null, // bool
     "start_at" => null, // string
-    "updated_at" => null, // string
+]);
+```
+
+
+### ManagedResource
+
+Create an instance: `$managed_resource = $client->ManagedResource();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `create(data)` | Create a new entity with the given data. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `annotations` | `array` | Annotations that track metadata about this resource |
+| `managed_by` | `string` | How is this resource managed |
+| `resource_id` | `string` | The ID of the resource that this relates to |
+| `resource_type` | `string` | The type of the related resource |
+| `source_url` | `string` | The url of the external repository where this resource is managed (if there is one) |
+
+#### Example: Create
+
+```php
+$managed_resource = $client->ManagedResource()->create([
+    "annotations" => null, // array
+    "resource_id" => null, // string
+    "resource_type" => null, // string
 ]);
 ```
 
@@ -5043,6 +4921,44 @@ Create an instance: `$on_call_notification_method_public_v2 = $client->OnCallNot
 ```php
 // list() returns an array of OnCallNotificationMethodPublicV2 entities, one per record (throws on error).
 $on_call_notification_method_public_v2s = $client->OnCallNotificationMethodPublicV2()->list(["user_id" => "example"]);
+```
+
+
+### OnCallNotificationPause
+
+Create an instance: `$on_call_notification_pause = $client->OnCallNotificationPause();`
+
+#### Operations
+
+| Method | Description |
+| --- | --- |
+| `list(match)` | List entities matching the criteria. |
+| `load(match)` | Load a single entity by match criteria. |
+
+#### Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `created_at` | `string` |  |
+| `ends_at` | `string` | When notifications resume |
+| `id` | `string` | Unique identifier for this notification pause |
+| `reason` | `string` | Free text reason for why notifications are paused, shown to teammates |
+| `starts_at` | `string` | When notifications stop being sent to the user |
+| `updated_at` | `string` |  |
+| `user_id` | `string` | The user whose on-call notifications are paused in this time window |
+
+#### Example: Load
+
+```php
+// load() returns the ENTITY — call data_get() for the OnCallNotificationPause record (throws on error).
+$on_call_notification_pause = $client->OnCallNotificationPause()->load(["id" => "on_call_notification_pause_id"]);
+```
+
+#### Example: List
+
+```php
+// list() returns an array of OnCallNotificationPause entities, one per record (throws on error).
+$on_call_notification_pauses = $client->OnCallNotificationPause()->list();
 ```
 
 
@@ -5125,15 +5041,10 @@ $pay_configs = $client->PayConfig()->list();
 ```php
 $pay_config = $client->PayConfig()->create([
     "base_rate_cents" => null, // int
-    "created_at" => null, // string
     "currency" => null, // string
-    "id" => null, // string
     "name" => null, // string
-    "one_off_rules" => null, // array
     "rate_time_unit" => null, // string
     "timezone" => null, // string
-    "updated_at" => null, // string
-    "weekly_rules" => null, // array
 ]);
 ```
 
@@ -5428,17 +5339,11 @@ $pay_reports = $client->PayReport()->list();
 
 ```php
 $pay_report = $client->PayReport()->create([
-    "created_at" => null, // string
     "end_date" => null, // string
-    "id" => null, // string
     "name" => null, // string
-    "overlapping_shifts" => null, // string
     "pay_config_expression" => null, // array
     "schedule_ids" => null, // array
     "start_date" => null, // string
-    "status" => null, // string
-    "unpaid_shifts" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -5482,17 +5387,7 @@ Create an instance: `$pay_reports_publish_result_v2 = $client->PayReportsPublish
 $pay_reports_publish_result_v2 = $client->PayReportsPublishResultV2()->create([
     "pay_report_id" => null, // string
     "cc_emails" => null, // array
-    "created_at" => null, // string
-    "end_date" => null, // string
-    "id" => null, // string
-    "name" => null, // string
-    "overlapping_shifts" => null, // string
-    "schedule_ids" => null, // array
     "send_user_breakdowns" => null, // string
-    "start_date" => null, // string
-    "status" => null, // string
-    "unpaid_shifts" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -5534,17 +5429,7 @@ Create an instance: `$pay_reports_unpublish_result_v2 = $client->PayReportsUnpub
 ```php
 $pay_reports_unpublish_result_v2 = $client->PayReportsUnpublishResultV2()->create([
     "pay_report_id" => null, // string
-    "created_at" => null, // string
-    "end_date" => null, // string
-    "id" => null, // string
-    "name" => null, // string
-    "overlapping_shifts" => null, // string
-    "schedule_ids" => null, // array
-    "start_date" => null, // string
-    "status" => null, // string
-    "unpaid_shifts" => null, // string
     "unpublish_reason" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -5637,16 +5522,13 @@ $policys = $client->Policy()->list();
 $policy = $client->Policy()->create([
     "assignment_rules" => null, // array
     "conditions" => null, // array
-    "created_at" => null, // string
     "debrief" => null, // array
+    "description" => null, // string
     "follow_up" => null, // array
-    "id" => null, // string
     "name" => null, // string
     "policy_type" => null, // string
     "post_mortem" => null, // array
     "schedule" => null, // array
-    "status" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -5739,23 +5621,7 @@ Create an instance: `$policy_findings_dismiss_result_v2 = $client->PolicyFinding
 ```php
 $policy_findings_dismiss_result_v2 = $client->PolicyFindingsDismissResultV2()->create([
     "policy_finding_id" => null, // string
-    "created_at" => null, // string
-    "debrief" => null, // array
-    "dismissal" => null, // array
-    "follow_up" => null, // array
-    "id" => null, // string
-    "last_checked_at" => null, // string
-    "on_call_readiness" => null, // array
-    "policy_id" => null, // string
-    "policy_type" => null, // string
-    "post_mortem" => null, // array
     "reason" => null, // string
-    "responsible_users" => null, // array
-    "schedule" => null, // array
-    "shift_conflict" => null, // array
-    "state" => null, // string
-    "updated_at" => null, // string
-    "vacation_conflict" => null, // array
 ]);
 ```
 
@@ -5909,16 +5775,7 @@ $schedules = $client->Schedule()->list();
 
 ```php
 $schedule = $client->Schedule()->create([
-    "annotations" => null, // array
-    "config" => null, // array
-    "created_at" => null, // string
     "holidays_public_config" => null, // array
-    "id" => null, // string
-    "name" => null, // string
-    "permalink" => null, // string
-    "team_ids" => null, // array
-    "timezone" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -5949,10 +5806,7 @@ Create an instance: `$schedule_entries_list_payload_v2 = $client->ScheduleEntrie
 ```php
 $schedule_entries_list_payload_v2 = $client->ScheduleEntriesListPayloadV2()->create([
     "schedule_id" => null, // string
-    "final" => null, // array
-    "overrides" => null, // array
     "schedule" => null, // array
-    "scheduled" => null, // array
 ]);
 ```
 
@@ -6030,14 +5884,10 @@ $schedule_replicas = $client->ScheduleReplica()->list(["id" => "example"]);
 ```php
 $schedule_replica = $client->ScheduleReplica()->create([
     "id" => null, // string
-    "created_at" => null, // string
     "replica_fallback_user_id" => null, // string
     "replica_provider" => null, // string
     "replica_provider_id" => null, // string
-    "schedule_id" => null, // string
     "sources" => null, // array
-    "updated_at" => null, // string
-    "user_statuses" => null, // array
 ]);
 ```
 
@@ -6089,13 +5939,8 @@ $schedule_sync_rules = $client->ScheduleSyncRule()->list(["id" => "example"]);
 ```php
 $schedule_sync_rule = $client->ScheduleSyncRule()->create([
     "id" => null, // string
-    "created_at" => null, // string
-    "permanent_member_user_ids" => null, // array
-    "schedule_id" => null, // string
-    "schedule_sync_target" => null, // array
     "schedule_sync_target_id" => null, // string
     "sync_type" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -6147,13 +5992,7 @@ $schedule_sync_targets = $client->ScheduleSyncTarget()->list();
 ```php
 $schedule_sync_target = $client->ScheduleSyncTarget()->create([
     "add_bot_to_group" => null, // bool
-    "created_at" => null, // string
-    "id" => null, // string
-    "linked_schedules" => null, // array
     "new_slack_user_group" => null, // array
-    "slack_team_id" => null, // string
-    "slack_user_group_id" => null, // string
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -6202,14 +6041,11 @@ $schedules_show_override_result_v2s = $client->SchedulesShowOverrideResultV2()->
 
 ```php
 $schedules_show_override_result_v2 = $client->SchedulesShowOverrideResultV2()->create([
-    "created_at" => null, // string
     "end_at" => null, // string
-    "id" => null, // string
     "layer_id" => null, // string
     "rotation_id" => null, // string
     "schedule_id" => null, // string
     "start_at" => null, // string
-    "updated_at" => null, // string
     "user" => null, // array
 ]);
 ```
@@ -6288,14 +6124,8 @@ $secrets = $client->Secret()->list();
 
 ```php
 $secret = $client->Secret()->create([
-    "created_at" => null, // string
-    "id" => null, // string
     "name" => null, // string
-    "secret" => null, // array
-    "updated_at" => null, // string
     "value" => null, // string
-    "version" => null, // int
-    "versions" => null, // array
 ]);
 ```
 
@@ -6342,12 +6172,8 @@ $severitys = $client->Severity()->list();
 
 ```php
 $severity = $client->Severity()->create([
-    "created_at" => null, // string
     "description" => null, // string
-    "id" => null, // string
     "name" => null, // string
-    "rank" => null, // int
-    "updated_at" => null, // string
 ]);
 ```
 
@@ -6428,8 +6254,6 @@ $status_page_components = $client->StatusPageComponent()->list();
 
 ```php
 $status_page_component = $client->StatusPageComponent()->create([
-    "id" => null, // string
-    "management_meta" => null, // array
     "name" => null, // string
 ]);
 ```
@@ -6511,16 +6335,12 @@ $status_page_incidents = $client->StatusPageIncident()->list(["status_page_id" =
 
 ```php
 $status_page_incident = $client->StatusPageIncident()->create([
-    "component_impacts" => null, // array
-    "id" => null, // string
     "idempotency_key" => null, // string
     "incident_status" => null, // string
     "message" => null, // string
     "name" => null, // string
     "notify_subscribers" => null, // bool
-    "published_at" => null, // string
     "status_page_id" => null, // string
-    "updates" => null, // array
 ]);
 ```
 
@@ -6632,19 +6452,14 @@ $status_page_maintenances = $client->StatusPageMaintenance()->list(["status_page
 ```php
 $status_page_maintenance = $client->StatusPageMaintenance()->create([
     "affected_component_ids" => null, // array
-    "automate_maintenance_status" => null, // bool
-    "component_maintenance_periods" => null, // array
     "end_at" => null, // string
-    "id" => null, // string
     "idempotency_key" => null, // string
     "maintenance_status" => null, // string
     "message" => null, // string
     "name" => null, // string
     "notify_subscribers" => null, // bool
-    "published_at" => null, // string
     "start_at" => null, // string
     "status_page_id" => null, // string
-    "updates" => null, // array
 ]);
 ```
 
@@ -6824,12 +6639,6 @@ $users = $client->User()->list();
 ```php
 $user = $client->User()->create([
     "id" => null, // string
-    "base_role" => null, // array
-    "custom_roles" => null, // array
-    "is_active" => null, // bool
-    "name" => null, // string
-    "role" => null, // string
-    "seats" => null, // array
 ]);
 ```
 
@@ -6901,16 +6710,12 @@ $workflow = $client->Workflow()->create([
     "continue_on_step_error" => null, // bool
     "delay" => null, // array
     "expressions" => null, // array
-    "id" => null, // string
-    "management_meta" => null, // array
     "name" => null, // string
     "once_for" => null, // array
     "runs_on_incident_modes" => null, // array
     "runs_on_incidents" => null, // string
     "steps" => null, // array
     "trigger" => null, // string
-    "version" => null, // int
-    "workflow" => null, // array
 ]);
 ```
 
@@ -6961,7 +6766,7 @@ $workflow_runs = $client->WorkflowRun()->list();
 
 ## Features
 
-This SDK ships 8 optional features. Each is **inactive until you
+This SDK ships 9 optional features. Each is **inactive until you
 switch it on**, so an SDK you have not configured behaves exactly as if none of
 them existed — no retries, no cache, no logging, no measurable overhead.
 
@@ -6976,10 +6781,11 @@ above:
 | [`paging`](#paging) | Paging |
 | [`ratelimit`](#ratelimit) | Rate limiting |
 | [`retry`](#retry) | Retry |
+| [`secrets`](#secrets) | Secrets |
 | [`test`](#test) | Test transport |
 | [`timeout`](#timeout) | Timeout |
 
-> **Order matters for `ratelimit`, `retry`, `timeout`.** These wrap the
+> **Order matters for `ratelimit`, `retry`, `secrets`, `timeout`.** These wrap the
 > transport, so each one wraps whatever is already installed: the order you
 > activate them in IS the nesting order. Activating them as an ordered list
 > rather than a map is what fixes that order.
@@ -7070,6 +6876,24 @@ Set `feature.retry.active` to enable it, then override any of the options above.
 transport features decides what it sees. A feature activated later wraps one
 activated earlier.
 
+### secrets
+
+Secrets.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+| `cache` | `true` |
+| `exchange` | `{active: false, method: 'POST', path: 'auth/token', refresh: '', request: 'refresh_token', response: 'access_token', retries: 1, statuses: [401]}` |
+| `name` | `'apikey'` |
+| `providers` | `[]` |
+
+Set `feature.secrets.active` to enable it, then override any of the options above.
+
+`secrets` wraps the transport, so its position among the other
+transport features decides what it sees. A feature activated later wraps one
+activated earlier.
+
 ### test
 
 Test transport.
@@ -7140,6 +6964,7 @@ The SDK ships with built-in features:
 - **PagingFeature**: Paging
 - **RatelimitFeature**: Rate limiting
 - **RetryFeature**: Retry
+- **SecretsFeature**: Secrets
 - **TestFeature**: Test transport
 - **TimeoutFeature**: Timeout
 
