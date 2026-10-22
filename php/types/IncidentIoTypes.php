@@ -1466,11 +1466,6 @@ class EscalationsReassignEscalationResultV2CreateData
     public ?array $user_ids = null;
 }
 
-/** EscalationsV2 entity data model. */
-class EscalationsV2
-{
-}
-
 /** FollowUp entity data model. */
 class FollowUp
 {

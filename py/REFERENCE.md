@@ -170,10 +170,6 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2Entity` instance. Pas
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance. Pass `None` for no initial data.
 
-#### `EscalationsV2(data=None)`
-
-Create a new `EscalationsV2Entity` instance. Pass `None` for no initial data.
-
 #### `FollowUp(data=None)`
 
 Create a new `FollowUpEntity` instance. Pass `None` for no initial data.
@@ -3412,41 +3408,6 @@ Set the entity match criteria.
 #### `make() -> Entity`
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance with the same options.
-
-#### `get_name() -> str`
-
-Return the entity name.
-
-
----
-
-## EscalationsV2Entity
-
-```python
-escalations_v2 = client.EscalationsV2()
-```
-
-### Common Methods
-
-#### `data_get() -> dict`
-
-Get the entity data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get() -> dict`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make() -> Entity`
-
-Create a new `EscalationsV2Entity` instance with the same options.
 
 #### `get_name() -> str`
 

@@ -540,12 +540,6 @@ class IncidentIoSDK:
         return EscalationsReassignEscalationResultV2Entity(self, data)
 
 
-    def EscalationsV2(self, data=None) -> "EscalationsV2Entity":
-        """Entity factory: client.EscalationsV2().list() / client.EscalationsV2().load({"id": ...})."""
-        from incidentio_sdk.entity.escalations_v2_entity import EscalationsV2Entity
-        return EscalationsV2Entity(self, data)
-
-
     def FollowUp(self, data=None) -> "FollowUpEntity":
         """Entity factory: client.FollowUp().list() / client.FollowUp().load({"id": ...})."""
         from incidentio_sdk.entity.follow_up_entity import FollowUpEntity
@@ -1043,7 +1037,6 @@ if TYPE_CHECKING:
     from incidentio_sdk.entity.escalation_path_template_entity import EscalationPathTemplateEntity
     from incidentio_sdk.entity.escalations_check_escalation_permissions_result_v2_entity import EscalationsCheckEscalationPermissionsResultV2Entity
     from incidentio_sdk.entity.escalations_reassign_escalation_result_v2_entity import EscalationsReassignEscalationResultV2Entity
-    from incidentio_sdk.entity.escalations_v2_entity import EscalationsV2Entity
     from incidentio_sdk.entity.follow_up_entity import FollowUpEntity
     from incidentio_sdk.entity.follow_ups_connect_external_issue_result_v2_entity import FollowUpsConnectExternalIssueResultV2Entity
     from incidentio_sdk.entity.follow_ups_connect_external_issue_result_v3_entity import FollowUpsConnectExternalIssueResultV3Entity

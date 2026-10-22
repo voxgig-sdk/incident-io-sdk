@@ -628,14 +628,6 @@ func (sdk *IncidentIoSDK) EscalationsReassignEscalationResultV2(data map[string]
 }
 
 
-// EscalationsV2 returns a EscalationsV2 entity bound to this client.
-// Idiomatic usage: client.EscalationsV2(nil).List(nil, nil) or
-// client.EscalationsV2(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *IncidentIoSDK) EscalationsV2(data map[string]any) IncidentIoEntity {
-	return NewEscalationsV2EntityFunc(sdk, data)
-}
-
-
 // FollowUp returns a FollowUp entity bound to this client.
 // Idiomatic usage: client.FollowUp(nil).List(nil, nil) or
 // client.FollowUp(nil).Load(map[string]any{"id": ...}, nil).

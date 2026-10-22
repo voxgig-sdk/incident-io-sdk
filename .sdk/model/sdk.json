@@ -11333,18 +11333,6 @@
             ]
           }
         },
-        "escalations_v2": {
-          "active": true,
-          "alias": {
-            "field": {}
-          },
-          "fields": {},
-          "name": "escalations_v2",
-          "op": {},
-          "relations": {
-            "ancestors": []
-          }
-        },
         "follow_up": {
           "active": true,
           "alias": {
@@ -33161,15 +33149,6 @@
               "v": []
             }
           ]
-        },
-        "BasicEscalationsV2Flow": {
-          "active": true,
-          "entity": "escalations_v2",
-          "key$": "BasicEscalationsV2Flow",
-          "kind": "basic",
-          "name": "BasicEscalationsV2Flow",
-          "param": {},
-          "step": []
         },
         "BasicFollowUpFlow": {
           "active": true,

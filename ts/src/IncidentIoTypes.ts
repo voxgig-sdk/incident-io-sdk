@@ -1367,9 +1367,6 @@ export interface EscalationsReassignEscalationResultV2CreateData {
   user_ids?: any[]
 }
 
-export interface EscalationsV2 {
-}
-
 export interface FollowUp {
   assignee: Record<string, any>
   assignee_id?: string

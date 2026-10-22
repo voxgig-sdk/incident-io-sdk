@@ -222,7 +222,7 @@
 
 This guide introduces the API, the client libraries, and the companion tools in this repository. Start with the API capabilities, choose a client for your application, and use the linked reference when you need exact request and response details.
 
-The selected API surface contains 106 entities and 330 HTTP routes. There are 6 SDK targets and 2 companion tools.
+The selected API surface contains 105 entities and 330 HTTP routes. There are 6 SDK targets and 2 companion tools.
 
 An entity groups related API operations. An operation can have several routes with different inputs or authentication requirements. The SDK exposes the entity and its operations using the conventions of the selected language.
 
@@ -662,10 +662,6 @@ Key fields to recognise:
 - `resolve_original`: Whether to resolve the original escalation, stopping it paging its targets.
 - `title`: The title of this escalation
 - `user_ids`: IDs of users to reassign directly to
-
-### [EscalationsV2](docs/api/escalations_v2.html)
-
-SDK operations: .
 
 ### [FollowUp](docs/api/follow_up.html)
 

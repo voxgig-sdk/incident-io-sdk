@@ -32,7 +32,6 @@ import { EscalationPathEntity } from './entity/EscalationPathEntity'
 import { EscalationPathTemplateEntity } from './entity/EscalationPathTemplateEntity'
 import { EscalationsCheckEscalationPermissionsResultV2Entity } from './entity/EscalationsCheckEscalationPermissionsResultV2Entity'
 import { EscalationsReassignEscalationResultV2Entity } from './entity/EscalationsReassignEscalationResultV2Entity'
-import { EscalationsV2Entity } from './entity/EscalationsV2Entity'
 import { FollowUpEntity } from './entity/FollowUpEntity'
 import { FollowUpsConnectExternalIssueResultV2Entity } from './entity/FollowUpsConnectExternalIssueResultV2Entity'
 import { FollowUpsConnectExternalIssueResultV3Entity } from './entity/FollowUpsConnectExternalIssueResultV3Entity'
@@ -724,15 +723,6 @@ if (null != this._secrets) {
   EscalationsReassignEscalationResultV2(entopts?: Record<string, any>) {
     const self = this
     return new EscalationsReassignEscalationResultV2Entity(self, entopts)
-  }
-
-
-  // Entity access: `client.EscalationsV2().list()` / `client.EscalationsV2().load({ id })`.
-  // The argument is the entity OPTIONS object (passed to the entity
-  // constructor as entopts), not initial entity data.
-  EscalationsV2(entopts?: Record<string, any>) {
-    const self = this
-    return new EscalationsV2Entity(self, entopts)
   }
 
 

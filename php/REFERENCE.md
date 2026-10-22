@@ -170,10 +170,6 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2Entity` instance. Pas
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance. Pass `null` for no initial data.
 
-#### `EscalationsV2($data = null)`
-
-Create a new `EscalationsV2Entity` instance. Pass `null` for no initial data.
-
 #### `FollowUp($data = null)`
 
 Create a new `FollowUpEntity` instance. Pass `null` for no initial data.
@@ -3400,42 +3396,6 @@ Set the entity match criteria.
 #### `make(): EscalationsReassignEscalationResultV2Entity`
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance with the same client and
-options.
-
-#### `get_name(): string`
-
-Return the entity name.
-
-
----
-
-## EscalationsV2Entity
-
-```php
-$escalations_v2 = $client->EscalationsV2();
-```
-
-### Common Methods
-
-#### `data_get(): array`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set($data): void`
-
-Set the entity data.
-
-#### `match_get(): array`
-
-Get the entity match criteria.
-
-#### `match_set($match): void`
-
-Set the entity match criteria.
-
-#### `make(): EscalationsV2Entity`
-
-Create a new `EscalationsV2Entity` instance with the same client and
 options.
 
 #### `get_name(): string`

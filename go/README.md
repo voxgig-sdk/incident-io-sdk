@@ -289,7 +289,6 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `EscalationPathTemplate` | `(data map[string]any) IncidentIoEntity` | Create an EscalationPathTemplate entity instance. |
 | `EscalationsCheckEscalationPermissionsResultV2` | `(data map[string]any) IncidentIoEntity` | Create an EscalationsCheckEscalationPermissionsResultV2 entity instance. |
 | `EscalationsReassignEscalationResultV2` | `(data map[string]any) IncidentIoEntity` | Create an EscalationsReassignEscalationResultV2 entity instance. |
-| `EscalationsV2` | `(data map[string]any) IncidentIoEntity` | Create an EscalationsV2 entity instance. |
 | `FollowUp` | `(data map[string]any) IncidentIoEntity` | Create a FollowUp entity instance. |
 | `FollowUpsConnectExternalIssueResultV2` | `(data map[string]any) IncidentIoEntity` | Create a FollowUpsConnectExternalIssueResultV2 entity instance. |
 | `FollowUpsConnectExternalIssueResultV3` | `(data map[string]any) IncidentIoEntity` | Create a FollowUpsConnectExternalIssueResultV3 entity instance. |
@@ -1006,15 +1005,6 @@ API path: `/v2/escalations/{escalation_id}/actions/check_permissions`
 Operations: Create.
 
 API path: `/v2/escalations/{escalation_id}/actions/reassign`
-
-#### EscalationsV2
-
-| Field | Description |
-| --- | --- |
-
-Operations: .
-
-API path: ``
 
 #### FollowUp
 
@@ -4078,11 +4068,6 @@ if err != nil {
 }
 fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
-
-
-### EscalationsV2
-
-Create an instance: `escalationsV2 := client.EscalationsV2(nil)`
 
 
 ### FollowUp

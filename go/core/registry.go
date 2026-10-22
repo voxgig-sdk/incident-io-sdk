@@ -86,8 +86,6 @@ var NewEscalationsCheckEscalationPermissionsResultV2EntityFunc func(client *Inci
 
 var NewEscalationsReassignEscalationResultV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
-var NewEscalationsV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
-
 var NewFollowUpEntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity
 
 var NewFollowUpsConnectExternalIssueResultV2EntityFunc func(client *IncidentIoSDK, entopts map[string]any) IncidentIoEntity

@@ -170,10 +170,6 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2` entity instance. Pa
 
 Create a new `EscalationsReassignEscalationResultV2` entity instance. Pass `nil` for no initial data.
 
-#### `EscalationsV2(data = nil)`
-
-Create a new `EscalationsV2` entity instance. Pass `nil` for no initial data.
-
 #### `FollowUp(data = nil)`
 
 Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
@@ -3425,42 +3421,6 @@ Set the entity match criteria.
 #### `make -> Entity`
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance with the same client and
-options.
-
-#### `get_name -> String`
-
-Return the entity name.
-
-
----
-
-## EscalationsV2Entity
-
-```ruby
-escalations_v2 = client.EscalationsV2
-```
-
-### Common Methods
-
-#### `data_get -> Hash`
-
-Get the entity data. Returns a copy of the current data.
-
-#### `data_set(data)`
-
-Set the entity data.
-
-#### `match_get -> Hash`
-
-Get the entity match criteria.
-
-#### `match_set(match)`
-
-Set the entity match criteria.
-
-#### `make -> Entity`
-
-Create a new `EscalationsV2Entity` instance with the same client and
 options.
 
 #### `get_name -> String`

@@ -30,7 +30,6 @@ import { EscalationPathEntity } from './entity/EscalationPathEntity';
 import { EscalationPathTemplateEntity } from './entity/EscalationPathTemplateEntity';
 import { EscalationsCheckEscalationPermissionsResultV2Entity } from './entity/EscalationsCheckEscalationPermissionsResultV2Entity';
 import { EscalationsReassignEscalationResultV2Entity } from './entity/EscalationsReassignEscalationResultV2Entity';
-import { EscalationsV2Entity } from './entity/EscalationsV2Entity';
 import { FollowUpEntity } from './entity/FollowUpEntity';
 import { FollowUpsConnectExternalIssueResultV2Entity } from './entity/FollowUpsConnectExternalIssueResultV2Entity';
 import { FollowUpsConnectExternalIssueResultV3Entity } from './entity/FollowUpsConnectExternalIssueResultV3Entity';
@@ -173,7 +172,6 @@ declare class IncidentIoSDK {
     EscalationPathTemplate(entopts?: Record<string, any>): EscalationPathTemplateEntity;
     EscalationsCheckEscalationPermissionsResultV2(entopts?: Record<string, any>): EscalationsCheckEscalationPermissionsResultV2Entity;
     EscalationsReassignEscalationResultV2(entopts?: Record<string, any>): EscalationsReassignEscalationResultV2Entity;
-    EscalationsV2(entopts?: Record<string, any>): EscalationsV2Entity;
     FollowUp(entopts?: Record<string, any>): FollowUpEntity;
     FollowUpsConnectExternalIssueResultV2(entopts?: Record<string, any>): FollowUpsConnectExternalIssueResultV2Entity;
     FollowUpsConnectExternalIssueResultV3(entopts?: Record<string, any>): FollowUpsConnectExternalIssueResultV3Entity;

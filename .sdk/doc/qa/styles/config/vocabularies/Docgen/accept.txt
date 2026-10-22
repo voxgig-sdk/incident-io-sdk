@@ -347,8 +347,6 @@ initialiser
 [Ee][Ss][Cc][Aa][Ll][Aa][Tt][Ii][Oo][Nn][Ss][Cc][Hh][Ee][Cc][Kk][Ee][Ss][Cc][Aa][Ll][Aa][Tt][Ii][Oo][Nn][Pp][Ee][Rr][Mm][Ii][Ss][Ss][Ii][Oo][Nn][Ss][Rr][Ee][Ss][Uu][Ll][Tt][Vv]2
 [Ee][Ss][Cc][Aa][Ll][Aa][Tt][Ii][Oo][Nn][Ss]_[Rr][Ee][Aa][Ss][Ss][Ii][Gg][Nn]_[Ee][Ss][Cc][Aa][Ll][Aa][Tt][Ii][Oo][Nn]_[Rr][Ee][Ss][Uu][Ll][Tt]_[Vv]2
 [Ee][Ss][Cc][Aa][Ll][Aa][Tt][Ii][Oo][Nn][Ss][Rr][Ee][Aa][Ss][Ss][Ii][Gg][Nn][Ee][Ss][Cc][Aa][Ll][Aa][Tt][Ii][Oo][Nn][Rr][Ee][Ss][Uu][Ll][Tt][Vv]2
-[Ee][Ss][Cc][Aa][Ll][Aa][Tt][Ii][Oo][Nn][Ss]_[Vv]2
-[Ee][Ss][Cc][Aa][Ll][Aa][Tt][Ii][Oo][Nn][Ss][Vv]2
 [Ff][Oo][Ll][Ll][Oo][Ww]_[Uu][Pp]
 [Ff][Oo][Ll][Ll][Oo][Ww][Uu][Pp]
 [Ff][Oo][Ll][Ll][Oo][Ww]_[Uu][Pp][Ss]_[Cc][Oo][Nn][Nn][Ee][Cc][Tt]_[Ee][Xx][Tt][Ee][Rr][Nn][Aa][Ll]_[Ii][Ss][Ss][Uu][Ee]_[Rr][Ee][Ss][Uu][Ll][Tt]_[Vv]2

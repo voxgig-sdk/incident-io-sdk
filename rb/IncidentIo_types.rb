@@ -3784,10 +3784,6 @@ EscalationsReassignEscalationResultV2CreateData = Struct.new(
   keyword_init: true
 )
 
-# EscalationsV2 entity data model.
-class EscalationsV2
-end
-
 # FollowUp entity data model.
 #
 # @!attribute [rw] assignee

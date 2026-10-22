@@ -176,10 +176,6 @@ Create a new `EscalationsCheckEscalationPermissionsResultV2` entity instance. Pa
 
 Create a new `EscalationsReassignEscalationResultV2` entity instance. Pass `nil` for no initial data.
 
-#### `EscalationsV2(data map[string]any) IncidentIoEntity`
-
-Create a new `EscalationsV2` entity instance. Pass `nil` for no initial data.
-
 #### `FollowUp(data map[string]any) IncidentIoEntity`
 
 Create a new `FollowUp` entity instance. Pass `nil` for no initial data.
@@ -3957,45 +3953,6 @@ Get or set the entity match criteria. Works the same as `Data()`.
 #### `Make() Entity`
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance with the same client and
-options.
-
-#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
-
-Run an operation through the pipeline and send its result items on the
-returned channel, which closes when the stream ends. A `StreamItem` holds
-one item in `Item`, or in `Err` the error that ended the stream: the
-error the operation itself would return, sent as the last value. Under
-`throw: false` in `callopts["ctrl"]`, no error is sent.
-
-#### `GetName() string`
-
-Return the entity name.
-
-
----
-
-## EscalationsV2Entity
-
-```go
-escalationsV2 := client.EscalationsV2(nil)
-fmt.Println(escalationsV2.GetName()) // "escalations_v2"
-```
-
-### Common Methods
-
-#### `Data(args ...any) any`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `Match(args ...any) any`
-
-Get or set the entity match criteria. Works the same as `Data()`.
-
-#### `Make() Entity`
-
-Create a new `EscalationsV2Entity` instance with the same client and
 options.
 
 #### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`

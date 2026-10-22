@@ -951,24 +951,6 @@ class IncidentIoSDK implements \JsonSerializable
     }
 
 
-    private $_escalations_v2 = null;
-
-    // Canonical facade: $client->EscalationsV2()->list() / ->load(["id" => ...]).
-    // PHP method names are case-insensitive, so lowercase $client->escalations_v2()
-    // resolves here too.
-    public function EscalationsV2($data = null)
-    {
-        require_once __DIR__ . '/entity/escalations_v2_entity.php';
-        if ($data === null) {
-            if ($this->_escalations_v2 === null) {
-                $this->_escalations_v2 = new EscalationsV2Entity($this, null);
-            }
-            return $this->_escalations_v2;
-        }
-        return new EscalationsV2Entity($this, $data);
-    }
-
-
     private $_follow_up = null;
 
     // Canonical facade: $client->FollowUp()->list() / ->load(["id" => ...]).

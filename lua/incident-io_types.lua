@@ -1052,8 +1052,6 @@
 ---@field title? string
 ---@field user_ids? table
 
----@class EscalationsV2
-
 ---@class FollowUp
 ---@field assignee table
 ---@field assignee_id? string

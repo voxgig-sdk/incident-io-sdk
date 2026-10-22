@@ -1411,10 +1411,6 @@ class EscalationsReassignEscalationResultV2CreateData(EscalationsReassignEscalat
     user_ids: list
 
 
-class EscalationsV2(TypedDict):
-    pass
-
-
 class FollowUpRequired(TypedDict):
     assignee: dict
     assignee_team: dict

@@ -32,7 +32,6 @@
 @"./escalation_path_template.aontu"
 @"./escalations_check_escalation_permissions_result_v2.aontu"
 @"./escalations_reassign_escalation_result_v2.aontu"
-@"./escalations_v2.aontu"
 @"./follow_up.aontu"
 @"./follow_ups_connect_external_issue_result_v2.aontu"
 @"./follow_ups_connect_external_issue_result_v3.aontu"

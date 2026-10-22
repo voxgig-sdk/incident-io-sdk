@@ -538,13 +538,6 @@ class IncidentIoSDK
   end
 
 
-  # Canonical facade: client.EscalationsV2.list / client.EscalationsV2.load({ "id" => ... })
-  def EscalationsV2(data = nil)
-    require_relative 'entity/escalations_v2_entity'
-    EscalationsV2Entity.new(self, data)
-  end
-
-
   # Canonical facade: client.FollowUp.list / client.FollowUp.load({ "id" => ... })
   def FollowUp(data = nil)
     require_relative 'entity/follow_up_entity'

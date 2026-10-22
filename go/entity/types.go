@@ -1014,10 +1014,6 @@ type EscalationsReassignEscalationResultV2CreateData struct {
 	UserIds *[]any `json:"user_ids,omitempty"`
 }
 
-// EscalationsV2 is the typed data model for the escalations_v2 entity.
-type EscalationsV2 struct {
-}
-
 // FollowUp is the typed data model for the follow_up entity.
 type FollowUp struct {
 }

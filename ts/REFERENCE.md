@@ -433,18 +433,6 @@ Create a new `EscalationsReassignEscalationResultV2` entity instance.
 
 **Returns:** `EscalationsReassignEscalationResultV2Entity` instance.
 
-#### `EscalationsV2(data?: object)`
-
-Create a new `EscalationsV2` entity instance.
-
-**Parameters:**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `data` | `object` | Initial entity data. |
-
-**Returns:** `EscalationsV2Entity` instance.
-
 #### `FollowUp(data?: object)`
 
 Create a new `FollowUp` entity instance.
@@ -4430,40 +4418,6 @@ Get or set the entity match criteria. Works the same as `data()`.
 #### `make()`
 
 Create a new `EscalationsReassignEscalationResultV2Entity` instance with the same client and
-options.
-
-#### `client()`
-
-Return the parent `IncidentIoSDK` instance.
-
-#### `entopts()`
-
-Return a copy of the entity options.
-
-
----
-
-## EscalationsV2Entity
-
-```ts
-const escalations_v2 = client.EscalationsV2()
-```
-
-### Common Methods
-
-#### `data(data?: object)`
-
-Get or set the entity data. When called with data, sets the entity's
-internal data and returns the current data. When called without
-arguments, returns a copy of the current data.
-
-#### `match(match?: object)`
-
-Get or set the entity match criteria. Works the same as `data()`.
-
-#### `make()`
-
-Create a new `EscalationsV2Entity` instance with the same client and
 options.
 
 #### `client()`

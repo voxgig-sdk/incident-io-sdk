@@ -256,7 +256,6 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `EscalationPathTemplate` | `(data) -> EscalationPathTemplateEntity` | Create an EscalationPathTemplate entity instance. |
 | `EscalationsCheckEscalationPermissionsResultV2` | `(data) -> EscalationsCheckEscalationPermissionsResultV2Entity` | Create an EscalationsCheckEscalationPermissionsResultV2 entity instance. |
 | `EscalationsReassignEscalationResultV2` | `(data) -> EscalationsReassignEscalationResultV2Entity` | Create an EscalationsReassignEscalationResultV2 entity instance. |
-| `EscalationsV2` | `(data) -> EscalationsV2Entity` | Create an EscalationsV2 entity instance. |
 | `FollowUp` | `(data) -> FollowUpEntity` | Create a FollowUp entity instance. |
 | `FollowUpsConnectExternalIssueResultV2` | `(data) -> FollowUpsConnectExternalIssueResultV2Entity` | Create a FollowUpsConnectExternalIssueResultV2 entity instance. |
 | `FollowUpsConnectExternalIssueResultV3` | `(data) -> FollowUpsConnectExternalIssueResultV3Entity` | Create a FollowUpsConnectExternalIssueResultV3 entity instance. |
@@ -973,15 +972,6 @@ API path: `/v2/escalations/{escalation_id}/actions/check_permissions`
 Operations: Create.
 
 API path: `/v2/escalations/{escalation_id}/actions/reassign`
-
-#### EscalationsV2
-
-| Field | Description |
-| --- | --- |
-
-Operations: .
-
-API path: ``
 
 #### FollowUp
 
@@ -3689,11 +3679,6 @@ local escalations_reassign_escalation_result_v2, err = client:EscalationsReassig
   escalation_id = "example_escalation_id", -- string
 })
 ```
-
-
-### EscalationsV2
-
-Create an instance: `local escalations_v2 = client:EscalationsV2(nil)`
 
 
 ### FollowUp

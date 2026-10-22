@@ -167,8 +167,6 @@ func entityFor(client *sdk.IncidentIoSDK, name string) (sdk.IncidentIoEntity, er
 		return client.EscalationsCheckEscalationPermissionsResultV2(nil), nil
 	case "escalations_reassign_escalation_result_v2":
 		return client.EscalationsReassignEscalationResultV2(nil), nil
-	case "escalations_v2":
-		return client.EscalationsV2(nil), nil
 	case "follow_up":
 		return client.FollowUp(nil), nil
 	case "follow_ups_connect_external_issue_result_v2":

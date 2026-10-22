@@ -153,9 +153,6 @@ func init() {
 	core.NewEscalationsReassignEscalationResultV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewEscalationsReassignEscalationResultV2Entity(client, entopts)
 	}
-	core.NewEscalationsV2EntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
-		return entity.NewEscalationsV2Entity(client, entopts)
-	}
 	core.NewFollowUpEntityFunc = func(client *core.IncidentIoSDK, entopts map[string]any) core.IncidentIoEntity {
 		return entity.NewFollowUpEntity(client, entopts)
 	}

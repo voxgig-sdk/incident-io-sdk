@@ -67,7 +67,6 @@ const EscalationPathEntity_1 = require("./entity/EscalationPathEntity");
 const EscalationPathTemplateEntity_1 = require("./entity/EscalationPathTemplateEntity");
 const EscalationsCheckEscalationPermissionsResultV2Entity_1 = require("./entity/EscalationsCheckEscalationPermissionsResultV2Entity");
 const EscalationsReassignEscalationResultV2Entity_1 = require("./entity/EscalationsReassignEscalationResultV2Entity");
-const EscalationsV2Entity_1 = require("./entity/EscalationsV2Entity");
 const FollowUpEntity_1 = require("./entity/FollowUpEntity");
 const FollowUpsConnectExternalIssueResultV2Entity_1 = require("./entity/FollowUpsConnectExternalIssueResultV2Entity");
 const FollowUpsConnectExternalIssueResultV3Entity_1 = require("./entity/FollowUpsConnectExternalIssueResultV3Entity");
@@ -613,13 +612,6 @@ class IncidentIoSDK {
     EscalationsReassignEscalationResultV2(entopts) {
         const self = this;
         return new EscalationsReassignEscalationResultV2Entity_1.EscalationsReassignEscalationResultV2Entity(self, entopts);
-    }
-    // Entity access: `client.EscalationsV2().list()` / `client.EscalationsV2().load({ id })`.
-    // The argument is the entity OPTIONS object (passed to the entity
-    // constructor as entopts), not initial entity data.
-    EscalationsV2(entopts) {
-        const self = this;
-        return new EscalationsV2Entity_1.EscalationsV2Entity(self, entopts);
     }
     // Entity access: `client.FollowUp().list()` / `client.FollowUp().load({ id })`.
     // The argument is the entity OPTIONS object (passed to the entity

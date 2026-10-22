@@ -75,7 +75,6 @@ class ReadmeExamplesTest < Minitest::Test
     "EscalationPathTemplate" => "escalation_path_template",
     "EscalationsCheckEscalationPermissionsResultV2" => "escalations_check_escalation_permissions_result_v2",
     "EscalationsReassignEscalationResultV2" => "escalations_reassign_escalation_result_v2",
-    "EscalationsV2" => "escalations_v2",
     "FollowUp" => "follow_up",
     "FollowUpsConnectExternalIssueResultV2" => "follow_ups_connect_external_issue_result_v2",
     "FollowUpsConnectExternalIssueResultV3" => "follow_ups_connect_external_issue_result_v3",

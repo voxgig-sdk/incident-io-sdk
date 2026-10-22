@@ -20,7 +20,7 @@ Full documentation for this SDK: [https://voxgig-sdk.github.io/incident-io-sdk/]
 
 ## Entities, not endpoints
 
-This SDK exposes the API as **106 semantic entities** that you
+This SDK exposes the API as **105 semantic entities** that you
 call directly, instead of assembling URL paths and query strings. See the [Entities](#entities) table below for the full list. Entities are
 **Capitalised** to mark them as the primary surface, each with the operations they
 support (`list`, `load`, `create`, `update`, `remove`):
@@ -173,7 +173,7 @@ Then add it to your agent's MCP config (Claude Desktop, Cursor, etc.):
 
 ## Entities
 
-The API exposes 106 entities:
+The API exposes 105 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
@@ -209,7 +209,6 @@ The API exposes 106 entities:
 | **EscalationPathTemplate** | The EscalationPathTemplate entity (create, list, load, remove, update). | `/v2/escalation_path_templates` |
 | **EscalationsCheckEscalationPermissionsResultV2** | The EscalationsCheckEscalationPermissionsResultV2 entity (create). | `/v2/escalations/{escalation_id}/actions/check_permissions` |
 | **EscalationsReassignEscalationResultV2** | The EscalationsReassignEscalationResultV2 entity (create). | `/v2/escalations/{escalation_id}/actions/reassign` |
-| **EscalationsV2** | The EscalationsV2 entity. | `` |
 | **FollowUp** | The FollowUp entity (create, list, load, remove, update). | `/v3/follow_ups` |
 | **FollowUpsConnectExternalIssueResultV2** | The FollowUpsConnectExternalIssueResultV2 entity (create). | `/v2/follow_ups/{id}/actions/connect_external_issue` |
 | **FollowUpsConnectExternalIssueResultV3** | The FollowUpsConnectExternalIssueResultV3 entity (create). | `/v3/follow_ups/{id}/actions/connect_external_issue` |

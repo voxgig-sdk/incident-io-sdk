@@ -871,20 +871,6 @@ function IncidentIoSDK:EscalationsReassignEscalationResultV2(data)
 end
 
 
--- Idiomatic facade: client:EscalationsV2():list() / client:EscalationsV2():load({ id = ... })
--- Entity access is capitalised (PascalCase) for parity with the other SDKs.
-function IncidentIoSDK:EscalationsV2(data)
-  local EntityMod = require("entity.escalations_v2_entity")
-  if data == nil then
-    if self._escalations_v2 == nil then
-      self._escalations_v2 = EntityMod.new(self, nil)
-    end
-    return self._escalations_v2
-  end
-  return EntityMod.new(self, data)
-end
-
-
 -- Idiomatic facade: client:FollowUp():list() / client:FollowUp():load({ id = ... })
 -- Entity access is capitalised (PascalCase) for parity with the other SDKs.
 function IncidentIoSDK:FollowUp(data)
